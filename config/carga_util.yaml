@@ -1,0 +1,36 @@
+# Opções de carga útil de referência para a missão A (Etapa 1.4, Parte A).
+# Status: PROPOSTA — aguardando a escolha do Fabio. Nenhuma opção é usada em cálculo ainda.
+# Fontes em docs/fontes.md (F22–F26). Massas em kg. "Até a órbita de Marte" = carga útil (sem os
+# estágios de propulsão nem a estrutura do veículo) presente na captura em Marte. "Volta à Terra" =
+# o que entra na atmosfera (cápsula com amostras). Fora do escopo: descida, pouso e subida (Fase 2).
+opcoes:
+  CU-1:
+    nome: Carga útil do ERO, versão ESA 2021
+    ate_orbita_marte:
+      - {item: "CCRS (sem RSS)", massa: 500, fonte: "[F22] Yau (ESA) 2021, slide 8: \"CCRS Total (w/o RSS)≈ 500 kg\""}
+      - {item: "EES (cápsula de entrada)", massa: 100, fonte: "[F22] slide 8: \"EES ≈ 100 kg\""}
+      - {item: "CCM (descartado em Marte)", massa: 200, fonte: "[F22] slide 8: \"CCM > 200 kg (Jettisoned at Mars)\" — valor mínimo"}
+    descartado_em_marte: [CCM]
+    volta_a_terra:
+      - {item: "EES com OS e amostras", massa: 100, fonte: "[F22] slide 8: \"EES ≈ 100 kg\"; OS ≈ 8 kg no mesmo slide"}
+  CU-2:
+    nome: Carga útil do ERO, versão NASA 2024 (CCRS) + cápsula de entrada NASA (DAC-3A)
+    ate_orbita_marte:
+      - {item: "CCRS (captura + montagem + proteção contra micrometeoroides)", massa: 620, fonte: "[F23] Sarli et al. 2024, p. 5: \"The approximate mass of the CCRS payload is 620 kg\""}
+      - {item: "EEV com COS (valor máximo esperado)", massa: 89.9, fonte: "[F24] Corliss & Edquist (NASA) 2021, slide 30: \"EEV MEV with NTE COS (kg) … 89.9\""}
+    volta_a_terra:
+      - {item: "EEV com COS (contêiner com OS e amostras)", massa: 89.9, fonte: "[F24] slide 30"}
+    ressalva: "A fonte não diz se os 620 kg do CCRS incluem o EES; aqui a cápsula é somada à parte (escolha conservadora)."
+  CU-3:
+    nome: Cota inferior — só cápsula com amostras
+    ate_orbita_marte:
+      - {item: "EEV, massa de entrada (alocação)", massa: 92.5, fonte: "[F24] slide 27: \"Entry Mass (kg) < 92.5\""}
+    volta_a_terra:
+      - {item: "EEV, massa de entrada (alocação)", massa: 92.5, fonte: "[F24] slide 27"}
+    ressalva: >
+      Não inclui sistema de captura em órbita. Só faz sentido se as amostras chegarem à órbita já
+      dentro da cápsula, o que depende da arquitetura de subida (Fase 2). Serve como limite
+      inferior para a sensibilidade.
+amostras:
+  meta_massa_g: {valor: 500, fonte: "[F25] MSR IRB-2 (2023), p. 24: \"return of 500 g (~1.1 pound) of Martian sample material\""}
+  tubos_requisito: {valor: 30, fonte: "[F25] p. 26: \"capability to return 30 sample tube assemblies\""}
