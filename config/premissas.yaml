@@ -1,0 +1,21 @@
+# Premissas do estudo: todo valor usado sem fonte primária publicada.
+# Regra: só o Fabio altera o campo "status". Valores possíveis: "NÃO VALIDADA", "ACEITA PELO FABIO".
+premissas:
+  - id: P-001
+    nome: tolerancia_efemeride_vs_horizons_km
+    valor: 1.0
+    unidade: km
+    uso: tests/test_ephemeris.py — tolerância de posição entre DE440 (local) e Horizons (DE441)
+    justificativa: >
+      Escolhida para detectar erros de pipeline: escala de tempo errada (UTC em vez de
+      TDB, ~69 s x ~24 km/s ~ 1600 km), frame eclíptico em vez de equatorial (~1e8 km)
+      e unidade errada. Diferença observada em 2026-10-26: < 0,1 m (ver
+      docs/etapa1.1_efemerides.md). Não há valor publicado para essa tolerância.
+    status: NÃO VALIDADA
+  - id: P-002
+    nome: tolerancia_velocidade_vs_horizons_km_s
+    valor: 1.0e-6
+    unidade: km/s
+    uso: tests/test_ephemeris.py — tolerância de velocidade entre DE440 (local) e Horizons (DE441)
+    justificativa: Idem P-001.
+    status: NÃO VALIDADA

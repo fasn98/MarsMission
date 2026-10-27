@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      # Kernels SPICE (~120 MB) ficam em cache; a chave muda se config/kernels.yaml mudar.
+      - name: Cache dos kernels SPICE
+        uses: actions/cache@v4
+        with:
+          path: data/kernels
+          key: spice-${{ hashFiles('config/kernels.yaml') }}
+
+      - name: Baixar e conferir kernels (MD5)
+        run: python tools/fetch_kernels.py
+
+      - name: pytest
+        run: python -m pytest -v
