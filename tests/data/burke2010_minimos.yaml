@@ -1,0 +1,19 @@
+# Mínimos de C3 por tipo (linhas 1 e 2 das tabelas "Energy Minima") transcritos de
+# Burke, Falck & McGuire, NASA/TM-2010-216764 (docs/fontes.md [F13]).
+# Datas impressas como m/d/aa; aqui em ISO. Páginas = numeração impressa (página do PDF = impressa + 6).
+# Condições do manual (pp. 1, 8–11): MIDAS, cônicas emendadas, balístico, grade de 2 dias,
+# valores arredondados pelo programa. Efeméride e corpo de partida NÃO declarados no documento.
+# Transcrição conferida contra o texto extraído do PDF em 2026-10-27.
+janelas:
+  "2028": {tabela: 3, pagina: 19,
+    tipo_1: {partida: "2028-12-10", chegada: "2029-07-20", c3: "9.048", vinf_chegada: "4.892"},
+    tipo_2: {partida: "2028-12-02", chegada: "2029-10-16", c3: "8.928", vinf_chegada: "3.261"}}
+  "2031": {tabela: 4, pagina: 26,
+    tipo_1: {partida: "2031-01-28", chegada: "2031-08-06", c3: "9.00", vinf_chegada: "5.541"},
+    tipo_2: {partida: "2031-02-23", chegada: "2032-01-09", c3: "8.237", vinf_chegada: "5.53"}}
+  "2033": {tabela: 5, pagina: 33,
+    tipo_1: {partida: "2033-04-06", chegada: "2033-10-01", c3: "8.412", vinf_chegada: "3.956"},
+    tipo_2: {partida: "2033-04-28", chegada: "2034-01-27", c3: "7.781", vinf_chegada: "4.377"}}
+  "2035": {tabela: 6, pagina: 40,
+    tipo_1: {partida: "2035-04-21", chegada: "2035-11-03", c3: "10.19", vinf_chegada: "2.692"},
+    tipo_2: {partida: "2035-06-12", chegada: "2036-07-28", c3: "17.52", vinf_chegada: "4.063"}}

@@ -1,0 +1,56 @@
+# Casos de referência para o solver de Lambert.
+#
+# "referencia_autor": testes oficiais do pacote valladopy, publicados pelo próprio autor do
+#   livro (D. A. Vallado / CelesTrak), com as posições do Example 7-5 e várias revoluções.
+#   NÃO são páginas do livro: são o código de referência do autor. docs/fontes.md [F12].
+#   Repositório https://github.com/CelesTrak/fundamentals-of-astrodynamics, commit
+#   49df0479c950917c0a2c5ac31f2db6477bba57f6, arquivo software/python/tests/astro/iod/test_lambert.py
+#   (test_universal). Constantes do pacote: RE = 6378.1363 km, MU = 398600.4415 km^3/s^2.
+#   Correspondência: "SHORT" = prograde true; "LONG" = prograde false; para M = 1, o ramo
+#   "LOW" do autor coincide com o nosso "esquerdo" e "HIGH" com o "direito".
+#
+# "livros": exemplos impressos. Edição, página e resposta impressa NÃO CONFIRMADAS (os livros
+#   não estavam acessíveis). O teste é pulado enquanto "v1" for null. Só o Fabio preenche,
+#   depois de conferir no exemplar.
+referencia_autor:
+  re_km: 6378.1363
+  mu: 398600.4415
+  r1_re: [2.5, 0.0, 0.0]
+  r2_re: [1.9151111, 1.6069690, 0.0]
+  tof_s: 92854.234
+  casos:
+    - {id: longo_M1_high,  prograde: false, revolucoes: 1, ramo: direito,
+       v1: [-6.241103311949874, -1.3513393001017955, 0], v2: [5.649586717745847, 2.976517899131199, 0]}
+    - {id: longo_M1_low,   prograde: false, revolucoes: 1, ramo: esquerdo,
+       v1: [0.6411191590247107, -5.957501826310465, 0], v2: [3.338282703564938, -4.975814587420603, 0]}
+    - {id: curto_M1_high,  prograde: true,  revolucoes: 1, ramo: direito,
+       v1: [-0.8696153799562063, 6.335154583804734, 0], v2: [-3.40599496310541, 5.411987920515576, 0]}
+    - {id: curto_M1_low,   prograde: true,  revolucoes: 1, ramo: esquerdo,
+       v1: [5.8325227187105835, 1.4319944886088742, 0], v2: [-5.388439980710266, -2.6521018993831795, 0]}
+    - {id: longo_M0,       prograde: false, revolucoes: 0, ramo: esquerdo,
+       v1: [0.8790611303752992, -6.351161592594172, 0], v2: [3.409048205683391, -5.43032161186189, 0]}
+livros:
+  - id: vallado_ex7-5
+    obra: Vallado, D. A. Fundamentals of Astrodynamics and Applications
+    exemplo: Example 7-5
+    edicao: NÃO CONFIRMADA (o código do autor cita "vallado 2022", 5ª ed., p. 497–499)
+    pagina: NÃO CONFIRMADA
+    mu: null
+    r1: null
+    r2: null
+    tof_s: null
+    v1: null
+    v2: null
+  - id: curtis_ex5-2
+    obra: Curtis, H. D. Orbital Mechanics for Engineering Students
+    exemplo: Example 5.2
+    edicao: NÃO CONFIRMADA
+    pagina: NÃO CONFIRMADA
+    # Entradas confirmadas no script do autor Example_5_02.m (espelho
+    # https://github.com/dunningrb/curtis-matlab); resposta impressa não confirmada.
+    mu: 398600
+    r1: [5000, 10000, 2100]
+    r2: [-14600, 2500, 7000]
+    tof_s: 3600
+    v1: null
+    v2: null

@@ -1,0 +1,17 @@
+# Domínios de busca das grades de porkchop (datas TDB). São escolhas de enquadramento, não
+# premissas físicas: cada domínio foi escolhido para conter com folga os mínimos de C3 do
+# manual NASA/TM-2010-216764 e os encontrados aqui.
+terra_marte:
+  titulo: "Terra → Marte, balístico"
+  partida: "399"     # centro da Terra (fisicamente correto para a missão)
+  chegada: "4"       # baricentro de Marte (ADR 0002)
+  passo_dias: 2      # mesmo passo da grade do manual
+  referencia: tests/data/burke2010_minimos.yaml   # mínimos do manual, marcados no gráfico
+  c3_max: 60
+  niveis_c3: [8, 9, 10, 12, 15, 20, 25, 30, 40, 50]
+  niveis_vinf: [2.5, 3, 3.5, 4, 5, 6, 7]
+  janelas:
+    "2028": {partida: ["2028-09-15", "2029-02-28"], chegada: ["2029-05-01", "2030-02-28"]}
+    "2031": {partida: ["2030-11-01", "2031-05-15"], chegada: ["2031-06-01", "2032-04-30"]}
+    "2033": {partida: ["2033-01-01", "2033-07-31"], chegada: ["2033-08-01", "2034-05-31"]}
+    "2035": {partida: ["2035-03-15", "2035-10-15"], chegada: ["2035-10-01", "2036-12-31"]}

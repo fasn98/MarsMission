@@ -7,8 +7,8 @@ Autor: Fabio Nogueira ([@fasn98](https://github.com/fasn98)). O cenário tripula
 
 | Etapa | Conteúdo | Estado |
 | :- | :- | :- |
-| 1.1 | Infraestrutura, efemérides DE440 (de440s) via SPICE, verificação contra o JPL Horizons | aprovada; aguardando CI |
-| 1.2 | Lambert (Izzo, 2015), porkchop plots 2028–2035, verificação contra NASA/TM-2010-216764 | não iniciada |
+| 1.1 | Infraestrutura, efemérides DE440 (de440s) via SPICE, verificação contra o JPL Horizons | concluída (PR #1) |
+| 1.2 | Lambert (Izzo, 2015), porkchop plots 2028–2035, verificação contra NASA/TM-2010-216764 | aguardando portão |
 | 1.3 | Missões completas (classes conjunção e oposição), Δv a partir de órbitas de estacionamento | não iniciada |
 | 1.4 | Orçamento de Δv com margem e primeiro dimensionamento; comparação com NASA/SP-2009-566 | não iniciada |
 
