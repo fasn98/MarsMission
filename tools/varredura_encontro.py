@@ -36,6 +36,18 @@ TINTA, TINTA_2, SUPERFICIE, GRADE = "#0b0b0b", "#52514e", "#fcfcfb", "#eceae4"
 AZUL, LARANJA = "#2a78d6", "#eb6834"
 
 
+def dv_extra_orbitador(mu, um_sol, rp, ra, c3l, descer):
+    """Δv extra do orbitador para usar a órbita de encontro rp × ra em vez da de 1 sol (km/s).
+
+    Descer da órbita de 1 sol até a de encontro, mais o custo extra da injeção trans-Terra: o menor entre
+    partir da órbita de encontro ou voltar à de 1 sol."""
+    vinf = np.sqrt(c3l)
+    tei_1sol = float(mn.dv_hiperbole_orbita(mu, vinf, um_sol.rp, um_sol.ra))
+    tei_alvo = float(mn.dv_hiperbole_orbita(mu, vinf, rp, ra))
+    voltar = mn.dv_transferencia_coaxial(mu, rp, ra, um_sol.rp, um_sol.ra) + tei_1sol
+    return descer + min(tei_alvo, voltar) - tei_1sol
+
+
 def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo="", saida=None, gravar=True):
     """`mav_massas(dv)` → (massa pousada do MAV e equipamentos, massa extra no cruzeiro); padrão: MAV sólido.
 
@@ -75,11 +87,7 @@ def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo="", saida
             descer = min(descer_q, walkout) if versao == "aerofrenagem" else descer_q
             res = {}
             for caso, var in (("missao_A", "missao_A"), ("regra_iii", dcfg["regra_projeto"])):
-                vinf = np.sqrt(c3l[caso])
-                tei_1sol = float(mn.dv_hiperbole_orbita(mu, vinf, um_sol.rp, um_sol.ra))
-                tei_alvo = float(mn.dv_hiperbole_orbita(mu, vinf, rp, ra))
-                voltar = mn.dv_transferencia_coaxial(mu, rp, ra, um_sol.rp, um_sol.ra) + tei_1sol
-                extra = descer + min(tei_alvo, voltar) - tei_1sol
+                extra = dv_extra_orbitador(mu, um_sol, rp, ra, c3l[caso], descer)
                 m = orbitador(extra, var)
                 res[f"dv_extra_orbitador_{caso}_km_s"] = round(extra, 4)
                 res[f"orbitador_{caso}_kg"] = round(m, 1)

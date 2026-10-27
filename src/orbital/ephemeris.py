@@ -69,3 +69,18 @@ def estado(alvo: str, tdb_iso: str, observador: str = SOL,
     st, _ = spice.spkezr(alvo, tdb_para_et(tdb_iso), frame, "NONE", observador)
     st = np.asarray(st)
     return st[:3], st[3:]
+
+
+def data_tdb(et: float) -> str:
+    """Data do calendário em TDB (AAAA-MM-DD) de uma época ET.
+
+    As grades de datas do projeto são épocas à meia-noite TDB; converter para UTC (et2utc) dá 69 s antes da
+    meia-noite e, portanto, o dia anterior. Este é o rótulo correto dessas épocas (errata da Etapa 2.4)."""
+    carregar_kernels()
+    return spice.timout(et, "YYYY-MM-DD ::TDB")
+
+
+def instante_tdb(et: float) -> str:
+    """Data e hora em TDB (AAAA-MM-DDTHH:MM:SS) de uma época ET."""
+    carregar_kernels()
+    return spice.timout(et, "YYYY-MM-DDTHR:MN:SC ::TDB ::RND")

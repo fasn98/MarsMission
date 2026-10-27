@@ -28,5 +28,7 @@ classes:
 janelas:
   "2028": {partida_terra: ["2028-09-15", "2029-02-28"], datas_em_marte: ["2029-01-01", "2031-04-30"], chegada_terra: ["2029-06-01", "2032-03-31"]}
   "2031": {partida_terra: ["2030-11-01", "2031-05-15"], datas_em_marte: ["2031-03-01", "2033-06-30"], chegada_terra: ["2031-09-01", "2034-04-30"]}
-  "2033": {partida_terra: ["2033-01-01", "2033-07-31"], datas_em_marte: ["2033-05-01", "2035-09-30"], chegada_terra: ["2033-10-01", "2036-09-30"]}
+  # 2033: |DLA| ≤ 50° na partida da Terra (decisão do Fabio no portão da Etapa 2.4; ADR 0004 atualizado).
+  # Sem o limite a melhor conjunção tinha DLA de −55,5°, a 0,13° do limite de azimute do Cabo [F13].
+  "2033": {partida_terra: ["2033-01-01", "2033-07-31"], datas_em_marte: ["2033-05-01", "2035-09-30"], chegada_terra: ["2033-10-01", "2036-09-30"], dla_max_graus: 50}
   "2035": {partida_terra: ["2035-03-15", "2035-10-15"], datas_em_marte: ["2035-07-01", "2037-12-31"], chegada_terra: ["2036-01-01", "2038-12-31"]}

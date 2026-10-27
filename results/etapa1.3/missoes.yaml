@@ -7,10 +7,10 @@ missao_referencia:
   orbita_marte: eliptica_alta
   captura: propulsiva
   datas:
-  - '2028-11-23'
-  - '2029-09-19'
-  - '2030-11-07'
-  - '2031-09-22'
+  - '2028-11-24'
+  - '2029-09-20'
+  - '2030-11-08'
+  - '2031-09-23'
 envelope_dimensionamento:
   regra:
     janelas:
@@ -23,8 +23,8 @@ envelope_dimensionamento:
     - oposicao
     orbita_marte: eliptica_alta
     captura: propulsiva
-  missao_que_define: 2035-conjuncao
-  dv_total_km_s: 5.9107
+  missao_que_define: 2033-conjuncao
+  dv_total_km_s: 5.9118
   minimo_admissivel_por_janela:
     '2028':
       missao: 2028-conjuncao
@@ -34,7 +34,7 @@ envelope_dimensionamento:
       dv_total_km_s: 5.7807
     '2033':
       missao: 2033-conjuncao
-      dv_total_km_s: 5.8892
+      dv_total_km_s: 5.9118
     '2035':
       missao: 2035-conjuncao
       dv_total_km_s: 5.9107
@@ -51,10 +51,10 @@ parametros:
   r_interface_terra_km: 6500.0566
   v_reentrada_max_km_s: 12.9
 candidatas:
-- partida_terra: '2029-02-27'
-  chegada_marte: '2029-05-12'
-  partida_marte: '2029-06-11'
-  chegada_terra: '2030-12-08'
+- partida_terra: '2029-02-28'
+  chegada_marte: '2029-05-13'
+  partida_marte: '2029-06-12'
+  chegada_terra: '2030-12-09'
   ida_dias: 74.0
   em_marte_dias: 30.0
   volta_dias: 545.0
@@ -84,12 +84,13 @@ candidatas:
   id: 2028-oposicao
   janela_ida: '2028'
   classe: oposicao
+  dla_max_graus: null
   na_borda_do_dominio:
   - partida_terra
-- partida_terra: '2028-11-23'
-  chegada_marte: '2029-09-19'
-  partida_marte: '2030-11-07'
-  chegada_terra: '2031-09-22'
+- partida_terra: '2028-11-24'
+  chegada_marte: '2029-09-20'
+  partida_marte: '2030-11-08'
+  chegada_terra: '2031-09-23'
   ida_dias: 300.0
   em_marte_dias: 414.0
   volta_dias: 319.0
@@ -119,11 +120,12 @@ candidatas:
   id: 2028-conjuncao
   janela_ida: '2028'
   classe: conjuncao
+  dla_max_graus: null
   na_borda_do_dominio: []
-- partida_terra: '2029-01-06'
-  chegada_marte: '2029-08-04'
-  partida_marte: '2030-12-01'
-  chegada_terra: '2031-06-28'
+- partida_terra: '2029-01-07'
+  chegada_marte: '2029-08-05'
+  partida_marte: '2030-12-02'
+  chegada_terra: '2031-06-29'
   ida_dias: 210.0
   em_marte_dias: 484.0
   volta_dias: 209.0
@@ -153,11 +155,12 @@ candidatas:
   id: 2028-conjuncao_transito_curto
   janela_ida: '2028'
   classe: conjuncao_transito_curto
+  dla_max_graus: null
   na_borda_do_dominio: []
-- partida_terra: '2031-05-11'
-  chegada_marte: '2031-07-20'
-  partida_marte: '2031-08-19'
-  chegada_terra: '2033-02-19'
+- partida_terra: '2031-05-12'
+  chegada_marte: '2031-07-21'
+  partida_marte: '2031-08-20'
+  chegada_terra: '2033-02-20'
   ida_dias: 70.0
   em_marte_dias: 30.0
   volta_dias: 550.0
@@ -187,11 +190,12 @@ candidatas:
   id: 2031-oposicao
   janela_ida: '2031'
   classe: oposicao
+  dla_max_graus: null
   na_borda_do_dominio: []
-- partida_terra: '2030-12-24'
-  chegada_marte: '2031-10-04'
-  partida_marte: '2033-01-26'
-  chegada_terra: '2033-09-01'
+- partida_terra: '2030-12-25'
+  chegada_marte: '2031-10-05'
+  partida_marte: '2033-01-27'
+  chegada_terra: '2033-09-02'
   ida_dias: 284.0
   em_marte_dias: 480.0
   volta_dias: 218.0
@@ -221,11 +225,12 @@ candidatas:
   id: 2031-conjuncao
   janela_ida: '2031'
   classe: conjuncao
+  dla_max_graus: null
   na_borda_do_dominio: []
-- partida_terra: '2031-02-18'
-  chegada_marte: '2031-09-16'
-  partida_marte: '2033-02-01'
-  chegada_terra: '2033-08-30'
+- partida_terra: '2031-02-19'
+  chegada_marte: '2031-09-17'
+  partida_marte: '2033-02-02'
+  chegada_terra: '2033-08-31'
   ida_dias: 210.0
   em_marte_dias: 504.0
   volta_dias: 210.0
@@ -255,11 +260,12 @@ candidatas:
   id: 2031-conjuncao_transito_curto
   janela_ida: '2031'
   classe: conjuncao_transito_curto
+  dla_max_graus: null
   na_borda_do_dominio: []
-- partida_terra: '2032-12-31'
-  chegada_marte: '2033-05-14'
-  partida_marte: '2033-06-13'
-  chegada_terra: '2033-11-09'
+- partida_terra: '2033-01-01'
+  chegada_marte: '2033-05-15'
+  partida_marte: '2033-06-14'
+  chegada_terra: '2033-11-10'
   ida_dias: 134.0
   em_marte_dias: 30.0
   volta_dias: 149.0
@@ -289,80 +295,83 @@ candidatas:
   id: 2033-oposicao
   janela_ida: '2033'
   classe: oposicao
+  dla_max_graus: 50
   na_borda_do_dominio:
   - partida_terra
-- partida_terra: '2033-04-16'
-  chegada_marte: '2033-11-02'
-  partida_marte: '2035-05-06'
-  chegada_terra: '2035-11-21'
-  ida_dias: 200.0
+- partida_terra: '2033-04-23'
+  chegada_marte: '2033-11-03'
+  partida_marte: '2035-05-07'
+  chegada_terra: '2035-11-22'
+  ida_dias: 194.0
   em_marte_dias: 550.0
   volta_dias: 199.0
-  total_dias: 949.0
-  c3_km2_s2: 9.1127
-  dla_graus: -55.4534
-  angulo_ida_graus: 148.709
+  total_dias: 943.0
+  c3_km2_s2: 9.598
+  dla_graus: -49.6546
+  angulo_ida_graus: 142.8569
   angulo_volta_graus: 147.9716
-  vinf_chegada_marte_km_s: 3.318
+  vinf_chegada_marte_km_s: 3.32
   c3l_partida_marte_km2_s2: 8.7586
   vinf_chegada_terra_km_s: 3.0386
   v_reentrada_km_s: 11.4838
-  dv_saida_terra_km_s: 3.5873
+  dv_saida_terra_km_s: 3.6088
   por_orbita_marte:
     circular_baixa:
-      dv_captura_propulsiva_km_s: 2.4286
+      dv_captura_propulsiva_km_s: 2.4297
       dv_captura_aerocaptura_km_s: 0.1032
       dv_saida_marte_km_s: 2.2292
-      dv_total_sem_aerocaptura_km_s: 8.245
-      dv_total_com_aerocaptura_km_s: 5.9197
+      dv_total_sem_aerocaptura_km_s: 8.2677
+      dv_total_com_aerocaptura_km_s: 5.9412
     eliptica_alta:
-      dv_captura_propulsiva_km_s: 1.2484
+      dv_captura_propulsiva_km_s: 1.2495
       dv_captura_aerocaptura_km_s: 0.0115
       dv_saida_marte_km_s: 1.0536
-      dv_total_sem_aerocaptura_km_s: 5.8892
-      dv_total_com_aerocaptura_km_s: 4.6524
+      dv_total_sem_aerocaptura_km_s: 5.9118
+      dv_total_com_aerocaptura_km_s: 4.6739
   id: 2033-conjuncao
   janela_ida: '2033'
   classe: conjuncao
+  dla_max_graus: 50
   na_borda_do_dominio: []
-- partida_terra: '2033-04-16'
-  chegada_marte: '2033-11-02'
-  partida_marte: '2035-05-06'
-  chegada_terra: '2035-11-21'
-  ida_dias: 200.0
+- partida_terra: '2033-04-23'
+  chegada_marte: '2033-11-03'
+  partida_marte: '2035-05-07'
+  chegada_terra: '2035-11-22'
+  ida_dias: 194.0
   em_marte_dias: 550.0
   volta_dias: 199.0
-  total_dias: 949.0
-  c3_km2_s2: 9.1127
-  dla_graus: -55.4534
-  angulo_ida_graus: 148.709
+  total_dias: 943.0
+  c3_km2_s2: 9.598
+  dla_graus: -49.6546
+  angulo_ida_graus: 142.8569
   angulo_volta_graus: 147.9716
-  vinf_chegada_marte_km_s: 3.318
+  vinf_chegada_marte_km_s: 3.32
   c3l_partida_marte_km2_s2: 8.7586
   vinf_chegada_terra_km_s: 3.0386
   v_reentrada_km_s: 11.4838
-  dv_saida_terra_km_s: 3.5873
+  dv_saida_terra_km_s: 3.6088
   por_orbita_marte:
     circular_baixa:
-      dv_captura_propulsiva_km_s: 2.4286
+      dv_captura_propulsiva_km_s: 2.4297
       dv_captura_aerocaptura_km_s: 0.1032
       dv_saida_marte_km_s: 2.2292
-      dv_total_sem_aerocaptura_km_s: 8.245
-      dv_total_com_aerocaptura_km_s: 5.9197
+      dv_total_sem_aerocaptura_km_s: 8.2677
+      dv_total_com_aerocaptura_km_s: 5.9412
     eliptica_alta:
-      dv_captura_propulsiva_km_s: 1.2484
+      dv_captura_propulsiva_km_s: 1.2495
       dv_captura_aerocaptura_km_s: 0.0115
       dv_saida_marte_km_s: 1.0536
-      dv_total_sem_aerocaptura_km_s: 5.8892
-      dv_total_com_aerocaptura_km_s: 4.6524
+      dv_total_sem_aerocaptura_km_s: 5.9118
+      dv_total_com_aerocaptura_km_s: 4.6739
   id: 2033-conjuncao_transito_curto
   janela_ida: '2033'
   classe: conjuncao_transito_curto
+  dla_max_graus: 50
   na_borda_do_dominio: []
-- partida_terra: '2035-03-14'
-  chegada_marte: '2035-08-05'
-  partida_marte: '2035-09-04'
-  chegada_terra: '2036-04-15'
+- partida_terra: '2035-03-15'
+  chegada_marte: '2035-08-06'
+  partida_marte: '2035-09-05'
+  chegada_terra: '2036-04-16'
   ida_dias: 144.0
   em_marte_dias: 30.0
   volta_dias: 224.0
@@ -392,12 +401,13 @@ candidatas:
   id: 2035-oposicao
   janela_ida: '2035'
   classe: oposicao
+  dla_max_graus: null
   na_borda_do_dominio:
   - partida_terra
-- partida_terra: '2035-06-28'
-  chegada_marte: '2036-01-16'
-  partida_marte: '2037-07-11'
-  chegada_terra: '2038-04-07'
+- partida_terra: '2035-06-29'
+  chegada_marte: '2036-01-17'
+  partida_marte: '2037-07-12'
+  chegada_terra: '2038-04-08'
   ida_dias: 202.0
   em_marte_dias: 542.0
   volta_dias: 270.0
@@ -427,11 +437,12 @@ candidatas:
   id: 2035-conjuncao
   janela_ida: '2035'
   classe: conjuncao
+  dla_max_graus: null
   na_borda_do_dominio: []
-- partida_terra: '2035-06-28'
-  chegada_marte: '2036-01-16'
-  partida_marte: '2037-07-07'
-  chegada_terra: '2038-01-19'
+- partida_terra: '2035-06-29'
+  chegada_marte: '2036-01-17'
+  partida_marte: '2037-07-08'
+  chegada_terra: '2038-01-20'
   ida_dias: 202.0
   em_marte_dias: 538.0
   volta_dias: 196.0
@@ -461,4 +472,5 @@ candidatas:
   id: 2035-conjuncao_transito_curto
   janela_ida: '2035'
   classe: conjuncao_transito_curto
+  dla_max_graus: null
   na_borda_do_dominio: []

@@ -6,7 +6,7 @@
 
 | Grandeza | DRA 5.0 | Este estudo |
 | :- | -: | -: |
-| Partida da Terra | 2031-02-23 | 2031-02-18 |
+| Partida da Terra | 2031-02-23 | 2031-02-19 |
 | Tempo de ida (d) | 190 | 210 |
 | Permanência (d) | 572 | 504 |
 | Tempo de volta (d) | 134 | 210 |
@@ -32,18 +32,18 @@ Mesmos v∞ do DRA, Δv pelas fórmulas impulsivas deste estudo:
 
 | Grandeza | DRA 5.0 | Este estudo |
 | :- | -: | -: |
-| Partida da Terra | 2033-05-21 | 2033-04-16 |
-| Tempo de ida (d) | 191 | 200 |
+| Partida da Terra | 2033-05-21 | 2033-04-23 |
+| Tempo de ida (d) | 191 | 194 |
 | Permanência (d) | 553 | 550 |
 | Tempo de volta (d) | 133 | 199 |
-| v∞ de partida da Terra | 4,290 | 3,019 |
-| Δv injeção trans-Marte | 4,090 | 3,587 |
-| v∞ de chegada a Marte | 3,756 | 3,318 |
-| Δv captura em Marte | 1,517 | 1,248 |
+| v∞ de partida da Terra | 4,290 | 3,098 |
+| Δv injeção trans-Marte | 4,090 | 3,609 |
+| v∞ de chegada a Marte | 3,756 | 3,320 |
+| Δv captura em Marte | 1,517 | 1,250 |
 | v∞ de partida de Marte | 3,847 | 2,959 |
 | Δv injeção trans-Terra | 1,573 | 1,054 |
 | v∞ de chegada à Terra | 5,762 | 3,039 |
-| Δv total (soma dos três) | 7,180 (soma calculada aqui) | 5,889 |
+| Δv total (soma dos três) | 7,180 (soma calculada aqui) | 5,912 |
 | Razão Δv total (este estudo / DRA) |  | 0,82 |
 
 Mesmos v∞ do DRA, Δv pelas fórmulas impulsivas deste estudo:
@@ -58,7 +58,7 @@ Mesmos v∞ do DRA, Δv pelas fórmulas impulsivas deste estudo:
 
 | Grandeza | DRA 5.0 | Este estudo |
 | :- | -: | -: |
-| Partida da Terra | 2035-07-03 | 2035-06-28 |
+| Partida da Terra | 2035-07-03 | 2035-06-29 |
 | Tempo de ida (d) | 180 | 202 |
 | Permanência (d) | 560 | 538 |
 | Tempo de volta (d) | 183 | 196 |

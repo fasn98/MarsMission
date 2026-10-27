@@ -90,3 +90,18 @@ def test_envelope_maior_dos_minimos_por_janela():
                                                          "alta", "propulsiva")
     assert (valor, define) == (5.9, "B-conjuncao")
     assert minimos["A"] == ("A-conjuncao", 5.4)  # a classe "curto" não entra
+
+
+@pytest.mark.parametrize("semente", [3, 11])
+def test_limite_de_dla_equivale_a_excluir_as_celulas(semente):
+    """dla_max_graus dá o mesmo resultado que remover da grade de ida as células com |DLA| acima do limite."""
+    rng = np.random.default_rng(semente)
+    ida, volta = _grades(rng)
+    ida.dla_graus = rng.uniform(-60, 60, ida.c3.shape)
+    r = ms.melhor_combinacao(P, ida, volta, (20, 200), 600, "alta", False, dla_max_graus=30.0)
+    sem = pc.Grade(ida.et_partida, ida.et_chegada, np.where(np.abs(ida.dla_graus) > 30.0, np.nan, ida.c3),
+                   ida.vinf_chegada, ida.angulo_transf, ida.tof_dias)
+    r2 = ms.melhor_combinacao(P, sem, volta, (20, 200), 600, "alta", False)
+    assert (r is None and r2 is None) or (r[0] == pytest.approx(r2[0]) and r[1] == r2[1])
+    livre = ms.melhor_combinacao(P, ida, volta, (20, 200), 600, "alta", False)
+    assert livre[0] <= r[0]

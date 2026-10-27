@@ -45,7 +45,7 @@ def _et(d):
 
 
 def _dia(et):
-    return spice.et2utc(et, "ISOC", 0)[:10]
+    return eph.data_tdb(et)
 
 
 def _dominio(jan):

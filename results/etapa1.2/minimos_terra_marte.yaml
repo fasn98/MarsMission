@@ -6,8 +6,8 @@ chegada: '4'
 janelas:
   '2028':
     min_vinf_tipo_1:
-      partida_tdb: '2029-01-15T23:28:18'
-      chegada_tdb: '2029-09-04T11:42:44'
+      partida_tdb: '2029-01-15T23:29:27'
+      chegada_tdb: '2029-09-04T11:43:53'
       tof_dias: 231.51
       c3_km2_s2: 23.2926
       vinf_chegada_km_s: 3.5863
@@ -15,8 +15,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_1:
-      partida_tdb: '2028-12-10T17:04:10'
-      chegada_tdb: '2029-07-20T09:38:50'
+      partida_tdb: '2028-12-10T17:05:20'
+      chegada_tdb: '2029-07-20T09:39:59'
       tof_dias: 221.69
       c3_km2_s2: 9.0241
       vinf_chegada_km_s: 4.8739
@@ -24,8 +24,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     min_vinf_tipo_2:
-      partida_tdb: '2028-11-20T01:09:56'
-      chegada_tdb: '2029-09-17T16:27:16'
+      partida_tdb: '2028-11-20T01:11:05'
+      chegada_tdb: '2029-09-17T16:28:25'
       tof_dias: 301.64
       c3_km2_s2: 9.2558
       vinf_chegada_km_s: 2.9659
@@ -33,8 +33,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_2:
-      partida_tdb: '2028-11-29T16:46:11'
-      chegada_tdb: '2029-10-10T10:57:39'
+      partida_tdb: '2028-11-29T16:47:20'
+      chegada_tdb: '2029-10-10T10:58:49'
       tof_dias: 314.76
       c3_km2_s2: 8.9952
       vinf_chegada_km_s: 3.1613
@@ -43,8 +43,8 @@ janelas:
       na_borda_da_exclusao_180: false
   '2031':
     min_vinf_tipo_1:
-      partida_tdb: '2031-03-01T06:53:53'
-      chegada_tdb: '2031-09-26T09:27:02'
+      partida_tdb: '2031-03-01T06:55:03'
+      chegada_tdb: '2031-09-26T09:28:11'
       tof_dias: 209.11
       c3_km2_s2: 18.0763
       vinf_chegada_km_s: 3.7772
@@ -52,8 +52,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_1:
-      partida_tdb: '2031-01-27T07:06:32'
-      chegada_tdb: '2031-08-05T02:20:53'
+      partida_tdb: '2031-01-27T07:07:41'
+      chegada_tdb: '2031-08-05T02:22:03'
       tof_dias: 189.8
       c3_km2_s2: 8.9699
       vinf_chegada_km_s: 5.5988
@@ -61,8 +61,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     min_vinf_tipo_2:
-      partida_tdb: '2030-12-14T02:13:13'
-      chegada_tdb: '2031-09-25T18:51:43'
+      partida_tdb: '2030-12-14T02:14:22'
+      chegada_tdb: '2031-09-25T18:52:52'
       tof_dias: 285.69
       c3_km2_s2: 12.3655
       vinf_chegada_km_s: 3.4457
@@ -70,8 +70,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_2:
-      partida_tdb: '2031-02-22T15:59:46'
-      chegada_tdb: '2032-01-08T18:54:58'
+      partida_tdb: '2031-02-22T16:00:55'
+      chegada_tdb: '2032-01-08T18:56:07'
       tof_dias: 320.12
       c3_km2_s2: 8.1699
       vinf_chegada_km_s: 5.5237
@@ -80,8 +80,8 @@ janelas:
       na_borda_da_exclusao_180: false
   '2033':
     min_vinf_tipo_1:
-      partida_tdb: '2033-04-20T08:47:21'
-      chegada_tdb: '2033-11-05T16:35:18'
+      partida_tdb: '2033-04-20T08:48:30'
+      chegada_tdb: '2033-11-05T16:36:27'
       tof_dias: 199.32
       c3_km2_s2: 9.2826
       vinf_chegada_km_s: 3.3115
@@ -89,8 +89,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_1:
-      partida_tdb: '2033-04-04T06:21:03'
-      chegada_tdb: '2033-09-28T22:21:15'
+      partida_tdb: '2033-04-04T06:22:12'
+      chegada_tdb: '2033-09-28T22:22:25'
       tof_dias: 177.67
       c3_km2_s2: 8.3961
       vinf_chegada_km_s: 4.0398
@@ -98,8 +98,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     min_vinf_tipo_2:
-      partida_tdb: '2033-01-27T20:26:14'
-      chegada_tdb: '2033-10-17T21:20:47'
+      partida_tdb: '2033-01-27T20:27:23'
+      chegada_tdb: '2033-10-17T21:21:56'
       tof_dias: 263.04
       c3_km2_s2: 17.4244
       vinf_chegada_km_s: 3.832
@@ -107,8 +107,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_2:
-      partida_tdb: '2033-04-28T21:59:14'
-      chegada_tdb: '2034-01-27T15:27:27'
+      partida_tdb: '2033-04-28T22:00:23'
+      chegada_tdb: '2034-01-27T15:28:36'
       tof_dias: 273.73
       c3_km2_s2: 7.7046
       vinf_chegada_km_s: 4.3762
@@ -117,8 +117,8 @@ janelas:
       na_borda_da_exclusao_180: false
   '2035':
     min_vinf_tipo_1:
-      partida_tdb: '2035-07-09T18:24:58'
-      chegada_tdb: '2036-01-24T18:51:22'
+      partida_tdb: '2035-07-09T18:26:08'
+      chegada_tdb: '2036-01-24T18:52:31'
       tof_dias: 199.02
       c3_km2_s2: 11.9522
       vinf_chegada_km_s: 2.6012
@@ -126,8 +126,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_1:
-      partida_tdb: '2035-06-23T23:31:27'
-      chegada_tdb: '2036-01-05T06:28:12'
+      partida_tdb: '2035-06-23T23:32:36'
+      chegada_tdb: '2036-01-05T06:29:21'
       tof_dias: 195.29
       c3_km2_s2: 10.2621
       vinf_chegada_km_s: 2.6904
@@ -135,8 +135,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     min_vinf_tipo_2:
-      partida_tdb: '2035-05-13T12:19:34'
-      chegada_tdb: '2036-01-07T22:43:02'
+      partida_tdb: '2035-05-13T12:20:43'
+      chegada_tdb: '2036-01-07T22:44:11'
       tof_dias: 239.43
       c3_km2_s2: 19.1717
       vinf_chegada_km_s: 2.6985
@@ -144,8 +144,8 @@ janelas:
       na_borda_do_dominio: false
       na_borda_da_exclusao_180: false
     tipo_2:
-      partida_tdb: '2035-08-08T15:29:03'
-      chegada_tdb: '2036-09-14T16:49:35'
+      partida_tdb: '2035-08-08T15:30:12'
+      chegada_tdb: '2036-09-14T16:50:45'
       tof_dias: 403.06
       c3_km2_s2: 17.5311
       vinf_chegada_km_s: 3.9761

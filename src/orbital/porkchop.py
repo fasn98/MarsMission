@@ -31,6 +31,7 @@ class Grade:
     vinf_chegada: np.ndarray      # (n, m) km/s
     angulo_transf: np.ndarray     # (n, m) graus, 0–360 no sentido prógrado
     tof_dias: np.ndarray          # (n, m)
+    dla_graus: np.ndarray | None = None   # (n, m) declinação da assíntota de partida (J2000), só partindo da Terra
 
 
 def estado_corpo(corpo: str, et: float) -> np.ndarray:
@@ -66,7 +67,10 @@ def calcular_grade(partida: str, chegada: str, et_partida, et_chegada) -> Grade:
     vinf = np.full((n, m), np.nan)
     ang = np.full((n, m), np.nan)
     tof = (et_chegada[None, :] - et_partida[:, None]) / DIA
+    da_terra = partida == eph.TERRA
+    dla = np.full((n, m), np.nan) if da_terra else None
     for i, s1 in enumerate(st1):
+        rot = np.array(spice.pxform(FRAME, "J2000", et_partida[i])) if da_terra else None
         for j, s2 in enumerate(st2):
             if tof[i, j] <= 0:
                 continue
@@ -78,7 +82,10 @@ def calcular_grade(partida: str, chegada: str, et_partida, et_chegada) -> Grade:
             c3[i, j] = d1 @ d1
             vinf[i, j] = np.linalg.norm(sol.v2 - s2[3:])
             ang[i, j] = angulo_prograde(s1[:3], s2[:3])
-    return Grade(et_partida, et_chegada, c3, vinf, ang, tof)
+            if da_terra:
+                v = rot @ d1
+                dla[i, j] = np.degrees(np.arcsin(v[2] / np.linalg.norm(v)))
+    return Grade(et_partida, et_chegada, c3, vinf, ang, tof, dla)
 
 
 def minimo_c3_por_tipo(partida: str, chegada: str, grade: Grade, tipo: int, exclusao_180: float = 0.0,

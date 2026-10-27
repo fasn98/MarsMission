@@ -378,3 +378,32 @@ premissas:
       e comunicação não crescem com a massa). Comparação: SRL, ≤ 2100 kg secos na superfície [F77], menos
       MAV de 400 kg [F35] e SFR de < 230 kg [F78], ou seja, ≥ ~1470 kg com os itens do MSR.
     status: NÃO VALIDADA
+  - id: P-036
+    nome: multiplicador_dla
+    valor: {dla_graus: [28.5, 40, 50, 60], fator: [1.0, 0.95, 0.90, 0.65]}
+    unidade: adimensional (multiplica a massa entregue pelo lançador na injeção direta)
+    uso: config/lancadores.yaml — injeção direta com |DLA| > 28,5° a partir do Cabo
+    justificativa: >
+      Multiplicadores aproximados de [F83] (subida a nordeste, CCAFS), dados para Atlas V e Delta IV e
+      citados pela fonte como "approximate and highly depend on the declination, energy requirements, and
+      vehicle configuration". Aplicados aqui a Falcon, Vulcan, New Glenn e SLS, com interpolação linear entre
+      28,5° (sem penalidade, [F79]) e 60°. Nenhum lançador publica a sua curva de penalidade por DLA.
+      ATENÇÃO: a tabela de [F83] é de Atlas V e Delta IV; o seu uso para os demais lançadores é extrapolação.
+      Aprovada pelo Fabio no portão da Etapa 2.4 como premissa (continua NÃO VALIDADA).
+    status: NÃO VALIDADA
+  - id: P-037
+    nome: saida_propria_fora_do_plano
+    valor: {orbita_baixa_km: 407, inclinacoes_com_dado_graus: [28.5, 51.6]}
+    unidade: km; graus
+    uso: tools/lancamento.py — opção (b), órbita baixa + estágio criogênico próprio
+    justificativa: >
+      Capacidade de LEO publicada a 400 km (ELVPerf [F79], Atlas V [F27]) usada para a órbita de 407 km do modelo
+      (diferença de 7 km desprezada). A órbita baixa é a de 28,5° ou a de 51,6° (as inclinações com dado); quando
+      |DLA| passa da inclinação, a assíntota precisa sair β = |DLA| − i do plano, e a própria queima de saída, num
+      impulso único no perigeu, gira o plano em torno do vetor posição: θ = arcsin(sen β / sen ν∞), com
+      ν∞ = arccos(−1/e) ≈ 150°, ou seja, θ ≈ 2β (correção da revisão independente; a primeira versão usava θ = β e
+      subestimava o custo). Δv pela lei dos cossenos entre a velocidade circular e a do perigeu da hipérbole.
+      Estratégias com mais de um impulso, ou um lançamento direto à inclinação da DLA, podem custar menos; não foram
+      avaliadas. O estágio de saída é redimensionado para o C3 e a DLA de cada janela (pedido do Fabio no portão
+      da Etapa 2.4). Aprovada pelo Fabio no portão da Etapa 2.4 como premissa (continua NÃO VALIDADA).
+    status: NÃO VALIDADA

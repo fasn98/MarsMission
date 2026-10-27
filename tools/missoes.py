@@ -69,7 +69,8 @@ def main():
         volta = pc.calcular_grade(eph.BARICENTRO_MARTE, eph.TERRA, et_M, et_arr)
         for classe, c in cfg["classes"].items():
             r = ms.melhor_combinacao(p, ida, volta, c["permanencia_dias"], c.get("duracao_max_dias", 1e9),
-                                     crit["orbita_marte"], crit["aerocaptura"], c.get("tof_max_dias", np.inf))
+                                     crit["orbita_marte"], crit["aerocaptura"], c.get("tof_max_dias", np.inf),
+                                     dla_max_graus=jan.get("dla_max_graus", np.inf))
             if r is None:
                 print(nome, classe, "sem solução")
                 continue
@@ -78,6 +79,7 @@ def main():
             borda = {"partida_terra": i in (0, len(et_dep) - 1), "chegada_marte": a in (0, len(et_M) - 1),
                      "partida_marte": d in (0, len(et_M) - 1), "chegada_terra": k in (0, len(et_arr) - 1)}
             linha.update({"id": f"{nome}-{classe}", "janela_ida": nome, "classe": classe,
+                          "dla_max_graus": jan.get("dla_max_graus"),
                           "na_borda_do_dominio": [k_ for k_, v in borda.items() if v]})
             candidatas.append(linha)
             print(linha["id"], round(r[0], 3), linha["partida_terra"], linha["chegada_terra"],

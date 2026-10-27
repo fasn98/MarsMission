@@ -1,0 +1,116 @@
+# Etapa 2.4 — lançadores, centros de lançamento e DLA (tools/lancamento.py).
+# Fontes em docs/fontes.md; premissas (NÃO VALIDADAS) em config/premissas.yaml.
+#
+# Duas formas de chegar à trajetória para Marte:
+#   (a) injeção direta pelo lançador: o lançador entrega o veículo no C3 da janela (sem o estágio de saída próprio);
+#   (b) lançamento à órbita baixa + estágio criogênico próprio (modelo atual, config/dimensionamento.yaml).
+# Orbitador e lander em lançamentos separados (ADR 0005).
+
+centro:
+  # Eastern Range (Cabo Canaveral / KSC).
+  latitude_graus: {valor: 28.45, fonte: "[F13] Burke et al. 2010, p. 8: \"Kennedy Space Flight Center … which has a declination of 28.45°\""}
+  azimute_graus: {valor: [40, 115], fonte: "[F13] p. 8: \"the Eastern Test Range Safety Requirements specify that the launch azimuth must be between 40° and 115°\""}
+  plataformas:
+    SLC-40: {latitude_graus: 28.5620, fonte: "[F82] Falcon User's Guide v8, p. 58"}
+    LC-39A: {latitude_graus: 28.6082, fonte: "[F82] p. 59"}
+  # Vulcan e Atlas V (SLC-41), New Glenn (SLC-36) e SLS (LC-39B): coordenadas de plataforma não confirmadas;
+  # usa-se a latitude de [F13]. Ariane 64 (ELA-4, Kourou) fica fora do Eastern Range: sem limite de azimute aqui.
+
+dla:
+  # ELVPerf: "Performance shown is applicable for declinations between 28.5 deg. and -28.5 deg." [F79]
+  faixa_sem_penalidade_graus: {valor: 28.5, fonte: "[F79]"}
+  # Multiplicadores aproximados de desempenho para |DLA| > 28,5° a partir de CCAFS, subida a nordeste
+  # (Atlas V e Delta IV): [F83] Tabela 2, p. 4. 28,5° → 1 é o limite da faixa sem penalidade. Aplicar a outros
+  # lançadores e interpolar linearmente: P-036.
+  multiplicador_nordeste:
+    dla_graus: [28.5, 40, 50, 60]
+    fator: [1.0, 0.95, 0.90, 0.65]
+    fonte: "[F83] Abilleira 2007, Tabela 2, p. 4: \"CCAFS Northeast 0.95 0.90 0.65\" (declinação 40°, 50°, 60°)"
+    premissa: P-036
+
+orbita_estacionamento_b:
+  # Opção (b): órbita baixa de 407 km (config/parametros_orbitais.yaml). Capacidades de LEO publicadas a 400 km
+  # (ELVPerf, Atlas V) ou 407 km (Vulcan); a diferença de 7 km é desprezada (P-037). Inclinações com dado: 28,5° e 51,6°.
+  inclinacoes_graus: [28.5, 51.6]
+
+# Decisão do Fabio no portão da Etapa 2.4 (ADR 0008): forma (a), injeção direta pelo lançador.
+# Orbitador: Falcon Heavy descartável ou Vulcan VC6; lander: a lista de lançadores que servem.
+# A forma (b) fica documentada como alternativa: exige estágio criogênico próprio.
+escolha:
+  forma: a_injecao_direta
+  orbitador: [Falcon Heavy (descartável), Vulcan VC6]
+  # Lander em (a): os que servem por injeção direta em todas as janelas (results/etapa2.4/lancamento.yaml).
+  # O Falcon 9 serve o lander só em (b) e fica fora da escolha.
+  lander: [Falcon Heavy (recuperação), Falcon Heavy (descartável), Vulcan VC2, Vulcan VC4, Vulcan VC6]
+  lander_anunciados: [New Glenn, SLS Block 1 (5 m + iCPS)]
+
+lancadores:
+  # massa separada de espaçonave (kg) × C3 (km²/s²); LEO (kg) por inclinação.
+  # categoria: operacional | anunciado (= "desempenho anunciado, não demonstrado").
+  # "operacional" vale na data do guia ou da consulta citada; a disponibilidade em 2028+ NÃO foi avaliada.
+  Falcon 9 (ASDS):
+    categoria: operacional
+    plataforma: SLC-40
+    c3: {pontos: [0, 5, 9, 10], massa_kg: [3310, 2745, 2325, 2220], fonte: "[F79] ELVPerf, consultas C3 = 0, 5, 9, 10"}
+    leo_400km: {28.5: 15520, 51.6: 14460, fonte: "[F79] ELVPerf, LEO circular 400 km"}
+  Falcon Heavy (recuperação):
+    categoria: operacional
+    plataforma: LC-39A
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [6690, 5855, 5275, 5130, 4865, 4465, 3845], fonte: "[F79]"}
+    leo_400km: {fonte: "não listado no ELVPerf a 400 km; não confirmado"}
+  Falcon Heavy (descartável):
+    categoria: operacional
+    plataforma: LC-39A
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [15010, 13615, 12600, 12345, 11880, 11190, 10115], fonte: "[F79]"}
+    leo_400km: {fonte: "não listado no ELVPerf a 400 km; não confirmado"}
+  Vulcan VC2:
+    categoria: operacional
+    plataforma: SLC-41
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [5920, 5330, 4865, 4750, 4530, 4210, 3710], fonte: "[F79]; em C3 = 20 o guia [F80] Tab. 2.2.5-1, p. 2-8, dá VC2S 3600 (ELVPerf +3,1 %)"}
+    leo_400km: {28.5: 16810, 51.6: 15660, fonte: "[F79]"}
+  Vulcan VC4:
+    categoria: operacional
+    plataforma: SLC-41
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [8550, 7820, 7275, 7140, 6880, 6490, 5880], fonte: "[F79]; [F80] p. 2-8 dá VC4S 6000 em C3 = 20 (ELVPerf −2,0 %)"}
+    leo_400km: {28.5: 22310, 51.6: 20800, fonte: "[F79]"}
+  Vulcan VC6:
+    categoria: operacional
+    plataforma: SLC-41
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [10850, 9960, 9295, 9130, 8810, 8340, 7630], fonte: "[F79]; [F80] p. 2-8 dá VC6S 7600 em C3 = 20 (ELVPerf +0,4 %)"}
+    leo_400km: {28.5: 26450, 51.6: 24730, fonte: "[F79]"}
+  Atlas V 541:
+    categoria: operacional
+    plataforma: SLC-41
+    c3: {fonte: "sem curva publicada: [F27] Rev 11, p. 2-30, \"Please contact ULA … for a performance assessment on Earth-escape capability\"; não está no ELVPerf"}
+    leo_400km: {28.5: 17083, fonte: "[F27] Tab. 2.6.5-2e, p. 2-91 (400 km circular, 28,5°)"}
+  Atlas V 551:
+    categoria: operacional
+    plataforma: SLC-41
+    c3: {fonte: "sem curva publicada ([F27] p. 2-30)"}
+    leo_400km: {28.5: 18505, fonte: "[F27] Tab. 2.6.5-2f, p. 2-93 (400 km circular, 28,5°)"}
+  Ariane 64:
+    categoria: operacional
+    plataforma: ELA-4
+    c3: {pontos: [6.25], massa_kg: [6900], fonte: "[F81] Ariane 6 UM I2R0, §2.4.5, p. 2-11: \"Escape Mission 1: Vinfinity = 2.5 km/s (Free declination)\" … A64 6,900 kg (C3 = 2,5² calculado aqui); único ponto publicado"}
+    leo_400km: {fonte: "só 250 × 250 km a 51,6° (20 000 kg, [F81] p. 2-11); sem caso de 400 km"}
+  New Glenn:
+    categoria: anunciado
+    plataforma: SLC-36
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [7180, 6360, 5215, 4930, 4400, 3605, 2365], fonte: "[F79]: \"This configuration is under development… vehicle performance may change\""}
+    leo_400km: {28.5: 36290, 51.6: 34110, fonte: "[F79]"}
+  SLS Block 1 (5 m + iCPS):
+    categoria: anunciado
+    plataforma: LC-39B
+    c3: {pontos: [0, 10, 20], massa_kg: [24000, 19500, 16500], fonte: "[F84] SLS MPG Executive Overview v1, 22/08/2014, Fig. 4-3, p. 14 — leitura de gráfico (±1–2 t); configuração de carga com coifa de 5 m"}
+    leo_400km: {fonte: "órbita não definida na fonte (\"70t\", [F84]); não usado"}
+excluidos:
+  - "Delta IV Heavy: [F85] Delta IV Launch Services User's Guide, 2013, sem curva de C3 (§1.2.3)."
+  - "H3, Longa Marcha 5, Starship: sem guia de usuário público obtido (Etapa 2.4)."
+
+revisao_2033:
+  # Busca da melhor missão da janela de 2033 com |DLA| limitado (mesma busca e critérios da Etapa 1.3,
+  # tools/missoes.py; config/missoes.yaml). Pontos de análise: 28,5° (faixa sem penalidade [F79]),
+  # 40° e 50° (colunas da tabela de [F83]); sem limite = o caso atual.
+  janela: "2033"
+  classes: [conjuncao]   # a oposição de 2033 é inviável (25,7 km/s na Etapa 1.3)
+  dla_max_graus: [28.5, 40, 50]

@@ -157,3 +157,11 @@ Explicação das diferenças:
 - O ε do Centaur III vem de um estágio de lançador. Um estágio de saída para esta massa seria menor,
   e o ε real tende a ser maior.
 - Sem mudança de plano para a DLA (Fase 2) e sem cálculo de lançador.
+
+## Nota (Etapa 2.4, 2026-10-27): 2033 com |DLA| ≤ 50°
+- A janela de 2033 passou a ter |DLA| ≤ 50° (ADR 0004, atualização da Etapa 2.4).
+- A regra (i) desta etapa tinha 2033 como janela que define e usou a trajetória antiga (saída da Terra
+  3,5873 km/s). A nova tem 3,6088 km/s, então o valor da regra (i) aqui fica um pouco abaixo do atual.
+- Os resultados desta etapa não foram regenerados (também usam a plataforma de 850 kg da época).
+- A regra (iii), a escolhida, não muda.
+
