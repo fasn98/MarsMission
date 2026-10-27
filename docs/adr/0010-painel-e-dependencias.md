@@ -66,3 +66,11 @@ ambiente de execução: ele importa o repositório do GitHub e roda, sem altera�
   - A conferência no ambiente oficial é o workflow `regeneracao.yml` do CI (conda, Python 3.11.18), que roda porque o
     `pyproject.toml` mudou.
 - O restante desta ADR continua vigente.
+
+## Nota (2026-10-27): desenvolvimento no Replit
+- **Decisão do Fabio:** o Contexto acima diz que o Replit roda o repositório "sem alteração de código lá". Isso deixa de
+  valer.
+- Desenvolvimento passa a ser permitido em qualquer ambiente (notebook, Claude Code na web, Claude Code no Replit),
+  sempre com branch, hook, revisão independente e PR.
+- Proibido: Replit Agent e commits diretos na `main`. A regra está em CLAUDE.md, "Restrições".
+- O restante desta ADR continua vigente.

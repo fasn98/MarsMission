@@ -1,7 +1,9 @@
-# Replit: só ambiente de execução do painel (nenhuma alteração de código feita lá). Ver docs/painel.md.
+# Replit: ambiente de execução do painel. Desenvolvimento aqui só com branch, hook, revisão independente e PR; proibidos
+# o Replit Agent e commits diretos na main (CLAUDE.md, "Restrições"). Ver docs/painel.md.
 # Chaves conforme https://docs.replit.com/replit-workspace/configuring-repl (consultado em 2026-10-27).
-# NÃO CONFERIDO na documentação oficial: a grafia exata do módulo "python-3.11" e o canal do Nix; o painel não foi
-# executado no Replit por este estudo.
+# Conferido no workspace do Replit em 2026-10-27: o módulo "python-3.11" forneceu o Python 3.11.14 e o canal
+# "stable-25_05" foi aceito (NIX_PATH = nixpkgs-stable-25_05). O canal "stable-24_05" não foi testado.
+# Primeira execução no workspace: docs/painel.md. NÃO CONFERIDO: o Webview e o endereço externo do Replit.
 modules = ["python-3.11"]
 
 # Run: instala o pacote com o extra "painel" (dependências só do pyproject.toml), baixa e confere os kernels (MD5,
@@ -9,7 +11,7 @@ modules = ["python-3.11"]
 run = ["bash", "-c", "python -m pip install --quiet -e '.[painel]' && python tools/fetch_kernels.py && python -m streamlit run src/painel/app.py --server.address 0.0.0.0 --server.port 8501"]
 
 [nix]
-channel = "stable-24_05"
+channel = "stable-25_05"
 
 # Não deixar o Replit adivinhar pacotes pelos imports e escrever no pyproject.toml (fonte única das dependências).
 [packager.features]
