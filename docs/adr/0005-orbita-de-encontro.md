@@ -38,6 +38,20 @@ com periapse de 300 km escolhe **apoapse de 26.950 km**. A órbita de encontro p
 
 O valor de 18.483 km dos itens 4 e seguintes vale para o MAV sólido e fica como histórico.
 
+## Atualização (Etapa 2.3, plataformas)
+Com as plataformas escolhidas pelo Fabio no portão da Etapa 2.3, a mesma regra dos 5 % escolhe
+**apoapse de 24.992 km**. A órbita de encontro passa a ser **300 × 24.992 km**.
+- Plataformas: orbitador de 442,3 kg (lista por subsistema, P-016) e lander de 1470 kg (L3, P-017),
+  no lugar dos 850 kg de cada.
+- A bateria do orbitador depende do eclipse e, portanto, do apoapse. Plataforma e apoapse foram
+  iterados até o apoapse não mudar (duas iterações).
+- Total pela regra (iii): 29.063 kg, 4,7 % acima do mínimo de 27.765 kg no extremo da varredura.
+- Total na missão A: 21.539 kg.
+- MAV: 282,5 kg.
+- Fonte: `results/etapa2.3/plataformas.yaml`, gerado por `tools/plataformas.py`.
+
+Os valores de 26.950 km acima ficam como histórico.
+
 ## Hipóteses mantidas
 - Orbitador e lander em lançamentos separados, como no MSR, os dois na janela da missão A (2028).
 - O orbitador chega à órbita de 1 sol (ADR 0003) e desce até a órbita de encontro com propulsão

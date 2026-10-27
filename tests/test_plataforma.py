@@ -32,3 +32,22 @@ def test_bateria_e_painel():
 
 def test_com_margem():
     assert pf.com_margem(100.0, 0.25) == pytest.approx(125.0)
+
+
+def test_config_coincide_com_a_etapa_2_3():
+    """P-016 e P-017 no config são os valores calculados por tools/plataformas.py (sem cópia à mão divergente)."""
+    import sys
+    from pathlib import Path
+
+    import yaml
+
+    raiz = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(raiz / "tools"))
+    import plataformas as pl
+
+    ler = lambda c: yaml.safe_load((raiz / c).read_text(encoding="utf-8"))  # noqa: E731
+    cfg, po = ler("config/plataformas.yaml"), ler("config/parametros_orbitais.yaml")
+    res = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
+    m_o = pl.plataforma_orbitador(cfg, po, res["apoapse_regra_5pct_km"], res["periapse_alt_km"])
+    assert ler("config/dimensionamento.yaml")["plataforma_orbitador_kg"]["valor"] == pytest.approx(m_o, abs=0.05)
+    assert ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"]["valor"] == pytest.approx(pl.lander_l3(cfg))

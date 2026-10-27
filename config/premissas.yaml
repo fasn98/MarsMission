@@ -156,34 +156,32 @@ premissas:
     status: NÃO VALIDADA
   - id: P-016
     nome: plataforma_orbitador_kg
-    valor: 850
-    faixa: [331.8, 2200]
-    unidade: kg (massa seca da plataforma, sem módulos propulsivos e sem carga útil)
+    valor: 442.3
+    faixa: [422, 510]
+    unidade: kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil)
     uso: config/dimensionamento.yaml
     justificativa: >
-      Decisão do Fabio (portão da Parte B, 2026-10-27): incluir a plataforma já na Fase 1, com faixa
-      entre análogos publicados. Limite inferior: Mars Odyssey, 331,8 kg secos [F33], orbitador
-      químico sem carga de captura. Limite superior: módulo principal do ERO, 2200 kg secos [F22], que
-      inclui propulsão elétrica e painéis de 41 kW, desnecessários aqui. Base de 850 kg ≈ média
-      geométrica dos dois (√(331,8 × 2200) ≈ 854 kg), arredondada. A faixa cobre um fator de 6,6;
-      sem análogo direto (orbitador químico com captura em órbita), o centro em escala logarítmica é
-      a escolha neutra. Leva os sensores de encontro, que o CCRS de 2021 não inclui ("w/o RSS" [F22]).
+      Etapa 2.3 (decisão do Fabio no portão, 2026-10-27): lista por subsistema com análogo do Mars Odyssey [F63],
+      energia dimensionada para o afélio e o pior eclipse na órbita de 300 × 24.992 km, cabeamento de 5 % da
+      plataforma [F71], margem de crescimento no ponto médio da categoria E1 do AIAA S-120A [F70]. Básica 354,1 kg;
+      prevista 442,3 kg. Faixa: E1 mínimo (422) a ESA 20 % × 20 % (510). Depende das premissas P-028 a P-031 e
+      P-033. Histórico: até a Etapa 2.2 valia 850 kg (média geométrica de Odyssey 331,8 kg [F33] e ERO 2200 kg [F22]).
     status: NÃO VALIDADA
   - id: P-017
     nome: plataforma_superficie_kg
-    valor: 850
-    faixa: [284, 2500]
-    unidade: kg (massa pousada sem o MAV)
+    valor: 1470
+    faixa: [529, 1857]
+    unidade: kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV)
     uso: config/superficie.yaml — massa pousada = MAV + plataforma de superfície
     justificativa: >
-      Plataforma de pouso (estrutura, pernas, energia, aviônica, sistema de lançamento do MAV,
-      transferência de amostras). Limite inferior: lander Phoenix, 410 kg com 67 kg de propelente e
-      59 kg de instrumentos, ou seja, 284 kg secos sem carga [F40]. Limite superior: SRL de 2024, capacidade
-      pousada de ~2900 kg [F41] menos o MAV de 400 kg [F35], ou seja, 2500 kg (inclui elementos do MSR
-      que podem não se aplicar). Base ≈ média geométrica (√(284 × 2500) ≈ 843 kg), arredondada para 850 kg,
-      pelo mesmo critério da P-016. ATENÇÃO: é o SEGUNDO uso do critério da média geométrica sem análogo
-      direto (o primeiro foi a P-016); as duas bases têm a mesma fragilidade e devem ser revistas juntas.
-      Valor sem fonte direta.
+      Etapa 2.3 (decisão do Fabio no portão, 2026-10-27): opção L3, análogo da mesma classe, o Sample Retrieval
+      Lander do MSR. Até 2100 kg secos na superfície [F77] menos o MAV de 400 kg [F35] e o rover de busca de
+      < 230 kg [F78] = 1470 kg. Como o SFR é "< 230 kg", 1470 kg é um limite inferior dessa conta. Valor de alocação
+      ("as much as"), usado sem margem de crescimento adicional; GSFC (+15 %) e ESA (× 1,44) na sensibilidade.
+      Cobre ao menos parte do sistema de lançamento e ereção do MAV (MLS), que não tem massa publicada. Os itens
+      próprios do MSR (braço de transferência de amostras, apoio a helicópteros) são incerteza declarada.
+      Limites da faixa: L1 = núcleo do Phoenix sem escala (529 kg) e L2 = núcleo escalado com a massa pousada
+      (1857 kg) (P-035). Histórico: até a Etapa 2.2 valia 850 kg (média geométrica de Phoenix e SRL).
     status: NÃO VALIDADA
   - id: P-018
     nome: razao_massa_pousada_entrada
@@ -324,13 +322,14 @@ premissas:
     status: NÃO VALIDADA
   - id: P-031
     nome: base_do_cabeamento_orbitador
-    valor: plataforma + CU-2
+    valor: plataforma
     unidade: —
     uso: config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71]
     justificativa: >
-      A regra da ESA aplica 5 % sobre a massa seca nominal do veículo inteiro. Aqui a base é a plataforma mais a
-      carga útil CU-2, porque o ε dos estágios já inclui o cabeamento deles. Aplicar sobre os estágios também
-      somaria cabeamento duas vezes.
+      A regra da ESA aplica 5 % sobre a massa seca nominal do veículo inteiro. Aqui a base é só a plataforma: a CU-2
+      é uma alocação de carga útil que já traz o seu cabeamento, e o ε dos estágios já inclui o deles. Revista no
+      portão da Etapa 2.3: a primeira versão incluía a CU-2 na base, e 37,4 dos 55,2 kg básicos de cabeamento
+      vinham dela, recebendo a margem de 75 %.
     status: NÃO VALIDADA
   - id: P-032
     nome: energia_lander
@@ -365,7 +364,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-035
     nome: escala_nucleo_lander
-    valor: {opcoes: [L1, L2]}
+    valor: {opcoes: [L1, L2], base: L3}
     unidade: —
     uso: config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander
     justificativa: >

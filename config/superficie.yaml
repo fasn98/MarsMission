@@ -31,7 +31,9 @@ descida:
   # perda é ∫g·sen γ dt, menor. Uso da forma vertical = escolha conservadora. Fonte da equação: [F39].
 
 lander:
-  plataforma_superficie_kg: {valor: 850, premissa: P-017}
+  # L3 da Etapa 2.3: lander do MSR sem MAV e sem rover de busca, 2100 − 400 − 230 kg (config/plataformas.yaml).
+  # Decisão do Fabio no portão da Etapa 2.3 (substitui os 850 kg). Conferido por tests/test_plataforma.py.
+  plataforma_superficie_kg: {valor: 1470, premissa: P-017}
   razao_pousada_entrada:
     entrada_direta: {valor: 0.509, premissa: P-018}
     a_partir_de_orbita: {valor: 0.624, premissa: P-018}

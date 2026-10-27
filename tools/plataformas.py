@@ -3,9 +3,10 @@
 Orbitador: subsistemas do Mars Odyssey [F63], energia dimensionada para o afélio de Marte e o pior eclipse
 na órbita de encontro do ADR 0005, cabeamento pela regra da ESA [F71]. Lander: comunicação e radar do
 Phoenix [F74], coleta de amostras pela carga útil do Phoenix (P-034), núcleo do Phoenix sem divisão
-publicada (opções L1 e L2, P-035), energia para a noite marciana. Margem: AIAA S-120A, categoria E1 [F70].
-Refaz a massa total na órbita baixa (regra iii e missão A) com as novas plataformas, no ponto escolhido
-do ADR 0005 e com a regra dos 5 % reaplicada.
+publicada (limites L1 e L2, P-035); base L3 = lander do MSR sem MAV e sem rover de busca (P-017, decisão do
+Fabio). Margem: AIAA S-120A, categoria E1 [F70], ponto médio; GSFC e ESA na sensibilidade.
+Refaz a massa total na órbita baixa (regra iii e missão A) reaplicando a regra dos 5 % do ADR 0005. Como a
+bateria do orbitador depende do eclipse, plataforma e apoapse são iterados até o apoapse não mudar.
 Saída: results/etapa2.3/plataformas.yaml e plataformas.md
 
 Uso: python tools/plataformas.py
@@ -51,7 +52,7 @@ def prevista(itens, cfg, qual):
     return tot
 
 
-def orbitador(cfg, po, cu_ate_marte, apoapse_km, rp_alt_km):
+def orbitador(cfg, po, apoapse_km, rp_alt_km):
     o = cfg["orbitador"]
     e = o["energia"]
     R, mu = _v(po["raio_marte_km"]), _v(po["gm_marte"])
@@ -71,7 +72,7 @@ def orbitador(cfg, po, cu_ate_marte, apoapse_km, rp_alt_km):
     itens += [("painel_solar", m_sa, "painel_solar"), ("bateria", m_bat, "baterias"),
               ("energia_restante", m_rest, er["categoria"])]
     f = _v(o["cabeamento"]["fracao"])
-    m_cab = f / (1 - f) * (sum(m for _, m, _ in itens) + cu_ate_marte)
+    m_cab = f / (1 - f) * sum(m for _, m, _ in itens)  # base: só a plataforma (P-031)
     itens.append(("cabeamento", m_cab, "cabeamento"))
     energia = {"eclipse_max_h": t_ecl / 3600, "periodo_h": periodo / 3600, "carga_w": carga, "afelio_ua": d_af,
                "painel_w_afelio_fim_de_vida": p_sa, "energia_eclipse_wh": e_ecl, "bateria_wh_nominal": cap,
@@ -109,6 +110,25 @@ def lander(cfg, opcao, mav_bloco_kg):
     return itens, energia
 
 
+def lander_l3(cfg):
+    """L3: lander do MSR sem MAV e sem rover de busca (alocação, sem MGA adicional no caso de base)."""
+    t = cfg["lander"]["topo_para_baixo"]
+    return _v(t["srl_seco_superficie_kg"]) - _v(t["srl_mav_kg"]) - _v(t["srl_sfr_kg"])
+
+
+def l3_com_margem(m, cfg, qual):
+    a = cfg["margem_crescimento"]["alternativas"]
+    if qual == "esa":
+        return m * (1 + a["esa"]["equipamento"]) * (1 + a["esa"]["sistema"])
+    if qual == "e1_medio_mais_gsfc":
+        return m * (1 + a["gsfc"]["sistema_sobre_basica"])
+    return m
+
+
+def plataforma_orbitador(cfg, po, apoapse_km, rp_alt_km, qual="e1_medio"):
+    return prevista(orbitador(cfg, po, apoapse_km, rp_alt_km)[0], cfg, qual)
+
+
 def main():
     cfg = _ler("config/plataformas.yaml")
     po = _ler("config/parametros_orbitais.yaml")
@@ -125,23 +145,9 @@ def main():
     fonte_mav = min((x for x in mp["opcoes"] if x["opcao"] == op_mav), key=lambda x: x["total_regra_iii_kg"])["energia"]
     vr = scfg["varreduras_encontro"]["rp300"]
     ap0, rp_alt = antes["apoapse_alt_km"], vr["periapse_alt_km"]
-    cu_base = dcfg["caso_base"]["carga_util"]
-    cu_ate_marte = sum(x["massa"] for x in cu["opcoes"][cu_base]["ate_orbita_marte"])
-
-    # Plataformas no ponto escolhido do ADR 0005
-    it_o, en_o = orbitador(cfg, po, cu_ate_marte, ap0, rp_alt)
     margem_dv = _v(dcfg["margem_dv"])
     mav_pousado, _, _ = massas_opcao((1 + margem_dv) * antes["dv_mav_km_s"], op_mav, mcfg, scfg, icfg, fonte_mav)
-    landers = {o: lander(cfg, o, mav_pousado) for o in cfg["lander"]["escala_nucleo"]["opcoes"]}
 
-    def lista(itens):
-        return [{"subsistema": n, "basica_kg": m, "categoria_e1": c, "mga_e1_medio": _mga(c, cfg, "e1_medio"),
-                 "prevista_kg": pf.com_margem(m, _mga(c, cfg, "e1_medio"))} for n, m, c in itens]
-
-    plat_o = {q: prevista(it_o, cfg, q) for q in MARGENS}
-    plat_l = {o: {q: prevista(it, cfg, q) for q in MARGENS} for o, (it, _) in landers.items()}
-
-    # Massa total: varredura completa (regra dos 5 % reaplicada) com as novas plataformas
     R = _v(po["raio_marte_km"])
     ms = _ler("results/etapa1.3/missoes.yaml")
     cand = {c["id"]: c for c in ms["candidatas"]}
@@ -157,38 +163,71 @@ def main():
                _v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"]), _v(scfg["subida"]["dv_100x100_km_s"]), m_lan,
                _v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]), _v(scfg["aerofrenagem"]["dv_saida_aerofrenagem_km_s"]),
                vs, a_caso, c3l)
-        pontos, _, esc = ve.varrer("rp300", vr, scfg, d2, cu, p, R, ctx, mav_massas=mav_f, gravar=False)
+        pontos, mins, esc = ve.varrer("rp300", vr, scfg, d2, cu, p, R, ctx, mav_massas=mav_f, gravar=False)
+        mn_ = mins["quimico/total_regra_iii_kg"]
         no_ponto = next(x for x in pontos if x["apoapse_alt_km"] == ap0)["quimico"]
         return {"plataforma_orbitador_kg": m_orb, "plataforma_lander_kg": m_lan,
-                "no_apoapse_adr0005": {"apoapse_alt_km": ap0, "total_regra_iii_kg": no_ponto["total_regra_iii_kg"],
-                                       "total_missao_A_kg": no_ponto["total_missao_A_kg"],
-                                       "orbitador_regra_iii_kg": no_ponto["orbitador_regra_iii_kg"],
-                                       "orbitador_missao_A_kg": no_ponto["orbitador_missao_A_kg"]},
+                "em_26950_km": {"total_regra_iii_kg": no_ponto["total_regra_iii_kg"], "total_missao_A_kg": no_ponto["total_missao_A_kg"]},
                 "regra_5pct": {"apoapse_alt_km": esc["apoapse_alt_km"], "total_regra_iii_kg": esc["massa_regra_iii_kg"],
-                               "total_missao_A_kg": esc["massa_missao_A_kg"], "minimo_kg": esc["minimo_kg"]}}
+                               "total_missao_A_kg": esc["massa_missao_A_kg"], "minimo_kg": esc["minimo_kg"],
+                               "acima_do_minimo": esc["acima_do_minimo"], "mav_glom_kg": esc["mav_glom_kg"],
+                               "apoapse_do_minimo_km": mn_["apoapse_alt_km"], "minimo_no_extremo": mn_["no_extremo"]}}
 
-    totais = {"antes_P016_P017": total(_v(dcfg["plataforma_orbitador_kg"]), _v(scfg["lander"]["plataforma_superficie_kg"]))}
-    for o in plat_l:
-        for q in MARGENS:
-            totais[f"{o}/{q}"] = total(plat_o[q], plat_l[o][q])
+    # Caso de base: orbitador (E1 médio) + L3, iterando plataforma ↔ apoapse
+    m_l3 = lander_l3(cfg)
+    ap, iteracoes = ap0, []
+    for _ in range(6):
+        m_o = plataforma_orbitador(cfg, po, ap, rp_alt)
+        t = total(m_o, m_l3)
+        iteracoes.append({"apoapse_entrada_km": ap, "plataforma_orbitador_kg": m_o, "apoapse_saida_km": t["regra_5pct"]["apoapse_alt_km"]})
+        if t["regra_5pct"]["apoapse_alt_km"] == ap:
+            break
+        ap = t["regra_5pct"]["apoapse_alt_km"]
+    else:
+        raise RuntimeError("plataforma e apoapse não convergiram")
+    ap_f = ap
+    it_o, en_o = orbitador(cfg, po, ap_f, rp_alt)
+    landers = {o: lander(cfg, o, mav_pousado) for o in cfg["lander"]["escala_nucleo"]["opcoes"]}
+
+    def lista(itens):
+        return [{"subsistema": n, "basica_kg": m, "categoria_e1": c, "mga_e1_medio": _mga(c, cfg, "e1_medio"),
+                 "prevista_kg": pf.com_margem(m, _mga(c, cfg, "e1_medio"))} for n, m, c in itens]
+
+    plat_o = {q: prevista(it_o, cfg, q) for q in MARGENS}
+    plat_l = {o: {q: prevista(it, cfg, q) for q in MARGENS} for o, (it, _) in landers.items()}
+    plat_l["L3"] = {q: l3_com_margem(m_l3, cfg, q) for q in ("e1_medio", "e1_medio_mais_gsfc", "esa")}
+
+    a = cfg["antes_etapa_2_3"]
+    casos = {"antes": ("Antes (P-016 = P-017 = 850 kg)", a["orbitador_kg"], a["lander_kg"]),
+             "base": ("**Base: orbitador E1 médio + L3**", plat_o["e1_medio"], m_l3),
+             "gsfc": ("GSFC: orbitador E1 médio + 15 %; L3 + 15 %", plat_o["e1_medio_mais_gsfc"], plat_l["L3"]["e1_medio_mais_gsfc"]),
+             "esa": ("ESA: 20 % × 20 % nos dois", plat_o["esa"], plat_l["L3"]["esa"]),
+             "orb_e1_min": ("Orbitador E1 mínimo + L3", plat_o["e1_minimo"], m_l3),
+             "orb_e1_max": ("Orbitador E1 máximo + L3", plat_o["e1_maximo"], m_l3),
+             "limite_L1": ("Limite inferior do lander: L1 (E1 médio)", plat_o["e1_medio"], plat_l["L1"]["e1_medio"]),
+             "limite_L2": ("Limite superior do lander: L2 (E1 médio)", plat_o["e1_medio"], plat_l["L2"]["e1_medio"])}
+    totais = {k: {"caso": r, **total(mo, ml)} for k, (r, mo, ml) in casos.items()}
 
     out = {"gerado_por": "tools/plataformas.py",
-           "orbita_encontro": {"periapse_alt_km": rp_alt, "apoapse_alt_km": ap0},
+           "orbita_encontro": {"periapse_alt_km": rp_alt, "apoapse_antes_km": ap0, "apoapse_regra_5pct_km": ap_f,
+                               "iteracoes": iteracoes},
            "mav": {"opcao": op_mav, "energia": fonte_mav, "massa_pousada_kg": mav_pousado},
+           "escolha": {"plataforma_orbitador_kg": plat_o["e1_medio"], "plataforma_lander_kg": m_l3,
+                       "criterio": "orbitador: lista por subsistema, E1 médio; lander: L3 (decisão do Fabio, portão 2.3)"},
            "orbitador": {"subsistemas": lista(it_o), "energia": en_o, "prevista_kg": plat_o,
                          "basica_kg": sum(m for _, m, _ in it_o)},
-           "lander": {o: {"subsistemas": lista(it), "energia": en, "prevista_kg": plat_l[o],
-                          "basica_kg": sum(m for _, m, _ in it)} for o, (it, en) in landers.items()},
+           "lander": {**{o: {"subsistemas": lista(it), "energia": en, "prevista_kg": plat_l[o],
+                             "basica_kg": sum(m for _, m, _ in it)} for o, (it, en) in landers.items()},
+                      "L3": {"basica_kg": m_l3, "prevista_kg": plat_l["L3"]}},
            "totais": totais}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "plataformas.yaml").write_text(yaml.safe_dump(dm._nativo(out), sort_keys=False, allow_unicode=True), encoding="utf-8")
 
     br = lambda x, n=0: f"{x:,.{n}f}".replace(",", " ").replace(".", ",")  # noqa: E731
-    rot = {"e1_medio": "S-120A E1, ponto médio (base)", "e1_minimo": "S-120A E1, mínimo", "e1_maximo": "S-120A E1, máximo",
-           "e1_medio_mais_gsfc": "E1 médio + 15 % da básica (GSFC pré-A)", "esa": "ESA: 20 % equipamento × 20 % sistema"}
     md = ["# Plataformas por subsistema (gerado por tools/plataformas.py)", "",
-          f"Órbita de encontro {rp_alt} × {br(ap0)} km (ADR 0005); MAV {op_mav} com energia {fonte_mav}. Massas em kg.", "",
-          "## Orbitador", "", "| Subsistema | Básica | Categoria E1 | MGA (médio) | Prevista |", "| :- | -: | :- | -: | -: |"]
+          f"Órbita de encontro {rp_alt} × {br(ap_f)} km (regra dos 5 % do ADR 0005 reaplicada; antes {br(ap0)} km); "
+          f"MAV {op_mav} com energia {fonte_mav}. Massas em kg.", "",
+          "## Orbitador (base: E1 médio)", "", "| Subsistema | Básica | Categoria E1 | MGA (médio) | Prevista |", "| :- | -: | :- | -: | -: |"]
     for r in out["orbitador"]["subsistemas"]:
         md.append(f"| {r['subsistema']} | {br(r['basica_kg'], 1)} | {r['categoria_e1']} | {br(100 * r['mga_e1_medio'], 1)} % | {br(r['prevista_kg'], 1)} |")
     md.append(f"| **Total** | **{br(out['orbitador']['basica_kg'], 1)}** | | | **{br(plat_o['e1_medio'], 1)}** |")
@@ -196,25 +235,23 @@ def main():
     md += ["", f"Energia: pior eclipse {br(e['eclipse_max_h'], 2)} h num período de {br(e['periodo_h'], 2)} h; carga {br(e['carga_w'])} W; "
            f"painel {br(e['painel_w_afelio_fim_de_vida'])} W no afélio ({br(e['afelio_ua'], 3)} UA, {br(e['w_kg_painel_afelio'], 1)} W/kg); "
            f"bateria {br(e['bateria_wh_nominal'])} Wh nominais para {br(e['energia_eclipse_wh'])} Wh no eclipse."]
+    md += ["", "## Lander", "", f"**Base L3** (lander do MSR sem MAV e sem rover de busca): {br(m_l3)} kg, sem MGA adicional "
+           f"(GSFC: {br(plat_l['L3']['e1_medio_mais_gsfc'])}; ESA: {br(plat_l['L3']['esa'])}). Limites L1 e L2 abaixo."]
     for o, d in out["lander"].items():
-        md += ["", f"## Lander, opção {o}", "", "| Subsistema | Básica | Categoria E1 | MGA (médio) | Prevista |", "| :- | -: | :- | -: | -: |"]
+        if o == "L3":
+            continue
+        md += ["", f"### Limite {o}", "", "| Subsistema | Básica | Categoria E1 | MGA (médio) | Prevista |", "| :- | -: | :- | -: | -: |"]
         for r in d["subsistemas"]:
             md.append(f"| {r['subsistema']} | {br(r['basica_kg'], 1)} | {r['categoria_e1']} | {br(100 * r['mga_e1_medio'], 1)} % | {br(r['prevista_kg'], 1)} |")
         md.append(f"| **Total** | **{br(d['basica_kg'], 1)}** | | | **{br(d['prevista_kg']['e1_medio'], 1)}** |")
-    el = out["lander"]["L1"]["energia"]
-    md += ["", f"Energia do lander: {br(el['energia_por_sol_wh'])} Wh/sol ({br(el['carga_media_w'])} W médios); painel {br(el['area_painel_m2'], 2)} m²; "
-           f"bateria {br(el['bateria_wh_nominal'])} Wh nominais para {br(el['energia_noite_wh'])} Wh na noite."]
-    md += ["", "## Plataformas por critério de margem", "", "| Critério | Orbitador | Lander L1 | Lander L2 |", "| :- | -: | -: | -: |"]
-    for q in MARGENS:
-        md.append(f"| {rot[q]} | {br(plat_o[q])} | {br(plat_l['L1'][q])} | {br(plat_l['L2'][q])} |")
     md += ["", "## Massa total na órbita baixa da Terra", "",
            f"| Caso | Orbitador | Lander | Total (iii) em {br(ap0)} km | Total (A) em {br(ap0)} km | Apoapse pela regra dos 5 % | Total (iii) nele | Total (A) nele |",
            "| :- | -: | -: | -: | -: | -: | -: | -: |"]
     for k, t in totais.items():
-        nome = "Antes (P-016 = P-017 = 850 kg)" if k.startswith("antes") else f"{k.split('/')[0]}, {rot[k.split('/')[1]]}"
-        a, b = t["no_apoapse_adr0005"], t["regra_5pct"]
-        md.append(f"| {nome} | {br(t['plataforma_orbitador_kg'])} | {br(t['plataforma_lander_kg'])} | {br(a['total_regra_iii_kg'])} | "
-                  f"{br(a['total_missao_A_kg'])} | {br(b['apoapse_alt_km'])} | {br(b['total_regra_iii_kg'])} | {br(b['total_missao_A_kg'])} |")
+        a_, b = t["em_26950_km"], t["regra_5pct"]
+        md.append(f"| {t['caso']} | {br(t['plataforma_orbitador_kg'])} | {br(t['plataforma_lander_kg'])} | {br(a_['total_regra_iii_kg'])} | "
+                  f"{br(a_['total_missao_A_kg'])} | {br(b['apoapse_alt_km'])} | {br(b['total_regra_iii_kg'])} | {br(b['total_missao_A_kg'])} |")
+    md += ["", "Nos casos de sensibilidade, a plataforma do orbitador é a calculada no apoapse do caso de base."]
     (SAIDA / "plataformas.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

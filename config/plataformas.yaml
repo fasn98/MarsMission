@@ -96,7 +96,10 @@ orbitador:
       excentricidade: {valor: 0.093377, fonte: "[F56] lista de símbolos: \"eccentricity : 0.093377\""}
   cabeamento:
     fracao: {valor: 0.05, fonte: "[F71] p. 5, R-M1-7: \"Harness mass shall be considered to be at least 5 % of nominal dry mass\""}
-    base: plataforma_e_carga_util   # P-031: aplicada à plataforma + CU-2 (o ε dos estágios já inclui o cabeamento deles)
+    # P-031 (revista no portão da Etapa 2.3): base = só a plataforma. A CU-2 é uma alocação de carga útil que já
+    # traz o seu cabeamento; o ε dos estágios já inclui o deles. Antes a base incluía a CU-2 e 37,4 kg dos 55,2 kg
+    # básicos de cabeamento vinham dela, recebendo a MGA de 75 % (correção pedida pelo Fabio).
+    base: plataforma
   topo_para_baixo:
     # Comparação: plataformas inteiras de orbitadores maiores (não por subsistema).
     mro_outros_secos_kg: {valor: 892, fonte: "[F65] MRO Launch Press Kit, p. 6: \"892 kilograms … other dry weight\" (inclui a propulsão seca)"}
@@ -133,10 +136,10 @@ lander:
       categoria: estrutura_primaria
       nota: "Contém o painel e as baterias do Phoenix; somar a energia dimensionada aqui é conservador."
   escala_nucleo:
-    # P-035. Opções para o Fabio decidir:
-    #   L1: núcleo do Phoenix sem escala;
-    #   L2: núcleo como fração constante da massa pousada seca do Phoenix (cresce com o MAV).
+    # P-035. L1: núcleo do Phoenix sem escala; L2: núcleo como fração constante da massa pousada seca do Phoenix.
+    # L1 e L2 são os limites da faixa. Base (decisão do Fabio, portão da Etapa 2.3): L3, ver topo_para_baixo.
     opcoes: [L1, L2]
+  base: L3
   energia:
     energia_por_sol_wh: {valor: 3500, premissa: P-032}
     rendimento_painel_wh_sol_m2:
@@ -147,6 +150,16 @@ lander:
     noite_fracao_sol: {valor: 0.5, premissa: P-032}
     duracao_sol_h: {valor: 24.6597, fonte: "[F47] NASA GSFC, Mars Fact Sheet: \"Length of day (hrs) 24.6597\""}
   topo_para_baixo:
+    # L3 (base, P-017 revista): lander do MSR, análogo da mesma classe, sem o MAV e sem o rover de busca.
+    # L3 = 2100 − 400 − 230 kg. Cobre ao menos parte do sistema de lançamento e ereção do MAV (MLS, sem massa
+    # publicada). Itens próprios do MSR (braço de transferência, apoio a helicópteros, etc.) são incerteza declarada.
+    # O SFR é "< 230 kg": com um SFR mais leve o L3 seria maior. Valor de alocação ("as much as"), usado sem MGA
+    # adicional no caso de base; GSFC (+15 %) e ESA (×1,2 × 1,2) na sensibilidade.
     srl_seco_superficie_kg: {valor: 2100, fonte: "[F77] Ivanov & Sell (JPL) 2020, resumo: \"as much as 2100 kg of dry mass to the surface\""}
     srl_mav_kg: {valor: 400, fonte: "[F35]"}
     srl_sfr_kg: {valor: 230, fonte: "[F78] Gramling 2020, slide 11: SFR \"Mass = < 230 kg\""}
+
+# Valores anteriores (P-016 e P-017 até a Etapa 2.2), só para a comparação antes/depois.
+antes_etapa_2_3:
+  orbitador_kg: 850
+  lander_kg: 850

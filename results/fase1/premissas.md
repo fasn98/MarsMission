@@ -17,8 +17,8 @@
 | P-013 | desvio_orbitador_parametros | periapse_seguro_alt_km: 300; antecedencia_dias: 1 | km; dias | NÃO VALIDADA | config/dimensionamento.yaml — Δv de desvio do orbitador após soltar a cápsula (plano B) |
 | P-014 | margem_dv | 0.1 | fração, aplicada a todos os trechos | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-015 | perdas_gravitacionais_do_dra | saida_terra: 0.148; captura_marte: 0.018; saida_marte: 0.011 | km/s | NÃO VALIDADA | config/dimensionamento.yaml |
-| P-016 | plataforma_orbitador_kg | 850 | kg (massa seca da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
-| P-017 | plataforma_superficie_kg | 850 | kg (massa pousada sem o MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
+| P-016 | plataforma_orbitador_kg | 442.3 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
+| P-017 | plataforma_superficie_kg | 1470 | kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
 | P-018 | razao_massa_pousada_entrada | entrada_direta: 0.509; a_partir_de_orbita: 0.624 | adimensional (massa pousada / massa de entrada) | NÃO VALIDADA | config/superficie.yaml — massa do sistema de entrada, descida e pouso |
 | P-019 | mav_estagios | fracao_estrutural: 0.286; fracao_dv_estagio_1: 0.481 | adimensional | NÃO VALIDADA | config/superficie.yaml — dimensionamento do MAV sólido de dois estágios |
 | P-020 | aerofrenagem_orbitador | dv_saida_km_s: 0.09; duracao_dias: 205 | km/s; dias | NÃO VALIDADA | config/superficie.yaml — arquitetura S4 |
@@ -32,10 +32,10 @@
 | P-028 | carga_eletrica_orbitador_w | 510 | W (mesma carga no sol e no eclipse) | NÃO VALIDADA | config/plataformas.yaml — painel e bateria do orbitador |
 | P-029 | eficiencia_recarga_bateria | 0.8 | adimensional (energia devolvida / energia de recarga) | NÃO VALIDADA | config/plataformas.yaml — potência do painel do orbitador |
 | P-030 | fator_perdas_painel_orbitador | 0.774 | adimensional (multiplica a potência específica a 1 UA escalada por 1/d²) | NÃO VALIDADA | config/plataformas.yaml — massa do painel do orbitador |
-| P-031 | base_do_cabeamento_orbitador | plataforma + CU-2 | — | NÃO VALIDADA | config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71] |
+| P-031 | base_do_cabeamento_orbitador | plataforma | — | NÃO VALIDADA | config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71] |
 | P-032 | energia_lander | energia_por_sol_wh: 3500; fracao_noite: 0.5 | Wh/sol; adimensional | NÃO VALIDADA | config/plataformas.yaml — painel e bateria do lander |
 | P-033 | margem_crescimento_e1_ponto_medio | ponto médio da faixa E1 do AIAA S-120A | — | NÃO VALIDADA | config/plataformas.yaml — margem por subsistema |
 | P-034 | sistema_de_amostras_lander | 59 | kg | NÃO VALIDADA | config/plataformas.yaml — coleta e transferência de amostras no lander |
-| P-035 | escala_nucleo_lander | opcoes: ['L1', 'L2'] | — | NÃO VALIDADA | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
+| P-035 | escala_nucleo_lander | opcoes: ['L1', 'L2']; base: L3 | — | NÃO VALIDADA | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
 
 Total: 35 premissas, 35 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
