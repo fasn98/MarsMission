@@ -137,9 +137,9 @@ escolha é do Fabio.
   - Sem `tools/fetch_kernels.py`, a página Trajetória mostra o aviso de kernels ausentes (`src/painel/app.py`).
   - As outras páginas leem `results/` e `config/`.
   - Resolver isso exigiria mudar o código, com PR e justificativa.
-- **Pillow:** o streamlit 1.65.0, fixado no `pyproject.toml`, exige `pillow<13`. Fora do firewall do Replit, o pip
-  instalaria o pillow 12.3.0, que tem avisos de segurança corrigidos só na 13.0.0
-  ([notas da 13.0.0](https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html)).
+- **Pillow:** com o `pyproject.toml` atual (streamlit 1.66.1 e `pillow>=13.0.0`; ADR 0010, nota de 2026-10-27), o pip
+  instala o pillow 13.0.0 ou posterior (13.0.0 no CI do PR #13), com os avisos "Critical" das versões até a 12.3.0
+  corrigidos. **Não conferido** no Community Cloud.
 
 ### Comparação
 
@@ -149,7 +149,7 @@ escolha é do Fabio.
 | Endereço | `<subdomínio>.replit.app` ([Custom domains](https://docs.replit.com/cloud-services/deployments/custom-domains)) | `<subdomínio>.streamlit.app` |
 | Repositório | Importação pública conferida; privado não conferido | Público, para app público |
 | Etapa de build (kernels) | Sim (`[deployment] build` do `.replit`) | Não encontrada na documentação |
-| Instalação | Bloqueada pelo firewall de pacotes no pillow (observado em 2026-10-27, com streamlit 1.65.0) | Não conferida |
+| Instalação | Funciona com `pillow>=13.0.0` (observado em 2026-10-27; com streamlit 1.65.0, o firewall de pacotes bloqueava o pillow) | Não conferida |
 
 ### Alternativa estática (GitHub Pages)
 Sem plano pago, a alternativa permanente é uma página estática no GitHub Pages do repositório. **Não foi construída.**
