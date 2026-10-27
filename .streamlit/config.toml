@@ -1,0 +1,12 @@
+# Configuração do Streamlit para o painel (local e Replit).
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"
+primaryColor = "#2a78d6"
+backgroundColor = "#fcfcfb"
+textColor = "#0b0b0b"

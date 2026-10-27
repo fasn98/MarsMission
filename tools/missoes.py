@@ -22,6 +22,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 from orbital import ephemeris as eph  # noqa: E402
 from orbital import missao as ms  # noqa: E402
 from orbital import porkchop as pc  # noqa: E402
+from orbital.config import parametros  # noqa: E402,F401 (usado por outras ferramentas: missoes.parametros)
 
 SAIDA = RAIZ / "results" / "etapa1.3"
 
@@ -32,22 +33,6 @@ def _ler(nome):
 
 def _valor(item):
     return float(item["valor"])
-
-
-def parametros():
-    po = _ler("parametros_orbitais.yaml")
-    premissas = {p["nome"]: p["valor"] for p in _ler("premissas.yaml")["premissas"]}
-    rt, rm = _valor(po["raio_terra_km"]), _valor(po["raio_marte_km"])
-    leo = rt + _valor(po["leo_altitude_km"])
-    orbitas = {}
-    for nome, o in po["orbitas_marte"].items():
-        orbitas[nome] = ms.Orbita(rm + float(o["periapse_alt_km"]["valor"]), rm + float(o["apoapse_alt_km"]["valor"]))
-    return ms.Parametros(
-        mu_terra=_valor(po["gm_terra"]), mu_marte=_valor(po["gm_marte"]), leo=ms.Orbita(leo, leo),
-        orbitas_marte=orbitas, rp_aerocaptura_marte=rm + _valor(po["aerocaptura_periapse_alt_km"]),
-        r_interface_terra=rt + _valor(po["interface_reentrada_alt_km"]),
-        exclusao_180=float(premissas["exclusao_angulo_180_graus"]),
-        v_reentrada_max=_valor(po["reentrada_max_km_s"]))
 
 
 def _eixo(ini, fim, passo):

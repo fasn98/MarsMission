@@ -1,0 +1,87 @@
+gerado_por: tools/exporta_painel.py
+fonte_dos_dominios: config/janelas.yaml
+sentidos:
+  terra_marte:
+    titulo: Terra → Marte, balístico
+    c3_max: 60
+    niveis_c3:
+    - 8
+    - 8.5
+    - 9
+    - 10
+    - 12
+    - 15
+    - 20
+    niveis_vinf:
+    - 2.5
+    - 3
+    - 3.5
+    - 4
+    - 5
+    - 6
+    janelas:
+      '2028':
+        arquivo: porkchop_terra_marte_2028.npz
+        pontos:
+        - 84
+        - 152
+      '2031':
+        arquivo: porkchop_terra_marte_2031.npz
+        pontos:
+        - 98
+        - 168
+      '2033':
+        arquivo: porkchop_terra_marte_2033.npz
+        pontos:
+        - 106
+        - 152
+      '2035':
+        arquivo: porkchop_terra_marte_2035.npz
+        pontos:
+        - 108
+        - 229
+  marte_terra:
+    titulo: Marte → Terra, balístico
+    c3_max: 60
+    niveis_c3:
+    - 5.5
+    - 6
+    - 7
+    - 8
+    - 10
+    - 12
+    - 15
+    - 20
+    niveis_vinf:
+    - 2.5
+    - 3
+    - 3.5
+    - 4
+    - 5
+    - 6
+    janelas:
+      '2030':
+        arquivo: porkchop_marte_terra_2030.npz
+        pontos:
+        - 243
+        - 213
+      '2032':
+        arquivo: porkchop_marte_terra_2032.npz
+        pontos:
+        - 258
+        - 183
+      '2035':
+        arquivo: porkchop_marte_terra_2035.npz
+        pontos:
+        - 198
+        - 275
+      '2037':
+        arquivo: porkchop_marte_terra_2037.npz
+        pontos:
+        - 167
+        - 244
+      '2039':
+        arquivo: porkchop_marte_terra_2039.npz
+        pontos:
+        - 183
+        - 260

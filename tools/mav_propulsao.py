@@ -21,54 +21,10 @@ sys.path[:0] = [str(RAIZ / "src"), str(RAIZ / "tools")]
 
 import dimensionamento as dm  # noqa: E402
 import varredura_encontro as ve  # noqa: E402
-from isru import energia, zbo  # noqa: E402
-from orbital import foguete as fg  # noqa: E402
-from orbital import isru  # noqa: E402
+from orbital.mav import massas_opcao, mav_generico  # noqa: E402,F401
 from superficie import _ler, _v, lander_leo  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa2.2"
-
-
-def mav_generico(dv, op, scfg):
-    f1 = _v(scfg["mav"]["fracao_dv_estagio_1"])
-    eps = _v(op["fracao_estrutural"])
-    e1 = fg.Estagio("mav_1", op["isp_s"][0], eps, [fg.Queima("subida_1", f1 * dv)])
-    e2 = fg.Estagio("mav_2", op["isp_s"][1], eps, [fg.Queima("subida_2", (1 - f1) * dv)])
-    r = fg.dimensionar_veiculo([e1, e2], _v(scfg["mav"]["carga_util_kg"]))
-    prop = sum(s.propelente for s in r)
-    return r[0].massa_inicial, prop
-
-
-def massas_opcao(dv, nome, mcfg, scfg, icfg, fonte_energia):
-    """(massa pousada do MAV + equipamentos de armazenamento e energia, massa extra no cruzeiro, detalhe)."""
-    op = mcfg["opcoes"][nome]
-    glom, prop = mav_generico(dv, op, scfg)
-    det = {"mav_glom_kg": glom, "mav_propelente_kg": prop}
-    if not op["criogenico"]:
-        aq = mcfg["aquecimento"]
-        dt = _v(aq["t_minima_c"][nome]) - _v(aq["t_ambiente_c"])
-        dt_ref = _v(aq["t_referencia_c"]) - _v(aq["t_ambiente_c"])
-        p_aq = isru.escala(_v(aq["referencia_w"]) * dt / dt_ref, prop, _v(aq["m_prop_referencia_kg"]), _v(aq["expoente_area"]))
-        m_en, desc = energia(icfg, p_aq, fonte_energia)
-        det.update({"aquecimento_w": p_aq, "energia_superficie_kg": m_en, "energia_superficie": desc})
-        return glom + m_en, 0.0, det
-    m_ox, m_ch4 = isru.divisao_of(prop, _v(op["razao_of"]))
-    # Superfície: armazenamento sem evaporação + fonte de energia (como na Etapa 2.2)
-    p_sup, m_sup = zbo(icfg, m_ch4, m_ox)
-    m_en, desc = energia(icfg, p_sup, fonte_energia)
-    # Cruzeiro: armazenamento sem evaporação (P-026) alimentado por painéis no cruzeiro (descartados antes da entrada)
-    cz = mcfg["cruzeiro"]
-    z = cz["zbo_transito"]
-    p_cz = sum(isru.escala(z["potencia_w"], m, z["referencia_kg"], z["expoente"]) for m in (m_ch4, m_ox))
-    m_cz_hw = sum(isru.escala(z["massa_ativa_kg"] + z["massa_passiva_kg"], m, z["referencia_kg"], z["expoente"]) for m in (m_ch4, m_ox))
-    w_kg_marte = _v(cz["solar_w_kg_1ua"]) / _v(cz["distancia_marte_ua"]) ** 2
-    m_paineis = p_cz / w_kg_marte
-    # O hardware de cruzeiro e o de superfície servem aos mesmos tanques: conta-se o maior dos dois.
-    m_hw = max(m_sup, m_cz_hw)
-    det.update({"o2_kg": m_ox, "ch4_kg": m_ch4, "zbo_superficie_w": p_sup, "zbo_superficie_kg": m_sup,
-                "energia_superficie_kg": m_en, "energia_superficie": desc, "zbo_cruzeiro_w": p_cz,
-                "zbo_cruzeiro_kg": m_cz_hw, "paineis_cruzeiro_kg": m_paineis, "armazenamento_pousado_kg": m_hw})
-    return glom + m_hw + m_en, m_paineis, det
 
 
 def main():

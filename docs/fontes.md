@@ -108,6 +108,7 @@ Toda constante ou dado externo usado no código cita uma entrada desta lista no 
 | F101 | NASA. *FY 2026 Budget Technical Supplement* (maio de 2025), p. 242: "NASA plans to terminate the Mars Sample Return Program given that current architecture options remain unaffordable" | Estado do programa MSR | https://www.nasa.gov/wp-content/uploads/2025/05/fy-2026-budget-technical-supplement-002.pdf |
 | F102 | NASA. *FY 2027 Full Budget Request* (22/04/2026), p. 202: "Subsequent missions could retrieve the sealed samples collected by Perseverance" | Estado do programa MSR | https://www.nasa.gov/wp-content/uploads/2026/04/fiscal-year-2027-full-budget-request.pdf |
 | F103 | NASA. Página *Mars Sample Return* (atualizada em 17/09/2026): "Mars Sample Return was a plan for an ambitious, multi-mission campaign …" | Estado do programa MSR | https://science.nasa.gov/mission/mars-sample-return/ |
+| F104 | IAU. Resolução B2 da XXVIII Assembleia Geral (Pequim, 2012), *Re-definition of the astronomical unit of length*, texto reproduzido pelo Observatório de Paris (SYRTE): "A conventional unit of length equal to 149 597 870 700 m exactly" | Escala em UA da trajetória no painel (`orbital.constantes.UA_KM`) | https://syrte.obspm.fr/IAU_resolutions/IAUResol_2012_0.html |
 
 Referências previstas para etapas seguintes (ainda não usadas no código):
 (nenhuma pendente)

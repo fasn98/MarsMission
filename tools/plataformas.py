@@ -33,126 +33,13 @@ import dimensionamento as dm  # noqa: E402
 import varredura_encontro as ve  # noqa: E402
 from mav_propulsao import massas_opcao  # noqa: E402
 from orbital import plataforma as pf  # noqa: E402
-from orbital import superficie as sf  # noqa: E402
+from orbital.massa_plataformas import (MARGENS, l3_com_margem, lander, lander_base, lander_l3,  # noqa: E402,F401
+                                       limite_srl_2024, mga, orbitador, plataforma_orbitador, prevista)
 from superficie import _ler, _v  # noqa: E402
 
+_mga = mga
+
 SAIDA = RAIZ / "results" / "etapa2.3"
-MARGENS = ("e1_medio", "e1_minimo", "e1_maximo", "e1_medio_mais_gsfc", "esa")
-
-
-def _mga(cat, cfg, qual):
-    lo, hi = cfg["margem_crescimento"]["categorias_e1"][cat]
-    valores = {"e1_minimo": lo, "e1_maximo": hi, "e1_medio": 0.5 * (lo + hi), "e1_medio_mais_gsfc": 0.5 * (lo + hi)}
-    if qual not in valores:
-        raise ValueError(f"critério de margem desconhecido: {qual}")
-    return valores[qual] / 100.0
-
-
-def prevista(itens, cfg, qual):
-    """Massa prevista da lista para um critério de margem. `itens`: [(nome, básica, categoria)]."""
-    basica = sum(m for _, m, _ in itens)
-    if qual == "esa":
-        a = cfg["margem_crescimento"]["alternativas"]["esa"]
-        return basica * (1 + a["equipamento"]) * (1 + a["sistema"])
-    if qual not in MARGENS:
-        raise ValueError(f"critério de margem desconhecido: {qual}")
-    tot = sum(pf.com_margem(m, _mga(c, cfg, qual)) for _, m, c in itens)
-    if qual == "e1_medio_mais_gsfc":
-        tot += cfg["margem_crescimento"]["alternativas"]["gsfc"]["sistema_sobre_basica"] * basica
-    return tot
-
-
-def orbitador(cfg, po, apoapse_km, rp_alt_km):
-    o = cfg["orbitador"]
-    e = o["energia"]
-    R, mu = _v(po["raio_marte_km"]), _v(po["gm_marte"])
-    t_ecl, periodo = pf.eclipse_maximo(mu, R, R + rp_alt_km, R + apoapse_km)
-    t_sol = periodo - t_ecl
-    carga = _v(e["carga_w"])
-    d_af = _v(e["distancia_ua"]["semieixo"]) * (1 + _v(e["distancia_ua"]["excentricidade"]))
-    p_sa = pf.potencia_painel(carga, t_sol, t_ecl, _v(e["eficiencia_recarga"]))
-    m_sa = pf.massa_painel(p_sa, _v(e["painel_w_kg_1ua"]), d_af, _v(e["fator_perdas_painel"]))
-    e_ecl = carga * t_ecl / 3600.0
-    cap, m_bat = pf.bateria(e_ecl, _v(e["profundidade_descarga"]), _v(e["energia_especifica_bateria_wh_kg"]))
-    s = o["subsistemas"]
-    er = s["energia_restante"]
-    m_rest = _v(er["massa_energia_odyssey_kg"]) - _v(er["painel_odyssey_w_1ua"]) / _v(e["painel_w_kg_1ua"])
-    itens = [(k, float(s[k]["massa_kg"]), s[k]["categoria"]) for k in
-             ("estrutura", "termico", "comunicacao", "comando_e_dados", "gnc", "mecanismos", "rss_nac", "rss_lidar")]
-    itens += [("painel_solar", m_sa, "painel_solar"), ("bateria", m_bat, "baterias"),
-              ("energia_restante", m_rest, er["categoria"])]
-    f = _v(o["cabeamento"]["fracao"])
-    m_cab = f / (1 - f) * sum(m for _, m, _ in itens)  # base: só a plataforma (P-031)
-    itens.append(("cabeamento", m_cab, "cabeamento"))
-    energia = {"eclipse_max_h": t_ecl / 3600, "periodo_h": periodo / 3600, "carga_w": carga, "afelio_ua": d_af,
-               "painel_w_afelio": p_sa, "energia_eclipse_wh": e_ecl, "bateria_wh_nominal": cap,
-               "w_kg_painel_afelio": _v(e["painel_w_kg_1ua"]) * _v(e["fator_perdas_painel"]) / d_af**2}
-    return itens, energia
-
-
-def lander(cfg, opcao, mav_bloco_kg):
-    la = cfg["lander"]
-    e = la["energia"]
-    ph = la["phoenix"]
-    s = la["subsistemas"]
-    sol_h = _v(e["duracao_sol_h"])
-    e_sol = _v(e["energia_por_sol_wh"])
-    carga = e_sol / sol_h
-    e_noite = carga * _v(e["noite_fracao_sol"]) * sol_h
-    oc = cfg["orbitador"]["energia"]
-    cap, m_bat = pf.bateria(e_noite, _v(oc["profundidade_descarga"]), _v(oc["energia_especifica_bateria_wh_kg"]))
-    rend = _v(e["rendimento_painel_wh_sol_m2"]["energia_wh"]) / _v(e["rendimento_painel_wh_sol_m2"]["area_m2"])
-    area = e_sol / rend
-    m_sa = area * _v(e["densidade_area_painel_w_m2"]) / _v(oc["painel_w_kg_1ua"])
-    itens = [(k, float(s[k]["massa_kg"]), s[k]["categoria"]) for k in ("uhf", "banda_x_cruzeiro", "radar", "amostras")]
-    itens += [("painel_solar", m_sa, "painel_solar"), ("bateria", m_bat, "baterias")]
-    seco_ph = _v(ph["lander_kg"]) - _v(ph["combustivel_kg"])
-    nucleo_ph = seco_ph - _v(ph["instrumentos_kg"]) - sum(float(s[k]["massa_kg"]) for k in ("uhf", "banda_x_cruzeiro", "radar"))
-    if opcao == "L1":
-        nucleo = nucleo_ph
-    else:  # L2: núcleo = k × massa pousada seca, com k do Phoenix
-        k = nucleo_ph / seco_ph
-        nucleo = k / (1 - k) * (sum(m for _, m, _ in itens) + mav_bloco_kg)
-    itens.insert(0, ("nucleo", nucleo, s["nucleo"]["categoria"]))
-    energia = {"energia_por_sol_wh": e_sol, "carga_media_w": carga, "energia_noite_wh": e_noite, "bateria_wh_nominal": cap,
-               "area_painel_m2": area, "rendimento_wh_sol_m2": rend, "nucleo_phoenix_kg": nucleo_ph,
-               "fracao_nucleo_phoenix": nucleo_ph / seco_ph}
-    return itens, energia
-
-
-def lander_l3(cfg):
-    """L3: lander do MSR sem MAV e sem rover de busca (alocação, sem MGA adicional no caso de base)."""
-    t = cfg["lander"]["topo_para_baixo"]
-    return _v(t["srl_seco_superficie_kg"]) - _v(t["srl_mav_kg"]) - _v(t["srl_sfr_kg"])
-
-
-def l3_com_margem(m, cfg, qual):
-    a = cfg["margem_crescimento"]["alternativas"]
-    if qual == "esa":
-        return m * (1 + a["esa"]["equipamento"]) * (1 + a["esa"]["sistema"])
-    if qual == "e1_medio_mais_gsfc":
-        return m * (1 + a["gsfc"]["sistema_sobre_basica"])
-    if qual == "e1_medio":
-        return m
-    raise ValueError(f"critério de margem sem uso no L3: {qual}")
-
-
-def lander_base(cfg, qual="e1_medio"):
-    """Base do lander: L3 + braço de coleta (item "amostras", P-034) + helicópteros de recuperação (ADR 0009),
-    cada item com a sua margem E1."""
-    s = cfg["lander"]["subsistemas"]
-    itens = [(k, float(s[k]["massa_kg"]), s[k]["categoria"]) for k in ("amostras", "helicopteros") if k in s]
-    return l3_com_margem(lander_l3(cfg), cfg, qual) + prevista(itens, cfg, qual)
-
-
-def limite_srl_2024(cfg):
-    """Limite superior da faixa do lander: SRL de 2024 menos o MAV (comparabilidade não confirmada)."""
-    t = cfg["lander"]["topo_para_baixo"]
-    return _v(t["srl_2024_pousado_kg"]) - _v(t["srl_mav_kg"])
-
-
-def plataforma_orbitador(cfg, po, apoapse_km, rp_alt_km, qual="e1_medio"):
-    return prevista(orbitador(cfg, po, apoapse_km, rp_alt_km)[0], cfg, qual)
 
 
 def main():

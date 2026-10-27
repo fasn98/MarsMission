@@ -1,0 +1,25 @@
+# Replit: só ambiente de execução do painel (nenhuma alteração de código feita lá). Ver docs/painel.md.
+# Chaves conforme https://docs.replit.com/replit-workspace/configuring-repl (consultado em 2026-10-27).
+# NÃO CONFERIDO na documentação oficial: a grafia exata do módulo "python-3.11" e o canal do Nix; o painel não foi
+# executado no Replit por este estudo.
+modules = ["python-3.11"]
+
+# Run: instala o pacote com o extra "painel" (dependências só do pyproject.toml), baixa e confere os kernels (MD5,
+# tools/fetch_kernels.py; só baixa se faltar ou se o MD5 não bater) e sobe o Streamlit na porta 8501.
+run = ["bash", "-c", "python -m pip install --quiet -e '.[painel]' && python tools/fetch_kernels.py && python -m streamlit run src/painel/app.py --server.address 0.0.0.0 --server.port 8501"]
+
+[nix]
+channel = "stable-24_05"
+
+# Não deixar o Replit adivinhar pacotes pelos imports e escrever no pyproject.toml (fonte única das dependências).
+[packager.features]
+guessImports = false
+
+[[ports]]
+localPort = 8501
+externalPort = 80
+
+[deployment]
+deploymentTarget = "cloudrun"
+build = ["bash", "-c", "python -m pip install --quiet -e '.[painel]' && python tools/fetch_kernels.py"]
+run = ["bash", "-c", "python tools/fetch_kernels.py && python -m streamlit run src/painel/app.py --server.address 0.0.0.0 --server.port 8501"]

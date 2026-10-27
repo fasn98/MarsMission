@@ -108,3 +108,21 @@ def test_diferenca_numerica_em_markdown(cr):
     assert d == [("linha 1", "22 768", "22 953")]
     linha = cr._linha_dif(*d[0])
     assert linha["dif_abs"] == pytest.approx(185) and linha["dif_rel"] == pytest.approx(185 / 22768)
+
+
+@pytest.mark.parametrize("caso, a, b, passa", [
+    # passa só pelo critério relativo: |a − b| = 5e-7 > piso 1e-10, mas ≤ 1e-9 · |b| = 1e-6
+    ("so_relativo", 1000.0 + 5e-7, 1000.0, True),
+    # passa só pelo piso absoluto: |a − b| = 5e-11 > 1e-9 · |b| = 1e-12, mas ≤ piso 1e-10
+    ("so_piso", 1e-3 + 5e-11, 1e-3, True),
+    # falha nos dois: |a − b| = 5e-10 > 1e-9 · |b| = 1e-12 e > piso 1e-10
+    ("falha_nos_dois", 1e-3 + 5e-10, 1e-3, False),
+])
+def test_p039_relativo_piso_e_falha(cr, caso, a, b, passa):
+    """Os três casos da P-039 (passa se |a − b| ≤ max(1e-9 · |b|, 1e-10)), com cada critério conferido isoladamente."""
+    rtol, atol, _ = cr._tolerancias()
+    d = abs(a - b)
+    pelo_relativo, pelo_piso = d <= rtol * abs(b), d <= atol
+    assert (pelo_relativo, pelo_piso) == {"so_relativo": (True, False), "so_piso": (False, True),
+                                          "falha_nos_dois": (False, False)}[caso]
+    assert cr._dentro(a, b, rtol, atol) is passa
