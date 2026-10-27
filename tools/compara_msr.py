@@ -1,7 +1,7 @@
 """Comparação de ordem de grandeza das massas deste estudo com o ERO do MSR (Etapa 1.4).
 
-NÃO é verificação: o ERO usa propulsão elétrica (Isp 4000 s) no retorno e tem plataforma completa;
-este estudo usa só propulsão química e não modela a plataforma do orbitador.
+NÃO é verificação: o ERO usa propulsão elétrica (Isp 4000 s) no retorno; este estudo usa só
+propulsão química e representa a plataforma do orbitador por uma massa única (P-016).
 Saída: results/etapa1.4/comparacao_msr.md
 
 Uso: python tools/compara_msr.py   (depois de tools/dimensionamento.py)
@@ -21,10 +21,10 @@ def main():
     m = {k: v["valor"] for k, v in yaml.safe_load((RAIZ / "tests/data/msr_massas.yaml").read_text(encoding="utf-8")).items()}
     br = lambda x: f"{x:,.0f}".replace(",", " ")  # noqa: E731
     md = ["# Comparação de ordem de grandeza com o MSR (gerado por tools/compara_msr.py)", "",
-          "**Comparação de ordem de grandeza, não verificação.** O ERO volta com propulsão elétrica (Isp 4000 s) "
-          "e tem plataforma completa (energia, aviônica, comunicação, térmica). Este estudo usa propulsão química e "
-          "**não modela a plataforma do orbitador**: a carga útil é só captura + cápsula (CU-2) e a fração estrutural "
-          "cobre só os módulos propulsivos. Massas em kg.", "",
+          "**Comparação de ordem de grandeza, não verificação.** O ERO volta com propulsão elétrica (Isp 4000 s). "
+          "Este estudo usa propulsão química, com carga útil CU-2 e plataforma do orbitador de "
+          f"{d['plataforma_orbitador_kg']:.0f} kg (P-016, NÃO VALIDADA). Regra de projeto: `{d['regra_projeto']}`. "
+          "Massas em kg.", "",
           "| Grandeza | ERO (MSR) | " + " | ".join(d["variantes"]) + " |", "| :- |" + " -: |" * (1 + len(d["variantes"]))]
 
     def est(v, nome):

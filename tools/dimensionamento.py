@@ -79,7 +79,7 @@ def _queimas(dv, f, descartado, capsula):
     }
 
 
-def dimensionar(variante, cfg, cu, opcao, margem, acrescimo, isp=None, eps=None):
+def dimensionar(variante, cfg, cu, opcao, margem, acrescimo, isp=None, eps=None, plataforma=None):
     """Dimensiona uma variante. `variante` = {"tipo": "estagios"|"unico", "dv_por_estagio": {estágio: caso}}.
 
     Em "estagios", cada estágio usa as queimas do caso indicado para ele (permite pior caso por trecho).
@@ -89,7 +89,8 @@ def dimensionar(variante, cfg, cu, opcao, margem, acrescimo, isp=None, eps=None)
     f = 1.0 + margem
     est = cfg["estagios"]
     ate_marte, capsula, descartado = carga(opcao, cu, acrescimo)
-    carga_final = ate_marte - descartado - capsula      # o que fica no orbitador até o fim
+    plat = _v(cfg["plataforma_orbitador_kg"]) if plataforma is None else plataforma
+    carga_final = ate_marte - descartado - capsula + plat   # o que fica no orbitador até o fim
 
     def e(nome, queimas):
         s_ = est[nome]
@@ -178,18 +179,18 @@ def variantes(a, janelas, piores):
     }
 
 
-def massa_leo(var, cfg, cu, opcao, margem, acresc, isp=None, eps=None):
+def massa_leo(var, cfg, cu, opcao, margem, acresc, isp=None, eps=None, plataforma=None):
     """(massa na órbita baixa, detalhe). Para o sistema único, o pior caso entre as janelas."""
     if var["tipo"] == "unico":
         res = {}
         for j_, c in var["por_janela"].items():
             try:
-                res[j_] = dimensionar({"tipo": "unico", "caso": c}, cfg, cu, opcao, margem, acresc, isp, eps)[1]
+                res[j_] = dimensionar({"tipo": "unico", "caso": c}, cfg, cu, opcao, margem, acresc, isp, eps, plataforma)[1]
             except ValueError:
                 return float("nan"), None, None
         j_pior = max(res, key=lambda j_: res[j_][0].massa_inicial)
         return res[j_pior][0].massa_inicial, res[j_pior], j_pior
-    r = dimensionar(var, cfg, cu, opcao, margem, acresc, isp, eps)[1]
+    r = dimensionar(var, cfg, cu, opcao, margem, acresc, isp, eps, plataforma)[1]
     return r[0].massa_inicial, r, None
 
 
@@ -204,6 +205,7 @@ def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     br = lambda x, n=0: f"{x:,.{n}f}".replace(",", " ").replace(".", ",")  # noqa: E731
     out = {"gerado_por": "tools/dimensionamento.py", "caso_base": base, "margem_dv": margem,
+           "regra_projeto": cfg["regra_projeto"], "plataforma_orbitador_kg": _v(cfg["plataforma_orbitador_kg"]),
            "variantes": {}, "sensibilidade": []}
 
     # 1. Orçamento de Δv por trecho: missão A, mínimos por janela e pior caso por trecho
@@ -212,27 +214,42 @@ def main():
     md = ["# Orçamento de Δv por trecho (gerado por tools/dimensionamento.py)", "",
           f"Δv em km/s: ideal (Etapa 1.3) + perdas gravitacionais + parcelas fixas. Margem de {br(100 * margem)} % "
           "aplicada a todos os trechos (P-014, NÃO VALIDADA). Colunas: missão A e o mínimo admissível de cada janela "
-          "(ADR 0004). A última coluna é o pior caso de cada trecho entre as janelas.", "",
+          "(ADR 0004). Penúltima coluna: pior caso de cada trecho entre as janelas. Última: Δv de projeto pela regra "
+          f"`{cfg['regra_projeto']}` (ADR 0004).", "",
           "| Trecho | " + " | ".join(colunas) + " | Pior caso do trecho |", "| :- |" + " -: |" * (len(colunas) + 1)]
+    # Coluna de projeto: cada trecho pelo caso que a regra de projeto atribui ao estágio que o executa.
+    reg = vs[cfg["regra_projeto"]]
+    estagio_do_trecho = {"saida_terra": "saida_terra", "correcoes_ida": "insercao_marte", "captura_marte": "insercao_marte",
+                         "encontro_e_manutencao_marte": "retorno", "saida_marte": "retorno", "correcoes_volta": "retorno",
+                         "desvio_orbitador": "retorno"}
+    md[-2] = md[-2] + " Projeto (regra de projeto) |"
+    md[-1] = md[-1] + " -: |"
     tot = {k: 0.0 for k in colunas}
-    tot_pior = 0.0
+    tot_pior = tot_proj = 0.0
     for n in nomes:
         vals = {k: orcamento(c, cfg, p)[n] for k, c in colunas.items()}
         pior_n = max(orcamento(c, cfg, p)[n] for c in janelas.values())
+        proj_n = orcamento(reg["dv_por_estagio"][estagio_do_trecho[n]], cfg, p)[n]
         tot_pior += pior_n
+        tot_proj += proj_n
         for k in colunas:
             tot[k] += vals[k]
-        md.append(f"| {n} | " + " | ".join(br(vals[k], 3) for k in colunas) + f" | {br(pior_n, 3)} |")
-    md.append("| **Total sem margem** | " + " | ".join(f"**{br(tot[k], 3)}**" for k in colunas) + f" | **{br(tot_pior, 3)}** |")
+        md.append(f"| {n} | " + " | ".join(br(vals[k], 3) for k in colunas) + f" | {br(pior_n, 3)} | {br(proj_n, 3)} |")
+    md.append("| **Total sem margem** | " + " | ".join(f"**{br(tot[k], 3)}**" for k in colunas)
+              + f" | **{br(tot_pior, 3)}** | **{br(tot_proj, 3)}** |")
     md.append(f"| **Total com margem** | " + " | ".join(f"**{br(tot[k] * (1 + margem), 3)}**" for k in colunas)
-              + f" | **{br(tot_pior * (1 + margem), 3)}** |")
+              + f" | **{br(tot_pior * (1 + margem), 3)}** | **{br(tot_proj * (1 + margem), 3)}** |")
     (SAIDA / "orcamento_dv.md").write_text("\n".join(md) + "\n", encoding="utf-8")
-    out["orcamento_total_km_s"] = {k: round(v, 4) for k, v in tot.items()} | {"pior_por_trecho": round(tot_pior, 4)}
+    out["orcamento_total_km_s"] = ({k: round(v, 4) for k, v in tot.items()}
+                                   | {"pior_por_trecho": round(tot_pior, 4), "projeto": round(tot_proj, 4),
+                                      "projeto_com_margem": round(tot_proj * (1 + margem), 4)})
 
     # 2. Variantes no caso base
     md2 = ["# Dimensionamento por estágios (gerado por tools/dimensionamento.py)", "",
            f"Carga útil {base['carga_util']}, margem de Δv {br(100 * margem)} %, acréscimo na cápsula "
-           f"{br(100 * acresc)} %. Massas em kg. Só trechos no espaço (descida, pouso e subida: Fase 2).", ""]
+           f"{br(100 * acresc)} %, plataforma do orbitador {br(_v(cfg['plataforma_orbitador_kg']))} kg (P-016). "
+           f"Massas em kg. Só trechos no espaço (descida, pouso e subida: Fase 2). "
+           f"Regra de projeto (ADR 0004): `{cfg['regra_projeto']}`.", ""]
     for k, var in vs.items():
         m, r, j_pior = massa_leo(var, cfg, cu, base["carga_util"], margem, acresc)
         reg = {"descricao": var["descricao"], "massa_orbita_baixa_kg": None if r is None else round(m, 1)}
@@ -257,7 +274,8 @@ def main():
 
     def linha(rotulo, valor, **kw):
         res = {k: massa_leo(v, cfg, cu, kw.get("opcao", base["carga_util"]), kw.get("margem", margem),
-                            kw.get("acresc", acresc), kw.get("isp"), kw.get("eps"))[0] for k, v in vs.items()}
+                            kw.get("acresc", acresc), kw.get("isp"), kw.get("eps"), kw.get("plataforma"))[0]
+               for k, v in vs.items()}
         out["sensibilidade"].append({"parametro": rotulo, "valor": valor,
                                      "massa_orbita_baixa_kg": {k: (round(v, 1) if v == v else None) for k, v in res.items()}})
         md2.append(f"| {rotulo} | {valor} | " + " | ".join(br(res[k]) if res[k] == res[k] else "inviável" for k in vs) + " |")
@@ -274,6 +292,8 @@ def main():
         linha("Isp de todos os estágios", f"{'+' if d >= 0 else ''}{br(100 * d)} %", isp={n: v * (1 + d) for n, v in isp0.items()})
     for x in sens["fracao_estrutural_multiplicador"]:
         linha("Frações estruturais × fator", br(x, 2), eps={n: v * x for n, v in eps0.items()})
+    for x in sens["plataforma_orbitador_kg"]:
+        linha("Plataforma do orbitador", f"{br(x, 1)} kg", plataforma=x)
     (SAIDA / "dimensionamento.md").write_text("\n".join(md2) + "\n", encoding="utf-8")
     (SAIDA / "dimensionamento.yaml").write_text(yaml.safe_dump(_nativo(out), sort_keys=False, allow_unicode=True),
                                                 encoding="utf-8")

@@ -1,6 +1,6 @@
 # Etapa 1.4, Parte B: orçamento de Δv e primeiro dimensionamento
 
-Estado: aguardando o portão do Fabio, que escolhe a regra final do envelope (ADR 0004). Parte A
+Estado: portão da Parte B feito em 2026-10-27. Regra de projeto (iii) (ADR 0004); plataforma do orbitador incluída (P-016). Parte A
 (carga útil): `docs/etapa1.4_carga_util.md`.
 
 **Escopo:** só os trechos no espaço, ou seja, saída da órbita baixa da Terra, captura em Marte,
@@ -54,94 +54,106 @@ tabela anterior.
 ## 3. Dimensionamento: missão A e as três regras de envelope
 
 Equação do foguete por estágio (`src/orbital/foguete.py`), testada contra a forma fechada
-(`tests/test_foguete.py`). A cápsula é solta antes do desvio. Na CU-1, o módulo descartado em Marte
-sai antes da partida de Marte. Caso base: CU-2, margem de 10 %, sem acréscimo na cápsula.
+(`tests/test_foguete.py`).
+- A cápsula é solta antes do desvio; na CU-1, o módulo descartado em Marte sai antes da partida de
+  Marte.
+- A **plataforma do orbitador** (P-016, 850 kg) fica com o orbitador até o fim.
+- Caso base: CU-2, margem de 10 %, sem acréscimo na cápsula.
 
 | Caso | Regra | Massa na órbita baixa da Terra | Massa depois da injeção trans-Marte |
 | :- | :- | -: | -: |
-| Missão A | os três estágios pela missão A | **6.180 kg** | 2.036 kg |
-| **(i)** | saída da Terra com estágio próprio + um só estágio armazenável para captura e retorno; cada janela com a sua missão; projeto pela pior janela | **10.352 kg** (define: 2033) | 3.409 kg |
-| **(ii)** | cada estágio pelo pior caso do seu trecho | **10.629 kg** | 3.420 kg |
-| **(iii)** | estágios de Marte pelo pior caso; saída da Terra pela janela de referência (A) | **10.381 kg** | 3.420 kg |
+| Missão A | os três estágios pela missão A | 13.587 kg | 4.476 kg |
+| (i) | saída da Terra própria + um só estágio para captura e retorno; projeto pela pior janela (2033) | 22.768 kg | 7.499 kg |
+| (ii) | cada estágio pelo pior caso do seu trecho | 23.378 kg | 7.522 kg |
+| **(iii), regra de projeto (ADR 0004)** | **saída da Terra pela janela da missão A; captura (descartada em Marte) e retorno pelo pior caso de cada trecho** | **22.833 kg** | **7.522 kg** |
 
-Leitura:
+- A (iii) foi escolhida no portão da Parte B. O estágio de saída da Terra é montado para cada
+  lançamento, e a (i) é frágil à fração estrutural: com ε × 1,5 vai a 90 t (ADR 0004).
+- Na (i), a janela que define a massa é 2033, não 2035 (a de maior Δv total). Com o estágio de Marte
+  único, a distribuição do Δv entre os trechos pesa mais que o total.
 
-- As três regras dão massas parecidas: 10,35 a 10,63 t, uma faixa de 3 %. Todas ficam ~70 % acima
-  da missão A, porque precisam cobrir as janelas de 2031 a 2035, com captura (até 1,36 km/s) e
-  saída de Marte (até 1,39 km/s) mais caras que as da janela de 2028.
-- Na (i), a janela que define a massa é **2033**, não 2035 (a de maior Δv total). Com o estágio de
-  Marte único, a distribuição do Δv entre os trechos pesa mais que o total.
-- A (iii) fica 2,3 % abaixo da (ii). A diferença vem só da saída da Terra (3,735 contra 3,806 km/s),
-  o trecho de menor Isp relativo ao Δv.
-- A (i) é a mais sensível à fração estrutural: com ε × 1,5 passa a 41 t, perto de ficar inviável,
-  porque o estágio único leva o inerte da captura até o fim da missão.
+## 4. Plataforma do orbitador (P-016)
 
-## 4. Sensibilidade da massa na órbita baixa
+| | Valor | Fonte |
+| :- | -: | :- |
+| Limite inferior: Mars Odyssey, massa seca sem instrumentos | 331,8 kg | [F33] |
+| Limite superior: módulo principal do ERO, massa seca | 2200 kg | [F22] |
+| **Base: ≈ média geométrica dos dois limites, arredondada** | **850 kg** | **P-016, NÃO VALIDADA** |
 
-Tabela completa: `results/etapa1.4/dimensionamento.md`. Faixas em kg (missão A | variante ii):
+Justificativa da base:
+- A faixa cobre um fator de 6,6, e não há análogo direto: um orbitador químico que captura uma carga
+  em órbita.
+- A Odyssey não levava sistema de captura nem sensores de encontro, que o CCRS de 2021 não inclui
+  ("w/o RSS" [F22]).
+- O módulo do ERO inclui propulsão elétrica e painéis de 41 kW, desnecessários num orbitador químico.
+  Como a fração estrutural já cobre os módulos propulsivos, o limite superior conta parte da
+  propulsão duas vezes.
+- O centro em escala logarítmica é a escolha neutra entre os dois.
 
-| Parâmetro | Faixa testada | Missão A | (ii) |
+Efeito na regra (iii): 15,2 t com 331,8 kg, 22,8 t com 850 kg e 42,6 t com 2200 kg. **A plataforma
+passou a ser o parâmetro de maior efeito**, junto com a margem e a fração estrutural.
+
+## 5. Sensibilidade da massa na órbita baixa
+
+Tabela completa: `results/etapa1.4/dimensionamento.md`. Faixas em kg:
+
+| Parâmetro | Faixa testada | Missão A | (iii) |
 | :- | :- | :- | :- |
-| Margem de Δv (P-014) | 0 a 20 % | 4.990 a 7.692 | 8.070 a 14.124 |
-| Isp de todos os estágios | −5 % a +5 % | 7.010 a 5.521 | 12.516 a 9.191 |
-| Frações estruturais | × 0,5 a × 1,5 | 4.671 a 9.243 | 7.089 a 20.129 |
-| Acréscimo na cápsula (P-012) | 0 a 50 % | 6.180 a 6.568 | 10.629 a 11.293 |
-| Carga útil | CU-3 / CU-2b / CU-1 / CU-2 | 799 / 5.396 / 6.292 / 6.180 | 1.368 / 9.280 / 10.264 / 10.629 |
+| Plataforma (P-016) | 331,8 a 2200 kg | 9.071 a 25.352 | 15.242 a 42.611 |
+| Margem de Δv (P-014) | 0 a 20 % | 10.970 a 16.913 | 17.383 a 30.257 |
+| Frações estruturais | × 0,5 a × 1,5 | 10.268 a 20.326 | 15.277 a 43.049 |
+| Isp de todos os estágios | −5 % a +5 % | 15.413 a 12.140 | 26.845 a 19.773 |
+| Acréscimo na cápsula (P-012) | 0 a 50 % | 13.587 a 13.975 | 22.833 a 23.483 |
+| Carga útil | CU-3 / CU-2b / CU-1 / CU-2 | 8.206 / 12.804 / 13.699 / 13.587 | 13.788 / 21.516 / 22.477 / 22.833 |
 
-Pontos de atenção:
+- **A cápsula mais rápida (12,34 contra 12,0 km/s) pesa pouco.** Até +50 % na massa da cápsula dá
+  +3 % na massa total (P-012; sem lei de escala, como decidido).
+- **CU-2 contra CU-2b:**
+  - a CU-2 continua sendo a base (decisão do Fabio);
+  - a frase de Martin-Mur et al. (ISSFD 2024, p. 5 [F32]), "Capture, Containment, and Return System
+    (CCRS), including the Earth Entry System (EES)", é **um indício a favor da CU-2b**, ou seja, de
+    que os 620 kg [F23] já incluiriam a cápsula. A questão será revisada se surgir fonte mais clara;
+  - na CU-2b, a massa da (iii) cai 5,8 %.
 
-- **A cápsula mais rápida (12,34 contra 12,0 km/s) pesa pouco.** Até +50 % na massa da cápsula
-  muda a massa total em +6 % (P-012; sem lei de escala, como decidido).
-- **A margem e a fração estrutural dominam.** Margem de 20 % e ε × 1,5 aumentam a massa entre 25 e
-  90 %, conforme o caso.
-- **Possível contagem dupla na CU-2.** Martin-Mur et al. (ISSFD 2024, p. 5 [F32]) descrevem o
-  "CCRS, including the Earth Entry System (EES)". Se os 620 kg do CCRS [F23] já incluírem a cápsula,
-  a CU-2 conta a cápsula duas vezes. Na leitura alternativa (CU-2b), todas as massas caem 12,7 %.
-  Nenhuma fonte diz isso explicitamente, e o caso base mantém a soma (conservador).
-
-## 5. Comparação de ordem de grandeza com o MSR
+## 6. Comparação de ordem de grandeza com o MSR
 
 **Rótulo: comparação de ordem de grandeza, não verificação.** Tabela: `results/etapa1.4/comparacao_msr.md`
 (`tools/compara_msr.py`).
 
-| | ERO (MSR) | Este estudo: missão A | Este estudo: (ii) |
+| | ERO (MSR) | Missão A | (iii) |
 | :- | -: | -: | -: |
-| Massa a caminho de Marte | ≈ 6.500 kg úmida [F22] (7.200 kg em 2023 [F29]) | 2.036 kg | 3.420 kg |
-| Módulo de inserção em Marte (seco + propelente) | 2.500 kg [F22] | 882 kg | 1.767 kg |
+| Massa a caminho de Marte | ≈ 6.500 kg úmida [F22] (7.200 kg em 2023 [F29]) | 4.476 kg | 7.522 kg |
+| Módulo de inserção em Marte (seco + propelente) | 2.500 kg [F22] | 1.938 kg | 3.886 kg |
 
 Explicação das diferenças:
 
-1. **Propulsão.** O ERO volta com propulsão elétrica (Isp 4000 s; 1100 kg de xenônio; "ΔV 10 km/s"
-   [F22]). Aqui toda a propulsão é química, e por isso a massa química calculada aqui deve ser
-   **maior** que a de um sistema elétrico equivalente, não menor. A comparação química × elétrica
-   fica para a Fase 3.
-2. **Plataforma do orbitador ausente: o principal motivo de os valores daqui ficarem abaixo dos do
-   ERO.** Este modelo não tem a massa da plataforma (energia, aviônica, comunicação, controle
-   térmico, GNC). A carga útil é só a captura e a cápsula, e ε cobre só os módulos propulsivos. Para
-   comparar: o módulo principal do ERO tem 2200 kg secos [F22], com painéis de 41 kW para a
-   propulsão elétrica. A massa seca da Mars Odyssey, um orbitador químico, foi de 331,8 kg sem
-   instrumentos [F33].
-3. **Trajetória.** O ERO faz uma espiral de baixo empuxo com outro perfil de Δv. Aqui o Δv é
-   impulsivo.
+1. **Propulsão.** O ERO volta com propulsão elétrica (Isp 4000 s; 1100 kg de xenônio [F22]). Aqui
+   toda a propulsão é química, então a massa química deve ser **maior** que a de um sistema elétrico
+   equivalente. Com a plataforma incluída, é o que acontece na regra (iii): 7,5 t contra 6,5 t. A
+   comparação química × elétrica fica para a Fase 3.
+2. **Envelope contra missão única.** A (iii) cobre as janelas de 2028 a 2035. Só a missão A fica em
+   4,5 t, abaixo do ERO, porque a janela de 2028 tem a captura e a saída de Marte mais baratas.
+3. **Plataforma.** A massa de 850 kg é premissa (P-016). Com a faixa inteira, a (iii) vai de 5,0 a
+   14,0 t a caminho de Marte. A ordem de grandeza do ERO fica dentro dela.
+4. **Trajetória.** O ERO faz espirais de baixo empuxo, com outro perfil de Δv. Aqui o Δv é impulsivo.
+5. **Massa na órbita baixa.** O ERO seria lançado num Ariane 64 [F32] e não tem estágio de saída da
+   Terra próprio. Os 22,8 t da (iii) incluem esse estágio.
 
-## 6. Pendências e premissas novas
+## 7. Premissas desta parte (todas NÃO VALIDADAS)
 
-- **Regra final do envelope:** escolher entre (i), (ii) e (iii); o ADR 0004 será atualizado.
-- **Plataforma do orbitador:** decidir se entra uma massa de plataforma (com fonte ou como premissa)
-  já nesta fase, ou na Fase 2/3.
-- **CU-2 contra CU-2b:** decidir se os 620 kg incluem a cápsula.
-- **Premissas novas (NÃO VALIDADAS):**
+- **Aprovadas no portão da Parte B:**
   - P-012: faixa de acréscimo na cápsula;
   - P-013: parâmetros do desvio;
   - P-014: margem de Δv de 10 %;
   - P-015: perdas gravitacionais tiradas do DRA.
+- **Nova:** P-016, plataforma do orbitador de 850 kg (faixa de 331,8 a 2200 kg).
 
-## 7. Limitações
+## 8. Limitações
 
 - Manobras impulsivas; sem queima finita (o motor de 400 N tem empuxo baixo para estas massas). As
   perdas entram só pela P-015 e pela margem.
-- Sem plataforma do orbitador, sem margem de massa seca, sem propelente residual nem de controle de
-  atitude além dos 15 m/s por trecho.
-- O ε do Centaur III vem de um estágio de lançador. Um estágio de saída para esta massa seria muito
-  menor, e o ε real tende a ser maior.
+- Plataforma representada por uma massa única (P-016), sem orçamento por subsistema e sem margem de
+  massa seca.
+- O ε do Centaur III vem de um estágio de lançador. Um estágio de saída para esta massa seria menor,
+  e o ε real tende a ser maior.
 - Sem mudança de plano para a DLA (Fase 2) e sem cálculo de lançador.

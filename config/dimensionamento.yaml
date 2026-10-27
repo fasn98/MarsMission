@@ -47,6 +47,15 @@ dv:
 
 margem_dv: {valor: 0.10, premissa: P-014}
 
+# Plataforma do orbitador (energia, aviônica, comunicação, térmica, GNC, sensores de encontro):
+# fica com o orbitador até o fim da missão. Faixa entre análogos publicados: Mars Odyssey,
+# 331,8 kg secos [F33], e módulo principal do ERO, 2200 kg secos com propulsão elétrica e painéis de
+# 41 kW [F22]. Valor de base e justificativa: premissa P-016 (NÃO VALIDADA).
+plataforma_orbitador_kg: {valor: 850, premissa: P-016}
+
+# Regra de projeto do envelope (ADR 0004, decisão do Fabio no portão da Parte B): variante (iii).
+regra_projeto: iii_marte_pior_terra_ref
+
 caso_base:
   carga_util: CU-2          # decisão do Fabio (portão da Parte A)
   acrescimo_capsula: 0.0    # faixa P-012 aplicada na sensibilidade
@@ -57,3 +66,4 @@ sensibilidade:
   acrescimo_capsula: [0.0, 0.15, 0.30, 0.50]    # P-012
   delta_isp_relativo: [-0.05, 0.05]
   fracao_estrutural_multiplicador: [0.5, 1.5]
+  plataforma_orbitador_kg: [331.8, 850, 2200]   # P-016: os dois análogos e o valor de base

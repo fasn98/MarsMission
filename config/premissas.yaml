@@ -154,3 +154,18 @@ premissas:
       tripulado com outra relação empuxo/peso. Usadas como ordem de grandeza; o valor real depende do
       empuxo deste veículo, que não foi definido.
     status: NÃO VALIDADA
+  - id: P-016
+    nome: plataforma_orbitador_kg
+    valor: 850
+    faixa: [331.8, 2200]
+    unidade: kg (massa seca da plataforma, sem módulos propulsivos e sem carga útil)
+    uso: config/dimensionamento.yaml
+    justificativa: >
+      Decisão do Fabio (portão da Parte B, 2026-10-27): incluir a plataforma já na Fase 1, com faixa
+      entre análogos publicados. Limite inferior: Mars Odyssey, 331,8 kg secos [F33], orbitador
+      químico sem carga de captura. Limite superior: módulo principal do ERO, 2200 kg secos [F22], que
+      inclui propulsão elétrica e painéis de 41 kW, desnecessários aqui. Base de 850 kg ≈ média
+      geométrica dos dois (√(331,8 × 2200) ≈ 854 kg), arredondada. A faixa cobre um fator de 6,6;
+      sem análogo direto (orbitador químico com captura em órbita), o centro em escala logarítmica é
+      a escolha neutra. Leva os sensores de encontro, que o CCRS de 2021 não inclui ("w/o RSS" [F22]).
+    status: NÃO VALIDADA

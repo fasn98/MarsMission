@@ -1,36 +1,46 @@
-# ADR 0004 — Envelope de Δv para dimensionamento
+# ADR 0004 — Envelope de Δv e regra de dimensionamento por estágio
 
-Status: Accepted (Fabio, 2026-10-27; regra explicitada no segundo portão da Etapa 1.3)
+Status: Accepted (Fabio, 2026-10-27; regra do Δv no 2º portão da Etapa 1.3; regra de estagiamento
+no portão da Parte B da Etapa 1.4)
 Data: 2026-10-27
 
 ## Contexto
 O veículo deve servir em qualquer janela de ida de 2028 a 2035, não só na missão de referência
-(ADR 0003).
+(ADR 0003). A forma de cobrir as janelas depende do estagiamento.
 
 ## Decisão
-- **Regra:** para cada janela de ida (2028, 2031, 2033, 2035), toma-se o **menor Δv propulsivo
-  admissível** sob as restrições da missão **robótica**. O **envelope é o maior desses mínimos**.
-- Restrições da missão robótica:
-  - velocidade de reentrada ≤ 12,9 km/s (P-011, NÃO VALIDADA), aplicada dentro da busca;
-  - órbita de Marte elíptica de 1 sol e captura propulsiva (ADR 0003);
-  - **sem limite de tempo de trânsito.**
-- **Classes consideradas:** conjunção e oposição. A classe `conjuncao_transito_curto` (trânsitos
-  ≤ 210 d) **fica de fora**: o limite de 210 d vem do DRA 5.0 ("relatively short transits … less
-  than 180 to 210 days", SP p. 47 [F18]) e é uma restrição de tripulação. A missão deste estudo é
-  robótica.
-- **Valor:** 5,91 km/s, definido por `2035-conjuncao` (impulsivo ideal, sem margem). É calculado
-  por `tools/missoes.py` a partir de `config/missao_referencia.yaml` e gravado em
-  `results/etapa1.3/missoes.yaml`. Mínimos por janela: 2028 5,40; 2031 5,78; 2033 5,89; 2035 5,91 km/s.
-- **A DLA não entra nesta regra.** Ela será avaliada na Fase 2. Afeta principalmente a janela de
-  2033, cujo mínimo tem DLA de −55,5°: partir no plano da órbita de estacionamento exigiria
-  inclinação ≥ 55,5° ou mudança de plano, e nenhuma das duas está no Δv acima.
+1. **Mínimo admissível por janela** (Etapa 1.3): para cada janela de ida 2028–2035, a missão de
+   menor Δv propulsivo sob as restrições da missão robótica:
+   - reentrada ≤ 12,9 km/s (P-011);
+   - órbita de 1 sol e captura propulsiva (ADR 0003);
+   - sem limite de trânsito.
+
+   A classe "trânsitos ≤ 210 d" fica de fora porque é restrição de tripulação do DRA 5.0 (SP p. 47).
+   Mínimos ideais: 2028 5,40; 2031 5,78; 2033 5,89; 2035 5,91 km/s.
+2. **Regra de dimensionamento (variante iii)** (Etapa 1.4):
+   - **estágio de saída da Terra:** dimensionado pela janela da missão A (2028). Esse estágio é
+     montado para cada lançamento, então não precisa cobrir as outras janelas;
+   - **estágio de captura em Marte:** dimensionado pelo pior caso do seu trecho entre as janelas, e
+     **descartado em Marte** depois da captura, como o módulo de inserção do ERO [F22];
+   - **estágio de retorno:** separado do de captura, dimensionado pelo pior caso do seu trecho;
+   - o cálculo está em `tools/dimensionamento.py`, com `regra_projeto` em
+     `config/dimensionamento.yaml`.
+3. **Por que não (i) nem (ii):**
+   - (i), um estágio único para captura e retorno, é frágil à fração estrutural: com ε × 1,5 a massa
+     na órbita baixa vai a 41 t sem plataforma e a 90 t com a plataforma de 850 kg, porque o inerte
+     da captura viaja até o fim;
+   - (ii) dimensiona a saída da Terra por uma janela que não é a da missão de referência, e dá a
+     maior massa das três.
+4. **A DLA não entra nesta regra** e será avaliada na Fase 2 (afeta a janela de 2033, DLA −55,5°).
 
 ## Histórico
-No primeiro portão foram citados 6,17 km/s (candidata D). Esse era o pior valor só entre as cinco
-candidatas apresentadas. Com a regra aplicada a todas as conjunções e a classe de trânsito curto
-incluída, o valor seria 6,64 km/s. O Fabio escolheu a regra acima.
+- No primeiro portão da 1.3 foram citados 6,17 km/s (candidata D, pior só entre as candidatas
+  apresentadas); com a classe de trânsito curto seriam 6,64 km/s; a regra do item 1 dá 5,91 km/s.
+- Na Etapa 1.4 foram comparadas as três regras de estagiamento (i), (ii) e (iii) com o mesmo
+  propelente por trecho: `docs/etapa1.4_dimensionamento.md`.
 
 ## Consequências
-- O envelope não inclui margem; a margem é premissa da Etapa 1.4.
-- Se a avaliação de DLA da Fase 2 exigir mudança de plano em 2033, o mínimo dessa janela sobe, e o
-  envelope deve ser recalculado.
+- Massa na órbita baixa da Terra no caso base (CU-2, margem de 10 %, plataforma de 850 kg, P-016):
+  22,8 t pela regra (iii). Valor em `results/etapa1.4/dimensionamento.yaml`.
+- Se a avaliação de DLA da Fase 2 exigir mudança de plano em 2033, o pior caso da captura ou do
+  retorno pode mudar, e o envelope deve ser recalculado.
