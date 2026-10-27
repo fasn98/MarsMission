@@ -1,8 +1,64 @@
 # Etapa 2.4: lançamento e DLA
 
-Estado: **aguardando o portão do Fabio**. Resultados em `results/etapa2.4/lancamento.md` e `.yaml`,
-gerados por `tools/lancamento.py` a partir de `config/lancadores.yaml`. Todos os números abaixo vêm
-desses arquivos.
+Estado: **decidida pelo Fabio no portão da Etapa 2.4** (ADR 0008). Resultados em `results/etapa2.4/lancamento.md`
+e `.yaml`, gerados por `tools/lancamento.py` a partir de `config/lancadores.yaml`.
+
+## Decisões do portão e resultado final
+
+| Item | Decisão |
+| :- | :- |
+| Chegada à trajetória | **(a) injeção direta pelo lançador.** (b) fica como alternativa: exige estágio criogênico próprio |
+| Orbitador | **Falcon Heavy descartável ou Vulcan VC6** |
+| Lander | lista de lançadores que servem (abaixo) |
+| 2033 | **\|DLA\| ≤ 50°** (`config/missoes.yaml`); envelope reaplicado (ADR 0004) |
+| P-036, P-037 | aprovadas como premissas, NÃO VALIDADAS; a tabela da P-036 é de Atlas V/Delta IV |
+| Datas | corrigidas para o calendário TDB, com errata nos relatórios e ADRs anteriores (seção 7) |
+| "Operacional" | vale na data do guia ou da consulta citada; **disponibilidade em 2028 e depois não foi avaliada** |
+
+**Envelope reaplicado (ADR 0004):** 5,912 km/s, definido agora pela conjunção de 2033 (antes, 5,911 km/s em
+2035). O pior caso de cada estágio de Marte não muda. As massas da regra (iii) também não mudam: os resultados
+da Etapa 2.3 foram regenerados sem diferença.
+
+**Janelas finais** (datas em TDB):
+
+| Janela | Partida | C3 (km²/s²) | DLA |
+| :- | :- | -: | -: |
+| 2028, conjunção (missão A) | 2028-11-24 | 9,10 | +29,2° |
+| 2031, conjunção | 2030-12-25 | 10,70 | +14,8° |
+| 2033, conjunção (\|DLA\| ≤ 50°) | 2033-04-23 | 9,60 | −49,7° |
+| 2035, conjunção | 2035-06-29 | 10,44 | +8,7° |
+
+**Orbitador da regra (iii), forma (a):** pior margem nas quatro janelas, sempre em 2033, com multiplicador
+de DLA de 0,902.
+
+| Lançador | Pior margem |
+| :- | -: |
+| Falcon Heavy descartável | **+86 %** |
+| Vulcan VC6 | **+38 %** |
+| Vulcan VC4 | +8 % |
+
+**Lander, forma (a):**
+
+| Lançador | Pior margem |
+| :- | -: |
+| Falcon Heavy | +26 % (recuperação), +201 % (descartável) |
+| Vulcan VC2 / VC4 / VC6 | +16 % / +74 % / +123 % |
+
+O Falcon 9 serve o lander só na forma (b), com +27 %, porque não há dado acima de C3 = 10.
+
+**Lançamentos da arquitetura: 2**, um por veículo.
+
+**Datas da missão de referência** (corrigidas, calendário TDB):
+
+| Evento | Data |
+| :- | :- |
+| Partida da Terra | 2028-11-24 |
+| Chegada a Marte | 2029-09-20 |
+| Partida de Marte | 2030-11-08 |
+| Chegada à Terra | 2031-09-23 |
+
+As seções 1 a 9 abaixo são a análise apresentada no portão. Os números delas são com a 2033 sem limite de
+DLA, e as datas estão com o rótulo antigo (ver seção 7). O texto foi mantido.
 
 ## 1. O que se compara
 
@@ -180,7 +236,7 @@ Pior margem com cada alternativa de 2033 está em `results/etapa2.4/lancamento.m
    - A escolha é de arquitetura.
 4. **New Glenn e SLS** ficam separados como "desempenho anunciado, não demonstrado".
 
-## 7. Achado fora do escopo: datas gravadas um dia antes
+## 7. Achado fora do escopo: datas gravadas um dia antes (CORRIGIDO após o portão)
 
 - **O defeito:** as datas das missões (Etapa 1.3 em diante) são impressas com `spice.et2utc` a partir
   de épocas à **meia-noite TDB**. Como TDB está ~69 s à frente de UTC, a data impressa é a do dia
@@ -191,6 +247,15 @@ Pior margem com cada alternativa de 2033 está em `results/etapa2.4/lancamento.m
     + 1 dia e reproduz C3 e DLA.
 - **Não corrigido nesta etapa.** A correção (imprimir em TDB ou somar o dia) mexe nos relatórios da
   Fase 1 e nos ADRs. A decisão é do Fabio.
+- **Correção (decisão do Fabio no portão):**
+  - As datas passam a ser rotuladas no calendário TDB (`orbital.ephemeris.data_tdb`), em
+    `src/orbital/missao.py`, `tools/porkchop.py` e nas ferramentas de verificação.
+  - `tools/porkchop.py` também gravava instantes UTC com o rótulo `_tdb`; isso foi corrigido.
+  - Os resultados das Etapas 1.2 e 1.3 foram regenerados. As verificações contra NASA/TM-2010-216764 e JPL
+    82-43 não mudaram, e nenhum mínimo de porkchop mudou de dia.
+  - Erratas, sem apagar o texto original, em: `docs/etapa1.3_missoes.md` (tabela antigo → correto de
+    todas as missões), `docs/adr/0003-missao-de-referencia.md`, `config/missao_referencia.yaml`,
+    `docs/etapa1.2_lambert_porkchop.md` e `docs/etapa1.2_retorno.md`.
 
 ## 8. Premissas novas (NÃO VALIDADAS)
 

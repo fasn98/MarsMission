@@ -39,7 +39,7 @@ def _et(data):
 
 
 def _dia(et):
-    return spice.et2utc(et, "ISOC", 0)[:10]
+    return eph.data_tdb(et)
 
 
 def main():

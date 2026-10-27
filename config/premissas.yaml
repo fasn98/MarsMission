@@ -388,6 +388,8 @@ premissas:
       citados pela fonte como "approximate and highly depend on the declination, energy requirements, and
       vehicle configuration". Aplicados aqui a Falcon, Vulcan, New Glenn e SLS, com interpolação linear entre
       28,5° (sem penalidade, [F79]) e 60°. Nenhum lançador publica a sua curva de penalidade por DLA.
+      ATENÇÃO: a tabela de [F83] é de Atlas V e Delta IV; o seu uso para os demais lançadores é extrapolação.
+      Aprovada pelo Fabio no portão da Etapa 2.4 como premissa (continua NÃO VALIDADA).
     status: NÃO VALIDADA
   - id: P-037
     nome: saida_propria_fora_do_plano
@@ -403,5 +405,5 @@ premissas:
       subestimava o custo). Δv pela lei dos cossenos entre a velocidade circular e a do perigeu da hipérbole.
       Estratégias com mais de um impulso, ou um lançamento direto à inclinação da DLA, podem custar menos; não foram
       avaliadas. O estágio de saída é redimensionado para o C3 e a DLA de cada janela (pedido do Fabio no portão
-      da Etapa 2.4).
+      da Etapa 2.4). Aprovada pelo Fabio no portão da Etapa 2.4 como premissa (continua NÃO VALIDADA).
     status: NÃO VALIDADA

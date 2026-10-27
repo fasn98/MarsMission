@@ -81,11 +81,12 @@ def test_dla_da_grade_confere_com_a_missao_A():
     eph.carregar_kernels()
     m = yaml.safe_load((RAIZ / "results/etapa1.3/missoes.yaml").read_text(encoding="utf-8"))
     a = next(c for c in m["candidatas"] if c["id"] == "2028-conjuncao")
-    # As datas gravadas são a conversão para UTC (et2utc) de épocas à meia-noite TDB; como TDB − UTC ≈ 69 s,
-    # a data impressa é a do dia anterior. A época da grade é a meia-noite TDB do dia seguinte à data impressa.
-    et1 = spice.str2et(a["partida_terra"] + " 00:00:00 TDB") + 86400.0
-    et2 = spice.str2et(a["chegada_marte"] + " 00:00:00 TDB") + 86400.0
-    assert spice.et2utc(et1, "ISOC", 0)[:10] == a["partida_terra"]
+    # As datas gravadas são o calendário TDB das épocas da grade (meia-noite TDB). Antes da errata da Etapa 2.4
+    # eram a conversão para UTC (et2utc), que cai 69 s antes da meia-noite e dava o dia anterior.
+    et1 = spice.str2et(a["partida_terra"] + " 00:00:00 TDB")
+    et2 = spice.str2et(a["chegada_marte"] + " 00:00:00 TDB")
+    assert eph.data_tdb(et1) == a["partida_terra"]
+    assert spice.et2utc(et1, "ISOC", 0)[:10] != a["partida_terra"]   # o rótulo UTC antigo dava o dia anterior
     g = pc.calcular_grade(eph.TERRA, eph.BARICENTRO_MARTE, [et1], [et2])
     assert g.dla_graus[0, 0] == pytest.approx(a["dla_graus"], abs=1e-3)
     assert g.c3[0, 0] == pytest.approx(a["c3_km2_s2"], abs=1e-3)

@@ -51,11 +51,12 @@ def _br(x, casas=None):
 
 
 def _datas(ets):
-    return np.array([np.datetime64(spice.et2utc(t, "ISOC", 0)) for t in ets])
+    return np.array([np.datetime64(eph.instante_tdb(t)) for t in ets])
 
 
 def _utc(et):
-    return spice.et2utc(et, "ISOC", 0)
+    """Instante em TDB (o nome da função é histórico; antes devolvia UTC com rótulo "_tdb")."""
+    return eph.instante_tdb(et)
 
 
 def porkchop(sentido, nome, jan, cfg):

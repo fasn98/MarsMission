@@ -44,3 +44,16 @@ O veículo deve servir em qualquer janela de ida de 2028 a 2035, não só na mis
   22,8 t pela regra (iii). Valor em `results/etapa1.4/dimensionamento.yaml`.
 - Se a avaliação de DLA da Fase 2 exigir mudança de plano em 2033, o pior caso da captura ou do
   retorno pode mudar, e o envelope deve ser recalculado.
+
+## Atualização (Etapa 2.4, 2026-10-27): limite de DLA em 2033
+Decisão do Fabio no portão da Etapa 2.4: na janela de 2033 a partida da Terra fica limitada a |DLA| ≤ 50°
+(`config/missoes.yaml`). Sem o limite, a melhor conjunção tinha DLA de −55,5°, a 0,13° do limite de azimute
+do Cabo [F13], com penalidade de lançamento aproximada de 0,76 (P-036).
+- Regra do item 1 reaplicada (`results/etapa1.3/missoes.yaml`): mínimos por janela 2028 5,399; 2031 5,781;
+  **2033 5,912**; 2035 5,911 km/s. **Envelope = 5,912 km/s, definido agora pela conjunção de 2033**
+  (partida 2033-04-23, C3 9,60 km²/s², DLA −49,7°), contra 5,911 km/s (2035) antes.
+- A regra (iii) usa o pior caso de cada estágio de Marte. Ele não muda, e as massas também não: os
+  resultados da Etapa 2.3 foram regenerados sem diferença.
+- O item de consequências acima ("se a avaliação de DLA da Fase 2 exigir mudança de plano em 2033…") fica
+  atendido por esta atualização.
+

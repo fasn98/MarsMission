@@ -19,7 +19,7 @@ Autor: Fabio Nogueira ([@fasn98](https://github.com/fasn98)). O cenário tripula
 | 2.1 | Arquitetura de superfície: pouso, subida (MAV) e encontro | decidida: família S2, encontro 300 × 18.483 km (ADR 0005) |
 | 2.2 | Estudo de troca do ISRU; propulsão do MAV | ISRU fora (ADR 0006); MAV hipergólico (ADR 0007); encontro 300 × 26.950 km (ADR 0005) |
 | 2.3 | Plataformas do orbitador (lista por subsistema, 442 kg) e do lander (L3 + amostras provisórias, 1558,5 kg); órbita de encontro 300 × 24.992 km | decidida no portão (`docs/etapa2.3_plataformas.md`) |
-| 2.4 | Lançamento e DLA: injeção direta × órbita baixa + estágio próprio, por janela | aguardando o portão (`docs/etapa2.4_lancamento.md`) |
+| 2.4 | Lançamento e DLA: injeção direta (Falcon Heavy descartável ou Vulcan VC6 para o orbitador), 2 lançamentos; 2033 com \|DLA\| ≤ 50° | decidida no portão (ADR 0008) |
 | 2.5 | Arquitetura integrada | não iniciada |
 
 Modelo: cônicas emendadas, manobras impulsivas, sem perturbações. As limitações estão descritas no

@@ -199,3 +199,31 @@ P-009 e P-010 foram aprovadas no portão de 2026-10-27 e continuam NÃO VALIDADA
   outras datas na mesma janela.
 - O cenário do estudo é robótico. Os limites de reentrada e de trânsito do DRA são de missão
   tripulada e servem aqui só como referência.
+
+## Errata (Etapa 2.4, 2026-10-27): datas um dia antes
+
+As datas das missões foram impressas com `spice.et2utc` a partir de épocas à meia-noite TDB. Como TDB está
+~69 s à frente de UTC, o rótulo saía no dia anterior. As épocas e todos os valores calculados (C3, DLA, Δv,
+durações) estavam certos; só o rótulo da data estava errado. Desde a Etapa 2.4 as datas são rotuladas em TDB
+(`orbital.ephemeris.data_tdb`). O texto original acima foi mantido.
+
+Datas corrigidas (antigo → correto, calendário TDB):
+
+| Missão | Partida da Terra | Chegada a Marte | Partida de Marte | Chegada à Terra |
+| :- | :- | :- | :- | :- |
+| 2028-oposicao | 2029-02-27 → **2029-02-28** | 2029-05-12 → **2029-05-13** | 2029-06-11 → **2029-06-12** | 2030-12-08 → **2030-12-09** |
+| **2028-conjuncao (missão A)** | 2028-11-23 → **2028-11-24** | 2029-09-19 → **2029-09-20** | 2030-11-07 → **2030-11-08** | 2031-09-22 → **2031-09-23** |
+| 2028-conjuncao_transito_curto | 2029-01-06 → **2029-01-07** | 2029-08-04 → **2029-08-05** | 2030-12-01 → **2030-12-02** | 2031-06-28 → **2031-06-29** |
+| 2031-oposicao | 2031-05-11 → **2031-05-12** | 2031-07-20 → **2031-07-21** | 2031-08-19 → **2031-08-20** | 2033-02-19 → **2033-02-20** |
+| 2031-conjuncao | 2030-12-24 → **2030-12-25** | 2031-10-04 → **2031-10-05** | 2033-01-26 → **2033-01-27** | 2033-09-01 → **2033-09-02** |
+| 2031-conjuncao_transito_curto | 2031-02-18 → **2031-02-19** | 2031-09-16 → **2031-09-17** | 2033-02-01 → **2033-02-02** | 2033-08-30 → **2033-08-31** |
+| 2033-oposicao | 2032-12-31 → **2033-01-01** | 2033-05-14 → **2033-05-15** | 2033-06-13 → **2033-06-14** | 2033-11-09 → **2033-11-10** |
+| 2035-oposicao | 2035-03-14 → **2035-03-15** | 2035-08-05 → **2035-08-06** | 2035-09-04 → **2035-09-05** | 2036-04-15 → **2036-04-16** |
+| 2035-conjuncao | 2035-06-28 → **2035-06-29** | 2036-01-16 → **2036-01-17** | 2037-07-11 → **2037-07-12** | 2038-04-07 → **2038-04-08** |
+| 2035-conjuncao_transito_curto | 2035-06-28 → **2035-06-29** | 2036-01-16 → **2036-01-17** | 2037-07-07 → **2037-07-08** | 2038-01-19 → **2038-01-20** |
+
+As conjunções de 2033 (`2033-conjuncao` e `2033-conjuncao_transito_curto`) não estão na tabela: foram trocadas
+por decisão do Fabio no portão da Etapa 2.4 (|DLA| ≤ 50°). A trajetória nova parte em 2033-04-23, chega a Marte
+em 2033-11-03, parte de Marte em 2035-05-07 e chega à Terra em 2035-11-22, com Δv de 5,912 km/s. Com isso o
+envelope passa de 5,91 km/s (2035) para 5,912 km/s (2033); ver ADR 0004.
+

@@ -132,3 +132,10 @@ VALIDADA.
 
 As mesmas da ida: cônicas emendadas, impulsivo, sem perturbações, sem manobra no espaço profundo.
 A partida é no baricentro de Marte. Nada de órbita de estacionamento nem de captura (Etapa 1.3).
+
+## Errata (Etapa 2.4, 2026-10-27): rótulos de instante dos mínimos
+Os instantes gravados com o sufixo `_tdb` em `results/etapa1.2/minimos_*.yaml` eram, na verdade, UTC
+(`spice.et2utc`), 69 s antes do instante TDB. Desde a Etapa 2.4 eles são TDB. Nenhuma data de mínimo muda de
+dia (conferido por comparação dos arquivos antes e depois), e os valores de C3, v∞ e ângulo não mudam. As
+verificações contra NASA/TM-2010-216764 e JPL 82-43 foram regeneradas sem nenhuma diferença.
+

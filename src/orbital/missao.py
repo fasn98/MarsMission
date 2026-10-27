@@ -127,10 +127,10 @@ def detalhar(p: Parametros, et_dep, et_M1, et_M2, et_arr):
     c3l, vinf_t, ang2, _ = pc.transferencia(eph.BARICENTRO_MARTE, eph.TERRA, et_M2, et_arr)
     rot = np.array(spice.pxform(pc.FRAME, "J2000", et_dep))
     linha = {
-        "partida_terra": spice.et2utc(et_dep, "ISOC", 0)[:10],
-        "chegada_marte": spice.et2utc(et_M1, "ISOC", 0)[:10],
-        "partida_marte": spice.et2utc(et_M2, "ISOC", 0)[:10],
-        "chegada_terra": spice.et2utc(et_arr, "ISOC", 0)[:10],
+        "partida_terra": eph.data_tdb(et_dep),
+        "chegada_marte": eph.data_tdb(et_M1),
+        "partida_marte": eph.data_tdb(et_M2),
+        "chegada_terra": eph.data_tdb(et_arr),
         "ida_dias": (et_M1 - et_dep) / DIA, "em_marte_dias": (et_M2 - et_M1) / DIA,
         "volta_dias": (et_arr - et_M2) / DIA, "total_dias": (et_arr - et_dep) / DIA,
         "c3_km2_s2": c3, "dla_graus": mn.declinacao_graus(rot @ vinf1),

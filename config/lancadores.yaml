@@ -33,9 +33,18 @@ orbita_estacionamento_b:
   # (ELVPerf, Atlas V) ou 407 km (Vulcan); a diferença de 7 km é desprezada (P-037). Inclinações com dado: 28,5° e 51,6°.
   inclinacoes_graus: [28.5, 51.6]
 
+# Decisão do Fabio no portão da Etapa 2.4 (ADR 0008): forma (a), injeção direta pelo lançador.
+# Orbitador: Falcon Heavy descartável ou Vulcan VC6; lander: a lista de lançadores que servem.
+# A forma (b) fica documentada como alternativa: exige estágio criogênico próprio.
+escolha:
+  forma: a_injecao_direta
+  orbitador: [Falcon Heavy (descartável), Vulcan VC6]
+  lander: lista de results/etapa2.4/lancamento.yaml (lancadores_que_servem.lander)
+
 lancadores:
   # massa separada de espaçonave (kg) × C3 (km²/s²); LEO (kg) por inclinação.
   # categoria: operacional | anunciado (= "desempenho anunciado, não demonstrado").
+  # "operacional" vale na data do guia ou da consulta citada; a disponibilidade em 2028+ NÃO foi avaliada.
   Falcon 9 (ASDS):
     categoria: operacional
     plataforma: SLC-40
