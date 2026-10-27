@@ -108,6 +108,47 @@ Depois, **Run** de novo. Se o `pyproject.toml` mudou, o comando de Run reinstala
   - o preço por tipo de publicação;
   - qual plano permite domínio próprio.
 
+## Hospedagem gratuita: Streamlit Community Cloud
+
+Consultado na documentação oficial em 2026-10-27. **Nada foi publicado.** É uma opção ao lado do Replit pago, e a
+escolha é do Fabio.
+
+- **Custo e visibilidade** ([streamlit.io/cloud](https://streamlit.io/cloud)): "Totally free"; "Public apps only".
+  - A visibilidade segue o repositório: "if your repo is private your app will be private and if your repo is public
+    your app will be public"; "You are only allowed one private app at a time"
+    ([Share your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app)).
+- **Endereço:** `<subdomínio>.streamlit.app`
+  ([Manage your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app)).
+- **Dorme por inatividade** (mesma página): "All apps without traffic for 12 hours go to sleep".
+  - Qualquer visitante acorda o app pelo botão "Yes, get this app back up!".
+  - Memória: "690MB minimum, 2.7GBs maximum", com a ressalva "These limits may change at any time without notice"
+    (valores da documentação, de fevereiro de 2024).
+- **Arquivo de dependências**
+  ([App dependencies](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies)):
+  - O Community Cloud usa o primeiro que encontrar, na ordem `uv.lock`, `Pipfile`, `environment.yml`,
+    `requirements.txt` e `pyproject.toml` (este, "poetry").
+  - A busca começa na pasta do arquivo de entrada e depois vai à raiz do repositório.
+  - Neste repositório, valeria o `environment.yml` da raiz, que instala o pacote com
+    `pip install -e .[dev,painel]`. **Não conferido** se isso funciona lá.
+- **Kernels SPICE: não conferido.** O Community Cloud só roda o app; não foi encontrada na documentação uma etapa de
+  build equivalente ao `build` do Replit.
+  - Sem `tools/fetch_kernels.py`, a página Trajetória mostra o aviso de kernels ausentes (`src/painel/app.py`).
+  - As outras páginas leem `results/` e `config/`.
+  - Resolver isso exigiria mudar o código, com PR e justificativa.
+- **Pillow:** o streamlit 1.65.0, fixado no `pyproject.toml`, exige `pillow<13`. Fora do firewall do Replit, o pip
+  instalaria o pillow 12.3.0, que tem avisos de segurança corrigidos só na 13.0.0
+  ([notas da 13.0.0](https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html)).
+
+### Comparação
+
+| | Replit | Streamlit Community Cloud |
+| :- | :- | :- |
+| Endereço permanente | Só com plano pago: Core (US$ 18/mês na cobrança anual) ou Pro. No Starter, o link "will automatically go down after 30 days" | Gratuito; o app dorme após 12 h sem tráfego |
+| Endereço | `<subdomínio>.replit.app` ([Custom domains](https://docs.replit.com/cloud-services/deployments/custom-domains)) | `<subdomínio>.streamlit.app` |
+| Repositório | Importação pública conferida; privado não conferido | Público, para app público |
+| Etapa de build (kernels) | Sim (`[deployment] build` do `.replit`) | Não encontrada na documentação |
+| Instalação | Hoje bloqueada pelo firewall de pacotes no pillow | Não conferida |
+
 ### Alternativa estática (GitHub Pages)
 Sem plano pago, a alternativa permanente é uma página estática no GitHub Pages do repositório. **Não foi construída.**
 - **O que funcionaria:** visão geral, premissas e decisões, trajetória e porkchops. Seriam páginas HTML com gráficos
