@@ -26,6 +26,8 @@ class Conjunto:
     massa_kg: float           # soma das massas dos motores
     queima_unica_max_s: float # a menor entre os motores do conjunto (nan se nenhuma fonte)
     nota: str
+    vida_acumulada_s: float = float("nan")   # a menor entre os motores (nan se nenhuma fonte)
+    partidas: float = float("nan")           # a menor entre os motores (nan se nenhuma fonte)
 
 
 def catalogo(cfg: dict | None = None) -> dict:
@@ -37,6 +39,8 @@ def catalogo(cfg: dict | None = None) -> dict:
         out[nome] = {"nome": m["nome"], "propelentes": m["propelentes"], "empuxo_n": _valor_si(m["empuxo_n"], conv),
                      "isp_s": float(m["isp_s"]["valor"]), "massa_kg": _valor_si(m["massa_kg"], conv),
                      "queima_unica_max_s": float(m["queima_unica_max_s"]["valor"]) if "queima_unica_max_s" in m else float("nan"),
+                     "vida_acumulada_s": float(m["vida_acumulada_s"]["valor"]) if "vida_acumulada_s" in m else float("nan"),
+                     "partidas": float(m["partidas"]["valor"]) if "partidas" in m else float("nan"),
                      "sem_combinacao": "fora_das_combinacoes" in m}
     return out
 
@@ -54,6 +58,7 @@ def conjuntos(funcao: str, cfg: dict | None = None) -> list[Conjunto]:
         empuxo = sum(m["empuxo_n"] * q for m, q, _ in partes)
         massa = sum(m["massa_kg"] * q for m, q, _ in partes)
         desc = " + ".join(f"{q} × {chave}" for _, q, chave in partes)
-        out.append(Conjunto(nome, desc, Motor(empuxo, isps.pop()), massa,
-                            min((m["queima_unica_max_s"] for m, _, _ in partes), key=lambda x: (math.isnan(x), x)), c.get("nota", "")))
+        menor = lambda campo: min((m[campo] for m, _, _ in partes), key=lambda x: (math.isnan(x), x))  # noqa: E731
+        out.append(Conjunto(nome, desc, Motor(empuxo, isps.pop()), massa, menor("queima_unica_max_s"), c.get("nota", ""),
+                            menor("vida_acumulada_s"), menor("partidas")))
     return out

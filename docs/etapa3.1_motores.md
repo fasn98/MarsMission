@@ -145,3 +145,78 @@ Depois da escolha:
 - decidir o Isp do cruzeiro e do MAV.
 
 Isso muda as massas da Fase 2 e entra com errata, no mesmo PR que aplicar a decisão.
+
+## Nota (2026-10-27): decisões do portão, R-4D-11 a 310 s e captura e saída em várias queimas
+
+**Decisões do Fabio no portão** (PR #20 já mergeado):
+- MAV: estágio 1 = M2 (4 × R-4D-11); estágio 2 = N2 (1 × R-4D-11).
+- Cruzeiro do lander: Z1 (4 × 10 N, Isp 292 s).
+- R-4D-11 com a variante que voou no Orion: Isp 310 s, não 315 s.
+- Isp do MAV pelos motores pressurizados que voaram, não os 343 s de turbobomba.
+- Captura e retorno: sem escolha ainda; pedido o modelo de várias queimas antes.
+
+As decisões de MAV e cruzeiro serão aplicadas no PR do redimensionamento, com errata da Fase 2.
+
+**Errata da §2 e da §4 (R-4D-11):**
+- O catálogo passa a usar, para o R-4D-11, o Isp de 310 s e os limites da variante do Orion: "Max Firing Time 2000 seconds", "Number of Burns 40" [F107, Tab. 3]. Antes eram 315 s e 12.000 s, da ficha [F106].
+- **Valores vigentes:** os de `results/etapa3.1/queima_finita.md`.
+  - C2, caso de projeto: perda de 75,9 m/s (antes 76,4) e propelente de 2.302 kg (antes 2.274).
+  - R3, caso de projeto: 71,0 m/s (antes 71,4) e 1.050 kg (antes 1.037).
+  - As duas continuam cabendo no propelente dimensionado.
+- O texto original das §2 e §4 fica como estava.
+
+**Várias queimas no periapse** (`orbital.queima_multipla`, P-042; tabelas em `results/etapa3.1/queima_finita.md`):
+- **Física que manda:** o excesso hiperbólico (v∞) só sai, na captura, ou entra, na saída, numa única passagem pelo
+  periapse. Uma 1ª queima que não captura deixa a nave escapar.
+  - Por isso a divisão é: a 1ª queima leva a uma órbita alta, de apoapse = 1/3 do raio de Hill de Marte; as demais
+    baixam o apoapse até a órbita de 1 sol (na saída, ao contrário).
+  - Na captura do caso de projeto, a 1ª queima já carrega cerca de 85 % do Δv impulsivo.
+- **O ganho existe, mas para em N = 2:**
+  - C1, projeto: 444,5 m/s com 1 queima, 346,0 com 2, 343,4 com 4;
+  - C2, projeto: 75,9, 52,8 e 52,7 m/s;
+  - R2, projeto: 242,2, 162,4 e 160,9 m/s.
+- **C1 (2 × S400-15) não fica viável com nenhum N:**
+  - no caso de projeto, a 1ª queima dura 8.613 s, acima dos 6.660 s de queima única do S400-15, e o propelente
+    (2.559 kg) não cabe;
+  - no caso de referência, cabe, mas a 1ª queima (6.684 s) passa por 24 s.
+- **R1 e R2 não cabem no caso de projeto com nenhum N.**
+- **C2, C3 e R3 cabem**, dentro dos limites de queima e de partidas, com qualquer N. A sequência leva até 33 dias, contra
+  estadas de 414 a 542 dias.
+- **Sensibilidade à fração do raio de Hill (C1, projeto, N = 4):** perda de 371,0 m/s com 0,1 e 339,4 m/s com 0,5.
+  A conclusão não muda.
+
+**Conferência de coerência com o ERO** (P-043; não é verificação, porque a fonte não publica v∞, órbita nem Δv da captura):
+- **Dados e hipóteses:** massa úmida de ~6,5 t e 1.900 kg de propelente no módulo de inserção [F22], com 2 × 400 N
+  [F29]. Admitindo a massa úmida na captura e todo o propelente nela, o Δv do motor é de 1.088 m/s; é o "~1,1 km/s" do
+  projeto do ERO.
+- **No nosso modelo, o ERO fecha** com 1.900 kg e dentro da queima única qualificada:
+  - para v∞ de até 2,5 km/s, na órbita de 1 sol (1.718 kg);
+  - para v∞ de até 2,75 km/s, numa órbita alta (1.678 kg).
+- **Com o v∞ da nossa missão de referência (2,97 km/s), não fecha:** 1.919 kg na órbita alta e 2.198 kg na de 1 sol, com
+  a 1ª queima de 7.108 s.
+- **Explicação:**
+  - "Δv parecido" vale para o Δv do motor, que inclui a perda, e não para o Δv impulsivo da captura. Com ~1,1 km/s de
+    motor, sobram ~1,1 km/s menos a perda (138 a 240 m/s nesta faixa de v∞) para a captura propriamente dita.
+  - O ERO usa propulsão elétrica para descer depois da captura [F22, slide 10, "EP spirals to LMO"]. Assim, ele pode
+    capturar numa órbita alta, que pede menos Δv impulsivo que a nossa órbita de 1 sol.
+  - O nosso caso de projeto chega com v∞ de 3,48 km/s (2031), bem acima da faixa em que o ERO fecha.
+  - O modelo é coerente com o ERO **se** o ERO chegar com v∞ ≤ ~2,5–2,75 km/s ou capturar numa órbita mais folgada.
+    Isso não foi conferido em fonte primária.
+- **Limitações que pesam nos dois casos:** empuxo tangente à velocidade (não ótimo), modelo plano, sem direção da
+  assíntota nem rotação da linha das apsides.
+
+**Premissas novas:** P-042 (divisão em várias queimas e fração do raio de Hill) e P-043 (hipóteses da conferência com o
+ERO), ambas NÃO VALIDADAS. São agora 43 premissas (`results/fase1/premissas.md`).
+
+### Portão: captura e retorno (decisão do Fabio)
+
+| Combinação | Caso de projeto, 1 queima | Caso de projeto, melhor com várias queimas | Restrição que pega |
+| :- | :- | :- | :- |
+| C1: 2 × S400-15 | 444,5 m/s; não cabe | 343,4 m/s (N = 4); não cabe | 1ª queima de 8.613 s, acima dos 6.660 s de queima única, com qualquer N |
+| C2: 8 × R-4D-11 (310 s) | 75,9 m/s; cabe (2.302 de 2.336 kg) | 52,7 m/s (N ≥ 2); cabe (2.272 kg) | — |
+| C3: 1 × OMS-E | 2,1 m/s; cabe | 1,4 m/s; cabe | 135 kg de motor; disponibilidade não conferida |
+| R1: 1 × S400-15 | 492,5 m/s; não cabe | 347,4 m/s; não cabe | queima de escape de ~7.400 s, acima de 6.660 s |
+| R2: 2 × S400-15 | 242,2 m/s; não cabe | 160,9 m/s; não cabe (1.071 de 1.065 kg) | propelente |
+| R3: 4 × R-4D-11 (310 s) | 71,0 m/s; cabe (1.050 de 1.065 kg) | 43,5 m/s (N ≥ 2); cabe (1.034 kg) | — |
+
+Depois da escolha, segue o redimensionamento, com a perda calculada no lugar da P-015 e as decisões de MAV e cruzeiro.

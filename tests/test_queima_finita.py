@@ -109,3 +109,38 @@ def test_parametros_numericos_p041_nao_mudam_a_perda(monkeypatch):
     monkeypatch.setattr(qf, "RTOL", 1e-11)
     monkeypatch.setattr(qf, "ATOL", 1e-7)
     assert qf.saida(MU, R, qf.Motor(850.0, 321), 3000.0, UM.rp, UM.ra, 3.0).perda_km_s == pytest.approx(s_base, rel=1e-4)
+
+
+def test_varias_queimas_n1_e_a_queima_unica_e_n2_captura_primeiro_numa_orbita_alta():
+    from orbital import queima_multipla as qm
+    from orbital.constantes import GM_SOL, UA_KM
+    rh = qm.raio_hill(MU, GM_SOL, 1.5236915 * UA_KM)
+    motor = qf.Motor(20000.0, 321)
+    um = qm.captura_multipla(MU, R, motor, 6000.0, 3.0, UM.rp, UM.ra, 1, rh, 1 / 3)
+    so = qf.captura(MU, R, motor, 6000.0, 3.0, UM.rp, UM.ra)
+    assert um.perda_km_s == pytest.approx(so.perda_km_s, rel=1e-12)
+    dois = qm.captura_multipla(MU, R, motor, 6000.0, 3.0, UM.rp, UM.ra, 2, rh, 1 / 3)
+    assert dois.viavel and dois.apoapses_intermediarios_km[0] == pytest.approx(rh / 3 - R)
+    assert 0 < dois.perda_km_s < um.perda_km_s                              # dividir ajuda
+    assert dois.dv_impulsivo_km_s == pytest.approx(so.dv_impulsivo_km_s)    # a mesma referência impulsiva
+    assert dois.duracao_sequencia_dias > 0
+    s1 = qm.saida_multipla(MU, R, motor, 3000.0, UM.rp, UM.ra, 3.0, 1, rh, 1 / 3)
+    s2 = qm.saida_multipla(MU, R, motor, 3000.0, UM.rp, UM.ra, 3.0, 2, rh, 1 / 3)
+    assert 0 < s2.perda_km_s < s1.perda_km_s
+
+
+def test_raio_de_hill_de_marte():
+    from orbital import queima_multipla as qm
+    from orbital.constantes import GM_SOL, UA_KM
+    a = 1.5236915 * UA_KM
+    assert qm.raio_hill(MU, GM_SOL, a) == pytest.approx(a * (MU / (3 * GM_SOL)) ** (1 / 3))
+
+
+def test_conferencia_ero_e_varias_queimas_no_resultado():
+    r = ler("results/etapa3.1/queima_finita.yaml")
+    ero = r["conferencia_ero"]
+    assert any(x["fecha"] for x in ero) and r["dv_motor_ero_km_s"] == pytest.approx(321 * G0 * math.log(6500 / 4600))
+    for k in ("captura", "saida"):
+        for x in r["varias_queimas"][k]:
+            ns = [l["n"] for l in x["por_n"]]
+            assert ns == [1, 2, 3, 4]

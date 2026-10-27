@@ -58,51 +58,51 @@ captura:
 - combinacao: C2
   motores: 8 × R-4D-11
   empuxo_n: 3914.4353600000004
-  isp_s: 315.0
+  isp_s: 310.0
   massa_motores_kg: 34.4730224
   caso: projeto (pior janela)
   missao: 2031-conjuncao
   vinf_km_s: 3.4843
   m0_kg: 6168.6354444691115
-  duracao_s: 1794.17346825893
-  propelente_kg: 2273.538571818362
-  dv_motor_km_s: 1.4202394334667343
+  duracao_s: 1787.5924427742548
+  propelente_kg: 2301.734707427569
+  dv_motor_km_s: 1.4197826264459088
   dv_impulsivo_km_s: 1.343873679497805
-  perda_km_s: 0.0763657539689293
+  perda_km_s: 0.0759089469481038
   inicio_rel_periapse_s: -1050.0
-  altitude_minima_km: 301.81
+  altitude_minima_km: 301.42
   periapse_final_km: 250.0
   apoapse_final_km: 33793.0
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 411.94
+  periapse_chegada_alt_km: 410.9
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: true
-  queima_unica_max_s: 12000.0
+  queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: arranjo dos motores auxiliares do Orion ESM [F107]
 - combinacao: C2
   motores: 8 × R-4D-11
   empuxo_n: 3914.4353600000004
-  isp_s: 315.0
+  isp_s: 310.0
   massa_motores_kg: 34.4730224
   caso: referência
   missao: 2028-conjuncao
   vinf_km_s: 2.9707
   m0_kg: 6168.6354444691115
-  duracao_s: 1461.0985536176051
-  propelente_kg: 1851.4731031560668
-  dv_motor_km_s: 1.1024340731500024
+  duracao_s: 1456.915377181893
+  propelente_kg: 1875.949242792798
+  dv_motor_km_s: 1.1022197837583871
   dv_impulsivo_km_s: 1.059400066818057
-  perda_km_s: 0.04303400633194543
+  perda_km_s: 0.042819716940330155
   inicio_rel_periapse_s: -820.0
-  altitude_minima_km: 285.64
+  altitude_minima_km: 285.42
   periapse_final_km: 250.0
   apoapse_final_km: 33793.0
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 347.8
+  periapse_chegada_alt_km: 347.29
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: true
-  queima_unica_max_s: 12000.0
+  queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: arranjo dos motores auxiliares do Orion ESM [F107]
 - combinacao: C3
@@ -263,53 +263,53 @@ saida:
 - combinacao: R3
   motores: 4 × R-4D-11
   empuxo_n: 1957.2176800000002
-  isp_s: 315.0
+  isp_s: 310.0
   massa_motores_kg: 17.2365112
   caso: projeto (pior janela)
   missao: 2035-conjuncao
   vinf_km_s: 3.5426684857604163
   orbita_inicial: órbita de 1 sol
   m0_kg: 2768.828672964927
-  duracao_s: 1636.663628098268
-  propelente_kg: 1036.9727212565679
-  dv_motor_km_s: 1.4494981879814346
+  duracao_s: 1630.6117346369408
+  propelente_kg: 1049.8018267876791
+  dv_motor_km_s: 1.4490940322413326
   dv_impulsivo_km_s: 1.3781306596367031
-  perda_km_s: 0.07136752834473148
+  perda_km_s: 0.07096337260462948
   inicio_rel_periapse_s: -820.0
-  altitude_minima_km: 312.45
-  periapse_final_km: 400.98
+  altitude_minima_km: 312.22
+  periapse_final_km: 400.1
   apoapse_final_km: null
-  vinf_final_km_s: 3.542668485760416
+  vinf_final_km_s: 3.5426684857604167
   periapse_chegada_alt_km: null
   propelente_dimensionado_kg: 1064.7517529964293
   cabe_no_dimensionado: true
-  queima_unica_max_s: 12000.0
+  queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: ''
 - combinacao: R3
   motores: 4 × R-4D-11
   empuxo_n: 1957.2176800000002
-  isp_s: 315.0
+  isp_s: 310.0
   massa_motores_kg: 17.2365112
   caso: referência
   missao: 2028-conjuncao
   vinf_km_s: 2.3303433223454437
   orbita_inicial: órbita de 1 sol
   m0_kg: 2768.828672964927
-  duracao_s: 960.4537709827421
-  propelente_kg: 608.5333256256054
-  dv_motor_km_s: 0.7666497489233189
+  duracao_s: 958.5569643633155
+  propelente_kg: 617.1271988869344
+  dv_motor_km_s: 0.7665984961467878
   dv_impulsivo_km_s: 0.7525555368246879
-  perda_km_s: 0.014094212098631043
+  perda_km_s: 0.014042959322099868
   inicio_rel_periapse_s: -490.0
-  altitude_minima_km: 265.83
-  periapse_final_km: 285.0
+  altitude_minima_km: 265.79
+  periapse_final_km: 284.87
   apoapse_final_km: null
-  vinf_final_km_s: 2.3303433223454446
+  vinf_final_km_s: 2.330343322345442
   periapse_chegada_alt_km: null
   propelente_dimensionado_kg: 1064.7517529964293
   cabe_no_dimensionado: true
-  queima_unica_max_s: 12000.0
+  queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: ''
 cruzeiro:
@@ -353,15 +353,15 @@ mav:
   combinacao: M2
   motores: 4 × R-4D-11
   empuxo_n: 1957.2176800000002
-  isp_s: 315.0
+  isp_s: 310.0
   isp_dimensionamento_s: 343
   massa_motores_kg: 17.2365112
   m0_kg: 267.78741661624844
   dv_km_s: 2.772264449497674
-  duracao_s: 250.3729593905022
+  duracao_s: 248.83521761724776
   empuxo_peso_marte: 1.9683455363551892
   aceleracao_inicial_m_s2: 7.308848581204181
-  queima_unica_max_s: 12000.0
+  queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: ''
 - estagio: mav_1
@@ -398,15 +398,1393 @@ mav:
   combinacao: N2
   motores: 1 × R-4D-11
   empuxo_n: 489.30442000000005
-  isp_s: 315.0
+  isp_s: 310.0
   isp_dimensionamento_s: 343
   massa_motores_kg: 4.3091278
   m0_kg: 70.49497877933928
   dv_km_s: 2.9912791045515443
-  duracao_s: 276.0589197228813
+  duracao_s: 274.254336722865
   empuxo_peso_marte: 1.869275568684767
   aceleracao_inicial_m_s2: 6.940982584470339
-  queima_unica_max_s: 12000.0
+  queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: ''
+raio_hill_km: 1084065.079200463
+fracao_raio_hill: 0.3333333333333333
+varias_queimas:
+  captura:
+  - combinacao: C1
+    motores: 2 × S400-15
+    caso: projeto (pior janela)
+    missao: 2031-conjuncao
+    propelente_dimensionado_kg: 2335.8895214037116
+    queima_unica_max_s: 6660.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 9901.326114095282
+      maior_queima_s: 9901.326114095282
+      soma_queimas_s: 9901.326114095282
+      propelente_kg: 2673.5393623819323
+      dv_motor_km_s: 1.7883945194289976
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.4445208
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 480.0
+      altitude_minima_km: 454.4
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 8613.227063273327
+      - 874.455206957802
+      maior_queima_s: 8613.227063273327
+      soma_queimas_s: 9487.68227023113
+      propelente_kg: 2562.3842166458667
+      dv_motor_km_s: 1.68983921706419
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.3459655
+      correcao_periapse_km_s: 0.0004681
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      duracao_sequencia_dias: 27.396608819599454
+      estada_dias: 480.0
+      altitude_minima_km: 245.67
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 8613.227063273327
+      - 440.26786215327746
+      - 426.47082688338617
+      maior_queima_s: 8613.227063273327
+      soma_queimas_s: 9479.96575230999
+      propelente_kg: 2559.899738296608
+      dv_motor_km_s: 1.687671236480585
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.3437976
+      correcao_periapse_km_s: 0.0001181
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 65803.48171570478
+      duracao_sequencia_dias: 29.839213336677084
+      estada_dias: 480.0
+      altitude_minima_km: 248.41
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 8613.227063273327
+      - 294.5156119457619
+      - 288.3825109496292
+      - 282.3824014926434
+      maior_queima_s: 8613.227063273327
+      soma_queimas_s: 9478.507587661361
+      propelente_kg: 2559.4309015306294
+      dv_motor_km_s: 1.6872622922521878
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.3433886
+      correcao_periapse_km_s: 5.26e-05
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 92063.69263415429
+      - 50628.35800885142
+      duracao_sequencia_dias: 32.993392601939675
+      estada_dias: 480.0
+      altitude_minima_km: 249.22
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: null
+  - combinacao: C1
+    motores: 2 × S400-15
+    caso: referência
+    missao: 2028-conjuncao
+    propelente_dimensionado_kg: 2335.8895214037116
+    queima_unica_max_s: 6660.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 8151.014628993871
+      maior_queima_s: 8151.014628993871
+      soma_queimas_s: 8151.014628993871
+      propelente_kg: 2200.9232099671394
+      dv_motor_km_s: 1.3891457495727615
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.3297457
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 414.0
+      altitude_minima_km: 449.06
+      cabe_no_dimensionado: true
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 6684.1902437696035
+      - 996.2854898095094
+      maior_queima_s: 6684.1902437696035
+      soma_queimas_s: 7680.475733579113
+      propelente_kg: 2074.6514860959087
+      dv_motor_km_s: 1.2905244081966543
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.2311243
+      correcao_periapse_km_s: 0.0006015
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      duracao_sequencia_dias: 27.396608819598516
+      estada_dias: 414.0
+      altitude_minima_km: 244.43
+      cabe_no_dimensionado: true
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 6684.1902437696035
+      - 500.4149722818098
+      - 484.6616954786682
+      maior_queima_s: 6684.1902437696035
+      soma_queimas_s: 7669.266911530081
+      propelente_kg: 2071.0405604917114
+      dv_motor_km_s: 1.28774912914898
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.2283491
+      correcao_periapse_km_s: 0.0001522
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 65803.48171570478
+      duracao_sequencia_dias: 29.83919792274337
+      estada_dias: 414.0
+      altitude_minima_km: 247.96
+      cabe_no_dimensionado: true
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 6684.1902437696035
+      - 334.5807050898031
+      - 327.5977736582281
+      - 320.76828141237803
+      maior_queima_s: 6684.1902437696035
+      soma_queimas_s: 7667.137003930013
+      propelente_kg: 2070.3556230126433
+      dv_motor_km_s: 1.2872229770283203
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.2278229
+      correcao_periapse_km_s: 6.78e-05
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 92063.69263415429
+      - 50628.35800885142
+      duracao_sequencia_dias: 32.99337910309119
+      estada_dias: 414.0
+      altitude_minima_km: 248.99
+      cabe_no_dimensionado: true
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: null
+  - combinacao: C2
+    motores: 8 × R-4D-11
+    caso: projeto (pior janela)
+    missao: 2031-conjuncao
+    propelente_dimensionado_kg: 2335.8895214037116
+    queima_unica_max_s: 2000.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1787.5924427742548
+      maior_queima_s: 1787.5924427742548
+      soma_queimas_s: 1787.5924427742548
+      propelente_kg: 2301.734707427569
+      dv_motor_km_s: 1.4197826264459088
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.0759089
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 480.0
+      altitude_minima_km: 301.42
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1561.7799270694643
+      - 202.91839898531947
+      maior_queima_s: 1561.7799270694643
+      soma_queimas_s: 1764.6983260547838
+      propelente_kg: 2272.2892671407467
+      dv_motor_km_s: 1.3967210441915854
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.0528474
+      correcao_periapse_km_s: 2.61e-05
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      duracao_sequencia_dias: 27.396608819598757
+      estada_dias: 480.0
+      altitude_minima_km: 249.76
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1561.7799270694643
+      - 103.05370903195559
+      - 99.76233220584453
+      maior_queima_s: 1561.7799270694643
+      soma_queimas_s: 1764.5959683072645
+      propelente_kg: 2272.1324124621947
+      dv_motor_km_s: 1.3965986633122396
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.052725
+      correcao_periapse_km_s: 6.5e-06
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 65803.48171570478
+      duracao_sequencia_dias: 29.83926387990557
+      estada_dias: 480.0
+      altitude_minima_km: 249.91
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1561.7799270694643
+      - 69.06627052448259
+      - 67.5884581353723
+      - 66.14233701680543
+      maior_queima_s: 1561.7799270694643
+      soma_queimas_s: 1764.5769927461247
+      propelente_kg: 2272.1033351211167
+      dv_motor_km_s: 1.3965759771819886
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.0527023
+      correcao_periapse_km_s: 2.9e-06
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 92063.69263415429
+      - 50628.35800885142
+      duracao_sequencia_dias: 32.99343675478364
+      estada_dias: 480.0
+      altitude_minima_km: 249.96
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  - combinacao: C2
+    motores: 8 × R-4D-11
+    caso: referência
+    missao: 2028-conjuncao
+    propelente_dimensionado_kg: 2335.8895214037116
+    queima_unica_max_s: 2000.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1456.915377181893
+      maior_queima_s: 1456.915377181893
+      soma_queimas_s: 1456.915377181893
+      propelente_kg: 1875.949242792798
+      dv_motor_km_s: 1.1022197837583871
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0428197
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 414.0
+      altitude_minima_km: 285.42
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1213.2271786255692
+      - 224.85697304346974
+      maior_queima_s: 1213.2271786255692
+      soma_queimas_s: 1438.0841516690389
+      propelente_kg: 1851.7472753124139
+      dv_motor_km_s: 1.0851281924226397
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0257281
+      correcao_periapse_km_s: 3.2e-05
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      duracao_sequencia_dias: 27.396608819602648
+      estada_dias: 414.0
+      altitude_minima_km: 249.71
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1213.2271786255692
+      - 114.18269022731917
+      - 110.53512283354925
+      maior_queima_s: 1213.2271786255692
+      soma_queimas_s: 1437.9449916864376
+      propelente_kg: 1851.5340187270394
+      dv_motor_km_s: 1.0849780154672881
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0255779
+      correcao_periapse_km_s: 8.0e-06
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 65803.48171570478
+      duracao_sequencia_dias: 29.839263206550037
+      estada_dias: 414.0
+      altitude_minima_km: 249.89
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1213.2271786255692
+      - 76.52315034964317
+      - 74.88562353853256
+      - 73.28323418992677
+      maior_queima_s: 1213.2271786255692
+      soma_queimas_s: 1437.9191867036718
+      propelente_kg: 1851.4944759704895
+      dv_motor_km_s: 1.0849501699641615
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0255501
+      correcao_periapse_km_s: 3.6e-06
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 92063.69263415429
+      - 50628.35800885142
+      duracao_sequencia_dias: 32.993436167734195
+      estada_dias: 414.0
+      altitude_minima_km: 249.95
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  - combinacao: C3
+    motores: 1 × OMS-E
+    caso: projeto (pior janela)
+    missao: 2031-conjuncao
+    propelente_dimensionado_kg: 2335.8895214037116
+    queima_unica_max_s: 1030.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 252.09476497817644
+      maior_queima_s: 252.09476497817644
+      soma_queimas_s: 252.09476497817644
+      propelente_kg: 2178.2414086865624
+      dv_motor_km_s: 1.3459987559146531
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.0021251
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 480.0
+      altitude_minima_km: 251.65
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 221.54930043724738
+      - 30.436915686496047
+      maior_queima_s: 221.54930043724738
+      soma_queimas_s: 251.98621612374342
+      propelente_kg: 2177.3042443856216
+      dv_motor_km_s: 1.3452731212194253
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.0013994
+      correcao_periapse_km_s: 6.0e-07
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      duracao_sequencia_dias: 27.396608819603166
+      estada_dias: 480.0
+      altitude_minima_km: 249.99
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 221.54930043724738
+      - 15.461038217221862
+      - 14.97553061580584
+      maior_queima_s: 221.54930043724738
+      soma_queimas_s: 251.9858692702751
+      propelente_kg: 2177.300677989691
+      dv_motor_km_s: 1.3452703601287241
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.0013967
+      correcao_periapse_km_s: 1.0e-07
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 65803.48171570478
+      duracao_sequencia_dias: 29.83926677324059
+      estada_dias: 480.0
+      altitude_minima_km: 250.0
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 221.54930043724738
+      - 10.362046730025066
+      - 10.143971619118973
+      - 9.930486256919798
+      maior_queima_s: 221.54930043724738
+      soma_queimas_s: 251.98580504331125
+      propelente_kg: 2177.3000175713096
+      dv_motor_km_s: 1.3452698488354966
+      dv_impulsivo_km_s: 1.343873679497805
+      perda_km_s: 0.0013962
+      correcao_periapse_km_s: 1.0e-07
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 92063.69263415429
+      - 50628.35800885142
+      duracao_sequencia_dias: 32.99343927690122
+      estada_dias: 480.0
+      altitude_minima_km: 250.0
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  - combinacao: C3
+    motores: 1 × OMS-E
+    caso: referência
+    missao: 2028-conjuncao
+    propelente_dimensionado_kg: 2335.8895214037116
+    queima_unica_max_s: 1030.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 207.38905527926912
+      maior_queima_s: 207.38905527926912
+      soma_queimas_s: 207.38905527926912
+      propelente_kg: 1791.958781677984
+      dv_motor_km_s: 1.0604767092102367
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0010766
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 414.0
+      altitude_minima_km: 250.95
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 173.93332260714556
+      - 33.380524731185965
+      maior_queima_s: 173.93332260714556
+      soma_queimas_s: 207.31384733833153
+      propelente_kg: 1791.3099439885737
+      dv_motor_km_s: 1.0600186427490574
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0006186
+      correcao_periapse_km_s: 7.0e-07
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      duracao_sequencia_dias: 27.39660881959879
+      estada_dias: 414.0
+      altitude_minima_km: 249.99
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 173.93332260714556
+      - 16.95626507128499
+      - 16.423802133393743
+      maior_queima_s: 173.93332260714556
+      soma_queimas_s: 207.31338981182427
+      propelente_kg: 1791.3052396343382
+      dv_motor_km_s: 1.060015321816777
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0006153
+      correcao_periapse_km_s: 2.0e-07
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 65803.48171570478
+      duracao_sequencia_dias: 29.83926675971917
+      estada_dias: 414.0
+      altitude_minima_km: 250.0
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 173.93332260714556
+      - 11.36414830564899
+      - 11.1249829311876
+      - 10.890851246990172
+      maior_queima_s: 173.93332260714556
+      soma_queimas_s: 207.3133050909723
+      propelente_kg: 1791.3043684861004
+      dv_motor_km_s: 1.0600147068498091
+      dv_impulsivo_km_s: 1.059400066818057
+      perda_km_s: 0.0006146
+      correcao_periapse_km_s: 1.0e-07
+      apoapses_intermediarios_km:
+      - 357958.8364001543
+      - 92063.69263415429
+      - 50628.35800885142
+      duracao_sequencia_dias: 32.9934392651148
+      estada_dias: 414.0
+      altitude_minima_km: 250.0
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  saida:
+  - combinacao: R1
+    motores: 1 × S400-15
+    caso: projeto (pior janela)
+    missao: 2035-conjuncao
+    propelente_dimensionado_kg: 1064.7517529964293
+    queima_unica_max_s: 6660.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 9188.341619964891
+      maior_queima_s: 9188.341619964891
+      soma_queimas_s: 9188.341619964891
+      propelente_kg: 1240.5102464516156
+      dv_motor_km_s: 1.87068001561296
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.4925494
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 542.0
+      altitude_minima_km: 649.39
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1277.5944433570935
+      - 7395.34291545027
+      maior_queima_s: 7395.34291545027
+      soma_queimas_s: 8672.937358807363
+      propelente_kg: 1170.9259521931722
+      dv_motor_km_s: 1.7305216674916868
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.352391
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 357958.83640015865
+      duracao_sequencia_dias: 27.398515146542923
+      estada_dias: 542.0
+      altitude_minima_km: 258.18
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 636.6533251369085
+      - 616.9487227749645
+      - 7403.69908056561
+      maior_queima_s: 7403.69908056561
+      soma_queimas_s: 8657.301128477482
+      propelente_kg: 1168.8149179345041
+      dv_motor_km_s: 1.7263655871776644
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.3482349
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 65803.48171570478
+      - 357958.83640015865
+      duracao_sequencia_dias: 29.83986612186832
+      estada_dias: 542.0
+      altitude_minima_km: 251.11
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 425.05494569439736
+      - 416.2552358663982
+      - 407.6437501832079
+      - 7405.327950155498
+      maior_queima_s: 7405.327950155498
+      soma_queimas_s: 8654.281881899502
+      propelente_kg: 1168.4072920024844
+      dv_motor_km_s: 1.7255637088404654
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.347433
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 50628.35800885142
+      - 92063.69263415429
+      - 357958.83640015865
+      duracao_sequencia_dias: 32.993763991628434
+      estada_dias: 542.0
+      altitude_minima_km: 250.34
+      cabe_no_dimensionado: false
+      queima_unica_ok: false
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: null
+  - combinacao: R1
+    motores: 1 × S400-15
+    caso: referência
+    missao: 2028-conjuncao
+    propelente_dimensionado_kg: 1064.7517529964293
+    queima_unica_max_s: 6660.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 5233.321822151601
+      maior_queima_s: 5233.321822151601
+      soma_queimas_s: 5233.321822151601
+      propelente_kg: 706.5463618866511
+      dv_motor_km_s: 0.9274164317594503
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.1748609
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 414.0
+      altitude_minima_km: 455.0
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1277.5944433570935
+      - 3517.8284741596563
+      maior_queima_s: 3517.8284741596563
+      soma_queimas_s: 4795.422917516749
+      propelente_kg: 647.4260003919153
+      dv_motor_km_s: 0.8384425130332254
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.085887
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 357958.83640015865
+      duracao_sequencia_dias: 27.398515146542923
+      estada_dias: 414.0
+      altitude_minima_km: 258.18
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 636.6533251369085
+      - 616.9487227749645
+      - 3520.11910089723
+      maior_queima_s: 3520.11910089723
+      soma_queimas_s: 4773.721148809103
+      propelente_kg: 644.4960629166394
+      dv_motor_km_s: 0.8340977988431449
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0815423
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 65803.48171570478
+      - 357958.83640015865
+      duracao_sequencia_dias: 29.83986612186832
+      estada_dias: 414.0
+      altitude_minima_km: 251.11
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 425.05494569439736
+      - 416.2552358663982
+      - 407.6437501832079
+      - 3520.57435121052
+      maior_queima_s: 3520.57435121052
+      soma_queimas_s: 4769.528282954523
+      propelente_kg: 643.9299876367104
+      dv_motor_km_s: 0.8332590739656939
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0807035
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 50628.35800885142
+      - 92063.69263415429
+      - 357958.83640015865
+      duracao_sequencia_dias: 32.993763991628434
+      estada_dias: 414.0
+      altitude_minima_km: 250.34
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  - combinacao: R2
+    motores: 2 × S400-15
+    caso: projeto (pior janela)
+    missao: 2035-conjuncao
+    propelente_dimensionado_kg: 1064.7517529964293
+    queima_unica_max_s: 6660.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 4125.632256760046
+      maior_queima_s: 4125.632256760046
+      soma_queimas_s: 4125.632256760046
+      propelente_kg: 1113.9962572749207
+      dv_motor_km_s: 1.6203194813717487
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.2421888
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 542.0
+      altitude_minima_km: 455.41
+      cabe_no_dimensionado: false
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 626.8009580690186
+      - 3341.443280506544
+      maior_queima_s: 3341.443280506544
+      soma_queimas_s: 3968.2442385755626
+      propelente_kg: 1071.4986102996868
+      dv_motor_km_s: 1.5404981814180454
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.1623675
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 357958.83640015865
+      duracao_sequencia_dias: 27.397094590892877
+      estada_dias: 542.0
+      altitude_minima_km: 252.09
+      cabe_no_dimensionado: false
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 316.71453763617893
+      - 306.94079216497886
+      - 3342.1578932514685
+      maior_queima_s: 3342.1578932514685
+      soma_queimas_s: 3965.813223052626
+      propelente_kg: 1070.842191592107
+      dv_motor_km_s: 1.5392809969856414
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.1611503
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 65803.48171570478
+      - 357958.83640015865
+      duracao_sequencia_dias: 29.839417398435227
+      estada_dias: 542.0
+      altitude_minima_km: 250.28
+      cabe_no_dimensionado: false
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 212.0414909648721
+      - 207.65813547425032
+      - 203.36613512029416
+      - 3342.2923197489285
+      maior_queima_s: 3342.2923197489285
+      soma_queimas_s: 3965.3580813083454
+      propelente_kg: 1070.719294986666
+      dv_motor_km_s: 1.5390531644986765
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.1609225
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 50628.35800885142
+      - 92063.69263415429
+      - 357958.83640015865
+      duracao_sequencia_dias: 32.99352067622456
+      estada_dias: 542.0
+      altitude_minima_km: 250.08
+      cabe_no_dimensionado: false
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  - combinacao: R2
+    motores: 2 × S400-15
+    caso: referência
+    missao: 2028-conjuncao
+    propelente_dimensionado_kg: 1064.7517529964293
+    queima_unica_max_s: 6660.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 2340.9421253669675
+      maior_queima_s: 2340.9421253669675
+      soma_queimas_s: 2340.9421253669675
+      propelente_kg: 632.097240824844
+      dv_motor_km_s: 0.8157780592417507
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0632225
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 414.0
+      altitude_minima_km: 322.01
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 626.8009580690186
+      - 1624.0673234273233
+      maior_queima_s: 1624.0673234273233
+      soma_queimas_s: 2250.868281496342
+      propelente_kg: 607.7756535612616
+      dv_motor_km_s: 0.7801487318584325
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0275932
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 357958.83640015865
+      duracao_sequencia_dias: 27.397094590892877
+      estada_dias: 414.0
+      altitude_minima_km: 252.09
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 316.71453763617893
+      - 306.94079216497886
+      - 1624.1510497131453
+      maior_queima_s: 1624.1510497131453
+      soma_queimas_s: 2247.806379514303
+      propelente_kg: 606.948883957029
+      dv_motor_km_s: 0.7789446341628132
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0263891
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 65803.48171570478
+      - 357958.83640015865
+      duracao_sequencia_dias: 29.839417398435227
+      estada_dias: 414.0
+      altitude_minima_km: 250.28
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 212.0414909648721
+      - 207.65813547425032
+      - 203.36613512029416
+      - 1624.1671783039594
+      maior_queima_s: 1624.1671783039594
+      soma_queimas_s: 2247.232939863376
+      propelente_kg: 606.7940447505384
+      dv_motor_km_s: 0.7787191793288523
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0261636
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 50628.35800885142
+      - 92063.69263415429
+      - 357958.83640015865
+      duracao_sequencia_dias: 32.99352067622456
+      estada_dias: 414.0
+      altitude_minima_km: 250.08
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: true
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  - combinacao: R3
+    motores: 4 × R-4D-11
+    caso: projeto (pior janela)
+    missao: 2035-conjuncao
+    propelente_dimensionado_kg: 1064.7517529964293
+    queima_unica_max_s: 2000.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 1630.6117346369408
+      maior_queima_s: 1630.6117346369408
+      soma_queimas_s: 1630.6117346369408
+      propelente_kg: 1049.8018267876791
+      dv_motor_km_s: 1.4490940322413326
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.0709634
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 542.0
+      altitude_minima_km: 312.22
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 270.4355497709644
+      - 1336.2429486794986
+      maior_queima_s: 1336.2429486794986
+      soma_queimas_s: 1606.678498450463
+      propelente_kg: 1034.3934039634075
+      dv_motor_km_s: 1.421965972180086
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.0438353
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 357958.83640015865
+      duracao_sequencia_dias: 27.396700745185598
+      estada_dias: 542.0
+      altitude_minima_km: 250.4
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 137.27838918145446
+      - 132.89707577451824
+      - 1336.272233108883
+      maior_queima_s: 1336.272233108883
+      soma_queimas_s: 1606.4476980648558
+      propelente_kg: 1034.2448126946897
+      dv_motor_km_s: 1.4217055374123848
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.0435749
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 65803.48171570478
+      - 357958.83640015865
+      duracao_sequencia_dias: 29.839295218946084
+      estada_dias: 542.0
+      altitude_minima_km: 250.05
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 91.99614022300831
+      - 90.02834658486913
+      - 88.10270466231675
+      - 1336.277672020532
+      maior_queima_s: 1336.277672020532
+      soma_queimas_s: 1606.4048634907263
+      propelente_kg: 1034.2172354283084
+      dv_motor_km_s: 1.4216572054053307
+      dv_impulsivo_km_s: 1.3781306596367031
+      perda_km_s: 0.0435265
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 50628.35800885142
+      - 92063.69263415429
+      - 357958.83640015865
+      duracao_sequencia_dias: 32.993454657063616
+      estada_dias: 542.0
+      altitude_minima_km: 250.02
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+  - combinacao: R3
+    motores: 4 × R-4D-11
+    caso: referência
+    missao: 2028-conjuncao
+    propelente_dimensionado_kg: 1064.7517529964293
+    queima_unica_max_s: 2000.0
+    por_n:
+    - n: 1
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 958.5569643633155
+      maior_queima_s: 958.5569643633155
+      soma_queimas_s: 958.5569643633155
+      propelente_kg: 617.1271988869344
+      dv_motor_km_s: 0.7665984961467878
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.014043
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km: []
+      duracao_sequencia_dias: 0.0
+      estada_dias: 414.0
+      altitude_minima_km: 265.79
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 2
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 270.4355497709644
+      - 678.9274639487622
+      maior_queima_s: 678.9274639487622
+      soma_queimas_s: 949.3630137197267
+      propelente_kg: 611.2080545707158
+      dv_motor_km_s: 0.7582470321906208
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0056915
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 357958.83640015865
+      duracao_sequencia_dias: 27.396700745185598
+      estada_dias: 414.0
+      altitude_minima_km: 250.4
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 3
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 137.27838918145446
+      - 132.89707577451824
+      - 678.9270545777854
+      maior_queima_s: 678.9270545777854
+      soma_queimas_s: 949.1025195337581
+      propelente_kg: 611.0403461785286
+      dv_motor_km_s: 0.7580107422662832
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0054552
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 65803.48171570478
+      - 357958.83640015865
+      duracao_sequencia_dias: 29.839295218946084
+      estada_dias: 414.0
+      altitude_minima_km: 250.05
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    - n: 4
+      viavel: true
+      motivo: ''
+      duracoes_s:
+      - 91.99614022300831
+      - 90.02834658486913
+      - 88.10270466231675
+      - 678.9269810134551
+      maior_queima_s: 678.9269810134551
+      soma_queimas_s: 949.0541724836494
+      propelente_kg: 611.0092199328105
+      dv_motor_km_s: 0.7579668894853648
+      dv_impulsivo_km_s: 0.7525555368246879
+      perda_km_s: 0.0054114
+      correcao_periapse_km_s: 0.0
+      apoapses_intermediarios_km:
+      - 50628.35800885142
+      - 92063.69263415429
+      - 357958.83640015865
+      duracao_sequencia_dias: 32.993454657063616
+      estada_dias: 414.0
+      altitude_minima_km: 250.02
+      cabe_no_dimensionado: true
+      queima_unica_ok: true
+      vida_acumulada_ok: null
+      partidas_ok: true
+      tempo_ok: true
+    melhor_n: 4
+sensibilidade_fracao_hill:
+- fracao_raio_hill: 0.1
+  combinacao: C1
+  n: 4
+  perda_km_s: 0.371005
+  maior_queima_s: 8983.86904337452
+  viavel: true
+- fracao_raio_hill: 0.5
+  combinacao: C1
+  n: 4
+  perda_km_s: 0.3394209
+  maior_queima_s: 8558.59460876699
+  viavel: true
+conferencia_ero:
+- vinf_km_s: 2.0
+  orbita: órbita de 1 sol
+  n: 4
+  dv_impulsivo_km_s: 0.6178729491339938
+  perda_km_s: 0.0573398
+  propelente_kg: 1254.8266053544885
+  propelente_ero_kg: 1900.0
+  fecha: true
+  maior_queima_s: 3386.9819157272473
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.0
+  orbita: órbita alta (f_H · raio de Hill)
+  n: 1
+  dv_impulsivo_km_s: 0.4206955214709369
+  perda_km_s: 0.0566468
+  propelente_kg: 914.5471391434876
+  propelente_ero_kg: 1900.0
+  fecha: true
+  maior_queima_s: 3386.9819157272473
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.25
+  orbita: órbita de 1 sol
+  n: 4
+  dv_impulsivo_km_s: 0.7182323926982903
+  perda_km_s: 0.0931517
+  propelente_kg: 1476.8816339658679
+  propelente_ero_kg: 1900.0
+  fecha: true
+  maior_queima_s: 4263.063170278118
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.25
+  orbita: órbita alta (f_H · raio de Hill)
+  n: 1
+  dv_impulsivo_km_s: 0.5210549650352334
+  perda_km_s: 0.0925159
+  propelente_kg: 1151.105120538763
+  propelente_ero_kg: 1900.0
+  fecha: true
+  maior_queima_s: 4263.063170278118
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.5
+  orbita: órbita de 1 sol
+  n: 4
+  dv_impulsivo_km_s: 0.8282137273537309
+  perda_km_s: 0.1382554
+  propelente_kg: 1718.3518338940721
+  propelente_ero_kg: 1900.0
+  fecha: true
+  maior_queima_s: 5215.691091969904
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.5
+  orbita: órbita alta (f_H · raio de Hill)
+  n: 1
+  dv_impulsivo_km_s: 0.631036299690674
+  perda_km_s: 0.137679
+  propelente_kg: 1408.3321037729966
+  propelente_ero_kg: 1900.0
+  fecha: true
+  maior_queima_s: 5215.691091969904
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.75
+  orbita: órbita de 1 sol
+  n: 4
+  dv_impulsivo_km_s: 0.9472472936017464
+  perda_km_s: 0.1903387
+  propelente_kg: 1971.3367041814372
+  propelente_ero_kg: 1900.0
+  fecha: false
+  maior_queima_s: 6213.689593373008
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.75
+  orbita: órbita alta (f_H · raio de Hill)
+  n: 1
+  dv_impulsivo_km_s: 0.7500698659386895
+  perda_km_s: 0.1898215
+  propelente_kg: 1677.8099743484372
+  propelente_ero_kg: 1900.0
+  fecha: true
+  maior_queima_s: 6213.689593373008
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: true
+- vinf_km_s: 2.9707
+  orbita: órbita de 1 sol
+  n: 4
+  dv_impulsivo_km_s: 1.059400066818057
+  perda_km_s: 0.2398494
+  propelente_kg: 2198.0371295152145
+  propelente_ero_kg: 1900.0
+  fecha: false
+  maior_queima_s: 7107.952349617354
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: false
+- vinf_km_s: 2.9707
+  orbita: órbita alta (f_H · raio de Hill)
+  n: 1
+  dv_impulsivo_km_s: 0.8622226391550001
+  perda_km_s: 0.2393826
+  propelente_kg: 1919.277294137839
+  propelente_ero_kg: 1900.0
+  fecha: false
+  maior_queima_s: 7107.952349617354
+  queima_unica_max_s: 6660.0
+  queima_unica_ok: false
+dv_motor_ero_km_s: 1.0883854149909675
 g_marte_m_s2: 3.713193870796725

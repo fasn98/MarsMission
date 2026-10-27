@@ -23,15 +23,19 @@ motores:
       nota: o S400-12 tem 1,1 h qualificada; para o S400-15 a mesma linha dá 1,85 h, e as linhas de vida acumulada e ciclos dele estão como "planned"
     vida_acumulada_s: {valor: 30600, planejado: true, fonte: "[F105] \"Qualified Accumulated Burn Life | 8.3 hours | 8.5 hours planned\" (8,5 h = 30600 s)"}
     ciclos: {valor: 135, planejado: true, fonte: "[F105] \"Qualified Cycle Life | 100 cycles | 135 cycles planned\""}
+    partidas: {valor: 135, planejado: true, fonte: "[F105] o mesmo \"135 cycles planned\" (ciclo = partida, aqui)"}
     voo: "[F28] p. 9 (lista de herança do 400N, sem separar S400-12 de S400-15): \"MARS EXPRESS 2003\", \"Exomars Orbiter 2016\"; arranjo de 2 motores no módulo de inserção do ERO: [F29] \"2 x 400 N (OIM - for Mars orbit insertion)\""
   R-4D-11:
     nome: L3Harris (ex-Aerojet) R-4D-11
     propelentes: MON-3 / MMH
     empuxo_n: {valor_original: 110, unidade_original: lbf, fonte: "[F106] p. 3, linha R-4D-11, coluna \"THRUST, LB\": 110"}
-    isp_s: {valor: 315, fonte: "[F106] p. 3, coluna \"SS ISP, SEC\": 315"}
-    massa_kg: {valor_original: 9.5, unidade_original: lb, fonte: "[F106] p. 3, coluna \"WT, LB\": 9.5"}
-    queima_unica_max_s: {valor: 12000, fonte: "[F106] p. 3, coluna \"LONG BURN, SEC\": 12,000"}
-    pulsos: {valor: 59000, fonte: "[F106] p. 3, coluna \"LIFE PULSES\": 59,000"}
+    # Decisão do Fabio no portão da Etapa 3.1 (2026-10-27): usar a variante que voou no Orion (bocal 164:1), com o
+    # Isp e os limites dela [F107 Tab. 3]. A ficha [F106] dá 315 s e 12,000 s de queima longa.
+    isp_s: {valor: 310, fonte: "[F107] p. 6 (Tab. 3, \"Artemis I Auxiliary Engine Requirements\"): \"Specific Impulse 310 seconds\""}
+    massa_kg: {valor_original: 9.5, unidade_original: lb, fonte: "[F106] p. 3, coluna \"WT, LB\": 9.5 (ficha; massa da variante do Orion não encontrada)"}
+    queima_unica_max_s: {valor: 2000, fonte: "[F107] p. 6 (Tab. 3): \"Max Firing Time 2000 seconds\""}
+    partidas: {valor: 40, fonte: "[F107] p. 6 (Tab. 3): \"Number of Burns 40\""}
+    pulsos: {valor: 59000, fonte: "[F106] p. 3, coluna \"LIFE PULSES\": 59,000 (ficha)"}
     voo: "[F106] p. 3: \"Q, F, IP\" (\"Q=Qualified, F=Flown, IP=In-Production\"); Orion ESM, 8 motores auxiliares no Artemis I: [F107] p. 5, \"The auxiliary engines are modified Aerojet Rocketdyne R-4D-11 engines produced specifically for the Orion program\""
     nota: "a variante que voou no Orion (bocal 164:1) tem o mesmo empuxo, mas Isp e limites menores: [F107] p. 6 (Tab. 3), \"Thrust 489 N\", \"Specific Impulse 310 seconds\", \"Max Firing Time 2000 seconds\", \"Number of Burns 40\". O catálogo usa a ficha [F106] (315 s); com a variante do Orion, Isp 310 s"
   R-42:
@@ -59,6 +63,7 @@ motores:
     massa_kg: {valor_original: 297, unidade_original: lb, fonte: "[F108] p. 7: \"DRY WEIGHT 297 LBS\" (motor do Shuttle)"}
     queima_unica_max_s: {valor: 1030, fonte: "[F107] p. 3 (Tab. 2): \"Max Burn Duration 1030 seconds\""}
     partidas: {valor: 10, fonte: "[F107] p. 3 (Tab. 2): \"Number of Starts 10 max\" (requisito do Orion)"}
+    vida_acumulada_s: {valor: 54000, fonte: "[F108] p. 7: \"LIFE 100 MISSIONS 1000 STARTS 15 HOURS CUM. FIRING\" (15 h = 54000 s; motor do Shuttle)"}
     voo: "[F107] p. 2: a unidade do Artemis I \"previously flew on nineteen missions from STS-41G in 1984 to STS-112 in 2002\"; p. 2: \"There were five (5) burns using the Orbital Maneuvering System Engine (OMS-E)\""
     nota: "disponibilidade: as unidades do Orion são motores do Shuttle reformados; [F107] p. 10, \"Starting on Artemis VII, a new engine will replace the heritage Space Shuttle Orbital Maneuvering System Engines\". Disponibilidade para esta missão: não conferida"
   LEROS-1b:

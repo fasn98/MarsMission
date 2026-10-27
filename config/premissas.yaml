@@ -463,3 +463,27 @@ premissas:
       da captura (−0,5; 1,0; 1,0), início (1,05·t_imp), expansão (×1,5) e limite inferior (0,5·t_imp) do intervalo do
       brentq da saída, e o arredondamento a 10 casas que só limpa a representação binária. Sem valor publicado.
     status: NÃO VALIDADA
+  - id: P-042
+    nome: divisao_captura_saida_varias_queimas
+    valor: {numero_de_queimas: "1, 2, 3, 4", fracao_raio_hill: 0.3333, sensibilidade: "0,1 e 0,5"}
+    unidade: adimensional
+    uso: config/queima_finita.yaml (orbital.queima_multipla, Etapa 3.1)
+    justificativa: >
+      Captura e saída de Marte em várias queimas no periapse. A 1ª queima da captura (e a última da saída) leva o excesso
+      hiperbólico numa única passagem, até uma órbita alta de apoapse igual a uma fração do raio de Hill de Marte; as
+      demais dividem o resto em partes iguais de velocidade no periapse. A fração 1/3 é uma escolha de ordem de grandeza
+      para uma órbita ainda bem ligada a Marte, sem fonte conferida; o resultado é mostrado também com 0,1 e 0,5.
+      Não considera direção da assíntota, rotação da linha das apsides, perturbação solar nem a geometria de partida.
+    status: NÃO VALIDADA
+  - id: P-043
+    nome: hipoteses_conferencia_ero
+    valor: {massa_na_captura: "massa úmida de ~6,5 t [F22]", propelente_da_captura: "todo o do OIM, 1900 kg [F22]", orbita_alvo: "1 sol ou órbita alta (P-042)", vinf_km_s: "2,0 a 2,75 e o da missão de referência"}
+    unidade: kg; km/s
+    uso: config/queima_finita.yaml (verificacao_ero; tools/queima_finita.py)
+    justificativa: >
+      A fonte do ERO [F22] dá massa úmida aproximada e propelente do módulo de inserção, e [F29] dá 2 x 400 N, mas
+      nenhuma das duas publica v∞ de chegada, órbita-alvo nem Δv da captura. Para conferir a coerência do modelo, admite-se
+      a massa úmida como massa na captura, todo o propelente do OIM na captura e uma faixa de v∞. É conferência de
+      coerência, não verificação.
+    status: NÃO VALIDADA
+

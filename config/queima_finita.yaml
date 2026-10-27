@@ -25,3 +25,16 @@ arredondamento_resultados:
   # relativo no início da queima, entre duas execuções com caminhos de otimização diferentes).
   inicio_s: {valor: 10, premissa: P-041}
   altitude_km: {valor: 0.01, premissa: P-041}      # também as apsides finais (carregam o resíduo do ajuste ao alvo)
+  perda_varias_queimas_km_s: {valor: 1.0e-7, premissa: P-041}   # perda das sequências: diferença de dois Δv grandes
+varias_queimas:
+  # Captura e saída em várias queimas no periapse (orbital.queima_multipla). Premissa P-042 (NÃO VALIDADA).
+  numero_de_queimas: {valor: [1, 2, 3, 4], premissa: P-042}
+  fracao_raio_hill: {valor: 0.3333333333333333, premissa: P-042}   # apoapse da órbita alta de captura / de saída
+  fracao_raio_hill_sensibilidade: {valor: [0.1, 0.5], premissa: P-042}
+verificacao_ero:
+  # Conferência de coerência com o ERO da ESA (não é verificação: a fonte não publica v∞, órbita nem Δv da captura).
+  massa_kg: {valor: 6500, fonte: "[F22] slide 7: \"Approx 6.5 Tonnes (wet mass)\""}
+  propelente_kg: {valor: 1900, fonte: "[F22] slide 8, Orbit Insertion Module: \"Prop Mass = 1900 kg\""}
+  motor: {valor: S400-15, quantidade: 2, fonte: "[F29] slide 6: \"Chemical propulsion: 2 x 400 N (OIM - for Mars orbit insertion)\""}
+  vinf_km_s: {valor: [2.0, 2.25, 2.5, 2.75], premissa: P-043}   # mais o v∞ da missão de referência, lido de results/
+
