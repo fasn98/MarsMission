@@ -57,7 +57,7 @@ FASE_1 = [["tools/baricentro_marte.py"], ["tools/porkchop.py", "terra_marte"], [
 FASE_850 = [["tools/dimensionamento.py"], ["tools/compara_msr.py"], ["tools/superficie.py"],
             ["tools/varredura_encontro.py"], ["tools/isru.py"], ["tools/mav_propulsao.py"]]
 FASE_ATUAL = [["tools/plataformas.py"], ["tools/lancamento.py"], ["tools/coleta.py"], ["tools/arquitetura.py"],
-              ["tools/confere_2033.py"], ["tools/exporta_painel.py"]]
+              ["tools/confere_2033.py"], ["tools/exporta_painel.py"], ["tools/queima_finita.py"]]
 _SO_NA_RAIZ = {".git", "data", "results", "hanatrial", ".venv", ".pythonlibs", ".cache", ".claude"}
 
 

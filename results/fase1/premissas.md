@@ -42,5 +42,6 @@
 | P-038 | categoria_de_margem_dos_helicopteros | eletronica_0_5kg | categoria do AIAA S-120A (E1; 20–35 %, ponto médio 27,5 %) | NÃO VALIDADA | config/plataformas.yaml — helicópteros de recuperação no lander (ADR 0009) |
 | P-039 | tolerancia_regeneracao_numerica | relativa: 1e-09; piso_absoluto: 1e-10 | adimensional (passa se |a − b| ≤ max(relativa · |b|, piso_absoluto); a = versionado, b = regenerado) | NÃO VALIDADA | tools/confere_regeneracao.py — números em YAML, Markdown e NPZ de results/ regenerados contra os versionados |
 | P-040 | tolerancia_regeneracao_png | 0.001 | fração de pixels diferentes por figura | NÃO VALIDADA | tools/confere_regeneracao.py — figuras PNG de results/ regeneradas contra as versionadas |
+| P-041 | parametros_numericos_queima_finita | rtol: 1e-11; atol_km: 1e-09; tolerancia_alvo: 1e-06; passo_continuacao: 2.0; duracao_inicial_continuacao_s: 60; demais: ver config/queima_finita.yaml | adimensional; km e km/s; s | NÃO VALIDADA | config/queima_finita.yaml (orbital.queima_finita e tools/queima_finita.py, Etapa 3.1) |
 
-Total: 40 premissas, 40 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 41 premissas, 41 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

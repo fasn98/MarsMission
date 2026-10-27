@@ -446,3 +446,20 @@ premissas:
       no runner do CI, 0,0002 % a 0,05 % dos pixels dos porkchops diferiram (PR #11, 2026-10-27). Os dados de origem
       das figuras são conferidos numericamente (P-039). Decisão do Fabio (2026-10-27). Sem valor publicado.
     status: NÃO VALIDADA
+  - id: P-041
+    nome: parametros_numericos_queima_finita
+    valor: {rtol: 1.0e-11, atol_km: 1.0e-9, tolerancia_alvo: 1.0e-6, passo_continuacao: 2.0, duracao_inicial_continuacao_s: 60, demais: ver config/queima_finita.yaml}
+    unidade: adimensional; km e km/s; s
+    uso: config/queima_finita.yaml (orbital.queima_finita e tools/queima_finita.py, Etapa 3.1)
+    justificativa: >
+      Parâmetros do método numérico da queima finita, em config/queima_finita.yaml: tolerâncias do integrador
+      DOP853 e amostragem da altitude mínima; erro relativo aceito no periapse e no apoapse finais da captura; continuação
+      no empuxo (passo e ponto de partida); faixas de busca, tolerâncias e custo de ponto inviável dos otimizadores; e o
+      arredondamento, em results/, dos campos mal condicionados (início da queima, altitudes), que dependem da posição
+      de um mínimo plano. Escolhidos bem abaixo da precisão relevante do estudo (~1e-4 relativo) e conferidos para que
+      nenhum ótimo caia numa borda; trocar os principais (rtol 1e-9, passo 1,5, partida em 30 s) muda a perda em menos de
+      1e-4 relativo (tests/test_queima_finita.py). Ficam no código, também cobertas por esta premissa, constantes internas
+      dos algoritmos que não mudam o resultado nos casos calculados: tolerâncias de 1e-14 do least_squares, chute inicial
+      da captura (−0,5; 1,0; 1,0), início (1,05·t_imp), expansão (×1,5) e limite inferior (0,5·t_imp) do intervalo do
+      brentq da saída, e o arredondamento a 10 casas que só limpa a representação binária. Sem valor publicado.
+    status: NÃO VALIDADA

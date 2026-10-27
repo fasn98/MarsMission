@@ -38,12 +38,18 @@ def energia(icfg, potencia_w, fonte):
     return isru.escala(v(s["massa_kg"]), potencia_w, v(s["potencia_continua_w"]), v(s["expoente"])), "solar"
 
 
-def mav_generico(dv, op, scfg):
+def mav_estagios(dv, op, scfg):
+    """Os dois estágios do MAV dimensionados: [(ResultadoEstagio, Δv da queima em km/s, Isp em s)]."""
     f1 = v(scfg["mav"]["fracao_dv_estagio_1"])
     eps = v(op["fracao_estrutural"])
     e1 = fg.Estagio("mav_1", op["isp_s"][0], eps, [fg.Queima("subida_1", f1 * dv)])
     e2 = fg.Estagio("mav_2", op["isp_s"][1], eps, [fg.Queima("subida_2", (1 - f1) * dv)])
     r = fg.dimensionar_veiculo([e1, e2], v(scfg["mav"]["carga_util_kg"]))
+    return [(r[0], f1 * dv, op["isp_s"][0]), (r[1], (1 - f1) * dv, op["isp_s"][1])]
+
+
+def mav_generico(dv, op, scfg):
+    r = [e for e, _, _ in mav_estagios(dv, op, scfg)]
     prop = sum(s.propelente for s in r)
     return r[0].massa_inicial, prop
 
