@@ -25,7 +25,9 @@ CONFIG_KERNELS = RAIZ / "config" / "kernels.yaml"
 
 # Códigos NAIF (NAIF, "NAIF Integer ID codes" Required Reading).
 # de440s.bsp traz o baricentro de Marte (4), não o centro do corpo (499).
-# A distância entre os dois não foi quantificada com fonte; ver docs/etapa1.1_efemerides.md.
+# A distância entre os dois vem de Fobos e Deimos: Σ GM_lua/GM_sistema × a_lua, entre
+# 0,10 e 0,21 m conforme a geometria (GM: MAR099 [F7]; a, e: SSD/JPL [F8]; ver
+# orbital.marte e results/etapa1.1/baricentro_marte.yaml).
 SOL = "10"
 TERRA = "399"
 BARICENTRO_TERRA_LUA = "3"

@@ -30,7 +30,7 @@ def _premissa(nome: str) -> float:
     return next(p["valor"] for p in cfg["premissas"] if p["nome"] == nome)
 
 
-def ler_horizons(arquivo: Path) -> tuple[str, np.ndarray, np.ndarray]:
+def ler_horizons(arquivo: Path, centro: str = "Sun (10)") -> tuple[str, np.ndarray, np.ndarray]:
     """Extrai (época TDB ISO, r [km], v [km/s]) de uma resposta texto do Horizons."""
     texto = arquivo.read_text(encoding="utf-8")
     bloco = texto.split("$$SOE", 1)[1].split("$$EOE", 1)[0]
@@ -41,7 +41,8 @@ def ler_horizons(arquivo: Path) -> tuple[str, np.ndarray, np.ndarray]:
     r = [float(re.search(rf"\b{c}\s*=\s*{_NUM}", bloco).group(1)) for c in ("X", "Y", "Z")]
     v = [float(re.search(rf"\b{c}\s*=\s*{_NUM}", bloco).group(1)) for c in ("VX", "VY", "VZ")]
     assert "TDB" in bloco and "Reference frame : ICRF" in texto
-    assert "Center body name: Sun (10)" in texto
+    assert f"Center body name: {centro}" in texto
+    assert "Output type     : GEOMETRIC cartesian states" in texto
     return iso, np.array(r), np.array(v)
 
 

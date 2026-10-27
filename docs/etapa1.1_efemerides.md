@@ -10,10 +10,37 @@
 - Leap seconds `naif0012.tls` [F2]. Acesso via spiceypy 8.3.0 / CSPICE N0067 [F4, F5].
 - O arquivo traz os baricentros dos sistemas planetários. Para Marte, o corpo disponível é o
   **baricentro do sistema marciano (NAIF 4)**, não o centro de Marte (499). Para trajetórias
-  heliocêntricas isso é o adequado. Numa consulta exploratória ao Horizons (2028-01-01 TDB), os
-  alvos 499 e 4 diferiram em ~41 m na coordenada X. Esse valor não foi investigado nem está nos
-  testes. Se uma etapa futura precisar do centro de Marte, será preciso
+  heliocêntricas isso é o adequado. Se uma etapa futura precisar do centro de Marte, será preciso
   um kernel de satélites marcianos (por exemplo `mar099.bsp`), e essa decisão fica para então.
+
+## Distância entre o baricentro (4) e o centro de Marte (499)
+
+Valor físico, pela definição de baricentro: |r₄₉₉ − r₄| = Σ (GM_lua / GM_sistema) · a_lua, com GM do
+MAR099 [F7] e elementos médios do SSD/JPL [F8] (`src/orbital/marte.py`):
+
+| Contribuição | Valor |
+| :- | -: |
+| Fobos (a = 9375 km) | 0,155 m |
+| Deimos (a = 23457 km) | 0,053 m |
+| Faixa, conforme a geometria e a excentricidade de Fobos | 0,100 a 0,210 m |
+
+Horizons, alvos 499 e 4 com parâmetros idênticos (estado geométrico, VEC_CORR = NONE, centro
+500@10, ICRF, TDB), mais a consulta direta de 499 relativo a 500@4. Respostas brutas em
+`tests/data/horizons/marte_centro*.txt`; tabela gerada por `tools/baricentro_marte.py` em
+`results/etapa1.1/baricentro_marte.yaml`; testes em `tests/test_marte_baricentro.py`.
+
+| Época TDB | \|r₄₉₉ − r₄\| heliocêntrico | \|r₄₉₉ rel. 4\| direto | Diferença entre os dois |
+| :- | -: | -: | -: |
+| 2028-01-01 | 0,1342 m | 0,1342 m | 0,10 mm |
+| 2033-06-15 | 0,1512 m | 0,1511 m | 0,10 mm |
+
+Os dois valores ficam dentro da faixa física. A diferença de 0,1 mm entre os dois caminhos está
+dentro do arredondamento de 16 algarismos com que o Horizons imprime posições de ~1,5e8 km.
+
+**Correção registrada.** Na revisão anterior deste relatório, apareceu "~41 m" para essa distância.
+Não foi diferença de configuração da consulta: a consulta de 2026-10-26 a 499 tinha os mesmos
+parâmetros efetivos e devolve exatamente os mesmos números de agora. O erro foi de unidade na minha
+conta (4,1e-5 km lido como 41 m; o valor correto da componente X é 0,041 m).
 
 ## Verificação contra o JPL Horizons
 
