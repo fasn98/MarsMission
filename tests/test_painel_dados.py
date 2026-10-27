@@ -208,3 +208,19 @@ def test_ferramentas_chamam_as_funcoes_de_src(monkeypatch):
     assert pl_t.prevista is massa_plataformas.prevista and pl_t.lander_base is massa_plataformas.lander_base
     for m in ("dimensionamento", "lancamento", "plataformas"):
         sys.modules.pop(m, None)
+
+
+def test_nomes_legiveis_vem_do_config_e_de_results():
+    """Nomes de exibição: órbita pela descrição do config, missão pelo id de results/ e mínimos pela nota do arquivo."""
+    m = d.missao_referencia()
+    orbitas = yaml.safe_load((d.RAIZ / "config" / "parametros_orbitais.yaml").read_text(encoding="utf-8"))["orbitas_marte"]
+    assert d.nome_orbita_marte(m["orbita_marte"]) == orbitas[m["orbita_marte"]]["descricao"]
+    assert d.nome_missao("2028-conjuncao") == "conjunção de 2028"
+    assert d.nome_missao("2031-conjuncao_transito_curto") == "conjunção com trânsito curto de 2031"
+    classes = yaml.safe_load((d.RAIZ / "config" / "missoes.yaml").read_text(encoding="utf-8"))["classes"]
+    assert set(d.NOMES_CLASSE) == set(classes)   # todo nome de classe corresponde a uma classe do config
+    assert d.nome_minimo("tipo_1") == "Mín. C3 de partida, tipo I"
+    assert d.nome_minimo("min_vinf_tipo_2") == "Mín. v∞ de chegada, tipo II"
+    for sentido in ("terra_marte", "marte_terra"):
+        for janela in d.minimos(sentido).values():
+            assert all(d.nome_minimo(k) != k for k in janela)   # nenhuma chave de mínimo fica sem nome

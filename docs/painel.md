@@ -15,6 +15,14 @@ com branch, hook, revisão independente e PR; o Replit Agent e commits diretos n
 | Orçamento de massa | Controles para a plataforma do lander (P-017), a margem de Δv (P-014) e o Isp e a fração estrutural dos estágios MMH/MON; recalcula os veículos e mostra que lançadores continuam servindo | `orbital.veiculos`, `orbital.lancamento` |
 | Premissas e decisões | Todas as premissas de `config/premissas.yaml`, com status, e os ADRs (texto e link) | `config/premissas.yaml`, `docs/adr/` |
 
+**Endereços.** A Visão geral é a página padrão, na raiz `/`. Ela também abre em `/visao-geral` (página oculta com o
+mesmo conteúdo, para links salvos). As outras ficam em `/trajetoria`, `/porkchops`, `/orcamento` e `/premissas`.
+
+**Nomes exibidos.** As chaves internas aparecem por extenso:
+- a órbita em Marte, pela `descricao` de `config/parametros_orbitais.yaml`;
+- a missão (ex.: `2028-conjuncao` → "conjunção de 2028"), pelo id de `results/etapa1.3/missoes.yaml`;
+- os mínimos dos porkchops, pela nota de `results/etapa1.2/minimos_*.yaml`.
+
 **Rótulos.** Todo número exibido traz um rótulo:
 - **verificado contra dados publicados:** comparação com NASA/TM-2010-216764 e JPL 82-43;
 - **calculado:** saída das ferramentas ou de `src/orbital`;

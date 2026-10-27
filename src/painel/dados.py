@@ -119,6 +119,31 @@ def missao_referencia() -> dict:
     }
 
 
+# Nomes das classes de missão de config/missoes.yaml (chaves de "classes"), para exibição.
+NOMES_CLASSE = {"oposicao": "oposição", "conjuncao": "conjunção", "conjuncao_transito_curto": "conjunção com trânsito curto"}
+
+
+def nome_orbita_marte(chave: str) -> str:
+    """Descrição da órbita em Marte em config/parametros_orbitais.yaml (ex.: eliptica_alta → "elíptica de 1 sol, …")."""
+    return ler("config/parametros_orbitais.yaml")["orbitas_marte"][chave]["descricao"]
+
+
+def nome_missao(mid: str) -> str:
+    """Id de missão "<janela>-<classe>" (results/etapa1.3/missoes.yaml) por extenso: 2028-conjuncao → "conjunção de 2028"."""
+    janela, classe = mid.split("-", 1)
+    return f"{NOMES_CLASSE.get(classe, classe)} de {janela}"
+
+
+def nome_minimo(chave: str) -> str:
+    """Chave de mínimo de results/etapa1.2/minimos_*.yaml por extenso, pela nota do próprio arquivo: tipo_N = mínimo de
+    C3 de partida; min_vinf_tipo_N = mínimo do v∞ de chegada (tipo em romano, como em tools/porkchop.py)."""
+    m = re.fullmatch(r"(min_vinf_)?tipo_(\d+)", chave)
+    if not m:
+        return chave
+    tipo = {"1": "I", "2": "II"}.get(m.group(2), m.group(2))
+    return f"Mín. v∞ de chegada, tipo {tipo}" if m.group(1) else f"Mín. C3 de partida, tipo {tipo}"
+
+
 def verificacoes() -> list[dict]:
     """Comparações com dados publicados (Etapa 1.2): NASA/TM-2010-216764 e JPL 82-43 Parte 5, nas datas publicadas."""
     out = []

@@ -27,8 +27,15 @@ def metrica(rotulo: str, x: d.Valor, casas: int = 2, sufixo: str | None = None):
     st.caption(f"{x.rotulo} · {x.origem}")
 
 
+# Colunas de texto com largura fixa: "Origem" cabe um caminho de results/ inteiro; "Item" quebra o resto da largura.
+COLUNAS = {"Origem": st.column_config.TextColumn("Origem", width=320,
+                                                 help="Arquivo de results/ ou item de config/ de onde vem o número"),
+           "Item": st.column_config.TextColumn("Item", width="large")}
+
+
 def tabela(linhas: list[dict]):
-    st.dataframe(pd.DataFrame(linhas), hide_index=True, width="stretch")
+    df = pd.DataFrame(linhas)
+    st.dataframe(df, hide_index=True, width="stretch", column_config={k: c for k, c in COLUNAS.items() if k in df.columns})
 
 
 def linha_valor(nome: str, x: d.Valor | None, casas: int = 1) -> dict:
@@ -44,9 +51,9 @@ def visao_geral():
     st.markdown(NOTA_ROTULOS)
     m, a = d.missao_referencia(), d.arquitetura()
 
-    st.header(f"Missão de referência: {m['id']}")
-    st.caption(f"Órbita em Marte: {m['orbita_marte']}; captura {m['captura']} (ADR 0003). Datas em TDB, de "
-               "`results/etapa1.3/missoes.yaml` (rótulo: calculado).")
+    st.header(f"Missão de referência: {d.nome_missao(m['id'])}")
+    st.caption(f"Órbita em Marte: {d.nome_orbita_marte(m['orbita_marte'])}; captura {m['captura']} (ADR 0003). Datas em "
+               f"TDB, de `results/etapa1.3/missoes.yaml`, missão `{m['id']}` (rótulo: calculado).")
     tabela([{"Evento": e, "Data (TDB)": dt, "Rótulo": d.CALCULADO} for e, dt in m["eventos"]])
     cols = st.columns(4)
     for c, (nome, x) in zip(cols, m["duracoes"].items()):
@@ -67,7 +74,7 @@ def visao_geral():
         with c:
             metrica(nome, x, 2)
     st.caption(f"Envelope de dimensionamento (ADR 0004): {br(m['envelope'].valor, 3)} km/s, definido por "
-               f"{m['envelope_missao']} — {m['envelope'].rotulo}.")
+               f"{d.nome_missao(m['envelope_missao'])} — {m['envelope'].rotulo}.")
 
     st.header("Arquitetura final (Etapa 2.5)")
     cols = st.columns(4)
@@ -78,9 +85,9 @@ def visao_geral():
     with cols[2]:
         metrica("Lançamentos", a["lancamentos"], 0, "")
     with cols[3]:
-        ra, rb = a["orbita_encontro_km"]
-        st.metric("Órbita de encontro", f"{br(ra.valor, 0)} × {br(rb.valor, 0)} km")
-        st.caption(f"{ra.rotulo} · {ra.origem}")
+        ra, rb = a["orbita_encontro_km"]   # altitudes de periapse e apoapse (tools/arquitetura.py)
+        metrica("Encontro: altitude do periapse", ra, 0)
+        metrica("Encontro: altitude do apoapse", rb, 0)
     for veic, titulo in (("orbitador", "Orbitador (regra iii)"), ("lander", "Lander (MAV, helicópteros e braço a bordo)")):
         st.subheader(titulo)
         linhas = []
@@ -96,7 +103,7 @@ def visao_geral():
     st.header("Lançadores e margens (injeção direta, ADR 0008)")
     jan = m["janelas_envelope"]
     st.caption(f"Margem = capacidade / massa injetada − 1, na pior das {len(jan)} janelas do envelope ({', '.join(jan)}).")
-    linhas = [{"Veículo": veic, "Lançador": n, "Pior margem": f"{br(100 * x.valor, 0)} %", "Rótulo": x.rotulo, "Origem": x.origem}
+    linhas = [{"Veículo": veic.capitalize(), "Lançador": n, "Pior margem": f"{br(100 * x.valor, 0)} %", "Rótulo": x.rotulo, "Origem": x.origem}
               for veic, dd in a["margens"].items() for n, x in dd.items()]
     tabela(linhas)
 
@@ -138,9 +145,9 @@ def pagina_porkchops():
     ev = dict(m["eventos"])
     marcas = []
     if sentido == "terra_marte" and g["partida_tdb"][0] <= ev["Partida da Terra"] <= g["partida_tdb"][-1]:
-        marcas.append((f"Missão de referência ({m['id']})", ev["Partida da Terra"], ev["Chegada a Marte"]))
+        marcas.append((f"Missão de referência ({d.nome_missao(m['id'])})", ev["Partida da Terra"], ev["Chegada a Marte"]))
     if sentido == "marte_terra" and g["partida_tdb"][0] <= ev["Partida de Marte"] <= g["partida_tdb"][-1]:
-        marcas.append((f"Missão de referência ({m['id']})", ev["Partida de Marte"], ev["Chegada à Terra"]))
+        marcas.append((f"Missão de referência ({d.nome_missao(m['id'])})", ev["Partida de Marte"], ev["Chegada à Terra"]))
     st.plotly_chart(gr.porkchop(g, masc, info["niveis_c3"], info["niveis_vinf"], f"{info['titulo']} — janela {janela}", mins, marcas),
                     width="stretch")
     p6 = d.premissa("P-006")
@@ -148,7 +155,7 @@ def pagina_porkchops():
                f"Escondidos no desenho: C3 > {br(info['c3_max'], 0)} km²/s² (enquadramento do gráfico, `config/janelas.yaml`) e a faixa de ±{br(p6['valor'], 0)}° em torno de 180° "
                f"de ângulo de transferência (P-006, {d.rotulo_premissa('P-006')}). Mínimos de `results/etapa1.2/minimos_{sentido}.yaml`.")
     if mins:
-        tabela([{"Mínimo": k, "Partida (TDB)": x["partida_tdb"], "Chegada (TDB)": x["chegada_tdb"],
+        tabela([{"Mínimo": d.nome_minimo(k), "Partida (TDB)": x["partida_tdb"], "Chegada (TDB)": x["chegada_tdb"],
                  "C3 [km²/s²]": br(x["c3_km2_s2"], 3), "v∞ chegada [km/s]": br(x["vinf_chegada_km_s"], 3),
                  "Tempo de voo [d]": br(x["tof_dias"], 1), "Na borda do domínio": "sim" if x["na_borda_do_dominio"] else "não",
                  "Rótulo": d.CALCULADO} for k, x in mins.items()])
@@ -205,7 +212,7 @@ def pagina_orcamento():
                     + (f" **Escolhidos que deixam de servir:** {', '.join(perdidos)}." if perdidos else " Todos os escolhidos servem."))
         st.plotly_chart(gr.margens(r["lancadores"], veic, len(d.missao_referencia()["janelas_envelope"])), width="stretch")
     with st.expander("Tabela completa de margens"):
-        tabela([{"Veículo": x["veiculo"], "Lançador": x["lancador"], "Categoria": x["categoria"],
+        tabela([{"Veículo": x["veiculo"].capitalize(), "Lançador": x["lancador"], "Categoria": x["categoria"],
                  "Escolhido (ADR 0008)": "sim" if x["escolhido"] else "", "Pior margem": "sem dado" if x["margem"] is None
                  else f"{br(100 * x['margem'].valor, 1)} %", "Janela mais restritiva": x["janela"] or "",
                  "Serve": "sim" if x["serve"] else "não", "Rótulo": d.CALCULADO} for x in r["lancadores"]])
@@ -232,7 +239,9 @@ def pagina_premissas():
             st.markdown(a["texto"])
 
 
-pg = st.navigation([st.Page(visao_geral, title="Visão geral", url_path="visao-geral", default=True),
+# A página padrão fica na raiz "/"; a cópia oculta faz o endereço /visao-geral (links salvos) abrir a mesma página.
+pg = st.navigation([st.Page(visao_geral, title="Visão geral", default=True),
+                    st.Page(visao_geral, title="Visão geral", url_path="visao-geral", visibility="hidden"),
                     st.Page(pagina_trajetoria, title="Trajetória", url_path="trajetoria"),
                     st.Page(pagina_porkchops, title="Porkchops", url_path="porkchops"),
                     st.Page(pagina_orcamento, title="Orçamento de massa", url_path="orcamento"),
