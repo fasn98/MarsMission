@@ -12,6 +12,9 @@ from __future__ import annotations
 
 import numpy as np
 
+from orbital import foguete as fg
+from orbital.config import v
+
 
 def inclinacao(latitude_graus, azimute_graus):
     """Inclinação (graus) da órbita alcançada com subida coplanar: cos i = cos φ · sen Σ."""
@@ -54,3 +57,54 @@ def interpolar(x, xs, ys):
     if x < xs[0] - 1e-12 or x > xs[-1] + 1e-12:
         return float("nan")
     return float(np.interp(x, xs, ys))
+
+
+def pior_margem_a(nome, m_inj, janelas, cfg):
+    """(pior margem, janela) da injeção direta do lançador `nome` para a massa dada, entre as janelas."""
+    lan = cfg["lancadores"][nome]
+    if lan.get("plataforma") == "ELA-4":
+        return None, None
+    pfm = cfg["centro"]["plataformas"].get(lan.get("plataforma"), {})
+    imax = inclinacao(pfm.get("latitude_graus", v(cfg["centro"]["latitude_graus"])), cfg["centro"]["azimute_graus"]["valor"][0])
+    vals = []
+    for j in janelas:
+        cap = capacidade_direta(lan, j["c3_km2_s2"], j["dla_graus"], cfg, imax)[0]
+        if cap != cap:
+            return None, j["id"]
+        vals.append((cap / m_inj - 1, j["id"]))
+    return min(vals)
+
+
+def capacidade_direta(lan, c3, dla, cfg, i_max):
+    """(capacidade kg ou NaN, nota) da injeção direta no C3 e na DLA."""
+    if "pontos" not in lan["c3"]:
+        return float("nan"), "sem curva de C3 publicada"
+    cap = interpolar(c3, lan["c3"]["pontos"], lan["c3"]["massa_kg"])
+    if cap != cap:
+        return cap, "C3 fora da faixa publicada"
+    if i_max is not None and abs(dla) > i_max:
+        return 0.0, f"|DLA| > {i_max:.2f}° (azimute 40°): exige dogleg ou plano quebrado".replace(".", ",")
+    m = cfg["dla"]["multiplicador_nordeste"]
+    f = 1.0 if abs(dla) <= v(cfg["dla"]["faixa_sem_penalidade_graus"]) else interpolar(abs(dla), m["dla_graus"], m["fator"])
+    return cap * f, ("" if f == 1.0 else f"multiplicador de DLA {f:.3f}".replace(".", ","))
+
+
+def leo_por_janela(m_inj, cand, dcfg, po, i_graus):
+    """(massa na órbita baixa kg, β graus, giro no perigeu θ graus, Δv extra do giro km/s), com o estágio de saída
+    próprio redimensionado para a janela."""
+    mu = v(po["gm_terra"])
+    r = v(po["raio_terra_km"]) + v(po["leo_altitude_km"])
+    c3 = cand["c3_km2_s2"]
+    beta = delta_plano(cand["dla_graus"], i_graus)
+    theta = giro_no_perigeu(beta, mu, r, c3)
+    if theta != theta:
+        return float("nan"), beta, theta, float("nan")
+    extra = dv_saida(mu, r, c3, theta) - dv_saida(mu, r, c3, 0.0)
+    dv_ideal = cand["dv_saida_terra_km_s"] + extra
+    dv = (1 + v(dcfg["margem_dv"])) * (dv_ideal + v(dcfg["dv"]["perda_gravitacional"]["saida_terra"]))
+    st = dcfg["estagios"]["saida_terra"]
+    e = fg.Estagio("saida_terra", v(st["isp_s"]), v(st["fracao_estrutural"]), [fg.Queima("saida_terra", dv)])
+    try:
+        return fg.dimensionar_veiculo([e], m_inj)[0].massa_inicial, beta, theta, extra
+    except ValueError:  # Δv alto demais para o estágio (giro grande): inviável
+        return float("inf"), beta, theta, extra

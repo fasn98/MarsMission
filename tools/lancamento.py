@@ -18,7 +18,6 @@ Uso: python tools/lancamento.py
 
 from __future__ import annotations
 
-import copy
 import sys
 from pathlib import Path
 
@@ -29,120 +28,16 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(RAIZ / "src"), str(RAIZ / "tools")]
 
 import dimensionamento as dm  # noqa: E402
-import varredura_encontro as ve  # noqa: E402
-from mav_propulsao import massas_opcao  # noqa: E402
 import missoes as mi  # noqa: E402
 from orbital import ephemeris as eph  # noqa: E402
-from orbital import foguete as fg  # noqa: E402
 from orbital import missao as ms_  # noqa: E402
 from orbital import porkchop as pc  # noqa: E402
 from orbital import lancamento as la  # noqa: E402
-from orbital import manobras as mn  # noqa: E402
-from orbital import superficie as sf  # noqa: E402
-from superficie import _ler, _v, lander_estagios  # noqa: E402
+from orbital.lancamento import capacidade_direta, leo_por_janela, pior_margem_a  # noqa: E402,F401
+from orbital.veiculos import veiculos  # noqa: E402
+from superficie import _ler, _v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa2.4"
-
-
-def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None):
-    """Massas injetadas (sem estágio de saída) do orbitador (iii e A) e do lander, no caso de base da Etapa 2.3.
-
-    `plataforma_lander_kg` substitui a plataforma do lander do config (opções de coleta, Etapa 2.5); `dcfg` e `scfg`
-    substituem config/dimensionamento.yaml e config/superficie.yaml (sensibilidade da Etapa 2.5). Cada veículo traz
-    também o detalhe por estágio ("estagios") e, no lander, as massas de chegada, pouso e MAV."""
-    dcfg = _ler("config/dimensionamento.yaml") if dcfg is None else dcfg
-    scfg = _ler("config/superficie.yaml") if scfg is None else scfg
-    cu = _ler("config/carga_util.yaml")
-    mcfg, icfg, po = _ler("config/mav_propulsao.yaml"), _ler("config/isru.yaml"), _ler("config/parametros_orbitais.yaml")
-    p = dm.parametros()
-    a_caso, jan, piores = dm.casos(dcfg, p)
-    vs = dm.variantes(a_caso, jan, piores)
-    pl = _ler("results/etapa2.3/plataformas.yaml")
-    mp = _ler("results/etapa2.2/mav_propulsao.yaml")
-    op_mav = mp["melhor_opcao"]
-    fonte_mav = min((x for x in mp["opcoes"] if x["opcao"] == op_mav), key=lambda x: x["total_regra_iii_kg"])["energia"]
-    R, mu, um = _v(po["raio_marte_km"]), p.mu_marte, p.orbitas_marte["eliptica_alta"]
-    rp, ra = R + pl["orbita_encontro"]["periapse_alt_km"], R + pl["orbita_encontro"]["apoapse_regra_5pct_km"]
-    ms = _ler("results/etapa1.3/missoes.yaml")
-    cand = {c["id"]: c for c in ms["candidatas"]}
-    ref = _ler("config/missao_referencia.yaml")["missao_referencia"]["id"]
-    janelas = [cand[v["missao"]] for v in ms["envelope_dimensionamento"]["minimo_admissivel_por_janela"].values()]
-    c3l = {"missao_A": cand[ref]["c3l_partida_marte_km2_s2"], "regra_iii": max(x["c3l_partida_marte_km2_s2"] for x in janelas)}
-    descer = mn.dv_transferencia_coaxial(mu, um.rp, um.ra, rp, ra)
-    margem = _v(dcfg["margem_dv"])
-    out = {}
-    for caso, var in (("missao_A", "missao_A"), ("regra_iii", dcfg["regra_projeto"])):
-        extra = ve.dv_extra_orbitador(mu, um, rp, ra, c3l[caso], descer)
-        c2 = copy.deepcopy(dcfg)
-        c2["dv"]["encontro_orbita_marte"]["valor"] = _v(dcfg["dv"]["encontro_orbita_marte"]) + extra
-        m, r, _ = dm.massa_leo(vs[var], c2, cu, dcfg["caso_base"]["carga_util"], margem, float(dcfg["caso_base"]["acrescimo_capsula"]))
-        out[f"orbitador_{caso}"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": m,
-                                    "estagios": [{"nome": e.nome, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente,
-                                                  "inerte_kg": e.inerte} for e in r]}
-    v_eq = 2 * np.pi * R / _v(scfg["marte"]["periodo_rotacao_s"])
-    dv = sf.dv_subida(mu, R, _v(scfg["subida"]["dv_100x100_km_s"]), rp, ra, v_eq,
-                      _v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"]), _v(scfg["sitio_e_encontro"]["latitude_sitio_graus"]))
-    pous, cruz, _ = massas_opcao((1 + margem) * dv, op_mav, mcfg, scfg, icfg, fonte_mav)
-    plat = _v(scfg["lander"]["plataforma_superficie_kg"]) if plataforma_lander_kg is None else plataforma_lander_kg
-    chegada = (pous + plat) / _v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]) + cruz
-    r = lander_estagios(chegada, scfg, dcfg, p, a_caso)
-    out["lander"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial,
-                     "estagios": [{"nome": e.nome, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente,
-                                   "inerte_kg": e.inerte} for e in r],
-                     "massa_entrada_kg": chegada - cruz, "massa_pousada_kg": pous + plat, "mav_e_aquecimento_kg": pous,
-                     "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz}
-    return out, janelas, ref
-
-
-def pior_margem_a(nome, m_inj, janelas, cfg):
-    """(pior margem, janela) da injeção direta do lançador `nome` para a massa dada, entre as janelas."""
-    lan = cfg["lancadores"][nome]
-    if lan.get("plataforma") == "ELA-4":
-        return None, None
-    pfm = cfg["centro"]["plataformas"].get(lan.get("plataforma"), {})
-    imax = la.inclinacao(pfm.get("latitude_graus", _v(cfg["centro"]["latitude_graus"])), cfg["centro"]["azimute_graus"]["valor"][0])
-    vals = []
-    for j in janelas:
-        cap = capacidade_direta(lan, j["c3_km2_s2"], j["dla_graus"], cfg, imax)[0]
-        if cap != cap:
-            return None, j["id"]
-        vals.append((cap / m_inj - 1, j["id"]))
-    return min(vals)
-
-
-def capacidade_direta(lan, c3, dla, cfg, i_max):
-    """(capacidade kg ou NaN, nota) da injeção direta no C3 e na DLA."""
-    if "pontos" not in lan["c3"]:
-        return float("nan"), "sem curva de C3 publicada"
-    cap = la.interpolar(c3, lan["c3"]["pontos"], lan["c3"]["massa_kg"])
-    if cap != cap:
-        return cap, "C3 fora da faixa publicada"
-    if i_max is not None and abs(dla) > i_max:
-        return 0.0, f"|DLA| > {i_max:.2f}° (azimute 40°): exige dogleg ou plano quebrado".replace(".", ",")
-    m = cfg["dla"]["multiplicador_nordeste"]
-    f = 1.0 if abs(dla) <= _v(cfg["dla"]["faixa_sem_penalidade_graus"]) else la.interpolar(abs(dla), m["dla_graus"], m["fator"])
-    return cap * f, ("" if f == 1.0 else f"multiplicador de DLA {f:.3f}".replace(".", ","))
-
-
-def leo_por_janela(m_inj, cand, dcfg, po, i_graus):
-    """(massa na órbita baixa kg, β graus, giro no perigeu θ graus, Δv extra do giro km/s), com o estágio de saída
-    próprio redimensionado para a janela."""
-    mu = _v(po["gm_terra"])
-    r = _v(po["raio_terra_km"]) + _v(po["leo_altitude_km"])
-    c3 = cand["c3_km2_s2"]
-    beta = la.delta_plano(cand["dla_graus"], i_graus)
-    theta = la.giro_no_perigeu(beta, mu, r, c3)
-    if theta != theta:
-        return float("nan"), beta, theta, float("nan")
-    extra = la.dv_saida(mu, r, c3, theta) - la.dv_saida(mu, r, c3, 0.0)
-    dv_ideal = cand["dv_saida_terra_km_s"] + extra
-    dv = (1 + _v(dcfg["margem_dv"])) * (dv_ideal + _v(dcfg["dv"]["perda_gravitacional"]["saida_terra"]))
-    st = dcfg["estagios"]["saida_terra"]
-    e = fg.Estagio("saida_terra", _v(st["isp_s"]), _v(st["fracao_estrutural"]), [fg.Queima("saida_terra", dv)])
-    try:
-        return fg.dimensionar_veiculo([e], m_inj)[0].massa_inicial, beta, theta, extra
-    except ValueError:  # Δv alto demais para o estágio (giro grande): inviável
-        return float("inf"), beta, theta, extra
 
 
 def revisar_janela(cfg):

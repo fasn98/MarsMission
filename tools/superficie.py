@@ -23,16 +23,13 @@ import dimensionamento as dm  # noqa: E402
 from orbital import foguete as fg  # noqa: E402
 from orbital import manobras as mn  # noqa: E402
 from orbital import superficie as sf  # noqa: E402
+from orbital.config import ler, v  # noqa: E402
+from orbital.veiculos import lander_estagios  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa2.1"
 
 
-def _ler(c):
-    return yaml.safe_load((RAIZ / c).read_text(encoding="utf-8"))
-
-
-def _v(x):
-    return float(x["valor"])
+_ler, _v = ler, v
 
 
 def mav(dv_total, cfg):
@@ -49,19 +46,6 @@ def mav(dv_total, cfg):
 def lander_leo(chegada, cfg, dcfg, p, caso_saida):
     """Massa na órbita baixa do lander: chegada a Marte + estágio de cruzeiro + estágio de saída da Terra."""
     return lander_estagios(chegada, cfg, dcfg, p, caso_saida)[0].massa_inicial
-
-
-def lander_estagios(chegada, cfg, dcfg, p, caso_saida):
-    """Estágios do lander [saída da Terra, cruzeiro]; [1].massa_inicial é a massa injetada na trajetória."""
-    margem = _v(dcfg["margem_dv"])
-    dv = dm.orcamento(caso_saida, dcfg, p)
-    cz = cfg["lancamento"]["cruzeiro_lander"]
-    st = dcfg["estagios"]["saida_terra"]
-    cruz = fg.Estagio("cruzeiro_lander", _v(cz["isp_s"]), _v(cz["fracao_estrutural"]),
-                      [fg.Queima("correcoes_ida", (1 + margem) * dv["correcoes_ida"])])
-    saida = fg.Estagio("saida_terra_lander", _v(st["isp_s"]), _v(st["fracao_estrutural"]),
-                       [fg.Queima("saida_terra", (1 + margem) * dv["saida_terra"])])
-    return fg.dimensionar_veiculo([saida, cruz], chegada)
 
 
 def main():

@@ -30,23 +30,12 @@ sys.path[:0] = [str(RAIZ / "src"), str(RAIZ / "tools")]
 import dimensionamento as dm  # noqa: E402
 from orbital import manobras as mn  # noqa: E402
 from orbital import superficie as sf  # noqa: E402
+from orbital.veiculos import dv_extra_orbitador  # noqa: E402
 from superficie import _ler, _v, lander_leo, mav  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa2.1"
 TINTA, TINTA_2, SUPERFICIE, GRADE = "#0b0b0b", "#52514e", "#fcfcfb", "#eceae4"
 AZUL, LARANJA = "#2a78d6", "#eb6834"
-
-
-def dv_extra_orbitador(mu, um_sol, rp, ra, c3l, descer):
-    """Δv extra do orbitador para usar a órbita de encontro rp × ra em vez da de 1 sol (km/s).
-
-    Descer da órbita de 1 sol até a de encontro, mais o custo extra da injeção trans-Terra: o menor entre
-    partir da órbita de encontro ou voltar à de 1 sol."""
-    vinf = np.sqrt(c3l)
-    tei_1sol = float(mn.dv_hiperbole_orbita(mu, vinf, um_sol.rp, um_sol.ra))
-    tei_alvo = float(mn.dv_hiperbole_orbita(mu, vinf, rp, ra))
-    voltar = mn.dv_transferencia_coaxial(mu, rp, ra, um_sol.rp, um_sol.ra) + tei_1sol
-    return descer + min(tei_alvo, voltar) - tei_1sol
 
 
 def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo="", saida=None, gravar=True):

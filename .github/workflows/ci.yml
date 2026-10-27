@@ -14,7 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Ambiente criado a partir do mesmo environment.yml usado localmente.
+      # Ambiente criado a partir do mesmo environment.yml usado localmente (Python do conda; dependências do
+      # pyproject.toml, instaladas com pip).
       - uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-version: latest
@@ -23,7 +24,9 @@ jobs:
           auto-activate-base: false
 
       - name: Versões instaladas
-        run: conda list | grep -E "^(python|numpy|scipy|matplotlib|pytest|pyyaml|spiceypy) "
+        run: |
+          python --version
+          python -m pip list | grep -iE "^(numpy|scipy|matplotlib|pytest|pyyaml|spiceypy|streamlit|plotly|marsmission) "
 
       # Kernels SPICE (~33 MB) ficam em cache; a chave muda se config/kernels.yaml mudar.
       - name: Cache dos kernels SPICE

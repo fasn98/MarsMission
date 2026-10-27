@@ -24,6 +24,7 @@ sys.path[:0] = [str(RAIZ / "src"), str(RAIZ / "tools")]
 import dimensionamento as dm  # noqa: E402
 from orbital import foguete as fg  # noqa: E402
 from orbital import isru  # noqa: E402
+from orbital.mav import energia, zbo  # noqa: E402
 from superficie import _ler, _v, lander_leo, mav  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa2.2"
@@ -39,32 +40,6 @@ def mav_loxch4(dv, scfg, icfg, eps):
     r = fg.dimensionar_veiculo([e1, e2], _v(scfg["mav"]["carga_util_kg"]))
     prop = sum(s.propelente for s in r)
     return r[0].massa_inicial, prop, r[0].massa_inicial - prop
-
-
-def zbo(icfg, m_ch4, m_lox):
-    z = icfg["armazenamento_zbo"]
-    a = _v(z["expoente"])
-    p = m = 0.0
-    if m_ch4 > 0:
-        p += isru.escala(z["ch4"]["potencia_w"], m_ch4, _v(z["referencia_ch4_kg"]), a)
-        m += isru.escala(z["ch4"]["massa_kg"], m_ch4, _v(z["referencia_ch4_kg"]), a)
-    if m_lox > 0:
-        p += isru.escala(z["lox"]["potencia_w"], m_lox, _v(z["referencia_lox_kg"]), a)
-        m += isru.escala(z["lox"]["massa_kg"], m_lox, _v(z["referencia_lox_kg"]), a)
-    return p, m
-
-
-def energia(icfg, potencia_w, fonte):
-    e = icfg["energia"]
-    if potencia_w <= 0:
-        return 0.0, ""
-    if fonte == "mmrtg":
-        r = e["mmrtg"]
-        m, n = isru.massa_rtg(potencia_w, _v(r["potencia_inicio_w"]), _v(r["massa_kg"]), _v(r["degradacao_anual"]),
-                              e["anos_ate_fim_da_estada"])
-        return m, f"{n} MMRTG"
-    s = e["solar"]
-    return isru.escala(_v(s["massa_kg"]), potencia_w, _v(s["potencia_continua_w"]), _v(s["expoente"])), "solar"
 
 
 def planta(icfg, taxa_kg_h, escala_planta):

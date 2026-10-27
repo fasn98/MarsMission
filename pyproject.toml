@@ -1,3 +1,13 @@
+# Fonte única das dependências Python (decisão do Fabio no portão do painel, 2026-10-27).
+# environment.yml (local e CI) e o Replit instalam este pacote com pip: nenhuma outra lista de dependências.
+# Versões fixas: as mesmas do ambiente conda conferido em 2026-10-26 (agora como wheels do PyPI); streamlit e plotly
+# com versões publicadas há mais de duas semanas em 2026-10-27 (streamlit 1.65.0: 02/10/2026; plotly 7.1.0: 15/09/2026;
+# pandas 3.0.6: 17/09/2026, datas de upload no PyPI). As dependências transitivas não são fixadas.
+
+[build-system]
+requires = ["setuptools>=77"]   # license = "MIT" como string (PEP 639) exige setuptools ≥ 77
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "marsmission"
 version = "0.1.0"
@@ -5,6 +15,20 @@ description = "Estudo conceitual (Pré-Fase A) de missão robótica de ida e vol
 requires-python = ">=3.11,<3.12"
 license = "MIT"
 authors = [{ name = "Fabio Nogueira" }]
+dependencies = [
+    "numpy==2.4.6",
+    "scipy==1.17.1",
+    "matplotlib==3.11.2",
+    "pyyaml==6.0.3",
+    "spiceypy==8.3.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.1.1"]
+painel = ["streamlit==1.65.0", "plotly==7.1.0", "pandas==3.0.6"]   # pandas: usado direto em src/painel/app.py
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

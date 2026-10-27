@@ -20,7 +20,13 @@ Autor: Fabio Nogueira ([@fasn98](https://github.com/fasn98)). O cenário tripula
 | 2.2 | Estudo de troca do ISRU; propulsão do MAV | ISRU fora (ADR 0006); MAV hipergólico (ADR 0007); encontro 300 × 26.950 km (ADR 0005) |
 | 2.3 | Plataformas do orbitador (lista por subsistema, 442 kg) e do lander (L3 + amostras provisórias, 1558,5 kg); órbita de encontro 300 × 24.992 km | decidida no portão (`docs/etapa2.3_plataformas.md`) |
 | 2.4 | Lançamento e DLA: injeção direta (Falcon Heavy descartável ou Vulcan VC6 para o orbitador), 2 lançamentos; 2033 com \|DLA\| ≤ 50° | decidida no portão (ADR 0008) |
-| 2.5 | Arquitetura integrada: coleta (tubos do Perseverance + braço), sensores de encontro, tabela integrada e sensibilidade; `docs/fase2_relatorio.md` | aguardando revisão e PR |
+| 2.5 | Arquitetura integrada: coleta (tubos do Perseverance + braço), sensores de encontro, tabela integrada e sensibilidade; `docs/fase2_relatorio.md` | concluída (PR #10, ADR 0009) |
+
+## Painel web
+
+Painel em Streamlit (ADR 0010) com a missão de referência, a trajetória, os porkchops, o orçamento de massa com
+controles e as premissas e decisões. Cada número mostra se é verificado, calculado ou premissa. Como rodar
+localmente e no Replit: [`docs/painel.md`](docs/painel.md).
 
 Modelo: cônicas emendadas, manobras impulsivas, sem perturbações. As limitações estão descritas no
 relatório de cada etapa.
@@ -37,7 +43,8 @@ relatório de cada etapa.
 ## Estrutura
 
 ```
-src/orbital/   código da mecânica orbital (pacote Python)
+src/orbital/   código da mecânica orbital e do dimensionamento (pacote Python)
+src/painel/    painel web (Streamlit): dados, gráficos e interface
 config/        parâmetros, kernels e premissas — entrada
 results/       saída gerada por tools/ — nunca editada à mão
 tools/         scripts que baixam dados e geram resultados
@@ -49,11 +56,12 @@ data/kernels/  kernels SPICE baixados (fora do git)
 ## Como rodar
 
 ```bash
-conda env create -f environment.yml      # versões fixas; o CI usa o mesmo arquivo
+conda env create -f environment.yml      # Python do conda + pacote e dependências do pyproject.toml (fonte única); o CI usa o mesmo arquivo
 conda activate marsmission
 git config core.hooksPath .githooks      # pre-commit roda o pytest
 python tools/fetch_kernels.py            # baixa de440s.bsp (~33 MB) e naif0012.tls, confere MD5
 python -m pytest
+python -m streamlit run src/painel/app.py   # painel
 ```
 
 ## Licença
