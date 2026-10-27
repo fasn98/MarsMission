@@ -250,8 +250,10 @@ oficiais consultadas nessa data.
   - **Não conferido** que a instalação também roda da raiz.
   - A mesma página de dependências diz que o `requirements.txt` é processado primeiro com o uv, com o pip como
     alternativa. Com uv 0.13.4, `uv pip install --dry-run -r src/painel/requirements.txt` a partir da raiz também
-    resolveu o `.` para a raiz do repositório (conferido em 2026-10-27).
-- Conferido em 2026-10-27 (workspace do Replit, CPU Intel Xeon Platinum 8581C), num venv limpo (Python 3.11.14, sem o `.pythonlibs` do Replit), com
+    resolveu o `.` para a raiz do repositório (conferido em 2026-10-27, workspace do Replit, CPU Intel Xeon Platinum
+    8581C).
+- Conferido em 2026-10-27 (workspace do Replit, CPU Intel Xeon Platinum 8581C), num venv limpo (Python 3.11.14, sem o
+  `.pythonlibs` do Replit), com
   `pip install -r src/painel/requirements.txt` a partir da raiz:
   - instala o pacote em modo editável, com pillow 13.0.0, streamlit 1.66.1, plotly 7.1.0, pandas 3.0.6 e numpy 2.4.6;
   - o pytest fica de fora, porque é do extra `dev`;
@@ -263,9 +265,11 @@ oficiais consultadas nessa data.
   A rotina é a de `tools/fetch_kernels.py`, agora em `src/orbital/kernels.py`.
   - Enquanto isso, aparece o aviso "Baixando e conferindo os kernels SPICE…".
   - Se um MD5 não conferir, a página mostra o erro, com o MD5 esperado e o obtido, e não calcula nada.
-  - **Prazo por arquivo:** `download_kernels.timeout_s` de `config/operacional.yaml`. É um parâmetro operacional, não uma
+  - **Prazo por arquivo:** `download_kernels.timeout_s` de `config/operacional.yaml`. É um parâmetro operacional, não
+    uma
     premissa científica (decisão do Fabio, 2026-10-27, com justificativa no arquivo).
-    - Vale para cada operação de rede e para o arquivo inteiro.
+    - Limita cada operação de rede e o tempo total do arquivo, conferido a cada bloco. No pior caso o arquivo leva
+      perto de 2× o prazo, e a resolução de DNS fica de fora.
     - Passou do prazo, ou a rede falhou: a página mostra a mensagem e o botão **Tentar de novo**.
 - O resultado fica no cache do Streamlit (`st.cache_resource`): uma vez por processo do servidor. Uma falha não entra no
   cache; recarregar a página tenta de novo.
@@ -289,7 +293,8 @@ oficiais consultadas nessa data.
 - **Limite publicado** ([Manage your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app)):
   "Memory: 690MB minimum, 2.7GBs maximum", valores "as of February 2024", com a ressalva "These limits may change at any
   time without notice". Acima do limite, o app "may slow down from throttling or become nonfunctional".
-- **Medido localmente** (observação de ambiente, 2026-10-27, workspace do Replit, CPU Intel Xeon Platinum 8581C; não é resultado do estudo):
+- **Medido localmente** (observação de ambiente, 2026-10-27, workspace do Replit, CPU Intel Xeon Platinum 8581C; não é
+  resultado do estudo):
   - método: pico de memória residente (VmHWM, `/proc/<pid>/status`) do processo do Streamlit, num venv limpo;
   - navegação: um Chromium headless abriu Trajetória (com o download dos kernels), Visão geral, Porkchops, Orçamento,
     Premissas, `/visao-geral` e Trajetória de novo;

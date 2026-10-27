@@ -28,8 +28,10 @@ def timeout_padrao() -> float:
 
 
 def _baixar_arquivo(url: str, destino: Path, timeout_s: float) -> None:
-    """Copia `url` para `destino` em blocos. `timeout_s` vale para cada operação de rede e para o arquivo inteiro:
-    passou do prazo, TimeoutError com mensagem clara (uma conexão lenta que nunca para também é interrompida)."""
+    """Copia `url` para `destino` em blocos. `timeout_s` limita cada operação de rede (conexão, cada leitura) e o tempo
+    total, conferido a cada bloco: uma conexão lenta que nunca para também é interrompida. No pior caso o arquivo leva
+    perto de 2× o prazo (a última leitura começa perto do fim e espera mais um prazo); a resolução de DNS não obedece
+    ao timeout. Passou do prazo: TimeoutError com mensagem clara."""
     erro = TimeoutError(f"o download de {url} passou do prazo de {timeout_s:g} s (config/operacional.yaml)")
     inicio = time.monotonic()
     try:
@@ -39,6 +41,8 @@ def _baixar_arquivo(url: str, destino: Path, timeout_s: float) -> None:
                 if time.monotonic() - inicio > timeout_s:
                     raise erro
     except TimeoutError as e:
+        if e is erro:   # prazo total estourado no laço
+            raise
         raise erro from e
     except urllib.error.URLError as e:
         if isinstance(e.reason, TimeoutError):
@@ -58,7 +62,7 @@ def baixar(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[s
            timeout_s: float | None = None) -> list[dict]:
     """Baixa os kernels do config que faltam ou cujo MD5 não confere e devolve, por kernel, o MD5 esperado e o obtido.
     O diretório do config ("diretorio") é relativo a `raiz`. `timeout_s` (padrão: config/operacional.yaml) é o prazo
-    por arquivo; passou dele, TimeoutError."""
+    por arquivo (ver _baixar_arquivo); passou dele, TimeoutError."""
     timeout_s = timeout_padrao() if timeout_s is None else timeout_s
     cfg = yaml.safe_load(Path(config).read_text(encoding="utf-8"))
     diretorio = raiz / cfg["diretorio"]
