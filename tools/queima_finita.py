@@ -128,13 +128,21 @@ def main():
     (SAIDA / "queima_finita.md").write_text(_md(out), encoding="utf-8")
 
 
+def _arredondar(x, passo):
+    """Arredonda ao múltiplo de `passo` (campos mal condicionados; config/queima_finita.yaml, P-041)."""
+    return None if x is None or np.isnan(x) else round(round(x / passo) * passo, 10)
+
+
 def _res(r):
+    arr = ler("config/queima_finita.yaml")["arredondamento_resultados"]
+    p_t, p_h = v(arr["inicio_s"]), v(arr["altitude_km"])
     return {"duracao_s": r.duracao_s, "propelente_kg": r.propelente_kg, "dv_motor_km_s": r.dv_motor_km_s,
-            "dv_impulsivo_km_s": r.dv_impulsivo_km_s, "perda_km_s": r.perda_km_s, "inicio_rel_periapse_s": r.inicio_rel_periapse_s,
-            "altitude_minima_km": r.altitude_minima_km, "periapse_final_km": r.rp_final_km,
-            "apoapse_final_km": None if np.isinf(r.ra_final_km) else r.ra_final_km,
+            "dv_impulsivo_km_s": r.dv_impulsivo_km_s, "perda_km_s": r.perda_km_s,
+            "inicio_rel_periapse_s": _arredondar(r.inicio_rel_periapse_s, p_t),
+            "altitude_minima_km": _arredondar(r.altitude_minima_km, p_h), "periapse_final_km": _arredondar(r.rp_final_km, p_h),
+            "apoapse_final_km": None if np.isinf(r.ra_final_km) else _arredondar(r.ra_final_km, p_h),
             "vinf_final_km_s": None if np.isnan(r.vinf_final_km_s) else r.vinf_final_km_s,
-            "periapse_chegada_alt_km": None if np.isnan(r.periapse_chegada_alt_km) else r.periapse_chegada_alt_km}
+            "periapse_chegada_alt_km": _arredondar(r.periapse_chegada_alt_km, p_h)}
 
 
 def _md(out):
@@ -145,6 +153,9 @@ def _md(out):
     md = ["# Etapa 3.1 — motores reais e queima finita (gerado por tools/queima_finita.py)", "",
           f"Modelo: {out['modelo']}. Perda = Δv entregue pelo motor − Δv impulsivo no periapse. "
           "Rótulo: calculado (não verificado contra caso publicado).", "",
+          "O mínimo do propelente no início da queima é plano: o início, a altitude mínima durante a queima e o periapse de "
+          "chegada são mal condicionados, e as apsides finais da captura carregam o resíduo do ajuste ao alvo; vão "
+          "arredondados (config/queima_finita.yaml, P-041). A perda, a duração e o propelente não.", "",
           "Massa no início de cada queima e propelente dimensionado: dimensionamento atual (regra iii, Isp de 321 s, perdas da P-015 e "
           "margem de Δv da P-014), sem refazer com o Isp de cada combinação. \"Cabe?\" compara o propelente da queima finita com o "
           "dimensionado para aquela queima; o caso de referência usa o mesmo veículo.", "",

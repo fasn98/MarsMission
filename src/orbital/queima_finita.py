@@ -33,6 +33,8 @@ from orbital.foguete import G0
 
 _NUM = ler("config/queima_finita.yaml")   # parâmetros numéricos, premissa P-041 (NÃO VALIDADA)
 RTOL, ATOL = v(_NUM["integrador"]["rtol"]), v(_NUM["integrador"]["atol_km"])
+PONTOS_RAIO_MINIMO = int(v(_NUM["integrador"]["pontos_raio_minimo"]))
+_OT = {k: x["valor"] if isinstance(x["valor"], (dict, list)) else v(x) for k, x in _NUM["otimizacao"].items()}
 TOL_ALVO = v(_NUM["tolerancia_alvo"])   # erro relativo máximo no periapse e no apoapse finais da captura
 
 
@@ -77,7 +79,7 @@ def _derivadas(mu, motor, sentido):
 
 def queimar(mu, motor, r0, v0, m0, duracao_s, sentido, raio_minimo=False):
     """Integra a queima (sentido −1 contra a velocidade, +1 a favor). Devolve (r, v, m, raio mínimo durante a queima);
-    o raio mínimo (amostrado em 2000 pontos da solução densa) só é calculado com raio_minimo=True, senão é nan."""
+    o raio mínimo (amostrado em PONTOS_RAIO_MINIMO pontos da solução densa) só é calculado com raio_minimo=True, senão é nan."""
     sol = solve_ivp(_derivadas(mu, motor, sentido), (0.0, duracao_s), [*r0, *v0, m0], method="DOP853",
                     rtol=RTOL, atol=ATOL, dense_output=raio_minimo)
     if not sol.success:
@@ -85,7 +87,7 @@ def queimar(mu, motor, r0, v0, m0, duracao_s, sentido, raio_minimo=False):
     s = sol.y[:, -1]
     rmin = float("nan")
     if raio_minimo:
-        xs = sol.sol(np.linspace(0.0, duracao_s, 2000))
+        xs = sol.sol(np.linspace(0.0, duracao_s, PONTOS_RAIO_MINIMO))
         rmin = float(np.min(np.hypot(xs[0], xs[1])))
     return s[0:2], s[2:4], s[4], rmin
 
@@ -116,7 +118,7 @@ def _dv_motor(motor, m0, mf):
     return motor.isp_s * G0 * np.log(m0 / mf)
 
 
-INVIAVEL = 1e3   # custo (duração/t_imp) atribuído a um início sem solução; muito maior que qualquer solução real
+INVIAVEL = _OT["custo_inviavel"]   # custo (duração/t_imp) de um início sem solução; maior que qualquer solução real (P-041)
 PASSO_CONTINUACAO = v(_NUM["continuacao"]["passo"])               # razão entre empuxos sucessivos (P-041)
 DURACAO_INICIAL_S = v(_NUM["continuacao"]["duracao_inicial_s"])  # começo da continuação (P-041)
 
@@ -145,7 +147,8 @@ def _captura_um(mu, raio, motor, m0, vinf, rp_alvo, ra_alvo, chute):
             if not np.isfinite(ra):
                 return [rp / rp_alvo - 1, 1.0 + (1.0 - x[1])]   # ainda hiperbólica: empurra para queima mais longa
             return [rp / rp_alvo - 1, ra / ra_alvo - 1]
-        sol = least_squares(residuo, x0=list(x0), bounds=([raio / rp_alvo, 0.5], [20.0, 20.0]),
+        lim = _OT["captura_limites_ajuste"]
+        sol = least_squares(residuo, x0=list(x0), bounds=([raio / rp_alvo, lim["duracao_min"]], [lim["rp_chegada_max"], lim["duracao_max"]]),
                             xtol=1e-14, ftol=1e-14, gtol=1e-14)
         if max(abs(np.asarray(sol.fun))) > TOL_ALVO:
             raise RuntimeError(f"captura não convergiu: resíduo {sol.fun}")
@@ -162,7 +165,8 @@ def _captura_um(mu, raio, motor, m0, vinf, rp_alvo, ra_alvo, chute):
         ultimo[0] = tuple(x)
         return x[1]
 
-    opt = minimize_scalar(custo, bounds=(f0 - 0.25, min(f0 + 0.25, 0.0)), method="bounded", options={"xatol": 1e-6})
+    j = _OT["captura_janela_inicio"]
+    opt = minimize_scalar(custo, bounds=(f0 - j, min(f0 + j, 0.0)), method="bounded", options={"xatol": _OT["xatol_inicio"]})
     f_ini = opt.x
     x = ajuste(f_ini, ultimo[0])
     rf, vf, mf, rmin, rp0, dur = final(f_ini, x, raio_minimo=True)
@@ -204,12 +208,13 @@ def saida(mu, raio, motor, m0, rp, ra, vinf_alvo):
         hi = 1.05 * t_imp
         while energia(hi, r, v) < 0:
             hi *= 1.5
-            if hi > 50 * t_imp:
+            if hi > _OT["saida_duracao_max"] * t_imp:
                 raise RuntimeError("saída: a queima não atinge a energia de v∞")
-        return brentq(lambda d: energia(d, r, v), 0.5 * t_imp, hi, xtol=1e-9, rtol=1e-13), r, v
+        return brentq(lambda d: energia(d, r, v), 0.5 * t_imp, hi, xtol=_OT["saida_brentq"]["xtol_s"],
+                      rtol=_OT["saida_brentq"]["rtol"]), r, v
 
-    opt = minimize_scalar(lambda f: duracao(f * t_imp)[0], bounds=(-1.5, 0.5), method="bounded",
-                          options={"xatol": 1e-7})
+    opt = minimize_scalar(lambda f: duracao(f * t_imp)[0], bounds=tuple(_OT["saida_limites_inicio"]), method="bounded",
+                          options={"xatol": _OT["xatol_inicio"]})
     t_ini = opt.x * t_imp
     dur, r, v = duracao(t_ini)
     rf, vf, mf, rmin = queimar(mu, motor, r, v, m0, dur, +1, raio_minimo=True)

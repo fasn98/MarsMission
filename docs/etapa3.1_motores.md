@@ -30,7 +30,8 @@ Ressalvas registradas no config:
   1,1 h de queima única qualificada.
 - **R-4D-11 no Orion:** a variante que voou (bocal 164:1) dá "Thrust 489 N", "Specific Impulse 310 seconds",
   "Max Firing Time 2000 seconds" e "Number of Burns 40" [F107]. O catálogo e as combinações usam a ficha [F106]
-  (315 s). Com a variante do Orion, a C2 e a R3 teriam ~1,6 % menos Δv por quilo de propelente (não recalculado).
+  (315 s). Com a variante do Orion, as combinações com R-4D-11 (C2, R3, M2 e N2) teriam Isp ~1,6 % menor (não
+  recalculado).
 - **OMS-E:** as unidades do Orion são motores do Shuttle reformados, a serem substituídos a partir do Artemis VII
   [F107]. A disponibilidade para esta missão **não foi conferida**.
 - **Cruzeiro do MSL:** usou hidrazina monopropelente em blow-down, com ~4,35 N por propulsor [F111]. Sem Isp em fonte

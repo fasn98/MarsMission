@@ -2,6 +2,8 @@
 
 Modelo: plano, dois corpos (Marte pontual), empuxo constante tangente à velocidade, vazão T/(Isp g0). Perda = Δv entregue pelo motor − Δv impulsivo no periapse. Rótulo: calculado (não verificado contra caso publicado).
 
+O mínimo do propelente no início da queima é plano: o início, a altitude mínima durante a queima e o periapse de chegada são mal condicionados, e as apsides finais da captura carregam o resíduo do ajuste ao alvo; vão arredondados (config/queima_finita.yaml, P-041). A perda, a duração e o propelente não.
+
 Massa no início de cada queima e propelente dimensionado: dimensionamento atual (regra iii, Isp de 321 s, perdas da P-015 e margem de Δv da P-014), sem refazer com o Isp de cada combinação. "Cabe?" compara o propelente da queima finita com o dimensionado para aquela queima; o caso de referência usa o mesmo veículo.
 
 Perdas do DRA usadas hoje (P-015, NÃO VALIDADA): captura 18 m/s; saída de Marte 11 m/s.

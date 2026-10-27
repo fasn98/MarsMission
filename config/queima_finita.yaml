@@ -1,10 +1,26 @@
-# Parâmetros numéricos de orbital.queima_finita (Etapa 3.1). Sem fonte publicada: premissa P-041 (NÃO VALIDADA).
-# São do método numérico, não da física: o teste de sensibilidade (tests/test_queima_finita.py) mostra que trocá-los
-# não muda a perda além de 1e-4 relativo (a precisão relevante do estudo).
+# Parâmetros numéricos de orbital.queima_finita e de tools/queima_finita.py (Etapa 3.1). Sem fonte publicada: premissa
+# P-041 (NÃO VALIDADA). São do método numérico, não da física: o teste de sensibilidade (tests/test_queima_finita.py)
+# mostra que trocar os principais não muda a perda além de 1e-4 relativo (a precisão relevante do estudo).
 integrador:
   rtol: {valor: 1.0e-11, premissa: P-041}
-  atol_km: {valor: 1.0e-9, premissa: P-041}      # km e km/s
-tolerancia_alvo: {valor: 1.0e-6, premissa: P-041}   # erro relativo no periapse e no apoapse finais da captura
+  atol_km: {valor: 1.0e-9, premissa: P-041}           # km e km/s
+  pontos_raio_minimo: {valor: 2000, premissa: P-041}  # amostras da solução densa para a altitude mínima durante a queima
+tolerancia_alvo: {valor: 1.0e-6, premissa: P-041}     # erro relativo no periapse e no apoapse finais da captura
 continuacao:
-  passo: {valor: 2.0, premissa: P-041}            # razão entre empuxos sucessivos
-  duracao_inicial_s: {valor: 60, premissa: P-041} # a continuação começa num empuxo de queima de até isto
+  passo: {valor: 2.0, premissa: P-041}                # razão entre empuxos sucessivos
+  duracao_inicial_s: {valor: 60, premissa: P-041}     # a continuação começa num empuxo de queima de até isto
+otimizacao:
+  # Início da queima, em fração da duração impulsiva equivalente (t_imp). O mínimo do propelente nesse início é plano:
+  # o início, a altitude mínima e o periapse de chegada são mal condicionados (a perda e o propelente não).
+  xatol_inicio: {valor: 1.0e-8, premissa: P-041}
+  captura_janela_inicio: {valor: 0.25, premissa: P-041}        # busca em ± isto em torno do nível anterior
+  captura_limites_ajuste: {valor: {rp_chegada_max: 20.0, duracao_min: 0.5, duracao_max: 20.0}, premissa: P-041}  # em rp_alvo e t_imp
+  saida_limites_inicio: {valor: [-1.5, 0.5], premissa: P-041}  # em t_imp, relativo à passagem pelo periapse
+  saida_duracao_max: {valor: 50.0, premissa: P-041}            # em t_imp
+  saida_brentq: {valor: {xtol_s: 1.0e-9, rtol: 1.0e-13}, premissa: P-041}
+  custo_inviavel: {valor: 1000.0, premissa: P-041}              # duração/t_imp de um início sem solução (> duracao_max)
+arredondamento_resultados:
+  # Campos mal condicionados gravados em results/ arredondados, para que o ruído de ponto flutuante entre CPUs
+  # (P-039) não mude o arquivo regenerado. Bem acima da variação observada (6e-7 relativo no início da queima).
+  inicio_s: {valor: 10, premissa: P-041}
+  altitude_km: {valor: 0.01, premissa: P-041}      # também as apsides finais (carregam o resíduo do ajuste ao alvo)
