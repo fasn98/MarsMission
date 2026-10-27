@@ -1,8 +1,9 @@
 # Etapa 2.1: arquitetura de superfície (pouso, subida e encontro)
 
-Estado: **aguardando o portão do Fabio**, que escolhe a arquitetura de superfície e a órbita de
-encontro. Nenhuma arquitetura foi escolhida aqui. As seções 5 a 7 respondem ao pedido do portão de
-2026-10-27: massa total, varredura da órbita de encontro e risco do encontro elíptico. Resultados: `results/etapa2.1/arquiteturas.md` e
+Estado: **decidido nos portões de 2026-10-27 (ADR 0005)**. Arquitetura da família S2 (entrada direta
++ encontro em órbita elíptica), orbitador químico, órbita de encontro de **300 × 18.483 km**. S1, S3 e
+S4 ficam descartadas com propulsão química: **encontro em órbita baixa exige propulsão elétrica no
+orbitador, a ser avaliada na Fase 3.** As seções 5 a 7 respondem ao 1º portão; a seção 6b, ao 2º. Resultados: `results/etapa2.1/arquiteturas.md` e
 `.yaml`, gerados por `tools/superficie.py`.
 
 ## 1. O que as fontes primárias do MSR mostram
@@ -122,7 +123,7 @@ acima pela regra (iii).
 
 ## 6. Varredura da órbita de encontro
 
-`tools/varredura_encontro.py` → `results/etapa2.1/varredura_encontro.png`, `.md` e `.yaml`.
+`tools/varredura_encontro.py` → `results/etapa2.1/varredura_encontro_rp250.{png,md,yaml}`.
 
 **Configuração:**
 - periapse fixo em 250 km, o da órbita de 1 sol, de modo que o extremo da varredura é exatamente a
@@ -151,15 +152,38 @@ Leitura:
 - Com apoapse abaixo de ~1000 km, nenhuma das duas versões fica abaixo de ~62 t pela regra (iii). Com
   1189 km de apoapse, a versão com aerofrenagem dá 58,8 t.
 
+## 6b. Varredura com periapse de 300 km e escolha do apoapse (ADR 0005)
+
+O periapse sobe para 300 km, que é o requisito de vida orbital do contêiner do MSR: "Its periapsis
+should be above 300 km" [F32]. O orbitador só químico desce da órbita de 1 sol (250 × 33.793 km) com
+duas queimas: baixa o apoapse no periapse e sobe o periapse para 300 km no apoapse. Saída:
+`results/etapa2.1/varredura_encontro_rp300.{png,md,yaml}`, com 120 pontos.
+
+| Caso | Apoapse do mínimo | Massa total no mínimo |
+| :- | -: | -: |
+| Regra (iii) | 33.793 km (extremo da varredura) | 39.398 kg |
+| Missão A | ~20.700 km | 29.677 kg |
+
+**Regra (ADR 0005):** o menor apoapse com massa pela regra (iii) até 5 % acima do mínimo.
+**Resultado:**
+- apoapse de **18.483 km**;
+- 41.168 kg pela regra (iii), 4,5 % acima do mínimo;
+- 29.709 kg na missão A;
+- MAV de 1404 kg, com Δv de subida de 5,17 km/s sem margem;
+- lander de 13,9 t na órbita baixa.
+
+A resolução da varredura é de ~3,8 % no apoapse.
+
+Com periapse de 250 km, o código generalizado reproduz exatamente os números da seção 6 (39.250 kg
+pela regra iii), o que serve de checagem da generalização.
+
 ## 7. Riscos não modelados
 
-- **Encontro em órbita muito elíptica** (S2 e o lado direito da varredura): detecção e rastreio do
+- **Encontro em órbita elíptica** (arquitetura escolhida: 300 × 18.483 km, período de ~12,2 h; S2 e o lado direito da varredura): detecção e rastreio do
   contêiner de amostras, navegação relativa, fases e janelas de encontro ao longo de uma órbita de
   ~24,6 h, velocidades altas perto do periapse e iluminação. O MSR baseou o encontro numa órbita baixa
   quase circular [F32].
-- **Vida orbital do contêiner:** o MSR exige periapse acima de 300 km [F32]. A varredura e a S2 usam
-  250 km, o periapse da órbita de 1 sol do DRA. Subir o periapse para 300 km mudaria um pouco o Δv do
-  MAV e do orbitador; não foi calculado.
+- **Vida orbital do contêiner:** resolvida na seção 6b, com o periapse de encontro em 300 km.
 - **Aerofrenagem (S4 e varredura):** ~205 dias, metade da estada da missão A, com valores de outro
   veículo (P-020).
 

@@ -73,10 +73,19 @@ lancamento:
     isp_s: {valor: 321, fonte: "[F28]"}
     fracao_estrutural: {valor: 0.24, fonte: "[F22]"}
 
-varredura_encontro:
-  # Órbita de encontro (periapse fixo, apoapse variável), MAV e orbitador recalculados em cada ponto.
-  # Periapse de 250 km para que o extremo coincida com a órbita de 1 sol [F18]. O MSR exige periapse
-  # acima de 300 km para a vida orbital do contêiner de amostras [F32] (risco registrado no relatório).
-  periapse_alt_km: 250
-  apoapse_alt_km: [380, 33793]
-  pontos: 60
+varreduras_encontro:
+  # Órbita de encontro com periapse fixo e apoapse variável; MAV, lander e orbitador recalculados em cada ponto.
+  # rp250: periapse da órbita de 1 sol [F18] (varredura do 1º portão da Etapa 2.1, com aerofrenagem).
+  # rp300: requisito de vida orbital do contêiner do MSR, "periapsis should be above 300 km" [F32]
+  #        (decisão do Fabio no 2º portão; orbitador só químico; regra de escolha do apoapse, ADR 0005).
+  rp250:
+    periapse_alt_km: 250
+    apoapse_alt_km: [380, 33793]
+    pontos: 60
+    versoes: [quimico, aerofrenagem]
+  rp300:
+    periapse_alt_km: 300
+    apoapse_alt_km: [380, 33793]
+    pontos: 120
+    versoes: [quimico]
+    regra_escolha: {tolerancia_relativa: 0.05, caso: total_regra_iii_kg}
