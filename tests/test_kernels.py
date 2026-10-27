@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from pathlib import Path
 
 import pytest
 import yaml
@@ -49,12 +50,20 @@ def test_config_real_tem_md5_e_url_para_todos_os_kernels():
     assert cfg["kernels"] and all(len(k["md5"]) == 32 and k["url"].startswith("https://") for k in cfg["kernels"])
 
 
-def test_download_que_falha_nao_deixa_parcial_e_preserva_o_destino(tmp_path):
+def test_download_que_falha_no_meio_nao_deixa_parcial_e_preserva_o_destino(tmp_path, monkeypatch):
     cfg = _config(tmp_path, b"kernel")
-    (tmp_path / "origem.bin").unlink()   # URL file:// inexistente: o download falha
     (tmp_path / "kernels").mkdir()
     (tmp_path / "kernels" / "k.bin").write_bytes(b"antigo")
-    with pytest.raises(OSError):
+    escritos = []
+
+    def falha_no_meio(url, destino):   # começa a escrever o .parcial e a conexão cai
+        Path(destino).write_bytes(b"ker")
+        escritos.append(Path(destino).name)
+        raise OSError("conexão interrompida")
+
+    monkeypatch.setattr(kernels.urllib.request, "urlretrieve", falha_no_meio)
+    with pytest.raises(OSError, match="interrompida"):
         kernels.baixar(cfg, tmp_path, lambda _: None)
+    assert escritos == ["k.bin.parcial"]   # o .parcial chegou a existir
     assert (tmp_path / "kernels" / "k.bin").read_bytes() == b"antigo"
     assert not list((tmp_path / "kernels").glob("*.parcial"))
