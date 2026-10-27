@@ -76,7 +76,7 @@ orbitador:
     periodo_h: 17.13582544049652
     carga_w: 510.0
     afelio_ua: 1.6659692411955
-    painel_w_afelio_fim_de_vida: 658.3636363636364
+    painel_w_afelio: 658.3636363636364
     energia_eclipse_wh: 1649.891865421258
     bateria_wh_nominal: 5499.639551404193
     w_kg_painel_afelio: 22.309867457222218
@@ -205,7 +205,7 @@ totais:
     caso: Antes (P-016 = P-017 = 850 kg)
     plataforma_orbitador_kg: 850
     plataforma_lander_kg: 850
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 31233.3
       total_missao_A_kg: 21297.6
     regra_5pct:
@@ -221,7 +221,7 @@ totais:
     caso: '**Base: orbitador E1 médio + L3**'
     plataforma_orbitador_kg: 442.27449498455564
     plataforma_lander_kg: 1470.0
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 28698.9
       total_missao_A_kg: 21363.5
     regra_5pct:
@@ -237,7 +237,7 @@ totais:
     caso: 'GSFC: orbitador E1 médio + 15 %; L3 + 15 %'
     plataforma_orbitador_kg: 495.38339563059117
     plataforma_lander_kg: 1690.4999999999998
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 30880.4
       total_missao_A_kg: 23206.3
     regra_5pct:
@@ -253,7 +253,7 @@ totais:
     caso: 'ESA: 20 % × 20 % nos dois'
     plataforma_orbitador_kg: 509.8454462019413
     plataforma_lander_kg: 2116.7999999999997
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 33725.2
       total_missao_A_kg: 25958.9
     regra_5pct:
@@ -269,7 +269,7 @@ totais:
     caso: Orbitador E1 mínimo + L3
     plataforma_orbitador_kg: 421.644095232888
     plataforma_lander_kg: 1470.0
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 28377.9
       total_missao_A_kg: 21174.1
     regra_5pct:
@@ -285,7 +285,7 @@ totais:
     caso: Orbitador E1 máximo + L3
     plataforma_orbitador_kg: 462.9048947362234
     plataforma_lander_kg: 1470.0
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 29019.9
       total_missao_A_kg: 21553.0
     regra_5pct:
@@ -301,7 +301,7 @@ totais:
     caso: 'Limite inferior do lander: L1 (E1 médio)'
     plataforma_orbitador_kg: 442.27449498455564
     plataforma_lander_kg: 528.6797083333335
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 22914.1
       total_missao_A_kg: 15578.7
     regra_5pct:
@@ -317,7 +317,7 @@ totais:
     caso: 'Limite superior do lander: L2 (E1 médio)'
     plataforma_orbitador_kg: 442.27449498455564
     plataforma_lander_kg: 1857.4162736126343
-    em_26950_km:
+    no_apoapse_anterior:
       total_regra_iii_kg: 31079.8
       total_missao_A_kg: 23744.3
     regra_5pct:

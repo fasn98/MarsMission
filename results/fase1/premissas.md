@@ -35,7 +35,7 @@
 | P-031 | base_do_cabeamento_orbitador | plataforma | — | NÃO VALIDADA | config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71] |
 | P-032 | energia_lander | energia_por_sol_wh: 3500; fracao_noite: 0.5 | Wh/sol; adimensional | NÃO VALIDADA | config/plataformas.yaml — painel e bateria do lander |
 | P-033 | margem_crescimento_e1_ponto_medio | ponto médio da faixa E1 do AIAA S-120A | — | NÃO VALIDADA | config/plataformas.yaml — margem por subsistema |
-| P-034 | sistema_de_amostras_lander | 59 | kg | NÃO VALIDADA | config/plataformas.yaml — coleta e transferência de amostras no lander |
+| P-034 | sistema_de_amostras_lander | 59 | kg | NÃO VALIDADA | config/plataformas.yaml — coleta e transferência de amostras nos limites L1 e L2 do lander (não entra na base L3) |
 | P-035 | escala_nucleo_lander | opcoes: ['L1', 'L2']; base: L3 | — | NÃO VALIDADA | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
 
 Total: 35 premissas, 35 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

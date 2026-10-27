@@ -118,6 +118,9 @@ Sobreposições que restam, todas para o lado conservador:
 - **Incerteza declarada:** os itens próprios do MSR, como o braço de transferência de amostras e o apoio
   aos helicópteros. O valor é de 2020; versões posteriores do SRL não foram comparadas.
 - **Fonte de 2020:** o documento do SRL só tem o resumo público.
+- **Dado posterior já no repositório:** em 2024, o SRL aparece com ~2900 kg pousados [F41] (o antigo teto da P-017).
+  Menos o MAV de 400 kg, dá ~2500 kg, acima do limite L2 (1857 kg). Não se sabe se os 2900 kg são comparáveis aos
+  2100 kg "secos" de 2020.
 
 **Limites da faixa (P-035), por subsistema:**
 
@@ -161,13 +164,25 @@ A regra dos 5 % do ADR 0005 foi reaplicada em todos os casos. O mínimo da varre
 - **Nos casos de sensibilidade,** a plataforma do orbitador é a calculada no apoapse do caso de base.
 - **A conta "antes" reproduz exatamente os 31.233 / 21.298 kg da Etapa 2.2.**
 
-## 7. Resultados de etapas anteriores
+## 7. Lacunas apontadas na revisão independente (decisão do Fabio)
+
+1. **Sensores de encontro (RSS) do orbitador sem alocação.**
+   - A P-016 antiga (850 kg) dizia que a plataforma os levava, porque o CCRS de 2021 é "w/o RSS" [F22].
+   - A lista nova vem do Odyssey, que não tinha RSS.
+   - Não se sabe se os 620 kg do CCRS de 2024 (CU-2 [F23]) os incluem.
+   - O RSS pode ter ficado fora das duas contas.
+2. **A base L3 não tem coleta nem busca de amostras.**
+   - O L3 tira o rover de busca do MSR (230 kg).
+   - O item "amostras" (P-034: 59 kg básicos, 88,5 kg previstos) só entra nos limites L1 e L2.
+   - O braço do SRL só transfere tubos já coletados. O conceito de coleta deste estudo não está definido.
+
+## 8. Resultados de etapas anteriores
 
 Os resultados das Etapas 1.4, 2.1 e 2.2 (`results/etapa1.4`, `etapa2.1`, `etapa2.2`) foram gerados com
 P-016 = P-017 = 850 kg. Eles ficam como registro dessas etapas e não foram regenerados. Se as
 ferramentas delas forem rodadas de novo, usarão as plataformas novas do `config`.
 
-## 8. Premissas (NÃO VALIDADAS)
+## 9. Premissas (NÃO VALIDADAS)
 
 | Premissa | Conteúdo |
 | :- | :- |
@@ -179,10 +194,10 @@ ferramentas delas forem rodadas de novo, usarão as plataformas novas do `config
 | P-031 | Revista: cabeamento só sobre a plataforma |
 | P-032 | Energia do lander (limites L1/L2) |
 | P-033 | Ponto médio da E1 |
-| P-034 | Amostras = carga útil do Phoenix |
+| P-034 | Amostras = carga útil do Phoenix (só nos limites L1 e L2) |
 | P-035 | L1 e L2 como limites; L3 como base |
 
-## 9. Limitações
+## 10. Limitações
 
 - Potência do sistema de captura (CU-2) não incluída: não tem valor publicado.
 - O L3 é uma alocação de 2020 com só o resumo público. O conteúdo exato da massa "seca na superfície"

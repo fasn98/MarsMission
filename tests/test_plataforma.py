@@ -51,3 +51,56 @@ def test_config_coincide_com_a_etapa_2_3():
     m_o = pl.plataforma_orbitador(cfg, po, res["apoapse_regra_5pct_km"], res["periapse_alt_km"])
     assert ler("config/dimensionamento.yaml")["plataforma_orbitador_kg"]["valor"] == pytest.approx(m_o, abs=0.05)
     assert ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"]["valor"] == pytest.approx(pl.lander_l3(cfg))
+
+
+def test_eclipse_eliptico_sombra_no_apoapse_analitico():
+    # Sol ao longo da linha das apsides, apoapse atrás do planeta: a sombra é a faixa |y| < R no ramo do apoapse.
+    # Entrada e saída em E = π ∓ asin(R/b); tempo pela equação de Kepler. Para apoapse alto é o pior caso.
+    rp, ra = R + 300.0, R + 24991.9
+    a, e = 0.5 * (rp + ra), (ra - rp) / (ra + rp)
+    b = a * np.sqrt(1 - e * e)
+    e1, e2 = np.pi - np.arcsin(R / b), np.pi + np.arcsin(R / b)
+    n = np.sqrt(MU / a**3)
+    t_analitico = ((e2 - e * np.sin(e2)) - (e1 - e * np.sin(e1))) / n
+    t, _ = pf.eclipse_maximo(MU, R, rp, ra)
+    assert t == pytest.approx(t_analitico, rel=2e-3)
+
+
+def _ferramenta():
+    import sys
+    from pathlib import Path
+
+    import yaml
+
+    raiz = Path(__file__).resolve().parents[1]
+    if str(raiz / "tools") not in sys.path:
+        sys.path.insert(0, str(raiz / "tools"))
+    import plataformas as pl
+
+    return pl, yaml.safe_load((raiz / "config/plataformas.yaml").read_text(encoding="utf-8"))
+
+
+def test_criterios_de_margem():
+    pl, cfg = _ferramenta()
+    itens = [("a", 100.0, "estrutura_primaria"), ("b", 10.0, "cabeamento")]
+    assert pl.prevista(itens, cfg, "e1_medio") == pytest.approx(121.5 + 17.5)
+    assert pl.prevista(itens, cfg, "e1_minimo") == pytest.approx(118.0 + 15.0)
+    assert pl.prevista(itens, cfg, "e1_maximo") == pytest.approx(125.0 + 20.0)
+    assert pl.prevista(itens, cfg, "e1_medio_mais_gsfc") == pytest.approx(139.0 + 0.15 * 110.0)
+    assert pl.prevista(itens, cfg, "esa") == pytest.approx(110.0 * 1.44)
+    with pytest.raises(ValueError):
+        pl.prevista(itens, cfg, "e1_meio")
+
+
+def test_lander_l1_l2_l3():
+    pl, cfg = _ferramenta()
+    assert pl.lander_l3(cfg) == pytest.approx(2100 - 400 - 230)
+    assert pl.l3_com_margem(1000.0, cfg, "e1_medio_mais_gsfc") == pytest.approx(1150.0)
+    assert pl.l3_com_margem(1000.0, cfg, "esa") == pytest.approx(1440.0)
+    it1, en = pl.lander(cfg, "L1", 300.0)
+    assert dict((n, m) for n, m, _ in it1)["nucleo"] == pytest.approx(410 - 67 - 59 - 6.5 - 14.7 - 5.0)
+    it2, _ = pl.lander(cfg, "L2", 300.0)
+    k = en["fracao_nucleo_phoenix"]
+    resto = sum(m for n, m, _ in it2 if n != "nucleo")
+    nucleo = dict((n, m) for n, m, _ in it2)["nucleo"]
+    assert nucleo / (nucleo + resto + 300.0) == pytest.approx(k)

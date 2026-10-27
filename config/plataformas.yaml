@@ -9,6 +9,12 @@
 # - Lander: aeroshell, paraquedas e propelente de descida estão na razão pousada/entrada (P-018); o MAV,
 #   o seu aquecimento e a fonte de energia desse aquecimento estão no bloco do MAV (config/mav_propulsao.yaml,
 #   opção O4). A plataforma de superfície é o resto.
+#
+# Itens sem alocação (lacunas declaradas, revisão da Etapa 2.3; decisão do Fabio pendente):
+# - Sensores de encontro (RSS) do orbitador: o CCRS de 2021 é "w/o RSS" [F22]; não se sabe se os 620 kg do
+#   CCRS de 2024 (CU-2) os incluem; a lista do Odyssey não os tem (o GNC dele é navegação comum).
+# - Coleta/busca de amostras na base L3: o L3 tira o rover de busca do MSR e não tem o item "amostras" (P-034),
+#   que só entra nos limites L1 e L2.
 
 margem_crescimento:
   # AIAA S-120A-2015, Tabela 1 "Mass Growth Allowance by Design Maturity", reproduzida em [F70], p. 4.
@@ -156,7 +162,7 @@ lander:
     # O SFR é "< 230 kg": com um SFR mais leve o L3 seria maior. Valor de alocação ("as much as"), usado sem MGA
     # adicional no caso de base; GSFC (+15 %) e ESA (×1,2 × 1,2) na sensibilidade.
     srl_seco_superficie_kg: {valor: 2100, fonte: "[F77] Ivanov & Sell (JPL) 2020, resumo: \"as much as 2100 kg of dry mass to the surface\""}
-    srl_mav_kg: {valor: 400, fonte: "[F35]"}
+    srl_mav_kg: {valor: 400, fonte: "[F35] pp. 3–4: alocação de 400 kg do MAV"}
     srl_sfr_kg: {valor: 230, fonte: "[F78] Gramling 2020, slide 11: SFR \"Mass = < 230 kg\""}
 
 # Valores anteriores (P-016 e P-017 até a Etapa 2.2), só para a comparação antes/depois.

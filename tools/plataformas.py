@@ -37,7 +37,10 @@ MARGENS = ("e1_medio", "e1_minimo", "e1_maximo", "e1_medio_mais_gsfc", "esa")
 
 def _mga(cat, cfg, qual):
     lo, hi = cfg["margem_crescimento"]["categorias_e1"][cat]
-    return {"e1_minimo": lo, "e1_maximo": hi}.get(qual, 0.5 * (lo + hi)) / 100.0
+    valores = {"e1_minimo": lo, "e1_maximo": hi, "e1_medio": 0.5 * (lo + hi), "e1_medio_mais_gsfc": 0.5 * (lo + hi)}
+    if qual not in valores:
+        raise ValueError(f"critério de margem desconhecido: {qual}")
+    return valores[qual] / 100.0
 
 
 def prevista(itens, cfg, qual):
@@ -46,6 +49,8 @@ def prevista(itens, cfg, qual):
     if qual == "esa":
         a = cfg["margem_crescimento"]["alternativas"]["esa"]
         return basica * (1 + a["equipamento"]) * (1 + a["sistema"])
+    if qual not in MARGENS:
+        raise ValueError(f"critério de margem desconhecido: {qual}")
     tot = sum(pf.com_margem(m, _mga(c, cfg, qual)) for _, m, c in itens)
     if qual == "e1_medio_mais_gsfc":
         tot += cfg["margem_crescimento"]["alternativas"]["gsfc"]["sistema_sobre_basica"] * basica
@@ -75,7 +80,7 @@ def orbitador(cfg, po, apoapse_km, rp_alt_km):
     m_cab = f / (1 - f) * sum(m for _, m, _ in itens)  # base: só a plataforma (P-031)
     itens.append(("cabeamento", m_cab, "cabeamento"))
     energia = {"eclipse_max_h": t_ecl / 3600, "periodo_h": periodo / 3600, "carga_w": carga, "afelio_ua": d_af,
-               "painel_w_afelio_fim_de_vida": p_sa, "energia_eclipse_wh": e_ecl, "bateria_wh_nominal": cap,
+               "painel_w_afelio": p_sa, "energia_eclipse_wh": e_ecl, "bateria_wh_nominal": cap,
                "w_kg_painel_afelio": _v(e["painel_w_kg_1ua"]) * _v(e["fator_perdas_painel"]) / d_af**2}
     return itens, energia
 
@@ -122,7 +127,9 @@ def l3_com_margem(m, cfg, qual):
         return m * (1 + a["esa"]["equipamento"]) * (1 + a["esa"]["sistema"])
     if qual == "e1_medio_mais_gsfc":
         return m * (1 + a["gsfc"]["sistema_sobre_basica"])
-    return m
+    if qual == "e1_medio":
+        return m
+    raise ValueError(f"critério de margem sem uso no L3: {qual}")
 
 
 def plataforma_orbitador(cfg, po, apoapse_km, rp_alt_km, qual="e1_medio"):
@@ -167,7 +174,7 @@ def main():
         mn_ = mins["quimico/total_regra_iii_kg"]
         no_ponto = next(x for x in pontos if x["apoapse_alt_km"] == ap0)["quimico"]
         return {"plataforma_orbitador_kg": m_orb, "plataforma_lander_kg": m_lan,
-                "em_26950_km": {"total_regra_iii_kg": no_ponto["total_regra_iii_kg"], "total_missao_A_kg": no_ponto["total_missao_A_kg"]},
+                "no_apoapse_anterior": {"total_regra_iii_kg": no_ponto["total_regra_iii_kg"], "total_missao_A_kg": no_ponto["total_missao_A_kg"]},
                 "regra_5pct": {"apoapse_alt_km": esc["apoapse_alt_km"], "total_regra_iii_kg": esc["massa_regra_iii_kg"],
                                "total_missao_A_kg": esc["massa_missao_A_kg"], "minimo_kg": esc["minimo_kg"],
                                "acima_do_minimo": esc["acima_do_minimo"], "mav_glom_kg": esc["mav_glom_kg"],
@@ -233,7 +240,7 @@ def main():
     md.append(f"| **Total** | **{br(out['orbitador']['basica_kg'], 1)}** | | | **{br(plat_o['e1_medio'], 1)}** |")
     e = en_o
     md += ["", f"Energia: pior eclipse {br(e['eclipse_max_h'], 2)} h num período de {br(e['periodo_h'], 2)} h; carga {br(e['carga_w'])} W; "
-           f"painel {br(e['painel_w_afelio_fim_de_vida'])} W no afélio ({br(e['afelio_ua'], 3)} UA, {br(e['w_kg_painel_afelio'], 1)} W/kg); "
+           f"painel {br(e['painel_w_afelio'])} W no afélio ({br(e['afelio_ua'], 3)} UA, {br(e['w_kg_painel_afelio'], 1)} W/kg); "
            f"bateria {br(e['bateria_wh_nominal'])} Wh nominais para {br(e['energia_eclipse_wh'])} Wh no eclipse."]
     md += ["", "## Lander", "", f"**Base L3** (lander do MSR sem MAV e sem rover de busca): {br(m_l3)} kg, sem MGA adicional "
            f"(GSFC: {br(plat_l['L3']['e1_medio_mais_gsfc'])}; ESA: {br(plat_l['L3']['esa'])}). Limites L1 e L2 abaixo."]
@@ -248,7 +255,7 @@ def main():
            f"| Caso | Orbitador | Lander | Total (iii) em {br(ap0)} km | Total (A) em {br(ap0)} km | Apoapse pela regra dos 5 % | Total (iii) nele | Total (A) nele |",
            "| :- | -: | -: | -: | -: | -: | -: | -: |"]
     for k, t in totais.items():
-        a_, b = t["em_26950_km"], t["regra_5pct"]
+        a_, b = t["no_apoapse_anterior"], t["regra_5pct"]
         md.append(f"| {t['caso']} | {br(t['plataforma_orbitador_kg'])} | {br(t['plataforma_lander_kg'])} | {br(a_['total_regra_iii_kg'])} | "
                   f"{br(a_['total_missao_A_kg'])} | {br(b['apoapse_alt_km'])} | {br(b['total_regra_iii_kg'])} | {br(b['total_missao_A_kg'])} |")
     md += ["", "Nos casos de sensibilidade, a plataforma do orbitador é a calculada no apoapse do caso de base."]

@@ -1,6 +1,6 @@
 # ADR 0005 — Arquitetura de superfície e órbita de encontro
 
-Status: Accepted (Fabio, 2026-10-27, portões da Etapa 2.1); **apoapse atualizado** no portão da propulsão do MAV (ADR 0007)
+Status: Accepted (Fabio, 2026-10-27, portões da Etapa 2.1); **apoapse atualizado** no portão da propulsão do MAV (ADR 0007) e no portão da Etapa 2.3 (plataformas)
 Data: 2026-10-27
 
 ## Contexto
