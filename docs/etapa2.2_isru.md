@@ -81,7 +81,7 @@ Sensibilidade, total pela regra (iii):
    34,4–34,6 t contra 34,8–34,9 t, ou seja, −0,3 a −0,4 t. A diferença está dentro da incerteza das
    premissas.
 4. **MMRTG × solar:** as massas ficam parecidas (para ~1,2 kW, 13 MMRTG contra ~480 kg de painéis). O
-   MMRTG depende de plutônio-238 (13 unidades está muito acima do que uma missão já levou). O solar
+   MMRTG depende de plutônio-238; a disponibilidade para 13 unidades não foi avaliada. O solar
    não inclui tempestade de poeira longa: o DRA estima +7800 kg para 50 dias na sua escala (p. 123).
    Nenhum dos dois pontos foi quantificado aqui.
 
@@ -100,7 +100,7 @@ Sensibilidade, total pela regra (iii):
 - Armazenamento criogênico no cruzeiro e o seu custo de energia: não modelados.
 - MAV LOX/CH4 com a mesma divisão de Δv e a mesma fração estrutural nos dois estágios; sem isolamento
   específico além do ε. Bowles mostra que o LOX/CH4 tem massa seca maior que o hipergólico.
-- Pureza do O2 do MOXIE: requisito > 98 % [F48]. Hoffman et al. 2022 recomendam > 99,6 % para propelente;
+- Pureza do O2 do MOXIE: requisito > 98 % [F48]. Hoffman et al. 2022 recomendam > 99,6 % para propelente [F54];
   não confirmei se o MOXIE atingiu isso. Não modelado.
 - A produção depende de a planta funcionar por 300 sols. O MOXIE fez ciclos curtos (horas); não há
   demonstração de operação contínua.

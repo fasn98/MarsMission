@@ -58,6 +58,7 @@ Toda constante ou dado externo usado no código cita uma entrada desta lista no 
 | F51 | Drake, B. G.; Watts, K. D. (eds.). DRA 5.0 Addendum #2, NASA/SP-2009-566-ADD2, Tabelas 4-31 e 4-32, p. 242 (imagens conferidas): armazenamento sem evaporação de LCH4 (3469 W; 310 + 161 kg) e de LOX (1858 W; 166 kg) | Armazenamento criogênico na superfície | https://ntrs.nasa.gov/citations/20160003093 |
 | F52 | NASA/DOE. *Multi-Mission Radioisotope Thermoelectric Generator (MMRTG) Fact Sheet* (atualizado em 05/2020): "Beginning of Life Power (Watts) 110"; "weighs about 94 pounds (45 kilograms)" | Fonte de energia por radioisótopo | https://science.nasa.gov/wp-content/uploads/2024/02/mmrtg-factsheet-updated-5-18-20-1.pdf |
 | F53 | Zakrajsek, J. F. et al. (NASA RPS Program), LPSC Community Dialogue 2016 (NTRS 20170000017), slide 12: "An MMRTG degradation rate of 4.8% per year on average" | Degradação do MMRTG | https://ntrs.nasa.gov/citations/20170000017 |
+| F54 | Hoffman, J. A. et al. *Mars Oxygen ISRU Experiment (MOXIE) — Preparing for human Mars exploration*. Science Advances 8, eabp8636, 2022 (PMC9432831), seção Results: "a purity of >99.6% is recommended for both propellant and breathing oxygen" | Pureza recomendada do O2 (limitação da Etapa 2.2) | https://doi.org/10.1126/sciadv.abp8636 |
 
 Referências previstas para etapas seguintes (ainda não usadas no código):
 (nenhuma pendente)
