@@ -134,9 +134,19 @@ def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr):
 
     proj = tomllib.loads((RAIZ / "pyproject.toml").read_text(encoding="utf-8"))["project"]
     reqs = proj["dependencies"] + [r for extra in proj["optional-dependencies"].values() for r in extra]
-    assert len(cr.pacotes()) == len(reqs) and {"pillow", "streamlit", "pandas", "pytest"} <= set(cr.pacotes())
+    nomes = {r.split(";")[0].split("[")[0].split("=")[0].split(">")[0].split("<")[0].strip().lower() for r in reqs}
+    assert set(cr.pacotes()) == nomes and {"pillow", "streamlit", "pandas", "pytest"} <= nomes
     amb = cr.ambiente()
-    assert list(amb)[0] == "python" and list(amb)[-4:] == ["cpu", "sistema", "commit", "alteracoes_nao_commitadas"]
-    assert amb["pillow"] and amb["cpu"] and amb["sistema"]
-    if (RAIZ / ".git").exists():   # num checkout git (CI, worktree), o commit é o HEAD
+    assert list(amb)[0] == "python" and list(amb)[-1] == "alteracoes_nao_commitadas"
+    assert {"cpu", "sistema", "commit"} <= set(amb) and amb["pillow"] and amb["cpu"] and amb["sistema"]
+    if amb["commit"] is not None:   # com git disponível, o commit é o SHA do HEAD
         assert len(amb["commit"]) == 40 and isinstance(amb["alteracoes_nao_commitadas"], bool)
+
+
+def test_linha_de_ambiente_do_markdown(cr):
+    amb = {"python": "3.11.18", "pillow": "13.0.0", "pandas": None, "cpu": "X", "sistema": "Linux", "commit": None,
+           "alteracoes_nao_commitadas": True}
+    assert cr.ambiente_md(amb) == ("python 3.11.18, pillow 13.0.0, pandas ausente, cpu X, sistema Linux "
+                                   "(árvore de trabalho com alterações não commitadas)")
+    amb.update(commit="a" * 40, alteracoes_nao_commitadas=False)
+    assert cr.ambiente_md(amb).endswith(f"commit {'a' * 40}")

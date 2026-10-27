@@ -186,7 +186,12 @@ def pacotes() -> list[str]:
     """Nomes das dependências do pyproject.toml (obrigatórias e extras, na ordem do arquivo), para o relatório."""
     proj = tomllib.loads(PYPROJECT.read_text(encoding="utf-8"))["project"]
     reqs = list(proj.get("dependencies", [])) + [r for extra in proj.get("optional-dependencies", {}).values() for r in extra]
-    nomes = [re.match(r"[A-Za-z0-9_.\-]+", r).group(0).lower() for r in reqs]
+    nomes = []
+    for r in reqs:
+        m = re.match(r"\s*([A-Za-z0-9][A-Za-z0-9_.\-]*)", r)
+        if m is None:
+            raise ValueError(f"requisito do pyproject.toml sem nome de pacote: {r!r}")
+        nomes.append(m.group(1).lower())
     return list(dict.fromkeys(nomes))
 
 
@@ -198,14 +203,38 @@ def _git(*args):
     return r.stdout.strip() if r.returncode == 0 else None
 
 
+def _commit_do_pr():
+    """No CI de pull_request o checkout é o merge sintético (refs/pull/N/merge); o head do PR vem do evento do GitHub."""
+    import json
+    import os
+    evento = os.environ.get("GITHUB_EVENT_PATH")
+    try:
+        return json.loads(Path(evento).read_text(encoding="utf-8"))["pull_request"]["head"]["sha"] if evento else None
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
 def ambiente() -> dict:
     """Ambiente da regeneração: Python, versões dos pacotes do pyproject.toml, CPU, sistema e commit da árvore regenerada.
-    A cópia regenerada é a árvore de trabalho, não o HEAD: "alteracoes_nao_commitadas" diz se havia arquivos rastreados
-    modificados (None sem git)."""
-    status = _git("status", "--porcelain", "--untracked-files=no")
-    return {"python": platform.python_version(), **{k: _versao(k) for k in pacotes()}, "cpu": _cpu(),
-            "sistema": platform.platform(), "commit": _git("rev-parse", "HEAD"),
-            "alteracoes_nao_commitadas": None if status is None else bool(status)}
+    Lido antes da cópia, para descrever o que foi regenerado (e não as escritas de --atualizar). A cópia é a árvore de
+    trabalho, não o HEAD: "alteracoes_nao_commitadas" diz se havia arquivos rastreados modificados ou não rastreados (fora
+    do .gitignore); None sem git. No CI de pull_request, "commit" é o merge sintético e "commit_head_do_pr" o head do PR."""
+    status = _git("status", "--porcelain")
+    amb = {"python": platform.python_version(), **{k: _versao(k) for k in pacotes()}, "cpu": _cpu(),
+           "sistema": platform.platform(), "commit": _git("rev-parse", "HEAD")}
+    pr = _commit_do_pr()
+    if pr:
+        amb["commit_head_do_pr"] = pr
+    amb["alteracoes_nao_commitadas"] = None if status is None else bool(status)
+    return amb
+
+
+def ambiente_md(amb: dict) -> str:
+    """Linha "Ambiente" do relatório em Markdown: pacote ausente aparece como "ausente"; commit sem git é omitido."""
+    partes = [f"{k} {'ausente' if v is None else v}" for k, v in amb.items()
+              if k != "alteracoes_nao_commitadas" and not (v is None and k.startswith("commit"))]
+    aviso = " (árvore de trabalho com alterações não commitadas)" if amb.get("alteracoes_nao_commitadas") else ""
+    return ", ".join(partes) + aviso
 
 
 def _versao(pacote):
@@ -318,6 +347,7 @@ def main():
         if not atualizar or not all(a.startswith("results/") and ".." not in Path(a).parts for a in atualizar):
             sys.exit("--atualizar exige caminhos em results/")
     base = referencia if referencia else RAIZ / "results"
+    amb = ambiente()   # antes da cópia: descreve a árvore regenerada
     with tempfile.TemporaryDirectory() as tmp:
         d = Path(tmp) / "repo"
         shutil.copytree(RAIZ, d, ignore=_ignorar)
@@ -352,7 +382,7 @@ def main():
             shutil.copytree(d / "results", guardar)
     out = {"gerado_por": "tools/confere_regeneracao.py", "rotulo": rotulo,
            "comparado_com": "regeneração guardada em " + referencia.name if referencia else "results/ versionado",
-           "ambiente": ambiente(),
+           "ambiente": amb,
            "ferramentas": log, "versionados": len(arquivos),
            "regenerados": sum(a["regenerado"] for a in arquivos),
            "tolerancias": {"P-039": {"relativa": _tolerancias()[0], "piso_absoluto": _tolerancias()[1]},
@@ -364,11 +394,9 @@ def main():
            "gerados_sem_versao": novos, "atualizados": atualizar, "arquivos": arquivos}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / f"regeneracao_{rotulo}.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
-    amb = ", ".join(f"{k} {v}" for k, v in out["ambiente"].items() if v and k != "alteracoes_nao_commitadas")
-    if out["ambiente"]["alteracoes_nao_commitadas"]:
-        amb += " (árvore de trabalho com alterações não commitadas)"
+    amb_md = ambiente_md(out["ambiente"])
     md = [f"# Regeneração de results/ — ambiente \"{rotulo}\" (gerado por tools/confere_regeneracao.py)", "",
-          f"Ambiente: {amb}. Comparado com: {out['comparado_com']}.", "",
+          f"Ambiente: {amb_md}. Comparado com: {out['comparado_com']}.", "",
           f"**Versionados: {out['versionados']}; regenerados: {out['regenerados']}; idênticos: {out['identicos']}; "
           f"dentro da tolerância: {len(out['dentro_da_tolerancia'])}; diferentes: {len(out['diferentes'])}.**", "",
           f"Não regenerados: {', '.join(out['nao_regenerados']) or 'nenhum'}.", "",
