@@ -66,8 +66,12 @@ afetados, porque põem o próprio `src/` na frente.
 Consultado na documentação oficial em 2026-10-27. **O painel não foi executado no Replit por este estudo.** O que está
 marcado "não conferido" precisa ser confirmado na primeira importação.
 
-**Nota (2026-10-27):** primeira importação feita. Resultados em "Primeira execução no workspace", abaixo: a instalação
-falhou no pillow, e o painel continua não executado no Replit.
+**Nota (2026-10-27):** primeira importação feita; resultados em "Primeira execução no workspace", abaixo.
+- Com as dependências da época (streamlit 1.65.0), a instalação falhou no pillow.
+- Com `pillow>=13.0.0` e streamlit 1.66.1 (ADR 0010, nota de 2026-10-27), o painel foi executado dentro do workspace e
+  aberto em `127.0.0.1:8501`.
+- A frase acima ("O painel não foi executado no Replit por este estudo") deixa de valer. Continuam não conferidos o
+  Webview do Replit e o endereço externo.
 
 ### Importar do GitHub
 1. **Repositório público:** abrir `https://replit.com/github.com/fasn98/MarsMission` ("Rapid import").
@@ -90,11 +94,13 @@ falhou no pillow, e o painel continua não executado no Replit.
        O canal `stable-24_05`, que estava antes no `.replit`, não foi testado.
 
 ### Primeira execução no workspace (2026-10-27)
-- **Instalação: falhou.** O `pip install -e ".[painel,dev]"` parou no pillow, dependência do matplotlib e do streamlit.
-  - O índice de pacotes do Replit (`package-firewall.replit.internal`, servidor `SocketFirewall/2.12.1`) devolveu
-    HTTP 403: "Access denied: Your download has been blocked by the Socket Security Policy. Reason: Critical CVE."
-  - Bloqueados: pillow 10.4.0, 11.3.0, 12.0.0, 12.1.0, 12.2.0 e 12.3.0. O pillow 13.0.0 passa pelo firewall.
-  - As outras dependências diretas fixadas no `pyproject.toml` passaram.
+- **Instalação: falhou** (observado). O `pip install -e ".[painel,dev]"`, rodado à mão no Shell (o Run do `.replit` usa
+  `.[painel]`), parou no pillow, dependência do matplotlib e do streamlit.
+  - Observado, sem fonte oficial do Replit: o índice de pacotes do Replit (`package-firewall.replit.internal`, servidor
+    `SocketFirewall/2.12.1`) devolveu HTTP 403: "Access denied: Your download has been blocked by the Socket Security
+    Policy. Reason: Critical CVE." O motivo é o texto do firewall; as fontes dos avisos estão na ADR 0010.
+  - Observados como bloqueados: pillow 10.4.0, 11.3.0, 12.0.0, 12.1.0, 12.2.0 e 12.3.0. O pillow 13.0.0 passa.
+  - Observado: as outras dependências diretas fixadas no `pyproject.toml` passaram.
 - **Kernels: conferidos.** `tools/fetch_kernels.py` baixou os dois kernels. Os MD5 batem com `config/kernels.yaml`:
   `naif0012.tls` `25a2fff30b0dedb4d76c06727b1895b1` e `de440s.bsp` `3917ee56769db332790c751e2168843d`.
 - **Com `pillow>=13.0.0` e streamlit 1.66.1** (branch `fix/deps-pillow-13`, commit 0a46b5e; ADR 0010, nota de

@@ -2,8 +2,7 @@
 # Chaves conforme https://docs.replit.com/replit-workspace/configuring-repl (consultado em 2026-10-27).
 # Conferido no workspace do Replit em 2026-10-27: o módulo "python-3.11" forneceu o Python 3.11.14 e o canal
 # "stable-25_05" foi aceito (NIX_PATH = nixpkgs-stable-25_05). O canal "stable-24_05" não foi testado.
-# O painel só instala aqui com pillow>=13.0.0 (o firewall de pacotes do Replit bloqueia o pillow até a 12.3.0); ver
-# docs/painel.md, "Primeira execução no workspace". NÃO CONFERIDO: o Webview e o endereço externo do Replit.
+# Primeira execução no workspace: docs/painel.md. NÃO CONFERIDO: o Webview e o endereço externo do Replit.
 modules = ["python-3.11"]
 
 # Run: instala o pacote com o extra "painel" (dependências só do pyproject.toml), baixa e confere os kernels (MD5,
