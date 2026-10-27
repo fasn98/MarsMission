@@ -200,3 +200,9 @@ da Fase 2, as 38 premissas (P-001 a P-038) estão com status NÃO VALIDADA. Só 
   `results/fase2/premissas_nao_validadas.md` foram regenerados e agora mostram 41 premissas (P-001 a P-041), todas NÃO
   VALIDADAS.
 - Nenhum número desta fase muda.
+
+## Nota (2026-10-27): premissas P-042 e P-043 na lista gerada
+- A Etapa 3.1 (várias queimas e conferência com o ERO) acrescenta a P-042 e a P-043, ambas NÃO VALIDADAS.
+- `results/fase1/premissas.md` e `results/fase2/premissas_nao_validadas.md` foram regenerados e agora mostram 43 premissas
+  (P-001 a P-043), todas NÃO VALIDADAS.
+- Nenhum número desta fase muda.
