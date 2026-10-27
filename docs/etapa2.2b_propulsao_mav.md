@@ -52,8 +52,8 @@ Todas as opções têm dois estágios, a mesma divisão de Δv (P-019), carga ú
 | Simplicidade / partes móveis | "Simple design does not require moving parts" [F58] | válvulas, pressurização, motor bipropelente (não detalhado aqui) | o mesmo, mais resfriadores criogênicos ativos |
 | Maturidade (TRL) | "High TRL and reliability" [F58] | o motor de referência de Bowles é o XLR-132, com 347 s [F46] | ZBO "not yet demonstrated in space" (DRA ADD2, p. 330 [F51]); maior resfriador de 90 K já voado: 20 W [F50] |
 | Ambiente térmico na superfície | "Potential issues with extremely cold environments" [F58]; o lander mantém o MAV entre −40 e +40 °C [F60] | NTO congela a −11 °C e MMH a ~−52 °C [F61]: exige aquecimento (não modelado) | armazenamento criogênico ativo por toda a estada, além do cruzeiro |
-| Controle de empuxo | "Cannot be actively throttled or shut down" [F58] (o MSR acrescentou propulsores de ajuste de órbita) | desligável e reacendível (motor líquido) | desligável e reacendível |
-| Manuseio | "Manufacturing and handling safety" [F58] | propelentes tóxicos | criogênicos, carregados meses antes do lançamento |
+| Controle de empuxo | "Cannot be actively throttled or shut down" [F58] (o MSR acrescentou propulsores de ajuste de órbita) | motor líquido: controle de empuxo (não verificado em fonte nesta etapa) | idem (não verificado em fonte nesta etapa) |
+| Manuseio | "Manufacturing and handling safety" [F58] | manuseio de hipergólicos (não verificado em fonte nesta etapa) | criogênicos armazenados desde a Terra (seção 1) |
 | Volume | dentro do envelope do MSR (≤ 0,57 m de diâmetro [F34]) | não avaliado | problema de volume relatado pelo MSR [F59] |
 
 Não encontrei em fonte primária os critérios de contaminação por pluma nem os de custo e cronograma
