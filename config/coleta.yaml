@@ -24,7 +24,7 @@ opcoes:
     itens:
       - nome: rover + sistema de saída do lander (MarsFAST)
         massa_kg: 178
-        categoria: sem_margem_adicional   # o estudo CDF já fecha massa com margens de sistema
+        categoria: sem_margem_adicional   # sem MGA adicional (escolha deste estudo; a fonte não diz se os 178 kg incluem margem)
         fonte: "[F93] ESA CDF-148(C), out/2014, p. 19: \"the total mass of 178 kg is below the total 200kg JPL mass allocation\""
     variante_rochas:
       # O SFR só buscava tubos já coletados pelo Perseverance; para escolher e extrair rochas o rover precisa de
@@ -42,10 +42,10 @@ opcoes:
       - nome: 2 helicópteros de recuperação de amostras
         massa_kg: 5.0
         categoria: eletronica_0_5kg
-        fonte: "[F98] Withrow-Maser et al. 2023, p. 3: \"total mass of SRH is expected to be ~2.5 kg\" (2 × 2,5 kg)"
+        fonte: "[F98] Withrow-Maser et al. 2023, p. 3: \"total mass of SRH is expected to be ~2.5 kg\"; dois helicópteros como no MSR: [F97] p. 28, \"two Sample Recovery Helicopters\""
     energia: "própria dos helicópteros (não publicada)"
     estado: >
-      Depósito Three Forks: 10 tubos (8 de rocha/regolito, 1 atmosférico, 1 testemunha), deixados entre 21/12/2022 e
+      Depósito Three Forks: 10 tubos (8 de rocha/regolito, 1 atmosférico, 1 testemunha), deixados até
       28/01/2023 [F99]; "the 10 samples in the depot cache are the less desirable of the initial sample pairs" [F97] p. 32.
       Perseverance operando: imagem do Sol 2009, 14/10/2026 [F100]. Programa MSR: "was a plan" [F103]; término proposto no pedido FY2026
       ("NASA plans to terminate the Mars Sample Return Program", [F101] p. 242); o FY2027 diz que "Subsequent missions
@@ -69,9 +69,11 @@ escolha: c_mais_a_escolhida
 riscos_declarados:
   # Riscos da opção (c), registrados por decisão do Fabio. Nenhum foi avaliado quantitativamente.
   - risco: integridade atual do depósito Three Forks
-    situacao: "10 tubos deixados de 21/12/2022 a 28/01/2023 [F99]; nenhum relato primário posterior sobre o depósito encontrado"
+    situacao: "10 tubos deixados até 28/01/2023 [F99]; nenhum relato primário posterior sobre o depósito encontrado"
   - risco: Perseverance ativo na data do pouso (só para os tubos a bordo)
-    situacao: "operando: Sol 2009, 14/10/2026 [F100]; o pedido de orçamento FY2027 reduz o ritmo das operações e submete a extensão à Senior Review de 2026 [F102] (não confirmado aqui o resultado)"
+    situacao: "operando: Sol 2009, 14/10/2026 [F100]; continuidade das operações até 2029–2030 não confirmada em fonte primária"
+  - risco: transferência dos tubos trazidos pelos helicópteros para o MAV
+    situacao: "sem item próprio: coberta só pelo L3 (o lander do MSR tinha braço de transferência de amostras), incerteza declarada da P-017"
   - risco: pouso de precisão perto do depósito
     situacao: "não avaliado; o lander do MSR previa \"Pin-point landing (< 20 m from target)\" [F24] slide 10"
   - risco: situação do programa MSR

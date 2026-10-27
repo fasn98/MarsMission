@@ -40,6 +40,8 @@ def main():
         arq = subprocess.run(["git", "archive", "HEAD"], cwd=RAIZ, capture_output=True, check=True).stdout
         subprocess.run(["tar", "-x", "-C", str(d)], input=arq, check=True)
         shutil.copytree(RAIZ / "data" / "kernels", d / "data" / "kernels", dirs_exist_ok=True)
+        for pasta in PASTAS:  # sem os resultados antigos: o que não for regenerado aparece como "não regenerado"
+            shutil.rmtree(d / pasta)
         for arq_cfg, chave, valor in (("config/dimensionamento.yaml", r"^plataforma_orbitador_kg: \{valor: [\d.]+,", antes["orbitador_kg"]),
                                       ("config/superficie.yaml", r"^  plataforma_superficie_kg: \{valor: [\d.]+,", antes["lander_kg"])):
             p = d / arq_cfg
@@ -52,17 +54,24 @@ def main():
         for pasta in PASTAS:
             for p in sorted((RAIZ / pasta).iterdir()):
                 q = d / pasta / p.name
-                linhas.append({"arquivo": f"{pasta}/{p.name}", "igual": q.exists() and _sha(p) == _sha(q)})
+                linhas.append({"arquivo": f"{pasta}/{p.name}", "regenerado": q.exists(),
+                               "igual": (_sha(p) == _sha(q)) if q.exists() else None})
     out = {"gerado_por": "tools/confere_2033.py", "commit": commit,
            "plataformas_usadas_kg": {"orbitador": antes["orbitador_kg"], "lander": antes["lander_kg"]},
-           "ferramentas": FERRAMENTAS, "arquivos": linhas, "todos_iguais": all(x["igual"] for x in linhas)}
+           "ferramentas": FERRAMENTAS, "arquivos": linhas,
+           "regenerados": sum(x["regenerado"] for x in linhas),
+           "todos_regenerados_iguais": all(x["igual"] for x in linhas if x["regenerado"]),
+           "nao_regenerados": [x["arquivo"] for x in linhas if not x["regenerado"]]}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "conferencia_2033.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     md = ["# Conferência das Etapas 2.1 e 2.2 com a 2033 nova (gerado por tools/confere_2033.py)", "",
           f"Commit {commit}; plataformas de {antes['orbitador_kg']} / {antes['lander_kg']} kg (as da época); "
           f"ferramentas: {', '.join(FERRAMENTAS)}.", "",
-          f"**Todos os arquivos iguais byte a byte: {'sim' if out['todos_iguais'] else 'NÃO'}** ({len(linhas)} arquivos).", "",
-          "| Arquivo | Igual |", "| :- | :- |"] + [f"| {x['arquivo']} | {'sim' if x['igual'] else '**não**'} |" for x in linhas]
+          f"**Arquivos regenerados pelas ferramentas atuais: {out['regenerados']} de {len(linhas)}; todos iguais byte a byte: "
+          f"{'sim' if out['todos_regenerados_iguais'] else 'NÃO'}.** Não regenerados (legado de versões anteriores das "
+          f"ferramentas, não conferidos): {', '.join(out['nao_regenerados']) or 'nenhum'}.", "",
+          "| Arquivo | Regenerado | Igual |", "| :- | :- | :- |"] + [
+          f"| {x['arquivo']} | {'sim' if x['regenerado'] else 'não'} | {'—' if x['igual'] is None else ('sim' if x['igual'] else '**não**')} |" for x in linhas]
     (SAIDA / "conferencia_2033.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md[:5]))
 

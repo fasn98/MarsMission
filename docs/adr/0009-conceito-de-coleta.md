@@ -29,13 +29,14 @@ Foram comparadas três opções, com massa, energia, complexidade e objetivo cie
 
 ## Riscos declarados (não avaliados quantitativamente)
 - **Integridade atual do depósito:**
-  - 10 tubos foram deixados entre 21/12/2022 e 28/01/2023 [F99].
+  - 10 tubos foram deixados até 28/01/2023 [F99].
   - Os 10 tubos do depósito são "the less desirable of the initial sample pairs" ([F97] p. 32).
   - Não foi encontrado relato primário posterior sobre o estado do depósito.
 - **Perseverance ativo na data do pouso** (só para os tubos a bordo):
   - O rover está operando; última imagem consultada: Sol 2009, 14/10/2026 [F100].
-  - O pedido de orçamento FY2027 reduz o ritmo das operações e põe a extensão da missão na Senior Review de
-    2026 [F102]. O resultado da revisão não foi confirmado.
+  - A continuidade das operações até a chegada (2029–2030) não foi confirmada em fonte primária.
+- **Transferência dos tubos para o MAV:** não tem item próprio. Fica coberta só pelo L3, já que o lander do MSR
+  tinha braço de transferência; é incerteza declarada da P-017.
 - **Pouso de precisão perto do depósito:** não avaliado. O lander do MSR previa "Pin-point landing (< 20 m
   from target)" ([F24] slide 10).
 - **Situação do programa MSR:**
@@ -51,3 +52,8 @@ Foram comparadas três opções, com massa, energia, complexidade e objetivo cie
   coleta de reserva.
 - **Twin (Fase 8):** os helicópteros são candidatos à simulação, reaproveitando o DroneSimulator
   (repositório só de leitura; método, não números).
+
+Nota: na revisão independente da Etapa 2.5 (antes do merge) foram retiradas deste ADR duas afirmações sem
+citação correspondente: a data de 21/12/2022 e a frase sobre o orçamento FY2027 e a Senior Review. Foi
+acrescentado o risco de transferência dos tubos.
+

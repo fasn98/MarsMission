@@ -54,3 +54,17 @@ injetados. Pior margem na forma (a) (`results/etapa2.4/lancamento.yaml`):
 
 Os dois continuam servindo. O lander não muda. Os números das seções acima são os de antes desta atualização.
 
+## Atualização (Etapa 2.5, 2026-10-27): helicópteros de coleta no lander (ADR 0009)
+Com os helicópteros de recuperação (ADR 0009), o lander passa de 3.727 para **3.740 kg** injetados e a nota
+anterior ("O lander não muda") deixa de valer.
+
+| Lançador | Pior margem antes | Pior margem depois |
+| :- | -: | -: |
+| Falcon Heavy, recuperação | +26 % | **+25 %** |
+| Falcon Heavy, descartável | +201 % | **+200 %** |
+| Vulcan VC2 | +16 % | **+16 %** |
+| Vulcan VC4 | +74 % | **+73 %** |
+| Vulcan VC6 | +123 % | **+122 %** |
+
+Fonte: `results/etapa2.4/lancamento.md`.
+

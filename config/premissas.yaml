@@ -365,7 +365,7 @@ premissas:
     nome: sistema_de_amostras_lander
     valor: 59
     unidade: kg
-    uso: "config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2"
+    uso: "config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2. Atualização (Etapa 2.5, ADR 0009): deixa de ser provisória; é o braço de coleta de reserva (regolito do sítio)"
     justificativa: >
       Carga útil do Phoenix, 59 kg [F40]: braço que escava e entrega amostras + instrumentos. Análogo funcional
       sem massa própria publicada para um sistema de transferência ao MAV. O sistema de lançamento e ereção do
@@ -412,4 +412,14 @@ premissas:
       Estratégias com mais de um impulso, ou um lançamento direto à inclinação da DLA, podem custar menos; não foram
       avaliadas. O estágio de saída é redimensionado para o C3 e a DLA de cada janela (pedido do Fabio no portão
       da Etapa 2.4). Aprovada pelo Fabio no portão da Etapa 2.4 como premissa (continua NÃO VALIDADA).
+    status: NÃO VALIDADA
+  - id: P-038
+    nome: categoria_de_margem_dos_helicopteros
+    valor: eletronica_0_5kg
+    unidade: categoria do AIAA S-120A (E1; 20–35 %, ponto médio 27,5 %)
+    uso: config/plataformas.yaml — helicópteros de recuperação no lander (ADR 0009)
+    justificativa: >
+      Cada helicóptero é um veículo inteiro de ~2,5 kg [F98], não um item eletrônico. A tabela do S-120A [F70] não
+      tem categoria de veículo; usa-se a de eletrônica de 0–5 kg pela massa por unidade. Com a categoria de
+      instrumentação (25–75 %), os 5 kg passariam de 6,4 para 7,5 kg previstos (diferença de ~1 kg).
     status: NÃO VALIDADA

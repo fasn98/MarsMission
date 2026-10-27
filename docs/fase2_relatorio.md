@@ -91,22 +91,22 @@ Massa de entrada 3.629 kg; massa pousada 1.847 kg.
 
 Uma premissa por vez, com a órbita de encontro de base.
 
-| Caso | Orbitador injetado | Orbitador: FH desc. / VC6 | Lander injetado | Lander: menor margem |
+| Caso | Orbitador injetado | Orbitador: FH desc. / VC6 | Lander injetado | Lander: FH rec. / FH desc. / VC2 / VC4 / VC6 |
 | :- | -: | -: | -: | -: |
-| Base | 6.310 | +78 % / +31 % | 3.740 | +16 % (VC2) |
-| Margem de massa GSFC (P-033) | 6.623 | +69 % / +25 % | 4.206 | +3 % (VC2) |
-| Margem de massa ESA (P-033) | 6.714 | +67 % / +24 % | 5.044 | −14 % (VC2) |
-| Lander no limite inferior L1 (P-035) | 6.310 | +78 % / +31 % | 1.642 | +163 % |
-| Lander no limite superior, SRL 2024 (P-035) | 6.310 | +78 % / +31 % | 5.633 | −23 % (VC2) |
-| Razão pousada/entrada 0,624 (P-018) | 6.310 | +78 % / +31 % | 3.051 | +42 % |
-| Margem de Δv 5 % (P-014) | 5.785 | +94 % / +43 % | 3.645 | +19 % |
-| Margem de Δv 20 % (P-014) | 7.548 | +49 % / +10 % | 4.007 | +8 % |
-| Sem penalidade de DLA (P-036) | 6.310 | +93 % / +43 % | 3.740 | +25 % |
+| Base | 6.310 | +78 % / +31 % | 3.740 | +25 / +200 / +16 / +73 / +122 % |
+| Margem de massa GSFC (P-033) | 6.623 | +69 % / +25 % | 4.206 | +11 / +167 / +3 / +54 / +97 % |
+| Margem de massa ESA (P-033) | 6.714 | +67 % / +24 % | 5.044 | **−7** / +123 / **−14** / +29 / +64 % |
+| Lander no limite inferior L1 (P-035; sem helicópteros) | 6.310 | +78 % / +31 % | 1.642 | +185 / +584 / +163 / +295 / +405 % |
+| Lander no limite superior, SRL 2024 (P-035) | 6.310 | +78 % / +31 % | 5.633 | **−17** / +99 / **−23** / +15 / +47 % |
+| Razão pousada/entrada 0,624 (P-018) | 6.310 | +78 % / +31 % | 3.051 | +53 / +268 / +42 / +113 / +172 % |
+| Margem de Δv 5 % (P-014) | 5.785 | +94 % / +43 % | 3.645 | +28 / +208 / +19 / +78 / +128 % |
+| Margem de Δv 20 % (P-014) | 7.548 | +49 % / +10 % | 4.007 | +17 / +180 / +8 / +62 / +107 % |
+| Sem penalidade de DLA (P-036) | 6.310 | +93 % / +43 % | 3.740 | +35 / +226 / +25 / +88 / +141 % |
 
 **Leitura:**
 - O orbitador fica servido pelos dois lançadores escolhidos em todos os casos.
-- O lander perde o Vulcan VC2 com a margem ESA ou com a plataforma no limite superior. Nesses casos os
-  outros lançadores da lista (Falcon Heavy, VC4, VC6) continuam servindo.
+- **Com a margem ESA ou com a plataforma no limite superior, o lander perde dois lançadores:** o Falcon Heavy
+  com recuperação e o Vulcan VC2. Nesses casos só o Falcon Heavy descartável e os Vulcan VC4 e VC6 servem.
 - As premissas de maior efeito são a plataforma do lander (P-017/P-035, faixa de 1,6 a 5,6 t injetados)
   e a margem de Δv (P-014).
 
@@ -126,7 +126,7 @@ Uma premissa por vez, com a órbita de encontro de base.
 
 `docs/fontes.md`, F1 a F103:
 - F79–F87: lançadores e DLA;
-- F88–F90: sensores de encontro e SRL;
+- F88–F89: sensores de encontro; F90: massa do SRL em 2023;
 - F92–F103: conceito de coleta e situação do MSR.
 
 Quando o documento original é pago (AIAA S-120A), a fonte usada é a reprodução pública citada [F70].
@@ -148,8 +148,12 @@ Quando o documento original é pago (AIAA S-120A), a fonte usada é a reproduç�
   - Aquecimento do MAV com escala sem fonte (P-027).
   - Encontro em órbita elíptica alta, diferente do MSR, que usava órbita baixa.
 - **Sensibilidade:** feita com a órbita de encontro de base, sem reaplicar a regra dos 5 %.
-- **Etapas 1.4, 2.1 e 2.2:** os resultados ficam como registro da época, com plataformas de 850 kg. A
-  conferência da 2.5 mostra que a 2033 nova não os altera (`results/etapa2.5/conferencia_2033.md`).
+- **Etapas 1.4, 2.1 e 2.2:** os resultados ficam como registro da época, com plataformas de 850 kg.
+  - 2.1 e 2.2: a conferência da 2.5 rodou as ferramentas de novo com a 2033 nova. Os 15 arquivos que elas
+    geram hoje saíram iguais; três arquivos antigos, sem sufixo, não são mais gerados e não foram conferidos
+    (`results/etapa2.5/conferencia_2033.md`).
+  - 1.4: não foi conferida. A regra (i) dela usou a trajetória antiga de 2033 e fica desatualizada (ADR 0004,
+    atualização da Etapa 2.4).
 
 ## 8. Lacunas e riscos declarados
 
@@ -157,8 +161,12 @@ Quando o documento original é pago (AIAA S-120A), a fonte usada é a reproduç�
   LIDAR usa um análogo [F89].
 - **Potência do sistema de captura (CU-2):** sem valor publicado.
 - **MLS (lançamento e ereção do MAV):** sem massa publicada; coberto ao menos em parte pelo L3.
-- **SRL 2024:** os ~2900 kg pousados provavelmente são massa total. Comparabilidade com os 2100 kg secos
-  de 2020 não confirmada.
+- **SRL 2024:** nenhum documento de 2023–2025 publica a massa seca na superfície.
+  - Valores publicados: 2100 kg secos em 2020 [F77]; até 2275 kg em agosto de 2023 [F90]; 2900 kg pousados em
+    2024 [F41].
+  - Como o SRL pousa com propulsão própria ([F24] slide 10), os 2900 kg provavelmente são massa total.
+  - A comparabilidade do limite de 2500 kg segue não confirmada.
+- **Transferência dos tubos dos helicópteros para o MAV:** sem item próprio; coberta só pelo L3.
 - **Coleta (ADR 0009):**
   - integridade atual do depósito Three Forks;
   - Perseverance ativo na data do pouso;
@@ -170,4 +178,4 @@ Quando o documento original é pago (AIAA S-120A), a fonte usada é a reproduç�
 ## 9. Premissas NÃO VALIDADAS
 
 A lista é gerada em **`results/fase2/premissas_nao_validadas.md`** por `tools/lista_premissas.py`. Ao fim
-da Fase 2, as 37 premissas (P-001 a P-037) estão com status NÃO VALIDADA. Só o Fabio altera o status.
+da Fase 2, as 38 premissas (P-001 a P-038) estão com status NÃO VALIDADA. Só o Fabio altera o status.

@@ -21,7 +21,6 @@ sys.path[:0] = [str(RAIZ / "src"), str(RAIZ / "tools")]
 import dimensionamento as dm  # noqa: E402
 import lancamento as lc  # noqa: E402
 import plataformas as pl  # noqa: E402
-from orbital import lancamento as la  # noqa: E402
 from superficie import _ler  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa2.5"
@@ -53,21 +52,14 @@ def main():
     for k, (nome, m_col) in casos.items():
         plat = l3 + m_col
         m_inj = lc.veiculos(plat)[0]["lander"]["injetada_kg"]
-        margens = {}
-        for n in lanc:
-            lan = lcfg["lancadores"][n]
-            pfm = lcfg["centro"]["plataformas"].get(lan.get("plataforma"), {})
-            imax = la.inclinacao(pfm.get("latitude_graus", float(lcfg["centro"]["latitude_graus"]["valor"])),
-                                 lcfg["centro"]["azimute_graus"]["valor"][0])
-            vals = [lc.capacidade_direta(lan, j["c3_km2_s2"], j["dla_graus"], lcfg, imax)[0] / m_inj - 1 for j in janelas]
-            margens[n] = min(vals)
+        margens = {n: lc.pior_margem_a(n, m_inj, janelas, lcfg)[0] for n in lanc}
         linhas.append({"opcao": k, "nome": nome, "coleta_prevista_kg": m_col, "plataforma_lander_kg": plat,
                        "lander_injetado_kg": m_inj, "pior_margem_a": margens})
     out = {"gerado_por": "tools/coleta.py", "l3_kg": l3, "lancadores_do_lander_a": lanc, "opcoes": linhas}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "coleta.yaml").write_text(yaml.safe_dump(dm._nativo(out), sort_keys=False, allow_unicode=True), encoding="utf-8")
     br = lambda x, n=0: f"{x:,.{n}f}".replace(",", " ").replace(".", ",")  # noqa: E731
-    pc = lambda x: f"{100 * x:+.0f} %".replace("-", "−")  # noqa: E731
+    pc = lambda x: "—" if x is None else f"{100 * x:+.0f} %".replace("-", "−")  # noqa: E731
     md = ["# Opções de coleta (gerado por tools/coleta.py)", "",
           f"Plataforma do lander = L3 ({br(l3)} kg) + item de coleta. Pior margem na forma (a), nas quatro janelas. Massas em kg.", "",
           "| Opção | Coleta (prevista) | Plataforma do lander | Lander injetado | " + " | ".join(lanc) + " |",

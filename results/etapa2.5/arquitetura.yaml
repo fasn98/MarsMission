@@ -36,6 +36,9 @@ lander:
     massa_kg: 6.375
   - item: MAV hipergólico + energia do aquecimento (ADR 0007)
     massa_kg: 282.45535725420643
+  - item: Painéis do armazenamento criogênico no cruzeiro (só MAV criogênico; descartados
+      antes da entrada)
+    massa_kg: 0.0
   injetado_kg: 3739.8415993663666
   soma_kg: 3739.8415993663666
   massa_entrada_kg: 3629.332725450307
@@ -116,7 +119,8 @@ sensibilidade:
       Vulcan VC2: -0.14252731018090714
       Vulcan VC4: 0.2861956261865686
       Vulcan VC6: 0.6441250360312203
-- caso: Plataforma do lander no limite inferior (L1)
+- caso: Plataforma do lander no limite inferior (L1; sem os helicópteros, como definido
+    na Etapa 2.3)
   premissa: P-017, P-035
   orbitador_injetado_kg: 6310.348840517989
   lander_injetado_kg: 1642.1083803862336

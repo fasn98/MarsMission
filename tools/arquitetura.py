@@ -62,6 +62,8 @@ def main():
         {"item": "Braço de coleta de reserva (P-034, com margem)", "massa_kg": mga("amostras")},
         {"item": "Helicópteros de recuperação (ADR 0009, com margem)", "massa_kg": mga("helicopteros")},
         {"item": "MAV hipergólico + energia do aquecimento (ADR 0007)", "massa_kg": la_["mav_e_aquecimento_kg"]},
+        {"item": "Painéis do armazenamento criogênico no cruzeiro (só MAV criogênico; descartados antes da entrada)",
+         "massa_kg": la_["paineis_cruzeiro_kg"]},
     ]
     soma_l = sum(x.get("massa_kg", 0) + x.get("propelente_kg", 0) + x.get("inerte_kg", 0) for x in lander)
 
@@ -78,7 +80,7 @@ def main():
 
     # Sensibilidade: uma premissa por vez
     pv = pl["orbitador"]["prevista_kg"]
-    lb = pl["lander"]["base_L3_mais_amostras"]["prevista_kg"]
+    lb = pl["lander"]["base_L3_braco_helicopteros"]["prevista_kg"]
     casos = []
 
     def caso(nome, premissa, plat_o=None, plat_l=None, margem_dv=None, razao=None, lcfg2=None):
@@ -97,7 +99,8 @@ def main():
     caso("Base", "—")
     caso("Margem de massa GSFC (+15 % da básica) nas duas plataformas", "P-033", pv["e1_medio_mais_gsfc"], lb["e1_medio_mais_gsfc"])
     caso("Margem de massa ESA (20 % × 20 %) nas duas plataformas", "P-033", pv["esa"], lb["esa"])
-    caso("Plataforma do lander no limite inferior (L1)", "P-017, P-035", plat_l=pl["lander"]["L1"]["prevista_kg"]["e1_medio"])
+    caso("Plataforma do lander no limite inferior (L1; sem os helicópteros, como definido na Etapa 2.3)", "P-017, P-035",
+         plat_l=pl["lander"]["L1"]["prevista_kg"]["e1_medio"])
     caso("Plataforma do lander no limite superior (SRL 2024 − MAV)", "P-017, P-035", plat_l=pl["lander"]["limite_superior_srl_2024_kg"])
     alt = _v(scfg["lander"]["razao_pousada_entrada"]["a_partir_de_orbita"])
     caso(f"Razão pousada/entrada {alt:g} (Viking, a partir de órbita) em vez de {_v(scfg['lander']['razao_pousada_entrada']['entrada_direta']):g}".replace(".", ","), "P-018", razao=alt)
@@ -139,12 +142,12 @@ def main():
     md += [f"| {c['evento']} | {c['data_tdb']} |" for c in crono]
     md += ["", "## Sensibilidade (uma premissa por vez; órbita de encontro de base)", "",
            "| Caso | Premissa | Orbitador injetado | Lander injetado | " + " | ".join(f"Orb.: {n}" for n in lcfg["escolha"]["orbitador"])
-           + " | Lander: menor margem |", "| :- | :- | -: | -: |" + " -: |" * (len(lcfg["escolha"]["orbitador"]) + 1)]
+           + " | " + " | ".join(f"Lander: {n}" for n in lcfg["escolha"]["lander"]) + " |",
+           "| :- | :- | -: | -: |" + " -: |" * (len(lcfg["escolha"]["orbitador"]) + len(lcfg["escolha"]["lander"]))]
     for c in casos:
-        ml = min(v for v in c["margens"]["lander"].values() if v is not None)
-        nl = min((v, k) for k, v in c["margens"]["lander"].items() if v is not None)[1]
         md.append(f"| {c['caso']} | {c['premissa']} | {br(c['orbitador_injetado_kg'])} | {br(c['lander_injetado_kg'])} | "
-                  + " | ".join(pc(c["margens"]["orbitador"][n]) for n in lcfg["escolha"]["orbitador"]) + f" | {pc(ml)} ({nl}) |")
+                  + " | ".join(pc(c["margens"]["orbitador"][n]) for n in lcfg["escolha"]["orbitador"]) + " | "
+                  + " | ".join(pc(c["margens"]["lander"][n]) for n in lcfg["escolha"]["lander"]) + " |")
     (SAIDA / "arquitetura.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

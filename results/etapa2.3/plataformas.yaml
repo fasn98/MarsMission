@@ -206,7 +206,7 @@ lander:
     basica_kg: 1512.2686751269966
   L3:
     basica_kg: 1470.0
-  base_L3_mais_amostras:
+  base_L3_braco_helicopteros:
     prevista_kg:
       e1_medio: 1564.875
       e1_medio_mais_gsfc: 1794.9749999999997

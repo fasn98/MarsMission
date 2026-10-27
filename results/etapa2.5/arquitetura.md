@@ -23,6 +23,7 @@ Missão de referência 2028-conjuncao; órbita de encontro 300 × 24 992 km; env
 | Braço de coleta de reserva (P-034, com margem) | — | 88 |
 | Helicópteros de recuperação (ADR 0009, com margem) | — | 6 |
 | MAV hipergólico + energia do aquecimento (ADR 0007) | — | 282 |
+| Painéis do armazenamento criogênico no cruzeiro (só MAV criogênico; descartados antes da entrada) | — | 0 |
 | **Massa injetada** | | **3 740** |
 
 Massa de entrada 3 629 kg; massa pousada 1 847 kg.
@@ -51,14 +52,14 @@ Massa de entrada 3 629 kg; massa pousada 1 847 kg.
 
 ## Sensibilidade (uma premissa por vez; órbita de encontro de base)
 
-| Caso | Premissa | Orbitador injetado | Lander injetado | Orb.: Falcon Heavy (descartável) | Orb.: Vulcan VC6 | Lander: menor margem |
-| :- | :- | -: | -: | -: | -: | -: |
-| Base | — | 6 310 | 3 740 | +78 % | +31 % | +16 % (Vulcan VC2) |
-| Margem de massa GSFC (+15 % da básica) nas duas plataformas | P-033 | 6 623 | 4 206 | +69 % | +25 % | +3 % (Vulcan VC2) |
-| Margem de massa ESA (20 % × 20 %) nas duas plataformas | P-033 | 6 714 | 5 044 | +67 % | +24 % | −14 % (Vulcan VC2) |
-| Plataforma do lander no limite inferior (L1) | P-017, P-035 | 6 310 | 1 642 | +78 % | +31 % | +163 % (Vulcan VC2) |
-| Plataforma do lander no limite superior (SRL 2024 − MAV) | P-017, P-035 | 6 310 | 5 633 | +78 % | +31 % | −23 % (Vulcan VC2) |
-| Razão pousada/entrada 0,624 (Viking, a partir de órbita) em vez de 0,509 | P-018 | 6 310 | 3 051 | +78 % | +31 % | +42 % (Vulcan VC2) |
-| Margem de Δv 5 % (base 10 %) | P-014 | 5 785 | 3 645 | +94 % | +43 % | +19 % (Vulcan VC2) |
-| Margem de Δv 20 % (base 10 %) | P-014 | 7 548 | 4 007 | +49 % | +10 % | +8 % (Vulcan VC2) |
-| Sem penalidade de DLA (multiplicador 1) | P-036 | 6 310 | 3 740 | +93 % | +43 % | +25 % (Vulcan VC2) |
+| Caso | Premissa | Orbitador injetado | Lander injetado | Orb.: Falcon Heavy (descartável) | Orb.: Vulcan VC6 | Lander: Falcon Heavy (recuperação) | Lander: Falcon Heavy (descartável) | Lander: Vulcan VC2 | Lander: Vulcan VC4 | Lander: Vulcan VC6 |
+| :- | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
+| Base | — | 6 310 | 3 740 | +78 % | +31 % | +25 % | +200 % | +16 % | +73 % | +122 % |
+| Margem de massa GSFC (+15 % da básica) nas duas plataformas | P-033 | 6 623 | 4 206 | +69 % | +25 % | +11 % | +167 % | +3 % | +54 % | +97 % |
+| Margem de massa ESA (20 % × 20 %) nas duas plataformas | P-033 | 6 714 | 5 044 | +67 % | +24 % | −7 % | +123 % | −14 % | +29 % | +64 % |
+| Plataforma do lander no limite inferior (L1; sem os helicópteros, como definido na Etapa 2.3) | P-017, P-035 | 6 310 | 1 642 | +78 % | +31 % | +185 % | +584 % | +163 % | +295 % | +405 % |
+| Plataforma do lander no limite superior (SRL 2024 − MAV) | P-017, P-035 | 6 310 | 5 633 | +78 % | +31 % | −17 % | +99 % | −23 % | +15 % | +47 % |
+| Razão pousada/entrada 0,624 (Viking, a partir de órbita) em vez de 0,509 | P-018 | 6 310 | 3 051 | +78 % | +31 % | +53 % | +268 % | +42 % | +113 % | +172 % |
+| Margem de Δv 5 % (base 10 %) | P-014 | 5 785 | 3 645 | +94 % | +43 % | +28 % | +208 % | +19 % | +78 % | +128 % |
+| Margem de Δv 20 % (base 10 %) | P-014 | 7 548 | 4 007 | +49 % | +10 % | +17 % | +180 % | +8 % | +62 % | +107 % |
+| Sem penalidade de DLA (multiplicador 1) | P-036 | 6 310 | 3 740 | +93 % | +43 % | +35 % | +226 % | +25 % | +88 % | +141 % |

@@ -1,5 +1,5 @@
 gerado_por: tools/confere_2033.py
-commit: 3ea91d5
+commit: 139e831
 plataformas_usadas_kg:
   orbitador: 850
   lander: 850
@@ -10,39 +10,62 @@ ferramentas:
 - tools/mav_propulsao.py
 arquivos:
 - arquivo: results/etapa2.1/arquiteturas.md
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/arquiteturas.yaml
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro.md
-  igual: true
+  regenerado: false
+  igual: null
 - arquivo: results/etapa2.1/varredura_encontro.png
-  igual: true
+  regenerado: false
+  igual: null
 - arquivo: results/etapa2.1/varredura_encontro.yaml
-  igual: true
+  regenerado: false
+  igual: null
 - arquivo: results/etapa2.1/varredura_encontro_rp250.md
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp250.png
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp250.yaml
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp300.md
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp300.png
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp300.yaml
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.md
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.png
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.2/isru.md
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.2/isru.yaml
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.2/mav_propulsao.md
+  regenerado: true
   igual: true
 - arquivo: results/etapa2.2/mav_propulsao.yaml
+  regenerado: true
   igual: true
-todos_iguais: true
+regenerados: 15
+todos_regenerados_iguais: true
+nao_regenerados:
+- results/etapa2.1/varredura_encontro.md
+- results/etapa2.1/varredura_encontro.png
+- results/etapa2.1/varredura_encontro.yaml

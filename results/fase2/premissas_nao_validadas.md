@@ -37,9 +37,10 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.
 | P-031 | base_do_cabeamento_orbitador | plataforma | — | config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71] |
 | P-032 | energia_lander | energia_por_sol_wh: 3500; fracao_noite: 0.5 | Wh/sol; adimensional | config/plataformas.yaml — painel e bateria do lander |
 | P-033 | margem_crescimento_e1_ponto_medio | ponto médio da faixa E1 do AIAA S-120A | — | config/plataformas.yaml — margem por subsistema |
-| P-034 | sistema_de_amostras_lander | 59 | kg | config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2 |
+| P-034 | sistema_de_amostras_lander | 59 | kg | config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2. Atualização (Etapa 2.5, ADR 0009): deixa de ser provisória; é o braço de coleta de reserva (regolito do sítio) |
 | P-035 | escala_nucleo_lander | limite_inferior: L1; limite_superior: SRL 2024 − MAV; referencia: L2; base: L3 + amostras | — | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
 | P-036 | multiplicador_dla | dla_graus: [28.5, 40, 50, 60]; fator: [1.0, 0.95, 0.9, 0.65] | adimensional (multiplica a massa entregue pelo lançador na injeção direta) | config/lancadores.yaml — injeção direta com |DLA| > 28,5° a partir do Cabo |
 | P-037 | saida_propria_fora_do_plano | orbita_baixa_km: 407; inclinacoes_com_dado_graus: [28.5, 51.6] | km; graus | tools/lancamento.py — opção (b), órbita baixa + estágio criogênico próprio |
+| P-038 | categoria_de_margem_dos_helicopteros | eletronica_0_5kg | categoria do AIAA S-120A (E1; 20–35 %, ponto médio 27,5 %) | config/plataformas.yaml — helicópteros de recuperação no lander (ADR 0009) |
 
-Total: 37 de 37 premissas com status NÃO VALIDADA.
+Total: 38 de 38 premissas com status NÃO VALIDADA.

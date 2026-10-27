@@ -20,3 +20,10 @@ def test_opcao_escolhida_igual_ao_lander_de_base(monkeypatch):
     assert a["plataforma_lander_kg"] == pytest.approx(pl.lander_base(cfg))
     l24 = yaml.safe_load((RAIZ / "results/etapa2.4/lancamento.yaml").read_text(encoding="utf-8"))
     assert a["lander_injetado_kg"] == pytest.approx(l24["veiculos"]["lander"]["injetada_kg"])
+
+
+def test_composicao_dos_veiculos_soma_a_massa_injetada():
+    """Na tabela integrada, a soma dos itens de cada veículo é a massa injetada (nada fica de fora)."""
+    a = yaml.safe_load((RAIZ / "results/etapa2.5/arquitetura.yaml").read_text(encoding="utf-8"))
+    for v in ("orbitador", "lander"):
+        assert a[v]["soma_kg"] == pytest.approx(a[v]["injetado_kg"], rel=1e-9)

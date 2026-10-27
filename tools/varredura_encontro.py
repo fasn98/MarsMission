@@ -5,7 +5,8 @@ Em cada ponto: MAV até a órbita de encontro, lander com entrada direta (P-018)
 estágio próprio de saída da Terra (lançamentos separados), orbitador com o Δv extra para descer da órbita
 de 1 sol até a de encontro e para a injeção trans-Terra a partir dela. Duas versões do orbitador: só
 químico e com aerofrenagem (P-020) na descida.
-Saída: results/etapa2.1/varredura_encontro.yaml, .md e .png
+Saída: results/etapa2.1/varredura_encontro_<nome>.yaml, .md e .png (nome = rp250, rp300; com sufixo da opção do MAV em
+tools/mav_propulsao.py). Os arquivos sem sufixo em results/etapa2.1 são de uma versão anterior e não são mais gerados.
 
 Uso: python tools/varredura_encontro.py
 """

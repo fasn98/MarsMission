@@ -19,6 +19,8 @@
 #   Logo a CU-2 não inclui o RSS. A lista do Odyssey também não. Massa publicada do RSS: pesquisa da Etapa 2.5.
 # - Coleta de amostras: o item da P-034 é somado ao L3 como ALOCAÇÃO PROVISÓRIA. O conceito de coleta e o
 #   objetivo científico ficam para a Etapa 2.5 (decisão do Fabio).
+#   Atualização (Etapa 2.5, ADR 0009): conceito (c) + (a); a P-034 deixa de ser provisória (braço de reserva) e
+#   entram 2 helicópteros de recuperação (item "helicopteros"; margem pela P-038).
 
 margem_crescimento:
   # AIAA S-120A-2015, Tabela 1 "Mass Growth Allowance by Design Maturity", reproduzida em [F70], p. 4.
@@ -157,6 +159,7 @@ lander:
       massa_kg: 5.0
       fonte: "[F98] p. 3: \"total mass of SRH is expected to be ~2.5 kg\" (2 × 2,5 kg)"
       categoria: eletronica_0_5kg
+      premissa: P-038
     nucleo:
       # Phoenix sem combustível, sem instrumentos, sem as comunicações e o radar listados acima: estrutura,
       # pernas, térmico, comando e dados, GNC, propulsão de descida seca, energia e cabeamento, sem divisão publicada.
@@ -189,6 +192,10 @@ lander:
     # Limite superior da faixa (decisão do Fabio): SRL de 2024 menos o MAV, ~2900 − 400 = 2500 kg.
     # COMPARABILIDADE NÃO CONFIRMADA: a fonte fala em carga pousada ("payload"), não em massa seca; não se sabe
     # se é a mesma grandeza dos 2100 kg de 2020. Documento do SRL 2024 com massa seca: pesquisa da Etapa 2.5.
+    # Pesquisa da Etapa 2.5 (sem documento com massa seca de 2023–2025): em 2023 o lander era "estimated to weigh as
+    # much as … 2,275 kilograms" [F90]; o SRL é lander propulsivo, sem sky crane ([F24] slide 10), então os 2900 kg de
+    # 2024 provavelmente são massa total pousada (inferência, não confirmada). O limite de 2500 kg continua com a
+    # comparabilidade não confirmada.
     srl_2024_pousado_kg: {valor: 2900, fonte: "[F41] Muppidi et al. 2024, p. 1: \"nearly 1100 kg capability for Mars2020 vs 2900 kg for SRL\""}
 
 # Valores anteriores (P-016 e P-017 até a Etapa 2.2), só para a comparação antes/depois.

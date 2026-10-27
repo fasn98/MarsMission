@@ -247,7 +247,7 @@ def main():
                          "basica_kg": sum(m for _, m, _ in it_o)},
            "lander": {**{o: {"subsistemas": lista(it), "energia": en, "prevista_kg": plat_l[o],
                              "basica_kg": sum(m for _, m, _ in it)} for o, (it, en) in landers.items()},
-                      "L3": {"basica_kg": m_l3}, "base_L3_mais_amostras": {"prevista_kg": plat_l["base"]},
+                      "L3": {"basica_kg": m_l3}, "base_L3_braco_helicopteros": {"prevista_kg": plat_l["base"]},
                       "limite_superior_srl_2024_kg": m_sup},
            "totais": totais}
     SAIDA.mkdir(parents=True, exist_ok=True)
