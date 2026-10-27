@@ -1,6 +1,6 @@
 """Orçamento de Δv por trecho e dimensionamento por estágios (Etapa 1.4, Parte B), usados pelas Etapas 2.x e pelo painel.
 
-Movido de tools/dimensionamento.py sem mudança de física (prova: results/conferencia/regeneracao_refatoracao.md,
+Movido de tools/dimensionamento.py sem mudança de física (prova: results/conferencia/regeneracao_painel.md,
 tools/confere_regeneracao.py). Lê config/ e results/etapa1.3/missoes.yaml pela raiz do repositório (orbital.config).
 
 Arquitetura (só trechos no espaço):

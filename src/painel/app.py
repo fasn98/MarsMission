@@ -145,7 +145,7 @@ def pagina_porkchops():
                     width="stretch")
     p6 = d.premissa("P-006")
     st.caption(f"Grade de `results/painel` (tools/exporta_painel.py), mesmo domínio e passo de tools/porkchop.py — {d.CALCULADO}. "
-               f"Escondidos no desenho: C3 > {br(info['c3_max'], 0)} km²/s² e a faixa de ±{br(p6['valor'], 0)}° em torno de 180° "
+               f"Escondidos no desenho: C3 > {br(info['c3_max'], 0)} km²/s² (enquadramento do gráfico, `config/janelas.yaml`) e a faixa de ±{br(p6['valor'], 0)}° em torno de 180° "
                f"de ângulo de transferência (P-006, {d.rotulo_premissa('P-006')}). Mínimos de `results/etapa1.2/minimos_{sentido}.yaml`.")
     if mins:
         tabela([{"Mínimo": k, "Partida (TDB)": x["partida_tdb"], "Chegada (TDB)": x["chegada_tdb"],
@@ -200,8 +200,7 @@ def pagina_orcamento():
     for veic in ("orbitador", "lander"):
         servem = [x["lancador"] + (" (desempenho anunciado, não demonstrado)" if x["categoria"] == "anunciado" else "")
                   for x in r["lancadores"] if x["veiculo"] == veic and x["serve"]]
-        esc = [x["lancador"] for x in r["lancadores"] if x["veiculo"] == veic and x["escolhido"]]
-        perdidos = [n for n in esc if not any(s_.startswith(n) and (len(s_) == len(n) or s_[len(n)] == " ") for s_ in servem)]
+        perdidos = [x["lancador"] for x in r["lancadores"] if x["veiculo"] == veic and x["escolhido"] and not x["serve"]]
         st.markdown(f"**{veic.capitalize()}** — servem ({len(servem)}): {', '.join(servem) or 'NENHUM'}."
                     + (f" **Escolhidos que deixam de servir:** {', '.join(perdidos)}." if perdidos else " Todos os escolhidos servem."))
         st.plotly_chart(gr.margens(r["lancadores"], veic, len(d.missao_referencia()["janelas_envelope"])), width="stretch")

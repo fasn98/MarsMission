@@ -22,7 +22,8 @@ ambiente de execução: ele importa o repositório do GitHub e roda, sem altera�
 3. **Funções de massa em `src/`:** as funções de `tools/plataformas.py` e `tools/lancamento.py` que o painel usa
    passam para `src/orbital`, junto com as que elas chamavam em outras ferramentas, sem mudança de física. `tools/`
    passa a chamar `src/`. Motivo: o Twin (Fase 8) vai reutilizá-las, e o painel não deve importar scripts. Prova:
-   pytest e `results/` regenerado (`results/conferencia/`).
+   pytest e `results/` regenerado (`results/conferencia/regeneracao_painel.md`: 62 de 62 idênticos no ambiente pip,
+   commit 310b8c3).
 
 ## Consequências
 - **Módulos novos em `src/orbital`:**
@@ -33,7 +34,7 @@ ambiente de execução: ele importa o repositório do GitHub e roda, sem altera�
   - `veiculos` (massas injetadas).
 - **Ampliados:** `lancamento` (margens de injeção direta) ganhou funções.
 - **Formato novo de resultado:** as grades dos porkchops em `results/painel/`, geradas por `tools/exporta_painel.py`.
-- **Conferência:** `tools/confere_regeneracao.py` regenera todo o `results/` numa cópia e compara com o versionado
-  ou com outra regeneração (`results/conferencia/`).
+- **Conferência:** `tools/confere_regeneracao.py` (PR #11) regenera todo o `results/` numa cópia e compara com o
+  versionado. Para este PR: `results/conferencia/regeneracao_painel.md`.
 - **Uso e publicação no Replit:** `docs/painel.md`, inclusive o que exige plano pago e a alternativa estática
   (GitHub Pages).

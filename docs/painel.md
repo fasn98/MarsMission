@@ -10,7 +10,7 @@ testes, PR).
 | :- | :- | :- |
 | Visão geral | Missão de referência (cronograma TDB, durações, Δv, reentrada); arquitetura final (orbitador, lander com MAV, helicópteros e braço); lançadores e margens; número de lançamentos; verificação contra dados publicados | `results/etapa1.3/missoes.yaml`, `results/etapa2.5/arquitetura.yaml`, `results/etapa1.2/verificacao_*.yaml` |
 | Trajetória | Órbitas de Terra e Marte nas datas reais (DE440) e arcos de Lambert de ida e volta, em 2D | `orbital.porkchop`, `orbital.lambert`, `orbital.kepler` (calculado na hora; precisa dos kernels) |
-| Porkchops | Contornos de C3 e v∞ de ida (2028–2035) e volta (2030–2039), com valores no cursor (inclusive DLA na ida), mínimos e missão de referência | `results/painel/porkchop_*.npz` (gerado por `tools/exporta_painel.py`), `results/etapa1.2/minimos_*.yaml` |
+| Porkchops | Contornos de C3 e v∞ das janelas de ida e de volta de `config/janelas.yaml`, com valores no cursor (inclusive DLA na ida), mínimos e missão de referência | `results/painel/porkchop_*.npz` (gerado por `tools/exporta_painel.py`), `results/etapa1.2/minimos_*.yaml` |
 | Orçamento de massa | Controles para a plataforma do lander (P-017), a margem de Δv (P-014) e o Isp e a fração estrutural dos estágios MMH/MON; recalcula os veículos e mostra que lançadores continuam servindo | `orbital.veiculos`, `orbital.lancamento` |
 | Premissas e decisões | Todas as premissas de `config/premissas.yaml`, com status, e os ADRs (texto e link) | `config/premissas.yaml`, `docs/adr/` |
 
@@ -19,8 +19,9 @@ testes, PR).
 - **calculado:** saída das ferramentas ou de `src/orbital`;
 - **premissa** seguido do status lido de `config/premissas.yaml` (hoje, NÃO VALIDADA).
 
-Os valores de base do Isp (321 s, [F28]) e da fração estrutural (0,24, [F22]) não são premissas: aparecem como
-"dado de fonte publicada [Fnn]".
+Os valores de base do Isp e da fração estrutural dos estágios MMH/MON têm fonte publicada e não são premissas:
+aparecem como "dado de fonte publicada [Fnn]", com a primeira fonte citada no config. Os valores das tabelas de
+referência na verificação (NASA/TM-2010-216764 e JPL 82-43) aparecem como "dado publicado".
 
 As faixas dos controles vêm dos arquivos, não do painel:
 - **Plataforma do lander:** de L1 a SRL 2024 − MAV, lidas de `results/etapa2.3/plataformas.yaml`.
@@ -39,17 +40,19 @@ python -m streamlit run src/painel/app.py
 
 As dependências estão só no `pyproject.toml`:
 - obrigatórias: numpy, scipy, matplotlib, pyyaml e spiceypy;
-- extra `painel`: streamlit e plotly;
+- extra `painel`: streamlit, plotly e pandas;
 - extra `dev`: pytest.
 
 Os três ambientes instalam o mesmo pacote:
 - `environment.yml` (local e CI): o conda fornece o Python 3.11.18 e instala o pacote com `pip install -e .[dev,painel]`;
 - Replit: `pip install -e '.[painel]'`.
 
-Conferência da troca conda-forge → wheels do PyPI e da mudança das funções para `src/`: `results/conferencia/`, gerado
-por `tools/confere_regeneracao.py`, que regenera todo o `results/` numa cópia e compara arquivo a arquivo. O resultado
-(quais arquivos saem idênticos byte a byte, quais só pixel a pixel e quais diferenças já existiam antes) está nos
-relatórios dessa pasta e no PR.
+**Conferência da troca conda-forge → wheels do PyPI e da mudança das funções para `src/`:**
+`results/conferencia/regeneracao_painel.md`, gerado por `tools/confere_regeneracao.py` num worktree fixo no commit 310b8c3.
+- O que a ferramenta faz: regenera todo o `results/` numa cópia, no ambiente pip, e compara com o versionado.
+- Resultado: 62 de 62 idênticos, nenhum só dentro da tolerância (P-039, P-040) e nenhum diferente.
+- Os commits seguintes do PR mudam em `src/orbital` só docstrings e não tocam `tools/` nem `config/`.
+- O CI repete a conferência a cada PR (`.github/workflows/regeneracao.yml`).
 
 **Ambiente local antigo:** o env `marsmission` criado antes desta mudança não tem streamlit nem plotly. Nele, o
 pre-commit pula `tests/test_painel_app.py`. Recrie com `conda env remove -n marsmission && conda env create -f environment.yml`.

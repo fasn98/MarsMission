@@ -2,7 +2,7 @@
 com o detalhe por estágio. Usado por tools/lancamento.py, tools/arquitetura.py, tools/coleta.py e pelo painel.
 
 Movido de tools/lancamento.py, tools/superficie.py e tools/varredura_encontro.py sem mudança de física (prova:
-results/conferencia/regeneracao_refatoracao.md, tools/confere_regeneracao.py). Lê config/ e os resultados das Etapas 1.3, 2.2 e 2.3.
+results/conferencia/regeneracao_painel.md, tools/confere_regeneracao.py). Lê config/ e os resultados das Etapas 1.3, 2.2 e 2.3.
 """
 
 from __future__ import annotations

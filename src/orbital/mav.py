@@ -1,7 +1,7 @@
 """MAV e equipamentos que pousam com ele: dimensionamento genérico de dois estágios, armazenamento criogênico sem
 evaporação (ZBO) e fonte de energia (Etapas 2.2 e 2.2b), usados pelas Etapas 2.3 a 2.5 e pelo painel.
 
-Movido de tools/mav_propulsao.py e tools/isru.py sem mudança de física (prova: results/conferencia/regeneracao_refatoracao.md,
+Movido de tools/mav_propulsao.py e tools/isru.py sem mudança de física (prova: results/conferencia/regeneracao_painel.md,
 tools/confere_regeneracao.py).
 """
 

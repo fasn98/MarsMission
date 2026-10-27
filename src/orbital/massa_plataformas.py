@@ -4,7 +4,7 @@ Orbitador: subsistemas do Mars Odyssey [F33], energia dimensionada para o aféli
 na órbita de encontro do ADR 0005, cabeamento pela regra da ESA [F71]. Lander: L1/L2 (Phoenix [F74]), L3 (lander
 do MSR sem MAV e sem rover de busca), base = L3 + braço (P-034) + helicópteros (ADR 0009). Margem: AIAA S-120A,
 categoria E1 [F70], ponto médio; GSFC e ESA na sensibilidade.
-Movido de tools/plataformas.py sem mudança de física (prova: results/conferencia/regeneracao_refatoracao.md,
+Movido de tools/plataformas.py sem mudança de física (prova: results/conferencia/regeneracao_painel.md,
 tools/confere_regeneracao.py).
 """
 
