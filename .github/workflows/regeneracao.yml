@@ -6,6 +6,17 @@ name: Regeneração de results/
 # Pedido do Fabio (2026-10-27): rodar nos PRs que alteram src/, tools/ ou config/. Também roda quando muda o que
 # alimenta ou é o próprio resultado: results/, tests/data/ (dados publicados usados nas verificações), dependências.
 on:
+  push:
+    branches: [main]   # também depois do merge: dois PRs que passam separados podem divergir juntos
+    paths:
+      - "src/**"
+      - "tools/**"
+      - "config/**"
+      - "results/**"
+      - "tests/data/**"
+      - "environment.yml"
+      - "pyproject.toml"
+      - ".github/workflows/regeneracao.yml"
   pull_request:
     paths:
       - "src/**"

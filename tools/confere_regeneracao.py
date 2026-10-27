@@ -94,6 +94,17 @@ def _identicos(p: Path, q: Path, rel: str = "") -> bool:
             (np.array_equal(a[k], b[k], equal_nan=a[k].dtype.kind == "f")) for k in a.files)
 
 
+def _cpu():
+    """Modelo da CPU (o numpy e a OpenBLAS escolhem o código pela CPU em tempo de execução): registrado no relatório."""
+    try:
+        for linha in Path("/proc/cpuinfo").read_text().splitlines():
+            if linha.startswith("model name"):
+                return linha.split(":", 1)[1].strip()
+    except OSError:
+        pass
+    return platform.processor() or platform.machine()
+
+
 def _versao(pacote):
     try:
         return md_.version(pacote)
@@ -230,7 +241,7 @@ def main():
     atualizar = []
     if "--atualizar" in sys.argv:
         atualizar = [a for a in sys.argv[sys.argv.index("--atualizar") + 1:] if not a.startswith("--")]
-        if not atualizar or not all(a.startswith("results/") for a in atualizar):
+        if not atualizar or not all(a.startswith("results/") and ".." not in Path(a).parts for a in atualizar):
             sys.exit("--atualizar exige caminhos em results/")
     base = referencia if referencia else RAIZ / "results"
     with tempfile.TemporaryDirectory() as tmp:
@@ -270,7 +281,7 @@ def main():
             shutil.copytree(d / "results", guardar)
     out = {"gerado_por": "tools/confere_regeneracao.py", "rotulo": rotulo,
            "comparado_com": "regeneração guardada em " + referencia.name if referencia else "results/ versionado",
-           "ambiente": {"python": platform.python_version(), **{k: _versao(k) for k in PACOTES}},
+           "ambiente": {"python": platform.python_version(), **{k: _versao(k) for k in PACOTES}, "cpu": _cpu()},
            "ferramentas": log, "versionados": len(arquivos),
            "regenerados": sum(a["regenerado"] for a in arquivos),
            "identicos": sum(bool(a.get("identico")) for a in arquivos),
@@ -282,7 +293,7 @@ def main():
     amb = ", ".join(f"{k} {v}" for k, v in out["ambiente"].items() if v)
     md = [f"# Regeneração de results/ — ambiente \"{rotulo}\" (gerado por tools/confere_regeneracao.py)", "",
           f"Ambiente: {amb}. Comparado com: {out['comparado_com']}.", "",
-          f"**Versionados: {out['versionados']}; regenerados: {out['regenerados']}; idênticos byte a byte: {out['identicos']}.**", "",
+          f"**Versionados: {out['versionados']}; regenerados: {out['regenerados']}; idênticos pelo critério abaixo: {out['identicos']}.**", "",
           f"Não regenerados: {', '.join(out['nao_regenerados']) or 'nenhum'}.", "",
           f"Gerados sem versão no repositório: {', '.join(novos) or 'nenhum'}.", "",
           f"Copiados sobre os versionados (--atualizar): {', '.join(atualizar) or 'nenhum'}.", "",
