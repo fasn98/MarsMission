@@ -133,8 +133,9 @@ def pagina_trajetoria():
     st.title("Trajetória heliocêntrica da missão de referência")
     try:
         _kernels()
-    except (ValueError, OSError, http.client.HTTPException) as e:   # OSError inclui URLError
-        st.error(f"Não foi possível obter os kernels SPICE: {e}. Nada foi calculado; recarregue a página para tentar de novo.")
+    except (ValueError, OSError, http.client.HTTPException) as e:   # OSError inclui URLError e TimeoutError
+        st.error(f"Não foi possível obter os kernels SPICE: {e}. Nada foi calculado.")
+        st.button("Tentar de novo", key="kernels_tentar_de_novo")   # o clique roda a página de novo; a falha não ficou no cache
         return
     t = st.cache_data(show_spinner="Calculando com DE440 e Lambert…")(lambda: d.trajetoria())()
     st.plotly_chart(gr.trajetoria(t), width="stretch")

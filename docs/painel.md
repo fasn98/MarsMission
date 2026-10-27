@@ -251,8 +251,8 @@ oficiais consultadas nessa data.
   - A mesma página de dependências diz que o `requirements.txt` é processado primeiro com o uv, com o pip como
     alternativa. Com uv 0.13.4, `uv pip install --dry-run -r src/painel/requirements.txt` a partir da raiz também
     resolveu o `.` para a raiz do repositório (conferido em 2026-10-27).
-- Conferido num venv limpo (Python 3.11.14, sem o `.pythonlibs` do Replit), com `pip install -r
-  src/painel/requirements.txt` a partir da raiz:
+- Conferido em 2026-10-27 (workspace do Replit, CPU Intel Xeon Platinum 8581C), num venv limpo (Python 3.11.14, sem o `.pythonlibs` do Replit), com
+  `pip install -r src/painel/requirements.txt` a partir da raiz:
   - instala o pacote em modo editável, com pillow 13.0.0, streamlit 1.66.1, plotly 7.1.0, pandas 3.0.6 e numpy 2.4.6;
   - o pytest fica de fora, porque é do extra `dev`;
   - `RAIZ` aponta para o repositório.
@@ -263,6 +263,10 @@ oficiais consultadas nessa data.
   A rotina é a de `tools/fetch_kernels.py`, agora em `src/orbital/kernels.py`.
   - Enquanto isso, aparece o aviso "Baixando e conferindo os kernels SPICE…".
   - Se um MD5 não conferir, a página mostra o erro, com o MD5 esperado e o obtido, e não calcula nada.
+  - **Prazo por arquivo:** `download_kernels.timeout_s` de `config/operacional.yaml`. É um parâmetro operacional, não uma
+    premissa científica (decisão do Fabio, 2026-10-27, com justificativa no arquivo).
+    - Vale para cada operação de rede e para o arquivo inteiro.
+    - Passou do prazo, ou a rede falhou: a página mostra a mensagem e o botão **Tentar de novo**.
 - O resultado fica no cache do Streamlit (`st.cache_resource`): uma vez por processo do servidor. Uma falha não entra no
   cache; recarregar a página tenta de novo.
 - As outras páginas leem só `results/` e `config/` e não precisam dos kernels.
@@ -270,18 +274,22 @@ oficiais consultadas nessa data.
   trata o disco como não permanente: depois de uma reinicialização, ou de acordar após dormir, o download se repete
   na primeira visita à Trajetória se os kernels tiverem sumido. **Não conferido** no Community Cloud, assim como o
   acesso de saída a naif.jpl.nasa.gov.
-- Conferido localmente em 2026-10-27, num venv limpo e Chromium headless:
+- Conferido em 2026-10-27 (workspace do Replit, CPU Intel Xeon Platinum 8581C), num venv limpo e Chromium headless:
   - sem kernels, a primeira visita à Trajetória mostrou o aviso, baixou os dois kernels (MD5 conferem) e desenhou a
     trajetória, em 9,0 s;
   - a segunda visita não baixou de novo;
   - com um MD5 errado no config (só no disco, revertido depois), a página mostrou "Não foi possível obter os kernels
-    SPICE: MD5 dos kernels não confere com kernels.yaml: naif0012.tls esperado …, obtido …".
+    SPICE: MD5 dos kernels não confere com kernels.yaml: naif0012.tls esperado …, obtido …";
+  - com o prazo reduzido no config (só no disco, revertido depois), a página mostrou "… passou do prazo de … s
+    (config/operacional.yaml). Nada foi calculado.";
+  - o botão **Tentar de novo** e o cálculo depois do clique foram conferidos por teste (`tests/test_painel_app.py`), não
+    no navegador.
 
 **Memória**
 - **Limite publicado** ([Manage your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app)):
   "Memory: 690MB minimum, 2.7GBs maximum", valores "as of February 2024", com a ressalva "These limits may change at any
   time without notice". Acima do limite, o app "may slow down from throttling or become nonfunctional".
-- **Medido localmente** (observação de 2026-10-27, não é resultado do estudo):
+- **Medido localmente** (observação de ambiente, 2026-10-27, workspace do Replit, CPU Intel Xeon Platinum 8581C; não é resultado do estudo):
   - método: pico de memória residente (VmHWM, `/proc/<pid>/status`) do processo do Streamlit, num venv limpo;
   - navegação: um Chromium headless abriu Trajetória (com o download dos kernels), Visão geral, Porkchops, Orçamento,
     Premissas, `/visao-geral` e Trajetória de novo;

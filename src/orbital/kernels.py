@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import hashlib
 import os
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Callable
@@ -16,6 +18,32 @@ from typing import Callable
 import yaml
 
 from orbital.ephemeris import CONFIG_KERNELS, RAIZ
+
+CONFIG_OPERACIONAL = RAIZ / "config" / "operacional.yaml"
+
+
+def timeout_padrao() -> float:
+    """Prazo por arquivo, em segundos (parâmetro operacional de config/operacional.yaml, não premissa científica)."""
+    return float(yaml.safe_load(CONFIG_OPERACIONAL.read_text(encoding="utf-8"))["download_kernels"]["timeout_s"]["valor"])
+
+
+def _baixar_arquivo(url: str, destino: Path, timeout_s: float) -> None:
+    """Copia `url` para `destino` em blocos. `timeout_s` vale para cada operação de rede e para o arquivo inteiro:
+    passou do prazo, TimeoutError com mensagem clara (uma conexão lenta que nunca para também é interrompida)."""
+    erro = TimeoutError(f"o download de {url} passou do prazo de {timeout_s:g} s (config/operacional.yaml)")
+    inicio = time.monotonic()
+    try:
+        with urllib.request.urlopen(url, timeout=timeout_s) as r, destino.open("wb") as f:
+            while bloco := r.read(1 << 20):
+                f.write(bloco)
+                if time.monotonic() - inicio > timeout_s:
+                    raise erro
+    except TimeoutError as e:
+        raise erro from e
+    except urllib.error.URLError as e:
+        if isinstance(e.reason, TimeoutError):
+            raise erro from e
+        raise
 
 
 def md5(caminho: Path) -> str:
@@ -26,9 +54,12 @@ def md5(caminho: Path) -> str:
     return h.hexdigest()
 
 
-def baixar(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[str], None] = print) -> list[dict]:
+def baixar(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[str], None] = print,
+           timeout_s: float | None = None) -> list[dict]:
     """Baixa os kernels do config que faltam ou cujo MD5 não confere e devolve, por kernel, o MD5 esperado e o obtido.
-    O diretório do config ("diretorio") é relativo a `raiz`."""
+    O diretório do config ("diretorio") é relativo a `raiz`. `timeout_s` (padrão: config/operacional.yaml) é o prazo
+    por arquivo; passou dele, TimeoutError."""
+    timeout_s = timeout_padrao() if timeout_s is None else timeout_s
     cfg = yaml.safe_load(Path(config).read_text(encoding="utf-8"))
     diretorio = raiz / cfg["diretorio"]
     diretorio.mkdir(parents=True, exist_ok=True)
@@ -40,7 +71,7 @@ def baixar(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[s
             avisar(f"baixando {k['url']}")
             parcial = destino.with_name(destino.name + ".parcial")
             try:
-                urllib.request.urlretrieve(k["url"], parcial)
+                _baixar_arquivo(k["url"], parcial, timeout_s)
                 os.replace(parcial, destino)
             finally:
                 parcial.unlink(missing_ok=True)
@@ -49,9 +80,10 @@ def baixar(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[s
     return out
 
 
-def garantir(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[str], None] = print) -> list[dict]:
+def garantir(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[str], None] = print,
+             timeout_s: float | None = None) -> list[dict]:
     """Como `baixar`, mas levanta ValueError se algum MD5 não conferir (o painel mostra a mensagem e não carrega)."""
-    res = baixar(config, raiz, avisar)
+    res = baixar(config, raiz, avisar, timeout_s)
     falhas = [r for r in res if not r["ok"]]
     if falhas:
         raise ValueError("MD5 dos kernels não confere com " + Path(config).name + ": " + "; ".join(
