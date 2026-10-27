@@ -16,7 +16,8 @@ ROTULOS = {d.VERIFICADO, d.CALCULADO}
 
 
 def _p039():
-    """Tolerância da P-039 (config/premissas.yaml): o recálculo no painel pode rodar noutra CPU que gerou results/."""
+    """Tolerância da P-039 (config/premissas.yaml): o recálculo no painel pode rodar noutra CPU que gerou results/.
+    Nos asserts, o valor de results/ (versionado, a) é comparado com approx(recalculado, b): base |b|, como na P-039."""
     v = next(p["valor"] for p in _ler("config/premissas.yaml")["premissas"] if p["id"] == "P-039")
     return {"rel": float(v["relativa"]), "abs": float(v["piso_absoluto"])}
 
@@ -48,12 +49,12 @@ def _rotulo_valido(v: d.Valor) -> bool:
 def test_orcamento_de_base_reproduz_a_arquitetura():
     a = _ler("results/etapa2.5/arquitetura.yaml")
     r = d.orcamento()
-    assert r["veiculos"]["orbitador"]["injetado"].valor == pytest.approx(a["orbitador"]["injetado_kg"], **_p039())
-    assert r["veiculos"]["lander"]["injetado"].valor == pytest.approx(a["lander"]["injetado_kg"], **_p039())
+    assert a["orbitador"]["injetado_kg"] == pytest.approx(r["veiculos"]["orbitador"]["injetado"].valor, **_p039())
+    assert a["lander"]["injetado_kg"] == pytest.approx(r["veiculos"]["lander"]["injetado"].valor, **_p039())
     for veic, margens in a["lancadores"]["margens_base"].items():
         for nome, m in margens.items():
             x = next(y for y in r["lancadores"] if y["veiculo"] == veic and y["lancador"] == nome)
-            assert x["escolhido"] and x["margem"].valor == pytest.approx(m, **_p039())
+            assert x["escolhido"] and m == pytest.approx(x["margem"].valor, **_p039())
 
 
 @pytest.mark.parametrize("caso, kw", [
@@ -67,12 +68,12 @@ def test_controles_reproduzem_a_sensibilidade_da_etapa_2_5(caso, kw):
     if kw == "limite_superior":
         kw = {"plataforma_lander_kg": _ler("results/etapa2.3/plataformas.yaml")["lander"]["limite_superior_srl_2024_kg"]}
     r = d.orcamento(**kw)
-    assert r["veiculos"]["orbitador"]["injetado"].valor == pytest.approx(s["orbitador_injetado_kg"], **_p039())
-    assert r["veiculos"]["lander"]["injetado"].valor == pytest.approx(s["lander_injetado_kg"], **_p039())
+    assert s["orbitador_injetado_kg"] == pytest.approx(r["veiculos"]["orbitador"]["injetado"].valor, **_p039())
+    assert s["lander_injetado_kg"] == pytest.approx(r["veiculos"]["lander"]["injetado"].valor, **_p039())
     for veic, margens in s["margens"].items():
         for nome, m in margens.items():
             x = next(y for y in r["lancadores"] if y["veiculo"] == veic and y["lancador"] == nome)
-            assert x["margem"].valor == pytest.approx(m, **_p039())
+            assert m == pytest.approx(x["margem"].valor, **_p039())
             assert x["serve"] == (m >= 0)
 
 
