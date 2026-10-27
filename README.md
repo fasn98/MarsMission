@@ -17,7 +17,7 @@ Autor: Fabio Nogueira ([@fasn98](https://github.com/fasn98)). O cenário tripula
 | Etapa | Conteúdo | Estado |
 | :- | :- | :- |
 | 2.1 | Arquitetura de superfície: pouso, subida (MAV) e encontro | decidida: família S2, encontro 300 × 18.483 km (ADR 0005) |
-| 2.2 | Estudo de troca do ISRU | não iniciada |
+| 2.2 | Estudo de troca do ISRU | aguardando portão |
 | 2.3 | Plataforma do orbitador por subsistema | não iniciada |
 | 2.4 | Lançamento e DLA | não iniciada |
 | 2.5 | Arquitetura integrada | não iniciada |
