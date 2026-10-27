@@ -1,0 +1,8 @@
+# Kernels SPICE: baixados por tools/fetch_kernels.py, nunca versionados (120 MB)
+data/kernels/*
+!data/kernels/.gitkeep
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.claude/worktrees/
