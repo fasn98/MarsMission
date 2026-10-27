@@ -126,3 +126,17 @@ def test_p039_relativo_piso_e_falha(cr, caso, a, b, passa):
     assert (pelo_relativo, pelo_piso) == {"so_relativo": (True, False), "so_piso": (False, True),
                                           "falha_nos_dois": (False, False)}[caso]
     assert cr._dentro(a, b, rtol, atol) is passa
+
+
+def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr):
+    """O relatório lista todas as dependências do pyproject.toml (inclusive o pillow), o Python, a CPU, o sistema e o commit."""
+    import tomllib
+
+    proj = tomllib.loads((RAIZ / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    reqs = proj["dependencies"] + [r for extra in proj["optional-dependencies"].values() for r in extra]
+    assert len(cr.pacotes()) == len(reqs) and {"pillow", "streamlit", "pandas", "pytest"} <= set(cr.pacotes())
+    amb = cr.ambiente()
+    assert list(amb)[0] == "python" and list(amb)[-4:] == ["cpu", "sistema", "commit", "alteracoes_nao_commitadas"]
+    assert amb["pillow"] and amb["cpu"] and amb["sistema"]
+    if (RAIZ / ".git").exists():   # num checkout git (CI, worktree), o commit é o HEAD
+        assert len(amb["commit"]) == 40 and isinstance(amb["alteracoes_nao_commitadas"], bool)

@@ -18,6 +18,8 @@ Os arquivos de controle que gravam o hash do commit em que rodaram (CONTROLE) s�
 efeito_efemeride só roda se data/kernels/de200.bsp existir (config/kernels_verificacao.yaml); sem ele, o arquivo dele
 conta como não regenerado.
 Saída: results/conferencia/regeneracao_<rótulo>.yaml e .md (rótulo identifica o ambiente, ex.: conda, pip)
+O relatório registra o ambiente: Python, versões das dependências do pyproject.toml, CPU, sistema e commit (e se a
+árvore de trabalho regenerada tinha alterações não commitadas).
 
 Com --referencia DIR, compara com uma regeneração anterior guardada (--guardar DIR) em vez do results/ versionado: isola
 o efeito da mudança (ambiente ou código) do que já diferia antes dela.
@@ -40,6 +42,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tomllib
 from pathlib import Path
 
 import numpy as np
@@ -47,7 +50,7 @@ import yaml
 
 RAIZ = Path(__file__).resolve().parents[1]
 SAIDA = RAIZ / "results" / "conferencia"
-PACOTES = ("numpy", "scipy", "matplotlib", "pyyaml", "spiceypy", "streamlit", "plotly")
+PYPROJECT = RAIZ / "pyproject.toml"   # fonte única das dependências (ADR 0010): os pacotes do relatório saem daqui
 FASE_1 = [["tools/baricentro_marte.py"], ["tools/porkchop.py", "terra_marte"], ["tools/porkchop.py", "marte_terra"],
           ["tools/verifica_burke2010.py"], ["tools/verifica_jpl8243.py"], ["tools/efeito_efemeride.py"],
           ["tools/missoes.py"], ["tools/compara_dra5.py"], ["tools/grafico_missoes.py"], ["tools/lista_premissas.py"]]
@@ -177,6 +180,32 @@ def _cpu():
     except OSError:
         pass
     return platform.processor() or platform.machine()
+
+
+def pacotes() -> list[str]:
+    """Nomes das dependências do pyproject.toml (obrigatórias e extras, na ordem do arquivo), para o relatório."""
+    proj = tomllib.loads(PYPROJECT.read_text(encoding="utf-8"))["project"]
+    reqs = list(proj.get("dependencies", [])) + [r for extra in proj.get("optional-dependencies", {}).values() for r in extra]
+    nomes = [re.match(r"[A-Za-z0-9_.\-]+", r).group(0).lower() for r in reqs]
+    return list(dict.fromkeys(nomes))
+
+
+def _git(*args):
+    try:
+        r = subprocess.run(["git", *args], cwd=RAIZ, capture_output=True, text=True)
+    except OSError:
+        return None
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
+def ambiente() -> dict:
+    """Ambiente da regeneração: Python, versões dos pacotes do pyproject.toml, CPU, sistema e commit da árvore regenerada.
+    A cópia regenerada é a árvore de trabalho, não o HEAD: "alteracoes_nao_commitadas" diz se havia arquivos rastreados
+    modificados (None sem git)."""
+    status = _git("status", "--porcelain", "--untracked-files=no")
+    return {"python": platform.python_version(), **{k: _versao(k) for k in pacotes()}, "cpu": _cpu(),
+            "sistema": platform.platform(), "commit": _git("rev-parse", "HEAD"),
+            "alteracoes_nao_commitadas": None if status is None else bool(status)}
 
 
 def _versao(pacote):
@@ -323,7 +352,7 @@ def main():
             shutil.copytree(d / "results", guardar)
     out = {"gerado_por": "tools/confere_regeneracao.py", "rotulo": rotulo,
            "comparado_com": "regeneração guardada em " + referencia.name if referencia else "results/ versionado",
-           "ambiente": {"python": platform.python_version(), **{k: _versao(k) for k in PACOTES}, "cpu": _cpu()},
+           "ambiente": ambiente(),
            "ferramentas": log, "versionados": len(arquivos),
            "regenerados": sum(a["regenerado"] for a in arquivos),
            "tolerancias": {"P-039": {"relativa": _tolerancias()[0], "piso_absoluto": _tolerancias()[1]},
@@ -335,7 +364,9 @@ def main():
            "gerados_sem_versao": novos, "atualizados": atualizar, "arquivos": arquivos}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / f"regeneracao_{rotulo}.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
-    amb = ", ".join(f"{k} {v}" for k, v in out["ambiente"].items() if v)
+    amb = ", ".join(f"{k} {v}" for k, v in out["ambiente"].items() if v and k != "alteracoes_nao_commitadas")
+    if out["ambiente"]["alteracoes_nao_commitadas"]:
+        amb += " (árvore de trabalho com alterações não commitadas)"
     md = [f"# Regeneração de results/ — ambiente \"{rotulo}\" (gerado por tools/confere_regeneracao.py)", "",
           f"Ambiente: {amb}. Comparado com: {out['comparado_com']}.", "",
           f"**Versionados: {out['versionados']}; regenerados: {out['regenerados']}; idênticos: {out['identicos']}; "
