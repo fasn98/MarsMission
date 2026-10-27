@@ -1,0 +1,11 @@
+# DRA 5.0 Addendum, NASA/SP-2009-566-ADD [F18], Tabela 4-2, p. 137:
+# "Crewed Mission Trajectory Data (Propulsive MOI into 1-day sol orbit)".
+# Nota da tabela: "All delta-Vs include gravity losses but no plane changes."
+# Órbitas: partida de 407 km circular; Marte 250 × 33.793 km (Tabela 4-1, p. 133).
+# Observação: a Tabela 4-1 dá "Maximum TEI V∞ 3.487 km/s", mas todas as linhas abaixo trazem
+# TEI V∞ 3.847 km/s, como impresso. Não se decide aqui qual é o erro tipográfico.
+# Transcrição conferida contra o texto extraído do PDF em 2026-10-27.
+linhas:
+  "2031": {partida: "2031-02-23", tmi_vinf: 3.940, tmi_dv: 3.955, tof_ida: 190, moi_vinf: 4.176, moi_dv: 1.789, permanencia: 572, tei_vinf: 3.847, tei_dv: 1.573, tof_volta: 134, vinf_terra: 6.813}
+  "2033": {partida: "2033-05-21", tmi_vinf: 4.290, tmi_dv: 4.090, tof_ida: 191, moi_vinf: 3.756, moi_dv: 1.517, permanencia: 553, tei_vinf: 3.847, tei_dv: 1.573, tof_volta: 133, vinf_terra: 5.762}
+  "2035": {partida: "2035-07-03", tmi_vinf: 3.327, tmi_dv: 3.746, tof_ida: 180, moi_vinf: 2.792, moi_dv: 0.971, permanencia: 560, tei_vinf: 3.847, tei_dv: 1.573, tof_volta: 183, vinf_terra: 4.438}

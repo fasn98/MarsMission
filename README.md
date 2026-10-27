@@ -8,8 +8,8 @@ Autor: Fabio Nogueira ([@fasn98](https://github.com/fasn98)). O cenário tripula
 | Etapa | Conteúdo | Estado |
 | :- | :- | :- |
 | 1.1 | Infraestrutura, efemérides DE440 (de440s) via SPICE, verificação contra o JPL Horizons | concluída (PR #1) |
-| 1.2 | Lambert (Izzo, 2015), porkchops de ida 2028–2035 (verificação: NASA/TM-2010-216764) e de retorno 2030–2039 (verificação do método: JPL 82-43 Parte 5) | ida aprovada (PR #2); retorno aguardando portão |
-| 1.3 | Missões completas (classes conjunção e oposição), Δv a partir de órbitas de estacionamento | não iniciada |
+| 1.2 | Lambert (Izzo, 2015), porkchops de ida 2028–2035 (verificação: NASA/TM-2010-216764) e de retorno 2030–2039 (verificação do método: JPL 82-43 Parte 5) | concluída (PRs #2 e #3) |
+| 1.3 | Missões completas (classes conjunção e oposição), Δv a partir de órbitas de estacionamento; comparação com DRA 5.0 | missão de referência (ADR 0003) e envelope de 5,91 km/s (ADR 0004) definidos |
 | 1.4 | Orçamento de Δv com margem e primeiro dimensionamento; comparação com NASA/SP-2009-566 | não iniciada |
 
 Modelo: cônicas emendadas, manobras impulsivas, sem perturbações. As limitações estão descritas no

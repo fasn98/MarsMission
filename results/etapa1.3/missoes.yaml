@@ -1,0 +1,464 @@
+gerado_por: tools/missoes.py
+criterio_selecao:
+  orbita_marte: eliptica_alta
+  aerocaptura: false
+missao_referencia:
+  id: 2028-conjuncao
+  orbita_marte: eliptica_alta
+  captura: propulsiva
+  datas:
+  - '2028-11-23'
+  - '2029-09-19'
+  - '2030-11-07'
+  - '2031-09-22'
+envelope_dimensionamento:
+  regra:
+    janelas:
+    - '2028'
+    - '2031'
+    - '2033'
+    - '2035'
+    classes:
+    - conjuncao
+    - oposicao
+    orbita_marte: eliptica_alta
+    captura: propulsiva
+  missao_que_define: 2035-conjuncao
+  dv_total_km_s: 5.9107
+  minimo_admissivel_por_janela:
+    '2028':
+      missao: 2028-conjuncao
+      dv_total_km_s: 5.3986
+    '2031':
+      missao: 2031-conjuncao
+      dv_total_km_s: 5.7807
+    '2033':
+      missao: 2033-conjuncao
+      dv_total_km_s: 5.8892
+    '2035':
+      missao: 2035-conjuncao
+      dv_total_km_s: 5.9107
+parametros:
+  leo_raio_km: 6785.1366
+  orbitas_marte_km:
+    circular_baixa:
+    - 3896.19
+    - 3896.19
+    eliptica_alta:
+    - 3646.19
+    - 37189.19
+  rp_aerocaptura_marte_km: 3446.19
+  r_interface_terra_km: 6500.0566
+  v_reentrada_max_km_s: 12.9
+candidatas:
+- partida_terra: '2029-02-27'
+  chegada_marte: '2029-05-12'
+  partida_marte: '2029-06-11'
+  chegada_terra: '2030-12-08'
+  ida_dias: 74.0
+  em_marte_dias: 30.0
+  volta_dias: 545.0
+  total_dias: 649.0
+  c3_km2_s2: 214.5455
+  dla_graus: 7.6433
+  angulo_ida_graus: 47.5364
+  angulo_volta_graus: 215.3251
+  vinf_chegada_marte_km_s: 14.6998
+  c3l_partida_marte_km2_s2: 128.7199
+  vinf_chegada_terra_km_s: 6.5864
+  v_reentrada_km_s: 12.8851
+  dv_saida_terra_km_s: 10.5573
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 12.114
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 8.9607
+      dv_total_sem_aerocaptura_km_s: 31.632
+      dv_total_com_aerocaptura_km_s: 19.6212
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 10.8528
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 7.712
+      dv_total_sem_aerocaptura_km_s: 29.1221
+      dv_total_com_aerocaptura_km_s: 18.2808
+  id: 2028-oposicao
+  janela_ida: '2028'
+  classe: oposicao
+  na_borda_do_dominio:
+  - partida_terra
+- partida_terra: '2028-11-23'
+  chegada_marte: '2029-09-19'
+  partida_marte: '2030-11-07'
+  chegada_terra: '2031-09-22'
+  ida_dias: 300.0
+  em_marte_dias: 414.0
+  volta_dias: 319.0
+  total_dias: 1033.0
+  c3_km2_s2: 9.0984
+  dla_graus: 29.234
+  angulo_ida_graus: 212.6218
+  angulo_volta_graus: 216.2628
+  vinf_chegada_marte_km_s: 2.9707
+  c3l_partida_marte_km2_s2: 5.4305
+  vinf_chegada_terra_km_s: 5.4444
+  v_reentrada_km_s: 12.3405
+  dv_saida_terra_km_s: 3.5866
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.2352
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 1.9205
+      dv_total_sem_aerocaptura_km_s: 7.7423
+      dv_total_com_aerocaptura_km_s: 5.6103
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 1.0594
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 0.7526
+      dv_total_sem_aerocaptura_km_s: 5.3986
+      dv_total_com_aerocaptura_km_s: 4.3507
+  id: 2028-conjuncao
+  janela_ida: '2028'
+  classe: conjuncao
+  na_borda_do_dominio: []
+- partida_terra: '2029-01-06'
+  chegada_marte: '2029-08-04'
+  partida_marte: '2030-12-01'
+  chegada_terra: '2031-06-28'
+  ida_dias: 210.0
+  em_marte_dias: 484.0
+  volta_dias: 209.0
+  total_dias: 903.0
+  c3_km2_s2: 17.2254
+  dla_graus: 6.2529
+  angulo_ida_graus: 142.2416
+  angulo_volta_graus: 123.0234
+  vinf_chegada_marte_km_s: 4.1748
+  c3l_partida_marte_km2_s2: 7.3797
+  vinf_chegada_terra_km_s: 6.4926
+  v_reentrada_km_s: 12.8374
+  dv_saida_terra_km_s: 3.9422
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.9625
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 2.1034
+      dv_total_sem_aerocaptura_km_s: 9.0082
+      dv_total_com_aerocaptura_km_s: 6.1488
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 1.7715
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 0.9308
+      dv_total_sem_aerocaptura_km_s: 6.6445
+      dv_total_com_aerocaptura_km_s: 4.8845
+  id: 2028-conjuncao_transito_curto
+  janela_ida: '2028'
+  classe: conjuncao_transito_curto
+  na_borda_do_dominio: []
+- partida_terra: '2031-05-11'
+  chegada_marte: '2031-07-20'
+  partida_marte: '2031-08-19'
+  chegada_terra: '2033-02-19'
+  ida_dias: 70.0
+  em_marte_dias: 30.0
+  volta_dias: 550.0
+  total_dias: 650.0
+  c3_km2_s2: 344.9708
+  dla_graus: -13.2938
+  angulo_ida_graus: 33.536
+  angulo_volta_graus: 229.7419
+  vinf_chegada_marte_km_s: 12.2751
+  c3l_partida_marte_km2_s2: 130.1429
+  vinf_chegada_terra_km_s: 6.6143
+  v_reentrada_km_s: 12.8994
+  dv_saida_terra_km_s: 13.8404
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 9.8247
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 9.0185
+      dv_total_sem_aerocaptura_km_s: 32.6836
+      dv_total_com_aerocaptura_km_s: 22.9621
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 8.572
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 7.7695
+      dv_total_sem_aerocaptura_km_s: 30.1818
+      dv_total_com_aerocaptura_km_s: 21.6214
+  id: 2031-oposicao
+  janela_ida: '2031'
+  classe: oposicao
+  na_borda_do_dominio: []
+- partida_terra: '2030-12-24'
+  chegada_marte: '2031-10-04'
+  partida_marte: '2033-01-26'
+  chegada_terra: '2033-09-01'
+  ida_dias: 284.0
+  em_marte_dias: 480.0
+  volta_dias: 218.0
+  total_dias: 982.0
+  c3_km2_s2: 10.7017
+  dla_graus: 14.7973
+  angulo_ida_graus: 216.6938
+  angulo_volta_graus: 141.3822
+  vinf_chegada_marte_km_s: 3.4843
+  c3l_partida_marte_km2_s2: 5.7176
+  vinf_chegada_terra_km_s: 4.079
+  v_reentrada_km_s: 11.8018
+  dv_saida_terra_km_s: 3.6577
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.5262
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 1.9478
+      dv_total_sem_aerocaptura_km_s: 8.1317
+      dv_total_com_aerocaptura_km_s: 5.7087
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 1.3439
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 0.7792
+      dv_total_sem_aerocaptura_km_s: 5.7807
+      dv_total_com_aerocaptura_km_s: 4.4484
+  id: 2031-conjuncao
+  janela_ida: '2031'
+  classe: conjuncao
+  na_borda_do_dominio: []
+- partida_terra: '2031-02-18'
+  chegada_marte: '2031-09-16'
+  partida_marte: '2033-02-01'
+  chegada_terra: '2033-08-30'
+  ida_dias: 210.0
+  em_marte_dias: 504.0
+  volta_dias: 210.0
+  total_dias: 924.0
+  c3_km2_s2: 14.1612
+  dla_graus: -29.9598
+  angulo_ida_graus: 148.5743
+  angulo_volta_graus: 136.6844
+  vinf_chegada_marte_km_s: 3.8705
+  c3l_partida_marte_km2_s2: 5.7774
+  vinf_chegada_terra_km_s: 4.1901
+  v_reentrada_km_s: 11.8407
+  dv_saida_terra_km_s: 3.8094
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.7645
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 1.9535
+      dv_total_sem_aerocaptura_km_s: 8.5274
+      dv_total_com_aerocaptura_km_s: 5.8661
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 1.5772
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 0.7847
+      dv_total_sem_aerocaptura_km_s: 6.1714
+      dv_total_com_aerocaptura_km_s: 4.6057
+  id: 2031-conjuncao_transito_curto
+  janela_ida: '2031'
+  classe: conjuncao_transito_curto
+  na_borda_do_dominio: []
+- partida_terra: '2032-12-31'
+  chegada_marte: '2033-05-14'
+  partida_marte: '2033-06-13'
+  chegada_terra: '2033-11-09'
+  ida_dias: 134.0
+  em_marte_dias: 30.0
+  volta_dias: 149.0
+  total_dias: 313.0
+  c3_km2_s2: 156.2439
+  dla_graus: -26.9151
+  angulo_ida_graus: 151.0916
+  angulo_volta_graus: 139.2736
+  vinf_chegada_marte_km_s: 16.9979
+  c3l_partida_marte_km2_s2: 47.571
+  vinf_chegada_terra_km_s: 6.604
+  v_reentrada_km_s: 12.8941
+  dv_saida_terra_km_s: 8.8804
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 14.3172
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 5.0245
+      dv_total_sem_aerocaptura_km_s: 28.2221
+      dv_total_com_aerocaptura_km_s: 14.0081
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 13.05
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 3.8045
+      dv_total_sem_aerocaptura_km_s: 25.7348
+      dv_total_com_aerocaptura_km_s: 12.6964
+  id: 2033-oposicao
+  janela_ida: '2033'
+  classe: oposicao
+  na_borda_do_dominio:
+  - partida_terra
+- partida_terra: '2033-04-16'
+  chegada_marte: '2033-11-02'
+  partida_marte: '2035-05-06'
+  chegada_terra: '2035-11-21'
+  ida_dias: 200.0
+  em_marte_dias: 550.0
+  volta_dias: 199.0
+  total_dias: 949.0
+  c3_km2_s2: 9.1127
+  dla_graus: -55.4534
+  angulo_ida_graus: 148.709
+  angulo_volta_graus: 147.9716
+  vinf_chegada_marte_km_s: 3.318
+  c3l_partida_marte_km2_s2: 8.7586
+  vinf_chegada_terra_km_s: 3.0386
+  v_reentrada_km_s: 11.4838
+  dv_saida_terra_km_s: 3.5873
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.4286
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 2.2292
+      dv_total_sem_aerocaptura_km_s: 8.245
+      dv_total_com_aerocaptura_km_s: 5.9197
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 1.2484
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 1.0536
+      dv_total_sem_aerocaptura_km_s: 5.8892
+      dv_total_com_aerocaptura_km_s: 4.6524
+  id: 2033-conjuncao
+  janela_ida: '2033'
+  classe: conjuncao
+  na_borda_do_dominio: []
+- partida_terra: '2033-04-16'
+  chegada_marte: '2033-11-02'
+  partida_marte: '2035-05-06'
+  chegada_terra: '2035-11-21'
+  ida_dias: 200.0
+  em_marte_dias: 550.0
+  volta_dias: 199.0
+  total_dias: 949.0
+  c3_km2_s2: 9.1127
+  dla_graus: -55.4534
+  angulo_ida_graus: 148.709
+  angulo_volta_graus: 147.9716
+  vinf_chegada_marte_km_s: 3.318
+  c3l_partida_marte_km2_s2: 8.7586
+  vinf_chegada_terra_km_s: 3.0386
+  v_reentrada_km_s: 11.4838
+  dv_saida_terra_km_s: 3.5873
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.4286
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 2.2292
+      dv_total_sem_aerocaptura_km_s: 8.245
+      dv_total_com_aerocaptura_km_s: 5.9197
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 1.2484
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 1.0536
+      dv_total_sem_aerocaptura_km_s: 5.8892
+      dv_total_com_aerocaptura_km_s: 4.6524
+  id: 2033-conjuncao_transito_curto
+  janela_ida: '2033'
+  classe: conjuncao_transito_curto
+  na_borda_do_dominio: []
+- partida_terra: '2035-03-14'
+  chegada_marte: '2035-08-05'
+  partida_marte: '2035-09-04'
+  chegada_terra: '2036-04-15'
+  ida_dias: 144.0
+  em_marte_dias: 30.0
+  volta_dias: 224.0
+  total_dias: 398.0
+  c3_km2_s2: 88.7755
+  dla_graus: -24.4014
+  angulo_ida_graus: 152.6289
+  angulo_volta_graus: 220.645
+  vinf_chegada_marte_km_s: 11.0097
+  c3l_partida_marte_km2_s2: 33.2392
+  vinf_chegada_terra_km_s: 6.6151
+  v_reentrada_km_s: 12.8998
+  dv_saida_terra_km_s: 6.6974
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 8.651
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 4.1158
+      dv_total_sem_aerocaptura_km_s: 19.4643
+      dv_total_com_aerocaptura_km_s: 10.9164
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 7.4039
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 2.9066
+      dv_total_sem_aerocaptura_km_s: 17.0079
+      dv_total_com_aerocaptura_km_s: 9.6156
+  id: 2035-oposicao
+  janela_ida: '2035'
+  classe: oposicao
+  na_borda_do_dominio:
+  - partida_terra
+- partida_terra: '2035-06-28'
+  chegada_marte: '2036-01-16'
+  partida_marte: '2037-07-11'
+  chegada_terra: '2038-04-07'
+  ida_dias: 202.0
+  em_marte_dias: 542.0
+  volta_dias: 270.0
+  total_dias: 1014.0
+  c3_km2_s2: 10.4406
+  dla_graus: 8.6767
+  angulo_ida_graus: 148.0881
+  angulo_volta_graus: 219.2523
+  vinf_chegada_marte_km_s: 2.6245
+  c3l_partida_marte_km2_s2: 12.5505
+  vinf_chegada_terra_km_s: 3.5317
+  v_reentrada_km_s: 11.624
+  dv_saida_terra_km_s: 3.6461
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.0579
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 2.5612
+      dv_total_sem_aerocaptura_km_s: 8.2652
+      dv_total_com_aerocaptura_km_s: 6.3105
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 0.8864
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 1.3781
+      dv_total_sem_aerocaptura_km_s: 5.9107
+      dv_total_com_aerocaptura_km_s: 5.0358
+  id: 2035-conjuncao
+  janela_ida: '2035'
+  classe: conjuncao
+  na_borda_do_dominio: []
+- partida_terra: '2035-06-28'
+  chegada_marte: '2036-01-16'
+  partida_marte: '2037-07-07'
+  chegada_terra: '2038-01-19'
+  ida_dias: 202.0
+  em_marte_dias: 538.0
+  volta_dias: 196.0
+  total_dias: 936.0
+  c3_km2_s2: 10.4406
+  dla_graus: 8.6767
+  angulo_ida_graus: 148.0881
+  angulo_volta_graus: 143.4712
+  vinf_chegada_marte_km_s: 2.6245
+  c3l_partida_marte_km2_s2: 14.3089
+  vinf_chegada_terra_km_s: 3.8915
+  v_reentrada_km_s: 11.7383
+  dv_saida_terra_km_s: 3.6461
+  por_orbita_marte:
+    circular_baixa:
+      dv_captura_propulsiva_km_s: 2.0579
+      dv_captura_aerocaptura_km_s: 0.1032
+      dv_saida_marte_km_s: 2.7089
+      dv_total_sem_aerocaptura_km_s: 8.413
+      dv_total_com_aerocaptura_km_s: 6.4583
+    eliptica_alta:
+      dv_captura_propulsiva_km_s: 0.8864
+      dv_captura_aerocaptura_km_s: 0.0115
+      dv_saida_marte_km_s: 1.5228
+      dv_total_sem_aerocaptura_km_s: 6.0554
+      dv_total_com_aerocaptura_km_s: 5.1805
+  id: 2035-conjuncao_transito_curto
+  janela_ida: '2035'
+  classe: conjuncao_transito_curto
+  na_borda_do_dominio: []

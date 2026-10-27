@@ -1,0 +1,15 @@
+# Decisões do Fabio nos portões da Etapa 1.3 (2026-10-27). ADRs 0003 e 0004. Só o Fabio altera.
+missao_referencia:
+  id: 2028-conjuncao          # candidata A: partida 2028-11-23, chegada à Terra 2031-09-22
+  orbita_marte: eliptica_alta # 1 sol, 250 × 33.793 km
+  captura: propulsiva         # linha de base; aerocaptura só como opção comparada
+envelope_dimensionamento:
+  # Regra (ADR 0004): para cada janela de ida, o MENOR Δv propulsivo admissível sob as restrições
+  # da missão ROBÓTICA (reentrada ≤ 12,9 km/s, P-011, aplicada na busca; sem limite de trânsito);
+  # envelope = o MAIOR desses mínimos. A classe "conjuncao_transito_curto" fica de fora: o limite
+  # de 210 d é restrição de tripulação do DRA 5.0. A DLA não entra nesta regra (Fase 2).
+  # O valor é calculado por tools/missoes.py; não é digitado aqui.
+  janelas: ["2028", "2031", "2033", "2035"]
+  classes: [conjuncao, oposicao]
+  orbita_marte: eliptica_alta
+  captura: propulsiva
