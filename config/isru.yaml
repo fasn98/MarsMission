@@ -1,0 +1,53 @@
+# Etapa 2.2 — estudo de troca do ISRU (tools/isru.py). Fontes F46–F54; premissas P-021 a P-025.
+# Comparação de três opções para a MESMA subida (órbita de encontro do ADR 0005, carga útil de 16 kg):
+#   O1: MAV sólido (Etapa 2.1), todo o propelente da Terra;
+#   O2: MAV LOX/CH4, todo o propelente da Terra;
+#   O3: MAV LOX/CH4, O2 produzido em Marte (MOXIE escalado), CH4 da Terra.
+# O MOXIE só produz O2: o metano vem da Terra em O3.
+
+mav_loxch4:
+  isp_s: {valor: 370, fonte: "[F46] Bowles et al., NASA/TM-2013-216620, p. 32: \"approximately 370 seconds for the methane/liquid oxygen combination\""}
+  razao_of: {valor: 3.5, fonte: "[F18] DRA 5.0 Addendum, p. 105: \"LO2/CH4 engines with a mixture ratio of 3.5:1\""}
+  fracao_estrutural: {valor: 0.286, premissa: P-021}
+  fracao_estrutural_alternativa: {valor: 0.114, premissa: P-021, fonte: "[F46] Tab. 10, p. 35: LOX/CH4, 1715,0 kg de propelente e 220,02 kg secos (ε calculado aqui)"}
+
+producao:
+  duracao_sols: {valor: 300, fonte: "[F18] DRA 5.0 Addendum, p. 109: \"operated continuously for a period of at least 300 sols\""}
+  horas_por_sol: {valor: 24.6597, fonte: "[F47] NASA GSFC, Mars Fact Sheet: \"Length of day (hrs) 24.6597\""}
+
+moxie:  # ponto de referência da planta (O3)
+  massa_kg: {valor: 17.8, fonte: "[F48] Hecht et al., Space Sci. Rev. 217:9 (2021), p. 6: \"The mass of the combined system is 17.8 kg\""}
+  potencia_w: {valor: 300, fonte: "[F48] p. 71: \"operating the full system is in the range of ∼ 300 W\""}
+  producao_g_h: {valor: 6, fonte: "[F48] p. 1 e p. 4: \"capable of producing at least 6 g/hr of oxygen\""}
+  expoente_massa: {valor: 1.0, premissa: P-022}
+  expoente_potencia: {valor: 1.0, premissa: P-022}
+
+planta_dra:  # limite inferior de comparação para a escala da planta (O3, sensibilidade)
+  massa_kg: {valor: 945, fonte: "[F18] DRA 5.0 Addendum, Tab. 3-23, p. 111: \"Total without CH4 945 26.08\""}
+  potencia_kw: {valor: 26.08, fonte: "[F18] idem"}
+  o2_kg: {valor: 24891, fonte: "[F18] Tab. 3-18, p. 105: O2 de propelente produzido em Marte"}
+
+liquefacao_o2:  # O3: liquefação em linha
+  potencia_w: {valor: 3570, fonte: "[F49] Johnson, Hauser, Plachta et al., NTRS 20180002101, slide 10: \"Total Input Power, watts 3,570\""}
+  massa_kg: {valor: 106.5, fonte: "[F49] slide 9: \"Total Mass, Kg 106.5\""}
+  taxa_kg_h: {valor: 2.2, fonte: "[F49] / [F50] Plachta et al., NTRS 20180004709, p. 9: \"just under 2.2 kg/hr\""}
+  expoente: {valor: 1.0, premissa: P-023}
+
+armazenamento_zbo:  # zero boil-off na superfície durante a estada (O2 e O3)
+  ch4: {potencia_w: 3469, massa_kg: 471, fonte: "[F51] DRA 5.0 Addendum #2, Tab. 4-31, p. 242: LCH4, 3469 W de entrada, 310 kg ativos + 161 kg passivos"}
+  lox: {potencia_w: 1858, massa_kg: 166, fonte: "[F51] Tab. 4-31: LOX, 1858 W, 166 kg"}
+  referencia_ch4_kg: {valor: 6567, fonte: "[F18] Tab. 3-18, p. 105 (CH4 da Terra do MAV do DRA)"}
+  referencia_lox_kg: {valor: 24891, fonte: "[F18] Tab. 3-18, p. 105"}
+  expoente: {valor: 0.6667, premissa: P-024}
+
+energia:
+  mmrtg:
+    potencia_inicio_w: {valor: 110, fonte: "[F52] NASA/DOE, MMRTG Fact Sheet (2020): \"Beginning of Life Power (Watts) 110\""}
+    massa_kg: {valor: 45, fonte: "[F52] \"weighs about 94 pounds (45 kilograms)\""}
+    degradacao_anual: {valor: 0.048, fonte: "[F53] Zakrajsek et al., NTRS 20170000017, slide 12: \"degradation rate of 4.8% per year\""}
+  solar:
+    # Módulo do DRA: 5 kWe contínuos (com célula a combustível regenerativa para a noite) = 1980 kg.
+    potencia_continua_w: {valor: 5000, fonte: "[F18] DRA 5.0 Addendum, p. 121: módulo de 5 kWe, 290 m²"}
+    massa_kg: {valor: 1980, fonte: "[F18] p. 121: \"single 5-kWe module is estimated to be 1,980 kg (including 20% contingency)\""}
+    expoente: {valor: 1.0, premissa: P-025}
+  anos_ate_fim_da_estada: 1.95   # (300 d de ida + 414 d em Marte, missão A) / 365,25; calculado

@@ -36,7 +36,8 @@ TINTA, TINTA_2, SUPERFICIE, GRADE = "#0b0b0b", "#52514e", "#fcfcfb", "#eceae4"
 AZUL, LARANJA = "#2a78d6", "#eb6834"
 
 
-def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx):
+def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo=""):
+    """`mav_massas(dv)` → (massa pousada do MAV e equipamentos, massa extra no cruzeiro); padrão: MAV sólido."""
     mu, margem, um_sol = p.mu_marte, _v(dcfg["margem_dv"]), p.orbitas_marte["eliptica_alta"]
     v_eq, lat, inc, dv100, plat, razao, walkout, vs, a_caso, c3l = ctx
     rp = R + vr["periapse_alt_km"]
@@ -56,8 +57,12 @@ def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx):
     for ap in apos:
         ra = R + ap
         dv_mav = sf.dv_subida(mu, R, dv100, rp, ra, v_eq, inc, lat)
-        glom, _ = mav((1 + margem) * dv_mav, cfg)
-        lander = lander_leo((glom + plat) / razao, cfg, dcfg, p, a_caso)
+        if mav_massas is None:
+            glom, _ = mav((1 + margem) * dv_mav, cfg)
+            cruz = 0.0
+        else:
+            glom, cruz = mav_massas((1 + margem) * dv_mav)
+        lander = lander_leo((glom + plat) / razao + cruz, cfg, dcfg, p, a_caso)
         # Orbitador: da órbita de 1 sol até a de encontro (baixa o apoapse no periapse; ajusta o periapse no
         # apoapse) e custo extra da injeção trans-Terra (o menor entre partir da órbita de encontro ou voltar a 1 sol).
         descer_q = mn.dv_transferencia_coaxial(mu, um_sol.rp, um_sol.ra, rp, ra)
@@ -98,6 +103,7 @@ def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx):
                    "mav_glom_kg": r["mav_glom_kg"], "dv_mav_km_s": r["dv_mav_km_s"],
                    "lander_orbita_baixa_kg": r["lander_orbita_baixa_kg"]}
     SAIDA.mkdir(parents=True, exist_ok=True)
+    nome = nome + sufixo
     (SAIDA / f"varredura_encontro_{nome}.yaml").write_text(yaml.safe_dump(dm._nativo(
         {"gerado_por": "tools/varredura_encontro.py", "periapse_alt_km": vr["periapse_alt_km"],
          "minimos": minimos, "escolha": escolha, "pontos": linhas}), sort_keys=False, allow_unicode=True), encoding="utf-8")

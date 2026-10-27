@@ -217,3 +217,79 @@ premissas:
       0,5 N/m². O coeficiente balístico deste orbitador não foi calculado; aplicar esses valores é extrapolação.
       A aerofrenagem já foi feita em voo em Marte (o próprio estudo toma o TGO como referência de cenário).
     status: NÃO VALIDADA
+  - id: P-021
+    nome: mav_loxch4_fracao_estrutural
+    valor: 0.295
+    unidade: adimensional (por estágio, MAV de dois estágios)
+    uso: config/mav_propulsao.yaml (O2) e config/isru.yaml (Etapa 2.2)
+    justificativa: >
+      REVISADA no portão da 2.2 (2026-10-27): usar no LOX/CH4 a fração do sólido não era conservador. Não há
+      estágio LOX/CH4 pequeno publicado. Estimativa: ε do MAV hipergólico pequeno de Bowles et al. (Tab. 5,
+      turbobomba, carga de 20 kg: 0,238 [F46]) multiplicado pela razão LOX/CH4 ÷ hipergólico na mesma missão
+      (Tab. 9: 0,150/0,121 = 1,24; Bowles, p. 32: massa seca maior "due to higher surface area and required
+      cryogenic tank insulation"). Resultado: 0,295. Derivado; sem estágio voado nessa escala.
+    status: NÃO VALIDADA
+  - id: P-022
+    nome: escala_planta_moxie
+    valor: {expoente_massa: 1.0, expoente_potencia: 1.0}
+    unidade: adimensional
+    uso: config/isru.yaml — planta de O2 da opção O3
+    justificativa: >
+      Extrapolação linear do MOXIE (17,8 kg, ~300 W, 6 g/h [F48]) para a taxa necessária. É conservadora:
+      Hecht et al. (p. 71) dizem que só o compressor deve escalar com a capacidade, e a planta do DRA
+      (945 kg, 26,08 kW para 24.891 kg em 300 sols [F18]) é ~10 vezes mais leve por kg/h. A escala do DRA entra
+      como limite inferior na sensibilidade. Nenhuma planta acima da escala do MOXIE voou.
+    status: NÃO VALIDADA
+  - id: P-023
+    nome: escala_liquefacao_o2
+    valor: 1.0
+    unidade: adimensional
+    uso: config/isru.yaml — liquefação de O2 (O3)
+    justificativa: >
+      Massa e potência da liquefação em linha de Johnson et al. (106,5 kg, 3570 W a 2,2 kg/h [F49]) escaladas
+      linearmente com a taxa. Abaixo dessa taxa, a massa de cryocoolers não cai necessariamente na mesma
+      proporção.
+    status: NÃO VALIDADA
+  - id: P-024
+    nome: escala_armazenamento_zbo
+    valor: 0.6667
+    unidade: adimensional (expoente sobre a massa armazenada)
+    uso: config/isru.yaml — armazenamento sem evaporação na superfície (O2 e O3)
+    justificativa: >
+      A carga térmica cresce com a área do tanque, ~ (massa)^(2/3). Referência: Tab. 4-31 do DRA 5.0
+      Addendum #2 [F51] (tanques cheios de um MAV humano), com as massas de propelente do MAV do DRA 5.0
+      Addendum, Tab. 3-18 [F18]. Os dois documentos podem descrever MAVs diferentes. O armazenamento
+      durante o cruzeiro Terra–Marte não é modelado.
+    status: NÃO VALIDADA
+  - id: P-025
+    nome: escala_energia_solar
+    valor: 1.0
+    unidade: adimensional
+    uso: config/isru.yaml — massa de painéis solares
+    justificativa: >
+      Massa do módulo solar do DRA (1980 kg para 5 kWe contínuos, com armazenamento noturno [F18]) escalada
+      linearmente com a potência. Não inclui tempestades de poeira longas (o DRA estima +7800 kg para 50 dias,
+      p. 123) nem a latitude de Jezero.
+    status: NÃO VALIDADA
+  - id: P-026
+    nome: armazenamento_cruzeiro
+    valor: {referencia_kg: 6567, expoente: 0.6667}
+    unidade: kg; adimensional
+    uso: config/mav_propulsao.yaml — armazenamento sem evaporação de LOX e CH4 no cruzeiro (O2)
+    justificativa: >
+      A única fonte primária para trânsito é a Tab. 4-30 do DRA 5.0 ADD2 [F51]: só CH4, MAV humano, com fator
+      de correção de carga térmica de 2,1. Escalada com área ~ massa^(2/3) a partir do CH4 do MAV do DRA, e
+      aplicada também ao LOX. Não há fonte primária para tanques dentro de um aeroshell no cruzeiro nem
+      para evaporação passiva em trânsito. O maior resfriador de 90 K já voado entrega 20 W [F50].
+    status: NÃO VALIDADA
+  - id: P-027
+    nome: aquecimento_mav_superficie
+    valor: {expoente_area: 0.6667, margem_congelamento_k: 10}
+    unidade: adimensional; K
+    uso: config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada
+    justificativa: >
+      Única referência numérica: aquecedores do 1º motor do MAV do MSR, 36 W para manter −20 °C num ambiente
+      de −62,5 °C, com 320 kg de propelente [F57]. Escala linear com ΔT (condução) e com a área ~ massa^(2/3).
+      Para o hipergólico, mínimo de −1 °C (NTO congela a −11 °C [F61], + 10 K de margem). Aquecimento
+      contínuo durante toda a estada, sem uso do calor residual de um MMRTG. Sem fonte para essa escala.
+    status: NÃO VALIDADA
