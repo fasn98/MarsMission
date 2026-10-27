@@ -61,7 +61,8 @@ genéricas.
 ## Restrições
 - `fasn98/DroneSimulator`: só leitura. Reaproveita-se o método, nunca os números. Citar só como "método reaproveitado
   de projeto anterior".
-- Replit: só ambiente de execução do painel. Nenhuma alteração de código feita lá (ver `docs/painel.md`).
+- Desenvolvimento permitido em qualquer ambiente (notebook, Claude Code na web, Claude Code no Replit), sempre com
+  branch, hook, revisão independente e PR. Proibido: Replit Agent e commits diretos na main.
 - Dependências Python: só no `pyproject.toml` (ADR 0010). `environment.yml` e o Replit instalam o pacote.
 
 ## Comandos

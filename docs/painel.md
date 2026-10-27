@@ -1,8 +1,9 @@
 # Painel web do MarsMission
 
 Painel em Streamlit (ADR 0010). Lê `results/` e `config/` e chama funções testadas de `src/orbital`. Não copia números
-nem altera cálculos. O Replit é só o ambiente de execução: todo o desenvolvimento acontece neste repositório (branch,
-testes, PR).
+nem altera cálculos. O Replit é o ambiente de execução do painel. Desenvolver nele (ou em qualquer outro ambiente) só
+com branch, hook, revisão independente e PR; o Replit Agent e commits diretos na `main` são proibidos (CLAUDE.md,
+"Restrições", decisão do Fabio em 2026-10-27).
 
 ## Páginas
 
@@ -123,7 +124,7 @@ marcado "não conferido" precisa ser confirmado na primeira importação.
   `127.0.0.1:8501` dentro do workspace.
 
 ### Atualizar
-Nada de editar código no Replit. Para trazer uma versão nova da `main`:
+Nada de Replit Agent nem de commit direto na `main` (CLAUDE.md). Para trazer uma versão nova da `main`:
 - no **Shell** do Replit, rodar `git pull`;
 - ou usar o painel **Git** do Replit (pull).
 
