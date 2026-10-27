@@ -1,4 +1,5 @@
-# Kernels usados só em verificações pontuais, fora do CI (não carregados por orbital.ephemeris).
+# Kernels de verificação (não carregados por orbital.ephemeris): usados por tools/efeito_efemeride.py e baixados
+# só no CI de regeneração (.github/workflows/regeneracao.yml), não no CI do pytest.
 # Baixar com: python tools/fetch_kernels.py config/kernels_verificacao.yaml
 diretorio: data/kernels
 kernels:

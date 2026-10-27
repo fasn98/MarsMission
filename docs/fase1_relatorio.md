@@ -190,3 +190,13 @@ Lista gerada de `config/premissas.yaml` em `results/fase1/premissas.md` (`tools/
   - se a massa do CCRS inclui a cápsula (CU-2 contra CU-2b; indício a favor da CU-2b em [F32]);
   - orçamento por subsistema da plataforma;
   - exemplos impressos de Lambert, ainda pulados até conferência no livro.
+
+## Errata (2026-10-27): Etapa 1.4 regenerada
+- **Números vigentes:** os de arquitetura são os das Etapas 2.3 a 2.5 (`docs/fase2_relatorio.md`). Os desta fase
+  ficam como registro da Fase 1.
+- **O que mudou:** os resultados da Etapa 1.4 estavam atrasados em relação à 2033 com |DLA| ≤ 50° (Etapa 2.4) e foram
+  regenerados. Mudam só valores da janela de 2033 e da regra (i), que não foi a escolhida. Tabela em
+  `docs/etapa1.4_dimensionamento.md`, errata de 2026-10-27.
+- **O que não muda:** os números citados neste relatório, da missão A e da regra (iii) (Δv por trecho e 22,8 t).
+- **Seção 5:** "a janela de 2033 tem DLA de −55,5°" descreve a 2033 da Fase 1. A atual tem DLA de −49,7°
+  (ADR 0004, atualização da Etapa 2.4).

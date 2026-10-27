@@ -1,0 +1,75 @@
+name: Regeneração de results/
+
+# Regenera todo o results/ numa cópia, na ordem histórica (tools/confere_regeneracao.py), e compara com o versionado:
+# números (YAML, Markdown, NPZ) e PNG comparados com tolerância declarada; arquivos de controle sem o hash do commit.
+# "Idêntico" = dentro das tolerâncias P-039 (números) e P-040 (PNG), premissas NÃO VALIDADAS; o relatório lista as
+# diferenças abaixo do limite. Falha se algum arquivo passar do limite ou não for regenerado, ou se a regeneração gerar
+# arquivo sem versão.
+# Pedido do Fabio (2026-10-27): rodar nos PRs que alteram src/, tools/ ou config/. Também roda quando muda o que
+# alimenta ou é o próprio resultado: results/, tests/data/ (dados publicados usados nas verificações), dependências.
+on:
+  push:
+    branches: [main]   # também depois do merge: dois PRs que passam separados podem divergir juntos
+    paths:
+      - "src/**"
+      - "tools/**"
+      - "config/**"
+      - "results/**"
+      - "tests/data/**"
+      - "environment.yml"
+      - "pyproject.toml"
+      - ".github/workflows/regeneracao.yml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "tools/**"
+      - "config/**"
+      - "results/**"
+      - "tests/data/**"
+      - "environment.yml"
+      - "pyproject.toml"
+      - ".github/workflows/regeneracao.yml"
+
+jobs:
+  regeneracao:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          environment-file: environment.yml
+          activate-environment: marsmission
+          auto-activate-base: false
+
+      # Kernels do CI (de440s, naif0012) e os de verificação (de200, usado por tools/efeito_efemeride.py).
+      - name: Cache dos kernels SPICE
+        uses: actions/cache@v4
+        with:
+          path: data/kernels
+          key: spice-regeneracao-${{ hashFiles('config/kernels.yaml', 'config/kernels_verificacao.yaml') }}
+
+      - name: Baixar e conferir kernels (MD5)
+        run: |
+          python tools/fetch_kernels.py
+          python tools/fetch_kernels.py config/kernels_verificacao.yaml
+
+      - name: Regenerar results/ e comparar com o versionado
+        run: python tools/confere_regeneracao.py ci --ci
+
+      - name: Resumo no job (inclui as diferenças abaixo do limite)
+        if: always()
+        run: cat results/conferencia/regeneracao_ci.md >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Relatório da regeneração
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regeneracao
+          path: results/conferencia/regeneracao_ci.*
+          if-no-files-found: ignore

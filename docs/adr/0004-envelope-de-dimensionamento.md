@@ -69,3 +69,17 @@ do Cabo [F13], com penalidade de lançamento aproximada de 0,76 (P-036).
 antigos (`results/etapa2.1/varredura_encontro.*`, sem sufixo) não são mais gerados e não foram conferidos.
 Fonte: `results/etapa2.5/conferencia_2033.md`. A ressalva acima sobre a regra (i) da Etapa 1.4 continua valendo.
 
+## Nota (2026-10-27): arquivos antigos sem sufixo removidos
+Os `results/etapa2.1/varredura_encontro.*` sem sufixo citados acima foram removidos do repositório no PR
+`fix/reprodutibilidade-1.4` (último commit em que existiam: b97d565). Motivo e detalhes:
+`docs/etapa2.1_superficie.md`, nota de 2026-10-27.
+
+## Errata (2026-10-27): números da regra (i) com a 2033 atual
+- **Números:** com os resultados da Etapa 1.4 regenerados com a 2033 atual, a regra (i) com ε × 1,5 vai a 91 t
+  (antes 90 t) com a plataforma de 850 kg. A decisão pela regra (iii) não muda. Detalhes em
+  `docs/etapa1.4_dimensionamento.md`, errata de 2026-10-27.
+- **Não reconferido:** o valor "41 t sem plataforma" da seção Decisão, item 3, não tem linha em `results/` e não
+  foi recalculado com a 2033 atual.
+- **Ressalva substituída:** esta errata substitui a ressalva "`results/etapa1.4` não foi regenerado" da
+  atualização da Etapa 2.4 e a frase "A ressalva acima sobre a regra (i) da Etapa 1.4 continua valendo" da
+  atualização da Etapa 2.5.

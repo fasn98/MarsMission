@@ -205,3 +205,15 @@ pela regra iii), o que serve de checagem da generalização.
   deriva de RAAN.
 - O lançamento do lander (estágio de saída da Terra próprio) entra na Etapa 2.4.
 - Fonte de projeto anterior: DroneSimulator só como método.
+
+## Nota (2026-10-27): arquivos antigos da varredura removidos
+- **Removidos** (`git rm`, decisão do Fabio no PR `fix/reprodutibilidade-1.4`): `results/etapa2.1/varredura_encontro.md`,
+  `.png` e `.yaml`, sem sufixo.
+- **Origem:** criados no commit ad72198 ("Etapa 2.1: massa total por arquitetura…"), pela primeira versão de
+  `tools/varredura_encontro.py`. Existiram até o commit b97d565 (merge do PR #10) e podem ser recuperados de lá
+  (`git show b97d565:results/etapa2.1/varredura_encontro.yaml`).
+- **Por que saíram:** a ferramenta passou a gravar só arquivos com sufixo (`_rp250`, `_rp300` e `_rp300_<opção do MAV>`).
+  Nenhuma ferramenta atual os gera, então não podiam ser reproduzidos nem conferidos (`tools/confere_2033.py` os
+  listava como "não regenerados"; `tools/confere_regeneracao.py` também).
+- **Efeito:** nenhum número vigente vinha deles. As varreduras usadas nas decisões (ADR 0005) são as com sufixo, que
+  continuam versionadas e saem idênticas na regeneração.

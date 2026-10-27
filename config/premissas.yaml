@@ -423,3 +423,26 @@ premissas:
       tem categoria de veículo; usa-se a de eletrônica de 0–5 kg pela massa por unidade. Com a categoria de
       instrumentação (25–75 %), os 5 kg passariam de 6,4 para 7,5 kg previstos (diferença de ~1 kg).
     status: NÃO VALIDADA
+  - id: P-039
+    nome: tolerancia_regeneracao_numerica
+    valor: {relativa: 1.0e-9, piso_absoluto: 1.0e-10}
+    unidade: adimensional (passa se |a − b| ≤ max(relativa · |b|, piso_absoluto); a = versionado, b = regenerado)
+    uso: tools/confere_regeneracao.py — números em YAML, Markdown e NPZ de results/ regenerados contra os versionados
+    justificativa: >
+      O limite vem da precisão relevante do estudo (~1e-4 relativo), com 5 ordens de folga para o ruído entre CPUs
+      (o numpy e a OpenBLAS escolhem o código pela CPU) amplificado por cálculos mal condicionados, como o giro de
+      plano no perigeu e a equação do foguete. NÃO deriva do ruído observado. Regra do Fabio: diferença acima do
+      limite é problema a investigar, nunca motivo para alargar a tolerância sem decisão dele. Histórico: a primeira
+      versão (1e-12 relativo, piso 1e-13) falhou no runner do CI no PR #11 (opção b da Etapa 2.4, até 1,1e-9 relativo
+      numa margem perto de zero); decisão do Fabio em 2026-10-27 pela opção (2). Sem valor publicado.
+    status: NÃO VALIDADA
+  - id: P-040
+    nome: tolerancia_regeneracao_png
+    valor: 0.001
+    unidade: fração de pixels diferentes por figura
+    uso: tools/confere_regeneracao.py — figuras PNG de results/ regeneradas contra as versionadas
+    justificativa: >
+      Com o mesmo ruído de ponto flutuante entre CPUs (P-039), linhas de contorno e rótulos se deslocam um pixel:
+      no runner do CI, 0,0002 % a 0,05 % dos pixels dos porkchops diferiram (PR #11, 2026-10-27). Os dados de origem
+      das figuras são conferidos numericamente (P-039). Decisão do Fabio (2026-10-27). Sem valor publicado.
+    status: NÃO VALIDADA

@@ -180,3 +180,16 @@ Quando o documento original é pago (AIAA S-120A), a fonte usada é a reproduç�
 
 A lista é gerada em **`results/fase2/premissas_nao_validadas.md`** por `tools/lista_premissas.py`. Ao fim
 da Fase 2, as 38 premissas (P-001 a P-038) estão com status NÃO VALIDADA. Só o Fabio altera o status.
+
+## Nota (2026-10-27): reprodutibilidade
+- **Arquivos antigos removidos:** os três arquivos sem sufixo citados na conferência das Etapas 2.1 e 2.2 foram
+  removidos (último commit em que existiam: b97d565). Detalhes em `docs/etapa2.1_superficie.md`.
+- **Etapa 1.4 regenerada:** os resultados da 1.4 estavam atrasados em relação à 2033 com |DLA| ≤ 50° e foram
+  regenerados. Errata em `docs/etapa1.4_dimensionamento.md`. Os números desta fase não mudam.
+- **Prevenção:** a verificação de CI `.github/workflows/regeneracao.yml` regenera todo o `results/` e compara com o
+  versionado.
+- **"Idêntico" com tolerância declarada:** CPUs diferentes mudam os últimos dígitos (1e-16 a 8e-15 relativo, observado
+  no CI). A comparação usa as premissas novas P-039 (números: passa se |a − b| ≤ max(1e-9 · |b|, 1e-10)) e P-040 (PNG: até
+  0,1 % dos pixels), ambas NÃO VALIDADAS. O limite numérico vem da precisão relevante do estudo (~1e-4 relativo), não do
+  ruído observado; diferença acima dele é problema a investigar. Com elas, são 40 premissas (P-001 a P-040), todas NÃO VALIDADAS
+  (`results/fase2/premissas_nao_validadas.md`).
