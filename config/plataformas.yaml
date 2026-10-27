@@ -151,6 +151,12 @@ lander:
       fonte: "[F40] p. 6: carga útil do Phoenix (braço que coleta e entrega amostras + instrumentos), usada como análogo do sistema de coleta e transferência"
       categoria: instrumentacao
       premissa: P-034
+    helicopteros:
+      # Conceito de coleta (c) + (a), decisão do Fabio no portão do item 2 da Etapa 2.5 (ADR 0009): os helicópteros
+      # recuperam os tubos do Perseverance (primário); o braço do item "amostras" coleta regolito (reserva).
+      massa_kg: 5.0
+      fonte: "[F98] p. 3: \"total mass of SRH is expected to be ~2.5 kg\" (2 × 2,5 kg)"
+      categoria: eletronica_0_5kg
     nucleo:
       # Phoenix sem combustível, sem instrumentos, sem as comunicações e o radar listados acima: estrutura,
       # pernas, térmico, comando e dados, GNC, propulsão de descida seca, energia e cabeamento, sem divisão publicada.

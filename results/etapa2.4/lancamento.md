@@ -8,7 +8,7 @@ Margem = capacidade / massa − 1. (a) injeção direta; (b) órbita baixa + est
 | :- | -: | -: |
 | Orbitador, missão A | 3 715 | 11 277 |
 | Orbitador, regra (iii) | 6 310 | 19 156 |
-| Lander | 3 727 | 11 313 |
+| Lander | 3 740 | 11 353 |
 
 ## Janelas
 
@@ -57,17 +57,17 @@ Inclinação máxima coplanar (azimute 40°): Falcon 9 (ASDS) 55,63°; Falcon He
 
 | Lançador | Categoria | (a) pior margem | (a) janela | (b) pior margem | (b) janela |
 | :- | :- | -: | :- | -: | :- |
-| Falcon 9 (ASDS) | operacional | — | 2031-conjuncao | +27 % | 2033-conjuncao |
-| Falcon Heavy (recuperação) | operacional | +26 % | 2033-conjuncao | — | 2028-conjuncao |
-| Falcon Heavy (descartável) | operacional | +201 % | 2033-conjuncao | — | 2028-conjuncao |
+| Falcon 9 (ASDS) | operacional | — | 2031-conjuncao | +26 % | 2033-conjuncao |
+| Falcon Heavy (recuperação) | operacional | +25 % | 2033-conjuncao | — | 2028-conjuncao |
+| Falcon Heavy (descartável) | operacional | +200 % | 2033-conjuncao | — | 2028-conjuncao |
 | Vulcan VC2 | operacional | +16 % | 2033-conjuncao | +37 % | 2033-conjuncao |
-| Vulcan VC4 | operacional | +74 % | 2033-conjuncao | +83 % | 2033-conjuncao |
-| Vulcan VC6 | operacional | +123 % | 2033-conjuncao | +117 % | 2033-conjuncao |
+| Vulcan VC4 | operacional | +73 % | 2033-conjuncao | +82 % | 2033-conjuncao |
+| Vulcan VC6 | operacional | +122 % | 2033-conjuncao | +116 % | 2033-conjuncao |
 | Atlas V 541 | operacional | — | 2028-conjuncao | −82 % | 2033-conjuncao |
 | Atlas V 551 | operacional | — | 2028-conjuncao | −81 % | 2033-conjuncao |
 | Ariane 64 | operacional | — | 2028-conjuncao | — | 2028-conjuncao |
-| New Glenn | anunciado | +22 % | 2033-conjuncao | +199 % | 2033-conjuncao |
-| SLS Block 1 (5 m + iCPS) | anunciado | +376 % | 2033-conjuncao | — | 2028-conjuncao |
+| New Glenn | anunciado | +22 % | 2033-conjuncao | +198 % | 2033-conjuncao |
+| SLS Block 1 (5 m + iCPS) | anunciado | +375 % | 2033-conjuncao | — | 2028-conjuncao |
 
 ## Detalhe por janela
 
@@ -128,50 +128,50 @@ Inclinação máxima coplanar (azimute 40°): Falcon 9 (ASDS) 55,63°; Falcon He
 | Orbitador, missão A | Ariane 64 | 2028-conjuncao | — | — | Kourou: só C3 = 6,25 publicado | — | — | — | — |
 | Orbitador, missão A | New Glenn | 2028-conjuncao | 5 170 | +39 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 306 | 36 290 | +221 % |
 | Orbitador, missão A | SLS Block 1 (5 m + iCPS) | 2028-conjuncao | 19 842 | +434 % | multiplicador de DLA 0,997 | — | — | — | — |
-| Lander | Falcon 9 (ASDS) | 2028-conjuncao | 2 307 | −38 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 343 | 15 520 | +37 % |
-| Lander | Falcon 9 (ASDS) | 2031-conjuncao | — | — | C3 fora da faixa publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 583 | 15 520 | +34 % |
-| Lander | Falcon 9 (ASDS) | 2033-conjuncao | 2 040 | −45 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 397 | 14 460 | +27 % |
-| Lander | Falcon 9 (ASDS) | 2035-conjuncao | — | — | C3 fora da faixa publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 539 | 15 520 | +35 % |
-| Lander | Falcon Heavy (recuperação) | 2028-conjuncao | 5 244 | +41 % | multiplicador de DLA 0,997 | — | — | — | — |
+| Lander | Falcon 9 (ASDS) | 2028-conjuncao | 2 307 | −38 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 382 | 15 520 | +36 % |
+| Lander | Falcon 9 (ASDS) | 2031-conjuncao | — | — | C3 fora da faixa publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 623 | 15 520 | +34 % |
+| Lander | Falcon 9 (ASDS) | 2033-conjuncao | 2 040 | −45 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 436 | 14 460 | +26 % |
+| Lander | Falcon 9 (ASDS) | 2035-conjuncao | — | — | C3 fora da faixa publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 579 | 15 520 | +34 % |
+| Lander | Falcon Heavy (recuperação) | 2028-conjuncao | 5 244 | +40 % | multiplicador de DLA 0,997 | — | — | — | — |
 | Lander | Falcon Heavy (recuperação) | 2031-conjuncao | 5 037 | +35 % |  | — | — | — | — |
-| Lander | Falcon Heavy (recuperação) | 2033-conjuncao | 4 678 | +26 % | multiplicador de DLA 0,902 | — | — | — | — |
+| Lander | Falcon Heavy (recuperação) | 2033-conjuncao | 4 678 | +25 % | multiplicador de DLA 0,902 | — | — | — | — |
 | Lander | Falcon Heavy (recuperação) | 2035-conjuncao | 5 072 | +36 % |  | — | — | — | — |
-| Lander | Falcon Heavy (descartável) | 2028-conjuncao | 12 535 | +236 % | multiplicador de DLA 0,997 | — | — | — | — |
-| Lander | Falcon Heavy (descartável) | 2031-conjuncao | 12 182 | +227 % |  | — | — | — | — |
-| Lander | Falcon Heavy (descartável) | 2033-conjuncao | 11 224 | +201 % | multiplicador de DLA 0,902 | — | — | — | — |
-| Lander | Falcon Heavy (descartável) | 2035-conjuncao | 12 243 | +228 % |  | — | — | — | — |
-| Lander | Vulcan VC2 | 2028-conjuncao | 4 838 | +30 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 343 | 16 810 | +48 % |
-| Lander | Vulcan VC2 | 2031-conjuncao | 4 673 | +25 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 583 | 16 810 | +45 % |
-| Lander | Vulcan VC2 | 2033-conjuncao | 4 325 | +16 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 397 | 15 660 | +37 % |
-| Lander | Vulcan VC2 | 2035-conjuncao | 4 702 | +26 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 539 | 16 810 | +46 % |
-| Lander | Vulcan VC4 | 2028-conjuncao | 7 239 | +94 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 343 | 22 310 | +97 % |
-| Lander | Vulcan VC4 | 2031-conjuncao | 7 049 | +89 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 583 | 22 310 | +93 % |
-| Lander | Vulcan VC4 | 2033-conjuncao | 6 487 | +74 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 397 | 20 800 | +83 % |
-| Lander | Vulcan VC4 | 2035-conjuncao | 7 083 | +90 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 539 | 22 310 | +93 % |
-| Lander | Vulcan VC6 | 2028-conjuncao | 9 249 | +148 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 343 | 26 450 | +133 % |
-| Lander | Vulcan VC6 | 2031-conjuncao | 9 018 | +142 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 583 | 26 450 | +128 % |
-| Lander | Vulcan VC6 | 2033-conjuncao | 8 293 | +123 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 397 | 24 730 | +117 % |
-| Lander | Vulcan VC6 | 2035-conjuncao | 9 060 | +143 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 539 | 26 450 | +129 % |
-| Lander | Atlas V 541 | 2028-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,73°; 1,47°; 8 m/s | 11 343 | 17 083 | +51 % |
-| Lander | Atlas V 541 | 2031-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 583 | 17 083 | +47 % |
-| Lander | Atlas V 541 | 2033-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 21,15°; 44,93°; 4 359 m/s | 95 134 | 17 083 | −82 % |
-| Lander | Atlas V 541 | 2035-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 539 | 17 083 | +48 % |
-| Lander | Atlas V 551 | 2028-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,73°; 1,47°; 8 m/s | 11 343 | 18 505 | +63 % |
-| Lander | Atlas V 551 | 2031-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 583 | 18 505 | +60 % |
-| Lander | Atlas V 551 | 2033-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 21,15°; 44,93°; 4 359 m/s | 95 134 | 18 505 | −81 % |
-| Lander | Atlas V 551 | 2035-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 539 | 18 505 | +60 % |
+| Lander | Falcon Heavy (descartável) | 2028-conjuncao | 12 535 | +235 % | multiplicador de DLA 0,997 | — | — | — | — |
+| Lander | Falcon Heavy (descartável) | 2031-conjuncao | 12 182 | +226 % |  | — | — | — | — |
+| Lander | Falcon Heavy (descartável) | 2033-conjuncao | 11 224 | +200 % | multiplicador de DLA 0,902 | — | — | — | — |
+| Lander | Falcon Heavy (descartável) | 2035-conjuncao | 12 243 | +227 % |  | — | — | — | — |
+| Lander | Vulcan VC2 | 2028-conjuncao | 4 838 | +29 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 382 | 16 810 | +48 % |
+| Lander | Vulcan VC2 | 2031-conjuncao | 4 673 | +25 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 623 | 16 810 | +45 % |
+| Lander | Vulcan VC2 | 2033-conjuncao | 4 325 | +16 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 436 | 15 660 | +37 % |
+| Lander | Vulcan VC2 | 2035-conjuncao | 4 702 | +26 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 579 | 16 810 | +45 % |
+| Lander | Vulcan VC4 | 2028-conjuncao | 7 239 | +94 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 382 | 22 310 | +96 % |
+| Lander | Vulcan VC4 | 2031-conjuncao | 7 049 | +88 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 623 | 22 310 | +92 % |
+| Lander | Vulcan VC4 | 2033-conjuncao | 6 487 | +73 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 436 | 20 800 | +82 % |
+| Lander | Vulcan VC4 | 2035-conjuncao | 7 083 | +89 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 579 | 22 310 | +93 % |
+| Lander | Vulcan VC6 | 2028-conjuncao | 9 249 | +147 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 382 | 26 450 | +132 % |
+| Lander | Vulcan VC6 | 2031-conjuncao | 9 018 | +141 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 623 | 26 450 | +128 % |
+| Lander | Vulcan VC6 | 2033-conjuncao | 8 293 | +122 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 436 | 24 730 | +116 % |
+| Lander | Vulcan VC6 | 2035-conjuncao | 9 060 | +142 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 579 | 26 450 | +128 % |
+| Lander | Atlas V 541 | 2028-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,73°; 1,47°; 8 m/s | 11 382 | 17 083 | +50 % |
+| Lander | Atlas V 541 | 2031-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 623 | 17 083 | +47 % |
+| Lander | Atlas V 541 | 2033-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 21,15°; 44,93°; 4 359 m/s | 95 464 | 17 083 | −82 % |
+| Lander | Atlas V 541 | 2035-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 579 | 17 083 | +48 % |
+| Lander | Atlas V 551 | 2028-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,73°; 1,47°; 8 m/s | 11 382 | 18 505 | +63 % |
+| Lander | Atlas V 551 | 2031-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 623 | 18 505 | +59 % |
+| Lander | Atlas V 551 | 2033-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 21,15°; 44,93°; 4 359 m/s | 95 464 | 18 505 | −81 % |
+| Lander | Atlas V 551 | 2035-conjuncao | — | — | sem curva de C3 publicada | 28,5°; 0,00°; 0,00°; 0 m/s | 11 579 | 18 505 | +60 % |
 | Lander | Ariane 64 | 2028-conjuncao | — | — | Kourou: só C3 = 6,25 publicado | — | — | — | — |
 | Lander | Ariane 64 | 2031-conjuncao | — | — | Kourou: só C3 = 6,25 publicado | — | — | — | — |
 | Lander | Ariane 64 | 2033-conjuncao | — | — | Kourou: só C3 = 6,25 publicado | — | — | — | — |
 | Lander | Ariane 64 | 2035-conjuncao | — | — | Kourou: só C3 = 6,25 publicado | — | — | — | — |
-| Lander | New Glenn | 2028-conjuncao | 5 170 | +39 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 343 | 36 290 | +220 % |
-| Lander | New Glenn | 2031-conjuncao | 4 744 | +27 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 583 | 36 290 | +213 % |
-| Lander | New Glenn | 2033-conjuncao | 4 549 | +22 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 397 | 34 110 | +199 % |
-| Lander | New Glenn | 2035-conjuncao | 4 813 | +29 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 539 | 36 290 | +215 % |
-| Lander | SLS Block 1 (5 m + iCPS) | 2028-conjuncao | 19 842 | +432 % | multiplicador de DLA 0,997 | — | — | — | — |
-| Lander | SLS Block 1 (5 m + iCPS) | 2031-conjuncao | 19 289 | +418 % |  | — | — | — | — |
-| Lander | SLS Block 1 (5 m + iCPS) | 2033-conjuncao | 17 747 | +376 % | multiplicador de DLA 0,902 | — | — | — | — |
-| Lander | SLS Block 1 (5 m + iCPS) | 2035-conjuncao | 19 368 | +420 % |  | — | — | — | — |
+| Lander | New Glenn | 2028-conjuncao | 5 170 | +38 % | multiplicador de DLA 0,997 | 28,5°; 0,73°; 1,47°; 8 m/s | 11 382 | 36 290 | +219 % |
+| Lander | New Glenn | 2031-conjuncao | 4 744 | +27 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 623 | 36 290 | +212 % |
+| Lander | New Glenn | 2033-conjuncao | 4 549 | +22 % | multiplicador de DLA 0,902 | 51,6°; 0,00°; 0,00°; 0 m/s | 11 436 | 34 110 | +198 % |
+| Lander | New Glenn | 2035-conjuncao | 4 813 | +29 % |  | 28,5°; 0,00°; 0,00°; 0 m/s | 11 579 | 36 290 | +213 % |
+| Lander | SLS Block 1 (5 m + iCPS) | 2028-conjuncao | 19 842 | +431 % | multiplicador de DLA 0,997 | — | — | — | — |
+| Lander | SLS Block 1 (5 m + iCPS) | 2031-conjuncao | 19 289 | +416 % |  | — | — | — | — |
+| Lander | SLS Block 1 (5 m + iCPS) | 2033-conjuncao | 17 747 | +375 % | multiplicador de DLA 0,902 | — | — | — | — |
+| Lander | SLS Block 1 (5 m + iCPS) | 2035-conjuncao | 19 368 | +418 % |  | — | — | — | — |
 
 ## Revisão da janela de 2033 (envelope atual: 5,912 km/s, 2033-conjuncao)
 
@@ -197,17 +197,17 @@ Pior margem com a 2033 trocada pela alternativa (as outras três janelas iguais)
 | Orbitador, regra (iii) | Ariane 64 | — / — | — / — | — / — |
 | Orbitador, regra (iii) | New Glenn | −31 % / +81 % | −40 % / +67 % | −28 % / +77 % |
 | Orbitador, regra (iii) | SLS Block 1 (5 m + iCPS) | +199 % / — | +177 % / — | +181 % / — |
-| Lander | Falcon 9 (ASDS) | — / +31 % | — / +20 % | — / +27 % |
-| Lander | Falcon Heavy (recuperação) | +30 % / — | +19 % / — | +26 % / — |
-| Lander | Falcon Heavy (descartável) | +218 % / — | +194 % / — | +201 % / — |
-| Lander | Vulcan VC2 | +21 % / +42 % | +11 % / +30 % | +16 % / +37 % |
-| Lander | Vulcan VC4 | +84 % / +88 % | +70 % / +72 % | +74 % / +83 % |
-| Lander | Vulcan VC6 | +136 % / +123 % | +118 % / +105 % | +123 % / +117 % |
+| Lander | Falcon 9 (ASDS) | — / +31 % | — / +19 % | — / +26 % |
+| Lander | Falcon Heavy (recuperação) | +29 % / — | +18 % / — | +25 % / — |
+| Lander | Falcon Heavy (descartável) | +216 % / — | +193 % / — | +200 % / — |
+| Lander | Vulcan VC2 | +21 % / +41 % | +11 % / +29 % | +16 % / +37 % |
+| Lander | Vulcan VC4 | +83 % / +88 % | +70 % / +72 % | +73 % / +82 % |
+| Lander | Vulcan VC6 | +135 % / +123 % | +118 % / +104 % | +122 % / +116 % |
 | Lander | Atlas V 541 | — / +44 % | — / −8 % | — / −82 % |
-| Lander | Atlas V 551 | — / +56 % | — / +0 % | — / −81 % |
+| Lander | Atlas V 551 | — / +56 % | — / −0 % | — / −81 % |
 | Lander | Ariane 64 | — / — | — / — | — / — |
-| Lander | New Glenn | +17 % / +207 % | +1 % / +182 % | +22 % / +199 % |
-| Lander | SLS Block 1 (5 m + iCPS) | +406 % / — | +370 % / — | +376 % / — |
+| Lander | New Glenn | +16 % / +205 % | +1 % / +181 % | +22 % / +198 % |
+| Lander | SLS Block 1 (5 m + iCPS) | +404 % / — | +368 % / — | +375 % / — |
 
 ## Lançadores que servem (alguma das formas, todas as janelas do veículo)
 

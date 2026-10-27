@@ -262,3 +262,14 @@ Antes → depois (`results/etapa2.3/plataformas.yaml`):
 - A câmera de ângulo largo e a potência do RSS seguem como lacuna.
 - Os números das seções acima são os de antes desta atualização.
 
+## Atualização (Etapa 2.5, 2026-10-27): helicópteros de coleta no lander (ADR 0009)
+A plataforma do lander passa de 1558,5 para **1564,9 kg**, com 2 helicópteros de 2,5 kg cada [F98] e margem E1.
+O braço (P-034) deixa de ser provisório: vira a coleta de reserva.
+
+| Item | Antes | Depois |
+| :- | -: | -: |
+| Total pela regra (iii) | 30.470 kg | **30.509 kg** |
+| Total na missão A | 22.590 kg | **22.630 kg** |
+
+O apoapse não muda (24.992 km). Fonte: `results/etapa2.3/plataformas.yaml`.
+

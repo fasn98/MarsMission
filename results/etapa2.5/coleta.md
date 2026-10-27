@@ -9,3 +9,4 @@ Plataforma do lander = L3 (1 470 kg) + item de coleta. Pior margem na forma (a),
 | Rover próprio de busca (análogo do Sample Fetch Rover do MSR) + ferramenta de testemunhagem | 232,7 | 1 702,7 | 4 019 | +16 % | +179 % | +8 % | +61 % | +106 % |
 | Rover próprio de busca (análogo do Sample Fetch Rover do MSR) (limite superior) | 230,0 | 1 700,0 | 4 013 | +17 % | +180 % | +8 % | +62 % | +107 % |
 | Recuperar os tubos deixados pelo Perseverance em Jezero (plano do MSR) | 6,4 | 1 476,4 | 3 561 | +31 % | +215 % | +21 % | +82 % | +133 % |
+| (c) + (a): helicópteros (primário) + braço no lander (reserva) — ESCOLHIDA | 94,9 | 1 564,9 | 3 740 | +25 % | +200 % | +16 % | +73 % | +122 % |

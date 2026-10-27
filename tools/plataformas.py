@@ -138,9 +138,11 @@ def l3_com_margem(m, cfg, qual):
 
 
 def lander_base(cfg, qual="e1_medio"):
-    """Base do lander: L3 + item de amostras da P-034 (alocação provisória, com a sua margem E1)."""
-    s = cfg["lander"]["subsistemas"]["amostras"]
-    return l3_com_margem(lander_l3(cfg), cfg, qual) + prevista([("amostras", float(s["massa_kg"]), s["categoria"])], cfg, qual)
+    """Base do lander: L3 + braço de coleta (item "amostras", P-034) + helicópteros de recuperação (ADR 0009),
+    cada item com a sua margem E1."""
+    s = cfg["lander"]["subsistemas"]
+    itens = [(k, float(s[k]["massa_kg"]), s[k]["categoria"]) for k in ("amostras", "helicopteros") if k in s]
+    return l3_com_margem(lander_l3(cfg), cfg, qual) + prevista(itens, cfg, qual)
 
 
 def limite_srl_2024(cfg):
@@ -225,7 +227,7 @@ def main():
 
     a = cfg["antes_etapa_2_3"]
     casos = {"antes": ("Antes (P-016 = P-017 = 850 kg)", a["orbitador_kg"], a["lander_kg"]),
-             "base": ("**Base: orbitador E1 médio + L3 + amostras**", plat_o["e1_medio"], m_base),
+             "base": ("**Base: orbitador E1 médio + L3 + braço + helicópteros**", plat_o["e1_medio"], m_base),
              "gsfc": ("GSFC: E1 médio + 15 % nos dois", plat_o["e1_medio_mais_gsfc"], plat_l["base"]["e1_medio_mais_gsfc"]),
              "esa": ("ESA: 20 % × 20 % nos dois", plat_o["esa"], plat_l["base"]["esa"]),
              "orb_e1_min": ("Orbitador E1 mínimo + lander de base", plat_o["e1_minimo"], m_base),
@@ -240,7 +242,7 @@ def main():
                                "iteracoes": iteracoes},
            "mav": {"opcao": op_mav, "energia": fonte_mav, "massa_pousada_kg": mav_pousado},
            "escolha": {"plataforma_orbitador_kg": plat_o["e1_medio"], "plataforma_lander_kg": m_base,
-                       "criterio": "orbitador: lista por subsistema, E1 médio; lander: L3 + amostras (provisório) (decisões do Fabio, portão 2.3)"},
+                       "criterio": "orbitador: lista por subsistema + RSS, E1 médio; lander: L3 + braço + helicópteros (portões 2.3 e 2.5; ADR 0009)"},
            "orbitador": {"subsistemas": lista(it_o), "energia": en_o, "prevista_kg": plat_o,
                          "basica_kg": sum(m for _, m, _ in it_o)},
            "lander": {**{o: {"subsistemas": lista(it), "energia": en, "prevista_kg": plat_l[o],
@@ -264,7 +266,7 @@ def main():
            f"painel {br(e['painel_w_afelio'])} W no afélio ({br(e['afelio_ua'], 3)} UA, {br(e['w_kg_painel_afelio'], 1)} W/kg); "
            f"bateria {br(e['bateria_wh_nominal'])} Wh nominais para {br(e['energia_eclipse_wh'])} Wh no eclipse."]
     md += ["", "## Lander", "", f"**Base:** L3 (lander do MSR sem MAV e sem rover de busca) {br(m_l3)} kg, sem MGA adicional, "
-           f"+ amostras (P-034, provisório) com MGA E1 = {br(m_base, 1)} kg (GSFC: {br(plat_l['base']['e1_medio_mais_gsfc'], 1)}; "
+           f"+ braço de coleta (P-034) + helicópteros (ADR 0009), com MGA E1 = {br(m_base, 1)} kg (GSFC: {br(plat_l['base']['e1_medio_mais_gsfc'], 1)}; "
            f"ESA: {br(plat_l['base']['esa'], 1)}). Faixa: L1 (abaixo) até SRL 2024 − MAV = {br(m_sup)} kg "
            "(comparabilidade não confirmada); L2 só como referência."]
     for o, d in out["lander"].items():

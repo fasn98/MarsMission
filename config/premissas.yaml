@@ -172,7 +172,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-017
     nome: plataforma_superficie_kg
-    valor: 1558.5
+    valor: 1564.875
     faixa: [529, 2500]
     unidade: kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV)
     uso: config/superficie.yaml — massa pousada = MAV + plataforma de superfície
@@ -188,6 +188,9 @@ premissas:
       2900 − 400 = 2500 kg [F41][F35], COMPARABILIDADE NÃO CONFIRMADA (a fonte fala em carga pousada, não em massa
       seca). L2 (1857 kg) fica só como referência. Histórico: até a Etapa 2.2 valia 850 kg (média geométrica de
       Phoenix e SRL); no primeiro portão da 2.3, 1470 kg (L3 sem amostras).
+      Etapa 2.5 (ADR 0009, conceito de coleta (c) + (a)): o braço (item "amostras") deixa de ser provisório e passa a
+      ser a coleta de reserva; somam-se 2 helicópteros de recuperação (2 × 2,5 kg [F98], 6,4 kg com margem):
+      1558,5 → 1564,9 kg.
     status: NÃO VALIDADA
   - id: P-018
     nome: razao_massa_pousada_entrada

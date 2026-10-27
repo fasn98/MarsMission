@@ -24,7 +24,7 @@ Energia: pior eclipse 3,24 h num período de 17,14 h; carga 510 W; painel 658 W 
 
 ## Lander
 
-**Base:** L3 (lander do MSR sem MAV e sem rover de busca) 1 470 kg, sem MGA adicional, + amostras (P-034, provisório) com MGA E1 = 1 558,5 kg (GSFC: 1 787,8; ESA: 2 201,8). Faixa: L1 (abaixo) até SRL 2024 − MAV = 2 500 kg (comparabilidade não confirmada); L2 só como referência.
+**Base:** L3 (lander do MSR sem MAV e sem rover de busca) 1 470 kg, sem MGA adicional, + braço de coleta (P-034) + helicópteros (ADR 0009), com MGA E1 = 1 564,9 kg (GSFC: 1 795,0; ESA: 2 209,0). Faixa: L1 (abaixo) até SRL 2024 − MAV = 2 500 kg (comparabilidade não confirmada); L2 só como referência.
 
 ### Limite inferior L1
 
@@ -57,11 +57,11 @@ Energia: pior eclipse 3,24 h num período de 17,14 h; carga 510 W; painel 658 W 
 | Caso | Orbitador | Lander | Total (iii) em 26 950 km | Total (A) em 26 950 km | Apoapse pela regra dos 5 % | Total (iii) nele | Total (A) nele |
 | :- | -: | -: | -: | -: | -: | -: | -: |
 | Antes (P-016 = P-017 = 850 kg) | 850 | 850 | 31 233 | 21 298 | 26 950 | 31 233 | 21 298 |
-| **Base: orbitador E1 médio + L3 + amostras** | 497 | 1 558 | 30 087 | 22 406 | 24 992 | 30 470 | 22 590 |
-| GSFC: E1 médio + 15 % nos dois | 556 | 1 788 | 32 426 | 24 364 | 24 992 | 32 829 | 24 559 |
-| ESA: 20 % × 20 % nos dois | 574 | 2 202 | 35 238 | 27 066 | 24 067 | 35 863 | 27 368 |
-| Orbitador E1 mínimo + lander de base | 473 | 1 558 | 29 725 | 22 192 | 24 992 | 30 100 | 22 373 |
-| Orbitador E1 máximo + lander de base | 520 | 1 558 | 30 450 | 22 620 | 24 992 | 30 840 | 22 808 |
+| **Base: orbitador E1 médio + L3 + braço + helicópteros** | 497 | 1 565 | 30 126 | 22 445 | 24 992 | 30 509 | 22 630 |
+| GSFC: E1 médio + 15 % nos dois | 556 | 1 795 | 32 470 | 24 408 | 24 992 | 32 872 | 24 602 |
+| ESA: 20 % × 20 % nos dois | 574 | 2 209 | 35 282 | 27 110 | 24 067 | 35 907 | 27 412 |
+| Orbitador E1 mínimo + lander de base | 473 | 1 565 | 29 764 | 22 231 | 24 992 | 30 139 | 22 412 |
+| Orbitador E1 máximo + lander de base | 520 | 1 565 | 30 489 | 22 659 | 24 992 | 30 879 | 22 847 |
 | Limite inferior do lander: L1 (E1 médio) | 497 | 529 | 23 759 | 16 077 | 26 950 | 23 759 | 16 077 |
 | Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada) | 497 | 2 500 | 35 873 | 28 192 | 24 067 | 36 459 | 28 474 |
 | Referência: L2 (E1 médio), antigo limite superior | 497 | 1 857 | 31 924 | 24 243 | 24 992 | 32 307 | 24 427 |

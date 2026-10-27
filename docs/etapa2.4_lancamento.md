@@ -287,3 +287,14 @@ injetados. Pior margem na forma (a) (`results/etapa2.4/lancamento.yaml`):
 
 Os dois continuam servindo. O lander não muda. Os números das seções acima são os de antes desta atualização.
 
+## Atualização (Etapa 2.5, 2026-10-27): helicópteros de coleta no lander (ADR 0009)
+A plataforma do lander passa de 1558,5 para **1564,9 kg**, com 2 helicópteros de 2,5 kg cada [F98] e margem E1.
+O braço (P-034) deixa de ser provisório: vira a coleta de reserva.
+
+O lander injetado passa de 3.727 para **3.740 kg**. Pior margem na forma (a), em `results/etapa2.4/lancamento.yaml`:
+
+| Lançador | Margem |
+| :- | -: |
+| Falcon Heavy, recuperação / descartável | +25 % / +200 % |
+| Vulcan VC2 / VC4 / VC6 | +16 % / +73 % / +122 % |
+

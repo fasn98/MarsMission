@@ -63,3 +63,14 @@ opcoes:
     Vulcan VC2: 0.21462574206215268
     Vulcan VC4: 0.8219196196482412
     Vulcan VC6: 1.3289331726165003
+- opcao: c_mais_a_escolhida
+  nome: '(c) + (a): helicópteros (primário) + braço no lander (reserva) — ESCOLHIDA'
+  coleta_prevista_kg: 94.875
+  plataforma_lander_kg: 1564.875
+  lander_injetado_kg: 3739.8415993663666
+  pior_margem_a:
+    Falcon Heavy (recuperação): 0.25096773553795826
+    Falcon Heavy (descartável): 2.001265040656188
+    Vulcan VC2: 0.1564367030792846
+    Vulcan VC4: 0.7346369710923382
+    Vulcan VC6: 1.2173610409903444

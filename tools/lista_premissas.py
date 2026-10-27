@@ -1,4 +1,5 @@
-"""Lista as premissas de config/premissas.yaml em results/fase1/premissas.md (sem edição à mão).
+"""Lista as premissas de config/premissas.yaml em results/fase1/premissas.md e, só as NÃO VALIDADAS, em
+results/fase2/premissas_nao_validadas.md (sem edição à mão).
 
 Uso: python tools/lista_premissas.py
 """
@@ -26,6 +27,19 @@ def main():
     saida = RAIZ / "results/fase1/premissas.md"
     saida.parent.mkdir(parents=True, exist_ok=True)
     saida.write_text("\n".join(md) + "\n", encoding="utf-8")
+    nao = [p for p in ps if p["status"] == "NÃO VALIDADA"]
+    md2 = ["# Premissas NÃO VALIDADAS ao fim da Fase 2 (gerado por tools/lista_premissas.py)", "",
+           "Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.", "",
+           "| Id | Nome | Valor | Unidade | Uso |", "| :- | :- | :- | :- | :- |"]
+    for p in nao:
+        valor = p["valor"]
+        if isinstance(valor, dict):
+            valor = "; ".join(f"{k}: {v}" for k, v in valor.items())
+        md2.append(f"| {p['id']} | {p['nome']} | {valor} | {p.get('unidade', '')} | {p['uso']} |")
+    md2 += ["", f"Total: {len(nao)} de {len(ps)} premissas com status NÃO VALIDADA."]
+    s2 = RAIZ / "results/fase2/premissas_nao_validadas.md"
+    s2.parent.mkdir(parents=True, exist_ok=True)
+    s2.write_text("\n".join(md2) + "\n", encoding="utf-8")
     print("\n".join(md[-1:]))
 
 
