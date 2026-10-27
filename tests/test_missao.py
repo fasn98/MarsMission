@@ -78,3 +78,15 @@ def test_limite_de_reentrada_igual_forca_bruta(semente):
         assert obtido is None
     else:
         assert obtido[0] == pytest.approx(esperado[0], rel=1e-12)
+
+
+def test_envelope_maior_dos_minimos_por_janela():
+    def c(j, classe, dv):
+        return {"id": f"{j}-{classe}", "janela_ida": j, "classe": classe,
+                "por_orbita_marte": {"alta": {"dv_total_sem_aerocaptura_km_s": dv, "dv_total_com_aerocaptura_km_s": dv - 1}}}
+    cands = [c("A", "conjuncao", 5.4), c("A", "curto", 9.0), c("A", "oposicao", 20.0),
+             c("B", "conjuncao", 5.9), c("B", "oposicao", 17.0), c("C", "conjuncao", 5.7)]
+    valor, define, minimos = ms.envelope_dimensionamento(cands, ["A", "B", "C"], ["conjuncao", "oposicao"],
+                                                         "alta", "propulsiva")
+    assert (valor, define) == (5.9, "B-conjuncao")
+    assert minimos["A"] == ("A-conjuncao", 5.4)  # a classe "curto" não entra

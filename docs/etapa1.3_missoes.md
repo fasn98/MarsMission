@@ -13,14 +13,18 @@ reentrada (P-011) estão indicados.
    - "Aerocapture has never been performed" (Wercinski, Munk, Powell & Hall, NASA/TM-2002-211386 [F21]);
    - "aerocapture has never been demonstrated at any planetary destination" (Dutta et al., NASA,
      2025, NTRS 20250006035 [F21]).
-2. **Envelope de dimensionamento** (ADR 0004): o Δv de projeto é o da pior conjunção de 2028 a 2035.
-   O valor sai de `tools/missoes.py`, pela regra em `config/missao_referencia.yaml`.
-   **Pendência:** aplicada a todas as conjunções calculadas e com o limite de reentrada dentro da
-   busca, a regra dá **6,64 km/s** (`2028-conjuncao_transito_curto`), e não os 6,17 km/s da D citados
-   no portão. A D era a pior só entre as cinco candidatas apresentadas. Falta confirmar a leitura:
-   - (a) 6,64 km/s, como está configurado;
-   - (b) só a classe conjunção sem limite de trânsito: 5,91 km/s;
-   - (c) só as candidatas apresentadas: 6,17 km/s.
+2. **Envelope de dimensionamento** (ADR 0004, regra explicitada no segundo portão de 2026-10-27):
+   - para cada janela de ida 2028–2035, o **menor Δv propulsivo admissível** sob as restrições da
+     missão robótica: reentrada ≤ 12,9 km/s, órbita de 1 sol, captura propulsiva, sem limite de
+     trânsito;
+   - envelope = o **maior desses mínimos = 5,91 km/s** (`2035-conjuncao`). Mínimos por janela:
+     2028 5,40; 2031 5,78; 2033 5,89; 2035 5,91 km/s;
+   - a classe "trânsitos ≤ 210 d" fica de fora porque o limite de 210 d é restrição de tripulação
+     do DRA 5.0 (SP p. 47);
+   - **a DLA não entra nesta regra** e será avaliada na Fase 2. Ela afeta a janela de 2033, cujo
+     mínimo tem DLA de −55,5°;
+   - histórico: no primeiro portão foram citados 6,17 km/s (a D, pior só entre as candidatas
+     apresentadas); com a classe de trânsito curto incluída, seriam 6,64 km/s.
 3. **P-009 e P-010** aprovadas, continuam NÃO VALIDADA.
 4. **Limite de reentrada de 12,9 km/s** (P-011, NÃO VALIDADA), valor da Stardust, a maior reentrada
    já feita: "The inertial entry velocity and flight-path angle for Stardust were 12.9 km/s and

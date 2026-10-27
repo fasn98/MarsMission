@@ -20,20 +20,24 @@ envelope_dimensionamento:
     - '2035'
     classes:
     - conjuncao
-    - conjuncao_transito_curto
+    - oposicao
     orbita_marte: eliptica_alta
     captura: propulsiva
-  missao_que_define: 2028-conjuncao_transito_curto
-  dv_total_km_s: 6.6445
-  elegiveis:
-    2028-conjuncao: 5.3986
-    2028-conjuncao_transito_curto: 6.6445
-    2031-conjuncao: 5.7807
-    2031-conjuncao_transito_curto: 6.1714
-    2033-conjuncao: 5.8892
-    2033-conjuncao_transito_curto: 5.8892
-    2035-conjuncao: 5.9107
-    2035-conjuncao_transito_curto: 6.0554
+  missao_que_define: 2035-conjuncao
+  dv_total_km_s: 5.9107
+  minimo_admissivel_por_janela:
+    '2028':
+      missao: 2028-conjuncao
+      dv_total_km_s: 5.3986
+    '2031':
+      missao: 2031-conjuncao
+      dv_total_km_s: 5.7807
+    '2033':
+      missao: 2033-conjuncao
+      dv_total_km_s: 5.8892
+    '2035':
+      missao: 2035-conjuncao
+      dv_total_km_s: 5.9107
 parametros:
   leo_raio_km: 6785.1366
   orbitas_marte_km:

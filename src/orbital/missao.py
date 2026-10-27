@@ -147,3 +147,20 @@ def detalhar(p: Parametros, et_dep, et_M1, et_M2, et_arr):
             "dv_total_com_aerocaptura_km_s": linha["dv_saida_terra_km_s"] + cap_a + sai,
         }
     return linha
+
+
+def envelope_dimensionamento(candidatas, janelas, classes, orbita: str, captura: str):
+    """Envelope de Δv (ADR 0004): para cada janela, o menor Δv entre as candidatas admissíveis das
+    classes dadas; o envelope é o maior desses mínimos. Devolve (valor, id que define, mínimos por janela).
+
+    As candidatas já respeitam as restrições aplicadas na busca (p. ex. limite de reentrada).
+    """
+    chave = "dv_total_sem_aerocaptura_km_s" if captura == "propulsiva" else "dv_total_com_aerocaptura_km_s"
+    minimos = {}
+    for j in janelas:
+        cs = [c for c in candidatas if c["janela_ida"] == j and c["classe"] in classes]
+        if cs:
+            m = min(cs, key=lambda c: c["por_orbita_marte"][orbita][chave])
+            minimos[j] = (m["id"], float(m["por_orbita_marte"][orbita][chave]))
+    j_pior = max(minimos, key=lambda j: minimos[j][1])
+    return minimos[j_pior][1], minimos[j_pior][0], minimos

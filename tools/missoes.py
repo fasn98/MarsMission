@@ -93,12 +93,11 @@ def main():
     # Envelope de dimensionamento (ADR 0004): regra em config/missao_referencia.yaml.
     ref = _ler("missao_referencia.yaml")
     regra = ref["envelope_dimensionamento"]
-    chave = "dv_total_sem_aerocaptura_km_s" if regra["captura"] == "propulsiva" else "dv_total_com_aerocaptura_km_s"
-    elegiveis = [c for c in candidatas if c["janela_ida"] in regra["janelas"] and c["classe"] in regra["classes"]]
-    pior = max(elegiveis, key=lambda c: c["por_orbita_marte"][regra["orbita_marte"]][chave])
-    envelope = {"regra": regra, "missao_que_define": pior["id"],
-                "dv_total_km_s": round(float(pior["por_orbita_marte"][regra["orbita_marte"]][chave]), 4),
-                "elegiveis": {c["id"]: round(float(c["por_orbita_marte"][regra["orbita_marte"]][chave]), 4) for c in elegiveis}}
+    valor, define, minimos = ms.envelope_dimensionamento(candidatas, regra["janelas"], regra["classes"],
+                                                         regra["orbita_marte"], regra["captura"])
+    envelope = {"regra": regra, "missao_que_define": define, "dv_total_km_s": round(valor, 4),
+                "minimo_admissivel_por_janela": {k: {"missao": v[0], "dv_total_km_s": round(v[1], 4)}
+                                                 for k, v in minimos.items()}}
     referencia = next(c for c in candidatas if c["id"] == ref["missao_referencia"]["id"])
     print("envelope:", envelope["missao_que_define"], envelope["dv_total_km_s"])
 

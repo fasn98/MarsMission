@@ -2,7 +2,7 @@
 
 Critério de seleção da trajetória: menor Δv propulsivo com órbita de Marte `eliptica_alta`, aerocaptura = False. Reentrada limitada a 12,9 km/s (P-011). Δv em km/s, C3 em km²/s², durações em dias.
 
-Missão de referência: **2028-conjuncao**. Envelope de dimensionamento: **6,64 km/s**, definido por 2028-conjuncao_transito_curto.
+Missão de referência: **2028-conjuncao**. Envelope de dimensionamento: **5,91 km/s**, definido por 2035-conjuncao.
 
 | Missão | Partida Terra | Chegada Marte | Partida Marte | Chegada Terra | Ida | Em Marte | Volta | Total | C3 | DLA (°) | v∞ Marte | v∞ Terra | v reentrada | Δv saída Terra |
 | :- | :- | :- | :- | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
