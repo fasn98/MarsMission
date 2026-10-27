@@ -54,8 +54,47 @@ def test_npz_array_a_array(cr, tmp_path):
     y = x.copy()
     y[1, 1] = np.nextafter(3.0, 4.0)
     np.savez_compressed(tmp_path / "c.npz", c3=y, datas=np.array(["2028-11-24"]))
-    assert cr._identicos(tmp_path / "a.npz", tmp_path / "b.npz")
-    assert not cr._identicos(tmp_path / "a.npz", tmp_path / "c.npz")
+    assert cr.avaliar(tmp_path / "a.npz", tmp_path / "b.npz")["estado"] == "identico"
+    # 1 ulp: dentro da tolerância (P-039), listado como abaixo do limite
+    r = cr.avaliar(tmp_path / "a.npz", tmp_path / "c.npz")
+    assert r["estado"] == "tolerancia" and r["abaixo"][0]["dif_abs"] > 0
+    z = x.copy()
+    z[1, 1] = 3.0 * (1 + 1e-9)
+    np.savez_compressed(tmp_path / "d.npz", c3=z, datas=np.array(["2028-11-24"]))
+    assert cr.avaliar(tmp_path / "a.npz", tmp_path / "d.npz")["estado"] == "diferente"
+    w = x.copy()
+    w[0, 1] = 1.0   # NaN que vira número: nunca tolerado
+    np.savez_compressed(tmp_path / "e.npz", c3=w, datas=np.array(["2028-11-24"]))
+    assert cr.avaliar(tmp_path / "a.npz", tmp_path / "e.npz")["estado"] == "diferente"
+
+
+def test_tolerancia_numerica_p039(cr, tmp_path):
+    """Relativa 1e-12 com piso absoluto 1e-13 (lidos de config/premissas.yaml)."""
+    rtol, atol, fpx = cr._tolerancias()
+    assert (rtol, atol, fpx) == (1e-12, 1e-13, 1e-3)
+    a, b, c, z = tmp_path / "a.yaml", tmp_path / "b.yaml", tmp_path / "c.yaml", tmp_path / "z.yaml"
+    a.write_text("c3: 9.597990318099248\nrel: -4.685807331155793e-08\nnome: x\n", encoding="utf-8")
+    b.write_text("c3: 9.597990318099326\nrel: -4.6858071395951336e-08\nnome: x\n", encoding="utf-8")   # observado no CI
+    c.write_text("c3: 9.597990318109248\nrel: -4.685807331155793e-08\nnome: x\n", encoding="utf-8")   # 1e-12 rel acima
+    z.write_text("c3: 9.597990318099248\nrel: -4.685807331155793e-08\nnome: y\n", encoding="utf-8")
+    r = cr.avaliar(a, b)
+    assert r["estado"] == "tolerancia" and len(r["abaixo"]) == 2 and not r["acima"]
+    assert cr.avaliar(a, c)["estado"] == "diferente"
+    assert cr.avaliar(a, z)["estado"] == "diferente"   # texto nunca é tolerado
+
+
+def test_png_ate_p040(cr, tmp_path):
+    import matplotlib.image as mpimg
+
+    img = np.zeros((100, 100, 3))
+    a, b, c = tmp_path / "a.png", tmp_path / "b.png", tmp_path / "c.png"
+    mpimg.imsave(a, img)
+    img[0, :10] = 1.0       # 10 de 10 000 pixels = 0,1 %: no limite
+    mpimg.imsave(b, img)
+    img[1, :1] = 1.0        # 11 pixels: acima
+    mpimg.imsave(c, img)
+    assert cr.avaliar(a, b)["estado"] == "tolerancia"
+    assert cr.avaliar(a, c)["estado"] == "diferente"
 
 
 def test_diferenca_numerica_em_markdown(cr):

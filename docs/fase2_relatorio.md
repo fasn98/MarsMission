@@ -188,3 +188,7 @@ da Fase 2, as 38 premissas (P-001 a P-038) estão com status NÃO VALIDADA. Só 
   regenerados. Errata em `docs/etapa1.4_dimensionamento.md`. Os números desta fase não mudam.
 - **Prevenção:** a verificação de CI `.github/workflows/regeneracao.yml` regenera todo o `results/` e compara com o
   versionado.
+- **"Idêntico" com tolerância declarada:** CPUs diferentes mudam os últimos dígitos (1e-16 a 8e-15 relativo, observado
+  no CI). A comparação usa as premissas novas P-039 (números: 1e-12 relativo, piso de 1e-13) e P-040 (PNG: até 0,1 %
+  dos pixels), ambas NÃO VALIDADAS. Com elas, são 40 premissas (P-001 a P-040), todas NÃO VALIDADAS
+  (`results/fase2/premissas_nao_validadas.md`).

@@ -1,8 +1,10 @@
 name: Regeneração de results/
 
 # Regenera todo o results/ numa cópia, na ordem histórica (tools/confere_regeneracao.py), e compara com o versionado:
-# YAML e Markdown byte a byte, PNG pixel a pixel, NPZ array a array, arquivos de controle sem o hash do commit.
-# Falha se algum arquivo versionado diferir ou não for regenerado, ou se a regeneração gerar arquivo sem versão.
+# números (YAML, Markdown, NPZ) e PNG comparados com tolerância declarada; arquivos de controle sem o hash do commit.
+# "Idêntico" = dentro das tolerâncias P-039 (números) e P-040 (PNG), premissas NÃO VALIDADAS; o relatório lista as
+# diferenças abaixo do limite. Falha se algum arquivo passar do limite ou não for regenerado, ou se a regeneração gerar
+# arquivo sem versão.
 # Pedido do Fabio (2026-10-27): rodar nos PRs que alteram src/, tools/ ou config/. Também roda quando muda o que
 # alimenta ou é o próprio resultado: results/, tests/data/ (dados publicados usados nas verificações), dependências.
 on:

@@ -423,3 +423,26 @@ premissas:
       tem categoria de veículo; usa-se a de eletrônica de 0–5 kg pela massa por unidade. Com a categoria de
       instrumentação (25–75 %), os 5 kg passariam de 6,4 para 7,5 kg previstos (diferença de ~1 kg).
     status: NÃO VALIDADA
+  - id: P-039
+    nome: tolerancia_regeneracao_numerica
+    valor: {relativa: 1.0e-12, piso_absoluto: 1.0e-13}
+    unidade: adimensional (|a − b| ≤ max(relativa · max(|a|, |b|), piso_absoluto))
+    uso: tools/confere_regeneracao.py — números em YAML, Markdown e NPZ de results/ regenerados contra os versionados
+    justificativa: >
+      O numpy e a OpenBLAS escolhem o código pela CPU em tempo de execução; com as mesmas versões de pacotes, a
+      regeneração no runner do CI (AMD EPYC 9V45) diferiu da local (Intel i5-13420H) de 1e-16 a 8e-15 relativo
+      (PR #11, 2026-10-27). O piso absoluto cobre valores próximos de zero (ex.: diferenças relativas DE440 × DE200
+      da ordem de 1e-8 em results/etapa1.2/efeito_efemeride_de200.yaml, com diferença absoluta observada ≤ 6e-14).
+      A precisão relevante do estudo é ~1e-4 relativo. Decisão do Fabio (2026-10-27): "idêntico" significa dentro
+      desta tolerância; as diferenças abaixo do limite são listadas em cada relatório. Sem valor publicado.
+    status: NÃO VALIDADA
+  - id: P-040
+    nome: tolerancia_regeneracao_png
+    valor: 0.001
+    unidade: fração de pixels diferentes por figura
+    uso: tools/confere_regeneracao.py — figuras PNG de results/ regeneradas contra as versionadas
+    justificativa: >
+      Com o mesmo ruído de ponto flutuante entre CPUs (P-039), linhas de contorno e rótulos se deslocam um pixel:
+      no runner do CI, 0,0002 % a 0,05 % dos pixels dos porkchops diferiram (PR #11, 2026-10-27). Os dados de origem
+      das figuras são conferidos numericamente (P-039). Decisão do Fabio (2026-10-27). Sem valor publicado.
+    status: NÃO VALIDADA

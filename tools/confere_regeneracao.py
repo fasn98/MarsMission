@@ -6,13 +6,14 @@ de física não altera nenhum resultado. A ordem e as plataformas seguem a hist�
   2. Etapas 1.4, 2.1 e 2.2 com as plataformas da época (P-016 = P-017 = 850 kg, histórico em config/plataformas.yaml,
      "antes_etapa_2_3"), como em tools/confere_2033.py;
   3. Etapas 2.3 a 2.5 com o config atual.
-Critério de "idêntico" por tipo:
-  - YAML e Markdown: byte a byte (SHA-256). Se diferir, o relatório traz valor a valor (YAML) ou número a número em cada
-    linha (Markdown), com diferença absoluta e relativa.
-  - PNG: pixel a pixel (mesma forma e mesmos valores). A compressão do PNG muda com a build da libpng/zlib (conda ou
-    wheel) sem mudar a imagem; os bytes iguais ficam registrados em "igual_bytes", só para informação.
-  - NPZ (grades do painel): array a array, porque o zip grava a hora de escrita.
-  - Arquivos de controle que gravam o hash do commit em que rodaram (CONTROLE): comparados com o hash mascarado.
+"Idêntico" significa dentro das tolerâncias declaradas (decisão do Fabio, 2026-10-27; premissas NÃO VALIDADAS):
+  - números (YAML, Markdown, NPZ): |a − b| ≤ max(relativa · max(|a|, |b|), piso absoluto), P-039. O numpy e a OpenBLAS
+    escolhem o código pela CPU, e CPUs diferentes mudam os últimos dígitos (1e-16 a 8e-15 relativo observado);
+  - PNG: até a fração de pixels diferentes da P-040 (os dados de origem das figuras são conferidos pela P-039).
+Cada arquivo sai em um de três estados: "idêntico" (byte a byte; PNG pixel a pixel; NPZ array a array; controle sem
+o hash), "dentro da tolerância" (as diferenças abaixo do limite ficam listadas no relatório, com o tamanho) ou
+"diferente" (alguma diferença acima do limite, ou de texto). Texto, estrutura ou forma diferentes nunca são tolerados.
+Os arquivos de controle que gravam o hash do commit em que rodaram (CONTROLE) são comparados com o hash mascarado.
 efeito_efemeride só roda se data/kernels/de200.bsp existir (config/kernels_verificacao.yaml); sem ele, o arquivo dele
 conta como não regenerado.
 Saída: results/conferencia/regeneracao_<rótulo>.yaml e .md (rótulo identifica o ambiente, ex.: conda, pip)
@@ -60,6 +61,8 @@ def _ignorar(pasta, nomes):
     """Pastas que não entram na cópia: as de _SO_NA_RAIZ só no topo (tests/data entra) e caches em qualquer nível."""
     na_raiz = Path(pasta) == RAIZ
     return [n for n in nomes if (na_raiz and n in _SO_NA_RAIZ) or n in ("__pycache__", ".pytest_cache") or n.endswith(".egg-info")]
+
+
 NUM = re.compile(r"[−-]?\d{1,3}(?:[  ]\d{3})+(?:,\d+)?|[−-]?\d+(?:[.,]\d+)?(?:e[+-]?\d+)?")  # 22 768 | 6,372 | 1.2e-3
 
 
@@ -78,20 +81,89 @@ def _sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def _identicos(p: Path, q: Path, rel: str = "") -> bool:
-    """Byte a byte; .png pixel a pixel; .npz array a array (bit a bit, NaN igual a NaN); controle sem o hash."""
+def _tolerancias():
+    """(relativa, piso absoluto, fração de pixels) das premissas P-039 e P-040 de config/premissas.yaml."""
+    ps = {x["id"]: x["valor"] for x in yaml.safe_load((RAIZ / "config/premissas.yaml").read_text(encoding="utf-8"))["premissas"]}
+    return float(ps["P-039"]["relativa"]), float(ps["P-039"]["piso_absoluto"]), float(ps["P-040"])
+
+
+def _dentro(a, b, rtol, atol) -> bool:
+    return abs(a - b) <= max(rtol * max(abs(a), abs(b)), atol)
+
+
+def _eh_num(x) -> bool:
+    return isinstance(x, (int, float)) and not isinstance(x, bool)
+
+
+def avaliar(p: Path, q: Path, rel: str = "") -> dict:
+    """Estado do arquivo regenerado q contra o versionado p: {"estado": "identico" | "tolerancia" | "diferente", ...}.
+
+    "abaixo" lista as diferenças dentro da tolerância e "acima", as que a excedem (com tamanho absoluto e relativo)."""
+    rtol, atol, fpx = _tolerancias()
     if rel in CONTROLE:
-        return _sem_hash(p) == _sem_hash(q)
+        if _sem_hash(p) == _sem_hash(q):
+            return {"estado": "identico"}
+        return {"estado": "diferente", "acima": [_linha_dif(*x) for x in (
+            _difs_yaml(yaml.safe_load(p.read_text(encoding="utf-8")), yaml.safe_load(q.read_text(encoding="utf-8")))
+            if p.suffix == ".yaml" else _difs_texto(p.read_text(encoding="utf-8"), q.read_text(encoding="utf-8")))]}
     if p.suffix == ".png":
         import matplotlib.image as mpimg
         a, b = mpimg.imread(p), mpimg.imread(q)
-        return a.shape == b.shape and a.dtype == b.dtype and np.array_equal(a, b)
-    if p.suffix != ".npz":
-        return _sha(p) == _sha(q)
-    with np.load(p) as a, np.load(q) as b:
-        return sorted(a.files) == sorted(b.files) and all(
-            a[k].dtype == b[k].dtype and a[k].shape == b[k].shape and
-            (np.array_equal(a[k], b[k], equal_nan=a[k].dtype.kind == "f")) for k in a.files)
+        if a.shape != b.shape or a.dtype != b.dtype:
+            return {"estado": "diferente", "png": {"forma": [list(a.shape), list(b.shape)]}}
+        d = np.abs(a.astype(float) - b.astype(float))
+        info = {"max_dif_pixel": float(d.max()), "fracao_pixels_diferentes": float((d.max(axis=-1) > 0).mean()),
+                "limite_fracao": fpx}
+        estado = "identico" if info["fracao_pixels_diferentes"] == 0 else (
+            "tolerancia" if info["fracao_pixels_diferentes"] <= fpx else "diferente")
+        return {"estado": estado, "png": info}
+    if _sha(p) == _sha(q):
+        return {"estado": "identico"}
+    if p.suffix == ".npz":
+        abaixo, acima = [], []
+        with np.load(p) as a, np.load(q) as b:
+            for k in sorted(set(a.files) | set(b.files)):
+                if k not in a.files or k not in b.files or a[k].shape != b[k].shape or a[k].dtype != b[k].dtype:
+                    acima.append({"onde": k, "versionado": "ausente, outra forma ou outro tipo", "regenerado": ""})
+                    continue
+                x, y = a[k], b[k]
+                if x.dtype.kind != "f":
+                    if not np.array_equal(x, y):
+                        acima.append({"onde": k, "versionado": "conteúdo diferente", "regenerado": ""})
+                    continue
+                if np.array_equal(x, y, equal_nan=True):
+                    continue
+                if not np.array_equal(np.isnan(x), np.isnan(y)):
+                    acima.append({"onde": k, "versionado": "NaN em posições diferentes", "regenerado": ""})
+                    continue
+                ok = ~np.isnan(x)
+                dif = np.abs(x[ok] - y[ok])
+                lim = np.maximum(rtol * np.maximum(np.abs(x[ok]), np.abs(y[ok])), atol)
+                rel_ = dif / np.where(np.abs(x[ok]) > 0, np.abs(x[ok]), np.inf)
+                r = {"onde": f"{k} ({int((dif > 0).sum())} elementos)", "versionado": "", "regenerado": "",
+                     "dif_abs": float(dif.max()), "dif_rel": float(rel_.max())}
+                (abaixo if bool((dif <= lim).all()) else acima).append(r)
+        return {"estado": "diferente" if acima else ("tolerancia" if abaixo else "identico"), "abaixo": abaixo, "acima": acima}
+    if p.suffix == ".yaml":
+        difs = _difs_yaml(yaml.safe_load(p.read_text(encoding="utf-8")), yaml.safe_load(q.read_text(encoding="utf-8")))
+        pares = [(o, x, y, x, y) for o, x, y in difs]
+    else:
+        difs = _difs_texto(p.read_text(encoding="utf-8"), q.read_text(encoding="utf-8"))
+        pares = [(o, x, y, _num(x) if isinstance(x, str) else None, _num(y) if isinstance(y, str) else None)
+                 for o, x, y in difs]
+    abaixo, acima = [], []
+    for o, x, y, nx, ny in pares:
+        dentro = _eh_num(nx) and _eh_num(ny) and "(texto)" not in o and _dentro(nx, ny, rtol, atol)
+        (abaixo if dentro else acima).append(_linha_dif(o, x, y))
+    if not difs:   # bytes diferentes, valores iguais (ex.: formatação): conta como dentro da tolerância
+        return {"estado": "tolerancia", "abaixo": [{"onde": "bytes diferentes, mesmos valores", "versionado": "", "regenerado": ""}],
+                "acima": []}
+    return {"estado": "diferente" if acima else "tolerancia", "abaixo": abaixo, "acima": acima}
+
+
+def _identicos(p: Path, q: Path, rel: str = "") -> bool:
+    """Idêntico pelo critério do estudo (dentro das tolerâncias P-039 e P-040)."""
+    return avaliar(p, q, rel)["estado"] != "diferente"
 
 
 def _cpu():
@@ -172,35 +244,6 @@ def _linha_dif(onde, a, b):
     return r
 
 
-def comparar(p: Path, q: Path):
-    """Detalhe da diferença entre o arquivo versionado p e o regenerado q."""
-    if p.suffix == ".png":
-        import matplotlib.image as mpimg
-        a, b = mpimg.imread(p), mpimg.imread(q)
-        if a.shape != b.shape:
-            return {"png": {"forma": [list(a.shape), list(b.shape)]}}
-        d = np.abs(a.astype(float) - b.astype(float))
-        return {"png": {"max_dif_pixel": float(d.max()), "fracao_pixels_diferentes": float((d.max(axis=-1) > 0).mean())}}
-    if p.suffix == ".npz":
-        with np.load(p) as a, np.load(q) as b:
-            difs = []
-            for k in sorted(set(a.files) | set(b.files)):
-                if k not in a.files or k not in b.files or a[k].shape != b[k].shape:
-                    difs.append({"onde": k, "versionado": "ausente ou outra forma", "regenerado": ""})
-                elif a[k].dtype.kind == "f":
-                    d = np.abs(a[k] - b[k])
-                    difs.append({"onde": k, "versionado": "", "regenerado": "", "dif_abs": float(np.nanmax(d)),
-                                 "dif_rel": float(np.nanmax(d / np.abs(a[k])))})
-                elif not np.array_equal(a[k], b[k]):
-                    difs.append({"onde": k, "versionado": "texto diferente", "regenerado": ""})
-        return {"valores": difs}
-    if p.suffix == ".yaml":
-        difs = _difs_yaml(yaml.safe_load(p.read_text(encoding="utf-8")), yaml.safe_load(q.read_text(encoding="utf-8")))
-    else:
-        difs = _difs_texto(p.read_text(encoding="utf-8"), q.read_text(encoding="utf-8"))
-    return {"valores": [_linha_dif(*d) for d in difs]}
-
-
 def regenerar(d: Path):
     """Roda todas as ferramentas em d, na ordem histórica. Devolve [(ferramenta, ok, motivo)]."""
     log = []
@@ -262,11 +305,8 @@ def main():
             q = d / rel
             item = {"arquivo": str(rel), "regenerado": q.exists()}
             if q.exists():
-                item["identico"] = _identicos(p, q, str(rel))
-                if p.suffix == ".png" or str(rel) in CONTROLE:
-                    item["igual_bytes"] = _sha(p) == _sha(q)
-                if not item["identico"]:
-                    item.update(comparar(p, q))
+                item.update(avaliar(p, q, str(rel)))
+                item["identico"] = item["estado"] != "diferente"
             arquivos.append(item)
         novos = sorted(str(x.relative_to(d)) for x in (d / "results").rglob("*")
                        if x.is_file() and not (base / x.relative_to(d / "results")).exists())
@@ -284,7 +324,10 @@ def main():
            "ambiente": {"python": platform.python_version(), **{k: _versao(k) for k in PACOTES}, "cpu": _cpu()},
            "ferramentas": log, "versionados": len(arquivos),
            "regenerados": sum(a["regenerado"] for a in arquivos),
-           "identicos": sum(bool(a.get("identico")) for a in arquivos),
+           "tolerancias": {"P-039": {"relativa": _tolerancias()[0], "piso_absoluto": _tolerancias()[1]},
+                           "P-040": {"fracao_pixels": _tolerancias()[2]}},
+           "identicos": sum(a.get("estado") == "identico" for a in arquivos),
+           "dentro_da_tolerancia": [a["arquivo"] for a in arquivos if a.get("estado") == "tolerancia"],
            "nao_regenerados": [a["arquivo"] for a in arquivos if not a["regenerado"]],
            "diferentes": [a["arquivo"] for a in arquivos if a["regenerado"] and not a["identico"]],
            "gerados_sem_versao": novos, "atualizados": atualizar, "arquivos": arquivos}
@@ -293,31 +336,51 @@ def main():
     amb = ", ".join(f"{k} {v}" for k, v in out["ambiente"].items() if v)
     md = [f"# Regeneração de results/ — ambiente \"{rotulo}\" (gerado por tools/confere_regeneracao.py)", "",
           f"Ambiente: {amb}. Comparado com: {out['comparado_com']}.", "",
-          f"**Versionados: {out['versionados']}; regenerados: {out['regenerados']}; idênticos pelo critério abaixo: {out['identicos']}.**", "",
+          f"**Versionados: {out['versionados']}; regenerados: {out['regenerados']}; idênticos: {out['identicos']}; "
+          f"dentro da tolerância: {len(out['dentro_da_tolerancia'])}; diferentes: {len(out['diferentes'])}.**", "",
           f"Não regenerados: {', '.join(out['nao_regenerados']) or 'nenhum'}.", "",
           f"Gerados sem versão no repositório: {', '.join(novos) or 'nenhum'}.", "",
           f"Copiados sobre os versionados (--atualizar): {', '.join(atualizar) or 'nenhum'}.", "",
-          "Critério: YAML e Markdown byte a byte; PNG pixel a pixel; NPZ array a array; arquivos de controle "
-          f"({', '.join(sorted(CONTROLE))}) sem o hash do commit.", "",
+          f"Critério (\"idêntico\" = dentro das tolerâncias): números com |a − b| ≤ max({_tolerancias()[0]:g} · max(|a|, |b|), "
+          f"{_tolerancias()[1]:g}) (P-039); PNG com até {100 * _tolerancias()[2]:g} % de pixels diferentes (P-040); "
+          f"arquivos de controle ({', '.join(sorted(CONTROLE))}) sem o hash do commit. Premissas NÃO VALIDADAS.", "",
           "Ferramentas não rodadas: " + (", ".join(f"{x['ferramenta']} ({x['motivo']})" for x in log if not x["rodou"]) or "nenhuma") + ".", "",
-          "## Arquivos diferentes", ""]
+          "## Arquivos diferentes (acima do limite)", ""]
+
+    def tabela(vals):
+        esc = lambda x: str(x).replace("|", "\\|")  # noqa: E731
+        g = lambda x: "" if x is None else format(x, ".3g")  # noqa: E731
+        t = ["| Onde | Versionado | Regenerado | Dif. absoluta | Dif. relativa |", "| :- | :- | :- | -: | -: |"]
+        t += [f"| {esc(v['onde'])} | {esc(v['versionado'])} | {esc(v['regenerado'])} | {g(v.get('dif_abs'))} | "
+              f"{g(v.get('dif_rel'))} |" for v in vals[:40]]
+        if len(vals) > 40:
+            t.append(f"| … mais {len(vals) - 40} (ver o .yaml) | | | | |")
+        return t
+
     if not out["diferentes"]:
         md.append("Nenhum.")
     for a in arquivos:
-        if not a["regenerado"] or a["identico"]:
+        if a.get("estado") != "diferente":
+            continue
+        md += [f"### {a['arquivo']}", ""] + ([f"PNG: {a['png']}"] if "png" in a else tabela(a.get("acima", [])))
+        if a.get("abaixo"):
+            md += ["", "Também abaixo do limite neste arquivo:", ""] + tabela(a["abaixo"])
+        md.append("")
+    md += ["## Diferenças abaixo do limite (dentro da tolerância)", ""]
+    if not out["dentro_da_tolerancia"]:
+        md.append("Nenhuma.")
+    for a in arquivos:
+        if a.get("estado") != "tolerancia":
             continue
         md += [f"### {a['arquivo']}", ""]
         if "png" in a:
-            md.append(f"PNG: {a['png']}")
+            md.append(f"PNG: {100 * a['png']['fracao_pixels_diferentes']:.4g} % dos pixels diferentes (limite "
+                      f"{100 * a['png']['limite_fracao']:g} %); maior diferença de pixel {a['png']['max_dif_pixel']:.3g}.")
         else:
-            md += ["| Onde | Versionado | Regenerado | Dif. absoluta | Dif. relativa |", "| :- | :- | :- | -: | -: |"]
-            for v in a["valores"][:40]:
-                esc = lambda x: str(x).replace("|", "\\|")  # noqa: E731
-                g = lambda x: "" if x is None else format(x, ".3g")  # noqa: E731
-                md.append(f"| {esc(v['onde'])} | {esc(v['versionado'])} | {esc(v['regenerado'])} | "
-                          f"{g(v.get('dif_abs'))} | {g(v.get('dif_rel'))} |")
-            if len(a["valores"]) > 40:
-                md.append(f"| … mais {len(a['valores']) - 40} diferenças (ver o .yaml) | | | | |")
+            vals = a["abaixo"]
+            mx_a = max((v.get("dif_abs") or 0 for v in vals), default=0)
+            mx_r = max((v.get("dif_rel") or 0 for v in vals), default=0)
+            md += [f"{len(vals)} diferença(s); maior absoluta {mx_a:.3g}, maior relativa {mx_r:.3g}.", ""] + tabela(vals)
         md.append("")
     (SAIDA / f"regeneracao_{rotulo}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
