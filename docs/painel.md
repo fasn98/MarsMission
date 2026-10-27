@@ -105,6 +105,8 @@ Depois, **Run** de novo. Se o `pyproject.toml` mudou, o comando de Run reinstala
   30 dias.
 - **Não encontrado na documentação oficial consultada:**
   - o formato exato do endereço publicado;
+    - **Nota (2026-10-27):** encontrado depois em [Custom domains](https://docs.replit.com/cloud-services/deployments/custom-domains):
+      `<subdomínio>.replit.app` (ver a comparação com o Streamlit Community Cloud).
   - o preço por tipo de publicação;
   - qual plano permite domínio próprio.
 
@@ -147,7 +149,7 @@ escolha é do Fabio.
 | Endereço | `<subdomínio>.replit.app` ([Custom domains](https://docs.replit.com/cloud-services/deployments/custom-domains)) | `<subdomínio>.streamlit.app` |
 | Repositório | Importação pública conferida; privado não conferido | Público, para app público |
 | Etapa de build (kernels) | Sim (`[deployment] build` do `.replit`) | Não encontrada na documentação |
-| Instalação | Hoje bloqueada pelo firewall de pacotes no pillow | Não conferida |
+| Instalação | Bloqueada pelo firewall de pacotes no pillow (observado em 2026-10-27, com streamlit 1.65.0) | Não conferida |
 
 ### Alternativa estática (GitHub Pages)
 Sem plano pago, a alternativa permanente é uma página estática no GitHub Pages do repositório. **Não foi construída.**
