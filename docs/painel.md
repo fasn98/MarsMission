@@ -65,6 +65,15 @@ Os três ambientes instalam o mesmo pacote:
 - Os commits seguintes do PR mudam em `src/orbital` só docstrings e não tocam `tools/` nem `config/`.
 - O CI repete a conferência a cada PR (`.github/workflows/regeneracao.yml`).
 
+**Nota (2026-10-27): formato dos relatórios de conferência.**
+- Desde o PR #17, o relatório de `tools/confere_regeneracao.py` registra as versões de todas as dependências do
+  `pyproject.toml` (inclusive o pillow), o Python, a CPU, o sistema e o commit.
+- Os relatórios de `results/conferencia/` anteriores ao #17 estão no formato antigo, sem pillow, sistema nem commit:
+  `regeneracao_painel`, `regeneracao_pillow13`, `regeneracao_pos_correcao` e `regeneracao_reprodutibilidade_1.4`
+  (`.md` e `.yaml`). O de `reprodutibilidade_1.4` também não registra a CPU.
+- Eles não foram regravados porque são registros datados de execuções em ambientes e commits específicos. Não entram
+  na comparação da regeneração.
+
 **Ambiente local antigo:** o env `marsmission` criado antes desta mudança não tem streamlit nem plotly. Nele, o
 pre-commit pula `tests/test_painel_app.py`. Recrie com `conda env remove -n marsmission && conda env create -f environment.yml`.
 
