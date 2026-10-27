@@ -66,6 +66,9 @@ afetados, porque põem o próprio `src/` na frente.
 Consultado na documentação oficial em 2026-10-27. **O painel não foi executado no Replit por este estudo.** O que está
 marcado "não conferido" precisa ser confirmado na primeira importação.
 
+**Nota (2026-10-27):** primeira importação feita. Resultados em "Primeira execução no workspace", abaixo: a instalação
+falhou no pillow, e o painel continua não executado no Replit.
+
 ### Importar do GitHub
 1. **Repositório público:** abrir `https://replit.com/github.com/fasn98/MarsMission` ("Rapid import").
    - Alternativa: replit.com/import → GitHub → escolher o repositório → Import.
@@ -82,6 +85,36 @@ marcado "não conferido" precisa ser confirmado na primeira importação.
    - **Não conferido:** se o ambiente do Replit mantém a instalação do `pip` entre sessões. O comando de Run reinstala a
      cada execução, sem efeito quando já está instalado.
    - **Também não conferidos:** a grafia do módulo `python-3.11` e o canal do Nix.
+     - **Nota (2026-10-27): conferido.** No workspace importado, o módulo `python-3.11` forneceu o Python 3.11.14.
+       O canal `stable-25_05` foi aceito (o `NIX_PATH` aponta `nixpkgs-stable-25_05`), e o `.replit` passou a usá-lo.
+       O canal `stable-24_05`, que estava antes no `.replit`, não foi testado.
+
+### Primeira execução no workspace (2026-10-27)
+- **Instalação: falhou.** O `pip install -e ".[painel,dev]"` parou no pillow, dependência do matplotlib e do streamlit.
+  - O índice de pacotes do Replit (`package-firewall.replit.internal`, servidor `SocketFirewall/2.12.1`) devolveu
+    HTTP 403: "Access denied: Your download has been blocked by the Socket Security Policy. Reason: Critical CVE."
+  - Bloqueados: pillow 10.4.0, 11.3.0, 12.0.0, 12.1.0, 12.2.0 e 12.3.0. O pillow 13.0.0 passa pelo firewall.
+  - As outras dependências diretas fixadas no `pyproject.toml` passaram.
+- **Kernels: conferidos.** `tools/fetch_kernels.py` baixou os dois kernels. Os MD5 batem com `config/kernels.yaml`:
+  `naif0012.tls` `25a2fff30b0dedb4d76c06727b1895b1` e `de440s.bsp` `3917ee56769db332790c751e2168843d`.
+- **Com `pillow>=13.0.0` e streamlit 1.66.1** (branch `fix/deps-pillow-13`, commit 0a46b5e; ADR 0010, nota de
+  2026-10-27), no mesmo workspace:
+  - **Instalação:** funcionou. `pip check`: "No broken requirements found".
+  - **pytest:** 183 passaram e 2 foram pulados (Vallado e Curtis, já pulados antes).
+  - **Painel:** subiu pelo comando de Run do `.replit`, com `--server.headless true` a mais. As cinco páginas foram
+    abertas num Chromium headless, sem exceção e sem alerta do Streamlit.
+  - **Console do navegador:** pela raiz `/`, vazio. Pelas URLs das páginas, dois 404 em `/<página>/_stcore/health` e
+    `/<página>/_stcore/host-config`.
+    - Em `/visao-geral` aparece ainda o aviso "The page that you have requested does not seem to exist. Running the
+      app's main page.": a página padrão fica em `/`.
+  - **Números exibidos, conferidos contra `results/`:**
+    - partida da missão de referência: 2028-11-24 (`results/etapa1.3/missoes.yaml`);
+    - orbitador injetado: 6 310 kg (6 310,3 na soma da tabela), contra 6310.348840517989 em
+      `results/etapa2.5/arquitetura.yaml`;
+    - pior margem do Vulcan VC6: 31 % no orbitador e 122 % no lander, contra 0.3141237151049956 e 1.2173610409903444
+      no mesmo arquivo.
+- **Não conferido:** o painel no navegador do próprio Replit (Webview) e pelo endereço externo; a conferência acima usou
+  `127.0.0.1:8501` dentro do workspace.
 
 ### Atualizar
 Nada de editar código no Replit. Para trazer uma versão nova da `main`:
