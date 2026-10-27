@@ -89,3 +89,31 @@ def dv_desvio(mu: float, vinf: float, r_interface: float, gama_graus: float, rp_
     """
     db = (h_periapse(mu, vinf, rp_seguro) - h_entrada(mu, vinf, r_interface, gama_graus)) / vinf
     return float(abs(db) / antecedencia_s)
+
+
+def dv_transferencia_coaxial(mu: float, rp1: float, ra1: float, rp2: float, ra2: float) -> float:
+    """Δv de duas queimas entre órbitas coaxiais (mesma linha das apsides, mesmo plano).
+
+    Primeira queima no periapse da órbita 1 leva o apoapse a ra2; segunda queima no novo apoapse leva
+    o periapse a rp2. Vale quando o periapse da órbita 1 coincide com o da final ou quando a ordem
+    inversa não é mais barata; o chamador escolhe a sequência.
+    """
+    d1 = abs(v_orbita(mu, rp1, rp1, ra2) - v_orbita(mu, rp1, rp1, ra1))
+    d2 = abs(v_orbita(mu, ra2, rp2, ra2) - v_orbita(mu, ra2, rp1, ra2))
+    return float(d1 + d2)
+
+
+def dv_saida_de_orbita(mu: float, r_orbita_apo: float, rp_orbita: float, r_interface: float) -> float:
+    """Δv no apoapse r_orbita_apo de uma órbita (rp_orbita, r_orbita_apo) para baixar o periapse
+    até r_interface (entrada atmosférica a partir de órbita)."""
+    return float(v_orbita(mu, r_orbita_apo, rp_orbita, r_orbita_apo) - v_orbita(mu, r_orbita_apo, r_interface, r_orbita_apo))
+
+
+def v_entrada_de_orbita(mu: float, r_apo: float, r_interface: float) -> float:
+    """Velocidade inercial na interface de entrada, na elipse (r_interface, r_apo) depois da saída de órbita."""
+    return float(v_orbita(mu, r_interface, r_interface, r_apo))
+
+
+def v_rotacao(raio_equatorial: float, periodo_rotacao_s: float, latitude_graus: float) -> float:
+    """Velocidade da superfície devida à rotação do planeta na latitude dada (km/s)."""
+    return float(2.0 * np.pi * raio_equatorial / periodo_rotacao_s * np.cos(np.radians(latitude_graus)))

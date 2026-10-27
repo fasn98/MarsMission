@@ -62,3 +62,24 @@ def test_desvio_cai_com_a_antecedencia():
     a = mn.dv_desvio(MU, 5.44, 6500.0, -25.0, 6678.0, 86400.0)
     b = mn.dv_desvio(MU, 5.44, 6500.0, -25.0, 6678.0, 2 * 86400.0)
     assert a == pytest.approx(2 * b, rel=1e-12)
+
+
+def test_coaxial_entre_circulares_igual_hohmann():
+    hohmann = (np.sqrt(MU / R1) * (np.sqrt(2 * R2 / (R1 + R2)) - 1)
+               + np.sqrt(MU / R2) * (1 - np.sqrt(2 * R1 / (R1 + R2))))
+    assert mn.dv_transferencia_coaxial(MU, R1, R1, R2, R2) == pytest.approx(hohmann, rel=1e-13)
+
+
+def test_saida_de_orbita_e_entrada_por_energia():
+    r, rei = 3800.0, 3521.0
+    dv = mn.dv_saida_de_orbita(MU_M := 42828.37, r, r, rei)
+    v_apo = np.sqrt(2 * MU_M * rei / (r * (r + rei)))
+    assert dv == pytest.approx(np.sqrt(MU_M / r) - v_apo, rel=1e-13)
+    # energia conservada entre o apoapse e a interface
+    v_ei = mn.v_entrada_de_orbita(MU_M, r, rei)
+    assert v_ei**2 / 2 - MU_M / rei == pytest.approx(v_apo**2 / 2 - MU_M / r, rel=1e-12)
+
+
+def test_rotacao_no_equador_e_nos_polos():
+    assert mn.v_rotacao(3396.19, 88642.66, 0.0) == pytest.approx(2 * np.pi * 3396.19 / 88642.66, rel=1e-15)
+    assert mn.v_rotacao(3396.19, 88642.66, 90.0) == pytest.approx(0.0, abs=1e-15)

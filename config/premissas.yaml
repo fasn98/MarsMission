@@ -169,3 +169,51 @@ premissas:
       sem análogo direto (orbitador químico com captura em órbita), o centro em escala logarítmica é
       a escolha neutra. Leva os sensores de encontro, que o CCRS de 2021 não inclui ("w/o RSS" [F22]).
     status: NÃO VALIDADA
+  - id: P-017
+    nome: plataforma_superficie_kg
+    valor: 850
+    faixa: [284, 2500]
+    unidade: kg (massa pousada sem o MAV)
+    uso: config/superficie.yaml — massa pousada = MAV + plataforma de superfície
+    justificativa: >
+      Plataforma de pouso (estrutura, pernas, energia, aviônica, sistema de lançamento do MAV,
+      transferência de amostras). Limite inferior: lander Phoenix, 410 kg com 67 kg de propelente e
+      59 kg de instrumentos, ou seja, 284 kg secos sem carga [F40]. Limite superior: SRL de 2024, capacidade
+      pousada de ~2900 kg [F41] menos o MAV de 400 kg [F35], ou seja, 2500 kg (inclui elementos do MSR
+      que podem não se aplicar). Base ≈ média geométrica (√(284 × 2500) ≈ 843 kg), arredondada para 850 kg,
+      pelo mesmo critério da P-016. ATENÇÃO: é o SEGUNDO uso do critério da média geométrica sem análogo
+      direto (o primeiro foi a P-016); as duas bases têm a mesma fragilidade e devem ser revistas juntas.
+      Valor sem fonte direta.
+    status: NÃO VALIDADA
+  - id: P-018
+    nome: razao_massa_pousada_entrada
+    valor: {entrada_direta: 0.509, a_partir_de_orbita: 0.624}
+    unidade: adimensional (massa pousada / massa de entrada)
+    uso: config/superficie.yaml — massa do sistema de entrada, descida e pouso
+    justificativa: >
+      Entrada direta: SRL de 2024, 5700 kg de entrada a 5,4 km/s e ~2900 kg pousados [F41]. A partir de
+      órbita: Viking, 980 kg de entrada e 612 kg pousados (Way et al. 2006, Tabela 1 [F42]), com entrada a
+      ~4,6 km/s [F43]. Aplicar essas razões a outras massas e velocidades de entrada é extrapolação.
+    status: NÃO VALIDADA
+  - id: P-019
+    nome: mav_estagios
+    valor: {fracao_estrutural: 0.286, fracao_dv_estagio_1: 0.481}
+    unidade: adimensional
+    uso: config/superficie.yaml — dimensionamento do MAV sólido de dois estágios
+    justificativa: >
+      Do MAV sólido de 2019 [F34]: 394 kg ao todo, 16 kg de carga útil, 216 + 54 kg de propelente; o inerte
+      total (108 kg, inclui aviônica e estrutura) dá ε = 108/378 = 0,286 para o conjunto. A divisão por
+      estágio não é publicada; supõe-se o mesmo ε nos dois. Com isso, a fração do Δv do 1º estágio
+      calculada para aquele projeto é 0,481. Valores derivados com hipótese de divisão igual.
+    status: NÃO VALIDADA
+  - id: P-020
+    nome: aerofrenagem_orbitador
+    valor: {dv_saida_km_s: 0.090, duracao_dias: 205}
+    unidade: km/s; dias
+    uso: config/superficie.yaml — arquitetura S4
+    justificativa: >
+      Valores do estudo de arquitetura do ERO (Joffre et al., Airbus/ESA [F44], pp. 9–10), para descer de
+      uma órbita de 1 sol até ~300 km com coeficiente balístico de 50 kg/m² e pressão dinâmica de pico de
+      0,5 N/m². O coeficiente balístico deste orbitador não foi calculado; aplicar esses valores é extrapolação.
+      A aerofrenagem já foi feita em voo em Marte (o próprio estudo toma o TGO como referência de cenário).
+    status: NÃO VALIDADA

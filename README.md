@@ -12,6 +12,16 @@ Autor: Fabio Nogueira ([@fasn98](https://github.com/fasn98)). O cenário tripula
 | 1.3 | Missões completas (classes conjunção e oposição), Δv a partir de órbitas de estacionamento; comparação com DRA 5.0 | missão de referência (ADR 0003) e envelope de 5,91 km/s (ADR 0004) definidos |
 | 1.4 | Carga útil (CU-2), orçamento de Δv com margem, dimensionamento por estágios (regra iii) e comparação com o MSR | concluída; relatório da Fase 1 em docs/fase1_relatorio.md |
 
+## Fase 2 — Arquitetura e dimensionamento
+
+| Etapa | Conteúdo | Estado |
+| :- | :- | :- |
+| 2.1 | Arquitetura de superfície: pouso, subida (MAV) e encontro | decidida: família S2, encontro 300 × 18.483 km (ADR 0005) |
+| 2.2 | Estudo de troca do ISRU | não iniciada |
+| 2.3 | Plataforma do orbitador por subsistema | não iniciada |
+| 2.4 | Lançamento e DLA | não iniciada |
+| 2.5 | Arquitetura integrada | não iniciada |
+
 Modelo: cônicas emendadas, manobras impulsivas, sem perturbações. As limitações estão descritas no
 relatório de cada etapa.
 
