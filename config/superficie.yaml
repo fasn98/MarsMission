@@ -1,0 +1,64 @@
+# Etapa 2.1 — arquitetura de superfície (pouso, subida e encontro). tools/superficie.py.
+# Fontes em docs/fontes.md (F34–F42); valores sem fonte = premissas (config/premissas.yaml).
+
+marte:
+  raio_interface_entrada_km: {valor: 3522.2, fonte: "[F36] Karlgaard et al. AAS 13-307, p. 3: \"Entry Interface Point (EIP) defined at 3522.2 km from the center of Mars\""}
+  periodo_rotacao_s: {valor: 88642.66, fonte: "[F17] pck00011.tpc, BODY499_PM, taxa 350,891982443297 °/dia (período calculado aqui)"}
+
+sitio_e_encontro:
+  latitude_sitio_graus: {valor: 18.85, fonte: "[F34] Jackman et al. IAC-19, p. 3: Jezero, \"18.85 degrees\""}
+  inclinacao_encontro_graus: {valor: 27.3, fonte: "[F35] Yaghoubi & Maynor, IEEE Aero 2022, p. 3: \"inclination angle of 27.3°\""}
+  orbita_baixa_alt_km: {valor: 380, fonte: "[F35] p. 3: \"nominal injection orbit of 380km\""}
+
+subida:
+  # Δv de subida com perdas, POST II, lançamento a 0° de latitude rumo leste, para 100 × 100 km.
+  dv_100x100_km_s: {valor: 4.0279, fonte: "[F37] Bowles et al., NASA/TM-2013-216620, Tabela 1, p. 17: \"(100,100) 3503 4027.9\""}
+  # A subida para outras órbitas é composta: Δv(100×100) + transferência coaxial ideal até a órbita-alvo
+  # + déficit de rotação por lançar na inclinação de encontro em vez de rumo leste no equador,
+  # v_eq·(1 − cos i). Composição conferida contra as outras linhas da mesma tabela (tests/test_superficie.py).
+
+mav:
+  carga_util_kg: {valor: 16, fonte: "[F34] p. 4: \"Payload (30 sample tubes): 16 kg\""}
+  isp_s: {estagio_1: 293, estagio_2: 282, fonte: "[F34] p. 4: \"1st stage avg ISP: 293 s\"; \"2nd stage avg ISP: 282 s\""}
+  fracao_estrutural: {valor: 0.286, premissa: P-019}
+  fracao_dv_estagio_1: {valor: 0.481, premissa: P-019}
+
+descida:
+  # Só para o orçamento de Δv; a massa do sistema de entrada sai da razão pousada/entrada (P-018).
+  velocidade_inicio_kms: {valor: 0.08214, fonte: "[F38] Karlgaard et al. 2022 (Mars 2020), Tabela 8: separação do backshell a 82,14 m/s"}
+  tempo_queima_s: {valor: 61.203, fonte: "[F38] Tabela 8: separação do backshell a 897,671 s, toque a 958,874 s (diferença calculada aqui)"}
+  # Perda gravitacional na forma vertical, g·t: exata para descida vertical; em trajetória inclinada a
+  # perda é ∫g·sen γ dt, menor. Uso da forma vertical = escolha conservadora. Fonte da equação: [F39].
+
+lander:
+  plataforma_superficie_kg: {valor: 850, premissa: P-017}
+  razao_pousada_entrada:
+    entrada_direta: {valor: 0.509, premissa: P-018}
+    a_partir_de_orbita: {valor: 0.624, premissa: P-018}
+  propulsao_orbital:  # captura e saída de órbita do lander (arquitetura S3): mesmos valores dos estágios de Marte da Fase 1
+    isp_s: {valor: 321, fonte: "[F28]"}
+    fracao_estrutural: {valor: 0.24, fonte: "[F22] (ε calculado na Fase 1)"}
+
+aerofrenagem:
+  # Descida do orbitador da órbita de 1 sol até a órbita baixa por aerofrenagem (só na arquitetura S4).
+  dv_saida_aerofrenagem_km_s: {valor: 0.090, premissa: P-020, fonte: "[F44] Joffre et al. (Airbus/ESA), p. 9: walk-out \"is the most Delta-V consuming phase (circa 90 m/s)\""}
+  duracao_dias: {valor: 205, premissa: P-020, fonte: "[F44] p. 10: \"ballistic coefficient of 50 kg/m2 and a peak dynamic pressure of 0.5 N/m2 … A/B duration of 205 days\""}
+
+arquiteturas:
+  S1:
+    nome: "Entrada direta + encontro em órbita baixa circular (como o MSR)"
+    entrada: direta
+    encontro: orbita_baixa
+  S2:
+    nome: "Entrada direta + encontro na órbita de 1 sol (orbitador não muda de órbita)"
+    entrada: direta
+    encontro: um_sol
+  S3:
+    nome: "Pouso a partir da órbita de 1 sol (lander se captura) + encontro em órbita baixa circular"
+    entrada: orbita
+    encontro: orbita_baixa
+  S4:
+    nome: "Entrada direta + encontro em órbita baixa; orbitador desce por aerofrenagem"
+    entrada: direta
+    encontro: orbita_baixa
+    orbitador_desce_por: aerofrenagem

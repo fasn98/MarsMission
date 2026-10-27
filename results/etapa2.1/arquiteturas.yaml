@@ -1,0 +1,144 @@
+gerado_por: tools/superficie.py
+margem_dv: 0.1
+arquiteturas:
+  S1:
+    nome: Entrada direta + encontro em órbita baixa circular (como o MSR)
+    missao_A:
+      vinf_chegada_marte_km_s: 2.9707
+      v_entrada_km_s: 5.7571
+      dv_orbitador_descer_ate_encontro_km_s: 1.1979
+      dv_orbitador_extra_saida_marte_km_s: 1.1774
+      modo_saida: subir para 1 sol e partir
+      massa_entrada_kg: 2340.6
+      massa_lander_na_chegada_kg: 2340.6
+      dv_orbitador_extra_total_km_s: 2.3753
+    envelope:
+      vinf_chegada_marte_km_s: 3.4843
+      v_entrada_km_s: 6.0382
+      dv_orbitador_descer_ate_encontro_km_s: 1.1979
+      dv_orbitador_extra_saida_marte_km_s: 1.1774
+      modo_saida: subir para 1 sol e partir
+      massa_entrada_kg: 2340.6
+      massa_lander_na_chegada_kg: 2340.6
+      dv_orbitador_extra_total_km_s: 2.3753
+    mav_glom_kg: 341.4
+    mav_estagios:
+    - nome: mav_1
+      propelente_kg: 183.5
+      inerte_kg: 73.5
+    - nome: mav_2
+      propelente_kg: 48.8
+      inerte_kg: 19.6
+    massa_pousada_kg: 1191.4
+    dv_trechos_km_s:
+      subida_MAV: 4.1869
+      descida_propulsiva (só orçamento): 0.3094
+    orbitador_massa_orbita_baixa_kg:
+      missao_A: 92936.0
+      regra_iii: 1109089.1
+  S2:
+    nome: Entrada direta + encontro na órbita de 1 sol (orbitador não muda de órbita)
+    missao_A:
+      vinf_chegada_marte_km_s: 2.9707
+      v_entrada_km_s: 5.7571
+      massa_entrada_kg: 5248.4
+      massa_lander_na_chegada_kg: 5248.4
+      dv_orbitador_extra_total_km_s: 0.0
+    envelope:
+      vinf_chegada_marte_km_s: 3.4843
+      v_entrada_km_s: 6.0382
+      massa_entrada_kg: 5248.4
+      massa_lander_na_chegada_kg: 5248.4
+      dv_orbitador_extra_total_km_s: 0.0
+    mav_glom_kg: 1821.4
+    mav_estagios:
+    - nome: mav_1
+      propelente_kg: 1134.5
+      inerte_kg: 454.4
+    - nome: mav_2
+      propelente_kg: 154.6
+      inerte_kg: 61.9
+    massa_pousada_kg: 2671.4
+    dv_trechos_km_s:
+      subida_MAV: 5.2956
+      descida_propulsiva (só orçamento): 0.3094
+    orbitador_massa_orbita_baixa_kg:
+      missao_A: 13587.0
+      regra_iii: 22833.5
+  S3:
+    nome: Pouso a partir da órbita de 1 sol (lander se captura) + encontro em órbita
+      baixa circular
+    missao_A:
+      vinf_chegada_marte_km_s: 2.9707
+      dv_captura_lander_km_s: 1.0774
+      dv_saida_de_orbita_km_s: 0.0071
+      v_entrada_km_s: 4.7133
+      propelente_lander_orbital_kg: 1029.5
+      dv_orbitador_descer_ate_encontro_km_s: 1.1979
+      dv_orbitador_extra_saida_marte_km_s: 1.1774
+      modo_saida: subir para 1 sol e partir
+      massa_entrada_kg: 1909.3
+      massa_lander_na_chegada_kg: 3263.9
+      dv_orbitador_extra_total_km_s: 2.3753
+    envelope:
+      vinf_chegada_marte_km_s: 3.4843
+      dv_captura_lander_km_s: 1.3619
+      dv_saida_de_orbita_km_s: 0.0071
+      v_entrada_km_s: 4.7133
+      propelente_lander_orbital_kg: 1452.6
+      dv_orbitador_descer_ate_encontro_km_s: 1.1979
+      dv_orbitador_extra_saida_marte_km_s: 1.1774
+      modo_saida: subir para 1 sol e partir
+      massa_entrada_kg: 1909.3
+      massa_lander_na_chegada_kg: 3820.6
+      dv_orbitador_extra_total_km_s: 2.3753
+    mav_glom_kg: 341.4
+    mav_estagios:
+    - nome: mav_1
+      propelente_kg: 183.5
+      inerte_kg: 73.5
+    - nome: mav_2
+      propelente_kg: 48.8
+      inerte_kg: 19.6
+    massa_pousada_kg: 1191.4
+    dv_trechos_km_s:
+      subida_MAV: 4.1869
+      descida_propulsiva (só orçamento): 0.3094
+    orbitador_massa_orbita_baixa_kg:
+      missao_A: 92936.0
+      regra_iii: 1109089.1
+  S4:
+    nome: Entrada direta + encontro em órbita baixa; orbitador desce por aerofrenagem
+    missao_A:
+      vinf_chegada_marte_km_s: 2.9707
+      v_entrada_km_s: 5.7571
+      dv_orbitador_descer_ate_encontro_km_s: 0.09
+      dv_orbitador_extra_saida_marte_km_s: 1.1774
+      modo_saida: subir para 1 sol e partir
+      massa_entrada_kg: 2340.6
+      massa_lander_na_chegada_kg: 2340.6
+      dv_orbitador_extra_total_km_s: 1.2674
+    envelope:
+      vinf_chegada_marte_km_s: 3.4843
+      v_entrada_km_s: 6.0382
+      dv_orbitador_descer_ate_encontro_km_s: 0.09
+      dv_orbitador_extra_saida_marte_km_s: 1.1774
+      modo_saida: subir para 1 sol e partir
+      massa_entrada_kg: 2340.6
+      massa_lander_na_chegada_kg: 2340.6
+      dv_orbitador_extra_total_km_s: 1.2674
+    mav_glom_kg: 341.4
+    mav_estagios:
+    - nome: mav_1
+      propelente_kg: 183.5
+      inerte_kg: 73.5
+    - nome: mav_2
+      propelente_kg: 48.8
+      inerte_kg: 19.6
+    massa_pousada_kg: 1191.4
+    dv_trechos_km_s:
+      subida_MAV: 4.1869
+      descida_propulsiva (só orçamento): 0.3094
+    orbitador_massa_orbita_baixa_kg:
+      missao_A: 29647.2
+      regra_iii: 60311.1
