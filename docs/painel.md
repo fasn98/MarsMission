@@ -149,7 +149,7 @@ escolha é do Fabio.
 | Endereço | `<subdomínio>.replit.app` ([Custom domains](https://docs.replit.com/cloud-services/deployments/custom-domains)) | `<subdomínio>.streamlit.app` |
 | Repositório | Importação pública conferida; privado não conferido | Público, para app público |
 | Etapa de build (kernels) | Sim (`[deployment] build` do `.replit`) | Não encontrada na documentação |
-| Instalação | O pillow 13.0.0 passa no firewall de pacotes; o pillow até a 12.3.0, exigido pelo streamlit 1.65.0, era bloqueado (observação de 2026-10-27, sem fonte oficial do Replit) | Não conferida |
+| Instalação | O pillow 13.0.0 passa no firewall de pacotes; o pillow de 10.4.0 a 12.3.0 (o streamlit 1.65.0 exige `pillow<13`) era bloqueado (observação de 2026-10-27, sem fonte oficial do Replit) | Não conferida |
 
 ### Alternativa estática (GitHub Pages)
 Sem plano pago, a alternativa permanente é uma página estática no GitHub Pages do repositório. **Não foi construída.**
