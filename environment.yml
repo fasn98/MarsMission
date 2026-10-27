@@ -1,8 +1,11 @@
+# Fonte única do ambiente: usada localmente (conda env create -f environment.yml)
+# e pelo CI (.github/workflows/ci.yml). Versões conferidas no ambiente local em 2026-10-26.
 name: marsmission
 channels:
   - conda-forge
+  - nodefaults
 dependencies:
-  - python=3.11
+  - python=3.11.18
   - numpy=2.4.6
   - scipy=1.17.1
   - matplotlib=3.11.2

@@ -1,6 +1,6 @@
 # ADR 0001 — Estrutura do repositório
 
-Status: Proposed
+Status: Accepted (Fabio, 2026-10-26)
 Data: 2026-10-26
 
 ## Contexto
@@ -17,8 +17,9 @@ proibir resultado escrito à mão. O repositório também precisa rodar no CI do
   da API, com a URL da consulta, gerados por script.
 - O hook de pre-commit em `.githooks/` (ativado com `core.hooksPath`) roda o pytest. O CI roda o
   mesmo pytest em PRs e na main.
-- Ambiente: conda `marsmission` (`environment.yml`). `requirements.txt` com as mesmas versões fixadas, para o CI.
+- Ambiente: `environment.yml` (conda-forge, versões fixas) é a fonte única, usada localmente e no CI
+  (`conda-incubator/setup-miniconda`).
 
 ## Consequências
-- Clonar e testar exige baixar ~120 MB uma vez.
+- Clonar e testar exige baixar ~33 MB de kernels uma vez.
 - O hook depende do Python do ambiente ativo (`MARSMISSION_PYTHON` pode forçar outro).

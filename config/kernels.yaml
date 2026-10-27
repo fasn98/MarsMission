@@ -1,5 +1,5 @@
 # Kernels SPICE usados pelo projeto. Baixados e conferidos por tools/fetch_kernels.py.
-# Fontes: ver docs/fontes.md [F1] (DE440) e [F2] (naif0012.tls).
+# Fontes: ver docs/fontes.md [F1] (DE440, versão curta de440s) e [F2] (naif0012.tls).
 diretorio: data/kernels
 kernels:
   - arquivo: naif0012.tls
@@ -8,8 +8,9 @@ kernels:
     # no download de 2026-10-26; serve só para detectar mudança do arquivo.
     md5: 25a2fff30b0dedb4d76c06727b1895b1
     md5_fonte: calculado localmente
-  - arquivo: de440.bsp
-    url: https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440.bsp
+  # de440s.bsp: mesma solução DE440, intervalo reduzido 1849–2150 (ADR 0002).
+  - arquivo: de440s.bsp
+    url: https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp
     # MD5 publicado pelo NAIF em spk/planets/aa_checksums.txt (conferido em 2026-10-26).
-    md5: c9d581bfd84209dbeee8b1583939b148
+    md5: 3917ee56769db332790c751e2168843d
     md5_fonte: https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/aa_checksums.txt

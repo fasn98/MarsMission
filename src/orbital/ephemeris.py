@@ -1,6 +1,7 @@
 """Acesso às efemérides planetárias via SPICE (spiceypy).
 
-Efemérides: JPL DE440 (Park et al., 2021, AJ 161:105) — docs/fontes.md [F1].
+Efemérides: JPL DE440 (Park et al., 2021, AJ 161:105), arquivo de440s.bsp
+(1849–2150) — docs/fontes.md [F1], ADR 0002.
 Leap seconds: NAIF naif0012.tls — docs/fontes.md [F2].
 
 Convenções:
@@ -23,7 +24,7 @@ RAIZ = Path(__file__).resolve().parents[2]
 CONFIG_KERNELS = RAIZ / "config" / "kernels.yaml"
 
 # Códigos NAIF (NAIF, "NAIF Integer ID codes" Required Reading).
-# DE440 traz o baricentro de Marte (4), não o centro do corpo (499);
+# de440s.bsp traz o baricentro de Marte (4), não o centro do corpo (499);
 # a diferença é dominada por Fobos e Deimos e fica na ordem de decímetros.
 SOL = "10"
 TERRA = "399"

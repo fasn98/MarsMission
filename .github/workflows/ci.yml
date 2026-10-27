@@ -8,18 +8,24 @@ on:
 jobs:
   pytest:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}   # login shell: ativa o ambiente conda em cada passo
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      # Ambiente criado a partir do mesmo environment.yml usado localmente.
+      - uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: "3.11"
-          cache: pip
+          miniforge-version: latest
+          environment-file: environment.yml
+          activate-environment: marsmission
+          auto-activate-base: false
 
-      - name: Instalar dependências
-        run: pip install -r requirements.txt
+      - name: Versões instaladas
+        run: conda list | grep -E "^(python|numpy|scipy|matplotlib|pytest|pyyaml|spiceypy) "
 
-      # Kernels SPICE (~120 MB) ficam em cache; a chave muda se config/kernels.yaml mudar.
+      # Kernels SPICE (~33 MB) ficam em cache; a chave muda se config/kernels.yaml mudar.
       - name: Cache dos kernels SPICE
         uses: actions/cache@v4
         with:

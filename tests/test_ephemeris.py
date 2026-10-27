@@ -64,7 +64,7 @@ def test_estado_heliocentrico_confere_com_horizons(arquivo, alvo):
 
 
 def test_kernels_cobrem_o_periodo_da_fase1():
-    """As janelas da Fase 1 (2028–2035, mais retorno) precisam estar dentro do DE440."""
+    """As janelas da Fase 1 (2028–2035, mais retorno) precisam estar dentro do de440s.bsp."""
     import spiceypy as spice
 
     eph.carregar_kernels()
