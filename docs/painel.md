@@ -70,7 +70,7 @@ Os três ambientes instalam o mesmo pacote:
   `pyproject.toml` (inclusive o pillow), o Python, a CPU, o sistema e o commit.
 - Os relatórios de `results/conferencia/` anteriores ao #17 estão no formato antigo, sem pillow, sistema nem commit:
   `regeneracao_painel`, `regeneracao_pillow13`, `regeneracao_pos_correcao` e `regeneracao_reprodutibilidade_1.4`
-  (`.md` e `.yaml`).
+  (`.md` e `.yaml`). O de `reprodutibilidade_1.4` também não registra a CPU.
 - Eles não foram regravados porque são registros datados de execuções em ambientes e commits específicos. Não entram
   na comparação da regeneração.
 
