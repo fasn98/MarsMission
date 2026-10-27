@@ -66,6 +66,7 @@ Toda constante ou dado externo usado no código cita uma entrada desta lista no 
 | F59 | McCollum, L.; Schnell, A.; Yaghoubi, D. (NASA MSFC). IEEE Aerospace 2019 (NTRS 20190002123), p. 3: "The liquid MAV concept had issues meeting the volume and mass constraints" | Critério de volume do MSR | https://ntrs.nasa.gov/citations/20190002123 |
 | F60 | Prince, A.; Kibbey, T.; Karp, A. *A Design for a Two-Stage Solid Mars Ascent Vehicle*. AIAA 2019-4149, p. 3: o lander deve manter o MAV "between -40 °C and +40 °C" | Ambiente térmico do MAV | https://ntrs.nasa.gov/citations/20190030430 |
 | F61 | Trinh, H. P.; Burnside, C. G.; Williams, H. A. *Assessment of MON-25/MMH Propellant System…* (NTRS 20190033304), p. 2: "the freezing temperature of NTO is -11oC … while the one of MMH is around -52oC" | Congelamento dos hipergólicos | https://ntrs.nasa.gov/citations/20190033304 |
+| F62 | Humphries, C. W.; Taylor, R. W. *Apollo Experience Report – Ascent Propulsion System*. NASA TN D-7082, março de 1973 (NTRS 19730010173): resumo, "hypergolic bipropellants and a pressure-fed ablatively cooled engine … 3500 pounds of thrust"; p. 1, "A single-engine concept was chosen"; resumo, "only on one series, lunar module-3, was a system problem indicated" (falha do regulador primário de hélio) | Precedente do MAV hipergólico pressurizado | https://ntrs.nasa.gov/citations/19730010173 |
 
 Referências previstas para etapas seguintes (ainda não usadas no código):
 (nenhuma pendente)

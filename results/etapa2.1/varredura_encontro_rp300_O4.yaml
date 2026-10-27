@@ -3,1343 +3,1343 @@ periapse_alt_km: 300
 minimos:
   quimico/total_missao_A_kg:
     apoapse_alt_km: 33793.0
-    massa_kg: 20571.4
-    mav_glom_kg: 279.9
+    massa_kg: 20664.4
+    mav_glom_kg: 295.0
     no_extremo: true
   quimico/total_regra_iii_kg:
     apoapse_alt_km: 33793.0
-    massa_kg: 29855.5
-    mav_glom_kg: 279.9
+    massa_kg: 29948.5
+    mav_glom_kg: 295.0
     no_extremo: true
 escolha:
   regra: menor apoapse com total_regra_iii_kg ≤ (1 + 0.05) × mínimo
   versao: quimico
-  minimo_kg: 29855.5
+  minimo_kg: 29948.5
   apoapse_alt_km: 26949.8
-  massa_regra_iii_kg: 31142.4
-  massa_missao_A_kg: 21206.7
-  acima_do_minimo: 0.04310428564251145
-  mav_glom_kg: 271.0
+  massa_regra_iii_kg: 31233.3
+  massa_missao_A_kg: 21297.6
+  acima_do_minimo: 0.042900312202614366
+  mav_glom_kg: 285.8
   dv_mav_km_s: 5.2554
-  lander_orbita_baixa_kg: 6888.9
+  lander_orbita_baixa_kg: 6979.8
 pontos:
 - apoapse_alt_km: 380.0
   dv_mav_km_s: 4.1688
-  mav_glom_kg: 129.7
-  lander_orbita_baixa_kg: 6020.7
+  mav_glom_kg: 138.3
+  lander_orbita_baixa_kg: 6073.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.3517
     orbitador_missao_A_kg: 89586.7
-    total_missao_A_kg: 95607.4
+    total_missao_A_kg: 95660.4
     dv_extra_orbitador_regra_iii_km_s: 2.3517
     orbitador_regra_iii_kg: 850167.9
-    total_regra_iii_kg: 856188.6
+    total_regra_iii_kg: 856241.6
 - apoapse_alt_km: 394.6
   dv_mav_km_s: 4.1721
-  mav_glom_kg: 130.0
-  lander_orbita_baixa_kg: 6022.3
+  mav_glom_kg: 138.6
+  lander_orbita_baixa_kg: 6075.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.3451
     orbitador_missao_A_kg: 88694.3
-    total_missao_A_kg: 94716.6
+    total_missao_A_kg: 94769.7
     dv_extra_orbitador_regra_iii_km_s: 2.3451
     orbitador_regra_iii_kg: 798148.4
-    total_regra_iii_kg: 804170.7
+    total_regra_iii_kg: 804223.9
 - apoapse_alt_km: 409.8
   dv_mav_km_s: 4.1755
-  mav_glom_kg: 130.2
-  lander_orbita_baixa_kg: 6024.0
+  mav_glom_kg: 138.9
+  lander_orbita_baixa_kg: 6077.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.3384
     orbitador_missao_A_kg: 87788.5
-    total_missao_A_kg: 93812.5
+    total_missao_A_kg: 93865.7
     dv_extra_orbitador_regra_iii_km_s: 2.3384
     orbitador_regra_iii_kg: 750581.9
-    total_regra_iii_kg: 756605.9
+    total_regra_iii_kg: 756659.1
 - apoapse_alt_km: 425.5
   dv_mav_km_s: 4.1789
-  mav_glom_kg: 130.5
-  lander_orbita_baixa_kg: 6025.7
+  mav_glom_kg: 139.2
+  lander_orbita_baixa_kg: 6079.0
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.3314
     orbitador_missao_A_kg: 86869.9
-    total_missao_A_kg: 92895.6
+    total_missao_A_kg: 92948.9
     dv_extra_orbitador_regra_iii_km_s: 2.3314
     orbitador_regra_iii_kg: 706949.9
-    total_regra_iii_kg: 712975.6
+    total_regra_iii_kg: 713028.9
 - apoapse_alt_km: 441.9
   dv_mav_km_s: 4.1825
-  mav_glom_kg: 130.8
-  lander_orbita_baixa_kg: 6027.5
+  mav_glom_kg: 139.5
+  lander_orbita_baixa_kg: 6080.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.3242
     orbitador_missao_A_kg: 85938.6
-    total_missao_A_kg: 91966.1
+    total_missao_A_kg: 92019.5
     dv_extra_orbitador_regra_iii_km_s: 2.3242
     orbitador_regra_iii_kg: 666811.0
-    total_regra_iii_kg: 672838.5
+    total_regra_iii_kg: 672891.9
 - apoapse_alt_km: 458.9
   dv_mav_km_s: 4.1862
-  mav_glom_kg: 131.1
-  lander_orbita_baixa_kg: 6029.3
+  mav_glom_kg: 139.8
+  lander_orbita_baixa_kg: 6082.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.3167
     orbitador_missao_A_kg: 84995.2
-    total_missao_A_kg: 91024.5
+    total_missao_A_kg: 91078.0
     dv_extra_orbitador_regra_iii_km_s: 2.3167
     orbitador_regra_iii_kg: 629787.4
-    total_regra_iii_kg: 635816.7
+    total_regra_iii_kg: 635870.2
 - apoapse_alt_km: 476.5
   dv_mav_km_s: 4.1901
-  mav_glom_kg: 131.4
-  lander_orbita_baixa_kg: 6031.3
+  mav_glom_kg: 140.1
+  lander_orbita_baixa_kg: 6084.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.309
     orbitador_missao_A_kg: 84040.1
-    total_missao_A_kg: 90071.3
+    total_missao_A_kg: 90124.9
     dv_extra_orbitador_regra_iii_km_s: 2.309
     orbitador_regra_iii_kg: 595553.3
-    total_regra_iii_kg: 601584.6
+    total_regra_iii_kg: 601638.2
 - apoapse_alt_km: 494.8
   dv_mav_km_s: 4.194
-  mav_glom_kg: 131.7
-  lander_orbita_baixa_kg: 6033.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.301
-    orbitador_missao_A_kg: 83073.7
-    total_missao_A_kg: 89106.9
-    dv_extra_orbitador_regra_iii_km_s: 2.301
-    orbitador_regra_iii_kg: 563826.8
-    total_regra_iii_kg: 569860.1
-- apoapse_alt_km: 513.8
-  dv_mav_km_s: 4.1981
-  mav_glom_kg: 132.1
-  lander_orbita_baixa_kg: 6035.3
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2928
-    orbitador_missao_A_kg: 82096.6
-    total_missao_A_kg: 88131.9
-    dv_extra_orbitador_regra_iii_km_s: 2.2928
-    orbitador_regra_iii_kg: 534362.3
-    total_regra_iii_kg: 540397.6
-- apoapse_alt_km: 533.6
-  dv_mav_km_s: 4.2023
-  mav_glom_kg: 132.4
-  lander_orbita_baixa_kg: 6037.4
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2843
-    orbitador_missao_A_kg: 81109.2
-    total_missao_A_kg: 87146.7
-    dv_extra_orbitador_regra_iii_km_s: 2.2843
-    orbitador_regra_iii_kg: 506945.2
-    total_regra_iii_kg: 512982.6
-- apoapse_alt_km: 554.1
-  dv_mav_km_s: 4.2067
-  mav_glom_kg: 132.8
-  lander_orbita_baixa_kg: 6039.6
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2756
-    orbitador_missao_A_kg: 80112.3
-    total_missao_A_kg: 86151.9
-    dv_extra_orbitador_regra_iii_km_s: 2.2756
-    orbitador_regra_iii_kg: 481386.8
-    total_regra_iii_kg: 487426.4
-- apoapse_alt_km: 575.4
-  dv_mav_km_s: 4.2111
-  mav_glom_kg: 133.2
-  lander_orbita_baixa_kg: 6041.9
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2666
-    orbitador_missao_A_kg: 79106.2
-    total_missao_A_kg: 85148.1
-    dv_extra_orbitador_regra_iii_km_s: 2.2666
-    orbitador_regra_iii_kg: 457520.8
-    total_regra_iii_kg: 463562.7
-- apoapse_alt_km: 597.5
-  dv_mav_km_s: 4.2157
-  mav_glom_kg: 133.5
-  lander_orbita_baixa_kg: 6044.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2573
-    orbitador_missao_A_kg: 78091.7
-    total_missao_A_kg: 84135.9
-    dv_extra_orbitador_regra_iii_km_s: 2.2573
-    orbitador_regra_iii_kg: 435199.9
-    total_regra_iii_kg: 441244.1
-- apoapse_alt_km: 620.4
-  dv_mav_km_s: 4.2205
-  mav_glom_kg: 133.9
-  lander_orbita_baixa_kg: 6046.7
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2477
-    orbitador_missao_A_kg: 77069.3
-    total_missao_A_kg: 83116.0
-    dv_extra_orbitador_regra_iii_km_s: 2.2477
-    orbitador_regra_iii_kg: 414293.1
-    total_regra_iii_kg: 420339.8
-- apoapse_alt_km: 644.3
-  dv_mav_km_s: 4.2254
-  mav_glom_kg: 134.3
-  lander_orbita_baixa_kg: 6049.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2378
-    orbitador_missao_A_kg: 76039.7
-    total_missao_A_kg: 82088.9
-    dv_extra_orbitador_regra_iii_km_s: 2.2378
-    orbitador_regra_iii_kg: 394683.9
-    total_regra_iii_kg: 400733.1
-- apoapse_alt_km: 669.1
-  dv_mav_km_s: 4.2304
-  mav_glom_kg: 134.8
-  lander_orbita_baixa_kg: 6051.8
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2276
-    orbitador_missao_A_kg: 75003.6
-    total_missao_A_kg: 81055.4
-    dv_extra_orbitador_regra_iii_km_s: 2.2276
-    orbitador_regra_iii_kg: 376267.8
-    total_regra_iii_kg: 382319.6
-- apoapse_alt_km: 694.8
-  dv_mav_km_s: 4.2356
-  mav_glom_kg: 135.2
-  lander_orbita_baixa_kg: 6054.5
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2172
-    orbitador_missao_A_kg: 73961.6
-    total_missao_A_kg: 80016.1
-    dv_extra_orbitador_regra_iii_km_s: 2.2172
-    orbitador_regra_iii_kg: 358951.1
-    total_regra_iii_kg: 365005.6
-- apoapse_alt_km: 721.5
-  dv_mav_km_s: 4.241
-  mav_glom_kg: 135.7
-  lander_orbita_baixa_kg: 6057.3
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.2064
-    orbitador_missao_A_kg: 72914.5
-    total_missao_A_kg: 78971.7
-    dv_extra_orbitador_regra_iii_km_s: 2.2064
-    orbitador_regra_iii_kg: 342649.6
-    total_regra_iii_kg: 348706.9
-- apoapse_alt_km: 749.2
-  dv_mav_km_s: 4.2465
-  mav_glom_kg: 136.1
-  lander_orbita_baixa_kg: 6060.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.1952
-    orbitador_missao_A_kg: 71862.9
-    total_missao_A_kg: 77923.0
-    dv_extra_orbitador_regra_iii_km_s: 2.1952
-    orbitador_regra_iii_kg: 327287.2
-    total_regra_iii_kg: 333347.3
-- apoapse_alt_km: 778.0
-  dv_mav_km_s: 4.2522
-  mav_glom_kg: 136.6
-  lander_orbita_baixa_kg: 6063.1
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.1838
-    orbitador_missao_A_kg: 70807.6
-    total_missao_A_kg: 76870.7
-    dv_extra_orbitador_regra_iii_km_s: 2.1838
-    orbitador_regra_iii_kg: 312795.0
-    total_regra_iii_kg: 318858.2
-- apoapse_alt_km: 807.9
-  dv_mav_km_s: 4.258
-  mav_glom_kg: 137.1
-  lander_orbita_baixa_kg: 6066.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.172
-    orbitador_missao_A_kg: 69749.4
-    total_missao_A_kg: 75815.6
-    dv_extra_orbitador_regra_iii_km_s: 2.172
-    orbitador_regra_iii_kg: 299110.8
-    total_regra_iii_kg: 305177.0
-- apoapse_alt_km: 838.9
-  dv_mav_km_s: 4.264
-  mav_glom_kg: 137.6
-  lander_orbita_baixa_kg: 6069.4
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.1599
-    orbitador_missao_A_kg: 68688.9
-    total_missao_A_kg: 74758.3
-    dv_extra_orbitador_regra_iii_km_s: 2.1599
-    orbitador_regra_iii_kg: 286177.7
-    total_regra_iii_kg: 292247.1
-- apoapse_alt_km: 871.2
-  dv_mav_km_s: 4.2702
-  mav_glom_kg: 138.2
-  lander_orbita_baixa_kg: 6072.7
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.1474
-    orbitador_missao_A_kg: 67626.9
-    total_missao_A_kg: 73699.6
-    dv_extra_orbitador_regra_iii_km_s: 2.1474
-    orbitador_regra_iii_kg: 273944.1
-    total_regra_iii_kg: 280016.7
-- apoapse_alt_km: 904.7
-  dv_mav_km_s: 4.2765
-  mav_glom_kg: 138.7
-  lander_orbita_baixa_kg: 6076.1
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.1346
-    orbitador_missao_A_kg: 66564.3
-    total_missao_A_kg: 72640.3
-    dv_extra_orbitador_regra_iii_km_s: 2.1346
-    orbitador_regra_iii_kg: 262362.8
-    total_regra_iii_kg: 268438.8
-- apoapse_alt_km: 939.4
-  dv_mav_km_s: 4.283
-  mav_glom_kg: 139.3
-  lander_orbita_baixa_kg: 6079.6
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.1215
-    orbitador_missao_A_kg: 65501.7
-    total_missao_A_kg: 71581.2
-    dv_extra_orbitador_regra_iii_km_s: 2.1215
-    orbitador_regra_iii_kg: 251390.6
-    total_regra_iii_kg: 257470.2
-- apoapse_alt_km: 975.5
-  dv_mav_km_s: 4.2897
-  mav_glom_kg: 139.9
-  lander_orbita_baixa_kg: 6083.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.1079
-    orbitador_missao_A_kg: 64439.9
-    total_missao_A_kg: 70523.0
-    dv_extra_orbitador_regra_iii_km_s: 2.1079
-    orbitador_regra_iii_kg: 240988.1
-    total_regra_iii_kg: 247071.3
-- apoapse_alt_km: 1013.0
-  dv_mav_km_s: 4.2966
   mav_glom_kg: 140.5
   lander_orbita_baixa_kg: 6086.9
   quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.301
+    orbitador_missao_A_kg: 83073.7
+    total_missao_A_kg: 89160.6
+    dv_extra_orbitador_regra_iii_km_s: 2.301
+    orbitador_regra_iii_kg: 563826.8
+    total_regra_iii_kg: 569913.7
+- apoapse_alt_km: 513.8
+  dv_mav_km_s: 4.1981
+  mav_glom_kg: 140.8
+  lander_orbita_baixa_kg: 6089.1
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2928
+    orbitador_missao_A_kg: 82096.6
+    total_missao_A_kg: 88185.7
+    dv_extra_orbitador_regra_iii_km_s: 2.2928
+    orbitador_regra_iii_kg: 534362.3
+    total_regra_iii_kg: 540451.4
+- apoapse_alt_km: 533.6
+  dv_mav_km_s: 4.2023
+  mav_glom_kg: 141.2
+  lander_orbita_baixa_kg: 6091.3
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2843
+    orbitador_missao_A_kg: 81109.2
+    total_missao_A_kg: 87200.6
+    dv_extra_orbitador_regra_iii_km_s: 2.2843
+    orbitador_regra_iii_kg: 506945.2
+    total_regra_iii_kg: 513036.5
+- apoapse_alt_km: 554.1
+  dv_mav_km_s: 4.2067
+  mav_glom_kg: 141.6
+  lander_orbita_baixa_kg: 6093.6
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2756
+    orbitador_missao_A_kg: 80112.3
+    total_missao_A_kg: 86205.9
+    dv_extra_orbitador_regra_iii_km_s: 2.2756
+    orbitador_regra_iii_kg: 481386.8
+    total_regra_iii_kg: 487480.4
+- apoapse_alt_km: 575.4
+  dv_mav_km_s: 4.2111
+  mav_glom_kg: 142.0
+  lander_orbita_baixa_kg: 6096.0
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2666
+    orbitador_missao_A_kg: 79106.2
+    total_missao_A_kg: 85202.2
+    dv_extra_orbitador_regra_iii_km_s: 2.2666
+    orbitador_regra_iii_kg: 457520.8
+    total_regra_iii_kg: 463616.8
+- apoapse_alt_km: 597.5
+  dv_mav_km_s: 4.2157
+  mav_glom_kg: 142.4
+  lander_orbita_baixa_kg: 6098.5
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2573
+    orbitador_missao_A_kg: 78091.7
+    total_missao_A_kg: 84190.2
+    dv_extra_orbitador_regra_iii_km_s: 2.2573
+    orbitador_regra_iii_kg: 435199.9
+    total_regra_iii_kg: 441298.3
+- apoapse_alt_km: 620.4
+  dv_mav_km_s: 4.2205
+  mav_glom_kg: 142.8
+  lander_orbita_baixa_kg: 6101.0
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2477
+    orbitador_missao_A_kg: 77069.3
+    total_missao_A_kg: 83170.3
+    dv_extra_orbitador_regra_iii_km_s: 2.2477
+    orbitador_regra_iii_kg: 414293.1
+    total_regra_iii_kg: 420394.2
+- apoapse_alt_km: 644.3
+  dv_mav_km_s: 4.2254
+  mav_glom_kg: 143.2
+  lander_orbita_baixa_kg: 6103.7
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2378
+    orbitador_missao_A_kg: 76039.7
+    total_missao_A_kg: 82143.4
+    dv_extra_orbitador_regra_iii_km_s: 2.2378
+    orbitador_regra_iii_kg: 394683.9
+    total_regra_iii_kg: 400787.6
+- apoapse_alt_km: 669.1
+  dv_mav_km_s: 4.2304
+  mav_glom_kg: 143.7
+  lander_orbita_baixa_kg: 6106.4
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2276
+    orbitador_missao_A_kg: 75003.6
+    total_missao_A_kg: 81110.0
+    dv_extra_orbitador_regra_iii_km_s: 2.2276
+    orbitador_regra_iii_kg: 376267.8
+    total_regra_iii_kg: 382374.2
+- apoapse_alt_km: 694.8
+  dv_mav_km_s: 4.2356
+  mav_glom_kg: 144.1
+  lander_orbita_baixa_kg: 6109.3
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2172
+    orbitador_missao_A_kg: 73961.6
+    total_missao_A_kg: 80070.8
+    dv_extra_orbitador_regra_iii_km_s: 2.2172
+    orbitador_regra_iii_kg: 358951.1
+    total_regra_iii_kg: 365060.4
+- apoapse_alt_km: 721.5
+  dv_mav_km_s: 4.241
+  mav_glom_kg: 144.6
+  lander_orbita_baixa_kg: 6112.2
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.2064
+    orbitador_missao_A_kg: 72914.5
+    total_missao_A_kg: 79026.6
+    dv_extra_orbitador_regra_iii_km_s: 2.2064
+    orbitador_regra_iii_kg: 342649.6
+    total_regra_iii_kg: 348761.8
+- apoapse_alt_km: 749.2
+  dv_mav_km_s: 4.2465
+  mav_glom_kg: 145.1
+  lander_orbita_baixa_kg: 6115.2
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.1952
+    orbitador_missao_A_kg: 71862.9
+    total_missao_A_kg: 77978.1
+    dv_extra_orbitador_regra_iii_km_s: 2.1952
+    orbitador_regra_iii_kg: 327287.2
+    total_regra_iii_kg: 333402.4
+- apoapse_alt_km: 778.0
+  dv_mav_km_s: 4.2522
+  mav_glom_kg: 145.6
+  lander_orbita_baixa_kg: 6118.3
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.1838
+    orbitador_missao_A_kg: 70807.6
+    total_missao_A_kg: 76925.9
+    dv_extra_orbitador_regra_iii_km_s: 2.1838
+    orbitador_regra_iii_kg: 312795.0
+    total_regra_iii_kg: 318913.3
+- apoapse_alt_km: 807.9
+  dv_mav_km_s: 4.258
+  mav_glom_kg: 146.1
+  lander_orbita_baixa_kg: 6121.6
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.172
+    orbitador_missao_A_kg: 69749.4
+    total_missao_A_kg: 75870.9
+    dv_extra_orbitador_regra_iii_km_s: 2.172
+    orbitador_regra_iii_kg: 299110.8
+    total_regra_iii_kg: 305232.3
+- apoapse_alt_km: 838.9
+  dv_mav_km_s: 4.264
+  mav_glom_kg: 146.7
+  lander_orbita_baixa_kg: 6124.9
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.1599
+    orbitador_missao_A_kg: 68688.9
+    total_missao_A_kg: 74813.8
+    dv_extra_orbitador_regra_iii_km_s: 2.1599
+    orbitador_regra_iii_kg: 286177.7
+    total_regra_iii_kg: 292302.6
+- apoapse_alt_km: 871.2
+  dv_mav_km_s: 4.2702
+  mav_glom_kg: 147.2
+  lander_orbita_baixa_kg: 6128.3
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.1474
+    orbitador_missao_A_kg: 67626.9
+    total_missao_A_kg: 73755.3
+    dv_extra_orbitador_regra_iii_km_s: 2.1474
+    orbitador_regra_iii_kg: 273944.1
+    total_regra_iii_kg: 280072.4
+- apoapse_alt_km: 904.7
+  dv_mav_km_s: 4.2765
+  mav_glom_kg: 147.8
+  lander_orbita_baixa_kg: 6131.9
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.1346
+    orbitador_missao_A_kg: 66564.3
+    total_missao_A_kg: 72696.2
+    dv_extra_orbitador_regra_iii_km_s: 2.1346
+    orbitador_regra_iii_kg: 262362.8
+    total_regra_iii_kg: 268494.7
+- apoapse_alt_km: 939.4
+  dv_mav_km_s: 4.283
+  mav_glom_kg: 148.4
+  lander_orbita_baixa_kg: 6135.6
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.1215
+    orbitador_missao_A_kg: 65501.7
+    total_missao_A_kg: 71637.2
+    dv_extra_orbitador_regra_iii_km_s: 2.1215
+    orbitador_regra_iii_kg: 251390.6
+    total_regra_iii_kg: 257526.2
+- apoapse_alt_km: 975.5
+  dv_mav_km_s: 4.2897
+  mav_glom_kg: 149.0
+  lander_orbita_baixa_kg: 6139.3
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.1079
+    orbitador_missao_A_kg: 64439.9
+    total_missao_A_kg: 70579.2
+    dv_extra_orbitador_regra_iii_km_s: 2.1079
+    orbitador_regra_iii_kg: 240988.1
+    total_regra_iii_kg: 247127.4
+- apoapse_alt_km: 1013.0
+  dv_mav_km_s: 4.2966
+  mav_glom_kg: 149.6
+  lander_orbita_baixa_kg: 6143.3
+  quimico:
     dv_extra_orbitador_missao_A_km_s: 2.094
     orbitador_missao_A_kg: 63379.6
-    total_missao_A_kg: 69466.5
+    total_missao_A_kg: 69522.9
     dv_extra_orbitador_regra_iii_km_s: 2.094
     orbitador_regra_iii_kg: 231118.8
-    total_regra_iii_kg: 237205.7
+    total_regra_iii_kg: 237262.0
 - apoapse_alt_km: 1052.0
   dv_mav_km_s: 4.3036
-  mav_glom_kg: 141.1
-  lander_orbita_baixa_kg: 6090.7
+  mav_glom_kg: 150.3
+  lander_orbita_baixa_kg: 6147.3
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.0798
     orbitador_missao_A_kg: 62321.7
-    total_missao_A_kg: 68412.5
+    total_missao_A_kg: 68469.0
     dv_extra_orbitador_regra_iii_km_s: 2.0798
     orbitador_regra_iii_kg: 221749.3
-    total_regra_iii_kg: 227840.1
+    total_regra_iii_kg: 227896.6
 - apoapse_alt_km: 1092.4
   dv_mav_km_s: 4.3108
-  mav_glom_kg: 141.8
-  lander_orbita_baixa_kg: 6094.7
+  mav_glom_kg: 151.0
+  lander_orbita_baixa_kg: 6151.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.0651
     orbitador_missao_A_kg: 61266.9
-    total_missao_A_kg: 67361.6
+    total_missao_A_kg: 67418.4
     dv_extra_orbitador_regra_iii_km_s: 2.0651
     orbitador_regra_iii_kg: 212848.9
-    total_regra_iii_kg: 218943.6
+    total_regra_iii_kg: 219000.3
 - apoapse_alt_km: 1134.4
   dv_mav_km_s: 4.3183
-  mav_glom_kg: 142.4
-  lander_orbita_baixa_kg: 6098.8
+  mav_glom_kg: 151.7
+  lander_orbita_baixa_kg: 6155.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.0501
     orbitador_missao_A_kg: 60215.9
-    total_missao_A_kg: 66314.7
+    total_missao_A_kg: 66371.6
     dv_extra_orbitador_regra_iii_km_s: 2.0501
     orbitador_regra_iii_kg: 204389.0
-    total_regra_iii_kg: 210487.8
+    total_regra_iii_kg: 210544.8
 - apoapse_alt_km: 1178.0
   dv_mav_km_s: 4.3258
-  mav_glom_kg: 143.1
-  lander_orbita_baixa_kg: 6103.0
+  mav_glom_kg: 152.4
+  lander_orbita_baixa_kg: 6160.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 2.0347
     orbitador_missao_A_kg: 59169.4
-    total_missao_A_kg: 65272.4
+    total_missao_A_kg: 65329.6
     dv_extra_orbitador_regra_iii_km_s: 2.0347
     orbitador_regra_iii_kg: 196343.4
-    total_regra_iii_kg: 202446.5
+    total_regra_iii_kg: 202503.6
 - apoapse_alt_km: 1223.3
   dv_mav_km_s: 4.3336
-  mav_glom_kg: 143.8
-  lander_orbita_baixa_kg: 6107.4
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.0189
-    orbitador_missao_A_kg: 58128.2
-    total_missao_A_kg: 64235.6
-    dv_extra_orbitador_regra_iii_km_s: 2.0189
-    orbitador_regra_iii_kg: 188687.9
-    total_regra_iii_kg: 194795.2
-- apoapse_alt_km: 1270.3
-  dv_mav_km_s: 4.3416
-  mav_glom_kg: 144.5
-  lander_orbita_baixa_kg: 6111.9
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 2.0028
-    orbitador_missao_A_kg: 57092.9
-    total_missao_A_kg: 63204.8
-    dv_extra_orbitador_regra_iii_km_s: 2.0028
-    orbitador_regra_iii_kg: 181399.7
-    total_regra_iii_kg: 187511.5
-- apoapse_alt_km: 1319.1
-  dv_mav_km_s: 4.3498
-  mav_glom_kg: 145.3
-  lander_orbita_baixa_kg: 6116.5
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.9862
-    orbitador_missao_A_kg: 56064.3
-    total_missao_A_kg: 62180.8
-    dv_extra_orbitador_regra_iii_km_s: 1.9862
-    orbitador_regra_iii_kg: 174458.0
-    total_regra_iii_kg: 180574.4
-- apoapse_alt_km: 1369.8
-  dv_mav_km_s: 4.3581
-  mav_glom_kg: 146.1
-  lander_orbita_baixa_kg: 6121.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.9692
-    orbitador_missao_A_kg: 55043.1
-    total_missao_A_kg: 61164.3
-    dv_extra_orbitador_regra_iii_km_s: 1.9692
-    orbitador_regra_iii_kg: 167843.2
-    total_regra_iii_kg: 173964.5
-- apoapse_alt_km: 1422.4
-  dv_mav_km_s: 4.3667
-  mav_glom_kg: 146.9
-  lander_orbita_baixa_kg: 6126.1
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.9519
-    orbitador_missao_A_kg: 54029.7
-    total_missao_A_kg: 60155.9
-    dv_extra_orbitador_regra_iii_km_s: 1.9519
-    orbitador_regra_iii_kg: 161537.3
-    total_regra_iii_kg: 167663.5
-- apoapse_alt_km: 1477.1
-  dv_mav_km_s: 4.3754
-  mav_glom_kg: 147.7
-  lander_orbita_baixa_kg: 6131.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.9341
-    orbitador_missao_A_kg: 53025.0
-    total_missao_A_kg: 59156.2
-    dv_extra_orbitador_regra_iii_km_s: 1.9341
-    orbitador_regra_iii_kg: 155523.4
-    total_regra_iii_kg: 161654.5
-- apoapse_alt_km: 1533.9
-  dv_mav_km_s: 4.3843
-  mav_glom_kg: 148.5
-  lander_orbita_baixa_kg: 6136.4
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.9159
-    orbitador_missao_A_kg: 52029.5
-    total_missao_A_kg: 58165.9
-    dv_extra_orbitador_regra_iii_km_s: 1.9159
-    orbitador_regra_iii_kg: 149785.6
-    total_regra_iii_kg: 155922.0
-- apoapse_alt_km: 1592.8
-  dv_mav_km_s: 4.3935
-  mav_glom_kg: 149.4
-  lander_orbita_baixa_kg: 6141.7
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.8974
-    orbitador_missao_A_kg: 51043.8
-    total_missao_A_kg: 57185.5
-    dv_extra_orbitador_regra_iii_km_s: 1.8974
-    orbitador_regra_iii_kg: 144309.2
-    total_regra_iii_kg: 150451.0
-- apoapse_alt_km: 1654.0
-  dv_mav_km_s: 4.4028
-  mav_glom_kg: 150.3
-  lander_orbita_baixa_kg: 6147.2
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.8784
-    orbitador_missao_A_kg: 50068.4
-    total_missao_A_kg: 56215.6
-    dv_extra_orbitador_regra_iii_km_s: 1.8784
-    orbitador_regra_iii_kg: 139080.6
-    total_regra_iii_kg: 145227.8
-- apoapse_alt_km: 1717.6
-  dv_mav_km_s: 4.4123
-  mav_glom_kg: 151.2
-  lander_orbita_baixa_kg: 6152.9
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.8591
-    orbitador_missao_A_kg: 49103.9
-    total_missao_A_kg: 55256.8
-    dv_extra_orbitador_regra_iii_km_s: 1.8591
-    orbitador_regra_iii_kg: 134086.7
-    total_regra_iii_kg: 140239.6
-- apoapse_alt_km: 1783.6
-  dv_mav_km_s: 4.422
-  mav_glom_kg: 152.2
-  lander_orbita_baixa_kg: 6158.7
-  quimico:
-    dv_extra_orbitador_missao_A_km_s: 1.8393
-    orbitador_missao_A_kg: 48150.8
-    total_missao_A_kg: 54309.4
-    dv_extra_orbitador_regra_iii_km_s: 1.8393
-    orbitador_regra_iii_kg: 129315.5
-    total_regra_iii_kg: 135474.2
-- apoapse_alt_km: 1852.2
-  dv_mav_km_s: 4.4319
   mav_glom_kg: 153.1
   lander_orbita_baixa_kg: 6164.7
   quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.0189
+    orbitador_missao_A_kg: 58128.2
+    total_missao_A_kg: 64292.9
+    dv_extra_orbitador_regra_iii_km_s: 2.0189
+    orbitador_regra_iii_kg: 188687.9
+    total_regra_iii_kg: 194852.6
+- apoapse_alt_km: 1270.3
+  dv_mav_km_s: 4.3416
+  mav_glom_kg: 153.9
+  lander_orbita_baixa_kg: 6169.4
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 2.0028
+    orbitador_missao_A_kg: 57092.9
+    total_missao_A_kg: 63262.4
+    dv_extra_orbitador_regra_iii_km_s: 2.0028
+    orbitador_regra_iii_kg: 181399.7
+    total_regra_iii_kg: 187569.1
+- apoapse_alt_km: 1319.1
+  dv_mav_km_s: 4.3498
+  mav_glom_kg: 154.7
+  lander_orbita_baixa_kg: 6174.3
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.9862
+    orbitador_missao_A_kg: 56064.3
+    total_missao_A_kg: 62238.6
+    dv_extra_orbitador_regra_iii_km_s: 1.9862
+    orbitador_regra_iii_kg: 174458.0
+    total_regra_iii_kg: 180632.2
+- apoapse_alt_km: 1369.8
+  dv_mav_km_s: 4.3581
+  mav_glom_kg: 155.5
+  lander_orbita_baixa_kg: 6179.3
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.9692
+    orbitador_missao_A_kg: 55043.1
+    total_missao_A_kg: 61222.3
+    dv_extra_orbitador_regra_iii_km_s: 1.9692
+    orbitador_regra_iii_kg: 167843.2
+    total_regra_iii_kg: 174022.5
+- apoapse_alt_km: 1422.4
+  dv_mav_km_s: 4.3667
+  mav_glom_kg: 156.3
+  lander_orbita_baixa_kg: 6184.4
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.9519
+    orbitador_missao_A_kg: 54029.7
+    total_missao_A_kg: 60214.1
+    dv_extra_orbitador_regra_iii_km_s: 1.9519
+    orbitador_regra_iii_kg: 161537.3
+    total_regra_iii_kg: 167721.7
+- apoapse_alt_km: 1477.1
+  dv_mav_km_s: 4.3754
+  mav_glom_kg: 157.2
+  lander_orbita_baixa_kg: 6189.7
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.9341
+    orbitador_missao_A_kg: 53025.0
+    total_missao_A_kg: 59214.7
+    dv_extra_orbitador_regra_iii_km_s: 1.9341
+    orbitador_regra_iii_kg: 155523.4
+    total_regra_iii_kg: 161713.1
+- apoapse_alt_km: 1533.9
+  dv_mav_km_s: 4.3843
+  mav_glom_kg: 158.1
+  lander_orbita_baixa_kg: 6195.1
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.9159
+    orbitador_missao_A_kg: 52029.5
+    total_missao_A_kg: 58224.6
+    dv_extra_orbitador_regra_iii_km_s: 1.9159
+    orbitador_regra_iii_kg: 149785.6
+    total_regra_iii_kg: 155980.7
+- apoapse_alt_km: 1592.8
+  dv_mav_km_s: 4.3935
+  mav_glom_kg: 159.0
+  lander_orbita_baixa_kg: 6200.7
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.8974
+    orbitador_missao_A_kg: 51043.8
+    total_missao_A_kg: 57244.5
+    dv_extra_orbitador_regra_iii_km_s: 1.8974
+    orbitador_regra_iii_kg: 144309.2
+    total_regra_iii_kg: 150510.0
+- apoapse_alt_km: 1654.0
+  dv_mav_km_s: 4.4028
+  mav_glom_kg: 159.9
+  lander_orbita_baixa_kg: 6206.5
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.8784
+    orbitador_missao_A_kg: 50068.4
+    total_missao_A_kg: 56274.9
+    dv_extra_orbitador_regra_iii_km_s: 1.8784
+    orbitador_regra_iii_kg: 139080.6
+    total_regra_iii_kg: 145287.1
+- apoapse_alt_km: 1717.6
+  dv_mav_km_s: 4.4123
+  mav_glom_kg: 160.9
+  lander_orbita_baixa_kg: 6212.4
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.8591
+    orbitador_missao_A_kg: 49103.9
+    total_missao_A_kg: 55316.3
+    dv_extra_orbitador_regra_iii_km_s: 1.8591
+    orbitador_regra_iii_kg: 134086.7
+    total_regra_iii_kg: 140299.1
+- apoapse_alt_km: 1783.6
+  dv_mav_km_s: 4.422
+  mav_glom_kg: 161.9
+  lander_orbita_baixa_kg: 6218.5
+  quimico:
+    dv_extra_orbitador_missao_A_km_s: 1.8393
+    orbitador_missao_A_kg: 48150.8
+    total_missao_A_kg: 54369.3
+    dv_extra_orbitador_regra_iii_km_s: 1.8393
+    orbitador_regra_iii_kg: 129315.5
+    total_regra_iii_kg: 135534.0
+- apoapse_alt_km: 1852.2
+  dv_mav_km_s: 4.4319
+  mav_glom_kg: 162.9
+  lander_orbita_baixa_kg: 6224.8
+  quimico:
     dv_extra_orbitador_missao_A_km_s: 1.8192
     orbitador_missao_A_kg: 47209.5
-    total_missao_A_kg: 53374.1
+    total_missao_A_kg: 53434.3
     dv_extra_orbitador_regra_iii_km_s: 1.8192
     orbitador_regra_iii_kg: 124755.6
-    total_regra_iii_kg: 130920.3
+    total_regra_iii_kg: 130980.4
 - apoapse_alt_km: 1923.4
   dv_mav_km_s: 4.442
-  mav_glom_kg: 154.1
-  lander_orbita_baixa_kg: 6170.8
+  mav_glom_kg: 164.0
+  lander_orbita_baixa_kg: 6231.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.7986
     orbitador_missao_A_kg: 46280.5
-    total_missao_A_kg: 52451.3
+    total_missao_A_kg: 52511.7
     dv_extra_orbitador_regra_iii_km_s: 1.7986
     orbitador_regra_iii_kg: 120396.4
-    total_regra_iii_kg: 126567.2
+    total_regra_iii_kg: 126627.6
 - apoapse_alt_km: 1997.3
   dv_mav_km_s: 4.4522
-  mav_glom_kg: 155.2
-  lander_orbita_baixa_kg: 6177.1
+  mav_glom_kg: 165.0
+  lander_orbita_baixa_kg: 6237.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.7777
     orbitador_missao_A_kg: 45364.3
-    total_missao_A_kg: 51541.4
+    total_missao_A_kg: 51602.1
     dv_extra_orbitador_regra_iii_km_s: 1.7777
     orbitador_regra_iii_kg: 116227.9
-    total_regra_iii_kg: 122405.0
+    total_regra_iii_kg: 122465.7
 - apoapse_alt_km: 2074.0
   dv_mav_km_s: 4.4627
-  mav_glom_kg: 156.2
-  lander_orbita_baixa_kg: 6183.5
+  mav_glom_kg: 166.1
+  lander_orbita_baixa_kg: 6244.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.7563
     orbitador_missao_A_kg: 44461.2
-    total_missao_A_kg: 50644.7
+    total_missao_A_kg: 50705.7
     dv_extra_orbitador_regra_iii_km_s: 1.7563
     orbitador_regra_iii_kg: 112240.7
-    total_regra_iii_kg: 118424.3
+    total_regra_iii_kg: 118485.3
 - apoapse_alt_km: 2153.7
   dv_mav_km_s: 4.4733
-  mav_glom_kg: 157.3
-  lander_orbita_baixa_kg: 6190.2
+  mav_glom_kg: 167.3
+  lander_orbita_baixa_kg: 6251.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.7346
     orbitador_missao_A_kg: 43571.5
-    total_missao_A_kg: 49761.7
+    total_missao_A_kg: 49823.0
     dv_extra_orbitador_regra_iii_km_s: 1.7346
     orbitador_regra_iii_kg: 108425.9
-    total_regra_iii_kg: 114616.1
+    total_regra_iii_kg: 114677.4
 - apoapse_alt_km: 2236.5
   dv_mav_km_s: 4.4841
-  mav_glom_kg: 158.4
-  lander_orbita_baixa_kg: 6197.0
+  mav_glom_kg: 168.4
+  lander_orbita_baixa_kg: 6258.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.7126
     orbitador_missao_A_kg: 42695.7
-    total_missao_A_kg: 48892.7
+    total_missao_A_kg: 48954.3
     dv_extra_orbitador_regra_iii_km_s: 1.7126
     orbitador_regra_iii_kg: 104775.2
-    total_regra_iii_kg: 110972.2
+    total_regra_iii_kg: 111033.9
 - apoapse_alt_km: 2322.5
   dv_mav_km_s: 4.4951
-  mav_glom_kg: 159.5
-  lander_orbita_baixa_kg: 6203.9
+  mav_glom_kg: 169.6
+  lander_orbita_baixa_kg: 6265.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.6901
     orbitador_missao_A_kg: 41834.0
-    total_missao_A_kg: 48038.0
+    total_missao_A_kg: 48100.0
     dv_extra_orbitador_regra_iii_km_s: 1.6901
     orbitador_regra_iii_kg: 101280.7
-    total_regra_iii_kg: 107484.7
+    total_regra_iii_kg: 107546.6
 - apoapse_alt_km: 2411.7
   dv_mav_km_s: 4.5062
-  mav_glom_kg: 160.7
-  lander_orbita_baixa_kg: 6211.1
+  mav_glom_kg: 170.8
+  lander_orbita_baixa_kg: 6273.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.6673
     orbitador_missao_A_kg: 40986.7
-    total_missao_A_kg: 47197.8
+    total_missao_A_kg: 47260.1
     dv_extra_orbitador_regra_iii_km_s: 1.6673
     orbitador_regra_iii_kg: 97935.0
-    total_regra_iii_kg: 104146.1
+    total_regra_iii_kg: 104208.4
 - apoapse_alt_km: 2504.4
   dv_mav_km_s: 4.5175
-  mav_glom_kg: 161.9
-  lander_orbita_baixa_kg: 6218.4
+  mav_glom_kg: 172.1
+  lander_orbita_baixa_kg: 6281.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.6441
     orbitador_missao_A_kg: 40154.1
-    total_missao_A_kg: 46372.5
+    total_missao_A_kg: 46435.1
     dv_extra_orbitador_regra_iii_km_s: 1.6441
     orbitador_regra_iii_kg: 94731.0
-    total_regra_iii_kg: 100949.4
+    total_regra_iii_kg: 101012.0
 - apoapse_alt_km: 2600.7
   dv_mav_km_s: 4.529
-  mav_glom_kg: 163.1
-  lander_orbita_baixa_kg: 6225.9
+  mav_glom_kg: 173.3
+  lander_orbita_baixa_kg: 6288.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.6206
     orbitador_missao_A_kg: 39336.2
-    total_missao_A_kg: 45562.1
+    total_missao_A_kg: 45625.1
     dv_extra_orbitador_regra_iii_km_s: 1.6206
     orbitador_regra_iii_kg: 91662.1
-    total_regra_iii_kg: 97888.0
+    total_regra_iii_kg: 97951.0
 - apoapse_alt_km: 2700.6
   dv_mav_km_s: 4.5407
-  mav_glom_kg: 164.3
-  lander_orbita_baixa_kg: 6233.6
+  mav_glom_kg: 174.7
+  lander_orbita_baixa_kg: 6296.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.5967
     orbitador_missao_A_kg: 38533.5
-    total_missao_A_kg: 44767.0
+    total_missao_A_kg: 44830.4
     dv_extra_orbitador_regra_iii_km_s: 1.5967
     orbitador_regra_iii_kg: 88722.1
-    total_regra_iii_kg: 94955.7
+    total_regra_iii_kg: 95019.0
 - apoapse_alt_km: 2804.4
   dv_mav_km_s: 4.5524
-  mav_glom_kg: 165.6
-  lander_orbita_baixa_kg: 6241.4
+  mav_glom_kg: 176.0
+  lander_orbita_baixa_kg: 6305.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.5725
     orbitador_missao_A_kg: 37745.9
-    total_missao_A_kg: 43987.3
+    total_missao_A_kg: 44051.0
     dv_extra_orbitador_regra_iii_km_s: 1.5725
     orbitador_regra_iii_kg: 85905.0
-    total_regra_iii_kg: 92146.5
+    total_regra_iii_kg: 92210.2
 - apoapse_alt_km: 2912.2
   dv_mav_km_s: 4.5644
-  mav_glom_kg: 166.9
-  lander_orbita_baixa_kg: 6249.4
+  mav_glom_kg: 177.4
+  lander_orbita_baixa_kg: 6313.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.548
     orbitador_missao_A_kg: 36973.6
-    total_missao_A_kg: 43223.1
+    total_missao_A_kg: 43287.2
     dv_extra_orbitador_regra_iii_km_s: 1.548
     orbitador_regra_iii_kg: 83205.3
-    total_regra_iii_kg: 89454.7
+    total_regra_iii_kg: 89518.8
 - apoapse_alt_km: 3024.1
   dv_mav_km_s: 4.5765
-  mav_glom_kg: 168.3
-  lander_orbita_baixa_kg: 6257.6
+  mav_glom_kg: 178.8
+  lander_orbita_baixa_kg: 6322.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.5232
     orbitador_missao_A_kg: 36216.8
-    total_missao_A_kg: 42474.5
+    total_missao_A_kg: 42538.9
     dv_extra_orbitador_regra_iii_km_s: 1.5232
     orbitador_regra_iii_kg: 80617.5
-    total_regra_iii_kg: 86875.1
+    total_regra_iii_kg: 86939.6
 - apoapse_alt_km: 3140.4
   dv_mav_km_s: 4.5887
-  mav_glom_kg: 169.6
-  lander_orbita_baixa_kg: 6266.0
+  mav_glom_kg: 180.2
+  lander_orbita_baixa_kg: 6330.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.4981
     orbitador_missao_A_kg: 35475.5
-    total_missao_A_kg: 41741.5
+    total_missao_A_kg: 41806.4
     dv_extra_orbitador_regra_iii_km_s: 1.4981
     orbitador_regra_iii_kg: 78136.7
-    total_regra_iii_kg: 84402.7
+    total_regra_iii_kg: 84467.5
 - apoapse_alt_km: 3261.1
   dv_mav_km_s: 4.601
-  mav_glom_kg: 171.0
-  lander_orbita_baixa_kg: 6274.6
+  mav_glom_kg: 181.6
+  lander_orbita_baixa_kg: 6339.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.4727
     orbitador_missao_A_kg: 34749.8
-    total_missao_A_kg: 41024.4
+    total_missao_A_kg: 41089.6
     dv_extra_orbitador_regra_iii_km_s: 1.4727
     orbitador_regra_iii_kg: 75758.0
-    total_regra_iii_kg: 82032.6
+    total_regra_iii_kg: 82097.8
 - apoapse_alt_km: 3386.4
   dv_mav_km_s: 4.6135
-  mav_glom_kg: 172.4
-  lander_orbita_baixa_kg: 6283.3
+  mav_glom_kg: 183.1
+  lander_orbita_baixa_kg: 6348.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.447
     orbitador_missao_A_kg: 34039.7
-    total_missao_A_kg: 40323.0
+    total_missao_A_kg: 40388.6
     dv_extra_orbitador_regra_iii_km_s: 1.447
     orbitador_regra_iii_kg: 73477.0
-    total_regra_iii_kg: 79760.3
+    total_regra_iii_kg: 79825.9
 - apoapse_alt_km: 3516.5
   dv_mav_km_s: 4.6261
-  mav_glom_kg: 173.9
-  lander_orbita_baixa_kg: 6292.2
+  mav_glom_kg: 184.6
+  lander_orbita_baixa_kg: 6358.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.4211
     orbitador_missao_A_kg: 33345.2
-    total_missao_A_kg: 39637.4
+    total_missao_A_kg: 39703.4
     dv_extra_orbitador_regra_iii_km_s: 1.4211
     orbitador_regra_iii_kg: 71289.2
-    total_regra_iii_kg: 77581.4
+    total_regra_iii_kg: 77647.5
 - apoapse_alt_km: 3651.7
   dv_mav_km_s: 4.6388
-  mav_glom_kg: 175.4
-  lander_orbita_baixa_kg: 6301.3
+  mav_glom_kg: 186.2
+  lander_orbita_baixa_kg: 6367.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.3949
     orbitador_missao_A_kg: 32666.3
-    total_missao_A_kg: 38967.5
+    total_missao_A_kg: 39034.0
     dv_extra_orbitador_regra_iii_km_s: 1.3949
     orbitador_regra_iii_kg: 69190.7
-    total_regra_iii_kg: 75492.0
+    total_regra_iii_kg: 75558.4
 - apoapse_alt_km: 3792.0
   dv_mav_km_s: 4.6516
-  mav_glom_kg: 176.9
-  lander_orbita_baixa_kg: 6310.5
+  mav_glom_kg: 187.7
+  lander_orbita_baixa_kg: 6377.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.3685
     orbitador_missao_A_kg: 32002.9
-    total_missao_A_kg: 38313.4
+    total_missao_A_kg: 38380.3
     dv_extra_orbitador_regra_iii_km_s: 1.3685
     orbitador_regra_iii_kg: 67177.5
-    total_regra_iii_kg: 73488.0
+    total_regra_iii_kg: 73554.8
 - apoapse_alt_km: 3937.8
   dv_mav_km_s: 4.6645
-  mav_glom_kg: 178.4
-  lander_orbita_baixa_kg: 6319.9
+  mav_glom_kg: 189.3
+  lander_orbita_baixa_kg: 6387.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.3418
     orbitador_missao_A_kg: 31355.0
-    total_missao_A_kg: 37675.0
+    total_missao_A_kg: 37742.3
     dv_extra_orbitador_regra_iii_km_s: 1.3418
     orbitador_regra_iii_kg: 65245.8
-    total_regra_iii_kg: 71565.8
+    total_regra_iii_kg: 71633.1
 - apoapse_alt_km: 4089.1
   dv_mav_km_s: 4.6775
-  mav_glom_kg: 180.0
-  lander_orbita_baixa_kg: 6329.5
+  mav_glom_kg: 191.0
+  lander_orbita_baixa_kg: 6397.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.315
     orbitador_missao_A_kg: 30722.6
-    total_missao_A_kg: 37052.1
+    total_missao_A_kg: 37119.8
     dv_extra_orbitador_regra_iii_km_s: 1.315
     orbitador_regra_iii_kg: 63392.3
-    total_regra_iii_kg: 69721.8
+    total_regra_iii_kg: 69789.5
 - apoapse_alt_km: 4246.3
   dv_mav_km_s: 4.6905
-  mav_glom_kg: 181.5
-  lander_orbita_baixa_kg: 6339.2
+  mav_glom_kg: 192.6
+  lander_orbita_baixa_kg: 6407.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.288
     orbitador_missao_A_kg: 30105.5
-    total_missao_A_kg: 36444.7
+    total_missao_A_kg: 36512.9
     dv_extra_orbitador_regra_iii_km_s: 1.288
     orbitador_regra_iii_kg: 61613.5
-    total_regra_iii_kg: 67952.8
+    total_regra_iii_kg: 68020.9
 - apoapse_alt_km: 4409.5
   dv_mav_km_s: 4.7037
-  mav_glom_kg: 183.2
-  lander_orbita_baixa_kg: 6349.1
+  mav_glom_kg: 194.3
+  lander_orbita_baixa_kg: 6417.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.2608
     orbitador_missao_A_kg: 29503.6
-    total_missao_A_kg: 35852.8
+    total_missao_A_kg: 35921.4
     dv_extra_orbitador_regra_iii_km_s: 1.2608
     orbitador_regra_iii_kg: 59906.3
-    total_regra_iii_kg: 66255.4
+    total_regra_iii_kg: 66324.0
 - apoapse_alt_km: 4578.9
   dv_mav_km_s: 4.7168
-  mav_glom_kg: 184.8
-  lander_orbita_baixa_kg: 6359.2
+  mav_glom_kg: 196.0
+  lander_orbita_baixa_kg: 6428.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.2335
     orbitador_missao_A_kg: 28916.8
-    total_missao_A_kg: 35276.0
+    total_missao_A_kg: 35345.1
     dv_extra_orbitador_regra_iii_km_s: 1.2335
     orbitador_regra_iii_kg: 58267.5
-    total_regra_iii_kg: 64626.7
+    total_regra_iii_kg: 64695.8
 - apoapse_alt_km: 4754.9
   dv_mav_km_s: 4.7301
-  mav_glom_kg: 186.5
-  lander_orbita_baixa_kg: 6369.4
+  mav_glom_kg: 197.8
+  lander_orbita_baixa_kg: 6438.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.2061
     orbitador_missao_A_kg: 28345.0
-    total_missao_A_kg: 34714.4
+    total_missao_A_kg: 34783.9
     dv_extra_orbitador_regra_iii_km_s: 1.2061
     orbitador_regra_iii_kg: 56694.3
-    total_regra_iii_kg: 63063.7
+    total_regra_iii_kg: 63133.2
 - apoapse_alt_km: 4937.7
   dv_mav_km_s: 4.7434
-  mav_glom_kg: 188.1
-  lander_orbita_baixa_kg: 6379.8
+  mav_glom_kg: 199.5
+  lander_orbita_baixa_kg: 6449.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.1785
     orbitador_missao_A_kg: 27787.9
-    total_missao_A_kg: 34167.7
+    total_missao_A_kg: 34237.7
     dv_extra_orbitador_regra_iii_km_s: 1.1785
     orbitador_regra_iii_kg: 55184.0
-    total_regra_iii_kg: 61563.8
+    total_regra_iii_kg: 61633.7
 - apoapse_alt_km: 5127.4
   dv_mav_km_s: 4.7567
-  mav_glom_kg: 189.8
-  lander_orbita_baixa_kg: 6390.3
+  mav_glom_kg: 201.3
+  lander_orbita_baixa_kg: 6460.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.1509
     orbitador_missao_A_kg: 27245.5
-    total_missao_A_kg: 33635.8
+    total_missao_A_kg: 33706.2
     dv_extra_orbitador_regra_iii_km_s: 1.1509
     orbitador_regra_iii_kg: 53733.8
-    total_regra_iii_kg: 60124.1
+    total_regra_iii_kg: 60194.5
 - apoapse_alt_km: 5324.5
   dv_mav_km_s: 4.77
-  mav_glom_kg: 191.6
-  lander_orbita_baixa_kg: 6400.9
+  mav_glom_kg: 203.1
+  lander_orbita_baixa_kg: 6471.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.1232
     orbitador_missao_A_kg: 26717.5
-    total_missao_A_kg: 33118.4
+    total_missao_A_kg: 33189.3
     dv_extra_orbitador_regra_iii_km_s: 1.1232
     orbitador_regra_iii_kg: 52341.3
-    total_regra_iii_kg: 58742.3
+    total_regra_iii_kg: 58813.1
 - apoapse_alt_km: 5529.1
   dv_mav_km_s: 4.7834
-  mav_glom_kg: 193.3
-  lander_orbita_baixa_kg: 6411.7
+  mav_glom_kg: 204.9
+  lander_orbita_baixa_kg: 6483.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.0954
     orbitador_missao_A_kg: 26203.8
-    total_missao_A_kg: 32615.5
+    total_missao_A_kg: 32686.8
     dv_extra_orbitador_regra_iii_km_s: 1.0954
     orbitador_regra_iii_kg: 51004.1
-    total_regra_iii_kg: 57415.8
+    total_regra_iii_kg: 57487.2
 - apoapse_alt_km: 5741.6
   dv_mav_km_s: 4.7967
-  mav_glom_kg: 195.1
-  lander_orbita_baixa_kg: 6422.6
+  mav_glom_kg: 206.8
+  lander_orbita_baixa_kg: 6494.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.0676
     orbitador_missao_A_kg: 25704.0
-    total_missao_A_kg: 32126.7
+    total_missao_A_kg: 32198.5
     dv_extra_orbitador_regra_iii_km_s: 1.0676
     orbitador_regra_iii_kg: 49719.9
-    total_regra_iii_kg: 56142.5
+    total_regra_iii_kg: 56214.3
 - apoapse_alt_km: 5962.3
   dv_mav_km_s: 4.8101
-  mav_glom_kg: 196.9
-  lander_orbita_baixa_kg: 6433.7
+  mav_glom_kg: 208.7
+  lander_orbita_baixa_kg: 6506.0
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.0398
     orbitador_missao_A_kg: 25218.2
-    total_missao_A_kg: 31651.8
+    total_missao_A_kg: 31724.1
     dv_extra_orbitador_regra_iii_km_s: 1.0398
     orbitador_regra_iii_kg: 48486.4
-    total_regra_iii_kg: 54920.1
+    total_regra_iii_kg: 54992.4
 - apoapse_alt_km: 6191.5
   dv_mav_km_s: 4.8234
-  mav_glom_kg: 198.7
-  lander_orbita_baixa_kg: 6444.8
+  mav_glom_kg: 210.6
+  lander_orbita_baixa_kg: 6517.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 1.012
     orbitador_missao_A_kg: 24745.9
-    total_missao_A_kg: 31190.7
+    total_missao_A_kg: 31263.5
     dv_extra_orbitador_regra_iii_km_s: 1.012
     orbitador_regra_iii_kg: 47301.6
-    total_regra_iii_kg: 53746.5
+    total_regra_iii_kg: 53819.2
 - apoapse_alt_km: 6429.4
   dv_mav_km_s: 4.8367
-  mav_glom_kg: 200.6
-  lander_orbita_baixa_kg: 6456.1
+  mav_glom_kg: 212.5
+  lander_orbita_baixa_kg: 6529.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.9842
     orbitador_missao_A_kg: 24287.0
-    total_missao_A_kg: 30743.1
+    total_missao_A_kg: 30816.4
     dv_extra_orbitador_regra_iii_km_s: 0.9842
     orbitador_regra_iii_kg: 46163.6
-    total_regra_iii_kg: 52619.6
+    total_regra_iii_kg: 52692.9
 - apoapse_alt_km: 6676.5
   dv_mav_km_s: 4.85
-  mav_glom_kg: 202.4
-  lander_orbita_baixa_kg: 6467.5
+  mav_glom_kg: 214.4
+  lander_orbita_baixa_kg: 6541.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.9564
     orbitador_missao_A_kg: 23841.3
-    total_missao_A_kg: 30308.7
+    total_missao_A_kg: 30382.5
     dv_extra_orbitador_regra_iii_km_s: 0.9564
     orbitador_regra_iii_kg: 45070.3
-    total_regra_iii_kg: 51537.7
+    total_regra_iii_kg: 51611.5
 - apoapse_alt_km: 6933.1
   dv_mav_km_s: 4.8633
-  mav_glom_kg: 204.3
-  lander_orbita_baixa_kg: 6478.9
+  mav_glom_kg: 216.4
+  lander_orbita_baixa_kg: 6553.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.9287
     orbitador_missao_A_kg: 23408.4
-    total_missao_A_kg: 29887.3
+    total_missao_A_kg: 29961.6
     dv_extra_orbitador_regra_iii_km_s: 0.9287
     orbitador_regra_iii_kg: 44019.9
-    total_regra_iii_kg: 50498.8
+    total_regra_iii_kg: 50573.1
 - apoapse_alt_km: 7199.6
   dv_mav_km_s: 4.8765
-  mav_glom_kg: 206.2
-  lander_orbita_baixa_kg: 6490.5
+  mav_glom_kg: 218.3
+  lander_orbita_baixa_kg: 6565.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.9011
     orbitador_missao_A_kg: 22988.2
-    total_missao_A_kg: 29478.7
+    total_missao_A_kg: 29553.5
     dv_extra_orbitador_regra_iii_km_s: 0.9011
     orbitador_regra_iii_kg: 43010.8
-    total_regra_iii_kg: 49501.3
+    total_regra_iii_kg: 49576.0
 - apoapse_alt_km: 7476.3
   dv_mav_km_s: 4.8896
-  mav_glom_kg: 208.0
-  lander_orbita_baixa_kg: 6502.1
+  mav_glom_kg: 220.3
+  lander_orbita_baixa_kg: 6577.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.8736
     orbitador_missao_A_kg: 22580.4
-    total_missao_A_kg: 29082.6
+    total_missao_A_kg: 29157.8
     dv_extra_orbitador_regra_iii_km_s: 0.8736
     orbitador_regra_iii_kg: 42041.1
-    total_regra_iii_kg: 48543.3
+    total_regra_iii_kg: 48618.5
 - apoapse_alt_km: 7763.6
   dv_mav_km_s: 4.9027
-  mav_glom_kg: 210.0
-  lander_orbita_baixa_kg: 6513.8
+  mav_glom_kg: 222.3
+  lander_orbita_baixa_kg: 6589.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.8462
     orbitador_missao_A_kg: 22184.8
-    total_missao_A_kg: 28698.7
+    total_missao_A_kg: 28774.4
     dv_extra_orbitador_regra_iii_km_s: 0.8462
     orbitador_regra_iii_kg: 41109.5
-    total_regra_iii_kg: 47623.3
+    total_regra_iii_kg: 47699.1
 - apoapse_alt_km: 8062.0
   dv_mav_km_s: 4.9157
-  mav_glom_kg: 211.9
-  lander_orbita_baixa_kg: 6525.6
+  mav_glom_kg: 224.3
+  lander_orbita_baixa_kg: 6601.9
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.819
     orbitador_missao_A_kg: 21801.1
-    total_missao_A_kg: 28326.7
+    total_missao_A_kg: 28403.0
     dv_extra_orbitador_regra_iii_km_s: 0.819
     orbitador_regra_iii_kg: 40214.2
-    total_regra_iii_kg: 46739.8
+    total_regra_iii_kg: 46816.0
 - apoapse_alt_km: 8371.9
   dv_mav_km_s: 4.9286
-  mav_glom_kg: 213.8
-  lander_orbita_baixa_kg: 6537.5
+  mav_glom_kg: 226.3
+  lander_orbita_baixa_kg: 6614.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.7919
     orbitador_missao_A_kg: 21429.0
-    total_missao_A_kg: 27966.5
+    total_missao_A_kg: 28043.2
     dv_extra_orbitador_regra_iii_km_s: 0.7919
     orbitador_regra_iii_kg: 39353.8
-    total_regra_iii_kg: 45891.3
+    total_regra_iii_kg: 45968.0
 - apoapse_alt_km: 8693.6
   dv_mav_km_s: 4.9414
-  mav_glom_kg: 215.7
-  lander_orbita_baixa_kg: 6549.4
+  mav_glom_kg: 228.3
+  lander_orbita_baixa_kg: 6626.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.7649
     orbitador_missao_A_kg: 21068.3
-    total_missao_A_kg: 27617.7
+    total_missao_A_kg: 27694.9
     dv_extra_orbitador_regra_iii_km_s: 0.7649
     orbitador_regra_iii_kg: 38527.0
-    total_regra_iii_kg: 45076.4
+    total_regra_iii_kg: 45153.6
 - apoapse_alt_km: 9027.7
   dv_mav_km_s: 4.9541
-  mav_glom_kg: 217.7
-  lander_orbita_baixa_kg: 6561.3
+  mav_glom_kg: 230.3
+  lander_orbita_baixa_kg: 6639.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.7382
     orbitador_missao_A_kg: 20718.8
-    total_missao_A_kg: 27280.1
+    total_missao_A_kg: 27357.8
     dv_extra_orbitador_regra_iii_km_s: 0.7382
     orbitador_regra_iii_kg: 37732.3
-    total_regra_iii_kg: 44293.6
+    total_regra_iii_kg: 44371.4
 - apoapse_alt_km: 9374.7
   dv_mav_km_s: 4.9668
-  mav_glom_kg: 219.6
-  lander_orbita_baixa_kg: 6573.3
+  mav_glom_kg: 232.4
+  lander_orbita_baixa_kg: 6651.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.7116
     orbitador_missao_A_kg: 20380.0
-    total_missao_A_kg: 26953.3
+    total_missao_A_kg: 27031.6
     dv_extra_orbitador_regra_iii_km_s: 0.7116
     orbitador_regra_iii_kg: 36968.6
-    total_regra_iii_kg: 43541.8
+    total_regra_iii_kg: 43620.1
 - apoapse_alt_km: 9735.0
   dv_mav_km_s: 4.9793
-  mav_glom_kg: 221.6
-  lander_orbita_baixa_kg: 6585.3
+  mav_glom_kg: 234.4
+  lander_orbita_baixa_kg: 6664.0
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.6853
     orbitador_missao_A_kg: 20051.9
-    total_missao_A_kg: 26637.2
+    total_missao_A_kg: 26716.0
     dv_extra_orbitador_regra_iii_km_s: 0.6853
     orbitador_regra_iii_kg: 36234.4
-    total_regra_iii_kg: 42819.7
+    total_regra_iii_kg: 42898.5
 - apoapse_alt_km: 10109.1
   dv_mav_km_s: 4.9916
-  mav_glom_kg: 223.5
-  lander_orbita_baixa_kg: 6597.3
+  mav_glom_kg: 236.4
+  lander_orbita_baixa_kg: 6676.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.6592
     orbitador_missao_A_kg: 19734.2
-    total_missao_A_kg: 26331.5
+    total_missao_A_kg: 26410.7
     dv_extra_orbitador_regra_iii_km_s: 0.6592
     orbitador_regra_iii_kg: 35528.8
-    total_regra_iii_kg: 42126.1
+    total_regra_iii_kg: 42205.4
 - apoapse_alt_km: 10497.7
   dv_mav_km_s: 5.0039
-  mav_glom_kg: 225.5
-  lander_orbita_baixa_kg: 6609.3
+  mav_glom_kg: 238.5
+  lander_orbita_baixa_kg: 6689.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.6334
     orbitador_missao_A_kg: 19426.5
-    total_missao_A_kg: 26035.9
+    total_missao_A_kg: 26115.6
     dv_extra_orbitador_regra_iii_km_s: 0.6334
     orbitador_regra_iii_kg: 34850.5
-    total_regra_iii_kg: 41459.9
+    total_regra_iii_kg: 41539.6
 - apoapse_alt_km: 10901.1
   dv_mav_km_s: 5.016
-  mav_glom_kg: 227.4
-  lander_orbita_baixa_kg: 6621.4
+  mav_glom_kg: 240.5
+  lander_orbita_baixa_kg: 6701.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.6078
     orbitador_missao_A_kg: 19128.7
-    total_missao_A_kg: 25750.0
+    total_missao_A_kg: 25830.3
     dv_extra_orbitador_regra_iii_km_s: 0.6078
     orbitador_regra_iii_kg: 34198.5
-    total_regra_iii_kg: 40819.8
+    total_regra_iii_kg: 40900.1
 - apoapse_alt_km: 11320.1
   dv_mav_km_s: 5.028
-  mav_glom_kg: 229.4
-  lander_orbita_baixa_kg: 6633.4
+  mav_glom_kg: 242.5
+  lander_orbita_baixa_kg: 6714.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.5825
     orbitador_missao_A_kg: 18840.4
-    total_missao_A_kg: 25473.8
+    total_missao_A_kg: 25554.5
     dv_extra_orbitador_regra_iii_km_s: 0.5825
     orbitador_regra_iii_kg: 33571.7
-    total_regra_iii_kg: 40205.0
+    total_regra_iii_kg: 40285.8
 - apoapse_alt_km: 11755.2
   dv_mav_km_s: 5.0398
-  mav_glom_kg: 231.4
-  lander_orbita_baixa_kg: 6645.4
+  mav_glom_kg: 244.6
+  lander_orbita_baixa_kg: 6726.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.5575
     orbitador_missao_A_kg: 18561.5
-    total_missao_A_kg: 25206.9
+    total_missao_A_kg: 25288.1
     dv_extra_orbitador_regra_iii_km_s: 0.5575
     orbitador_regra_iii_kg: 32969.0
-    total_regra_iii_kg: 39614.4
+    total_regra_iii_kg: 39695.6
 - apoapse_alt_km: 12206.9
   dv_mav_km_s: 5.0515
-  mav_glom_kg: 233.3
-  lander_orbita_baixa_kg: 6657.3
+  mav_glom_kg: 246.6
+  lander_orbita_baixa_kg: 6739.0
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.5328
     orbitador_missao_A_kg: 18291.6
-    total_missao_A_kg: 24949.0
+    total_missao_A_kg: 25030.7
     dv_extra_orbitador_regra_iii_km_s: 0.5328
     orbitador_regra_iii_kg: 32389.7
-    total_regra_iii_kg: 39047.0
+    total_regra_iii_kg: 39128.7
 - apoapse_alt_km: 12676.1
   dv_mav_km_s: 5.063
-  mav_glom_kg: 235.2
-  lander_orbita_baixa_kg: 6669.3
+  mav_glom_kg: 248.6
+  lander_orbita_baixa_kg: 6751.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.5085
     orbitador_missao_A_kg: 18030.6
-    total_missao_A_kg: 24699.9
+    total_missao_A_kg: 24782.1
     dv_extra_orbitador_regra_iii_km_s: 0.5085
     orbitador_regra_iii_kg: 31832.7
-    total_regra_iii_kg: 38501.9
+    total_regra_iii_kg: 38584.1
 - apoapse_alt_km: 13163.3
   dv_mav_km_s: 5.0743
-  mav_glom_kg: 237.2
-  lander_orbita_baixa_kg: 6681.2
+  mav_glom_kg: 250.6
+  lander_orbita_baixa_kg: 6763.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.4844
     orbitador_missao_A_kg: 17778.2
-    total_missao_A_kg: 24459.3
+    total_missao_A_kg: 24542.0
     dv_extra_orbitador_regra_iii_km_s: 0.4844
     orbitador_regra_iii_kg: 31297.1
-    total_regra_iii_kg: 37978.3
+    total_regra_iii_kg: 38060.9
 - apoapse_alt_km: 13669.2
   dv_mav_km_s: 5.0855
-  mav_glom_kg: 239.1
-  lander_orbita_baixa_kg: 6693.0
+  mav_glom_kg: 252.6
+  lander_orbita_baixa_kg: 6776.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.4607
     orbitador_missao_A_kg: 17534.1
-    total_missao_A_kg: 24227.1
+    total_missao_A_kg: 24310.2
     dv_extra_orbitador_regra_iii_km_s: 0.4607
     orbitador_regra_iii_kg: 30782.2
-    total_regra_iii_kg: 37475.2
+    total_regra_iii_kg: 37558.3
 - apoapse_alt_km: 14194.5
   dv_mav_km_s: 5.0965
-  mav_glom_kg: 241.0
-  lander_orbita_baixa_kg: 6704.8
+  mav_glom_kg: 254.6
+  lander_orbita_baixa_kg: 6788.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.4373
     orbitador_missao_A_kg: 17298.1
-    total_missao_A_kg: 24002.8
+    total_missao_A_kg: 24086.5
     dv_extra_orbitador_regra_iii_km_s: 0.4373
     orbitador_regra_iii_kg: 30287.0
-    total_regra_iii_kg: 36991.8
+    total_regra_iii_kg: 37075.4
 - apoapse_alt_km: 14740.1
   dv_mav_km_s: 5.1074
-  mav_glom_kg: 242.9
-  lander_orbita_baixa_kg: 6716.5
+  mav_glom_kg: 256.6
+  lander_orbita_baixa_kg: 6800.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.4143
     orbitador_missao_A_kg: 17070.0
-    total_missao_A_kg: 23786.4
+    total_missao_A_kg: 23870.5
     dv_extra_orbitador_regra_iii_km_s: 0.4143
     orbitador_regra_iii_kg: 29810.9
-    total_regra_iii_kg: 36527.4
+    total_regra_iii_kg: 36611.5
 - apoapse_alt_km: 15306.6
   dv_mav_km_s: 5.118
-  mav_glom_kg: 244.8
-  lander_orbita_baixa_kg: 6728.1
+  mav_glom_kg: 258.6
+  lander_orbita_baixa_kg: 6812.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.3916
     orbitador_missao_A_kg: 16849.5
-    total_missao_A_kg: 23577.6
+    total_missao_A_kg: 23662.2
     dv_extra_orbitador_regra_iii_km_s: 0.3916
     orbitador_regra_iii_kg: 29353.1
-    total_regra_iii_kg: 36081.2
+    total_regra_iii_kg: 36165.7
 - apoapse_alt_km: 15894.9
   dv_mav_km_s: 5.1285
-  mav_glom_kg: 246.7
-  lander_orbita_baixa_kg: 6739.7
+  mav_glom_kg: 260.5
+  lander_orbita_baixa_kg: 6824.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.3693
     orbitador_missao_A_kg: 16636.4
-    total_missao_A_kg: 23376.1
+    total_missao_A_kg: 23461.1
     dv_extra_orbitador_regra_iii_km_s: 0.3693
     orbitador_regra_iii_kg: 28912.8
-    total_regra_iii_kg: 35652.4
+    total_regra_iii_kg: 35737.5
 - apoapse_alt_km: 16505.7
   dv_mav_km_s: 5.1388
-  mav_glom_kg: 248.6
-  lander_orbita_baixa_kg: 6751.1
+  mav_glom_kg: 262.5
+  lander_orbita_baixa_kg: 6836.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.3474
     orbitador_missao_A_kg: 16430.6
-    total_missao_A_kg: 23181.7
+    total_missao_A_kg: 23267.2
     dv_extra_orbitador_regra_iii_km_s: 0.3474
     orbitador_regra_iii_kg: 28489.4
-    total_regra_iii_kg: 35240.5
+    total_regra_iii_kg: 35326.0
 - apoapse_alt_km: 17140.1
   dv_mav_km_s: 5.1489
-  mav_glom_kg: 250.4
-  lander_orbita_baixa_kg: 6762.5
+  mav_glom_kg: 264.4
+  lander_orbita_baixa_kg: 6848.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.3259
     orbitador_missao_A_kg: 16231.7
-    total_missao_A_kg: 22994.2
+    total_missao_A_kg: 23080.1
     dv_extra_orbitador_regra_iii_km_s: 0.3259
     orbitador_regra_iii_kg: 28082.2
-    total_regra_iii_kg: 34844.6
+    total_regra_iii_kg: 34930.6
 - apoapse_alt_km: 17798.9
   dv_mav_km_s: 5.1589
-  mav_glom_kg: 252.2
-  lander_orbita_baixa_kg: 6773.7
+  mav_glom_kg: 266.3
+  lander_orbita_baixa_kg: 6860.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.3047
     orbitador_missao_A_kg: 16039.6
-    total_missao_A_kg: 22813.4
+    total_missao_A_kg: 22899.8
     dv_extra_orbitador_regra_iii_km_s: 0.3047
     orbitador_regra_iii_kg: 27690.5
-    total_regra_iii_kg: 34464.3
+    total_regra_iii_kg: 34550.7
 - apoapse_alt_km: 18482.9
   dv_mav_km_s: 5.1686
-  mav_glom_kg: 254.1
-  lander_orbita_baixa_kg: 6784.9
+  mav_glom_kg: 268.2
+  lander_orbita_baixa_kg: 6871.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.2839
     orbitador_missao_A_kg: 15854.1
-    total_missao_A_kg: 22639.0
+    total_missao_A_kg: 22725.8
     dv_extra_orbitador_regra_iii_km_s: 0.2839
     orbitador_regra_iii_kg: 27313.9
-    total_regra_iii_kg: 34098.8
+    total_regra_iii_kg: 34185.6
 - apoapse_alt_km: 19193.3
   dv_mav_km_s: 5.1781
-  mav_glom_kg: 255.8
-  lander_orbita_baixa_kg: 6795.9
+  mav_glom_kg: 270.0
+  lander_orbita_baixa_kg: 6883.2
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.2636
     orbitador_missao_A_kg: 15675.0
-    total_missao_A_kg: 22470.9
+    total_missao_A_kg: 22558.1
     dv_extra_orbitador_regra_iii_km_s: 0.2636
     orbitador_regra_iii_kg: 26951.7
-    total_regra_iii_kg: 33747.5
+    total_regra_iii_kg: 33834.8
 - apoapse_alt_km: 19930.9
   dv_mav_km_s: 5.1875
-  mav_glom_kg: 257.6
-  lander_orbita_baixa_kg: 6806.8
+  mav_glom_kg: 271.9
+  lander_orbita_baixa_kg: 6894.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.2436
     orbitador_missao_A_kg: 15502.0
-    total_missao_A_kg: 22308.8
+    total_missao_A_kg: 22396.5
     dv_extra_orbitador_regra_iii_km_s: 0.2436
     orbitador_regra_iii_kg: 26603.2
-    total_regra_iii_kg: 33410.0
+    total_regra_iii_kg: 33497.7
 - apoapse_alt_km: 20696.9
   dv_mav_km_s: 5.1967
-  mav_glom_kg: 259.4
-  lander_orbita_baixa_kg: 6817.5
+  mav_glom_kg: 273.7
+  lander_orbita_baixa_kg: 6905.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.224
     orbitador_missao_A_kg: 15335.0
-    total_missao_A_kg: 22152.5
+    total_missao_A_kg: 22240.6
     dv_extra_orbitador_regra_iii_km_s: 0.224
     orbitador_regra_iii_kg: 26268.1
-    total_regra_iii_kg: 33085.7
+    total_regra_iii_kg: 33173.8
 - apoapse_alt_km: 21492.4
   dv_mav_km_s: 5.2056
-  mav_glom_kg: 261.1
-  lander_orbita_baixa_kg: 6828.2
+  mav_glom_kg: 275.5
+  lander_orbita_baixa_kg: 6916.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.2048
     orbitador_missao_A_kg: 15173.7
-    total_missao_A_kg: 22001.9
+    total_missao_A_kg: 22090.5
     dv_extra_orbitador_regra_iii_km_s: 0.2048
     orbitador_regra_iii_kg: 25945.7
-    total_regra_iii_kg: 32773.9
+    total_regra_iii_kg: 32862.5
 - apoapse_alt_km: 22318.4
   dv_mav_km_s: 5.2144
-  mav_glom_kg: 262.8
-  lander_orbita_baixa_kg: 6838.7
+  mav_glom_kg: 277.3
+  lander_orbita_baixa_kg: 6927.6
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.186
     orbitador_missao_A_kg: 15018.1
-    total_missao_A_kg: 21856.8
+    total_missao_A_kg: 21945.7
     dv_extra_orbitador_regra_iii_km_s: 0.186
     orbitador_regra_iii_kg: 25635.7
-    total_regra_iii_kg: 32474.3
+    total_regra_iii_kg: 32563.3
 - apoapse_alt_km: 23176.2
   dv_mav_km_s: 5.223
-  mav_glom_kg: 264.5
-  lander_orbita_baixa_kg: 6849.0
+  mav_glom_kg: 279.0
+  lander_orbita_baixa_kg: 6938.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.1677
     orbitador_missao_A_kg: 14867.9
-    total_missao_A_kg: 21716.9
+    total_missao_A_kg: 21806.3
     dv_extra_orbitador_regra_iii_km_s: 0.1677
     orbitador_regra_iii_kg: 25337.4
-    total_regra_iii_kg: 32186.4
+    total_regra_iii_kg: 32275.8
 - apoapse_alt_km: 24066.9
   dv_mav_km_s: 5.2314
-  mav_glom_kg: 266.2
-  lander_orbita_baixa_kg: 6859.2
+  mav_glom_kg: 280.8
+  lander_orbita_baixa_kg: 6949.0
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.1497
     orbitador_missao_A_kg: 14722.9
-    total_missao_A_kg: 21582.1
+    total_missao_A_kg: 21671.9
     dv_extra_orbitador_regra_iii_km_s: 0.1497
     orbitador_regra_iii_kg: 25050.5
-    total_regra_iii_kg: 31909.7
+    total_regra_iii_kg: 31999.5
 - apoapse_alt_km: 24991.9
   dv_mav_km_s: 5.2396
-  mav_glom_kg: 267.8
-  lander_orbita_baixa_kg: 6869.3
+  mav_glom_kg: 282.5
+  lander_orbita_baixa_kg: 6959.4
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.1321
     orbitador_missao_A_kg: 14583.0
-    total_missao_A_kg: 21452.3
+    total_missao_A_kg: 21542.4
     dv_extra_orbitador_regra_iii_km_s: 0.1321
     orbitador_regra_iii_kg: 24774.5
-    total_regra_iii_kg: 31643.7
+    total_regra_iii_kg: 31733.9
 - apoapse_alt_km: 25952.4
   dv_mav_km_s: 5.2476
-  mav_glom_kg: 269.4
-  lander_orbita_baixa_kg: 6879.1
+  mav_glom_kg: 284.1
+  lander_orbita_baixa_kg: 6969.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.1149
     orbitador_missao_A_kg: 14448.1
-    total_missao_A_kg: 21327.2
+    total_missao_A_kg: 21417.7
     dv_extra_orbitador_regra_iii_km_s: 0.1149
     orbitador_regra_iii_kg: 24508.9
-    total_regra_iii_kg: 31388.1
+    total_regra_iii_kg: 31478.6
 - apoapse_alt_km: 26949.8
   dv_mav_km_s: 5.2554
-  mav_glom_kg: 271.0
-  lander_orbita_baixa_kg: 6888.9
+  mav_glom_kg: 285.8
+  lander_orbita_baixa_kg: 6979.8
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.0981
     orbitador_missao_A_kg: 14317.8
-    total_missao_A_kg: 21206.7
+    total_missao_A_kg: 21297.6
     dv_extra_orbitador_regra_iii_km_s: 0.0981
     orbitador_regra_iii_kg: 24253.5
-    total_regra_iii_kg: 31142.4
+    total_regra_iii_kg: 31233.3
 - apoapse_alt_km: 27985.6
   dv_mav_km_s: 5.263
-  mav_glom_kg: 272.5
-  lander_orbita_baixa_kg: 6898.4
+  mav_glom_kg: 287.4
+  lander_orbita_baixa_kg: 6989.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.0818
     orbitador_missao_A_kg: 14192.2
-    total_missao_A_kg: 21090.6
+    total_missao_A_kg: 21181.9
     dv_extra_orbitador_regra_iii_km_s: 0.0818
     orbitador_regra_iii_kg: 24007.7
-    total_regra_iii_kg: 30906.2
+    total_regra_iii_kg: 30997.5
 - apoapse_alt_km: 29061.1
   dv_mav_km_s: 5.2705
-  mav_glom_kg: 274.1
-  lander_orbita_baixa_kg: 6907.8
+  mav_glom_kg: 289.0
+  lander_orbita_baixa_kg: 6999.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.0658
     orbitador_missao_A_kg: 14071.0
-    total_missao_A_kg: 20978.8
+    total_missao_A_kg: 21070.4
     dv_extra_orbitador_regra_iii_km_s: 0.0658
     orbitador_regra_iii_kg: 23771.3
-    total_regra_iii_kg: 30679.2
+    total_regra_iii_kg: 30770.8
 - apoapse_alt_km: 30178.1
   dv_mav_km_s: 5.2778
-  mav_glom_kg: 275.6
-  lander_orbita_baixa_kg: 6917.1
+  mav_glom_kg: 290.5
+  lander_orbita_baixa_kg: 7009.1
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.0502
     orbitador_missao_A_kg: 13954.1
-    total_missao_A_kg: 20871.1
+    total_missao_A_kg: 20963.1
     dv_extra_orbitador_regra_iii_km_s: 0.0502
     orbitador_regra_iii_kg: 23543.8
-    total_regra_iii_kg: 30460.9
+    total_regra_iii_kg: 30552.9
 - apoapse_alt_km: 31337.9
   dv_mav_km_s: 5.2848
-  mav_glom_kg: 277.0
-  lander_orbita_baixa_kg: 6926.1
+  mav_glom_kg: 292.1
+  lander_orbita_baixa_kg: 7018.5
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.0349
     orbitador_missao_A_kg: 13841.3
-    total_missao_A_kg: 20767.4
+    total_missao_A_kg: 20859.7
     dv_extra_orbitador_regra_iii_km_s: 0.0349
     orbitador_regra_iii_kg: 23325.0
-    total_regra_iii_kg: 30251.1
+    total_regra_iii_kg: 30343.4
 - apoapse_alt_km: 32542.3
   dv_mav_km_s: 5.2917
-  mav_glom_kg: 278.5
-  lander_orbita_baixa_kg: 6935.0
+  mav_glom_kg: 293.6
+  lander_orbita_baixa_kg: 7027.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.0201
     orbitador_missao_A_kg: 13732.5
-    total_missao_A_kg: 20667.5
+    total_missao_A_kg: 20760.2
     dv_extra_orbitador_regra_iii_km_s: 0.0201
     orbitador_regra_iii_kg: 23114.4
-    total_regra_iii_kg: 30049.4
+    total_regra_iii_kg: 30142.1
 - apoapse_alt_km: 33793.0
   dv_mav_km_s: 5.2984
-  mav_glom_kg: 279.9
-  lander_orbita_baixa_kg: 6943.7
+  mav_glom_kg: 295.0
+  lander_orbita_baixa_kg: 7036.7
   quimico:
     dv_extra_orbitador_missao_A_km_s: 0.0056
     orbitador_missao_A_kg: 13627.6
-    total_missao_A_kg: 20571.4
+    total_missao_A_kg: 20664.4
     dv_extra_orbitador_regra_iii_km_s: 0.0056
     orbitador_regra_iii_kg: 22911.8
-    total_regra_iii_kg: 29855.5
+    total_regra_iii_kg: 29948.5

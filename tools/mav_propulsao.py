@@ -45,7 +45,13 @@ def massas_opcao(dv, nome, mcfg, scfg, icfg, fonte_energia):
     glom, prop = mav_generico(dv, op, scfg)
     det = {"mav_glom_kg": glom, "mav_propelente_kg": prop}
     if not op["criogenico"]:
-        return glom, 0.0, det
+        aq = mcfg["aquecimento"]
+        dt = _v(aq["t_minima_c"][nome]) - _v(aq["t_ambiente_c"])
+        dt_ref = _v(aq["t_referencia_c"]) - _v(aq["t_ambiente_c"])
+        p_aq = isru.escala(_v(aq["referencia_w"]) * dt / dt_ref, prop, _v(aq["m_prop_referencia_kg"]), _v(aq["expoente_area"]))
+        m_en, desc = energia(icfg, p_aq, fonte_energia)
+        det.update({"aquecimento_w": p_aq, "energia_superficie_kg": m_en, "energia_superficie": desc})
+        return glom + m_en, 0.0, det
     m_ox, m_ch4 = isru.divisao_of(prop, _v(op["razao_of"]))
     # Superfície: armazenamento sem evaporação + fonte de energia (como na Etapa 2.2)
     p_sup, m_sup = zbo(icfg, m_ch4, m_ox)
@@ -80,7 +86,7 @@ def main():
 
     linhas = []
     for nome in ("O1", "O4", "O2"):
-        fontes = ("mmrtg", "solar") if mcfg["opcoes"][nome]["criogenico"] else ("-",)
+        fontes = ("mmrtg", "solar")
         for f in fontes:
             pousado, cruz, det = massas_opcao(dv, nome, mcfg, scfg, icfg, f)
             lander = lander_leo((pousado + plat) / razao + cruz, scfg, dcfg, p, a_caso)
@@ -119,10 +125,11 @@ def main():
     md = ["# Propulsão do MAV (gerado por tools/mav_propulsao.py)", "",
           f"Órbita de encontro 300 × {br(esc['apoapse_alt_km'])} km (ADR 0005); Δv com margem {br(dv, 3)} km/s; carga útil 16 kg; "
           f"orbitador {br(orbit['regra_iii'])} kg (iii) / {br(orbit['missao_A'])} kg (A). Massas em kg.", "",
-          "| Opção | Energia (superfície) | MAV | Armazenamento pousado | Energia pousada | Painéis no cruzeiro | Massa pousada | Lander na órbita baixa | **Total (iii)** | Total (A) |",
-          "| :- | :- | -: | -: | -: | -: | -: | -: | -: | -: |"]
+          "| Opção | Energia (superfície) | MAV | Potência térmica (aquecimento ou criogenia) | Armazenamento pousado | Energia pousada | Painéis no cruzeiro | Massa pousada | Lander na órbita baixa | **Total (iii)** | Total (A) |",
+          "| :- | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for r in linhas:
-        md.append(f"| {r['opcao']}: {r['nome']} | {r.get('energia_superficie') or r['energia']} | {br(r['mav_glom_kg'])} | "
+        pot = r.get("aquecimento_w", r.get("zbo_superficie_w"))
+        md.append(f"| {r['opcao']}: {r['nome']} | {r.get('energia_superficie') or r['energia']} | {br(r['mav_glom_kg'])} | {br(pot)} W | "
                   f"{br(r.get('armazenamento_pousado_kg'))} | {br(r.get('energia_superficie_kg'))} | {br(r.get('paineis_cruzeiro_kg'))} | "
                   f"{br(r['massa_pousada_kg'])} | {br(r['lander_orbita_baixa_kg'])} | **{br(r['total_regra_iii_kg'])}** | {br(r['total_missao_A_kg'])} |")
     v = out["varredura_com_melhor_opcao"]

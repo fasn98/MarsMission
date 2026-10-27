@@ -282,3 +282,14 @@ premissas:
       aplicada também ao LOX. Não há fonte primária para tanques dentro de um aeroshell no cruzeiro nem
       para evaporação passiva em trânsito. O maior resfriador de 90 K já voado entrega 20 W [F50].
     status: NÃO VALIDADA
+  - id: P-027
+    nome: aquecimento_mav_superficie
+    valor: {expoente_area: 0.6667, margem_congelamento_k: 10}
+    unidade: adimensional; K
+    uso: config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada
+    justificativa: >
+      Única referência numérica: aquecedores do 1º motor do MAV do MSR, 36 W para manter −20 °C num ambiente
+      de −62,5 °C, com 320 kg de propelente [F57]. Escala linear com ΔT (condução) e com a área ~ massa^(2/3).
+      Para o hipergólico, mínimo de −1 °C (NTO congela a −11 °C [F61], + 10 K de margem). Aquecimento
+      contínuo durante toda a estada, sem uso do calor residual de um MMRTG. Sem fonte para essa escala.
+    status: NÃO VALIDADA

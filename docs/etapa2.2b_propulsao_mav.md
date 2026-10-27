@@ -1,7 +1,8 @@
 # Etapa 2.2b: propulsão do MAV (sólido × hipergólico × LOX/metano)
 
-Estado: **aguardando o portão do Fabio**, que escolhe a propulsão do MAV. O ISRU está fora da
-arquitetura (ADR 0006). Resultados: `results/etapa2.2/mav_propulsao.md` e `.yaml`, além de
+Estado: **decidido (ADR 0007): O4 hipergólico como linha de base**, depois da inclusão do aquecimento na
+superfície (seção 2b). O ISRU está fora da arquitetura (ADR 0006). Órbita de encontro atualizada para
+300 × 26.950 km (ADR 0005). Resultados: `results/etapa2.2/mav_propulsao.md` e `.yaml`, além de
 `results/etapa2.1/varredura_encontro_rp300_O4.*`, todos gerados por `tools/mav_propulsao.py`.
 
 ## 1. Premissas por tipo de propulsão
@@ -37,7 +38,27 @@ Todas as opções têm dois estágios, a mesma divisão de Δv (P-019), carga ú
 - O sólido é o mais pesado: 7,1 t a mais que o hipergólico pela regra (iii), +21 %. Com Δv de
   ~5,7 km/s, o 2º estágio sólido trabalha perto do limite da equação do foguete.
 
-**Varredura da órbita de encontro refeita com O4** (periapse de 300 km, regra dos 5 % do ADR 0005):
+## 2b. Com aquecimento do MAV na superfície (condição do portão)
+
+Premissa P-027: aquecedores do 1º motor do MAV do MSR, 2 + 25 + 9 = 36 W para manter −20 °C num ambiente
+de −62,5 °C, com 320 kg de propelente (DAC-0.0, Fig. 5 e pp. 3–8 [F57]). O valor é escalado com o ΔT e
+com a área (~ massa^(2/3)). Mínimos por opção:
+- O4: NTO congela a −11 °C [F61], + 10 K de margem, ou seja, −1 °C;
+- O1: −40 °C, o requisito do MSR [F57].
+A energia vem de MMRTG ou solar, como na Etapa 2.2.
+
+| Opção | Potência térmica | Total (iii): MMRTG / solar | Total (missão A): MMRTG / solar |
+| :- | -: | -: | -: |
+| O1 sólido | 41 W de aquecimento | 41.445 / 41.267 kg | 29.985 / 29.807 kg |
+| **O4 hipergólico** | **36 W de aquecimento** | **34.375 / 34.186 kg** | **22.916 / 22.726 kg** |
+| O2 LOX/CH4 | 189 W de criogenia | 35.144 / 35.052 kg | 23.684 / 23.592 kg |
+
+**O O4 continua à frente**, 0,8 a 0,9 t abaixo do O2 e ~7 t abaixo do O1.
+
+**Varredura da órbita de encontro refeita com O4 (com aquecimento):** a regra dos 5 % escolhe
+**26.950 km**, com 31.233 kg pela regra (iii), 21.298 kg na missão A e MAV de 286 kg.
+
+**Varredura da órbita de encontro refeita com O4 (antes do aquecimento)** (periapse de 300 km, regra dos 5 % do ADR 0005):
 - o mínimo pela regra (iii), 29.856 kg, fica no extremo (apoapse de 33.793 km);
 - **a regra passa a escolher apoapse de 26.950 km**, em vez dos 18.483 km com o MAV sólido. Isso dá
   31.142 kg pela regra (iii), 4,3 % acima do mínimo, e 21.207 kg na missão A, com MAV de 271 kg;
@@ -50,7 +71,7 @@ Todas as opções têm dois estágios, a mesma divisão de Δv (P-019), carga ú
 | :- | :- | :- | :- |
 | Escolha do MSR | **escolhido**: "the most technologically ready" [F57] | — | "had issues meeting the volume and mass constraints" [F59] |
 | Simplicidade / partes móveis | "Simple design does not require moving parts" [F58] | válvulas, pressurização, motor bipropelente (não detalhado aqui) | o mesmo, mais resfriadores criogênicos ativos |
-| Maturidade (TRL) | "High TRL and reliability" [F58] | o motor de referência de Bowles é o XLR-132, com 347 s [F46] | ZBO "not yet demonstrated in space" (DRA ADD2, p. 330 [F51]); maior resfriador de 90 K já voado: 20 W [F50] |
+| Maturidade (TRL) | "High TRL and reliability" [F58] | o motor de referência de Bowles é o XLR-132, com 347 s [F46]; precedente: estágio de subida do LM da Apollo, "hypergolic bipropellants and a pressure-fed ablatively cooled engine" [F62] | DRA ADD2, p. 330 [F51]: "zero boil-off may be achieved using technology approaches under development but not yet demonstrated in space"; DRA ADD, p. 342 [F18]: maior armazenamento de criogênicos em voo de 9 h (Titan Centaur-5; afirmação de 2009); maior resfriador de 90 K já voado: 20 W [F50] |
 | Ambiente térmico na superfície | "Potential issues with extremely cold environments" [F58]; o lander mantém o MAV entre −40 e +40 °C [F60] | NTO congela a −11 °C e MMH a ~−52 °C [F61]: exige aquecimento (não modelado) | armazenamento criogênico ativo por toda a estada, além do cruzeiro |
 | Controle de empuxo | "Cannot be actively throttled or shut down" [F58] (o MSR acrescentou propulsores de ajuste de órbita) | motor líquido: controle de empuxo (não verificado em fonte nesta etapa) | idem (não verificado em fonte nesta etapa) |
 | Manuseio | "Manufacturing and handling safety" [F58] | manuseio de hipergólicos (não verificado em fonte nesta etapa) | criogênicos armazenados desde a Terra (seção 1) |
@@ -63,11 +84,13 @@ da escolha do MSR.
 
 - **P-021 (revisada):** ε do LOX/CH4 = 0,295, derivado. NÃO VALIDADA.
 - **P-026 (nova):** armazenamento sem evaporação no cruzeiro, escalado da Tab. 4-30 do ADD2. NÃO VALIDADA.
+- **P-027 (nova):** aquecimento do MAV na superfície, escalado dos 36 W do MSR. NÃO VALIDADA.
 
 ## 5. Limitações
 
-- Aquecimento dos hipergólicos e do sólido na superfície: não modelado. A massa de O4 e O1 está otimista
-  nesse ponto. O O2 já inclui o armazenamento criogênico.
+- Aquecimento na superfície: incluído pela P-027 (seção 2b), escalado de uma única referência do MSR.
+- Registro de processo: o commit 3b640a5 (só texto do relatório) foi feito com `--no-verify`, pulando o
+  hook. O pytest foi rodado logo depois (130 passaram, 2 pulados). Não se repete.
 - Todas as opções usam a mesma divisão de Δv e dois estágios. O MSR usa dois estágios só no sólido; os
   MAVs de Bowles são de um estágio.
 - Sem estudo de volume e encaixe no lander.

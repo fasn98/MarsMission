@@ -35,3 +35,17 @@ cruzeiro:
   duracao_dias: 300   # ida da missão A (Etapa 1.3)
   solar_w_kg_1ua: {valor: 80, fonte: "[F55] JPL D-101316 (2017), p. 26: \"Beginning-of-life specific power … at 1 AU is typically up to ~80 W/kg\""}
   distancia_marte_ua: {valor: 1.5236915, fonte: "[F56] Appelbaum & Flood, NASA TM-102299 (1989): semieixo de Marte 1,5236915 UA"}
+
+aquecimento:
+  # Aquecimento do MAV na superfície durante a estada (O1 e O4; o O2 já tem o armazenamento criogênico).
+  # Referência: aquecedores do 1º motor do MAV do MSR, DAC-0.0 [F57], Fig. 5, p. 4: 2 + 25 + 9 W para manter
+  # −25 a −15 °C (média −20 °C); ambiente de −62,5 °C (p. 8); 320 kg de propelente no SRM1 (p. 3).
+  # P = P_ref · (ΔT / ΔT_ref) · (m_prop / m_ref)^(2/3)  (P-027)
+  referencia_w: {valor: 36, fonte: "[F57] Fig. 5, p. 4 (imagem conferida): 2 W, 25 W e 9 W"}
+  t_referencia_c: {valor: -20, fonte: "[F57] p. 4: \"AFT range of -25°C to -15°C\""}
+  t_ambiente_c: {valor: -62.5, fonte: "[F57] p. 8: \"exposed to a minimum of -62.5°C while stowed within the igloo of the SRL\""}
+  m_prop_referencia_kg: {valor: 320, fonte: "[F57] p. 3: \"SRM1 featured 320kg of propellant\""}
+  expoente_area: {valor: 0.6667, premissa: P-027}
+  t_minima_c:
+    O1: {valor: -40, fonte: "[F57] p. 8: \"AFT greater than -40°C during non-operational phases\""}
+    O4: {valor: -1, premissa: P-027, fonte: "[F61] NTO congela a −11 °C; + 10 K de margem (premissa)"}

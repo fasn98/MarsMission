@@ -1,6 +1,6 @@
 # ADR 0005 — Arquitetura de superfície e órbita de encontro
 
-Status: Accepted (Fabio, 2026-10-27, portões da Etapa 2.1)
+Status: Accepted (Fabio, 2026-10-27, portões da Etapa 2.1); **apoapse atualizado** no portão da propulsão do MAV (ADR 0007)
 Data: 2026-10-27
 
 ## Contexto
@@ -26,6 +26,17 @@ baixa custa ~1,2 km/s, e partir de lá para a Terra custa outros ~1,2 km/s.
    - Fonte: `results/etapa2.1/varredura_encontro_rp300.yaml`, gerado por `tools/varredura_encontro.py`.
    - A varredura usa 120 pontos geométricos entre 380 e 33.793 km. Entre pontos vizinhos, o apoapse
      muda ~3,8 %; o valor escolhido tem essa resolução.
+
+## Atualização (ADR 0007, MAV hipergólico)
+Com o MAV hipergólico (O4, com aquecimento na superfície), a mesma regra dos 5 % aplicada à varredura
+com periapse de 300 km escolhe **apoapse de 26.950 km**. A órbita de encontro passa a ser **300 × 26.950 km**.
+- Total pela regra (iii): 31.233 kg, contra o mínimo de 29.948 kg no extremo da varredura.
+- Total na missão A: 21.298 kg.
+- MAV: 286 kg.
+- Fonte: `results/etapa2.2/mav_propulsao.yaml` e `results/etapa2.1/varredura_encontro_rp300_O4.yaml`,
+  gerados por `tools/mav_propulsao.py`.
+
+O valor de 18.483 km dos itens 4 e seguintes vale para o MAV sólido e fica como histórico.
 
 ## Hipóteses mantidas
 - Orbitador e lander em lançamentos separados, como no MSR, os dois na janela da missão A (2028).
