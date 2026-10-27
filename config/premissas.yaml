@@ -19,3 +19,53 @@ premissas:
     uso: tests/test_ephemeris.py — tolerância de velocidade entre DE440 (local) e Horizons (DE441)
     justificativa: Idem P-001.
     status: NÃO VALIDADA
+  - id: P-003
+    nome: tolerancia_lambert_vs_kepler_rel
+    valor: 1.0e-10
+    unidade: adimensional (erro relativo de posição e velocidade)
+    uso: tests/test_lambert.py — solução de Lambert propagada por Kepler analítico (variável universal)
+    justificativa: >
+      Folgada em relação ao pior caso observado em 2026-10-27 (6,2e-12 em 850 casos, M = 0, 1, 2,
+      incluindo órbitas de periapse baixa; nenhum caso excluído). Sem valor publicado.
+    status: NÃO VALIDADA
+  - id: P-004
+    nome: tolerancia_kepler_vs_integrador_rel
+    valor: 1.0e-8
+    unidade: adimensional (erro relativo de posição)
+    uso: tests/test_kepler.py — propagação analítica comparada com integração numérica (DOP853, rtol 1e-13)
+    justificativa: >
+      Folgada em relação ao pior caso observado em 2026-10-27 (4,1e-10 em 100 órbitas elípticas e
+      hiperbólicas). O limite é dado pelo integrador, não pela solução analítica. Sem valor publicado.
+    status: NÃO VALIDADA
+  - id: P-005
+    nome: tolerancia_lambert_vs_referencia_km_s
+    valor: 1.0e-8
+    unidade: km/s (maior diferença por componente)
+    uso: tests/test_lambert.py — comparação com os testes oficiais do valladopy
+    justificativa: >
+      Diferença observada em 2026-10-27: 2,5e-9 km/s em todos os casos. É a mesma ordem da
+      diferença entre os dois métodos do próprio autor (Battin e universal) no mesmo arquivo de
+      testes (p. ex. −6,241103309400 e −6,241103311950 km/s). Sem valor publicado.
+    status: NÃO VALIDADA
+  - id: P-006
+    nome: exclusao_angulo_180_graus
+    valor: 1.0
+    unidade: graus
+    uso: tools/porkchop.py e tools/verifica_burke2010.py — busca do mínimo de C3 por tipo
+    justificativa: >
+      Perto de 180° o plano da transferência de Lambert fica mal definido e a classificação
+      tipo I/II é ambígua. Sem exclusão, o mínimo "tipo II" de 2035 (partida no centro da Terra)
+      caiu em 180,0° (C3 = 17,29 km²/s², 10/05/35 → 19/12/35), fora da bacia que o manual
+      NASA/TM-2010-216764 reporta. O manual não diz como trata esse caso. Valor sem fonte.
+    status: NÃO VALIDADA
+  - id: P-007
+    nome: tolerancia_burke2010_rel
+    valor: 0.002
+    unidade: adimensional (erro relativo de C3 e de v∞ de chegada)
+    uso: tests/test_porkchop.py — C3 e v∞ nas datas impressas em NASA/TM-2010-216764, janelas 2028–2033
+    justificativa: >
+      O manual imprime 3 a 4 algarismos significativos e usa grade de 2 dias. Com partida no
+      baricentro Terra–Lua, os erros observados em 2026-10-27 foram ≤ 0,07 % (C3) e ≤ 0,03 %
+      (v∞). 2035 fica fora do teste: as datas da Tabela 6 do manual parecem deslocadas cerca de
+      63 dias (docs/etapa1.2_lambert_porkchop.md). Valor sem fonte.
+    status: NÃO VALIDADA

@@ -72,3 +72,12 @@ idênticos bit a bit.
   A origem não foi investigada.
 - A tolerância de 1 km detecta os erros de pipeline mais prováveis: UTC no lugar de TDB
   (~69 s × ~24 km/s ≈ 1600 km), frame eclíptico no lugar do equatorial e unidade errada.
+
+## Errata (2026-10-27)
+
+A versão desta seção publicada no commit 020f393 dizia que, numa consulta exploratória ao Horizons,
+"os alvos 499 e 4 diferiram em ~41 m na coordenada X". O valor está errado por erro de unidade na
+conversão de km para m: a diferença na coordenada X é 4,14e-5 km = **0,041 m = 41 mm**, não 41 m.
+A distância total |r₄₉₉ − r₄| nessa época é 0,134 m, dentro da faixa física de 0,10 a 0,21 m
+calculada acima. O texto original continua no histórico do git (commit 020f393); a correção entrou
+no commit 2cc07eb (PR #1).

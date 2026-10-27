@@ -1,0 +1,355 @@
+gerado_por: tools/verifica_burke2010.py
+fonte: NASA/TM-2010-216764
+linhas:
+- janela: '2028'
+  tipo: 1
+  corpo_partida: '399'
+  nasa:
+    partida: '2028-12-10'
+    chegada: '2029-07-20'
+    c3: 9.048
+    vinf: 4.892
+    tabela: 3
+    pagina: 19
+  minimo_proprio:
+    partida: '2028-12-10'
+    chegada: '2029-07-20'
+    tof_dias: 221.7
+    c3: 9.0241
+    vinf: 4.8739
+    angulo: 161.8
+    desloc_partida_dias: 0.7
+  nas_datas_nasa:
+    c3: 9.0293
+    vinf: 4.8925
+    angulo: 162.3
+- janela: '2028'
+  tipo: 2
+  corpo_partida: '399'
+  nasa:
+    partida: '2028-12-02'
+    chegada: '2029-10-16'
+    c3: 8.928
+    vinf: 3.261
+    tabela: 3
+    pagina: 19
+  minimo_proprio:
+    partida: '2028-11-29'
+    chegada: '2029-10-10'
+    tof_dias: 314.8
+    c3: 8.9952
+    vinf: 3.1613
+    angulo: 218.9
+    desloc_partida_dias: -2.3
+  nas_datas_nasa:
+    c3: 8.9991
+    vinf: 3.2606
+    angulo: 219.9
+- janela: '2028'
+  tipo: 1
+  corpo_partida: '3'
+  nasa:
+    partida: '2028-12-10'
+    chegada: '2029-07-20'
+    c3: 9.048
+    vinf: 4.892
+    tabela: 3
+    pagina: 19
+  minimo_proprio:
+    partida: '2028-12-09'
+    chegada: '2029-07-19'
+    tof_dias: 222.1
+    c3: 9.0501
+    vinf: 4.901
+    angulo: 162.5
+    desloc_partida_dias: -0.3
+  nas_datas_nasa:
+    c3: 9.0509
+    vinf: 4.8924
+    angulo: 162.3
+- janela: '2028'
+  tipo: 2
+  corpo_partida: '3'
+  nasa:
+    partida: '2028-12-02'
+    chegada: '2029-10-16'
+    c3: 8.928
+    vinf: 3.261
+    tabela: 3
+    pagina: 19
+  minimo_proprio:
+    partida: '2028-12-01'
+    chegada: '2029-10-16'
+    tof_dias: 318.3
+    c3: 8.9338
+    vinf: 3.2653
+    angulo: 220.1
+    desloc_partida_dias: -0.1
+  nas_datas_nasa:
+    c3: 8.9339
+    vinf: 3.2603
+    angulo: 219.9
+- janela: '2031'
+  tipo: 1
+  corpo_partida: '399'
+  nasa:
+    partida: '2031-01-28'
+    chegada: '2031-08-06'
+    c3: 9.0
+    vinf: 5.541
+    tabela: 4
+    pagina: 26
+  minimo_proprio:
+    partida: '2031-01-27'
+    chegada: '2031-08-05'
+    tof_dias: 189.8
+    c3: 8.9699
+    vinf: 5.5988
+    angulo: 146.1
+    desloc_partida_dias: -0.7
+  nas_datas_nasa:
+    c3: 8.9756
+    vinf: 5.5413
+    angulo: 145.9
+- janela: '2031'
+  tipo: 2
+  corpo_partida: '399'
+  nasa:
+    partida: '2031-02-23'
+    chegada: '2032-01-09'
+    c3: 8.237
+    vinf: 5.53
+    tabela: 4
+    pagina: 26
+  minimo_proprio:
+    partida: '2031-02-22'
+    chegada: '2032-01-08'
+    tof_dias: 320.1
+    c3: 8.1699
+    vinf: 5.5237
+    angulo: 216.4
+    desloc_partida_dias: -0.3
+  nas_datas_nasa:
+    c3: 8.1705
+    vinf: 5.5282
+    angulo: 216.2
+- janela: '2031'
+  tipo: 1
+  corpo_partida: '3'
+  nasa:
+    partida: '2031-01-28'
+    chegada: '2031-08-06'
+    c3: 9.0
+    vinf: 5.541
+    tabela: 4
+    pagina: 26
+  minimo_proprio:
+    partida: '2031-01-28'
+    chegada: '2031-08-05'
+    tof_dias: 189.4
+    c3: 8.9981
+    vinf: 5.5633
+    angulo: 145.5
+    desloc_partida_dias: 0.2
+  nas_datas_nasa:
+    c3: 8.9993
+    vinf: 5.5414
+    angulo: 145.9
+- janela: '2031'
+  tipo: 2
+  corpo_partida: '3'
+  nasa:
+    partida: '2031-02-23'
+    chegada: '2032-01-09'
+    c3: 8.237
+    vinf: 5.53
+    tabela: 4
+    pagina: 26
+  minimo_proprio:
+    partida: '2031-02-23'
+    chegada: '2032-01-10'
+    tof_dias: 320.5
+    c3: 8.2408
+    vinf: 5.5525
+    angulo: 216.2
+    desloc_partida_dias: 0.7
+  nas_datas_nasa:
+    c3: 8.2412
+    vinf: 5.5285
+    angulo: 216.2
+- janela: '2033'
+  tipo: 1
+  corpo_partida: '399'
+  nasa:
+    partida: '2033-04-06'
+    chegada: '2033-10-01'
+    c3: 8.412
+    vinf: 3.956
+    tabela: 5
+    pagina: 33
+  minimo_proprio:
+    partida: '2033-04-04'
+    chegada: '2033-09-28'
+    tof_dias: 177.7
+    c3: 8.3961
+    vinf: 4.0398
+    angulo: 139.0
+    desloc_partida_dias: -1.7
+  nas_datas_nasa:
+    c3: 8.4131
+    vinf: 3.9561
+    angulo: 138.6
+- janela: '2033'
+  tipo: 2
+  corpo_partida: '399'
+  nasa:
+    partida: '2033-04-28'
+    chegada: '2034-01-27'
+    c3: 7.781
+    vinf: 4.377
+    tabela: 5
+    pagina: 33
+  minimo_proprio:
+    partida: '2033-04-28'
+    chegada: '2034-01-27'
+    tof_dias: 273.7
+    c3: 7.7046
+    vinf: 4.3762
+    angulo: 188.5
+    desloc_partida_dias: 0.9
+  nas_datas_nasa:
+    c3: 7.709
+    vinf: 4.3762
+    angulo: 189.1
+- janela: '2033'
+  tipo: 1
+  corpo_partida: '3'
+  nasa:
+    partida: '2033-04-06'
+    chegada: '2033-10-01'
+    c3: 8.412
+    vinf: 3.956
+    tabela: 5
+    pagina: 33
+  minimo_proprio:
+    partida: '2033-04-05'
+    chegada: '2033-09-30'
+    tof_dias: 178.1
+    c3: 8.408
+    vinf: 3.9678
+    angulo: 138.8
+    desloc_partida_dias: -0.4
+  nas_datas_nasa:
+    c3: 8.4091
+    vinf: 3.9563
+    angulo: 138.6
+- janela: '2033'
+  tipo: 2
+  corpo_partida: '3'
+  nasa:
+    partida: '2033-04-28'
+    chegada: '2034-01-27'
+    c3: 7.781
+    vinf: 4.377
+    tabela: 5
+    pagina: 33
+  minimo_proprio:
+    partida: '2033-04-28'
+    chegada: '2034-01-27'
+    tof_dias: 273.8
+    c3: 7.7814
+    vinf: 4.3767
+    angulo: 188.7
+    desloc_partida_dias: 0.6
+  nas_datas_nasa:
+    c3: 7.7826
+    vinf: 4.3766
+    angulo: 189.1
+- janela: '2035'
+  tipo: 1
+  corpo_partida: '399'
+  nasa:
+    partida: '2035-04-21'
+    chegada: '2035-11-03'
+    c3: 10.19
+    vinf: 2.692
+    tabela: 6
+    pagina: 40
+  minimo_proprio:
+    partida: '2035-06-23'
+    chegada: '2036-01-05'
+    tof_dias: 195.3
+    c3: 10.2621
+    vinf: 2.6904
+    angulo: 146.6
+    desloc_partida_dias: 64.0
+  nas_datas_nasa:
+    c3: 34.6725
+    vinf: 4.3752
+    angulo: 171.8
+- janela: '2035'
+  tipo: 2
+  corpo_partida: '399'
+  nasa:
+    partida: '2035-06-12'
+    chegada: '2036-07-28'
+    c3: 17.52
+    vinf: 4.063
+    tabela: 6
+    pagina: 40
+  minimo_proprio:
+    partida: '2035-08-08'
+    chegada: '2036-09-14'
+    tof_dias: 403.1
+    c3: 17.5311
+    vinf: 3.9761
+    angulo: 221.3
+    desloc_partida_dias: 57.6
+  nas_datas_nasa:
+    c3: 45.2859
+    vinf: 4.6945
+    angulo: 255.0
+- janela: '2035'
+  tipo: 1
+  corpo_partida: '3'
+  nasa:
+    partida: '2035-04-21'
+    chegada: '2035-11-03'
+    c3: 10.19
+    vinf: 2.692
+    tabela: 6
+    pagina: 40
+  minimo_proprio:
+    partida: '2035-06-23'
+    chegada: '2036-01-04'
+    tof_dias: 195.5
+    c3: 10.1936
+    vinf: 2.697
+    angulo: 147.0
+    desloc_partida_dias: 63.1
+  nas_datas_nasa:
+    c3: 34.6541
+    vinf: 4.3754
+    angulo: 171.8
+- janela: '2035'
+  tipo: 2
+  corpo_partida: '3'
+  nasa:
+    partida: '2035-06-12'
+    chegada: '2036-07-28'
+    c3: 17.52
+    vinf: 4.063
+    tabela: 6
+    pagina: 40
+  minimo_proprio:
+    partida: '2035-08-15'
+    chegada: '2036-10-04'
+    tof_dias: 416.7
+    c3: 17.5251
+    vinf: 4.0984
+    angulo: 224.0
+    desloc_partida_dias: 64.2
+  nas_datas_nasa:
+    c3: 45.4423
+    vinf: 4.6946
+    angulo: 255.0
