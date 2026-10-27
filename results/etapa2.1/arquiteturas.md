@@ -14,6 +14,8 @@
 | Massa de entrada (missão A) | 2 341 | 5 248 | 1 909 | 2 341 |
 | Lander na chegada a Marte (missão A / envelope) | 2 341 / 2 341 | 5 248 / 5 248 | 3 264 / 3 821 | 2 341 / 2 341 |
 | Orbitador na órbita baixa da Terra: missão A / regra (iii) | 92 936 / 1 109 089 | 13 587 / 22 834 | 92 936 / 1 109 089 | 29 647 / 60 311 |
+| Lander na órbita baixa da Terra (com cruzeiro e saída da Terra): missão A / regra (iii) | 7 321 / 7 321 | 16 417 / 16 417 | 10 210 / 11 951 | 7 321 / 7 321 |
+| **TOTAL na órbita baixa (lançamentos separados): missão A / regra (iii)** | **100 257 / 1 116 410** | **30 004 / 39 251** | **103 146 / 1 121 040** | **36 969 / 67 632** |
 
 Referência sem superfície (Fase 1): orbitador de 13 587 kg (missão A) e 22 833 kg (regra iii) na órbita baixa.
 S4: a aerofrenagem leva ~205 dias (P-020), dentro da estada em Marte.

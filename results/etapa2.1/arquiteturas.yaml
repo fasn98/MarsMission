@@ -36,6 +36,12 @@ arquiteturas:
     orbitador_massa_orbita_baixa_kg:
       missao_A: 92936.0
       regra_iii: 1109089.1
+    lander_massa_orbita_baixa_kg:
+      missao_A: 7321.4
+      regra_iii: 7321.4
+    total_orbita_baixa_kg:
+      missao_A: 100257.4
+      regra_iii: 1116410.5
   S2:
     nome: Entrada direta + encontro na órbita de 1 sol (orbitador não muda de órbita)
     missao_A:
@@ -65,6 +71,12 @@ arquiteturas:
     orbitador_massa_orbita_baixa_kg:
       missao_A: 13587.0
       regra_iii: 22833.5
+    lander_massa_orbita_baixa_kg:
+      missao_A: 16417.1
+      regra_iii: 16417.1
+    total_orbita_baixa_kg:
+      missao_A: 30004.1
+      regra_iii: 39250.6
   S3:
     nome: Pouso a partir da órbita de 1 sol (lander se captura) + encontro em órbita
       baixa circular
@@ -107,6 +119,12 @@ arquiteturas:
     orbitador_massa_orbita_baixa_kg:
       missao_A: 92936.0
       regra_iii: 1109089.1
+    lander_massa_orbita_baixa_kg:
+      missao_A: 10209.5
+      regra_iii: 11950.9
+    total_orbita_baixa_kg:
+      missao_A: 103145.5
+      regra_iii: 1121040.0
   S4:
     nome: Entrada direta + encontro em órbita baixa; orbitador desce por aerofrenagem
     missao_A:
@@ -142,3 +160,9 @@ arquiteturas:
     orbitador_massa_orbita_baixa_kg:
       missao_A: 29647.2
       regra_iii: 60311.1
+    lander_massa_orbita_baixa_kg:
+      missao_A: 7321.4
+      regra_iii: 7321.4
+    total_orbita_baixa_kg:
+      missao_A: 36968.6
+      regra_iii: 67632.5

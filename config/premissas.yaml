@@ -181,7 +181,9 @@ premissas:
       59 kg de instrumentos, ou seja, 284 kg secos sem carga [F40]. Limite superior: SRL de 2024, capacidade
       pousada de ~2900 kg [F41] menos o MAV de 400 kg [F35], ou seja, 2500 kg (inclui elementos do MSR
       que podem não se aplicar). Base ≈ média geométrica (√(284 × 2500) ≈ 843 kg), arredondada para 850 kg,
-      pelo mesmo critério da P-016. Valor sem fonte direta.
+      pelo mesmo critério da P-016. ATENÇÃO: é o SEGUNDO uso do critério da média geométrica sem análogo
+      direto (o primeiro foi a P-016); as duas bases têm a mesma fragilidade e devem ser revistas juntas.
+      Valor sem fonte direta.
     status: NÃO VALIDADA
   - id: P-018
     nome: razao_massa_pousada_entrada

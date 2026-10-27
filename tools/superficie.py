@@ -46,6 +46,20 @@ def mav(dv_total, cfg):
     return r[0].massa_inicial, r
 
 
+def lander_leo(chegada, cfg, dcfg, p, caso_saida):
+    """Massa na órbita baixa do lander: chegada a Marte + estágio de cruzeiro + estágio de saída da Terra."""
+    margem = _v(dcfg["margem_dv"])
+    dv = dm.orcamento(caso_saida, dcfg, p)
+    cz = cfg["lancamento"]["cruzeiro_lander"]
+    st = dcfg["estagios"]["saida_terra"]
+    cruz = fg.Estagio("cruzeiro_lander", _v(cz["isp_s"]), _v(cz["fracao_estrutural"]),
+                      [fg.Queima("correcoes_ida", (1 + margem) * dv["correcoes_ida"])])
+    saida = fg.Estagio("saida_terra_lander", _v(st["isp_s"]), _v(st["fracao_estrutural"]),
+                       [fg.Queima("saida_terra", (1 + margem) * dv["saida_terra"])])
+    r = fg.dimensionar_veiculo([saida, cruz], chegada)
+    return r[0].massa_inicial
+
+
 def main():
     cfg = _ler("config/superficie.yaml")
     dcfg = _ler("config/dimensionamento.yaml")
@@ -154,6 +168,13 @@ def main():
             "orbitador_massa_orbita_baixa_kg": {"missao_A": round(leo(extra_A, "missao_A"), 1),
                                                 "regra_iii": round(leo(extra_env, dcfg["regra_projeto"]), 1)},
         })
+        a_caso, _, _ = dm.casos(dcfg, p)
+        lander_A = lander_leo(linha["missao_A"]["massa_lander_na_chegada_kg"], cfg, dcfg, p, a_caso)
+        lander_iii = lander_leo(linha["envelope"]["massa_lander_na_chegada_kg"], cfg, dcfg, p, a_caso)
+        orb = linha["orbitador_massa_orbita_baixa_kg"]
+        linha["lander_massa_orbita_baixa_kg"] = {"missao_A": round(lander_A, 1), "regra_iii": round(lander_iii, 1)}
+        linha["total_orbita_baixa_kg"] = {"missao_A": round(orb["missao_A"] + lander_A, 1),
+                                          "regra_iii": round(orb["regra_iii"] + lander_iii, 1)}
         out["arquiteturas"][nome] = linha
 
     # Tabela-resumo
@@ -178,6 +199,10 @@ def main():
     row("Lander na chegada a Marte (missão A / envelope)", lambda x: br(x["missao_A"]["massa_lander_na_chegada_kg"]) + " / " + br(x["envelope"]["massa_lander_na_chegada_kg"]))
     row("Orbitador na órbita baixa da Terra: missão A / regra (iii)",
         lambda x: br(x["orbitador_massa_orbita_baixa_kg"]["missao_A"]) + " / " + br(x["orbitador_massa_orbita_baixa_kg"]["regra_iii"]))
+    row("Lander na órbita baixa da Terra (com cruzeiro e saída da Terra): missão A / regra (iii)",
+        lambda x: br(x["lander_massa_orbita_baixa_kg"]["missao_A"]) + " / " + br(x["lander_massa_orbita_baixa_kg"]["regra_iii"]))
+    row("**TOTAL na órbita baixa (lançamentos separados): missão A / regra (iii)**",
+        lambda x: "**" + br(x["total_orbita_baixa_kg"]["missao_A"]) + " / " + br(x["total_orbita_baixa_kg"]["regra_iii"]) + "**")
     md += ["", "Referência sem superfície (Fase 1): orbitador de 13 587 kg (missão A) e 22 833 kg (regra iii) na órbita baixa.",
            f"S4: a aerofrenagem leva ~{_v(cfg['aerofrenagem']['duracao_dias']):.0f} dias (P-020), dentro da estada em Marte."]
     SAIDA.mkdir(parents=True, exist_ok=True)

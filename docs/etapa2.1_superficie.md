@@ -1,7 +1,8 @@
 # Etapa 2.1: arquitetura de superfície (pouso, subida e encontro)
 
 Estado: **aguardando o portão do Fabio**, que escolhe a arquitetura de superfície e a órbita de
-encontro. Nenhuma arquitetura foi escolhida aqui. Resultados: `results/etapa2.1/arquiteturas.md` e
+encontro. Nenhuma arquitetura foi escolhida aqui. As seções 5 a 7 respondem ao pedido do portão de
+2026-10-27: massa total, varredura da órbita de encontro e risco do encontro elíptico. Resultados: `results/etapa2.1/arquiteturas.md` e
 `.yaml`, gerados por `tools/superficie.py`.
 
 ## 1. O que as fontes primárias do MSR mostram
@@ -99,14 +100,79 @@ Leitura (fatos do modelo, sem recomendação):
 - **Comparação com o MSR, ordem de grandeza:** o MAV de S1, S3 e S4 (341 kg com margem de 10 %)
   fica na faixa dos MAVs publicados (394 a 400 kg [F34, F35]).
 
-## 5. Premissas novas (NÃO VALIDADAS)
+## 5. Massa total na órbita baixa da Terra (orbitador + lander)
 
-- P-017: plataforma de superfície de 850 kg (faixa de 284 a 2500 kg).
+**Hipótese declarada:**
+- orbitador e lander vão em **lançamentos separados**, como no MSR [F32];
+- cada um parte da órbita baixa com o seu estágio criogênico de saída da Terra (Isp e ε da Fase 1), na
+  janela da missão A (no MSR, os elementos partiam em anos diferentes);
+- o lander leva um estágio de cruzeiro armazenável para as correções da ida, descartado antes da
+  entrada;
+- pela regra (iii), a saída da Terra é dimensionada pela janela da missão A, e o lander pela chegada
+  no pior caso entre as janelas.
+
+| | S1 | S2 | S3 | S4 |
+| :- | -: | -: | -: | -: |
+| Orbitador: missão A / regra (iii) | 92,9 / 1109 t | 13,6 / 22,8 t | 92,9 / 1109 t | 29,6 / 60,3 t |
+| Lander: missão A / regra (iii) | 7,3 / 7,3 t | 16,4 / 16,4 t | 10,2 / 12,0 t | 7,3 / 7,3 t |
+| **Total: missão A / regra (iii)** | **100,3 / 1116 t** | **30,0 / 39,3 t** | **103,1 / 1121 t** | **37,0 / 67,6 t** |
+
+Com o lander incluído, a S2 continua com o menor total. A S4 fica 23 % acima na missão A e 72 %
+acima pela regra (iii).
+
+## 6. Varredura da órbita de encontro
+
+`tools/varredura_encontro.py` → `results/etapa2.1/varredura_encontro.png`, `.md` e `.yaml`.
+
+**Configuração:**
+- periapse fixo em 250 km, o da órbita de 1 sol, de modo que o extremo da varredura é exatamente a
+  órbita de 1 sol (S2);
+- apoapse de 380 a 33.793 km, em 60 pontos;
+- o ponto inicial é 250 × 380 km, próximo mas não igual à circular de 380 km de S1 e S4;
+- em cada ponto são recalculados o MAV, o lander (entrada direta), o orbitador (Δv extra para descer e
+  para a injeção trans-Terra, os dois no periapse) e os dois estágios de saída da Terra.
+
+| Orbitador | Caso | Apoapse do mínimo | Massa total no mínimo | MAV |
+| :- | :- | -: | -: | -: |
+| só químico | missão A | ~19.800 km | 29,5 t | 1442 kg |
+| só químico | regra (iii) | 33.793 km (extremo = 1 sol) | 39,3 t | 1821 kg |
+| com aerofrenagem | missão A | ~10.000 km | 28,5 t | 1004 kg |
+| com aerofrenagem | regra (iii) | 33.793 km (extremo = 1 sol) | 39,3 t | 1821 kg |
+
+Leitura:
+- **Pela regra (iii), o mínimo das duas versões fica no extremo da varredura, a própria órbita de 1
+  sol (S2).** A aerofrenagem não muda o mínimo, porque perto de 1 sol a descida química já é mais
+  barata que o walk-out de 90 m/s.
+- **Na missão A, a curva é rasa entre ~10.000 km e 1 sol.** Os mínimos internos (28,5 e 29,5 t) ficam
+  só 1,5 t e 0,5 t abaixo da S2 (30,0 t).
+- **Com apoapse abaixo de ~2500 km, o orbitador só químico passa de 100 t pela regra (iii)** e cresce
+  rápido rumo à assíntota da equação do foguete. Com aerofrenagem, o total no ponto de 380 km fica em
+  67 t pela regra (iii).
+- Com apoapse abaixo de ~1000 km, nenhuma das duas versões fica abaixo de ~62 t pela regra (iii). Com
+  1189 km de apoapse, a versão com aerofrenagem dá 58,8 t.
+
+## 7. Riscos não modelados
+
+- **Encontro em órbita muito elíptica** (S2 e o lado direito da varredura): detecção e rastreio do
+  contêiner de amostras, navegação relativa, fases e janelas de encontro ao longo de uma órbita de
+  ~24,6 h, velocidades altas perto do periapse e iluminação. O MSR baseou o encontro numa órbita baixa
+  quase circular [F32].
+- **Vida orbital do contêiner:** o MSR exige periapse acima de 300 km [F32]. A varredura e a S2 usam
+  250 km, o periapse da órbita de 1 sol do DRA. Subir o periapse para 300 km mudaria um pouco o Δv do
+  MAV e do orbitador; não foi calculado.
+- **Aerofrenagem (S4 e varredura):** ~205 dias, metade da estada da missão A, com valores de outro
+  veículo (P-020).
+
+## 8. Premissas novas (NÃO VALIDADAS)
+
+- P-017: plataforma de superfície de 850 kg (faixa de 284 a 2500 kg). **Segundo uso do critério da
+  média geométrica sem análogo direto** (o primeiro foi a P-016); as duas bases devem ser revistas
+  juntas.
 - P-018: razão pousada/entrada (0,509 para entrada direta; 0,624 a partir de órbita).
 - P-019: fração estrutural e divisão do Δv entre os estágios do MAV.
 - P-020: aerofrenagem (walk-out de 90 m/s, 205 dias).
 
-## 6. Limitações
+## 9. Limitações
 
 - A massa do sistema de entrada vem de razões de missões análogas, não de um dimensionamento de
   aeroshell e paraquedas.

@@ -62,3 +62,21 @@ arquiteturas:
     entrada: direta
     encontro: orbita_baixa
     orbitador_desce_por: aerofrenagem
+
+lancamento:
+  # Orbitador e lander em lançamentos separados (como no MSR [F32]); cada um com o seu estágio de saída
+  # da Terra (mesmos Isp e ε do estágio de saída da Fase 1, config/dimensionamento.yaml). Os dois partem
+  # na janela da missão A (no MSR, os elementos partiam em anos diferentes).
+  separados: true
+  cruzeiro_lander:
+    # Estágio de cruzeiro armazenável para as correções da ida, descartado antes da entrada (como o do MSL).
+    isp_s: {valor: 321, fonte: "[F28]"}
+    fracao_estrutural: {valor: 0.24, fonte: "[F22]"}
+
+varredura_encontro:
+  # Órbita de encontro (periapse fixo, apoapse variável), MAV e orbitador recalculados em cada ponto.
+  # Periapse de 250 km para que o extremo coincida com a órbita de 1 sol [F18]. O MSR exige periapse
+  # acima de 300 km para a vida orbital do contêiner de amostras [F32] (risco registrado no relatório).
+  periapse_alt_km: 250
+  apoapse_alt_km: [380, 33793]
+  pontos: 60
