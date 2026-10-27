@@ -157,7 +157,7 @@ lander:
       # Conceito de coleta (c) + (a), decisão do Fabio no portão do item 2 da Etapa 2.5 (ADR 0009): os helicópteros
       # recuperam os tubos do Perseverance (primário); o braço do item "amostras" coleta regolito (reserva).
       massa_kg: 5.0
-      fonte: "[F98] p. 3: \"total mass of SRH is expected to be ~2.5 kg\" (2 × 2,5 kg)"
+      fonte: "[F98] p. 3: \"total mass of SRH is expected to be ~2.5 kg\"; dois helicópteros como no MSR: [F97] p. 28, \"two Sample Recovery Helicopters\""
       categoria: eletronica_0_5kg
       premissa: P-038
     nucleo:

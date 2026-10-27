@@ -373,7 +373,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-035
     nome: escala_nucleo_lander
-    valor: {limite_inferior: L1, limite_superior: SRL 2024 − MAV, referencia: L2, base: L3 + amostras}
+    valor: {limite_inferior: L1, limite_superior: SRL 2024 − MAV, referencia: L2, base: L3 + braço + helicópteros (Etapa 2.5)}
     unidade: —
     uso: config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander
     justificativa: >

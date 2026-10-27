@@ -42,6 +42,7 @@ opcoes:
       - nome: 2 helicópteros de recuperação de amostras
         massa_kg: 5.0
         categoria: eletronica_0_5kg
+        premissa: P-038
         fonte: "[F98] Withrow-Maser et al. 2023, p. 3: \"total mass of SRH is expected to be ~2.5 kg\"; dois helicópteros como no MSR: [F97] p. 28, \"two Sample Recovery Helicopters\""
     energia: "própria dos helicópteros (não publicada)"
     estado: >
@@ -62,7 +63,8 @@ opcoes:
       - nome: 2 helicópteros de recuperação de amostras
         massa_kg: 5.0
         categoria: eletronica_0_5kg
-        fonte: "[F98] p. 3"
+        premissa: P-038
+        fonte: "[F98] p. 3; [F97] p. 28"
 
 escolha: c_mais_a_escolhida
 

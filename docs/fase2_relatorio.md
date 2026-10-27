@@ -84,6 +84,7 @@ Estada em Marte de 414 d; reentrada a 12,34 km/s.
 | Braço de coleta | 88 |
 | Helicópteros | 6 |
 | MAV + energia de aquecimento | 282 |
+| Painéis do armazenamento criogênico no cruzeiro (só para MAV criogênico) | 0 |
 
 Massa de entrada 3.629 kg; massa pousada 1.847 kg.
 

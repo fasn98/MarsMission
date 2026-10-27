@@ -60,7 +60,7 @@ def main():
            "plataformas_usadas_kg": {"orbitador": antes["orbitador_kg"], "lander": antes["lander_kg"]},
            "ferramentas": FERRAMENTAS, "arquivos": linhas,
            "regenerados": sum(x["regenerado"] for x in linhas),
-           "todos_regenerados_iguais": all(x["igual"] for x in linhas if x["regenerado"]),
+           "todos_regenerados_iguais": any(x["regenerado"] for x in linhas) and all(x["igual"] for x in linhas if x["regenerado"]),
            "nao_regenerados": [x["arquivo"] for x in linhas if not x["regenerado"]]}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "conferencia_2033.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
