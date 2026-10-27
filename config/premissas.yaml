@@ -80,3 +80,23 @@ premissas:
       Erros observados em 2026-10-27, com chegada no baricentro Terra–Lua: ≤ 0,09 %, fora as três
       linhas tratadas à parte em docs/etapa1.2_retorno.md. Valor sem fonte.
     status: NÃO VALIDADA
+  - id: P-009
+    nome: conjuncao_permanencia_busca_dias
+    valor: [400, 700]
+    unidade: dias
+    uso: config/missoes.yaml, classes conjuncao e conjuncao_transito_curto (faixa de busca)
+    justificativa: >
+      O DRA 5.0 (SP p. 47) descreve a conjunção como "500 days or more" e mostra soluções com
+      475–540 dias (p. 48). A faixa de busca é mais larga para que o mínimo de energia de cada
+      janela não seja cortado pela definição; a permanência resultante é reportada.
+    status: NÃO VALIDADA
+  - id: P-010
+    nome: aerocaptura_periapse_altitude_km
+    valor: 50
+    unidade: km
+    uso: config/parametros_orbitais.yaml — periapse da passagem atmosférica em Marte
+    justificativa: >
+      O DRA 5.0 Addendum #2 (Tabela 2-7) dá 50 km como altitude MÍNIMA de periapse para
+      aerocaptura, não como valor de projeto. No modelo ideal, a elevação de periapse depois da
+      passagem fica maior quanto mais baixo for o periapse, então 50 km tende a superestimar esse Δv.
+    status: NÃO VALIDADA
