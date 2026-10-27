@@ -193,3 +193,10 @@ da Fase 2, as 38 premissas (P-001 a P-038) estão com status NÃO VALIDADA. Só 
   0,1 % dos pixels), ambas NÃO VALIDADAS. O limite numérico vem da precisão relevante do estudo (~1e-4 relativo), não do
   ruído observado; diferença acima dele é problema a investigar. Com elas, são 40 premissas (P-001 a P-040), todas NÃO VALIDADAS
   (`results/fase2/premissas_nao_validadas.md`).
+
+## Nota (2026-10-27): premissa P-041 na lista gerada
+- A Etapa 3.1 acrescenta a P-041 (parâmetros numéricos da queima finita, NÃO VALIDADA) a `config/premissas.yaml`.
+- `tools/lista_premissas.py` lista todas as premissas. Por isso `results/fase1/premissas.md` e
+  `results/fase2/premissas_nao_validadas.md` foram regenerados e agora mostram 41 premissas (P-001 a P-041), todas NÃO
+  VALIDADAS.
+- Nenhum número desta fase muda.

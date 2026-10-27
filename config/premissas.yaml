@@ -446,3 +446,14 @@ premissas:
       no runner do CI, 0,0002 % a 0,05 % dos pixels dos porkchops diferiram (PR #11, 2026-10-27). Os dados de origem
       das figuras são conferidos numericamente (P-039). Decisão do Fabio (2026-10-27). Sem valor publicado.
     status: NÃO VALIDADA
+  - id: P-041
+    nome: parametros_numericos_queima_finita
+    valor: {rtol: 1.0e-11, atol_km: 1.0e-9, tolerancia_alvo: 1.0e-6, passo_continuacao: 2.0, duracao_inicial_continuacao_s: 60}
+    unidade: adimensional; km e km/s; s
+    uso: config/queima_finita.yaml (orbital.queima_finita, Etapa 3.1)
+    justificativa: >
+      Parâmetros do método numérico da queima finita: tolerâncias do integrador DOP853, erro relativo aceito no periapse
+      e no apoapse finais da captura e a continuação no empuxo (passo e ponto de partida). Escolhidos bem abaixo da
+      precisão relevante do estudo (~1e-4 relativo); trocá-los (rtol 1e-9, passo 1,5, partida em 30 s) muda a perda em
+      menos de 1e-4 relativo (tests/test_queima_finita.py). Sem valor publicado.
+    status: NÃO VALIDADA

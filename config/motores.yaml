@@ -1,0 +1,121 @@
+# Etapa 3.1 — catálogo de motores com voo comprovado e combinações propostas por estágio (tools/queima_finita.py).
+# Fontes primárias em docs/fontes.md. Cada valor traz a citação literal e a página (do PDF, salvo indicação).
+# Unidades do config: empuxo em N, Isp em s (vácuo, como a fonte o dá), massa em kg, tempos em s.
+# Valores publicados em lbf e lb foram convertidos pelos fatores do NIST SP 811 [F112]: o arquivo guarda o valor
+# original ("valor_original") e o fator; a conversão é feita em src/orbital/motores.py.
+# "Voo comprovado" = há fonte primária que diz que o motor (ou a família) voou; os campos "voo" dizem qual.
+# Valores do fabricante "planned" (não qualificados) ficam marcados como tais.
+
+conversao:
+  lbf_para_n: {valor: 4.448222, fonte: "[F112] NIST SP 811 (2008), Apêndice B.8, p. 65 do PDF: \"pound-force (lbf) ... newton (N) ... 4.448 222 E+00\""}
+  lb_para_kg: {valor: 0.4535924, fonte: "[F112] p. 65 do PDF: \"pound (avoirdupois) (lb) ... kilogram (kg) ... 4.535 924 E−01\""}
+
+motores:
+  S400-15:
+    nome: ArianeGroup 400N Bi-Propellant Apogee Motor (S400-15)
+    propelentes: MMH / N2O4, MON-1, MON-3
+    empuxo_n: {valor: 425, fonte: "[F28] p. 8: \"Thrust Nominal 425 N\""}
+    isp_s: {valor: 321, fonte: "[F28] p. 8: \"Specific Impulse at Nominal Point 321 s\""}
+    massa_kg: {valor: 4.30, fonte: "[F28] p. 8: \"Mass, Thruster with Valve 4.30 kg\""}
+    queima_unica_max_s:
+      valor: 6660   # 1,85 h
+      fonte: "[F105] tabela S400-12 | S400-15: \"Qualified Single Burn Life | 1.1 hours | 1.85 hours\" (1,85 h = 6660 s, calculado aqui)"
+      nota: o S400-12 tem 1,1 h qualificada; para o S400-15 a mesma linha dá 1,85 h, e as linhas de vida acumulada e ciclos dele estão como "planned"
+    vida_acumulada_s: {valor: 30600, planejado: true, fonte: "[F105] \"Qualified Accumulated Burn Life | 8.3 hours | 8.5 hours planned\" (8,5 h = 30600 s)"}
+    ciclos: {valor: 135, planejado: true, fonte: "[F105] \"Qualified Cycle Life | 100 cycles | 135 cycles planned\""}
+    voo: "[F28] p. 9 (lista de herança do 400N, sem separar S400-12 de S400-15): \"MARS EXPRESS 2003\", \"Exomars Orbiter 2016\"; arranjo de 2 motores no módulo de inserção do ERO: [F29] \"2 x 400 N (OIM - for Mars orbit insertion)\""
+  R-4D-11:
+    nome: L3Harris (ex-Aerojet) R-4D-11
+    propelentes: MON-3 / MMH
+    empuxo_n: {valor_original: 110, unidade_original: lbf, fonte: "[F106] p. 3, linha R-4D-11, coluna \"THRUST, LB\": 110"}
+    isp_s: {valor: 315, fonte: "[F106] p. 3, coluna \"SS ISP, SEC\": 315"}
+    massa_kg: {valor_original: 9.5, unidade_original: lb, fonte: "[F106] p. 3, coluna \"WT, LB\": 9.5"}
+    queima_unica_max_s: {valor: 12000, fonte: "[F106] p. 3, coluna \"LONG BURN, SEC\": 12,000"}
+    pulsos: {valor: 59000, fonte: "[F106] p. 3, coluna \"LIFE PULSES\": 59,000"}
+    voo: "[F106] p. 3: \"Q, F, IP\" (\"Q=Qualified, F=Flown, IP=In-Production\"); Orion ESM, 8 motores auxiliares no Artemis I: [F107] p. 5, \"The auxiliary engines are modified Aerojet Rocketdyne R-4D-11 engines produced specifically for the Orion program\""
+    nota: "no Orion, a variante de bocal 164:1 tem limites menores: [F107] p. 6, \"Max Firing Time 2000 seconds\", \"Number of Burns 40\""
+  R-42:
+    nome: L3Harris (ex-Aerojet) R-42
+    propelentes: MON-3 / MMH
+    empuxo_n: {valor_original: 200, unidade_original: lbf, fonte: "[F106] p. 3, linha R-42, coluna \"THRUST, LB\": 200"}
+    isp_s: {valor: 305, fonte: "[F106] p. 3, coluna \"SS ISP, SEC\": 305"}
+    massa_kg: {valor_original: 14.5, unidade_original: lb, fonte: "[F106] p. 3, coluna \"WT, LB\": 14.5"}
+    queima_unica_max_s: {valor: 3940, fonte: "[F106] p. 3, coluna \"LONG BURN, SEC\": 3,940"}
+    voo: "[F106] p. 3: \"Q, F, IP\". A ficha não nomeia a missão; nenhuma fonte primária com a missão foi encontrada"
+  R-40B:
+    nome: L3Harris (ex-Aerojet/Marquardt) R-40B
+    propelentes: MON-3 / MMH
+    empuxo_n: {valor_original: 900, unidade_original: lbf, fonte: "[F106] p. 3, linha R-40B, coluna \"THRUST, LB\": 900"}
+    isp_s: {valor: 296, fonte: "[F106] p. 3, coluna \"SS ISP, SEC\": 296"}
+    massa_kg: {valor_original: 35, unidade_original: lb, fonte: "[F106] p. 3, coluna \"WT, LB\": 35"}
+    queima_unica_max_s: {valor: 500, fonte: "[F106] p. 3, coluna \"LONG BURN, SEC\": 500"}
+    voo: "[F106] p. 3: \"Q, F, NIP\" (\"NIP=Not In Production\"). A ficha não nomeia a missão"
+    nota: fora de produção segundo a própria ficha
+  OMS-E:
+    nome: Orbital Maneuvering System Engine (Shuttle; Orion ESM)
+    propelentes: MMH / MON-3
+    empuxo_n: {valor: 26700, fonte: "[F107] p. 3 (Tab. 2): \"Thrust 26.7 kN\""}
+    isp_s: {valor: 315.1, fonte: "[F107] p. 3 (Tab. 2): \"Specific Impulse 315.1 seconds\""}
+    massa_kg: {valor_original: 297, unidade_original: lb, fonte: "[F108] p. 7: \"DRY WEIGHT 297 LBS\" (motor do Shuttle)"}
+    queima_unica_max_s: {valor: 1030, fonte: "[F107] p. 3 (Tab. 2): \"Max Burn Duration 1030 seconds\""}
+    partidas: {valor: 10, fonte: "[F107] p. 3 (Tab. 2): \"Number of Starts 10 max\" (requisito do Orion)"}
+    voo: "[F107] p. 2: a unidade do Artemis I \"previously flew on nineteen missions from STS-41G in 1984 to STS-112 in 2002\"; p. 2: \"There were five (5) burns using the Orbital Maneuvering System Engine (OMS-E)\""
+    nota: "disponibilidade: as unidades do Orion são motores do Shuttle reformados; [F107] p. 10, \"Starting on Artemis VII, a new engine will replace the heritage Space Shuttle Orbital Maneuvering System Engines\". Disponibilidade para esta missão: não conferida"
+  LEROS-1b:
+    nome: Nammo LEROS 1b
+    propelentes: MON / hidrazina (não MMH)
+    empuxo_n: {valor: 635, fonte: "[F109] p. 2: \"Thrust, nominal inlet pressure 635 N\""}
+    isp_s: {valor: 317, fonte: "[F109] p. 2: \"Specific Impulse 317 s [minimum]\""}
+    massa_kg: {valor: 4.5, fonte: "[F109] p. 2: \"Engine Mass 4.5 kg\""}
+    queima_unica_max_s: {valor: 2520, fonte: "[F109] p. 2: \"Maximum Duration Single Firing 2,520 s demonstrated in Qualification\""}
+    vida_acumulada_s: {valor: 20500, fonte: "[F109] p. 2: \"Cumulative Duration 20,500 s demonstrated in Qualification\""}
+    reacendimentos: {valor: 70, fonte: "[F109] p. 2: \"Restarts Demonstrated 70 off\""}
+    voo: "[F109] p. 1: \"18 off the LEROS 1b ... flown successfully on deep space missions\" (texto em colunas na ficha; missões não nomeadas nela)"
+    nota: o combustível é hidrazina, diferente do MMH dos estágios de Marte (Isp de 321 s); trocar exigiria rever o propelente do estágio
+  LEROS-4:
+    nome: Nammo LEROS 4
+    propelentes: MON-3 / MMH
+    empuxo_n: {valor: 1000, fonte: "[F110] p. 2: \"Thrust, nominal inlet pressure 1000 N\""}
+    isp_s: {valor: 321, fonte: "[F110] p. 2: \"Specific Impulse 321 seconds minimum\""}
+    massa_kg: {valor: 8.41, fonte: "[F110] p. 2: \"Engine Mass 8.41 kg +/-10%\""}
+    queima_unica_max_s: {valor: 3600, fonte: "[F110] p. 2: \"Maximum Duration Single Firing 3,600 seconds for qualification\""}
+    voo: "NÃO COMPROVADO para esta versão: [F110] p. 2, \"Technology Readiness Level In development, TRL6\". Uma variante (LEROS 4-ET) teria voado em 2025; não conferido em fonte primária"
+    fora_das_combinacoes: sem voo comprovado da versão com ficha
+  10N:
+    nome: ArianeGroup 10N Bi-Propellant Thruster
+    propelentes: MMH / N2O4, MON-1, MON-3
+    empuxo_n: {valor: 10, fonte: "[F28] p. 4: \"Thrust Nominal 10 N (2.2 lbf)\""}
+    isp_s: {valor: 292, fonte: "[F28] p. 4: \"Specific Impulse at Nominal Point 292 s\""}
+    massa_kg: {valor: 0.35, fonte: "[F28] p. 4: \"Mass, Thruster with Valve 350 g (single seat)\""}
+    queima_unica_max_s: {valor: 28800, fonte: "[F28] p. 4: \"Qualified longest single burn 8 hours\" (8 h = 28800 s)"}
+    vida_acumulada_s: {valor: 248400, fonte: "[F28] p. 4: \"Qualified accumulated burn life 69 hours\" (69 h = 248400 s)"}
+    ciclos: {valor: 1100000, fonte: "[F28] p. 4: \"Qualified cycle life 1.100.000 cycles\""}
+    voo: "[F28] p. 5 (tabela \"Heritage and Future Missions\", a partir de 2010): \"Exomars Orbiter 2016\""
+
+referencias_sem_combinacao:
+  cruzeiro_msl:
+    descricao: "Cruzeiro do MSL: hidrazina monopropelente em blow-down, não bipropelente"
+    fonte: "[F111] p. 2: \"It was a monopropellant hydrazine system, operated in a blow-down mode\"; p. 3: \"Each thruster produced about 4.35 N of thrust at the start of the mission\""
+    nota: Isp do propulsor não encontrado em fonte primária; sem Isp não há tempo de queima calculado
+
+# Combinações propostas (não são premissas: são opções para o portão da Etapa 3.1).
+# Cada combinação = lista de (motor, quantidade) que queimam juntos.
+combinacoes:
+  captura:          # estágio de inserção em Marte: queima de captura
+    C1: {motores: [{motor: S400-15, quantidade: 2}], nota: "arranjo do módulo de inserção do ERO [F29]"}
+    C2: {motores: [{motor: R-4D-11, quantidade: 8}], nota: "arranjo dos motores auxiliares do Orion ESM [F107]"}
+    C3: {motores: [{motor: OMS-E, quantidade: 1}], nota: "motor principal do Orion ESM e do Shuttle [F107]"}
+  retorno:          # estágio de retorno: injeção trans-Terra
+    R1: {motores: [{motor: S400-15, quantidade: 1}]}
+    R2: {motores: [{motor: S400-15, quantidade: 2}]}
+    R3: {motores: [{motor: R-4D-11, quantidade: 4}]}
+  cruzeiro:         # estágio de cruzeiro do lander: correções de trajetória da ida
+    Z1: {motores: [{motor: 10N, quantidade: 4}]}
+    Z2: {motores: [{motor: 10N, quantidade: 8}]}
+  mav_1:            # MAV, estágio 1 (decolagem em Marte)
+    M1: {motores: [{motor: R-42, quantidade: 2}]}
+    M2: {motores: [{motor: R-4D-11, quantidade: 4}]}
+    M3: {motores: [{motor: R-40B, quantidade: 1}], nota: "fora de produção [F106]"}
+  mav_2:            # MAV, estágio 2
+    N1: {motores: [{motor: S400-15, quantidade: 1}]}
+    N2: {motores: [{motor: R-4D-11, quantidade: 1}]}

@@ -1,0 +1,10 @@
+# Parâmetros numéricos de orbital.queima_finita (Etapa 3.1). Sem fonte publicada: premissa P-041 (NÃO VALIDADA).
+# São do método numérico, não da física: o teste de sensibilidade (tests/test_queima_finita.py) mostra que trocá-los
+# não muda a perda além de 1e-4 relativo (a precisão relevante do estudo).
+integrador:
+  rtol: {valor: 1.0e-11, premissa: P-041}
+  atol_km: {valor: 1.0e-9, premissa: P-041}      # km e km/s
+tolerancia_alvo: {valor: 1.0e-6, premissa: P-041}   # erro relativo no periapse e no apoapse finais da captura
+continuacao:
+  passo: {valor: 2.0, premissa: P-041}            # razão entre empuxos sucessivos
+  duracao_inicial_s: {valor: 60, premissa: P-041} # a continuação começa num empuxo de queima de até isto

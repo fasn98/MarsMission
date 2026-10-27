@@ -16,7 +16,14 @@ from orbital import foguete as fg
 from orbital import manobras as mn
 from orbital import superficie as sf
 from orbital.config import ler, parametros, v
-from orbital.mav import massas_opcao
+from orbital.mav import massas_opcao, mav_estagios
+
+
+def _estagio(e):
+    """Detalhe de um estágio dimensionado, com a massa logo antes de cada queima e o propelente dela (Etapa 3.1)."""
+    return {"nome": e.nome, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente, "inerte_kg": e.inerte,
+            "queimas": [{"nome": n, "massa_antes_kg": e.massa_antes_por_queima[n], "propelente_kg": e.propelente_por_queima[n]}
+                        for n in e.propelente_por_queima]}
 
 
 def lander_estagios(chegada, cfg, dcfg, p, caso_saida):
@@ -77,18 +84,19 @@ def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None):
         c2["dv"]["encontro_orbita_marte"]["valor"] = v(dcfg["dv"]["encontro_orbita_marte"]) + extra
         m, r, _ = dm.massa_leo(vs[var], c2, cu, dcfg["caso_base"]["carga_util"], margem, float(dcfg["caso_base"]["acrescimo_capsula"]))
         out[f"orbitador_{caso}"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": m,
-                                    "estagios": [{"nome": e.nome, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente,
-                                                  "inerte_kg": e.inerte} for e in r]}
+                                    "estagios": [_estagio(e) for e in r]}
     v_eq = 2 * np.pi * R / v(scfg["marte"]["periodo_rotacao_s"])
     dv = sf.dv_subida(mu, R, v(scfg["subida"]["dv_100x100_km_s"]), rp, ra, v_eq,
                       v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"]), v(scfg["sitio_e_encontro"]["latitude_sitio_graus"]))
     pous, cruz, _ = massas_opcao((1 + margem) * dv, op_mav, mcfg, scfg, icfg, fonte_mav)
+    est_mav = [{"nome": e.nome, "isp_s": isp, "dv_km_s": d, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente}
+               for e, d, isp in mav_estagios((1 + margem) * dv, mcfg["opcoes"][op_mav], scfg)]
     plat = v(scfg["lander"]["plataforma_superficie_kg"]) if plataforma_lander_kg is None else plataforma_lander_kg
     chegada = (pous + plat) / v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]) + cruz
     r = lander_estagios(chegada, scfg, dcfg, p, a_caso)
     out["lander"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial,
-                     "estagios": [{"nome": e.nome, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente,
-                                   "inerte_kg": e.inerte} for e in r],
+                     "estagios": [_estagio(e) for e in r],
                      "massa_entrada_kg": chegada - cruz, "massa_pousada_kg": pous + plat, "mav_e_aquecimento_kg": pous,
-                     "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz}
+                     "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz, "mav_opcao": op_mav,
+                     "mav_estagios": est_mav}
     return out, janelas, ref

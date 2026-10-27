@@ -1,0 +1,412 @@
+gerado_por: tools/queima_finita.py
+modelo: plano, dois corpos (Marte pontual), empuxo constante tangente à velocidade,
+  vazão T/(Isp g0)
+p015_km_s:
+  captura_marte: 0.018
+  saida_marte: 0.011
+captura:
+- combinacao: C1
+  motores: 2 × S400-15
+  empuxo_n: 850.0
+  isp_s: 321.0
+  massa_motores_kg: 8.6
+  caso: projeto (pior janela)
+  missao: 2031-conjuncao
+  vinf_km_s: 3.4843
+  m0_kg: 6168.6354444691115
+  duracao_s: 9901.32611409538
+  propelente_kg: 2673.5393623819596
+  dv_motor_km_s: 1.7883945194290223
+  dv_impulsivo_km_s: 1.343873679497805
+  perda_km_s: 0.44452083993121727
+  inicio_rel_periapse_s: -6942.546343695277
+  altitude_minima_km: 454.4002578405243
+  periapse_final_km: 249.99999999999181
+  apoapse_final_km: 33792.99999999958
+  vinf_final_km_s: null
+  periapse_chegada_alt_km: 1471.1574883139506
+  propelente_dimensionado_kg: 2335.8895214037116
+  cabe_no_dimensionado: false
+  queima_unica_max_s: 6660.0
+  excede_queima_unica: true
+  nota: arranjo do módulo de inserção do ERO [F29]
+- combinacao: C1
+  motores: 2 × S400-15
+  empuxo_n: 850.0
+  isp_s: 321.0
+  massa_motores_kg: 8.6
+  caso: referência
+  missao: 2028-conjuncao
+  vinf_km_s: 2.9707
+  m0_kg: 6168.6354444691115
+  duracao_s: 8151.014628993871
+  propelente_kg: 2200.9232099671394
+  dv_motor_km_s: 1.3891457495727615
+  dv_impulsivo_km_s: 1.059400066818057
+  perda_km_s: 0.3297456827547045
+  inicio_rel_periapse_s: -5533.406017346778
+  altitude_minima_km: 449.0632013613199
+  periapse_final_km: 249.99999999999636
+  apoapse_final_km: 33793.00000000016
+  vinf_final_km_s: null
+  periapse_chegada_alt_km: 1210.2882739164847
+  propelente_dimensionado_kg: 2335.8895214037116
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 6660.0
+  excede_queima_unica: true
+  nota: arranjo do módulo de inserção do ERO [F29]
+- combinacao: C2
+  motores: 8 × R-4D-11
+  empuxo_n: 3914.4353600000004
+  isp_s: 315.0
+  massa_motores_kg: 34.4730224
+  caso: projeto (pior janela)
+  missao: 2031-conjuncao
+  vinf_km_s: 3.4843
+  m0_kg: 6168.6354444691115
+  duracao_s: 1794.1734682589304
+  propelente_kg: 2273.5385718183634
+  dv_motor_km_s: 1.4202394334667356
+  dv_impulsivo_km_s: 1.343873679497805
+  perda_km_s: 0.07636575396893064
+  inicio_rel_periapse_s: -1051.5565213133218
+  altitude_minima_km: 301.8109913459002
+  periapse_final_km: 249.9999999999991
+  apoapse_final_km: 33792.9999999997
+  vinf_final_km_s: null
+  periapse_chegada_alt_km: 411.93875238030523
+  propelente_dimensionado_kg: 2335.8895214037116
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 12000.0
+  excede_queima_unica: false
+  nota: arranjo dos motores auxiliares do Orion ESM [F107]
+- combinacao: C2
+  motores: 8 × R-4D-11
+  empuxo_n: 3914.4353600000004
+  isp_s: 315.0
+  massa_motores_kg: 34.4730224
+  caso: referência
+  missao: 2028-conjuncao
+  vinf_km_s: 2.9707
+  m0_kg: 6168.6354444691115
+  duracao_s: 1461.0985536176147
+  propelente_kg: 1851.4731031560796
+  dv_motor_km_s: 1.1024340731500115
+  dv_impulsivo_km_s: 1.059400066818057
+  perda_km_s: 0.04303400633195453
+  inicio_rel_periapse_s: -818.4796456443025
+  altitude_minima_km: 285.63521193898396
+  periapse_final_km: 249.999999999995
+  apoapse_final_km: 33793.00000000034
+  vinf_final_km_s: null
+  periapse_chegada_alt_km: 347.8020051524227
+  propelente_dimensionado_kg: 2335.8895214037116
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 12000.0
+  excede_queima_unica: false
+  nota: arranjo dos motores auxiliares do Orion ESM [F107]
+- combinacao: C3
+  motores: 1 × OMS-E
+  empuxo_n: 26700.0
+  isp_s: 315.1
+  massa_motores_kg: 134.7169428
+  caso: projeto (pior janela)
+  missao: 2031-conjuncao
+  vinf_km_s: 3.4843
+  m0_kg: 6168.6354444691115
+  duracao_s: 252.09476497817644
+  propelente_kg: 2178.241408686562
+  dv_motor_km_s: 1.3459987559146527
+  dv_impulsivo_km_s: 1.343873679497805
+  perda_km_s: 0.002125076416847671
+  inicio_rel_periapse_s: -137.00158576061975
+  altitude_minima_km: 251.65040137268807
+  periapse_final_km: 250.00000000000136
+  apoapse_final_km: 33793.00000000013
+  vinf_final_km_s: null
+  periapse_chegada_alt_km: 254.25415037105904
+  propelente_dimensionado_kg: 2335.8895214037116
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 1030.0
+  excede_queima_unica: false
+  nota: motor principal do Orion ESM e do Shuttle [F107]
+- combinacao: C3
+  motores: 1 × OMS-E
+  empuxo_n: 26700.0
+  isp_s: 315.1
+  massa_motores_kg: 134.7169428
+  caso: referência
+  missao: 2028-conjuncao
+  vinf_km_s: 2.9707
+  m0_kg: 6168.6354444691115
+  duracao_s: 207.38905527926948
+  propelente_kg: 1791.9587816779867
+  dv_motor_km_s: 1.0604767092102387
+  dv_impulsivo_km_s: 1.059400066818057
+  perda_km_s: 0.001076642392181748
+  inicio_rel_periapse_s: -110.68062314937316
+  altitude_minima_km: 250.95485222670368
+  periapse_final_km: 250.0
+  apoapse_final_km: 33792.99999999977
+  vinf_final_km_s: null
+  periapse_chegada_alt_km: 252.3489562786208
+  propelente_dimensionado_kg: 2335.8895214037116
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 1030.0
+  excede_queima_unica: false
+  nota: motor principal do Orion ESM e do Shuttle [F107]
+saida:
+- combinacao: R1
+  motores: 1 × S400-15
+  empuxo_n: 425.0
+  isp_s: 321.0
+  massa_motores_kg: 4.3
+  caso: projeto (pior janela)
+  missao: 2035-conjuncao
+  vinf_km_s: 3.5426684857604163
+  orbita_inicial: órbita de 1 sol
+  m0_kg: 2768.828672964927
+  duracao_s: 9188.341619965073
+  propelente_kg: 1240.510246451639
+  dv_motor_km_s: 1.8706800156130083
+  dv_impulsivo_km_s: 1.3781306596367031
+  perda_km_s: 0.4925493559763052
+  inicio_rel_periapse_s: -3190.9399338549224
+  altitude_minima_km: 649.389206791047
+  periapse_final_km: 1635.4200424669175
+  apoapse_final_km: null
+  vinf_final_km_s: 3.5426684857604167
+  periapse_chegada_alt_km: null
+  propelente_dimensionado_kg: 1064.7517529964293
+  cabe_no_dimensionado: false
+  queima_unica_max_s: 6660.0
+  excede_queima_unica: true
+  nota: ''
+- combinacao: R1
+  motores: 1 × S400-15
+  empuxo_n: 425.0
+  isp_s: 321.0
+  massa_motores_kg: 4.3
+  caso: referência
+  missao: 2028-conjuncao
+  vinf_km_s: 2.3303433223454437
+  orbita_inicial: órbita de 1 sol
+  m0_kg: 2768.828672964927
+  duracao_s: 5233.321822151601
+  propelente_kg: 706.5463618866524
+  dv_motor_km_s: 0.9274164317594524
+  dv_impulsivo_km_s: 0.7525555368246879
+  perda_km_s: 0.17486089493476453
+  inicio_rel_periapse_s: -2321.8956628583182
+  altitude_minima_km: 455.0038418432905
+  periapse_final_km: 775.9690151905893
+  apoapse_final_km: null
+  vinf_final_km_s: 2.3303433223454437
+  periapse_chegada_alt_km: null
+  propelente_dimensionado_kg: 1064.7517529964293
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 6660.0
+  excede_queima_unica: false
+  nota: ''
+- combinacao: R2
+  motores: 2 × S400-15
+  empuxo_n: 850.0
+  isp_s: 321.0
+  massa_motores_kg: 8.6
+  caso: projeto (pior janela)
+  missao: 2035-conjuncao
+  vinf_km_s: 3.5426684857604163
+  orbita_inicial: órbita de 1 sol
+  m0_kg: 2768.828672964927
+  duracao_s: 4125.632256760046
+  propelente_kg: 1113.9962572749207
+  dv_motor_km_s: 1.6203194813717487
+  dv_impulsivo_km_s: 1.3781306596367031
+  perda_km_s: 0.24218882173504563
+  inicio_rel_periapse_s: -1780.4671789544295
+  altitude_minima_km: 455.4071307226668
+  periapse_final_km: 827.1612271468316
+  apoapse_final_km: null
+  vinf_final_km_s: 3.5426684857604163
+  periapse_chegada_alt_km: null
+  propelente_dimensionado_kg: 1064.7517529964293
+  cabe_no_dimensionado: false
+  queima_unica_max_s: 6660.0
+  excede_queima_unica: false
+  nota: ''
+- combinacao: R2
+  motores: 2 × S400-15
+  empuxo_n: 850.0
+  isp_s: 321.0
+  massa_motores_kg: 8.6
+  caso: referência
+  missao: 2028-conjuncao
+  vinf_km_s: 2.3303433223454437
+  orbita_inicial: órbita de 1 sol
+  m0_kg: 2768.828672964927
+  duracao_s: 2340.942125366969
+  propelente_kg: 632.0972408248449
+  dv_motor_km_s: 0.8157780592417524
+  dv_impulsivo_km_s: 0.7525555368246879
+  perda_km_s: 0.0632225224170645
+  inicio_rel_periapse_s: -1145.7993221819079
+  altitude_minima_km: 322.009496371782
+  periapse_final_km: 417.1168244417363
+  apoapse_final_km: null
+  vinf_final_km_s: 2.3303433223454437
+  periapse_chegada_alt_km: null
+  propelente_dimensionado_kg: 1064.7517529964293
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 6660.0
+  excede_queima_unica: false
+  nota: ''
+- combinacao: R3
+  motores: 4 × R-4D-11
+  empuxo_n: 1957.2176800000002
+  isp_s: 315.0
+  massa_motores_kg: 17.2365112
+  caso: projeto (pior janela)
+  missao: 2035-conjuncao
+  vinf_km_s: 3.5426684857604163
+  orbita_inicial: órbita de 1 sol
+  m0_kg: 2768.828672964927
+  duracao_s: 1636.6636280982682
+  propelente_kg: 1036.9727212565688
+  dv_motor_km_s: 1.4494981879814364
+  dv_impulsivo_km_s: 1.3781306596367031
+  perda_km_s: 0.07136752834473326
+  inicio_rel_periapse_s: -823.8253820422249
+  altitude_minima_km: 312.4471851174435
+  periapse_final_km: 400.9808256880374
+  apoapse_final_km: null
+  vinf_final_km_s: 3.542668485760416
+  periapse_chegada_alt_km: null
+  propelente_dimensionado_kg: 1064.7517529964293
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 12000.0
+  excede_queima_unica: false
+  nota: ''
+- combinacao: R3
+  motores: 4 × R-4D-11
+  empuxo_n: 1957.2176800000002
+  isp_s: 315.0
+  massa_motores_kg: 17.2365112
+  caso: referência
+  missao: 2028-conjuncao
+  vinf_km_s: 2.3303433223454437
+  orbita_inicial: órbita de 1 sol
+  m0_kg: 2768.828672964927
+  duracao_s: 960.4537709827437
+  propelente_kg: 608.5333256256058
+  dv_motor_km_s: 0.76664974892332
+  dv_impulsivo_km_s: 0.7525555368246879
+  perda_km_s: 0.014094212098632153
+  inicio_rel_periapse_s: -492.82388455646935
+  altitude_minima_km: 265.8319840043032
+  periapse_final_km: 285.0011217172246
+  apoapse_final_km: null
+  vinf_final_km_s: 2.330343322345444
+  periapse_chegada_alt_km: null
+  propelente_dimensionado_kg: 1064.7517529964293
+  cabe_no_dimensionado: true
+  queima_unica_max_s: 12000.0
+  excede_queima_unica: false
+  nota: ''
+cruzeiro:
+- combinacao: Z1
+  motores: 4 × 10N
+  empuxo_n: 40.0
+  isp_s: 292.0
+  massa_motores_kg: 1.4
+  m0_kg: 3739.8415993663666
+  dv_total_km_s: 0.07149999999999988
+  duracao_total_s: 6602.198442427973
+  queima_unica_max_s: 28800.0
+  excede_queima_unica: false
+- combinacao: Z2
+  motores: 8 × 10N
+  empuxo_n: 80.0
+  isp_s: 292.0
+  massa_motores_kg: 2.8
+  m0_kg: 3739.8415993663666
+  dv_total_km_s: 0.07149999999999988
+  duracao_total_s: 3301.0992212139863
+  queima_unica_max_s: 28800.0
+  excede_queima_unica: false
+mav:
+- estagio: mav_1
+  combinacao: M1
+  motores: 2 × R-42
+  empuxo_n: 1779.2888
+  isp_s: 305.0
+  isp_dimensionamento_s: 343
+  massa_motores_kg: 13.1541796
+  m0_kg: 267.78741661624844
+  dv_km_s: 2.772264449497674
+  duracao_s: 271.987452873804
+  empuxo_peso_marte: 1.7894050330501718
+  aceleracao_inicial_m_s2: 6.644407801094709
+  queima_unica_max_s: 3940.0
+  excede_queima_unica: false
+  nota: ''
+- estagio: mav_1
+  combinacao: M2
+  motores: 4 × R-4D-11
+  empuxo_n: 1957.2176800000002
+  isp_s: 315.0
+  isp_dimensionamento_s: 343
+  massa_motores_kg: 17.2365112
+  m0_kg: 267.78741661624844
+  dv_km_s: 2.772264449497674
+  duracao_s: 250.3729593905022
+  empuxo_peso_marte: 1.9683455363551892
+  aceleracao_inicial_m_s2: 7.308848581204181
+  queima_unica_max_s: 12000.0
+  excede_queima_unica: false
+  nota: ''
+- estagio: mav_1
+  combinacao: M3
+  motores: 1 × R-40B
+  empuxo_n: 4003.3998
+  isp_s: 296.0
+  isp_dimensionamento_s: 343
+  massa_motores_kg: 15.875734
+  m0_kg: 267.78741661624844
+  dv_km_s: 2.772264449497674
+  duracao_s: 119.45178149311955
+  empuxo_peso_marte: 4.026161324362887
+  aceleracao_inicial_m_s2: 14.949917552463095
+  queima_unica_max_s: 500.0
+  excede_queima_unica: false
+  nota: fora de produção [F106]
+- estagio: mav_2
+  combinacao: N1
+  motores: 1 × S400-15
+  empuxo_n: 425.0
+  isp_s: 321.0
+  isp_dimensionamento_s: 343
+  massa_motores_kg: 4.3
+  m0_kg: 70.49497877933928
+  dv_km_s: 2.9912791045515443
+  duracao_s: 320.2604792311599
+  empuxo_peso_marte: 1.6236152469070808
+  aceleracao_inicial_m_s2: 6.028798183347483
+  queima_unica_max_s: 6660.0
+  excede_queima_unica: false
+  nota: ''
+- estagio: mav_2
+  combinacao: N2
+  motores: 1 × R-4D-11
+  empuxo_n: 489.30442000000005
+  isp_s: 315.0
+  isp_dimensionamento_s: 343
+  massa_motores_kg: 4.3091278
+  m0_kg: 70.49497877933928
+  dv_km_s: 2.9912791045515443
+  duracao_s: 276.0589197228813
+  empuxo_peso_marte: 1.869275568684767
+  aceleracao_inicial_m_s2: 6.940982584470339
+  queima_unica_max_s: 12000.0
+  excede_queima_unica: false
+  nota: ''
+g_marte_m_s2: 3.713193870796725

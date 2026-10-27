@@ -40,14 +40,18 @@ class ResultadoEstagio:
     inerte: float
     massa_inicial: float      # estágio cheio + tudo o que ele carrega
     propelente_por_queima: dict
+    massa_antes_por_queima: dict = field(default_factory=dict)   # kg, logo antes de cada queima (já sem os descartes)
 
 
-def _massa_final_por_inicial(isp, queimas, m_ini, k_mp):
-    """Massa ao fim das queimas, dado m_ini; devolve (m_fim, propelente consumido por queima)."""
+def _massa_final_por_inicial(isp, queimas, m_ini, k_mp, antes=None):
+    """Massa ao fim das queimas, dado m_ini; devolve (m_fim, propelente consumido por queima). Se `antes` for um dict,
+    recebe a massa logo antes de cada queima (já sem os descartes)."""
     m = m_ini
     gastos = {}
     for q in queimas:
         m -= q.descarta_antes
+        if antes is not None:
+            antes[q.nome] = m
         m_dep = m / np.exp(q.dv / (G0 * isp))
         gastos[q.nome] = m - m_dep
         m = m_dep
@@ -83,9 +87,10 @@ def dimensionar_estagio(est: Estagio, carga_final: float):
     mp = -r0 / inclinacao
     ms = k * mp
     m_ini = carga_final + ms + mp + descartes
-    m_fim, gastos = _massa_final_por_inicial(est.isp, est.queimas, m_ini, k * mp)
+    antes = {}
+    m_fim, gastos = _massa_final_por_inicial(est.isp, est.queimas, m_ini, k * mp, antes)
     assert abs(m_fim - (carga_final + ms)) <= 1e-9 * m_ini
-    return ResultadoEstagio(est.nome, mp, ms, m_ini, gastos)
+    return ResultadoEstagio(est.nome, mp, ms, m_ini, gastos, antes)
 
 
 def dimensionar_veiculo(estagios, carga_final_ultimo: float):
