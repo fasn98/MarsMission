@@ -12,7 +12,7 @@ testes, PR).
 | Trajetória | Órbitas de Terra e Marte nas datas reais (DE440) e arcos de Lambert de ida e volta, em 2D | `orbital.porkchop`, `orbital.lambert`, `orbital.kepler` (calculado na hora; precisa dos kernels) |
 | Porkchops | Contornos de C3 e v∞ de ida (2028–2035) e volta (2030–2039), com valores no cursor (inclusive DLA na ida), mínimos e missão de referência | `results/painel/porkchop_*.npz` (gerado por `tools/exporta_painel.py`), `results/etapa1.2/minimos_*.yaml` |
 | Orçamento de massa | Controles para a plataforma do lander (P-017), a margem de Δv (P-014) e o Isp e a fração estrutural dos estágios MMH/MON; recalcula os veículos e mostra que lançadores continuam servindo | `orbital.veiculos`, `orbital.lancamento` |
-| Premissas e decisões | As 38 premissas com status e os ADRs 0001–0010 (texto e link) | `config/premissas.yaml`, `docs/adr/` |
+| Premissas e decisões | Todas as premissas de `config/premissas.yaml`, com status, e os ADRs (texto e link) | `config/premissas.yaml`, `docs/adr/` |
 
 **Rótulos.** Todo número exibido traz um rótulo:
 - **verificado contra dados publicados:** comparação com NASA/TM-2010-216764 e JPL 82-43;
