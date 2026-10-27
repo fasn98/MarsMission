@@ -397,8 +397,11 @@ premissas:
     justificativa: >
       Capacidade de LEO publicada a 400 km (ELVPerf [F79], Atlas V [F27]) usada para a órbita de 407 km do modelo
       (diferença de 7 km desprezada). A órbita baixa é a de 28,5° ou a de 51,6° (as inclinações com dado); quando
-      |DLA| passa da inclinação, a própria queima de saída gira o plano em Δi = |DLA| − i (impulso único no
-      perigeu, lei dos cossenos entre a velocidade circular e a da hipérbole). É uma aproximação: o giro mínimo
-      depende da posição do nó, e um lançamento à inclinação exata da DLA pode custar menos. O estágio de saída
-      é redimensionado para o C3 e a DLA de cada janela (pedido do Fabio no portão da Etapa 2.4).
+      |DLA| passa da inclinação, a assíntota precisa sair β = |DLA| − i do plano, e a própria queima de saída, num
+      impulso único no perigeu, gira o plano em torno do vetor posição: θ = arcsin(sen β / sen ν∞), com
+      ν∞ = arccos(−1/e) ≈ 150°, ou seja, θ ≈ 2β (correção da revisão independente; a primeira versão usava θ = β e
+      subestimava o custo). Δv pela lei dos cossenos entre a velocidade circular e a do perigeu da hipérbole.
+      Estratégias com mais de um impulso, ou um lançamento direto à inclinação da DLA, podem custar menos; não foram
+      avaliadas. O estágio de saída é redimensionado para o C3 e a DLA de cada janela (pedido do Fabio no portão
+      da Etapa 2.4).
     status: NÃO VALIDADA

@@ -89,3 +89,27 @@ def test_dla_da_grade_confere_com_a_missao_A():
     g = pc.calcular_grade(eph.TERRA, eph.BARICENTRO_MARTE, [et1], [et2])
     assert g.dla_graus[0, 0] == pytest.approx(a["dla_graus"], abs=1e-3)
     assert g.c3[0, 0] == pytest.approx(a["c3_km2_s2"], abs=1e-3)
+
+
+def test_anomalia_da_assintota_por_propagacao():
+    """ν∞ = arccos(−1/e) confere com a direção da velocidade depois de propagar a hipérbole por muito tempo."""
+    from orbital import kepler
+
+    r, c3 = 6378.1366 + 407.0, 9.1127
+    v_p = np.sqrt(c3 + 2 * MU_T / r)
+    r1, v1 = kepler.propagar(MU_T, np.array([r, 0.0, 0.0]), np.array([0.0, v_p, 0.0]), 200 * 86400.0)
+    ang_vel = np.degrees(np.arctan2(v1[1], v1[0]))
+    assert ang_vel == pytest.approx(la.anomalia_assintota(MU_T, r, c3), abs=0.05)
+
+
+def test_giro_no_perigeu_tira_a_assintota_do_plano():
+    """Girando o plano θ em torno do perigeu, a assíntota sai exatamente β do plano original (construção vetorial)."""
+    r, c3 = 6378.1366 + 407.0, 9.1127
+    nu = np.radians(la.anomalia_assintota(MU_T, r, c3))
+    for beta in (0.73, 3.85, 20.0):
+        th = np.radians(la.giro_no_perigeu(beta, MU_T, r, c3))
+        # plano original = xy, perigeu em x; rotação de θ em torno de x
+        a = np.array([np.cos(nu), np.sin(nu) * np.cos(th), np.sin(nu) * np.sin(th)])
+        assert np.degrees(np.arcsin(a[2])) == pytest.approx(beta)
+        assert np.degrees(th) > 1.9 * beta          # ν∞ ≈ 150° → θ ≈ 2β
+    assert np.isnan(la.giro_no_perigeu(40.0, MU_T, r, c3))   # sen β > sen ν∞: impossível com um impulso no perigeu

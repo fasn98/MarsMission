@@ -13,7 +13,8 @@ centro:
   plataformas:
     SLC-40: {latitude_graus: 28.5620, fonte: "[F82] Falcon User's Guide v8, p. 58"}
     LC-39A: {latitude_graus: 28.6082, fonte: "[F82] p. 59"}
-  # Vulcan (SLC-41) e New Glenn (SLC-36): coordenadas de plataforma não confirmadas; usa-se a latitude de [F13].
+  # Vulcan e Atlas V (SLC-41), New Glenn (SLC-36) e SLS (LC-39B): coordenadas de plataforma não confirmadas;
+  # usa-se a latitude de [F13]. Ariane 64 (ELA-4, Kourou) fica fora do Eastern Range: sem limite de azimute aqui.
 
 dla:
   # ELVPerf: "Performance shown is applicable for declinations between 28.5 deg. and -28.5 deg." [F79]
@@ -53,17 +54,17 @@ lancadores:
   Vulcan VC2:
     categoria: operacional
     plataforma: SLC-41
-    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [5920, 5330, 4865, 4750, 4530, 4210, 3710], fonte: "[F79]; em C3 = 20 confere com [F80] Tab. 2.2.5-1, p. 2-8 (VC2S 3600)"}
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [5920, 5330, 4865, 4750, 4530, 4210, 3710], fonte: "[F79]; em C3 = 20 o guia [F80] Tab. 2.2.5-1, p. 2-8, dá VC2S 3600 (ELVPerf +3,1 %)"}
     leo_400km: {28.5: 16810, 51.6: 15660, fonte: "[F79]"}
   Vulcan VC4:
     categoria: operacional
     plataforma: SLC-41
-    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [8550, 7820, 7275, 7140, 6880, 6490, 5880], fonte: "[F79]; [F80] p. 2-8 (VC4S 6000 em C3 = 20)"}
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [8550, 7820, 7275, 7140, 6880, 6490, 5880], fonte: "[F79]; [F80] p. 2-8 dá VC4S 6000 em C3 = 20 (ELVPerf −2,0 %)"}
     leo_400km: {28.5: 22310, 51.6: 20800, fonte: "[F79]"}
   Vulcan VC6:
     categoria: operacional
     plataforma: SLC-41
-    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [10850, 9960, 9295, 9130, 8810, 8340, 7630], fonte: "[F79]; [F80] p. 2-8 (VC6S 7600 em C3 = 20)"}
+    c3: {pontos: [0, 5, 9, 10, 12, 15, 20], massa_kg: [10850, 9960, 9295, 9130, 8810, 8340, 7630], fonte: "[F79]; [F80] p. 2-8 dá VC6S 7600 em C3 = 20 (ELVPerf +0,4 %)"}
     leo_400km: {28.5: 26450, 51.6: 24730, fonte: "[F79]"}
   Atlas V 541:
     categoria: operacional

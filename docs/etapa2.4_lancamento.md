@@ -19,6 +19,9 @@ desses arquivos.
 | Orbitador, missão A | 3.548 kg | 10.770 kg |
 | Lander | 3.727 kg | 11.313 kg |
 
+As somas na órbita baixa (29.607,5 e 22.083,1 kg) diferem em 0,4 e 0,2 kg dos totais da Etapa 2.3
+(29.607,1 e 22.082,9 kg). O motivo é o `config` arredondado: 442,3 kg contra os 442,27 kg da iteração.
+
 - **Janelas verificadas** (pedido do Fabio): para o orbitador da regra (iii), cada janela do envelope
   com o seu C3 e a sua DLA; vale o caso mais restritivo. A missão A é só uma delas. O lander também
   foi verificado nas quatro janelas.
@@ -40,11 +43,11 @@ desses arquivos.
 | :- | :- | :- | :- |
 | Falcon 9 (ASDS) | operacional | ELVPerf [F79], C3 de 0 a 10 | ELVPerf, 28,5° e 51,6° |
 | Falcon Heavy (recuperação / descartável) | operacional | ELVPerf, C3 de 0 a 20 | não publicada |
-| Vulcan VC2 / VC4 / VC6 | operacional | ELVPerf; confere com o guia [F80] em C3 = 20 | ELVPerf |
+| Vulcan VC2 / VC4 / VC6 | operacional | ELVPerf; em C3 = 20 difere do guia [F80] em +3,1 % / −2,0 % / +0,4 % (o guia é a configuração "S") | ELVPerf |
 | Atlas V 541 / 551 | operacional | **sem curva publicada** [F27] | guia [F27], 28,5° |
 | Ariane 64 | operacional | **só C3 = 6,25** ("free declination", [F81]) | só 250 km [F81] |
 | New Glenn | **anunciado** ("under development", [F79]) | ELVPerf | ELVPerf |
-| SLS Block 1, 5 m + iCPS | **anunciado** (configuração de carga não voada) | leitura de gráfico de 2014 [F84], ±1–2 t | não usada |
+| SLS Block 1, 5 m + iCPS | **anunciado** (não obtive fonte primária de voo desta configuração de carga) | leitura de gráfico de 2014 [F84], ±1–2 t | não usada |
 
 - **Fora da lista:**
   - Delta IV Heavy: sem curva de C3 [F85].
@@ -69,55 +72,61 @@ desses arquivos.
     60° (0,65) (P-036).
 - **Opção (b):**
   - A órbita baixa é a de 28,5° ou a de 51,6° (as inclinações com dado).
-  - Quando |DLA| passa da inclinação, a queima de saída gira o plano (P-037).
+  - Quando |DLA| passa da inclinação, a assíntota precisa sair β = |DLA| − i do plano. A queima de
+    saída, no perigeu, gira o plano em torno do vetor posição.
+  - Como a assíntota fica a ν∞ = arccos(−1/e) ≈ 150° do perigeu, o giro necessário é
+    θ = arcsin(sen β / sen ν∞), cerca de 2β (P-037). O Δv extra de cada linha está gravado nos resultados.
 - **Por janela:**
-  - **2028 (+29,2°):** multiplicador 0,997 em (a). Em (b), giro de 0,73° a partir de 28,5°, que custa
-    +2 m/s.
+  - **2028 (+29,2°):** multiplicador 0,997 em (a). Em (b), β = 0,73° e θ = 1,47° a partir de 28,5°, com
+    +8 m/s.
   - **2031 (+14,8°) e 2035 (+8,7°):** dentro da faixa, sem penalidade.
   - **2033 (−55,5°): é a janela mais restritiva.**
-    - É alcançável com subida coplanar, mas só 0,13° a 0,19° abaixo do limite de azimute, conforme a plataforma.
+    - É alcançável com subida coplanar, mas só 0,13° a 0,19° abaixo do limite de azimute, conforme a
+      plataforma.
     - Em (a), o multiplicador é **0,764**.
-    - Em (b), a partir de 51,6°, o giro é de 3,85° e custa **+54 m/s**. A partir de 28,5°, seria um giro
-      de 27° e +2,0 km/s.
+    - Em (b), a partir de 51,6°: β = 3,85°, θ = 7,72° e **+211 m/s**.
+    - Em (b), a partir de 28,5°: θ = 64,9° e +7,0 km/s. O estágio fica **inviável**; por isso o Atlas V
+      (só com LEO a 28,5°) não serve em 2033.
     - O Falcon User's Guide põe inclinações de 55° a 65° na faixa de "dog leg" [F82].
 
 ## 4. Resultado por veículo (pior margem entre as janelas)
 
-**Orbitador, regra (iii)** (6.027 kg injetados). O caso mais restritivo é 2033 para todos os lançadores.
+**Orbitador, regra (iii)** (6.027 kg injetados). Entre os lançadores com dado em todas as janelas, o
+caso mais restritivo é 2033.
 
 | Lançador | (a) injeção direta | (b) LEO + estágio próprio |
 | :- | -: | -: |
 | Falcon Heavy (descartável) | **+59 %** | sem dado de LEO |
-| Vulcan VC6 | **+18 %** | **+33 %** |
-| Vulcan VC4 | −8 % | **+12 %** |
-| Vulcan VC2 | −39 % | −16 % |
+| Vulcan VC6 | **+18 %** | **+26 %** |
+| Vulcan VC4 | −8 % | **+6 %** |
+| Vulcan VC2 | −39 % | −20 % |
 | Falcon Heavy (recuperação) | −33 % | sem dado de LEO |
-| Falcon 9 (ASDS) | sem dado (C3 > 10 em 2031) | −22 % |
-| Atlas V 541 / 551 | sem curva de C3 | −56 % / −52 % |
+| Falcon 9 (ASDS) | sem dado (C3 > 10 em 2031 e 2035) | −26 % |
+| Atlas V 541 / 551 | sem curva de C3 | inviável em 2033 (só LEO a 28,5°) |
 | Ariane 64 | sem dado no C3 das janelas | sem dado a 400 km |
-| *New Glenn (anunciado)* | −34 % | +83 % |
+| *New Glenn (anunciado)* | −34 % | +74 % |
 | *SLS Block 1 (anunciado)* | +152 % | — |
 
 **Orbitador, missão A** (3.548 kg, só 2028). Servem todos os operacionais com dado:
 - Vulcan VC2/4/6, Falcon Heavy e Atlas V 541/551.
 - Falcon 9 em (b), com +44 %. Em (a) ele fica com −35 %.
 
-**Lander** (3.727 kg). O caso mais restritivo é 2033.
+**Lander** (3.727 kg). Entre os lançadores com dado em todas as janelas, o caso mais restritivo é 2033.
 
 | Lançador | (a) | (b) |
 | :- | -: | -: |
-| Falcon 9 (ASDS) | sem dado (C3 > 10) | **+26 %** |
+| Falcon 9 (ASDS) | sem dado (C3 > 10 em 2031 e 2035) | **+19 %** |
 | Falcon Heavy (recuperação) | **+8 %** | sem dado |
 | Falcon Heavy (descartável) | **+158 %** | sem dado |
-| Vulcan VC2 | −1 % | **+36 %** |
-| Vulcan VC4 / VC6 | **+49 % / +90 %** | **+81 % / +115 %** |
-| Atlas V 541 / 551 | sem curva | −29 % / −23 % |
-| *New Glenn (anunciado)* | +6 % | +196 % |
+| Vulcan VC2 | −1 % | **+29 %** |
+| Vulcan VC4 / VC6 | **+49 % / +90 %** | **+71 % / +104 %** |
+| Atlas V 541 / 551 | sem curva | inviável em 2033 |
+| *New Glenn (anunciado)* | +6 % | +181 % |
 | *SLS Block 1 (anunciado)* | +308 % | — |
 
 **Lançamentos da arquitetura: 2**, um por veículo. Os dois veículos têm lançador operacional com
 margem positiva em todas as janelas:
-- **Orbitador (iii):** Falcon Heavy descartável (a), Vulcan VC6 (a ou b) e Vulcan VC4 (b).
+- **Orbitador (iii):** Falcon Heavy descartável (a), Vulcan VC6 (a ou b) e Vulcan VC4 (b, com só +6 %).
 - **Lander:** Falcon 9 (b); Falcon Heavy (a); Vulcan VC2 (b); VC4 e VC6 (a ou b).
 
 **Sem dado publicado:**
@@ -141,11 +150,14 @@ grade do porkchop, e a busca ganhou um limite opcional de |DLA|.
 - O envelope atual é 5,911 km/s (2035).
 - **Com |DLA| ≤ 50°:**
   - O Δv de 2033 fica 1 m/s acima desse envelope e passaria a defini-lo.
-  - A 2033 alternativa continua sendo a janela mais restritiva, agora com multiplicador de ~0,90.
+  - A 2033 alternativa continua sendo a janela mais restritiva, agora com multiplicador de ~0,90 em (a).
+    Em (b) não há giro, porque 49,7° < 51,6°.
   - O orbitador passa a ter:
     - Falcon Heavy descartável: +86 % em (a);
-    - Vulcan VC6: +38 % em (a) e +34 % em (b);
-    - Vulcan VC4: +8 % em (a) e +13 % em (b). O VC4 passa a servir também em (a).
+    - Vulcan VC6: +38 % em (a) e +34 % em (b), contra +18 % e +26 % hoje;
+    - Vulcan VC4: +8 % em (a) e +13 % em (b), contra −8 % e +6 % hoje. O VC4 passa a servir também em (a).
+  - O lander passa a ter o Vulcan VC2 também em (a), com +16 %.
+  - O Atlas V continua sem servir em 2033: só tem LEO a 28,5°.
 - **Com |DLA| ≤ 28,5°:** sem penalidade de lançamento, mas o envelope sobe 0,53 km/s.
 - **A oposição de 2033 é inviável** (25,7 km/s na Etapa 1.3) e fica fora.
 
@@ -155,11 +167,12 @@ Pior margem com cada alternativa de 2033 está em `results/etapa2.4/lancamento.m
 
 1. **A arquitetura fecha com 2 lançamentos de lançadores operacionais em todas as janelas.**
    - O orbitador da regra (iii) só cabe em Falcon Heavy descartável, Vulcan VC6 ou Vulcan VC4 (este só
-     em (b)).
+     em (b), com +6 %).
    - O lander cabe em vários.
 2. **A janela de 2033 é a que restringe,** pela DLA de −55,5°, quase no limite de azimute do Cabo.
    - O multiplicador de 0,764 vem de uma tabela aproximada para Atlas V e Delta IV (P-036).
    - Trocar a trajetória de 2033 por uma com |DLA| ≤ 50° custa 23 m/s e alivia todos os lançadores.
+   - Em (b), elimina o giro de plano de 211 m/s.
 3. **(a) × (b):**
    - (b) dá mais margem ao Vulcan, mas leva um estágio LOX/LH2 próprio, com armazenamento criogênico
      e ensaios próprios.
@@ -184,7 +197,7 @@ Pior margem com cada alternativa de 2033 está em `results/etapa2.4/lancamento.m
 | Premissa | Conteúdo |
 | :- | :- |
 | P-036 | Multiplicador de DLA do Atlas V/Delta IV [F83] aplicado a todos os lançadores, com interpolação linear |
-| P-037 | LEO de 400 km usada para 407 km; órbita baixa a 28,5° ou 51,6°; giro de plano na queima de saída |
+| P-037 | LEO de 400 km usada para 407 km; órbita baixa a 28,5° ou 51,6°; giro de plano no perigeu, θ = arcsin(sen β / sen ν∞) |
 
 ## 9. Limitações
 

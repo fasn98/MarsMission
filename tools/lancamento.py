@@ -88,7 +88,7 @@ def capacidade_direta(lan, c3, dla, cfg, i_max):
     cap = la.interpolar(c3, lan["c3"]["pontos"], lan["c3"]["massa_kg"])
     if cap != cap:
         return cap, "C3 fora da faixa publicada"
-    if abs(dla) > i_max:
+    if i_max is not None and abs(dla) > i_max:
         return 0.0, f"|DLA| > {i_max:.2f}° (azimute 40°): exige dogleg ou plano quebrado".replace(".", ",")
     m = cfg["dla"]["multiplicador_nordeste"]
     f = 1.0 if abs(dla) <= _v(cfg["dla"]["faixa_sem_penalidade_graus"]) else la.interpolar(abs(dla), m["dla_graus"], m["fator"])
@@ -96,16 +96,24 @@ def capacidade_direta(lan, c3, dla, cfg, i_max):
 
 
 def leo_por_janela(m_inj, cand, dcfg, po, i_graus):
-    """Massa na órbita baixa (kg) com o estágio de saída próprio redimensionado para a janela, e Δi (graus)."""
+    """(massa na órbita baixa kg, β graus, giro no perigeu θ graus, Δv extra do giro km/s), com o estágio de saída
+    próprio redimensionado para a janela."""
     mu = _v(po["gm_terra"])
     r = _v(po["raio_terra_km"]) + _v(po["leo_altitude_km"])
-    di = la.delta_plano(cand["dla_graus"], i_graus)
     c3 = cand["c3_km2_s2"]
-    dv_ideal = cand["dv_saida_terra_km_s"] + la.dv_saida(mu, r, c3, di) - la.dv_saida(mu, r, c3, 0.0)
+    beta = la.delta_plano(cand["dla_graus"], i_graus)
+    theta = la.giro_no_perigeu(beta, mu, r, c3)
+    if theta != theta:
+        return float("nan"), beta, theta, float("nan")
+    extra = la.dv_saida(mu, r, c3, theta) - la.dv_saida(mu, r, c3, 0.0)
+    dv_ideal = cand["dv_saida_terra_km_s"] + extra
     dv = (1 + _v(dcfg["margem_dv"])) * (dv_ideal + _v(dcfg["dv"]["perda_gravitacional"]["saida_terra"]))
     st = dcfg["estagios"]["saida_terra"]
     e = fg.Estagio("saida_terra", _v(st["isp_s"]), _v(st["fracao_estrutural"]), [fg.Queima("saida_terra", dv)])
-    return fg.dimensionar_veiculo([e], m_inj)[0].massa_inicial, di
+    try:
+        return fg.dimensionar_veiculo([e], m_inj)[0].massa_inicial, beta, theta, extra
+    except ValueError:  # Δv alto demais para o estágio (giro grande): inviável
+        return float("inf"), beta, theta, extra
 
 
 def revisar_janela(cfg):
@@ -147,6 +155,9 @@ def main():
     lat_c = _v(cfg["centro"]["latitude_graus"])
 
     def i_max(lan):
+        """Inclinação máxima coplanar no Eastern Range; None fora dele (ELA-4, Kourou)."""
+        if lan.get("plataforma") == "ELA-4":
+            return None
         pfm = cfg["centro"]["plataformas"].get(lan.get("plataforma"), {})
         return la.inclinacao(pfm.get("latitude_graus", lat_c), az_min)
 
@@ -163,10 +174,13 @@ def main():
                     cap = lan["leo_400km"].get(inc)
                     if cap is None:
                         continue
-                    m_leo, di = leo_por_janela(m_inj, j, dcfg, po, inc)
+                    m_leo, beta, theta, extra = leo_por_janela(m_inj, j, dcfg, po, inc)
+                    if m_leo != m_leo:  # giro impossível com um impulso no perigeu
+                        m_leo = float("inf")
                     marg = cap / m_leo - 1
                     if melhor_b is None or marg > melhor_b["margem"]:
-                        melhor_b = {"inclinacao_graus": inc, "delta_i_graus": di, "massa_leo_kg": m_leo, "capacidade_kg": cap, "margem": marg}
+                        melhor_b = {"inclinacao_graus": inc, "beta_graus": beta, "giro_perigeu_graus": theta,
+                                    "dv_extra_giro_m_s": 1000 * extra, "massa_leo_kg": m_leo, "capacidade_kg": cap, "margem": marg}
                 ls.append({"veiculo": veic, "lancador": nome, "categoria": lan["categoria"], "janela": j["id"],
                            "c3_km2_s2": c3, "dla_graus": dla, "massa_injetada_kg": m_inj,
                            "a_capacidade_kg": None if cap_a != cap_a else cap_a,
@@ -230,7 +244,7 @@ def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "lancamento.yaml").write_text(yaml.safe_dump(dm._nativo(out), sort_keys=False, allow_unicode=True), encoding="utf-8")
 
-    br = lambda x, n=0: "—" if x is None else f"{x:,.{n}f}".replace(",", " ").replace(".", ",")  # noqa: E731
+    br = lambda x, n=0: "—" if x is None else ("inviável" if x == float("inf") else f"{x:,.{n}f}".replace(",", " ").replace(".", ","))  # noqa: E731
     pc = lambda x: "—" if x is None else f"{100 * x:+.0f} %".replace("-", "−")  # noqa: E731
     rot = {"orbitador_regra_iii": "Orbitador, regra (iii)", "orbitador_missao_A": "Orbitador, missão A", "lander": "Lander"}
     md = ["# Lançamento e DLA (gerado por tools/lancamento.py)", "",
@@ -245,7 +259,7 @@ def main():
     for j in out["janelas"]:
         md.append(f"| {j['id']} | {j['partida']} | {br(j['c3_km2_s2'], 2)} | {br(j['dla_graus'], 1)}° |")
     md += ["", f"Inclinação máxima coplanar (azimute {az_min}°): " + "; ".join(
-        f"{n} {br(v, 2)}°" for n, v in out["inclinacao_max_coplanar_graus"].items() if n in ("Falcon 9 (ASDS)", "Falcon Heavy (descartável)", "Vulcan VC6"))]
+        f"{n} {br(v, 2)}°" for n, v in out["inclinacao_max_coplanar_graus"].items() if v is not None and n in ("Falcon 9 (ASDS)", "Falcon Heavy (descartável)", "Vulcan VC6"))]
     for veic in casos:
         md += ["", f"## {rot[veic]}: margem no caso mais restritivo", "",
                "| Lançador | Categoria | (a) pior margem | (a) janela | (b) pior margem | (b) janela |", "| :- | :- | -: | :- | -: | :- |"]
@@ -254,12 +268,12 @@ def main():
                 md.append(f"| {r['lancador']} | {r['categoria']} | {pc(r['a_pior_margem'])} | {r['a_janela_mais_restritiva']} | "
                           f"{pc(r['b_pior_margem'])} | {r['b_janela_mais_restritiva']} |")
     md += ["", "## Detalhe por janela", "",
-           "| Veículo | Lançador | Janela | (a) capacidade | (a) margem | (a) nota | (b) inclinação, Δi | (b) massa LEO | (b) capacidade | (b) margem |",
+           "| Veículo | Lançador | Janela | (a) capacidade | (a) margem | (a) nota | (b) inclinação; β; giro no perigeu; Δv extra | (b) massa LEO | (b) capacidade | (b) margem |",
            "| :- | :- | :- | -: | -: | :- | :- | -: | -: | -: |"]
     for x in linhas:
         b = x["b"] or {}
         md.append(f"| {rot[x['veiculo']]} | {x['lancador']} | {x['janela']} | {br(x['a_capacidade_kg'])} | {pc(x['a_margem'])} | {x['a_nota']} | "
-                  f"{(br(b['inclinacao_graus'], 1) + '°, ' + br(b['delta_i_graus'], 2) + '°') if b else '—'} | {br(b.get('massa_leo_kg'))} | "
+                  f"{(br(b['inclinacao_graus'], 1) + '°; ' + br(b['beta_graus'], 2) + '°; ' + br(b['giro_perigeu_graus'], 2) + '°; ' + br(b['dv_extra_giro_m_s']) + ' m/s') if b else '—'} | {br(b.get('massa_leo_kg'))} | "
                   f"{br(b.get('capacidade_kg'))} | {pc(b.get('margem'))} |")
     md += ["", f"## Revisão da janela de 2033 (envelope atual: {br(envelope['dv_total_km_s'], 3)} km/s, {envelope['missao_que_define']})", "",
            "| Classe | Limite de \\|DLA\\| | Δv total | Partida | Chegada à Terra | C3 | DLA | Na borda do domínio |",
