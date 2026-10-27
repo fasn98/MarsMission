@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Roda a suíte antes de cada commit (regra 5). Ativado por: git config core.hooksPath .githooks
+# Usa $MARSMISSION_PYTHON se definido; senão o python do ambiente ativo (conda activate marsmission).
+set -euo pipefail
+PY="${MARSMISSION_PYTHON:-python}"
+cd "$(git rev-parse --show-toplevel)"
+echo "pre-commit: $PY -m pytest -q"
+"$PY" -m pytest -q

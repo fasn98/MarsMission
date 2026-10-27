@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}   # login shell: ativa o ambiente conda em cada passo
+    steps:
+      - uses: actions/checkout@v4
+
+      # Ambiente criado a partir do mesmo environment.yml usado localmente.
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          environment-file: environment.yml
+          activate-environment: marsmission
+          auto-activate-base: false
+
+      - name: Versões instaladas
+        run: conda list | grep -E "^(python|numpy|scipy|matplotlib|pytest|pyyaml|spiceypy) "
+
+      # Kernels SPICE (~33 MB) ficam em cache; a chave muda se config/kernels.yaml mudar.
+      - name: Cache dos kernels SPICE
+        uses: actions/cache@v4
+        with:
+          path: data/kernels
+          key: spice-${{ hashFiles('config/kernels.yaml') }}
+
+      - name: Baixar e conferir kernels (MD5)
+        run: python tools/fetch_kernels.py
+
+      - name: pytest
+        run: python -m pytest -v

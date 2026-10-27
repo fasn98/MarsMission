@@ -1,0 +1,12 @@
+[project]
+name = "marsmission"
+version = "0.1.0"
+description = "Estudo conceitual (Pré-Fase A) de missão robótica de ida e volta Terra–Marte–Terra"
+requires-python = ">=3.11,<3.12"
+license = "MIT"
+authors = [{ name = "Fabio Nogueira" }]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
