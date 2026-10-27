@@ -233,6 +233,9 @@ As §1, §3 e §4 deste relatório ficam como registro; **os números vigentes s
 
 A órbita de encontro não muda: 300 × 24.992 km (a regra dos 5 % foi reaplicada).
 
+A referência L2 (só referência, fora da faixa) também cresce, porque o núcleo dela escala com o MAV: plataforma de
+1.857 para 2.440 kg e total (iii) no apoapse dela de 32.307 para 39.850 kg (`results/etapa2.3/plataformas.md`).
+
 **Margens dos lançadores escolhidos** (pior das quatro janelas): ver a nota de 2026-10-27 no ADR 0008. Todos continuam
 servindo, com margens menores:
 - orbitador: Falcon Heavy descartável +56 %, Vulcan VC6 +15 %;

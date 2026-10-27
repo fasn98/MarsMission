@@ -83,5 +83,6 @@ Valores de `results/etapa2.5/arquitetura.md`: pior margem nas quatro janelas do 
 | Lander | Vulcan VC6 | +122 % | +104 % |
 
 - Os lançadores escolhidos continuam servindo.
-- O Vulcan VC4 deixa de servir o orbitador (regra iii): pela injeção direta, a margem vai de +7,8 % para −5,6 %
+- O Vulcan VC4 deixa de servir o orbitador (regra iii): pela injeção direta (forma a), a margem vai de +2,8 % para
+  −10,0 %; pela órbita baixa com estágio próprio (forma b), de +7,8 % para −5,6 %
   (`results/etapa2.4/lancamento.md`). Ele não era um dos escolhidos.

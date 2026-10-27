@@ -32,7 +32,8 @@ primária e calculou a queima finita com o empuxo real, em uma e em várias quei
   várias queimas. As combinações de 400 N não cabem, e a 1ª queima delas passa da vida qualificada com qualquer N. O
   OMS-E (C3) perde menos, mas tem 135 kg de motor e disponibilidade não conferida.
 - **Um único tipo de motor (R-4D-11)** na captura, no retorno e no MAV (motivo dado pelo Fabio).
-- **Isp de voo:** os motores pressurizados que voaram dão 296 a 321 s. Os 343 s eram de um motor com turbobomba.
+- **Isp de voo:** os motores pressurizados de 400 N ou mais que voaram dão 296 a 321 s (o 10N dá 292 s). Os 343 s eram
+  de um motor com turbobomba.
 
 ## Consequências
 - Massas, órbita de encontro (regra dos 5 %, ADR 0005), MAV e margens dos lançadores (ADR 0008) foram refeitos:

@@ -255,7 +255,8 @@ def orcamento(plataforma_lander_kg=None, margem_dv=None, isp_armazenavel_s=None,
     """Recalcula orbitador e lander com orbital.veiculos e as margens de injeção direta (ADR 0008) de cada lançador.
 
     Isp e fração estrutural valem para os estágios armazenáveis (MMH/MON): inserção em Marte, retorno e cruzeiro do
-    lander. A órbita de encontro fica a de base (como na sensibilidade da Etapa 2.5). Sem argumentos, reproduz
+    lander. O Isp é o da inserção; o cruzeiro, que tem Isp de base próprio (ADR 0011), recebe a mesma variação relativa.
+    A órbita de encontro fica a de base (como na sensibilidade da Etapa 2.5). Sem argumentos, reproduz
     results/etapa2.5/arquitetura.yaml."""
     d, s, lcfg = ler("config/dimensionamento.yaml"), ler("config/superficie.yaml"), ler("config/lancadores.yaml")
     d, s = copy.deepcopy(d), copy.deepcopy(s)
@@ -264,10 +265,12 @@ def orcamento(plataforma_lander_kg=None, margem_dv=None, isp_armazenavel_s=None,
     for chave, valor in (("isp_s", isp_armazenavel_s), ("fracao_estrutural", fracao_estrutural_armazenavel)):
         if valor is None:
             continue
+        fator = float(valor) / v(d["estagios"]["insercao_marte"][chave])
         for n in ARMAZENAVEIS:
             d["estagios"][n] = copy.deepcopy(d["estagios"][n])   # as âncoras YAML compartilham o mesmo dict
             d["estagios"][n][chave] = {**d["estagios"][n][chave], "valor": float(valor)}
-        s["lancamento"]["cruzeiro_lander"][chave] = {**s["lancamento"]["cruzeiro_lander"][chave], "valor": float(valor)}
+        cz = s["lancamento"]["cruzeiro_lander"][chave]
+        s["lancamento"]["cruzeiro_lander"][chave] = {**cz, "valor": v(cz) * fator}
     try:
         vei, janelas, _ = veiculos(plataforma_lander_kg, d, s)
     except ValueError as e:   # Δv acima do que o estágio consegue com esse Isp e essa fração estrutural
