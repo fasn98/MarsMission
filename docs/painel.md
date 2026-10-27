@@ -195,14 +195,120 @@ escolha é do Fabio.
   - A busca começa na pasta do arquivo de entrada e depois vai à raiz do repositório.
   - Neste repositório, valeria o `environment.yml` da raiz, que instala o pacote com
     `pip install -e .[dev,painel]`. **Não conferido** se isso funciona lá.
+  - **Nota (2026-10-27):** agora vale `src/painel/requirements.txt`, na pasta do arquivo de entrada, que tem prioridade
+    sobre o `environment.yml` da raiz. Ver "Publicar no Streamlit Community Cloud", abaixo.
 - **Kernels SPICE: não conferido.** O Community Cloud só roda o app; não foi encontrada na documentação uma etapa de
   build equivalente ao `build` do Replit.
   - Sem `tools/fetch_kernels.py`, a página Trajetória mostra o aviso de kernels ausentes (`src/painel/app.py`).
   - As outras páginas leem `results/` e `config/`.
   - Resolver isso exigiria mudar o código, com PR e justificativa.
+  - **Nota (2026-10-27):** resolvido no código. A página Trajetória baixa os kernels que faltam, com a rotina de
+    `tools/fetch_kernels.py` (agora em `src/orbital/kernels.py`), e confere o MD5. Ver a subseção abaixo.
 - **Pillow:** com o `pyproject.toml` atual (streamlit 1.66.1 e `pillow>=13.0.0`; ADR 0010, nota de 2026-10-27), o pip
   instala o pillow 13.0.0 ou posterior (13.0.0 no CI do PR #13), com os avisos "Critical" das versões até a 12.3.0
   corrigidos. **Não conferido** no Community Cloud.
+
+### Publicar no Streamlit Community Cloud
+
+Preparado em 2026-10-27, **sem publicar**: a publicação é feita pelo Fabio, pela interface do Community Cloud. Fontes
+oficiais consultadas nessa data.
+
+**Passo a passo**
+1. **Conta** ([Create your account](https://docs.streamlit.io/deploy/streamlit-community-cloud/get-started/create-your-account)):
+   entrar em share.streamlit.io com GitHub, Google ou código por e-mail. Depois, conectar a conta do GitHub
+   ([Connect your GitHub account](https://docs.streamlit.io/deploy/streamlit-community-cloud/get-started/connect-your-github-account)).
+   - Com isso, já dá para publicar de repositórios públicos: "you'll be able to deploy apps from your public
+     repositories".
+   - É preciso ter direito de administrador no repositório.
+2. **Criar o app** ([Deploy your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)):
+   clicar em **Create app** e depois em **Yup, I have an app**. Preencher:
+   - **Repository:** `fasn98/MarsMission`;
+   - **Branch:** `main`;
+   - **Main file path:** `src/painel/app.py`;
+   - **App URL** (opcional): o subdomínio de `<subdomínio>.streamlit.app`.
+3. **Python 3.11:** em **Advanced settings**, escolher **3.11**.
+   - A documentação diz que o Community Cloud "defaults to version 3.12". O `pyproject.toml` exige `>=3.11,<3.12`, então
+     com o padrão a instalação falha.
+   - A lista de versões oferecidas não está na página: ela diz só que são aceitas as versões "still receiving security
+     updates". **Não conferido** que a 3.11 aparece na lista.
+4. **Save.** A página diz que "most apps are deployed within a few minutes".
+
+**Dependências (fonte única)**
+- O Community Cloud usa o primeiro arquivo que encontrar, na ordem `uv.lock`, `Pipfile`, `environment.yml`,
+  `requirements.txt`, `pyproject.toml` (poetry). Procura primeiro na pasta do arquivo de entrada e depois na raiz
+  ([App dependencies](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies)).
+- `src/painel/requirements.txt` fica na pasta do arquivo de entrada e tem só `-e .[painel]`. Não é uma lista de
+  dependências: instala este repositório pelo `pyproject.toml`, com o extra `painel`.
+  - O modo editável é necessário: `orbital.config.RAIZ` precisa da árvore do repositório para ler `config/` e `results/`.
+  - Sem esse arquivo, valeria o `environment.yml` da raiz (conda).
+- O pip resolve o `.` a partir da pasta atual, não da pasta do arquivo. Isso foi conferido com `pip install --dry-run`
+  em 2026-10-27.
+  - A documentação diz que, no Community Cloud, "the working directory is always the root of your repository"
+    ([File organization](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization)).
+  - **Não conferido** que a instalação também roda da raiz.
+- Conferido num venv limpo (Python 3.11.14, sem o `.pythonlibs` do Replit), com `pip install -r
+  src/painel/requirements.txt` a partir da raiz:
+  - instala o pacote em modo editável, com pillow 13.0.0, streamlit 1.66.1, plotly 7.1.0, pandas 3.0.6 e numpy 2.4.6;
+  - o pytest fica de fora, porque é do extra `dev`;
+  - `RAIZ` aponta para o repositório.
+- `.streamlit/config.toml` está na raiz, como exige a mesma página.
+
+**Kernels SPICE na primeira execução**
+- Ao abrir a página Trajetória, o painel baixa os kernels de `config/kernels.yaml` que faltam e confere o MD5 de todos.
+  A rotina é a de `tools/fetch_kernels.py`, agora em `src/orbital/kernels.py`.
+  - Enquanto isso, aparece o aviso "Baixando e conferindo os kernels SPICE…".
+  - Se um MD5 não conferir, a página mostra o erro, com o MD5 esperado e o obtido, e não calcula nada.
+- O resultado fica no cache do Streamlit (`st.cache_resource`): uma vez por processo do servidor. Uma falha não entra no
+  cache; recarregar a página tenta de novo.
+- As outras páginas leem só `results/` e `config/` e não precisam dos kernels.
+- **Disco:** a documentação oficial consultada não diz se o disco do app persiste entre reinicializações. O painel
+  trata o disco como não permanente: depois de uma reinicialização, ou de acordar após dormir, o download se repete
+  na primeira visita à Trajetória se os kernels tiverem sumido. **Não conferido** no Community Cloud, assim como o
+  acesso de saída a naif.jpl.nasa.gov.
+- Conferido localmente em 2026-10-27, num venv limpo e Chromium headless:
+  - sem kernels, a primeira visita à Trajetória mostrou o aviso, baixou os dois kernels (MD5 conferem) e desenhou a
+    trajetória, em 9,0 s;
+  - a segunda visita não baixou de novo;
+  - com um MD5 errado no config (só no disco, revertido depois), a página mostrou "Não foi possível obter os kernels
+    SPICE: MD5 dos kernels não confere com kernels.yaml: naif0012.tls esperado …, obtido …".
+
+**Memória**
+- **Limite publicado** ([Manage your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app)):
+  "Memory: 690MB minimum, 2.7GBs maximum", valores "as of February 2024", com a ressalva "These limits may change at any
+  time without notice". Acima do limite, o app "may slow down from throttling or become nonfunctional".
+- **Medido localmente** (observação de 2026-10-27, não é resultado do estudo):
+  - método: pico de memória residente (VmHWM, `/proc/<pid>/status`) do processo do Streamlit, num venv limpo;
+  - navegação: um Chromium headless abriu Trajetória (com o download dos kernels), Visão geral, Porkchops, Orçamento,
+    Premissas, `/visao-geral` e Trajetória de novo;
+  - resultado: pico de **193,8 MiB** (cerca de 203 MB). No início eram 72,4 MiB.
+  - Isso é menos de um terço do mínimo publicado de 690 MB.
+- **Limites da medição:**
+  - uma única sessão;
+  - controles na posição padrão: sem trocar janelas do porkchop nem mexer nos controles do orçamento, o que enche mais
+    caches;
+  - máquina do Replit, não do Community Cloud. Com vários visitantes ao mesmo tempo, a memória cresce;
+  - **não conferido** no Community Cloud.
+
+**Atualizar**
+- "Streamlit Community Cloud will monitor your repository and automatically copy any file changes you commit"; "You will
+  immediately see commits reflected in your deployed app for most changes"
+  ([Edit your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app/edit-your-app)).
+- Com o branch `main`, cada merge de PR atualiza o app.
+- A documentação não diz o que acontece quando muda um arquivo de dependências. **Não conferido** se o
+  `pyproject.toml` alterado é reinstalado sem reiniciar o app pela interface ("Manage app" → reboot).
+- Atualizações vindas do GitHub são limitadas a "no more than five per minute"
+  ([Status and limitations](https://docs.streamlit.io/deploy/streamlit-community-cloud/status)).
+
+**Limitações**
+- **App público:** "Public apps only" ([streamlit.io/cloud](https://streamlit.io/cloud)). Com repositório público, o
+  app é público ([Share your app](https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app)).
+- **Dorme sem uso:** "All apps without traffic for 12 hours go to sleep". Qualquer visitante acorda o app pelo botão
+  "Yes, get this app back up!" (Manage your app).
+- **Domínio próprio:** a documentação oficial consultada só descreve o endereço `<subdomínio>.streamlit.app` e não
+  menciona domínio próprio. **Não conferido** que ele não seja possível.
+- **Outras, da página Status and limitations:**
+  - hospedagem "in the United States", sem opção de mudar;
+  - Debian 11 ("bullseye").
 
 ### Comparação
 
@@ -211,7 +317,7 @@ escolha é do Fabio.
 | Endereço permanente | Só com plano pago: Core (US$ 18/mês na cobrança anual) ou Pro. No Starter, o link "will automatically go down after 30 days" | Gratuito; o app dorme após 12 h sem tráfego |
 | Endereço | `<subdomínio>.replit.app` ([Custom domains](https://docs.replit.com/cloud-services/deployments/custom-domains)) | `<subdomínio>.streamlit.app` |
 | Repositório | Importação pública conferida; privado não conferido | Público, para app público |
-| Etapa de build (kernels) | Sim (`[deployment] build` do `.replit`) | Não encontrada na documentação |
+| Etapa de build (kernels) | Sim (`[deployment] build` do `.replit`) | Não encontrada na documentação; o painel baixa os kernels na primeira visita à Trajetória |
 | Instalação | O pillow 13.0.0 passa no firewall de pacotes; o pillow de 10.4.0 a 12.3.0 (o streamlit 1.65.0 exige `pillow<13`) era bloqueado (observação de 2026-10-27, sem fonte oficial do Replit) | Não conferida |
 
 ### Alternativa estática (GitHub Pages)

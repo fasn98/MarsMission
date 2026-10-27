@@ -120,10 +120,19 @@ def visao_geral():
              "Diferença": f"{br(100 * x['dif_rel'], 2)} %", "Rótulo": x["calculado"].rotulo} for x in d.verificacoes()])
 
 
+@st.cache_resource(show_spinner="Baixando e conferindo os kernels SPICE de config/kernels.yaml (só na primeira execução)…")
+def _kernels() -> list[dict]:
+    """Uma vez por processo do servidor: baixa o que falta e confere o MD5. Exceção não entra no cache (nova tentativa
+    na próxima execução da página)."""
+    return d.garantir_kernels()
+
+
 def pagina_trajetoria():
     st.title("Trajetória heliocêntrica da missão de referência")
-    if not d.kernels_presentes():
-        st.error("Kernels SPICE ausentes. Rode `python tools/fetch_kernels.py` (baixa e confere o MD5).")
+    try:
+        _kernels()
+    except (ValueError, OSError) as e:
+        st.error(f"Não foi possível obter os kernels SPICE: {e}. Nada foi calculado; recarregue a página para tentar de novo.")
         return
     t = st.cache_data(show_spinner="Calculando com DE440 e Lambert…")(lambda: d.trajetoria())()
     st.plotly_chart(gr.trajetoria(t), width="stretch")
