@@ -226,11 +226,13 @@ oficiais consultadas nessa data.
    - **Branch:** `main`;
    - **Main file path:** `src/painel/app.py`;
    - **App URL** (opcional): o subdomínio de `<subdomínio>.streamlit.app`.
-3. **Python 3.11:** em **Advanced settings**, escolher **3.11**.
+3. **Python 3.11:** em **Advanced settings**, escolher **3.11** antes de salvar.
    - A documentação diz que o Community Cloud "defaults to version 3.12". O `pyproject.toml` exige `>=3.11,<3.12`, então
      com o padrão a instalação falha.
    - A lista de versões oferecidas não está na página: ela diz só que são aceitas as versões "still receiving security
      updates". **Não conferido** que a 3.11 aparece na lista.
+   - A versão não muda depois: "After you have deployed an app, you must delete it and redeploy it to change the version
+     of Python it uses" ([Upgrade Python](https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app/upgrade-python)).
 4. **Save.** A página diz que "most apps are deployed within a few minutes".
 
 **Dependências (fonte única)**
@@ -246,6 +248,9 @@ oficiais consultadas nessa data.
   - A documentação diz que, no Community Cloud, "the working directory is always the root of your repository"
     ([File organization](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization)).
   - **Não conferido** que a instalação também roda da raiz.
+  - A mesma página de dependências diz que o `requirements.txt` é processado primeiro com o uv, com o pip como
+    alternativa. Com uv 0.13.4, `uv pip install --dry-run -r src/painel/requirements.txt` a partir da raiz também
+    resolveu o `.` para a raiz do repositório (conferido em 2026-10-27).
 - Conferido num venv limpo (Python 3.11.14, sem o `.pythonlibs` do Replit), com `pip install -r
   src/painel/requirements.txt` a partir da raiz:
   - instala o pacote em modo editável, com pillow 13.0.0, streamlit 1.66.1, plotly 7.1.0, pandas 3.0.6 e numpy 2.4.6;

@@ -321,10 +321,6 @@ def mascara_porkchop(g: dict, c3_max: float) -> np.ndarray:
 
 # ---------------------------------------------------------------- trajetória heliocêntrica
 
-def kernels_presentes() -> bool:
-    return all(p.exists() for p in eph.kernels_configurados())
-
-
 def garantir_kernels() -> list[dict]:
     """Baixa os kernels de config/kernels.yaml que faltam (ex.: primeira execução no Streamlit Community Cloud) e confere
     o MD5 de todos, com a rotina de tools/fetch_kernels.py (orbital.kernels). ValueError se algum MD5 não conferir."""

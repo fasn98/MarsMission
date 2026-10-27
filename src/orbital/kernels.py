@@ -35,7 +35,7 @@ def baixar(config: Path = CONFIG_KERNELS, raiz: Path = RAIZ, avisar: Callable[[s
     out = []
     for k in cfg["kernels"]:
         destino = diretorio / k["arquivo"]
-        esperado = str(k["md5"])   # texto: um MD5 só de dígitos, sem aspas no YAML, seria lido como inteiro
+        esperado = str(k["md5"])   # um MD5 só de dígitos sem aspas vira inteiro no YAML (e perde zeros à esquerda: não confere)
         if not destino.exists() or md5(destino) != esperado:
             avisar(f"baixando {k['url']}")
             parcial = destino.with_name(destino.name + ".parcial")

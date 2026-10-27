@@ -47,3 +47,14 @@ def test_arquivo_corrompido_e_baixado_de_novo(tmp_path):
 def test_config_real_tem_md5_e_url_para_todos_os_kernels():
     cfg = yaml.safe_load(kernels.CONFIG_KERNELS.read_text(encoding="utf-8"))
     assert cfg["kernels"] and all(len(k["md5"]) == 32 and k["url"].startswith("https://") for k in cfg["kernels"])
+
+
+def test_download_que_falha_nao_deixa_parcial_e_preserva_o_destino(tmp_path):
+    cfg = _config(tmp_path, b"kernel")
+    (tmp_path / "origem.bin").unlink()   # URL file:// inexistente: o download falha
+    (tmp_path / "kernels").mkdir()
+    (tmp_path / "kernels" / "k.bin").write_bytes(b"antigo")
+    with pytest.raises(OSError):
+        kernels.baixar(cfg, tmp_path, lambda _: None)
+    assert (tmp_path / "kernels" / "k.bin").read_bytes() == b"antigo"
+    assert not list((tmp_path / "kernels").glob("*.parcial"))

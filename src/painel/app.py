@@ -5,6 +5,8 @@ Executar (na raiz do repositório): python -m streamlit run src/painel/app.py
 
 from __future__ import annotations
 
+import http.client
+
 import pandas as pd
 import streamlit as st
 
@@ -131,7 +133,7 @@ def pagina_trajetoria():
     st.title("Trajetória heliocêntrica da missão de referência")
     try:
         _kernels()
-    except (ValueError, OSError) as e:
+    except (ValueError, OSError, http.client.HTTPException) as e:   # OSError inclui URLError
         st.error(f"Não foi possível obter os kernels SPICE: {e}. Nada foi calculado; recarregue a página para tentar de novo.")
         return
     t = st.cache_data(show_spinner="Calculando com DE440 e Lambert…")(lambda: d.trajetoria())()
