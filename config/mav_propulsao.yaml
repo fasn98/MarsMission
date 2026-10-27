@@ -1,0 +1,37 @@
+# Etapa 2.2b — propulsão do MAV (tools/mav_propulsao.py). Todas as opções sem ISRU (ADR 0006).
+# Todas com dois estágios e a mesma divisão de Δv (P-019); carga útil de 16 kg [F34].
+opcoes:
+  O1:
+    nome: Sólido (como o MSR)
+    isp_s: [293, 282]
+    isp_fonte: "[F34] Jackman et al. 2019, p. 4: Isp médio de 293 e 282 s"
+    fracao_estrutural: {valor: 0.286, fonte: "[F34] p. 4: 394 kg, 216 + 54 kg de propelente, 16 kg de carga; ε = 108/378 (veículo inteiro, calculado aqui; P-019)"}
+    criogenico: false
+  O4:
+    nome: Hipergólico armazenável (MMH/NTO)
+    isp_s: [343, 343]
+    isp_fonte: "[F46] Bowles et al. 2013, p. 32: \"the hypergolic engine has an engine specific impulse of 343 seconds\""
+    fracao_estrutural:
+      valor: 0.238
+      fonte: >
+        [F46] Tab. 5, p. 30: MAV hipergólico com turbobomba, 20 kg de carga, 54,0 kg secos, 312,5 kg na decolagem.
+        Os 15,7 kg que não são carga, seco nem propelente útil (71,3 %) entram como inertes: ε = 69,7/292,5
+        (calculado aqui). Mesmo tipo de motor do Isp de 343 s.
+    criogenico: false
+  O2:
+    nome: LOX/CH4, tudo da Terra
+    isp_s: [370, 370]
+    isp_fonte: "[F46] p. 32: \"approximately 370 seconds for the methane/liquid oxygen combination\""
+    fracao_estrutural: {valor: 0.295, premissa: P-021}
+    razao_of: {valor: 3.5, fonte: "[F18] DRA 5.0 Addendum, p. 105"}
+    criogenico: true
+
+cruzeiro:
+  # Armazenamento sem evaporação no cruzeiro (O2): DRA 5.0 ADD2, Tab. 4-30, coluna de trânsito (só LCH4; o DRA leva
+  # os tanques de LOX vazios). Escalado com expoente 2/3 a partir do CH4 do MAV do DRA (6567 kg [F18]); aplicado
+  # ao CH4 e ao LOX (P-026).
+  zbo_transito: {potencia_w: 745, massa_ativa_kg: 71, massa_passiva_kg: 161, referencia_kg: 6567, expoente: 0.6667,
+                 fonte: "[F51] Tab. 4-30, p. 241 (imagem conferida): Transit/HEO, 31 W de carga, 3 cryocoolers, 71 kg ativos, 161 kg passivos, 745 W"}
+  duracao_dias: 300   # ida da missão A (Etapa 1.3)
+  solar_w_kg_1ua: {valor: 80, fonte: "[F55] JPL D-101316 (2017), p. 26: \"Beginning-of-life specific power … at 1 AU is typically up to ~80 W/kg\""}
+  distancia_marte_ua: {valor: 1.5236915, fonte: "[F56] Appelbaum & Flood, NASA TM-102299 (1989): semieixo de Marte 1,5236915 UA"}

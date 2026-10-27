@@ -219,15 +219,15 @@ premissas:
     status: NÃO VALIDADA
   - id: P-021
     nome: mav_loxch4_fracao_estrutural
-    valor: 0.286
-    faixa: [0.114, 0.286]
+    valor: 0.295
     unidade: adimensional (por estágio, MAV de dois estágios)
-    uso: config/isru.yaml — MAV LOX/CH4 (opções O2 e O3)
+    uso: config/mav_propulsao.yaml (O2) e config/isru.yaml (Etapa 2.2)
     justificativa: >
-      Base igual à do MAV sólido do MSR (0,286, P-019), na mesma escala de veículo (centenas de kg). O
-      LOX/CH4 de Bowles et al. (ε = 0,114) é de um veículo de ~2 t [F46]; veículos menores têm fração inerte
-      maior, e Bowles mostra o LOX/CH4 com massa seca maior que o hipergólico na mesma missão. Escolha
-      conservadora; o valor de 0,114 entra na sensibilidade. Não se usa média geométrica aqui.
+      REVISADA no portão da 2.2 (2026-10-27): usar no LOX/CH4 a fração do sólido não era conservador. Não há
+      estágio LOX/CH4 pequeno publicado. Estimativa: ε do MAV hipergólico pequeno de Bowles et al. (Tab. 5,
+      turbobomba, carga de 20 kg: 0,238 [F46]) multiplicado pela razão LOX/CH4 ÷ hipergólico na mesma missão
+      (Tab. 9: 0,150/0,121 = 1,24; Bowles, p. 32: massa seca maior "due to higher surface area and required
+      cryogenic tank insulation"). Resultado: 0,295. Derivado; sem estágio voado nessa escala.
     status: NÃO VALIDADA
   - id: P-022
     nome: escala_planta_moxie
@@ -270,4 +270,15 @@ premissas:
       Massa do módulo solar do DRA (1980 kg para 5 kWe contínuos, com armazenamento noturno [F18]) escalada
       linearmente com a potência. Não inclui tempestades de poeira longas (o DRA estima +7800 kg para 50 dias,
       p. 123) nem a latitude de Jezero.
+    status: NÃO VALIDADA
+  - id: P-026
+    nome: armazenamento_cruzeiro
+    valor: {referencia_kg: 6567, expoente: 0.6667}
+    unidade: kg; adimensional
+    uso: config/mav_propulsao.yaml — armazenamento sem evaporação de LOX e CH4 no cruzeiro (O2)
+    justificativa: >
+      A única fonte primária para trânsito é a Tab. 4-30 do DRA 5.0 ADD2 [F51]: só CH4, MAV humano, com fator
+      de correção de carga térmica de 2,1. Escalada com área ~ massa^(2/3) a partir do CH4 do MAV do DRA, e
+      aplicada também ao LOX. Não há fonte primária para tanques dentro de um aeroshell no cruzeiro nem
+      para evaporação passiva em trânsito. O maior resfriador de 90 K já voado entrega 20 W [F50].
     status: NÃO VALIDADA

@@ -1,0 +1,71 @@
+gerado_por: tools/mav_propulsao.py
+orbita_encontro_apoapse_km: 18482.9
+dv_mav_com_margem_km_s: 5.68546
+orbitador_kg:
+  regra_iii: 27313.9
+  missao_A: 15854.1
+opcoes:
+- opcao: O1
+  nome: Sólido (como o MSR)
+  energia: '-'
+  mav_glom_kg: 1404.4450972489167
+  mav_propelente_kg: 991.3497994357266
+  massa_pousada_kg: 2254.4450972489167
+  lander_orbita_baixa_kg: 13854.486513178828
+  total_regra_iii_kg: 41168.38651317883
+  total_missao_A_kg: 29708.58651317883
+- opcao: O4
+  nome: Hipergólico armazenável (MMH/NTO)
+  energia: '-'
+  mav_glom_kg: 254.05375895530074
+  mav_propelente_kg: 181.3969643239392
+  massa_pousada_kg: 1104.0537589553007
+  lander_orbita_baixa_kg: 6784.861574997297
+  total_regra_iii_kg: 34098.7615749973
+  total_missao_A_kg: 22638.961574997298
+- opcao: O2
+  nome: LOX/CH4, tudo da Terra
+  energia: mmrtg
+  mav_glom_kg: 305.06266673010106
+  mav_propelente_kg: 203.78918004472126
+  o2_kg: 158.50269559033876
+  ch4_kg: 45.2864844543825
+  zbo_superficie_w: 189.48259745135798
+  zbo_superficie_kg: 22.763526503651498
+  energia_superficie_kg: 90.0
+  energia_superficie: 2 MMRTG
+  zbo_cruzeiro_w: 89.1999746948808
+  zbo_cruzeiro_kg: 27.777710240553482
+  paineis_cruzeiro_kg: 2.5886231683311793
+  armazenamento_pousado_kg: 27.777710240553482
+  massa_pousada_kg: 1272.8403769706545
+  lander_orbita_baixa_kg: 7830.221572697097
+  total_regra_iii_kg: 35144.1215726971
+  total_missao_A_kg: 23684.321572697096
+- opcao: O2
+  nome: LOX/CH4, tudo da Terra
+  energia: solar
+  mav_glom_kg: 305.06266673010106
+  mav_propelente_kg: 203.78918004472126
+  o2_kg: 158.50269559033876
+  ch4_kg: 45.2864844543825
+  zbo_superficie_w: 189.48259745135798
+  zbo_superficie_kg: 22.763526503651498
+  energia_superficie_kg: 75.03510859073776
+  energia_superficie: solar
+  zbo_cruzeiro_w: 89.1999746948808
+  zbo_cruzeiro_kg: 27.777710240553482
+  paineis_cruzeiro_kg: 2.5886231683311793
+  armazenamento_pousado_kg: 27.777710240553482
+  massa_pousada_kg: 1257.8754855613922
+  lander_orbita_baixa_kg: 7738.256198849296
+  total_regra_iii_kg: 35052.1561988493
+  total_missao_A_kg: 23592.356198849295
+melhor_opcao: O4
+varredura_com_melhor_opcao:
+  apoapse_escolhido_km: 26949.8
+  apoapse_anterior_km: 18482.9
+  total_regra_iii_kg: 31142.4
+  total_missao_A_kg: 21206.7
+  mav_kg: 271.0
+  minimo_regra_iii_kg: 29855.5
