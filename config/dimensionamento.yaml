@@ -51,7 +51,7 @@ margem_dv: {valor: 0.10, premissa: P-014}
 # GNC, mecanismos, cabeamento): lista por subsistema da Etapa 2.3 (config/plataformas.yaml), margem E1 média do
 # AIAA S-120A, na órbita de 300 × 24.992 km. Decisão do Fabio no portão da Etapa 2.3 (substitui os 850 kg).
 # O valor é o calculado por tools/plataformas.py; tests/test_plataforma.py confere que os dois coincidem.
-plataforma_orbitador_kg: {valor: 442.3, premissa: P-016}
+plataforma_orbitador_kg: {valor: 496.5, premissa: P-016}
 
 # Regra de projeto do envelope (ADR 0004, decisão do Fabio no portão da Parte B): variante (iii).
 regra_projeto: iii_marte_pior_terra_ref

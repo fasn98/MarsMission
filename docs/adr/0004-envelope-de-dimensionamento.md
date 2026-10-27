@@ -63,3 +63,9 @@ do Cabo [F13], com penalidade de lançamento aproximada de 0,76 (P-036).
 - **Etapas 2.1 e 2.2:** não foram regeneradas. Pelos dados, os máximos que elas usam (C3 de partida de Marte,
   v∞ de chegada a Marte) não vêm de 2033, e a volta de 2033 é a mesma. Isso não foi conferido rodando de novo.
 
+## Atualização (Etapa 2.5, 2026-10-27): conferência das Etapas 2.1 e 2.2
+`tools/confere_2033.py` rodou de novo as ferramentas das Etapas 2.1 e 2.2 com a 2033 nova e as plataformas da
+época (850/850 kg). **Os 15 arquivos que as ferramentas atuais geram saíram iguais byte a byte.** Três arquivos
+antigos (`results/etapa2.1/varredura_encontro.*`, sem sufixo) não são mais gerados e não foram conferidos.
+Fonte: `results/etapa2.5/conferencia_2033.md`. A ressalva acima sobre a regra (i) da Etapa 1.4 continua valendo.
+

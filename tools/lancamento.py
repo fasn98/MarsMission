@@ -44,9 +44,15 @@ from superficie import _ler, _v, lander_estagios  # noqa: E402
 SAIDA = RAIZ / "results" / "etapa2.4"
 
 
-def veiculos():
-    """Massas injetadas (sem estágio de saída) do orbitador (iii e A) e do lander, no caso de base da Etapa 2.3."""
-    dcfg, scfg, cu = _ler("config/dimensionamento.yaml"), _ler("config/superficie.yaml"), _ler("config/carga_util.yaml")
+def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None):
+    """Massas injetadas (sem estágio de saída) do orbitador (iii e A) e do lander, no caso de base da Etapa 2.3.
+
+    `plataforma_lander_kg` substitui a plataforma do lander do config (opções de coleta, Etapa 2.5); `dcfg` e `scfg`
+    substituem config/dimensionamento.yaml e config/superficie.yaml (sensibilidade da Etapa 2.5). Cada veículo traz
+    também o detalhe por estágio ("estagios") e, no lander, as massas de chegada, pouso e MAV."""
+    dcfg = _ler("config/dimensionamento.yaml") if dcfg is None else dcfg
+    scfg = _ler("config/superficie.yaml") if scfg is None else scfg
+    cu = _ler("config/carga_util.yaml")
     mcfg, icfg, po = _ler("config/mav_propulsao.yaml"), _ler("config/isru.yaml"), _ler("config/parametros_orbitais.yaml")
     p = dm.parametros()
     a_caso, jan, piores = dm.casos(dcfg, p)
@@ -70,15 +76,38 @@ def veiculos():
         c2 = copy.deepcopy(dcfg)
         c2["dv"]["encontro_orbita_marte"]["valor"] = _v(dcfg["dv"]["encontro_orbita_marte"]) + extra
         m, r, _ = dm.massa_leo(vs[var], c2, cu, dcfg["caso_base"]["carga_util"], margem, float(dcfg["caso_base"]["acrescimo_capsula"]))
-        out[f"orbitador_{caso}"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": m}
+        out[f"orbitador_{caso}"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": m,
+                                    "estagios": [{"nome": e.nome, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente,
+                                                  "inerte_kg": e.inerte} for e in r]}
     v_eq = 2 * np.pi * R / _v(scfg["marte"]["periodo_rotacao_s"])
     dv = sf.dv_subida(mu, R, _v(scfg["subida"]["dv_100x100_km_s"]), rp, ra, v_eq,
                       _v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"]), _v(scfg["sitio_e_encontro"]["latitude_sitio_graus"]))
     pous, cruz, _ = massas_opcao((1 + margem) * dv, op_mav, mcfg, scfg, icfg, fonte_mav)
-    chegada = (pous + _v(scfg["lander"]["plataforma_superficie_kg"])) / _v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]) + cruz
+    plat = _v(scfg["lander"]["plataforma_superficie_kg"]) if plataforma_lander_kg is None else plataforma_lander_kg
+    chegada = (pous + plat) / _v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]) + cruz
     r = lander_estagios(chegada, scfg, dcfg, p, a_caso)
-    out["lander"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial}
+    out["lander"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial,
+                     "estagios": [{"nome": e.nome, "massa_inicial_kg": e.massa_inicial, "propelente_kg": e.propelente,
+                                   "inerte_kg": e.inerte} for e in r],
+                     "massa_entrada_kg": chegada - cruz, "massa_pousada_kg": pous + plat, "mav_e_aquecimento_kg": pous,
+                     "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz}
     return out, janelas, ref
+
+
+def pior_margem_a(nome, m_inj, janelas, cfg):
+    """(pior margem, janela) da injeção direta do lançador `nome` para a massa dada, entre as janelas."""
+    lan = cfg["lancadores"][nome]
+    if lan.get("plataforma") == "ELA-4":
+        return None, None
+    pfm = cfg["centro"]["plataformas"].get(lan.get("plataforma"), {})
+    imax = la.inclinacao(pfm.get("latitude_graus", _v(cfg["centro"]["latitude_graus"])), cfg["centro"]["azimute_graus"]["valor"][0])
+    vals = []
+    for j in janelas:
+        cap = capacidade_direta(lan, j["c3_km2_s2"], j["dla_graus"], cfg, imax)[0]
+        if cap != cap:
+            return None, j["id"]
+        vals.append((cap / m_inj - 1, j["id"]))
+    return min(vals)
 
 
 def capacidade_direta(lan, c3, dla, cfg, i_max):

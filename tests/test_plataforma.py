@@ -93,9 +93,10 @@ def test_lander_l1_l2_l3(ferramenta):
 def test_lander_base_e_limite_superior(ferramenta):
     pl, ler = ferramenta
     cfg = ler("config/plataformas.yaml")
-    assert pl.lander_base(cfg) == pytest.approx(1470 + 59 * 1.5)
-    assert pl.lander_base(cfg, "e1_medio_mais_gsfc") == pytest.approx(1470 * 1.15 + 59 * 1.5 + 0.15 * 59)
-    assert pl.lander_base(cfg, "esa") == pytest.approx((1470 + 59) * 1.44)
+    # L3 + braço (59 kg, instrumentação, 50 %) + helicópteros (5 kg, eletrônica 0–5 kg, 27,5 %) — ADR 0009
+    assert pl.lander_base(cfg) == pytest.approx(1470 + 59 * 1.5 + 5 * 1.275)
+    assert pl.lander_base(cfg, "e1_medio_mais_gsfc") == pytest.approx(1470 * 1.15 + 59 * 1.5 + 5 * 1.275 + 0.15 * 64)
+    assert pl.lander_base(cfg, "esa") == pytest.approx((1470 + 64) * 1.44)
     assert pl.limite_srl_2024(cfg) == pytest.approx(2900 - 400)
 
 

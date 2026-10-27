@@ -1,0 +1,88 @@
+# Etapa 2.5, item 2 — opções do conceito de coleta de amostras (tools/coleta.py).
+# DECISÃO DO FABIO (portão do item 2, ADR 0009): (c) + (a) combinados — helicópteros recuperam os tubos do
+# Perseverance (primário); o braço no lander coleta regolito do sítio (reserva e complemento).
+# Cada opção substitui o item "amostras" (P-034, alocação provisória) da plataforma do lander de base (L3 + amostras).
+# Massas básicas; a margem segue a regra da Etapa 2.3 (S-120A E1, ponto médio) pela categoria indicada.
+# Fontes em docs/fontes.md (F92–F103).
+
+opcoes:
+  a_braco_no_lander:
+    nome: "Braço no lander, solo/regolito no próprio sítio (análogo Phoenix)"
+    itens:
+      - nome: carga útil do Phoenix (braço + instrumentos)
+        massa_kg: 59
+        categoria: instrumentacao
+        fonte: "[F40] p. 6: \"59 kilograms … of science-instrument payload\" (inclui o braço; massa do braço sozinho não publicada)"
+    energia: "braço do Phoenix sem potência publicada; análogo: braço do MarsFAST, 3,2 kg com 10 % de margem e \"average power of 10 watt\" [F93] p. 123"
+    alcance: "braço de 2,35 m [F40] p. 6; escava ~0,5 m [F40] p. 10; 31 amostras em 152 sols no Phoenix [F92] p. 1"
+    ciencia: >
+      Só solo/regolito do sítio. O iMOST pede regolito como complemento ("collect additional dust and/or regolith
+      sample mass if possible", [F94] p. 5) e rochas ígneas e sedimentares selecionadas para os objetivos 1.5, 3 e 5.
+    complexidade: "voado (Phoenix); sem mobilidade; sem dependência externa"
+  b_rover_proprio:
+    nome: "Rover próprio de busca (análogo do Sample Fetch Rover do MSR)"
+    itens:
+      - nome: rover + sistema de saída do lander (MarsFAST)
+        massa_kg: 178
+        categoria: sem_margem_adicional   # sem MGA adicional (escolha deste estudo; a fonte não diz se os 178 kg incluem margem)
+        fonte: "[F93] ESA CDF-148(C), out/2014, p. 19: \"the total mass of 178 kg is below the total 200kg JPL mass allocation\""
+    variante_rochas:
+      # O SFR só buscava tubos já coletados pelo Perseverance; para escolher e extrair rochas o rover precisa de
+      # ferramenta de testemunhagem. Análogo: torre do braço do Perseverance, 45 kg.
+      massa_kg: 45
+      fonte: "[F95] Mars 2020 Landing Press Kit: \"its turret weighs more – 99 pounds (45 kilograms)\""
+    limite_superior_kg: {valor: 230, fonte: "[F78] SFR \"Mass = < 230 kg\""}
+    energia: "própria: painel de 2,24 m² e bateria de 653 Wh no fim de vida [F93] p. 18"
+    alcance: "15–20 km, passos de ~200 m/dia, até 36 tubos [F96]"
+    ciencia: "rochas selecionadas (só com ferramenta de testemunhagem e instrumentos de seleção, não incluídos no SFR)"
+    complexidade: "rover novo; o SFR foi retirado do MSR em 2022 e trocado por helicópteros [F97] p. 18"
+  c_tubos_do_perseverance:
+    nome: "Recuperar os tubos deixados pelo Perseverance em Jezero (plano do MSR)"
+    itens:
+      - nome: 2 helicópteros de recuperação de amostras
+        massa_kg: 5.0
+        categoria: eletronica_0_5kg
+        premissa: P-038
+        fonte: "[F98] Withrow-Maser et al. 2023, p. 3: \"total mass of SRH is expected to be ~2.5 kg\"; dois helicópteros como no MSR: [F97] p. 28, \"two Sample Recovery Helicopters\""
+    energia: "própria dos helicópteros (não publicada)"
+    estado: >
+      Depósito Three Forks: 10 tubos (8 de rocha/regolito, 1 atmosférico, 1 testemunha), deixados até
+      28/01/2023 [F99]; "the 10 samples in the depot cache are the less desirable of the initial sample pairs" [F97] p. 32.
+      Perseverance operando: imagem do Sol 2009, 14/10/2026 [F100]. Programa MSR: "was a plan" [F103]; término proposto no pedido FY2026
+      ("NASA plans to terminate the Mars Sample Return Program", [F101] p. 242); o FY2027 diz que "Subsequent missions
+      could retrieve the sealed samples collected by Perseverance" ([F102] p. 202). Estado atual do depósito: não confirmado.
+    ciencia: "amostras selecionadas pelo Perseverance (as menos desejáveis de cada par no depósito; o resto a bordo do rover)"
+    complexidade: "depende de ativo externo (Perseverance ou depósito); pouso de precisão perto do depósito"
+  c_mais_a_escolhida:
+    nome: "(c) + (a): helicópteros (primário) + braço no lander (reserva) — ESCOLHIDA"
+    itens:
+      - nome: carga útil do Phoenix (braço + instrumentos)
+        massa_kg: 59
+        categoria: instrumentacao
+        fonte: "[F40] p. 6"
+      - nome: 2 helicópteros de recuperação de amostras
+        massa_kg: 5.0
+        categoria: eletronica_0_5kg
+        premissa: P-038
+        fonte: "[F98] p. 3; [F97] p. 28"
+
+escolha: c_mais_a_escolhida
+
+riscos_declarados:
+  # Riscos da opção (c), registrados por decisão do Fabio. Nenhum foi avaliado quantitativamente.
+  - risco: integridade atual do depósito Three Forks
+    situacao: "10 tubos deixados até 28/01/2023 [F99]; nenhum relato primário posterior sobre o depósito encontrado"
+  - risco: Perseverance ativo na data do pouso (só para os tubos a bordo)
+    situacao: "operando: Sol 2009, 14/10/2026 [F100]; continuidade das operações até 2029–2030 não confirmada em fonte primária"
+  - risco: transferência dos tubos trazidos pelos helicópteros para o MAV
+    situacao: "sem item próprio: coberta só pelo L3 (o lander do MSR tinha braço de transferência de amostras), incerteza declarada da P-017"
+  - risco: pouso de precisão perto do depósito
+    situacao: "não avaliado; o lander do MSR previa \"Pin-point landing (< 20 m from target)\" [F24] slide 10"
+  - risco: situação do programa MSR
+    situacao: "término proposto no pedido FY2026 (mai/2025) [F101] p. 242; página do MSR fala no passado (17/09/2026) [F103]; FY2027 (22/04/2026): \"Subsequent missions could retrieve the sealed samples collected by Perseverance\" [F102] p. 202"
+
+simulacao_futura:
+  # Decisão do Fabio: os helicópteros são candidatos à simulação no Twin (Fase 8), reaproveitando o DroneSimulator
+  # (repositório fasn98/DroneSimulator, só leitura; método, não números).
+  helicopteros: candidato ao Twin (Fase 8), reaproveitando o DroneSimulator
+

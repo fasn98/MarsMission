@@ -17,8 +17,8 @@
 | P-013 | desvio_orbitador_parametros | periapse_seguro_alt_km: 300; antecedencia_dias: 1 | km; dias | NÃO VALIDADA | config/dimensionamento.yaml — Δv de desvio do orbitador após soltar a cápsula (plano B) |
 | P-014 | margem_dv | 0.1 | fração, aplicada a todos os trechos | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-015 | perdas_gravitacionais_do_dra | saida_terra: 0.148; captura_marte: 0.018; saida_marte: 0.011 | km/s | NÃO VALIDADA | config/dimensionamento.yaml |
-| P-016 | plataforma_orbitador_kg | 442.3 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
-| P-017 | plataforma_superficie_kg | 1558.5 | kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
+| P-016 | plataforma_orbitador_kg | 496.5 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
+| P-017 | plataforma_superficie_kg | 1564.875 | kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
 | P-018 | razao_massa_pousada_entrada | entrada_direta: 0.509; a_partir_de_orbita: 0.624 | adimensional (massa pousada / massa de entrada) | NÃO VALIDADA | config/superficie.yaml — massa do sistema de entrada, descida e pouso |
 | P-019 | mav_estagios | fracao_estrutural: 0.286; fracao_dv_estagio_1: 0.481 | adimensional | NÃO VALIDADA | config/superficie.yaml — dimensionamento do MAV sólido de dois estágios |
 | P-020 | aerofrenagem_orbitador | dv_saida_km_s: 0.09; duracao_dias: 205 | km/s; dias | NÃO VALIDADA | config/superficie.yaml — arquitetura S4 |
@@ -35,9 +35,10 @@
 | P-031 | base_do_cabeamento_orbitador | plataforma | — | NÃO VALIDADA | config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71] |
 | P-032 | energia_lander | energia_por_sol_wh: 3500; fracao_noite: 0.5 | Wh/sol; adimensional | NÃO VALIDADA | config/plataformas.yaml — painel e bateria do lander |
 | P-033 | margem_crescimento_e1_ponto_medio | ponto médio da faixa E1 do AIAA S-120A | — | NÃO VALIDADA | config/plataformas.yaml — margem por subsistema |
-| P-034 | sistema_de_amostras_lander | 59 | kg | NÃO VALIDADA | config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2 |
-| P-035 | escala_nucleo_lander | limite_inferior: L1; limite_superior: SRL 2024 − MAV; referencia: L2; base: L3 + amostras | — | NÃO VALIDADA | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
+| P-034 | sistema_de_amostras_lander | 59 | kg | NÃO VALIDADA | config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2. Atualização (Etapa 2.5, ADR 0009): deixa de ser provisória; é o braço de coleta de reserva (regolito do sítio) |
+| P-035 | escala_nucleo_lander | limite_inferior: L1; limite_superior: SRL 2024 − MAV; referencia: L2; base: L3 + braço + helicópteros (Etapa 2.5) | — | NÃO VALIDADA | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
 | P-036 | multiplicador_dla | dla_graus: [28.5, 40, 50, 60]; fator: [1.0, 0.95, 0.9, 0.65] | adimensional (multiplica a massa entregue pelo lançador na injeção direta) | NÃO VALIDADA | config/lancadores.yaml — injeção direta com |DLA| > 28,5° a partir do Cabo |
 | P-037 | saida_propria_fora_do_plano | orbita_baixa_km: 407; inclinacoes_com_dado_graus: [28.5, 51.6] | km; graus | NÃO VALIDADA | tools/lancamento.py — opção (b), órbita baixa + estágio criogênico próprio |
+| P-038 | categoria_de_margem_dos_helicopteros | eletronica_0_5kg | categoria do AIAA S-120A (E1; 20–35 %, ponto médio 27,5 %) | NÃO VALIDADA | config/plataformas.yaml — helicópteros de recuperação no lander (ADR 0009) |
 
-Total: 37 premissas, 37 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 38 premissas, 38 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

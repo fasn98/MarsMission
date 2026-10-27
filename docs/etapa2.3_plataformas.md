@@ -242,3 +242,34 @@ A regra dos 5 % do ADR 0005 foi reaplicada em todos os casos. O mínimo da varre
 - Eclipse no pior caso geométrico. Painel do lander (limites L1/L2) sem poeira.
 - A tabela do S-120A é a reproduzida pelo NESC (2024). A Rev B da norma está em revisão (NTRS
   20250005278).
+
+## Atualização (Etapa 2.5, 2026-10-27): sensores de encontro alocados
+Pedido do Fabio na Etapa 2.5: os sensores de encontro (RSS), que estavam como lacuna, foram alocados na lista
+do orbitador.
+- Duas câmeras de ângulo estreito do ERO, 2 × 14,5 kg [F88].
+- LIDAR análogo (RVS3000-3D), ca. 13 kg [F89].
+- Margem E1 de 20 % nos dois.
+
+Antes → depois (`results/etapa2.3/plataformas.yaml`):
+
+| Item | Antes | Depois |
+| :- | -: | -: |
+| Plataforma do orbitador (prevista) | 442,3 kg | **496,5 kg** |
+| Total pela regra (iii) | 29.607 kg | **30.470 kg** |
+| Total na missão A | 22.083 kg | **22.590 kg** |
+
+- O apoapse da regra dos 5 % não muda (24.992 km).
+- A câmera de ângulo largo e a potência do RSS seguem como lacuna.
+- Os números das seções acima são os de antes desta atualização.
+
+## Atualização (Etapa 2.5, 2026-10-27): helicópteros de coleta no lander (ADR 0009)
+A plataforma do lander passa de 1558,5 para **1564,9 kg**, com 2 helicópteros de 2,5 kg cada [F98] e margem E1.
+O braço (P-034) deixa de ser provisório: vira a coleta de reserva.
+
+| Item | Antes | Depois |
+| :- | -: | -: |
+| Total pela regra (iii) | 30.470 kg | **30.509 kg** |
+| Total na missão A | 22.590 kg | **22.630 kg** |
+
+O apoapse não muda (24.992 km). Fonte: `results/etapa2.3/plataformas.yaml`.
+
