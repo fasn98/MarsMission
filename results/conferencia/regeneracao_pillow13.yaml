@@ -1,0 +1,2339 @@
+gerado_por: tools/confere_regeneracao.py
+rotulo: pillow13
+comparado_com: results/ versionado
+ambiente:
+  python: 3.11.14
+  numpy: 2.4.6
+  scipy: 1.17.1
+  matplotlib: 3.11.2
+  pyyaml: 6.0.3
+  spiceypy: 8.3.0
+  streamlit: 1.66.1
+  plotly: 7.1.0
+  cpu: INTEL(R) XEON(R) PLATINUM 8581C CPU @ 2.30GHz
+ferramentas:
+- ferramenta: tools/baricentro_marte.py
+  rodou: true
+- ferramenta: tools/porkchop.py terra_marte
+  rodou: true
+- ferramenta: tools/porkchop.py marte_terra
+  rodou: true
+- ferramenta: tools/verifica_burke2010.py
+  rodou: true
+- ferramenta: tools/verifica_jpl8243.py
+  rodou: true
+- ferramenta: tools/efeito_efemeride.py
+  rodou: true
+- ferramenta: tools/missoes.py
+  rodou: true
+- ferramenta: tools/compara_dra5.py
+  rodou: true
+- ferramenta: tools/grafico_missoes.py
+  rodou: true
+- ferramenta: tools/lista_premissas.py
+  rodou: true
+- ferramenta: tools/dimensionamento.py
+  rodou: true
+- ferramenta: tools/compara_msr.py
+  rodou: true
+- ferramenta: tools/superficie.py
+  rodou: true
+- ferramenta: tools/varredura_encontro.py
+  rodou: true
+- ferramenta: tools/isru.py
+  rodou: true
+- ferramenta: tools/mav_propulsao.py
+  rodou: true
+- ferramenta: tools/plataformas.py
+  rodou: true
+- ferramenta: tools/lancamento.py
+  rodou: true
+- ferramenta: tools/coleta.py
+  rodou: true
+- ferramenta: tools/arquitetura.py
+  rodou: true
+- ferramenta: tools/confere_2033.py
+  rodou: true
+- ferramenta: tools/exporta_painel.py
+  rodou: true
+versionados: 62
+regenerados: 62
+tolerancias:
+  P-039:
+    relativa: 1.0e-09
+    piso_absoluto: 1.0e-10
+  P-040:
+    fracao_pixels: 0.001
+identicos: 45
+dentro_da_tolerancia:
+- results/etapa1.1/baricentro_marte.yaml
+- results/etapa1.2/efeito_efemeride_de200.yaml
+- results/etapa1.2/porkchop_marte_terra_2030.png
+- results/etapa1.2/porkchop_marte_terra_2032.png
+- results/etapa1.2/porkchop_marte_terra_2035.png
+- results/etapa1.2/porkchop_terra_marte_2028.png
+- results/etapa1.2/porkchop_terra_marte_2031.png
+- results/etapa2.4/lancamento.yaml
+- results/painel/porkchop_marte_terra_2030.npz
+- results/painel/porkchop_marte_terra_2032.npz
+- results/painel/porkchop_marte_terra_2035.npz
+- results/painel/porkchop_marte_terra_2037.npz
+- results/painel/porkchop_marte_terra_2039.npz
+- results/painel/porkchop_terra_marte_2028.npz
+- results/painel/porkchop_terra_marte_2031.npz
+- results/painel/porkchop_terra_marte_2033.npz
+- results/painel/porkchop_terra_marte_2035.npz
+nao_regenerados: []
+diferentes: []
+gerados_sem_versao: []
+atualizados: []
+arquivos:
+- arquivo: results/etapa1.1/baricentro_marte.yaml
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: /horizons_m/2028-01-01/diferenca_entre_os_dois
+    versionado: 0.00010404564155563365
+    regenerado: 0.00010404564155563363
+    dif_abs: 1.3552527156068805e-20
+    dif_rel: 1.3025559699992056e-16
+  acima: []
+  identico: true
+- arquivo: results/etapa1.2/efeito_efemeride_de200.yaml
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: /linhas[0]/c3l_rel
+    versionado: -4.685807331155793e-08
+    regenerado: -4.6858071395951336e-08
+    dif_abs: 1.9156065942393545e-15
+    dif_rel: 4.0881036262471647e-08
+  - onde: /linhas[0]/vhp_rel
+    versionado: -3.854733767061858e-08
+    regenerado: -3.8547337469934295e-08
+    dif_abs: 2.0068428687984997e-16
+    dif_rel: 5.2061776248898985e-09
+  - onde: /linhas[1]/c3l_rel
+    versionado: 6.855159506003323e-10
+    regenerado: 6.855145899274283e-10
+    dif_abs: 1.360672904044984e-15
+    dif_rel: 1.984888758391969e-06
+  - onde: /linhas[1]/vhp_rel
+    versionado: -5.193349206350131e-08
+    regenerado: -5.193349237866987e-08
+    dif_abs: 3.1516855858158176e-16
+    dif_rel: 6.068695673231672e-09
+  - onde: /linhas[2]/c3l_rel
+    versionado: -7.586877921092424e-08
+    regenerado: -7.586877957373788e-08
+    dif_abs: 3.628136457039339e-16
+    dif_rel: 4.78212051752235e-09
+  - onde: /linhas[2]/vhp_rel
+    versionado: -5.39811640815342e-08
+    regenerado: -5.398116519400842e-08
+    dif_abs: 1.1124742198232768e-15
+    dif_rel: 2.060856298213529e-08
+  - onde: /linhas[3]/c3l_rel
+    versionado: -2.187157761135583e-09
+    regenerado: -2.187157954829392e-09
+    dif_abs: 1.9369380916576332e-16
+    dif_rel: 8.855959666356968e-08
+  - onde: /linhas[4]/c3l_rel
+    versionado: -6.166643944602422e-07
+    regenerado: -6.16664397035553e-07
+    dif_abs: 2.5753108201398574e-15
+    dif_rel: 4.176195096190029e-09
+  - onde: /linhas[4]/vhp_rel
+    versionado: 2.9576426684416125e-07
+    regenerado: 2.957642038021244e-07
+    dif_abs: 6.3042036832578e-14
+    dif_rel: 2.131496056141054e-07
+  - onde: /linhas[5]/c3l_rel
+    versionado: 6.28421481708127e-08
+    regenerado: 6.2842148652882e-08
+    dif_abs: 4.820693069371084e-16
+    dif_rel: 7.671114386904544e-09
+  - onde: /linhas[5]/vhp_rel
+    versionado: -1.188076714996017e-08
+    regenerado: -1.1880767754084527e-08
+    dif_abs: 6.041243574670379e-16
+    dif_rel: 5.084893507647469e-08
+  - onde: /linhas[7]/c3l_rel
+    versionado: 6.314394135866993e-08
+    regenerado: 6.31439382260113e-08
+    dif_abs: 3.132658631782085e-15
+    dif_rel: 4.9611388905674604e-08
+  - onde: /linhas[7]/vhp_rel
+    versionado: -9.766859983420342e-09
+    regenerado: -9.766858169624555e-09
+    dif_abs: 1.813795786658758e-15
+    dif_rel: 1.8570920334045466e-07
+  - onde: /linhas[8]/c3l_rel
+    versionado: 6.371674496709392e-08
+    regenerado: 6.371674644224884e-08
+    dif_abs: 1.4751549144417163e-15
+    dif_rel: 2.31517619929196e-08
+  - onde: /linhas[8]/vhp_rel
+    versionado: 3.7662882027373115e-09
+    regenerado: 3.766283136333581e-09
+    dif_abs: 5.066403730174647e-15
+    dif_rel: 1.345198098884844e-06
+  - onde: /linhas[10]/c3l_rel
+    versionado: 3.629498157032374e-08
+    regenerado: 3.629497995999628e-08
+    dif_abs: 1.6103274629543219e-15
+    dif_rel: 4.4367771886981516e-08
+  - onde: /linhas[11]/vhp_rel
+    versionado: 2.4277865945442253e-09
+    regenerado: 2.427786727899079e-09
+    dif_abs: 1.333548538581061e-16
+    dif_rel: 5.492857327649144e-08
+  - onde: /linhas[12]/vhp_rel
+    versionado: -2.046101157136434e-08
+    regenerado: -2.0461011725493024e-08
+    dif_abs: 1.5412868265101385e-16
+    dif_rel: 7.532798762829523e-09
+  - onde: /linhas[13]/c3l_rel
+    versionado: -3.385372543445168e-08
+    regenerado: -3.3853721580599654e-08
+    dif_abs: 3.853852023348432e-15
+    dif_rel: 1.1383834345825084e-07
+  - onde: /linhas[13]/vhp_rel
+    versionado: 1.1228661081526677e-08
+    regenerado: 1.1228662920165367e-08
+    dif_abs: 1.8386386905927427e-15
+    dif_rel: 1.6374514087148464e-07
+  - onde: /linhas[14]/c3l_rel
+    versionado: 3.0675401300801e-08
+    regenerado: 3.067540055092312e-08
+    dif_abs: 7.49877877774983e-16
+    dif_rel: 2.444557678061744e-08
+  - onde: /linhas[14]/vhp_rel
+    versionado: -1.9709690774454333e-08
+    regenerado: -1.9709689727047844e-08
+    dif_abs: 1.0474064888477937e-15
+    dif_rel: 5.314170074171503e-08
+  - onde: /linhas[15]/c3l_rel
+    versionado: 4.013588162074454e-09
+    regenerado: 4.01358532464996e-09
+    dif_abs: 2.8374244939970433e-15
+    dif_rel: 7.06954570179542e-07
+  - onde: /linhas[15]/vhp_rel
+    versionado: 5.5354703648589115e-09
+    regenerado: 5.535470245622009e-09
+    dif_abs: 1.19236902431243e-16
+    dif_rel: 2.1540518613955602e-08
+  - onde: /linhas[16]/c3l_rel
+    versionado: -5.205975316162578e-09
+    regenerado: -5.2059751587804105e-09
+    dif_abs: 1.573821676342809e-16
+    dif_rel: 3.0231062975974736e-08
+  - onde: /linhas[16]/vhp_rel
+    versionado: -3.807627792742584e-08
+    regenerado: -3.807627889175256e-08
+    dif_abs: 9.643267213629562e-16
+    dif_rel: 2.5326181387817965e-08
+  - onde: /linhas[17]/c3l_rel
+    versionado: -6.781101306984019e-08
+    regenerado: -6.781101575352007e-08
+    dif_abs: 2.6836798845393276e-15
+    dif_rel: 3.957587068895935e-08
+  - onde: /linhas[17]/vhp_rel
+    versionado: -2.6364413452180214e-08
+    regenerado: -2.6364412441475672e-08
+    dif_abs: 1.0107045413170976e-15
+    dif_rel: 3.833593882717376e-08
+  - onde: /linhas[18]/c3l_rel
+    versionado: -2.2234681089887916e-09
+    regenerado: -2.2234679926759648e-09
+    dif_abs: 1.1631282682408385e-16
+    dif_rel: 5.231144370988151e-08
+  - onde: /linhas[18]/vhp_rel
+    versionado: -2.3540887548232714e-08
+    regenerado: -2.3540887428388375e-08
+    dif_abs: 1.1984433920534885e-16
+    dif_rel: 5.090901477686466e-09
+  - onde: /linhas[19]/c3l_rel
+    versionado: -4.867112393385055e-09
+    regenerado: -4.867109732392367e-09
+    dif_abs: 2.660992687727911e-15
+    dif_rel: 5.467292457319241e-07
+  - onde: /linhas[19]/vhp_rel
+    versionado: 4.674854720415802e-09
+    regenerado: 4.674853633798606e-09
+    dif_abs: 1.086617196594205e-15
+    dif_rel: 2.324387091322394e-07
+  - onde: /linhas[20]/c3l_rel
+    versionado: -1.3783491181516434e-08
+    regenerado: -1.3783491659905707e-08
+    dif_abs: 4.783892730360886e-16
+    dif_rel: 3.470740951883114e-08
+  - onde: /linhas[20]/vhp_rel
+    versionado: 3.591732623604413e-08
+    regenerado: 3.5917327126906657e-08
+    dif_abs: 8.908625281436312e-16
+    dif_rel: 2.4803141589354264e-08
+  - onde: /linhas[21]/c3l_rel
+    versionado: -1.5433167684618533e-05
+    regenerado: -1.5433167684915676e-05
+    dif_abs: 2.971425460285976e-16
+    dif_rel: 1.9253503370195653e-11
+  - onde: /linhas[21]/vhp_rel
+    versionado: -1.3580391930631067e-05
+    regenerado: -1.3580391930232684e-05
+    dif_abs: 3.9838331201622057e-16
+    dif_rel: 2.933518517368063e-11
+  - onde: /linhas[22]/c3l_rel
+    versionado: -3.610614670283503e-08
+    regenerado: -3.610614635195485e-08
+    dif_abs: 3.508801823218723e-16
+    dif_rel: 9.718017965465183e-09
+  - onde: /linhas[22]/vhp_rel
+    versionado: 3.4518339441095263e-08
+    regenerado: 3.451833944109527e-08
+    dif_abs: 6.617444900424222e-24
+    dif_rel: 1.917080893105167e-16
+  - onde: /linhas[24]/c3l_rel
+    versionado: 1.473207539143311e-08
+    regenerado: 1.4732072640839433e-08
+    dif_abs: 2.750593677501237e-15
+    dif_rel: 1.8670781980254745e-07
+  - onde: /linhas[24]/vhp_rel
+    versionado: -4.748071685599406e-08
+    regenerado: -4.748071542700817e-08
+    dif_abs: 1.428985894726518e-15
+    dif_rel: 3.0096131426586074e-08
+  - onde: /linhas[25]/c3l_rel
+    versionado: 3.7814308949081924e-08
+    regenerado: 3.781431117838771e-08
+    dif_abs: 2.2293057888854664e-15
+    dif_rel: 5.89540269501498e-08
+  - onde: /linhas[25]/vhp_rel
+    versionado: 2.0530029478375405e-08
+    regenerado: 2.0530030876608762e-08
+    dif_abs: 1.3982333577248258e-15
+    dif_rel: 6.810673892103303e-08
+  - onde: /linhas[26]/c3l_rel
+    versionado: 5.761462724945853e-08
+    regenerado: 5.7614627387658545e-08
+    dif_abs: 1.3820001631965992e-16
+    dif_rel: 2.3986967011221745e-09
+  - onde: /linhas[26]/vhp_rel
+    versionado: -3.958152929176417e-08
+    regenerado: -3.9581529138586464e-08
+    dif_abs: 1.531777028792637e-16
+    dif_rel: 3.869928868845797e-09
+  - onde: /linhas[27]/c3l_rel
+    versionado: 2.2198711801977007e-09
+    regenerado: 2.2198767075692524e-09
+    dif_abs: 5.527371551738458e-15
+    dif_rel: 2.4899514895482327e-06
+  - onde: /linhas[27]/vhp_rel
+    versionado: 3.8912956643062396e-08
+    regenerado: 3.891296033467906e-08
+    dif_abs: 3.691616666291933e-15
+    dif_rel: 9.48685729576936e-08
+  - onde: /linhas[28]/c3l_rel
+    versionado: -2.4233643789347935e-08
+    regenerado: -2.4233647158911425e-08
+    dif_abs: 3.3695634900895172e-15
+    dif_rel: 1.390448551352658e-07
+  - onde: /linhas[28]/vhp_rel
+    versionado: -7.248980800121232e-08
+    regenerado: -7.248980680048598e-08
+    dif_abs: 1.200726337752241e-15
+    dif_rel: 1.6564071155108592e-08
+  - onde: /linhas[29]/c3l_rel
+    versionado: -2.325333427522912e-09
+    regenerado: -2.3253316854365233e-09
+    dif_abs: 1.7420863888665636e-15
+    dif_rel: 7.491770290862506e-07
+  - onde: /linhas[29]/vhp_rel
+    versionado: -3.322157758451463e-08
+    regenerado: -3.32215735135684e-08
+    dif_abs: 4.070946230240019e-15
+    dif_rel: 1.2253922077853354e-07
+  - onde: /linhas[31]/c3l_rel
+    versionado: -3.4753617183013117e-08
+    regenerado: -3.4753617328322274e-08
+    dif_abs: 1.4530915722852037e-16
+    dif_rel: 4.181123261596626e-09
+  - onde: /linhas[31]/vhp_rel
+    versionado: -3.726553420639477e-08
+    regenerado: -3.726553405224268e-08
+    dif_abs: 1.5415209517107156e-16
+    dif_rel: 4.136586217100815e-09
+  - onde: /max_abs_rel_c3l
+    versionado: 1.5433167684618533e-05
+    regenerado: 1.5433167684915676e-05
+    dif_abs: 2.971425460285976e-16
+    dif_rel: 1.9253503370195653e-11
+  - onde: /max_abs_rel_vhp
+    versionado: 1.3580391930631067e-05
+    regenerado: 1.3580391930232684e-05
+    dif_abs: 3.9838331201622057e-16
+    dif_rel: 2.933518517368063e-11
+  acima: []
+  identico: true
+- arquivo: results/etapa1.2/minimos_marte_terra.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.2/minimos_terra_marte.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2030.png
+  regenerado: true
+  estado: tolerancia
+  png:
+    max_dif_pixel: 0.7803921550512314
+    fracao_pixels_diferentes: 0.0004917378917378918
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2032.png
+  regenerado: true
+  estado: tolerancia
+  png:
+    max_dif_pixel: 0.12156863510608673
+    fracao_pixels_diferentes: 2.279202279202279e-06
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2035.png
+  regenerado: true
+  estado: tolerancia
+  png:
+    max_dif_pixel: 0.19215688109397888
+    fracao_pixels_diferentes: 1.7094017094017095e-06
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2037.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2039.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2028.png
+  regenerado: true
+  estado: tolerancia
+  png:
+    max_dif_pixel: 0.1254901885986328
+    fracao_pixels_diferentes: 3.988603988603989e-06
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2031.png
+  regenerado: true
+  estado: tolerancia
+  png:
+    max_dif_pixel: 0.18039217591285706
+    fracao_pixels_diferentes: 0.0001361823361823362
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2033.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2035.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.2/verificacao_burke2010.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.2/verificacao_burke2010.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.2/verificacao_jpl8243.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.2/verificacao_jpl8243.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.3/comparacao_dra5.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.3/dv_x_duracao.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa1.3/missoes.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.3/missoes.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.4/comparacao_msr.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.4/dimensionamento.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.4/dimensionamento.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa1.4/orcamento_dv.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/arquiteturas.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/arquiteturas.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.png
+  regenerado: true
+  estado: identico
+  png:
+    max_dif_pixel: 0.0
+    fracao_pixels_diferentes: 0.0
+    limite_fracao: 0.001
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.2/isru.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.2/isru.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.2/mav_propulsao.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.2/mav_propulsao.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.3/plataformas.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.3/plataformas.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.4/lancamento.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.4/lancamento.yaml
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: /revisao_2033/casos[1]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/casos[1]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/casos[2]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/casos[3]/dv_total_km_s
+    versionado: 5.911849546390186
+    regenerado: 5.911849546390189
+    dif_abs: 3.552713678800501e-15
+    dif_rel: 6.00947918400564e-16
+  - onde: /revisao_2033/casos[3]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/casos[3]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/casos[3]/dv_saida_terra_km_s
+    versionado: 3.6088284844767244
+    regenerado: 3.608828484476728
+    dif_abs: 3.552713678800501e-15
+    dif_rel: 9.84450686443648e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[0]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[0]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[1]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[1]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[1]/a_capacidade_kg
+    versionado: 4839.128799209792
+    regenerado: 4839.128799209793
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 1.879459587687446e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[1]/a_margem
+    versionado: -0.23314401128851547
+    regenerado: -0.23314401128851536
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 4.761962438963344e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[2]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[2]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[2]/a_capacidade_kg
+    versionado: 11835.372178636891
+    regenerado: 11835.372178636893
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 1.5369093393017015e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[2]/a_margem
+    versionado: 0.8755495896904137
+    regenerado: 0.875549589690414
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 2.536059722254501e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[3]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[3]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[3]/a_capacidade_kg
+    versionado: 4509.303039367834
+    regenerado: 4509.303039367835
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 2.016929653724119e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[3]/a_margem
+    versionado: -0.285411448189022
+    regenerado: -0.28541144818902187
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 3.8899036169350827e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[4]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[4]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[4]/a_capacidade_kg
+    versionado: 6854.7755792295475
+    regenerado: 6854.775579229548
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 1.3268044901845675e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[4]/a_margem
+    versionado: 0.08627522066860394
+    regenerado: 0.08627522066860416
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 2.573677623821305e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[5]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[5]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[6]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[6]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[7]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[7]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[8]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[8]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[9]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[9]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[10]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[10]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[11]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[11]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[12]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[12]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[12]/a_capacidade_kg
+    versionado: 4839.128799209792
+    regenerado: 4839.128799209793
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 1.879459587687446e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[12]/a_margem
+    versionado: 0.29393950803415736
+    regenerado: 0.2939395080341576
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 7.554091874550886e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[13]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[13]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[13]/a_capacidade_kg
+    versionado: 11835.372178636891
+    regenerado: 11835.372178636893
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 1.5369093393017015e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[13]/a_margem
+    versionado: 2.1646720493836247
+    regenerado: 2.164672049383625
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 2.051531131362434e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[14]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[14]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[14]/a_capacidade_kg
+    versionado: 4509.303039367834
+    regenerado: 4509.303039367835
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 2.016929653724119e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[14]/a_margem
+    versionado: 0.20574706696985112
+    regenerado: 0.20574706696985134
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 1.0792115202185036e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[15]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[15]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[15]/a_capacidade_kg
+    versionado: 6854.7755792295475
+    regenerado: 6854.775579229548
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 1.3268044901845675e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[15]/a_margem
+    versionado: 0.8329053242230733
+    regenerado: 0.8329053242230737
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 5.331808993588858e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[16]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[16]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[17]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[17]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[18]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[18]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[19]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[19]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[20]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[20]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[21]/c3_km2_s2
+    versionado: 12.194034005926556
+    regenerado: 12.194034005926554
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.4567425665181055e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/linhas_2033[21]/dla_graus
+    versionado: 4.729332543807736
+    regenerado: 4.729332543807735
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 1.8780206540202912e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[1]/a_pior_margem
+    versionado: -0.23314401128851547
+    regenerado: -0.23314401128851536
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 4.761962438963344e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[2]/a_pior_margem
+    versionado: 0.8755495896904137
+    regenerado: 0.875549589690414
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 2.536059722254501e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[3]/a_pior_margem
+    versionado: -0.285411448189022
+    regenerado: -0.28541144818902187
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 3.8899036169350827e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[4]/a_pior_margem
+    versionado: 0.08627522066860394
+    regenerado: 0.08627522066860416
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 2.573677623821305e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[12]/a_pior_margem
+    versionado: 0.29393950803415736
+    regenerado: 0.2939395080341576
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 7.554091874550886e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[13]/a_pior_margem
+    versionado: 2.1646720493836247
+    regenerado: 2.164672049383625
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 2.051531131362434e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[14]/a_pior_margem
+    versionado: 0.20574706696985112
+    regenerado: 0.20574706696985134
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 1.0792115202185036e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 28.5°/resumo[15]/a_pior_margem
+    versionado: 0.8329053242230733
+    regenerado: 0.8329053242230737
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 5.331808993588858e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[0]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[1]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[1]/a_capacidade_kg
+    versionado: 4422.138827099724
+    regenerado: 4422.138827099725
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 2.056685095907366e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[1]/a_margem
+    versionado: -0.2992243473600533
+    regenerado: -0.2992243473600532
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 3.7103365231480896e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[2]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[2]/a_capacidade_kg
+    versionado: 10942.838967692354
+    regenerado: 10942.838967692356
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 1.6622646179078775e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[2]/a_margem
+    versionado: 0.7341099904698938
+    regenerado: 0.734109990469894
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 3.0246776070014193e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[3]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[4]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[4]/a_capacidade_kg
+    versionado: 6342.094755007634
+    regenerado: 6342.094755007635
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 1.4340604120662233e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[4]/a_margem
+    versionado: 0.005030770135211693
+    regenerado: 0.005030770135211915
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 4.413729885428124e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[5]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[5]/a_capacidade_kg
+    versionado: 8135.993061325599
+    regenerado: 8135.993061325601
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 2.2357312621029794e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[5]/a_margem
+    versionado: 0.28930955592904306
+    regenerado: 0.2893095559290433
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 7.67498343468097e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[6]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[6]/b/giro_perigeu_graus
+    versionado: 19.843090670465024
+    regenerado: 19.843090670465035
+    dif_abs: 1.0658141036401503e-14
+    dif_rel: 5.37121016750952e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[6]/b/dv_extra_giro_m_s
+    versionado: 1189.7387740790687
+    regenerado: 1189.738774079072
+    dif_abs: 3.410605131648481e-12
+    dif_rel: 2.8666840200181757e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[6]/b/massa_leo_kg
+    versionado: 31279.50421766626
+    regenerado: 31279.504217540525
+    dif_abs: 1.2573582353070378e-07
+    dif_rel: 4.019751165355422e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[6]/b/margem
+    versionado: -0.45385963021908315
+    regenerado: -0.4538596302168878
+    dif_abs: 2.1953550088937845e-12
+    dif_rel: 4.8370792701568585e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[7]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[7]/b/giro_perigeu_graus
+    versionado: 19.843090670465024
+    regenerado: 19.843090670465035
+    dif_abs: 1.0658141036401503e-14
+    dif_rel: 5.37121016750952e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[7]/b/dv_extra_giro_m_s
+    versionado: 1189.7387740790687
+    regenerado: 1189.738774079072
+    dif_abs: 3.410605131648481e-12
+    dif_rel: 2.8666840200181757e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[7]/b/massa_leo_kg
+    versionado: 31279.50421766626
+    regenerado: 31279.504217540525
+    dif_abs: 1.2573582353070378e-07
+    dif_rel: 4.019751165355422e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[7]/b/margem
+    versionado: -0.40839855161295635
+    regenerado: -0.40839855161057825
+    dif_abs: 2.3780977187470853e-12
+    dif_rel: 5.822982744074063e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[8]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[9]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[9]/a_capacidade_kg
+    versionado: 3781.5079139306226
+    regenerado: 3781.5079139306235
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 2.405111194987742e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[9]/a_margem
+    versionado: -0.40074502860285366
+    regenerado: -0.40074502860285355
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 2.770397498119458e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[10]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[10]/a_capacidade_kg
+    versionado: 17508.53891757587
+    regenerado: 17508.538917575872
+    dif_abs: 3.637978807091713e-12
+    dif_rel: 2.0778311795279184e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[10]/a_margem
+    versionado: 1.7745754410842793
+    regenerado: 1.7745754410842798
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 2.502509611982011e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[11]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[12]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[12]/a_capacidade_kg
+    versionado: 4422.138827099724
+    regenerado: 4422.138827099725
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 2.056685095907366e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[12]/a_margem
+    versionado: 0.18244014073990655
+    regenerado: 0.18244014073990678
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 1.2170819646625155e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[13]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[13]/a_capacidade_kg
+    versionado: 10942.838967692354
+    regenerado: 10942.838967692356
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 1.6622646179078775e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[13]/a_margem
+    versionado: 1.9260166980190756
+    regenerado: 1.926016698019076
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 2.305739147053149e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[14]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[15]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[15]/a_capacidade_kg
+    versionado: 6342.094755007634
+    regenerado: 6342.094755007635
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 1.4340604120662233e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[15]/a_margem
+    versionado: 0.6958190839104421
+    regenerado: 0.6958190839104423
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 3.191125539086398e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[16]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[16]/a_capacidade_kg
+    versionado: 8135.993061325599
+    regenerado: 8135.993061325601
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 2.2357312621029794e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[16]/a_margem
+    versionado: 1.175491353084062
+    regenerado: 1.1754913530840625
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 3.777902820679488e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[17]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[17]/b/giro_perigeu_graus
+    versionado: 19.843090670465024
+    regenerado: 19.843090670465035
+    dif_abs: 1.0658141036401503e-14
+    dif_rel: 5.37121016750952e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[17]/b/dv_extra_giro_m_s
+    versionado: 1189.7387740790687
+    regenerado: 1189.738774079072
+    dif_abs: 3.410605131648481e-12
+    dif_rel: 2.8666840200181757e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[17]/b/massa_leo_kg
+    versionado: 18537.864393396423
+    regenerado: 18537.86439343371
+    dif_abs: 3.7285644793882966e-08
+    dif_rel: 2.011323634839237e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[17]/b/margem
+    versionado: -0.07848069025225346
+    regenerado: -0.07848069025410698
+    dif_abs: 1.853517339611699e-12
+    dif_rel: 2.3617495382037337e-11
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[18]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[18]/b/giro_perigeu_graus
+    versionado: 19.843090670465024
+    regenerado: 19.843090670465035
+    dif_abs: 1.0658141036401503e-14
+    dif_rel: 5.37121016750952e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[18]/b/dv_extra_giro_m_s
+    versionado: 1189.7387740790687
+    regenerado: 1189.738774079072
+    dif_abs: 3.410605131648481e-12
+    dif_rel: 2.8666840200181757e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[18]/b/massa_leo_kg
+    versionado: 18537.864393396423
+    regenerado: 18537.86439343371
+    dif_abs: 3.7285644793882966e-08
+    dif_rel: 2.011323634839237e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[18]/b/margem
+    versionado: -0.0017728252132500621
+    regenerado: -0.0017728252152577895
+    dif_abs: 2.007727317732133e-12
+    dif_rel: 1.1325015589390409e-09
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[19]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[20]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[20]/a_capacidade_kg
+    versionado: 3781.5079139306226
+    regenerado: 3781.5079139306235
+    dif_abs: 9.094947017729282e-13
+    dif_rel: 2.405111194987742e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[20]/a_margem
+    versionado: 0.011141197683697479
+    regenerado: 0.011141197683697701
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 1.993004802795496e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[21]/c3_km2_s2
+    versionado: 13.588182205530279
+    regenerado: 13.588182205530277
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.3072807035787965e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[21]/a_capacidade_kg
+    versionado: 17508.53891757587
+    regenerado: 17508.538917575872
+    dif_abs: 3.637978807091713e-12
+    dif_rel: 2.0778311795279184e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/linhas_2033[21]/a_margem
+    versionado: 3.6816257994836743
+    regenerado: 3.681625799483675
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 2.4124625045399424e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[1]/a_pior_margem
+    versionado: -0.2992243473600533
+    regenerado: -0.2992243473600532
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 3.7103365231480896e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[2]/a_pior_margem
+    versionado: 0.7341099904698938
+    regenerado: 0.734109990469894
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 3.0246776070014193e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[4]/a_pior_margem
+    versionado: 0.005030770135211693
+    regenerado: 0.005030770135211915
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 4.413729885428124e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[5]/a_pior_margem
+    versionado: 0.28930955592904306
+    regenerado: 0.2893095559290433
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 7.67498343468097e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[6]/b_pior_margem
+    versionado: -0.45385963021908315
+    regenerado: -0.4538596302168878
+    dif_abs: 2.1953550088937845e-12
+    dif_rel: 4.8370792701568585e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[7]/b_pior_margem
+    versionado: -0.40839855161295635
+    regenerado: -0.40839855161057825
+    dif_abs: 2.3780977187470853e-12
+    dif_rel: 5.822982744074063e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[9]/a_pior_margem
+    versionado: -0.40074502860285366
+    regenerado: -0.40074502860285355
+    dif_abs: 1.1102230246251565e-16
+    dif_rel: 2.770397498119458e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[10]/a_pior_margem
+    versionado: 1.7745754410842793
+    regenerado: 1.7745754410842798
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 2.502509611982011e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[12]/a_pior_margem
+    versionado: 0.18244014073990655
+    regenerado: 0.18244014073990678
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 1.2170819646625155e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[13]/a_pior_margem
+    versionado: 1.9260166980190756
+    regenerado: 1.926016698019076
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 2.305739147053149e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[15]/a_pior_margem
+    versionado: 0.6958190839104421
+    regenerado: 0.6958190839104423
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 3.191125539086398e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[16]/a_pior_margem
+    versionado: 1.175491353084062
+    regenerado: 1.1754913530840625
+    dif_abs: 4.440892098500626e-16
+    dif_rel: 3.777902820679488e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[17]/b_pior_margem
+    versionado: -0.07848069025225346
+    regenerado: -0.07848069025410698
+    dif_abs: 1.853517339611699e-12
+    dif_rel: 2.3617495382037337e-11
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[18]/b_pior_margem
+    versionado: -0.0017728252132500621
+    regenerado: -0.0017728252152577895
+    dif_abs: 2.007727317732133e-12
+    dif_rel: 1.1325015589390409e-09
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[20]/a_pior_margem
+    versionado: 0.011141197683697479
+    regenerado: 0.011141197683697701
+    dif_abs: 2.220446049250313e-16
+    dif_rel: 1.993004802795496e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 40°/resumo[21]/a_pior_margem
+    versionado: 3.6816257994836743
+    regenerado: 3.681625799483675
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 2.4124625045399424e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/dv_total_km_s
+    versionado: 5.911849546390186
+    regenerado: 5.911849546390189
+    dif_abs: 3.552713678800501e-15
+    dif_rel: 6.00947918400564e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/acima_do_envelope_km_s
+    versionado: 4.9546390185284395e-05
+    regenerado: 4.954639018883711e-05
+    dif_abs: 3.552713678800501e-15
+    dif_rel: 7.170479353823198e-11
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[0]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[0]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[0]/a_capacidade_kg
+    versionado: 2039.8971203737117
+    regenerado: 2039.897120373705
+    dif_abs: 6.59383658785373e-12
+    dif_rel: 3.232435852767776e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[0]/a_margem
+    versionado: -0.6767378203759864
+    regenerado: -0.6767378203759875
+    dif_abs: 1.1102230246251565e-15
+    dif_rel: 1.640551172399869e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[0]/b/massa_leo_kg
+    versionado: 19296.90318669464
+    regenerado: 19296.903186694653
+    dif_abs: 1.4551915228366852e-11
+    dif_rel: 7.541062463535863e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[0]/b/margem
+    versionado: -0.2506569650009811
+    regenerado: -0.25065696500098167
+    dif_abs: 5.551115123125783e-16
+    dif_rel: 2.2146263213168863e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[1]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[1]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[1]/a_capacidade_kg
+    versionado: 4678.423284461829
+    regenerado: 4678.423284461821
+    dif_abs: 8.185452315956354e-12
+    dif_rel: 1.7496177276524366e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[1]/a_margem
+    versionado: -0.2586109892337112
+    regenerado: -0.2586109892337125
+    dif_abs: 1.3322676295501878e-15
+    dif_rel: 5.151628063052629e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[2]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[2]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[2]/a_capacidade_kg
+    versionado: 11224.260095444572
+    regenerado: 11224.260095444557
+    dif_abs: 1.4551915228366852e-11
+    dif_rel: 1.2964698879592809e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[2]/a_margem
+    versionado: 0.7787067528462057
+    regenerado: 0.7787067528462035
+    dif_abs: 2.220446049250313e-15
+    dif_rel: 2.8514534401229858e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[3]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[3]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[3]/a_capacidade_kg
+    versionado: 4324.891871323228
+    regenerado: 4324.8918713232215
+    dif_abs: 6.366462912410498e-12
+    dif_rel: 1.4720513487572207e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[3]/a_margem
+    versionado: -0.31463505732779484
+    regenerado: -0.31463505732779584
+    dif_abs: 9.992007221626409e-16
+    dif_rel: 3.1757450382321766e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[3]/b/massa_leo_kg
+    versionado: 19296.90318669464
+    regenerado: 19296.903186694653
+    dif_abs: 1.4551915228366852e-11
+    dif_rel: 7.541062463535863e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[3]/b/margem
+    versionado: -0.18847082101766
+    regenerado: -0.18847082101766066
+    dif_abs: 6.661338147750939e-16
+    dif_rel: 3.534413503258821e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[4]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[4]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[4]/a_capacidade_kg
+    versionado: 6487.269850056441
+    regenerado: 6487.269850056435
+    dif_abs: 6.366462912410498e-12
+    dif_rel: 9.813778460834503e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[4]/a_margem
+    versionado: 0.028036644884426032
+    regenerado: 0.02803664488442492
+    dif_abs: 1.1102230246251565e-15
+    dif_rel: 3.959899728379661e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[4]/b/massa_leo_kg
+    versionado: 19296.90318669464
+    regenerado: 19296.903186694653
+    dif_abs: 1.4551915228366852e-11
+    dif_rel: 7.541062463535863e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[4]/b/margem
+    versionado: 0.07789316237756516
+    regenerado: 0.0778931623775645
+    dif_abs: 6.661338147750939e-16
+    dif_rel: 8.551890749359974e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[5]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[5]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[5]/a_capacidade_kg
+    versionado: 8292.58199439241
+    regenerado: 8292.581994392402
+    dif_abs: 9.094947017729282e-12
+    dif_rel: 1.0967569598804624e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[5]/a_margem
+    versionado: 0.3141241798150274
+    regenerado: 0.31412417981502583
+    dif_abs: 1.5543122344752192e-15
+    dif_rel: 4.948082110044756e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[5]/b/massa_leo_kg
+    versionado: 19296.90318669464
+    regenerado: 19296.903186694653
+    dif_abs: 1.4551915228366852e-11
+    dif_rel: 7.541062463535863e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[5]/b/margem
+    versionado: 0.2815527839229417
+    regenerado: 0.2815527839229408
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 3.1545716129136593e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[6]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[6]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[6]/b/beta_graus
+    versionado: 21.154567553122128
+    regenerado: 21.154567553122057
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 3.358814752302671e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[6]/b/giro_perigeu_graus
+    versionado: 44.926069151152824
+    regenerado: 44.92606915115241
+    dif_abs: 4.121147867408581e-13
+    dif_rel: 9.173177055715836e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[6]/b/dv_extra_giro_m_s
+    versionado: 4358.714288141033
+    regenerado: 4358.714288140978
+    dif_abs: 5.4569682106375694e-11
+    dif_rel: 1.2519674036641057e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[6]/b/massa_leo_kg
+    versionado: 161081.92345429576
+    regenerado: 161081.92345429346
+    dif_abs: 2.2992026060819626e-09
+    dif_rel: 1.4273498582442257e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[6]/b/margem
+    versionado: -0.8939483733887309
+    regenerado: -0.8939483733887295
+    dif_abs: 1.4432899320127035e-15
+    dif_rel: 1.6145115030989525e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[7]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[7]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[7]/b/beta_graus
+    versionado: 21.154567553122128
+    regenerado: 21.154567553122057
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 3.358814752302671e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[7]/b/giro_perigeu_graus
+    versionado: 44.926069151152824
+    regenerado: 44.92606915115241
+    dif_abs: 4.121147867408581e-13
+    dif_rel: 9.173177055715836e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[7]/b/dv_extra_giro_m_s
+    versionado: 4358.714288141033
+    regenerado: 4358.714288140978
+    dif_abs: 5.4569682106375694e-11
+    dif_rel: 1.2519674036641057e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[7]/b/massa_leo_kg
+    versionado: 161081.92345429576
+    regenerado: 161081.92345429346
+    dif_abs: 2.2992026060819626e-09
+    dif_rel: 1.4273498582442257e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[7]/b/margem
+    versionado: -0.8851205672047338
+    regenerado: -0.8851205672047321
+    dif_abs: 1.6653345369377348e-15
+    dif_rel: 1.881477618576829e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[8]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[8]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[9]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[9]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[9]/a_capacidade_kg
+    versionado: 4548.828278966107
+    regenerado: 4548.82827896609
+    dif_abs: 1.7280399333685637e-11
+    dif_rel: 3.798868252202578e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[9]/a_margem
+    versionado: -0.2791478896129118
+    regenerado: -0.2791478896129146
+    dif_abs: 2.7755575615628914e-15
+    dif_rel: 9.94296451752401e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[9]/b/massa_leo_kg
+    versionado: 19296.90318669464
+    regenerado: 19296.903186694653
+    dif_abs: 1.4551915228366852e-11
+    dif_rel: 7.541062463535863e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[9]/b/margem
+    versionado: 0.7676411427259013
+    regenerado: 0.7676411427259
+    dif_abs: 1.3322676295501878e-15
+    dif_rel: 1.735534425394778e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[10]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[10]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[10]/a_capacidade_kg
+    versionado: 17746.806035913596
+    regenerado: 17746.80603591357
+    dif_abs: 2.546585164964199e-11
+    dif_rel: 1.43495407557324e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[10]/a_margem
+    versionado: 1.8123335942956902
+    regenerado: 1.8123335942956862
+    dif_abs: 3.9968028886505635e-15
+    dif_rel: 2.205335100133043e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[11]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[11]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[11]/a_capacidade_kg
+    versionado: 2039.8971203737117
+    regenerado: 2039.897120373705
+    dif_abs: 6.59383658785373e-12
+    dif_rel: 3.232435852767776e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[11]/a_margem
+    versionado: -0.4545498609568579
+    regenerado: -0.4545498609568597
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 3.907947162630081e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[11]/b/massa_leo_kg
+    versionado: 11436.350525206326
+    regenerado: 11436.350525223133
+    dif_abs: 1.6807462088763714e-08
+    dif_rel: 1.4696525829388643e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[11]/b/margem
+    versionado: 0.264389366881453
+    regenerado: 0.2643893668795949
+    dif_abs: 1.858069254012662e-12
+    dif_rel: 7.027776025674224e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[12]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[12]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[12]/a_capacidade_kg
+    versionado: 4678.423284461829
+    regenerado: 4678.423284461821
+    dif_abs: 8.185452315956354e-12
+    dif_rel: 1.7496177276524366e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[12]/a_margem
+    versionado: 0.25096829909974905
+    regenerado: 0.25096829909974705
+    dif_abs: 1.9984014443252818e-15
+    dif_rel: 7.962764426797202e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[13]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[13]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[13]/a_capacidade_kg
+    versionado: 11224.260095444572
+    regenerado: 11224.260095444557
+    dif_abs: 1.4551915228366852e-11
+    dif_rel: 1.2964698879592809e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[13]/a_margem
+    versionado: 2.0012661759113737
+    regenerado: 2.00126617591137
+    dif_abs: 3.552713678800501e-15
+    dif_rel: 1.7752329607942334e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[14]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[14]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[14]/a_capacidade_kg
+    versionado: 4324.891871323228
+    regenerado: 4324.8918713232215
+    dif_abs: 6.366462912410498e-12
+    dif_rel: 1.4720513487572207e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[14]/a_margem
+    versionado: 0.15643717960032988
+    regenerado: 0.1564371796003281
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.1355080959261329e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[14]/b/massa_leo_kg
+    versionado: 11436.350525206326
+    regenerado: 11436.350525223133
+    dif_abs: 1.6807462088763714e-08
+    dif_rel: 1.4696525829388643e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[14]/b/margem
+    versionado: 0.369317945045889
+    regenerado: 0.3693179450438766
+    dif_abs: 2.0123902544355587e-12
+    dif_rel: 5.448937105359212e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[15]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[15]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[15]/a_capacidade_kg
+    versionado: 6487.269850056441
+    regenerado: 6487.269850056435
+    dif_abs: 6.366462912410498e-12
+    dif_rel: 9.813778460834503e-16
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[15]/a_margem
+    versionado: 0.734637598329182
+    regenerado: 0.7346375983291804
+    dif_abs: 1.5543122344752192e-15
+    dif_rel: 2.1157537240270014e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[15]/b/massa_leo_kg
+    versionado: 11436.350525206326
+    regenerado: 11436.350525223133
+    dif_abs: 1.6807462088763714e-08
+    dif_rel: 1.4696525829388643e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[15]/b/margem
+    versionado: 0.8187620215168896
+    regenerado: 0.8187620215142166
+    dif_abs: 2.672972954087527e-12
+    dif_rel: 3.2646518571237712e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[16]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[16]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[16]/a_capacidade_kg
+    versionado: 8292.58199439241
+    regenerado: 8292.581994392402
+    dif_abs: 9.094947017729282e-12
+    dif_rel: 1.0967569598804624e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[16]/a_margem
+    versionado: 1.21736182510976
+    regenerado: 1.2173618251097578
+    dif_abs: 2.220446049250313e-15
+    dif_rel: 1.823981994055147e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[16]/b/massa_leo_kg
+    versionado: 11436.350525206326
+    regenerado: 11436.350525223133
+    dif_abs: 1.6807462088763714e-08
+    dif_rel: 1.4696525829388643e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[16]/b/margem
+    versionado: 1.1624031150054175
+    regenerado: 1.1624031150022396
+    dif_abs: 3.177902385687048e-12
+    dif_rel: 2.733907320673549e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[17]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[17]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[17]/b/beta_graus
+    versionado: 21.154567553122128
+    regenerado: 21.154567553122057
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 3.358814752302671e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[17]/b/giro_perigeu_graus
+    versionado: 44.926069151152824
+    regenerado: 44.92606915115241
+    dif_abs: 4.121147867408581e-13
+    dif_rel: 9.173177055715836e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[17]/b/dv_extra_giro_m_s
+    versionado: 4358.714288141033
+    regenerado: 4358.714288140978
+    dif_abs: 5.4569682106375694e-11
+    dif_rel: 1.2519674036641057e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[17]/b/massa_leo_kg
+    versionado: 95465.54294738479
+    regenerado: 95465.54294738344
+    dif_abs: 1.3533281162381172e-09
+    dif_rel: 1.417608986924209e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[17]/b/margem
+    versionado: -0.8210558545776544
+    regenerado: -0.8210558545776518
+    dif_abs: 2.55351295663786e-15
+    dif_rel: 3.1100356235220683e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[18]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[18]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[18]/b/beta_graus
+    versionado: 21.154567553122128
+    regenerado: 21.154567553122057
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 3.358814752302671e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[18]/b/giro_perigeu_graus
+    versionado: 44.926069151152824
+    regenerado: 44.92606915115241
+    dif_abs: 4.121147867408581e-13
+    dif_rel: 9.173177055715836e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[18]/b/dv_extra_giro_m_s
+    versionado: 4358.714288141033
+    regenerado: 4358.714288140978
+    dif_abs: 5.4569682106375694e-11
+    dif_rel: 1.2519674036641057e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[18]/b/massa_leo_kg
+    versionado: 95465.54294738479
+    regenerado: 95465.54294738344
+    dif_abs: 1.3533281162381172e-09
+    dif_rel: 1.417608986924209e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[18]/b/margem
+    versionado: -0.8061604278498797
+    regenerado: -0.806160427849877
+    dif_abs: 2.7755575615628914e-15
+    dif_rel: 3.442934514865254e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[19]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[19]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[20]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[20]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[20]/a_capacidade_kg
+    versionado: 4548.828278966107
+    regenerado: 4548.82827896609
+    dif_abs: 1.7280399333685637e-11
+    dif_rel: 3.798868252202578e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[20]/a_margem
+    versionado: 0.2163157604687871
+    regenerado: 0.21631576046878243
+    dif_abs: 4.6629367034256575e-15
+    dif_rel: 2.1556157967040447e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[20]/b/massa_leo_kg
+    versionado: 11436.350525206326
+    regenerado: 11436.350525223133
+    dif_abs: 1.6807462088763714e-08
+    dif_rel: 1.4696525829388643e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[20]/b/margem
+    versionado: 1.9825948343240918
+    regenerado: 1.9825948343197082
+    dif_abs: 4.383604590429968e-12
+    dif_rel: 2.211044089562773e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[21]/c3_km2_s2
+    versionado: 9.597990318099248
+    regenerado: 9.597990318099326
+    dif_abs: 7.815970093361102e-14
+    dif_rel: 8.143340255951571e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[21]/dla_graus
+    versionado: -49.65456755312213
+    regenerado: -49.65456755312206
+    dif_abs: 7.105427357601002e-14
+    dif_rel: 1.4309715516099051e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[21]/a_capacidade_kg
+    versionado: 17746.806035913596
+    regenerado: 17746.80603591357
+    dif_abs: 2.546585164964199e-11
+    dif_rel: 1.43495407557324e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/linhas_2033[21]/a_margem
+    versionado: 3.745336283472647
+    regenerado: 3.745336283472641
+    dif_abs: 6.217248937900877e-15
+    dif_rel: 1.6599975188706663e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[0]/b_pior_margem
+    versionado: -0.2506569650009811
+    regenerado: -0.25065696500098167
+    dif_abs: 5.551115123125783e-16
+    dif_rel: 2.2146263213168863e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[1]/a_pior_margem
+    versionado: -0.2586109892337112
+    regenerado: -0.2586109892337125
+    dif_abs: 1.3322676295501878e-15
+    dif_rel: 5.151628063052629e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[2]/a_pior_margem
+    versionado: 0.7787067528462057
+    regenerado: 0.7787067528462035
+    dif_abs: 2.220446049250313e-15
+    dif_rel: 2.8514534401229858e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[3]/a_pior_margem
+    versionado: -0.31463505732779484
+    regenerado: -0.31463505732779584
+    dif_abs: 9.992007221626409e-16
+    dif_rel: 3.1757450382321766e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[3]/b_pior_margem
+    versionado: -0.18847082101766
+    regenerado: -0.18847082101766066
+    dif_abs: 6.661338147750939e-16
+    dif_rel: 3.534413503258821e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[4]/a_pior_margem
+    versionado: 0.028036644884426032
+    regenerado: 0.02803664488442492
+    dif_abs: 1.1102230246251565e-15
+    dif_rel: 3.959899728379661e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[4]/b_pior_margem
+    versionado: 0.07789316237756516
+    regenerado: 0.0778931623775645
+    dif_abs: 6.661338147750939e-16
+    dif_rel: 8.551890749359974e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[5]/a_pior_margem
+    versionado: 0.3141241798150274
+    regenerado: 0.31412417981502583
+    dif_abs: 1.5543122344752192e-15
+    dif_rel: 4.948082110044756e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[5]/b_pior_margem
+    versionado: 0.2815527839229417
+    regenerado: 0.2815527839229408
+    dif_abs: 8.881784197001252e-16
+    dif_rel: 3.1545716129136593e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[6]/b_pior_margem
+    versionado: -0.8939483733887309
+    regenerado: -0.8939483733887295
+    dif_abs: 1.4432899320127035e-15
+    dif_rel: 1.6145115030989525e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[7]/b_pior_margem
+    versionado: -0.8851205672047338
+    regenerado: -0.8851205672047321
+    dif_abs: 1.6653345369377348e-15
+    dif_rel: 1.881477618576829e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[9]/a_pior_margem
+    versionado: -0.2791478896129118
+    regenerado: -0.2791478896129146
+    dif_abs: 2.7755575615628914e-15
+    dif_rel: 9.94296451752401e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[9]/b_pior_margem
+    versionado: 0.7676411427259013
+    regenerado: 0.7676411427259
+    dif_abs: 1.3322676295501878e-15
+    dif_rel: 1.735534425394778e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[10]/a_pior_margem
+    versionado: 1.8123335942956902
+    regenerado: 1.8123335942956862
+    dif_abs: 3.9968028886505635e-15
+    dif_rel: 2.205335100133043e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[11]/b_pior_margem
+    versionado: 0.264389366881453
+    regenerado: 0.2643893668795949
+    dif_abs: 1.858069254012662e-12
+    dif_rel: 7.027776025674224e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[12]/a_pior_margem
+    versionado: 0.25096829909974905
+    regenerado: 0.25096829909974705
+    dif_abs: 1.9984014443252818e-15
+    dif_rel: 7.962764426797202e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[13]/a_pior_margem
+    versionado: 2.0012661759113737
+    regenerado: 2.00126617591137
+    dif_abs: 3.552713678800501e-15
+    dif_rel: 1.7752329607942334e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[14]/a_pior_margem
+    versionado: 0.15643717960032988
+    regenerado: 0.1564371796003281
+    dif_abs: 1.7763568394002505e-15
+    dif_rel: 1.1355080959261329e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[14]/b_pior_margem
+    versionado: 0.369317945045889
+    regenerado: 0.3693179450438766
+    dif_abs: 2.0123902544355587e-12
+    dif_rel: 5.448937105359212e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[15]/a_pior_margem
+    versionado: 0.734637598329182
+    regenerado: 0.7346375983291804
+    dif_abs: 1.5543122344752192e-15
+    dif_rel: 2.1157537240270014e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[15]/b_pior_margem
+    versionado: 0.8187620215168896
+    regenerado: 0.8187620215142166
+    dif_abs: 2.672972954087527e-12
+    dif_rel: 3.2646518571237712e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[16]/a_pior_margem
+    versionado: 1.21736182510976
+    regenerado: 1.2173618251097578
+    dif_abs: 2.220446049250313e-15
+    dif_rel: 1.823981994055147e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[16]/b_pior_margem
+    versionado: 1.1624031150054175
+    regenerado: 1.1624031150022396
+    dif_abs: 3.177902385687048e-12
+    dif_rel: 2.733907320673549e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[17]/b_pior_margem
+    versionado: -0.8210558545776544
+    regenerado: -0.8210558545776518
+    dif_abs: 2.55351295663786e-15
+    dif_rel: 3.1100356235220683e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[18]/b_pior_margem
+    versionado: -0.8061604278498797
+    regenerado: -0.806160427849877
+    dif_abs: 2.7755575615628914e-15
+    dif_rel: 3.442934514865254e-15
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[20]/a_pior_margem
+    versionado: 0.2163157604687871
+    regenerado: 0.21631576046878243
+    dif_abs: 4.6629367034256575e-15
+    dif_rel: 2.1556157967040447e-14
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[20]/b_pior_margem
+    versionado: 1.9825948343240918
+    regenerado: 1.9825948343197082
+    dif_abs: 4.383604590429968e-12
+    dif_rel: 2.211044089562773e-12
+  - onde: /revisao_2033/lancadores_com_2033_alternativo/2033-conjuncao, |DLA| ≤ 50°/resumo[21]/a_pior_margem
+    versionado: 3.745336283472647
+    regenerado: 3.745336283472641
+    dif_abs: 6.217248937900877e-15
+    dif_rel: 1.6599975188706663e-15
+  acima: []
+  identico: true
+- arquivo: results/etapa2.5/arquitetura.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.5/arquitetura.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.5/coleta.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.5/coleta.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.5/conferencia_2033.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/etapa2.5/conferencia_2033.yaml
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/fase1/premissas.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/fase2/premissas_nao_validadas.md
+  regenerado: true
+  estado: identico
+  identico: true
+- arquivo: results/painel/porkchop_marte_terra_2030.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (8142 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 4.973799150320701e-12
+    dif_rel: 1.6303745819176863e-11
+  - onde: c3_km2_s2 (21753 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 8.381903171539307e-09
+    dif_rel: 5.5285943508863633e-14
+  - onde: vinf_chegada_km_s (16602 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 3.183231456205249e-12
+    dif_rel: 3.9207696464126606e-14
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_marte_terra_2032.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (8397 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 7.673861546209082e-12
+    dif_rel: 3.2185648739421123e-12
+  - onde: c3_km2_s2 (21835 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.862645149230957e-08
+    dif_rel: 1.8776413482325463e-13
+  - onde: vinf_chegada_km_s (16637 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 1.2307188176491105e-13
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_marte_terra_2035.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (9197 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 2.215949646000581e-12
+    dif_rel: 1.3472989646638689e-11
+  - onde: c3_km2_s2 (20234 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 4.6566128730773926e-09
+    dif_rel: 3.134437937696667e-13
+  - onde: vinf_chegada_km_s (17014 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.3642420526593924e-12
+    dif_rel: 1.2652924952189982e-14
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_marte_terra_2037.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (7306 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 2.9842794901924208e-12
+    dif_rel: 2.2416117005291694e-11
+  - onde: c3_km2_s2 (17736 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 2.7939677238464355e-09
+    dif_rel: 9.381104695886985e-14
+  - onde: vinf_chegada_km_s (14003 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.3642420526593924e-12
+    dif_rel: 8.742115333867848e-14
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_marte_terra_2039.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (8781 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 2.495426087989472e-11
+    dif_rel: 5.929947452467196e-12
+  - onde: c3_km2_s2 (20458 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 4.6566128730773926e-09
+    dif_rel: 1.758519647382576e-13
+  - onde: vinf_chegada_km_s (16067 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.8189894035458565e-12
+    dif_rel: 1.3898934616632104e-13
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_terra_marte_2028.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (2356 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.3642420526593924e-12
+    dif_rel: 7.54529108359054e-15
+  - onde: c3_km2_s2 (5891 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 6.59383658785373e-12
+    dif_rel: 1.17371542939057e-13
+  - onde: dla_graus (6039 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 3.11928260998684e-12
+    dif_rel: 1.5043829765016668e-12
+  - onde: vinf_chegada_km_s (4890 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 4.75175454539567e-13
+    dif_rel: 6.391378182208568e-14
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_terra_marte_2031.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (2684 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.9895196601282805e-12
+    dif_rel: 1.1896263130175123e-12
+  - onde: c3_km2_s2 (7703 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 1.7053025658242404e-11
+    dif_rel: 9.857860425005011e-14
+  - onde: dla_graus (6912 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 3.502975687297294e-12
+    dif_rel: 2.607650507641754e-12
+  - onde: vinf_chegada_km_s (6478 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 2.6290081223123707e-13
+    dif_rel: 2.3211567030520566e-14
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_terra_marte_2033.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (2784 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 4.234834705130197e-12
+    dif_rel: 1.645412439600164e-13
+  - onde: c3_km2_s2 (7860 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 5.820766091346741e-11
+    dif_rel: 6.223872358463902e-14
+  - onde: dla_graus (6757 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 4.007461029686965e-12
+    dif_rel: 1.121729690479097e-12
+  - onde: vinf_chegada_km_s (6563 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 2.0250467969162855e-13
+    dif_rel: 2.661969471597695e-14
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchop_terra_marte_2035.npz
+  regenerado: true
+  estado: tolerancia
+  abaixo:
+  - onde: angulo_transf_graus (3815 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 6.934897101018578e-12
+    dif_rel: 6.369410311224349e-12
+  - onde: c3_km2_s2 (11046 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 9.313225746154785e-10
+    dif_rel: 1.091081552231786e-13
+  - onde: dla_graus (11065 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 5.5848659030743875e-12
+    dif_rel: 1.0190206811565255e-11
+  - onde: vinf_chegada_km_s (10054 elementos)
+    versionado: ''
+    regenerado: ''
+    dif_abs: 2.5224267119483557e-13
+    dif_rel: 2.5041284836012985e-14
+  acima: []
+  identico: true
+- arquivo: results/painel/porkchops.yaml
+  regenerado: true
+  estado: identico
+  identico: true
