@@ -1,6 +1,6 @@
 # Etapa 1.2: Lambert e porkchop plots
 
-Estado: aguardando o portão do Fabio. O retorno Marte→Terra ainda não foi calculado (ver seção 4).
+Estado: parte Terra→Marte aprovada no portão de 2026-10-27. O retorno Marte→Terra é feito no branch seguinte (ver seção 4).
 
 ## 1. Solver de Lambert
 
@@ -17,10 +17,10 @@ Testes (`tests/test_lambert.py`):
 | Curtis, Example 5.2 (impresso) | Livro: edição, página e resposta **não confirmadas**; entradas confirmadas no script do autor | **Pulado** |
 | Propriedade física: Lambert seguido de propagação de Kepler analítica | Kepler por variável universal [F11], em `src/orbital/kepler.py` | Passa. 850 casos com M = 0, 1 e 2, sem exclusões; pior erro 6,2e-12; tolerância P-003 |
 
-O pedido do portão era "exemplos de livro-texto citando obra, edição e página". **Isso não foi
-cumprido.** Os livros não estavam acessíveis, e não vou citar página que não vi. Os dois exemplos
-impressos estão preparados em `tests/data/lambert_livros.yaml` e ficam pulados até que alguém
-confira no exemplar. Até lá, a referência numérica é o código publicado pelo autor do Vallado.
+Exemplos impressos em livro: os livros não estavam acessíveis, e nenhuma página foi citada sem ser
+vista. Por decisão do Fabio no portão de 2026-10-27, os testes oficiais do `valladopy` são a
+**referência substituta declarada**. Os dois exemplos impressos continuam em
+`tests/data/lambert_livros.yaml`, pulados com o motivo, até que alguém confira no exemplar.
 
 `src/orbital/kepler.py` (propagação de Kepler analítica) tem testes próprios em
 `tests/test_kepler.py`: comparação com integração numérica (P-004), conservação de energia e de
@@ -65,19 +65,23 @@ absoluto e relativo, estão em `results/etapa1.2/verificacao_burke2010.md`, gera
    v∞ de chegada difere até 3 % com partida 399 e até 0,4 % com partida 3. O motivo é que o mínimo
    de C3 fica num vale raso: deslocar a data de chegada em poucos dias quase não muda o C3, mas muda
    o v∞. Avaliado nas mesmas datas do manual, o v∞ bate em até 0,03 % (tabela acima).
-3. **2035: as datas da Tabela 6 do manual parecem deslocadas.** Os valores de C3, v∞ e tempo de voo
-   reproduzem o manual, mas em datas cerca de 63 dias posteriores às impressas:
+3. **2035: Tabela 6 inconsistente com as figuras do mesmo documento (pp. 41–42).** Os valores de
+   C3, v∞ e tempo de voo da Tabela 6 são reproduzidos aqui, mas em datas cerca de 63 dias
+   posteriores às impressas na tabela:
 
-   | 2035 | Datas NASA | Datas do mínimo próprio (partida 3) | C3 NASA / próprio | v∞ NASA / próprio | TOF NASA / próprio |
+   | 2035 | Datas da Tabela 6 | Datas do mínimo próprio (partida 3) | C3 tabela / próprio | v∞ tabela / próprio | TOF tabela / próprio |
    | :- | :- | :- | :- | :- | :- |
    | Tipo I | 21/04/35 → 03/11/35 | 23/06/35 → 04/01/36 | 10.19 / 10.194 | 2.692 / 2.697 | 196 / 195,5 d |
    | Tipo II | 12/06/35 → 28/07/36 | 15/08/35 → 04/10/36 | 17.52 / 17.525 | 4.063 / 4.098 | 412 / 416,7 d |
 
-   As figuras de 2035 do próprio manual (p. 41–42) mostram a bacia de mínimo do Tipo I perto da
-   partida em ~28/06/35 e da chegada em ~02/01/36. Isso é coerente com as datas calculadas aqui e
-   não com a tabela. Leitura visual da figura, sem extração numérica. Não encontrei errata
-   publicada. Por isso a janela de 2035 está fora do teste automático, e a diferença fica
-   registrada aqui.
+   As figuras de 2035 do mesmo documento (pp. 41–42) mostram a bacia de mínimo do Tipo I perto da
+   partida em ~28/06/35 e da chegada em ~02/01/36. Essa posição é coerente com as datas calculadas
+   aqui e não com as da Tabela 6. É uma leitura visual da figura, sem extração numérica. Não se
+   afirma aqui qual das duas está certa. A janela de 2035 fica fora do teste automático.
+
+   **Busca por errata (2026-10-27):** o registro NTRS 20100037210 tem um único documento (PDF
+   original), sem itens relacionados nem versão revisada. A busca na web por errata ou revisão do
+   NASA/TM-2010-216764 não encontrou nada. Resultado: nenhuma errata ou versão revisada encontrada.
 4. **Linha de 180°.** Sem tratamento especial, o mínimo "Tipo II" de 2035 (partida 399) caiu
    exatamente em 180,0°. Nesse ponto o plano da transferência é mal definido, e é onde as curvas
    do gráfico do manual convergem. A busca de mínimos agora exclui ±1° em torno de 180° (premissa
@@ -103,16 +107,13 @@ energia mínima com partida de Marte em 2029–2040**.
 | Young, Mulqueen & Skinner, *Mars Exploration, Venus Swingby and Conjunction Class Mission Modes, Time Period 2000 to 2045*, NASA-TM-86477, 1984 (NTRS 19850003653), Tabela 22, p. 57 | 2031–2044 | Missões de ida e volta da classe conjunção otimizadas como um todo; v∞ em unidades de velocidade orbital média da Terra; efemérides de 1984 | Só como comparação de ordem de grandeza: não é tabela de retorno de energia mínima |
 | Joffre et al., *Mars Sample Return: Mission Analysis for an ESA Earth Return Orbiter* (ICATT) | 2026–2030 | Porkchops e um retorno exemplo (partida de Marte 26/09/2028) | Não (período e um único ponto) |
 
-Proposta, sujeita à sua decisão: calcular os porkchops de retorno com o mesmo código e:
-
-- (a) **verificar o método** contra o JPL 82-43 Parte 5 num ano em que ele tem dados (por exemplo,
-  2007), como "verificado contra dados publicados" para esse ano;
-- (b) fazer a comparação 2029–2040 com o NASA GMAT, rotulada como "comparação entre ferramentas",
-  como você definiu. O GMAT não está instalado nesta máquina.
+Decisão do Fabio (2026-10-27): verificar o método contra o JPL 82-43 Parte 5 num ano coberto
+por ele e depois calcular os retornos de 2029–2040 com o mesmo código. A comparação com o GMAT
+fica adiada para fases futuras.
 
 ## 5. Premissas novas (todas NÃO VALIDADAS)
 
-P-003 a P-007 em `config/premissas.yaml`: tolerâncias de teste (P-003, P-004, P-005, P-007) e
+P-003 a P-007 em `config/premissas.yaml`, aprovadas no portão de 2026-10-27 e mantidas como NÃO VALIDADA: tolerâncias de teste (P-003, P-004, P-005, P-007) e
 exclusão de ±1° em torno de 180° na busca de mínimos (P-006).
 
 ## 6. Limitações do modelo
