@@ -21,6 +21,7 @@ otimizacao:
   custo_inviavel: {valor: 1000.0, premissa: P-041}              # duração/t_imp de um início sem solução (> duracao_max)
 arredondamento_resultados:
   # Campos mal condicionados gravados em results/ arredondados, para que o ruído de ponto flutuante entre CPUs
-  # (P-039) não mude o arquivo regenerado. Bem acima da variação observada (6e-7 relativo no início da queima).
+  # (P-039) não mude o arquivo regenerado. Bem acima da variação medida na revisão independente da Etapa 3.1 (até 6e-7
+  # relativo no início da queima, entre duas execuções com caminhos de otimização diferentes).
   inicio_s: {valor: 10, premissa: P-041}
   altitude_km: {valor: 0.01, premissa: P-041}      # também as apsides finais (carregam o resíduo do ajuste ao alvo)

@@ -452,11 +452,14 @@ premissas:
     unidade: adimensional; km e km/s; s
     uso: config/queima_finita.yaml (orbital.queima_finita e tools/queima_finita.py, Etapa 3.1)
     justificativa: >
-      Parâmetros do método numérico da queima finita, todos em config/queima_finita.yaml: tolerâncias do integrador
+      Parâmetros do método numérico da queima finita, em config/queima_finita.yaml: tolerâncias do integrador
       DOP853 e amostragem da altitude mínima; erro relativo aceito no periapse e no apoapse finais da captura; continuação
       no empuxo (passo e ponto de partida); faixas de busca, tolerâncias e custo de ponto inviável dos otimizadores; e o
       arredondamento, em results/, dos campos mal condicionados (início da queima, altitudes), que dependem da posição
       de um mínimo plano. Escolhidos bem abaixo da precisão relevante do estudo (~1e-4 relativo) e conferidos para que
       nenhum ótimo caia numa borda; trocar os principais (rtol 1e-9, passo 1,5, partida em 30 s) muda a perda em menos de
-      1e-4 relativo (tests/test_queima_finita.py). Sem valor publicado.
+      1e-4 relativo (tests/test_queima_finita.py). Ficam no código, também cobertas por esta premissa, constantes internas
+      dos algoritmos que não mudam o resultado nos casos calculados: tolerâncias de 1e-14 do least_squares, chute inicial
+      da captura (−0,5; 1,0; 1,0), início (1,05·t_imp), expansão (×1,5) e limite inferior (0,5·t_imp) do intervalo do
+      brentq da saída, e o arredondamento a 10 casas que só limpa a representação binária. Sem valor publicado.
     status: NÃO VALIDADA
