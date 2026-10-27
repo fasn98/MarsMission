@@ -36,8 +36,11 @@ TINTA, TINTA_2, SUPERFICIE, GRADE = "#0b0b0b", "#52514e", "#fcfcfb", "#eceae4"
 AZUL, LARANJA = "#2a78d6", "#eb6834"
 
 
-def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo=""):
-    """`mav_massas(dv)` → (massa pousada do MAV e equipamentos, massa extra no cruzeiro); padrão: MAV sólido."""
+def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo="", saida=None, gravar=True):
+    """`mav_massas(dv)` → (massa pousada do MAV e equipamentos, massa extra no cruzeiro); padrão: MAV sólido.
+
+    Devolve (pontos, mínimos, escolha). Com `gravar=False` não escreve arquivos (usado pela Etapa 2.3)."""
+    saida = SAIDA if saida is None else saida
     mu, margem, um_sol = p.mu_marte, _v(dcfg["margem_dv"]), p.orbitas_marte["eliptica_alta"]
     v_eq, lat, inc, dv100, plat, razao, walkout, vs, a_caso, c3l = ctx
     rp = R + vr["periapse_alt_km"]
@@ -102,9 +105,11 @@ def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo=""):
                    "massa_missao_A_kg": r[versao]["total_missao_A_kg"], "acima_do_minimo": r[versao][caso] / mmin - 1,
                    "mav_glom_kg": r["mav_glom_kg"], "dv_mav_km_s": r["dv_mav_km_s"],
                    "lander_orbita_baixa_kg": r["lander_orbita_baixa_kg"]}
-    SAIDA.mkdir(parents=True, exist_ok=True)
+    if not gravar:
+        return linhas, minimos, escolha
+    saida.mkdir(parents=True, exist_ok=True)
     nome = nome + sufixo
-    (SAIDA / f"varredura_encontro_{nome}.yaml").write_text(yaml.safe_dump(dm._nativo(
+    (saida / f"varredura_encontro_{nome}.yaml").write_text(yaml.safe_dump(dm._nativo(
         {"gerado_por": "tools/varredura_encontro.py", "periapse_alt_km": vr["periapse_alt_km"],
          "minimos": minimos, "escolha": escolha, "pontos": linhas}), sort_keys=False, allow_unicode=True), encoding="utf-8")
 
@@ -129,7 +134,7 @@ def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo=""):
     for r in linhas[:: max(1, len(linhas) // 15)] + [linhas[-1]]:
         md.append(f"| {br(r['apoapse_alt_km'])} | {br(r['dv_mav_km_s'], 3)} | {br(r['mav_glom_kg'])} | {br(r['lander_orbita_baixa_kg'])} | "
                   + " | ".join(f"{br(r[v]['total_missao_A_kg'])} / {br(r[v]['total_regra_iii_kg'])}" for v in vr["versoes"]) + " |")
-    (SAIDA / f"varredura_encontro_{nome}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    (saida / f"varredura_encontro_{nome}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
     fig, ax = plt.subplots(figsize=(11, 6), facecolor=SUPERFICIE)
     ax.set_facecolor(SUPERFICIE)
@@ -174,9 +179,10 @@ def varrer(nome, vr, cfg, dcfg, cu, p, R, ctx, mav_massas=None, sufixo=""):
     fig.tight_layout(rect=(0, 0.05, 1, 1))
     fig.text(0.01, 0.01, "Eixo de massa cortado em 500 t (perto da órbita baixa o orbitador químico tende à assíntota da "
              "equação do foguete). Gerado por tools/varredura_encontro.py.", fontsize=6.5, color=TINTA_2)
-    fig.savefig(SAIDA / f"varredura_encontro_{nome}.png", dpi=150, facecolor=SUPERFICIE)
+    fig.savefig(saida / f"varredura_encontro_{nome}.png", dpi=150, facecolor=SUPERFICIE)
     plt.close(fig)
     print("\n".join(md[:12 + (2 if escolha else 0)]))
+    return linhas, minimos, escolha
 
 
 def main():

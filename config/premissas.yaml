@@ -156,34 +156,35 @@ premissas:
     status: NÃO VALIDADA
   - id: P-016
     nome: plataforma_orbitador_kg
-    valor: 850
-    faixa: [331.8, 2200]
-    unidade: kg (massa seca da plataforma, sem módulos propulsivos e sem carga útil)
+    valor: 442.3
+    faixa: [422, 510]
+    unidade: kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil)
     uso: config/dimensionamento.yaml
     justificativa: >
-      Decisão do Fabio (portão da Parte B, 2026-10-27): incluir a plataforma já na Fase 1, com faixa
-      entre análogos publicados. Limite inferior: Mars Odyssey, 331,8 kg secos [F33], orbitador
-      químico sem carga de captura. Limite superior: módulo principal do ERO, 2200 kg secos [F22], que
-      inclui propulsão elétrica e painéis de 41 kW, desnecessários aqui. Base de 850 kg ≈ média
-      geométrica dos dois (√(331,8 × 2200) ≈ 854 kg), arredondada. A faixa cobre um fator de 6,6;
-      sem análogo direto (orbitador químico com captura em órbita), o centro em escala logarítmica é
-      a escolha neutra. Leva os sensores de encontro, que o CCRS de 2021 não inclui ("w/o RSS" [F22]).
+      Etapa 2.3 (decisão do Fabio no portão, 2026-10-27): lista por subsistema com análogo do Mars Odyssey [F33],
+      energia dimensionada para o afélio e o pior eclipse na órbita de 300 × 24.992 km, cabeamento de 5 % da
+      plataforma [F71], margem de crescimento no ponto médio da categoria E1 do AIAA S-120A [F70]. Básica 354,1 kg;
+      prevista 442,3 kg. Faixa: E1 mínimo (422) a ESA 20 % × 20 % (510). Depende das premissas P-028 a P-031 e
+      P-033. Histórico: até a Etapa 2.2 valia 850 kg (média geométrica de Odyssey 331,8 kg [F33] e ERO 2200 kg [F22]).
     status: NÃO VALIDADA
   - id: P-017
     nome: plataforma_superficie_kg
-    valor: 850
-    faixa: [284, 2500]
-    unidade: kg (massa pousada sem o MAV)
+    valor: 1558.5
+    faixa: [529, 2500]
+    unidade: kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV)
     uso: config/superficie.yaml — massa pousada = MAV + plataforma de superfície
     justificativa: >
-      Plataforma de pouso (estrutura, pernas, energia, aviônica, sistema de lançamento do MAV,
-      transferência de amostras). Limite inferior: lander Phoenix, 410 kg com 67 kg de propelente e
-      59 kg de instrumentos, ou seja, 284 kg secos sem carga [F40]. Limite superior: SRL de 2024, capacidade
-      pousada de ~2900 kg [F41] menos o MAV de 400 kg [F35], ou seja, 2500 kg (inclui elementos do MSR
-      que podem não se aplicar). Base ≈ média geométrica (√(284 × 2500) ≈ 843 kg), arredondada para 850 kg,
-      pelo mesmo critério da P-016. ATENÇÃO: é o SEGUNDO uso do critério da média geométrica sem análogo
-      direto (o primeiro foi a P-016); as duas bases têm a mesma fragilidade e devem ser revistas juntas.
-      Valor sem fonte direta.
+      Etapa 2.3 (decisões do Fabio no portão, 2026-10-27). Base = L3 + amostras.
+      L3: análogo da mesma classe, o Sample Retrieval Lander do MSR: até 2100 kg secos na superfície [F77] menos o
+      MAV de 400 kg [F35] e o rover de busca de < 230 kg [F78] = 1470 kg (limite inferior dessa conta, porque o SFR é
+      "< 230 kg"); valor de alocação, sem margem adicional. Cobre ao menos parte do sistema de lançamento e ereção do
+      MAV (MLS), sem massa publicada; os itens próprios do MSR são incerteza declarada.
+      Amostras: item da P-034 (59 kg, MGA E1 de 50 % = 88,5 kg) somado como ALOCAÇÃO PROVISÓRIA; o conceito de coleta
+      e o objetivo científico ficam para a Etapa 2.5. Total de base 1558,5 kg; GSFC 1787,9 kg; ESA 2201,8 kg.
+      Faixa: limite inferior L1 = núcleo do Phoenix sem escala (529 kg); limite superior = SRL de 2024 menos o MAV,
+      2900 − 400 = 2500 kg [F41][F35], COMPARABILIDADE NÃO CONFIRMADA (a fonte fala em carga pousada, não em massa
+      seca). L2 (1857 kg) fica só como referência. Histórico: até a Etapa 2.2 valia 850 kg (média geométrica de
+      Phoenix e SRL); no primeiro portão da 2.3, 1470 kg (L3 sem amostras).
     status: NÃO VALIDADA
   - id: P-018
     nome: razao_massa_pousada_entrada
@@ -292,4 +293,88 @@ premissas:
       de −62,5 °C, com 320 kg de propelente [F57]. Escala linear com ΔT (condução) e com a área ~ massa^(2/3).
       Para o hipergólico, mínimo de −1 °C (NTO congela a −11 °C [F61], + 10 K de margem). Aquecimento
       contínuo durante toda a estada, sem uso do calor residual de um MMRTG. Sem fonte para essa escala.
+    status: NÃO VALIDADA
+  - id: P-028
+    nome: carga_eletrica_orbitador_w
+    valor: 510
+    unidade: W (mesma carga no sol e no eclipse)
+    uso: config/plataformas.yaml — painel e bateria do orbitador
+    justificativa: >
+      Soma de dois análogos: barramento do Mars Express no modo de comunicação, sem carga útil, 445 W [F68],
+      e o relé UHF Electra em full duplex, pior caso no fim de vida, 65 W [F69]. Não inclui a potência do
+      sistema de captura (CU-2), que não tem valor publicado. Usar a carga de pico também no eclipse é conservador.
+    status: NÃO VALIDADA
+  - id: P-029
+    nome: eficiencia_recarga_bateria
+    valor: 0.8
+    unidade: adimensional (energia devolvida / energia de recarga)
+    uso: config/plataformas.yaml — potência do painel do orbitador
+    justificativa: >
+      Sem fonte primária para Li-ion de espaçonave. O JPL D-101146 cita ~80 % de eficiência energética, mas
+      para baterias de alta temperatura (outra química), por isso não é usado como fonte. Valor redondo e conservador.
+    status: NÃO VALIDADA
+  - id: P-030
+    nome: fator_perdas_painel_orbitador
+    valor: 0.774
+    unidade: adimensional (multiplica a potência específica a 1 UA escalada por 1/d²)
+    uso: config/plataformas.yaml — massa do painel do orbitador
+    justificativa: >
+      Do MRO [F65]: 6000 W perto da Terra e 2000 W em Marte. Se "em Marte" for a distância média (1,5236915 UA [F56]),
+      a razão 2000/6000 vale 0,774 do inverso do quadrado (calculado aqui). Cobre temperatura e degradação de forma
+      agregada. A fonte não diz a que distâncias valem os dois números.
+    status: NÃO VALIDADA
+  - id: P-031
+    nome: base_do_cabeamento_orbitador
+    valor: plataforma
+    unidade: —
+    uso: config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71]
+    justificativa: >
+      A regra da ESA aplica 5 % sobre a massa seca nominal do veículo inteiro. Aqui a base é só a plataforma: a CU-2
+      é uma alocação de carga útil que já traz o seu cabeamento, e o ε dos estágios já inclui o deles. Revista no
+      portão da Etapa 2.3: a primeira versão incluía a CU-2 na base, e 37,4 dos 55,2 kg básicos de cabeamento
+      vinham dela, recebendo a margem de 75 %.
+    status: NÃO VALIDADA
+  - id: P-032
+    nome: energia_lander
+    valor: {energia_por_sol_wh: 3500, fracao_noite: 0.5}
+    unidade: Wh/sol; adimensional
+    uso: config/plataformas.yaml — painel e bateria do lander
+    justificativa: >
+      Consumo da plataforma do lander igual à energia gerada pelo Phoenix por sol no início da missão [F76].
+      Rendimento do painel pelo do Phoenix (3500 Wh/sol em 4,2 m² [F40]), obtido a ~68° N no verão, com o Sol
+      quase sempre acima do horizonte; no sítio deste estudo (18,85°) a noite tem ~metade do sol (fração 0,5).
+      Sem poeira, sem tempestade e sem variação sazonal. O aquecimento do MAV e a sua energia ficam no bloco do MAV.
+    status: NÃO VALIDADA
+  - id: P-033
+    nome: margem_crescimento_e1_ponto_medio
+    valor: ponto médio da faixa E1 do AIAA S-120A
+    unidade: —
+    uso: config/plataformas.yaml — margem por subsistema
+    justificativa: >
+      A norma dá faixas por categoria [F70]; a escolha do ponto dentro da faixa é de projeto. Os extremos da faixa
+      e as alternativas da ESA [F71] e do GSFC [F72] aparecem lado a lado nos resultados. A classificação de cada
+      subsistema numa categoria (ex.: comunicação como eletrônica de 0–5 kg) também é escolha deste estudo.
+    status: NÃO VALIDADA
+  - id: P-034
+    nome: sistema_de_amostras_lander
+    valor: 59
+    unidade: kg
+    uso: "config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2"
+    justificativa: >
+      Carga útil do Phoenix, 59 kg [F40]: braço que escava e entrega amostras + instrumentos. Análogo funcional
+      sem massa própria publicada para um sistema de transferência ao MAV. O sistema de lançamento e ereção do
+      MAV (MLS do MSR) não tem massa publicada e NÃO está incluído.
+    status: NÃO VALIDADA
+  - id: P-035
+    nome: escala_nucleo_lander
+    valor: {limite_inferior: L1, limite_superior: SRL 2024 − MAV, referencia: L2, base: L3 + amostras}
+    unidade: —
+    uso: config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander
+    justificativa: >
+      Nenhum lander de Marte tem massa publicada por subsistema. O núcleo é o Phoenix sem combustível, sem
+      instrumentos e sem a comunicação e o radar já listados: 410 − 67 − 59 − 26,2 = 257,8 kg [F40][F74].
+      L1: núcleo sem escala (otimista: o Phoenix sustenta 59 kg de carga, aqui são ~300 kg de MAV).
+      L2: núcleo como fração constante (0,752) da massa pousada seca, como no Phoenix (pessimista: aviônica
+      e comunicação não crescem com a massa). Comparação: SRL, ≤ 2100 kg secos na superfície [F77], menos
+      MAV de 400 kg [F35] e SFR de < 230 kg [F78], ou seja, ≥ ~1470 kg com os itens do MSR.
     status: NÃO VALIDADA

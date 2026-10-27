@@ -47,11 +47,11 @@ dv:
 
 margem_dv: {valor: 0.10, premissa: P-014}
 
-# Plataforma do orbitador (energia, aviônica, comunicação, térmica, GNC, sensores de encontro):
-# fica com o orbitador até o fim da missão. Faixa entre análogos publicados: Mars Odyssey,
-# 331,8 kg secos [F33], e módulo principal do ERO, 2200 kg secos com propulsão elétrica e painéis de
-# 41 kW [F22]. Valor de base e justificativa: premissa P-016 (NÃO VALIDADA).
-plataforma_orbitador_kg: {valor: 850, premissa: P-016}
+# Plataforma do orbitador (estrutura do módulo de equipamentos, energia, térmico, comunicação, comando e dados,
+# GNC, mecanismos, cabeamento): lista por subsistema da Etapa 2.3 (config/plataformas.yaml), margem E1 média do
+# AIAA S-120A, na órbita de 300 × 24.992 km. Decisão do Fabio no portão da Etapa 2.3 (substitui os 850 kg).
+# O valor é o calculado por tools/plataformas.py; tests/test_plataforma.py confere que os dois coincidem.
+plataforma_orbitador_kg: {valor: 442.3, premissa: P-016}
 
 # Regra de projeto do envelope (ADR 0004, decisão do Fabio no portão da Parte B): variante (iii).
 regra_projeto: iii_marte_pior_terra_ref
