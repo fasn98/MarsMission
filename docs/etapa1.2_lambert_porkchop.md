@@ -57,7 +57,7 @@ absoluto e relativo, estão em `results/etapa1.2/verificacao_burke2010.md`, gera
    dias. Com partida no centro da Terra, o C3 difere até 0,9 %. A diferença tem causa física
    conhecida: a Terra se move cerca de 12 m/s em torno do baricentro Terra–Lua, e isso altera
    v∞,partida em até ~0,012 km/s. Como C3 = v∞², o efeito no C3 é de ~2·v∞·δv ≈ 0,07 km²/s², a
-   ordem observada. **Conclusão provável:** o manual usou o baricentro Terra–Lua (ou uma efeméride
+   ordem observada. **Convenção INFERIDA, não declarada pelo manual:** o manual usou o baricentro Terra–Lua (ou uma efeméride
    em que a Terra coincide com ele). O documento não diz isso. Para a missão, o fisicamente correto
    é partir do centro da Terra, e os porkchops usam 399.
 2. **v∞ de chegada nos mínimos próprios.** A tabela (a) do arquivo de resultados compara o mínimo de
@@ -77,7 +77,8 @@ absoluto e relativo, estão em `results/etapa1.2/verificacao_burke2010.md`, gera
    As figuras de 2035 do mesmo documento (pp. 41–42) mostram a bacia de mínimo do Tipo I perto da
    partida em ~28/06/35 e da chegada em ~02/01/36. Essa posição é coerente com as datas calculadas
    aqui e não com as da Tabela 6. É uma leitura visual da figura, sem extração numérica. Não se
-   afirma aqui qual das duas está certa. A janela de 2035 fica fora do teste automático.
+   afirma aqui qual das duas está certa. A janela de 2035 fica fora do teste automático, pela lista
+   explícita `config/excecoes_verificacao.yaml`.
 
    **Busca por errata (2026-10-27):** o registro NTRS 20100037210 tem um único documento (PDF
    original), sem itens relacionados nem versão revisada. A busca na web por errata ou revisão do

@@ -1,8 +1,8 @@
 # Etapa 1.2 (continuação): retorno Marte→Terra
 
-Estado: aguardando o portão do Fabio. Decisão anterior (2026-10-27): verificar o método contra o
-JPL 82-43 Parte 5 num ano coberto por ele; depois calcular 2029–2040 com o mesmo código. GMAT
-adiado.
+Estado: aprovado no portão de 2026-10-27; fecha com o merge do PR #3. Decisão anterior
+(2026-10-27): verificar o método contra o JPL 82-43 Parte 5 num ano coberto por ele; depois
+calcular 2029–2040 com o mesmo código. GMAT adiado.
 
 ## 1. Fonte de verificação
 
@@ -19,7 +19,7 @@ Opportunities, 1992–2007* (1987), docs/fontes.md [F14].
   `tests/data/jpl8243p5_minimos.yaml` foram conferidos na imagem da página.
 - **Efeméride do manual: DE-118**, declarada na Seção IV ("Table of Constants"). O NAIF não
   distribui a DE118. A DE200 é a DE118 girada para J2000 (Standish, 1990 [F15]; afirmação conferida
-  no registro NTRS e em fontes secundárias, artigo não lido). C3L e VHP são normas e não dependem
+  no resumo do registro NTRS, texto completo não lido). C3L e VHP são normas e não dependem
   da rotação, então a DE200 representa a DE118 aqui.
 - **Tolerância esperada por causa da efeméride:** medida, não suposta. Trocar a DE440 pela DE200
   nas 32 linhas muda C3L e VHP em **no máximo 1,5e-5 relativo** (0,0015 %), e em menos de 1e-5
@@ -41,10 +41,14 @@ Terra (399) e no baricentro Terra–Lua (3).
 O mínimo próprio, buscado sem usar as datas do JPL, cai nas mesmas datas da tabela, com diferença
 de no máximo 1 dia, em 28 das 29 linhas regulares com chegada no baricentro Terra–Lua. A exceção é
 2002/3 VHP tipo II, explicada abaixo. O padrão é o mesmo
-do manual da NASA na ida: as duas fontes parecem tratar a Terra como o baricentro Terra–Lua. Nenhum
-dos dois documentos declara isso.
+do manual da NASA na ida. Daí a **convenção INFERIDA**: as duas fontes tratam a Terra como o
+baricentro Terra–Lua. **Nenhum dos dois documentos declara isso**; é uma inferência a partir da
+concordância numérica. Nos cálculos da missão usa-se o centro da Terra (decisão do Fabio, 2026-10-27).
 
 ### Linhas fora do padrão (3 de 32), fora do teste automático
+
+Ficam fora do teste pela lista explícita `config/excecoes_verificacao.yaml`, com o motivo de cada
+uma. A tolerância P-008 não foi alargada para cobri-las.
 
 | Linha | O que acontece | Explicação |
 | :- | :- | :- |
@@ -58,7 +62,8 @@ sentido prógrado da eclíptica) seria Tipo I. O valor confere (+0,09 %). A dife
 outra vez perto de 180°. Por causa disso, o mínimo próprio de VHP com restrição de Tipo II cai em
 outro ponto (2003-02-28 → 2003-11-13, 3.107 km/s, +3,1 %, 9 dias de diferença na chegada).
 
-Teste automático: `tests/test_retorno.py`, 29 linhas, tolerância P-008 (NÃO VALIDADA).
+Teste automático: `tests/test_retorno.py`, 29 linhas, tolerância P-008 (aprovada em 2026-10-27,
+NÃO VALIDADA).
 
 ## 3. Retornos 2029–2040
 
@@ -120,7 +125,8 @@ idênticos byte a byte antes e depois):
 
 ## 5. Premissa nova
 
-P-008 (tolerância da verificação contra o JPL 82-43, 0,2 %), NÃO VALIDADA.
+P-008 (tolerância da verificação contra o JPL 82-43, 0,2 %), aprovada em 2026-10-27, continua NÃO
+VALIDADA.
 
 ## 6. Limitações
 

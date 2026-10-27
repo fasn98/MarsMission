@@ -2,9 +2,8 @@
 
 Nas datas impressas nas tabelas "ENERGY MINIMA" (1992–2007), com partida no baricentro de
 Marte e chegada no baricentro Terra–Lua, C3L e VHP devem bater dentro de P-008 (NÃO
-VALIDADA). Três linhas ficam fora e estão explicadas em docs/etapa1.2_retorno.md:
-1994 C3L tipo I e 2002/3 C3L tipo II (a até 1,4° da linha singular de 180°) e 2004/5 C3L
-tipo II (data de chegada impressa inconsistente com o valor).
+VALIDADA). As linhas fora do teste vêm da lista explícita em config/excecoes_verificacao.yaml,
+cada uma com o motivo; a tolerância não é alargada para cobri-las.
 """
 
 from __future__ import annotations
@@ -20,7 +19,8 @@ from orbital import porkchop as pc
 
 RAIZ = Path(__file__).resolve().parents[1]
 REF = yaml.safe_load((RAIZ / "tests/data/jpl8243p5_minimos.yaml").read_text(encoding="utf-8"))["janelas"]
-FORA = {("1994", "c3l_1"), ("2002/3", "c3l_2"), ("2004/5", "c3l_2")}
+EXCECOES = yaml.safe_load((RAIZ / "config/excecoes_verificacao.yaml").read_text(encoding="utf-8"))
+FORA = {(e["janela"], e["linha"]) for e in EXCECOES["jpl8243p5"]}
 CASOS = [(a, k) for a in REF for k in ("c3l_1", "c3l_2", "vhp_1", "vhp_2") if (a, k) not in FORA]
 
 
@@ -38,3 +38,9 @@ def test_c3l_e_vhp_nas_datas_do_manual(ano, linha):
                                       spice.str2et(f"{r['chegada']} 00:00 TDB"))
     calc = c3 if linha.startswith("c3l") else vinf
     assert abs(calc - float(r["valor"])) / float(r["valor"]) < _premissa("tolerancia_jpl8243_rel")
+
+
+def test_excecoes_existem_e_tem_motivo():
+    for e in EXCECOES["jpl8243p5"]:
+        assert e["linha"] in REF[e["janela"]]
+        assert e["motivo"].strip()

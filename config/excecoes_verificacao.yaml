@@ -1,0 +1,30 @@
+# Linhas de tabelas publicadas que ficam FORA dos testes automáticos de verificação.
+# Cada exceção tem o motivo. A tolerância dos testes NÃO é alargada para cobri-las.
+# Lista aprovada pelo Fabio no portão de 2026-10-27; só ele altera.
+jpl8243p5:   # tests/test_retorno.py
+  - janela: "1994"
+    linha: c3l_1
+    motivo: >
+      Nas datas inteiras da tabela (00:00 TDB) o ângulo de transferência é 178,6°, perto da linha
+      singular de 180°, e o C3L sai +2,1 %. O mínimo próprio reproduz 7.433 nas mesmas datas, em
+      outra hora do dia: a tabela arredonda as datas para o dia.
+  - janela: "2002/3"
+    linha: c3l_2
+    motivo: >
+      O mínimo do JPL fica em 180,2°, dentro da faixa de ±1° excluída da busca pela premissa P-006.
+      Nas datas da tabela o C3L sai +25,5 %; o mínimo próprio fora da faixa é 9.627 (+1,1 %).
+  - janela: "2004/5"
+    linha: c3l_2
+    motivo: >
+      A data de chegada impressa (2006/06/30) é inconsistente com o valor da mesma linha: nela o
+      ângulo é 307,9° e o C3L é 60,6. O valor 13.197 e a data de partida são reproduzidos com
+      chegada em 2006/03/30.
+burke2010:   # tests/test_porkchop.py
+  - janela: "2035"
+    linha: tipo_1
+    motivo: >
+      Tabela 6 inconsistente com as figuras do mesmo documento (pp. 41–42): C3, v∞ e tempo de voo
+      são reproduzidos em datas ~63 dias posteriores às impressas.
+  - janela: "2035"
+    linha: tipo_2
+    motivo: Idem tipo_1 (Tabela 6, 2035).
