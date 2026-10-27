@@ -3,11 +3,16 @@
 # Versões fixas: as mesmas do ambiente conda conferido em 2026-10-26 (agora como wheels do PyPI); streamlit e plotly
 # com versões publicadas há mais de duas semanas em 2026-10-27 (streamlit 1.65.0: 02/10/2026; plotly 7.1.0: 15/09/2026;
 # pandas 3.0.6: 17/09/2026, datas de upload no PyPI). As dependências transitivas não são fixadas.
+# (O streamlit e o pillow seguem a exceção abaixo.)
 #
 # EXCEÇÃO à regra das duas semanas (decisão do Fabio, 2026-10-27): streamlit 1.66.1 (upload no PyPI em 21/10/2026) e
-# pillow>=13.0.0 (13.0.0: 16/10/2026). Motivo: CVE-2026-96639 e CVE-2026-112398, classificados como "Critical" nas notas
-# oficiais do Pillow 13.0.0 (https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html, seção Security), afetam
-# o pillow até a 12.3.0 e são corrigidos na 13.0.0; o streamlit até a 1.66.0 exige pillow<13 (1.66.1: pillow<14).
+# pillow>=13.0.0 (13.0.0: 16/10/2026). Motivo: avisos de segurança "Critical" corrigidos na 13.0.0.
+#   - Notas oficiais do Pillow 13.0.0 (https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html), seção Security, "Critical":
+#     CVE-2026-96639 / GHSA-v9pv-5gc8-w2m6 e GHSA-5x8w-8jj5-q52h, GHSA-8g5g-8vmr-9782 (estes, sem CVE nas notas).
+#   - Avisos do projeto no GitHub (https://github.com/python-pillow/Pillow/security/advisories/):
+#     GHSA-v9pv-5gc8-w2m6: CVE-2026-96639, "Critical", CVSS 9.8, afetadas ">= 11.0.0, <= 12.3.0", corrigida "13.0.0";
+#     GHSA-5x8w-8jj5-q52h: CVE-2026-112398, "Critical", afetadas "<= 12.3.0", corrigida "13.0.0".
+#   O streamlit até a 1.66.0 exige pillow<13 (1.66.1: pillow<14; metadados das wheels no PyPI).
 # O pillow é dependência do matplotlib e do streamlit, por isso fica nas obrigatórias, só com o piso.
 # A regra das duas semanas volta a valer na próxima atualização de dependências.
 
