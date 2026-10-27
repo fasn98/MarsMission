@@ -1,0 +1,152 @@
+# Etapa 2.3 — plataformas do orbitador e do lander por subsistema (tools/plataformas.py).
+# Fontes em docs/fontes.md; premissas (NÃO VALIDADAS) em config/premissas.yaml.
+#
+# Fronteiras (o que NÃO entra na plataforma, para não contar duas vezes):
+# - Orbitador: tanques, motores e estrutura dos estágios estão na fração estrutural ε dos estágios
+#   (config/dimensionamento.yaml); captura, contenção, montagem e cápsula estão na carga útil CU-2
+#   (config/carga_util.yaml). A plataforma é o resto: estrutura do módulo de equipamentos, energia,
+#   térmico, comunicação, comando e dados, GNC, mecanismos e cabeamento.
+# - Lander: aeroshell, paraquedas e propelente de descida estão na razão pousada/entrada (P-018); o MAV,
+#   o seu aquecimento e a fonte de energia desse aquecimento estão no bloco do MAV (config/mav_propulsao.yaml,
+#   opção O4). A plataforma de superfície é o resto.
+
+margem_crescimento:
+  # AIAA S-120A-2015, Tabela 1 "Mass Growth Allowance by Design Maturity", reproduzida em [F70], p. 4.
+  # Categoria E1 "Estimated": "An approximation based on rough sketches, parametric analysis, or incomplete
+  # requirements" — é a maturidade deste estudo (nenhum item tem desenho; todos vêm de análogos).
+  # Base: ponto médio da faixa E1 (P-033); extremos da faixa na sensibilidade.
+  fonte: "[F70] NASA/TM-20240014203, Fig. 2, p. 4 (Tabela 1 do AIAA S-120A, categoria E1)"
+  categorias_e1:
+    eletronica_0_5kg: [20, 35]
+    eletronica_5_15kg: [15, 25]
+    eletronica_acima_15kg: [10, 20]
+    estrutura_primaria: [18, 25]
+    controle_termico: [30, 50]
+    propulsao_fluidos: [15, 25]
+    baterias: [20, 25]
+    cabeamento: [50, 100]
+    painel_solar: [20, 35]
+    estrutura_secundaria: [20, 35]
+    mecanismos: [18, 25]
+    instrumentacao: [25, 75]
+  alternativas:
+    # Mostradas lado a lado; não entram no caso de base.
+    esa:
+      fonte: "[F71] ESA SRE-PA/2011.097, Issue 1 Rev 3, p. 5: R-M1-4 (≥ 20 % para itens novos ou com grande modificação) e R-M1-1 (margem de sistema de 20 % sobre a massa seca nominal)"
+      equipamento: 0.20
+      sistema: 0.20
+    gsfc:
+      fonte: "[F72] GSFC-STD-1000I, Tabela 1.06-1, p. 10: pré-Fase A \">15% at all times before SRR\"; margem = (permitida − prevista)/básica"
+      sistema_sobre_basica: 0.15
+
+orbitador:
+  analogo: Mars Odyssey (único orbitador de Marte com massa publicada por subsistema)
+  subsistemas:
+    estrutura:
+      massa_kg: 81.7
+      fonte: "[F63] Odyssey Launch Press Kit, p. 30: \"The structures subsystem weighs 81.7 kilograms\""
+      categoria: estrutura_primaria
+      nota: "Inclui a estrutura do módulo de propulsão do Odyssey: possível dupla contagem com o ε dos estágios (conservador)."
+    termico:
+      massa_kg: 20.3
+      fonte: "[F63] p. 30: \"The thermal control subsystem weighs 20.3 kilograms\""
+      categoria: controle_termico
+    comunicacao:
+      massa_kg: 23.9
+      fonte: "[F63] p. 28: \"The telecommunication subsystem weighs 23.9 kilograms\" (banda X e UHF; o UHF faz o relé com landers)"
+      categoria: eletronica_0_5kg
+      alternativa_mro_kg: {valor: 107.7, fonte: "[F64] MRO Telecommunications, DESCANSO, Tab. 2-1, p. 15: \"Telecom total 107.7\" (HGA de 3 m, Ka e Electra)"}
+    comando_e_dados:
+      massa_kg: 11.1
+      fonte: "[F63] p. 28: \"The entire command and data handling subsystem weighs 11.1 kilograms\""
+      categoria: eletronica_5_15kg
+    gnc:
+      massa_kg: 23.4
+      fonte: "[F63] p. 28: \"The guidance, navigation and control subsystem weighs 23.4 kilograms\""
+      categoria: eletronica_5_15kg
+    mecanismos:
+      massa_kg: 24.2
+      fonte: "[F63] p. 31: \"All of the mechanisms combined weigh 24.2 kilograms\""
+      categoria: mecanismos
+    energia_restante:
+      # Subsistema de energia do Odyssey (86,0 kg: painel, bateria NiH2 de 16 Ah, PDDU, pirotécnicos, acionamentos)
+      # menos o painel estimado pela mesma potência específica usada aqui (1500 W no início / 80 W/kg).
+      massa_energia_odyssey_kg: {valor: 86.0, fonte: "[F63] p. 28: \"The electrical power subsystem weighs 86.0 kilograms\""}
+      painel_odyssey_w_1ua: {valor: 1500, fonte: "[F33] p. 6: \"Solar array providing up to 1,500 watts just after launch, 750 watts at Mars\""}
+      categoria: eletronica_acima_15kg
+      nota: "O restante ainda contém a bateria do Odyssey; somar a bateria dimensionada aqui é conservador."
+  excluidos:
+    - "Propulsão seca do Odyssey, 49,7 kg [F63] p. 30 — coberta pelo ε dos estágios."
+    - "Instrumentos do Odyssey, 44,5 kg [F33] — a carga útil aqui é a CU-2."
+  energia:
+    carga_w:
+      # 445 W: barramento do Mars Express no modo de comunicação, sem carga útil [F68]; + 65 W: Electra (relé UHF)
+      # em full duplex, pior caso no fim de vida [F69]. Mesma carga no sol e no eclipse.
+      valor: 510
+      premissa: P-028
+    eficiencia_recarga: {valor: 0.8, premissa: P-029}
+    profundidade_descarga: {valor: 0.30, fonte: "[F73] JPL D-101146, p. 35: ciclo de vida longo \"only possible at shallow depths of discharge of <30%\""}
+    profundidade_descarga_faixa: [0.27, 0.40]   # [F67] MGS limitado a 27 %; [F66] MRO "Only about 40% of the battery capacity was intended to be used"
+    energia_especifica_bateria_wh_kg: {valor: 100, fonte: "[F73] p. 28: \"The state of practice Li-ion batteries have high specific energy (~100 Wh/kg)\""}
+    painel_w_kg_1ua: {valor: 80, fonte: "[F55] p. 26: \"~80 W/kg\" no início da vida a 1 UA"}
+    fator_perdas_painel: {valor: 0.774, premissa: P-030}
+    distancia_ua:
+      # Afélio de Marte = a (1 + e), com a = 1,5236915 UA e e = 0,093377 [F56] (calculado aqui).
+      semieixo: {valor: 1.5236915, fonte: "[F56]"}
+      excentricidade: {valor: 0.093377, fonte: "[F56] lista de símbolos: \"eccentricity : 0.093377\""}
+  cabeamento:
+    fracao: {valor: 0.05, fonte: "[F71] p. 5, R-M1-7: \"Harness mass shall be considered to be at least 5 % of nominal dry mass\""}
+    base: plataforma_e_carga_util   # P-031: aplicada à plataforma + CU-2 (o ε dos estágios já inclui o cabeamento deles)
+  topo_para_baixo:
+    # Comparação: plataformas inteiras de orbitadores maiores (não por subsistema).
+    mro_outros_secos_kg: {valor: 892, fonte: "[F65] MRO Launch Press Kit, p. 6: \"892 kilograms … other dry weight\" (inclui a propulsão seca)"}
+    mex_plataforma_kg: {valor: 439, fonte: "[F68] ESA, Mars Express fact sheet: \"Spacecraft Bus 439 kg\" (inclui a propulsão seca)"}
+    ero_modulo_principal_kg: {valor: 2200, fonte: "[F22] slide 8 (inclui propulsão elétrica e painéis de 41 kW)"}
+
+lander:
+  analogo: Phoenix (único lander com parte da massa publicada por subsistema; nenhum lander de Marte tem a lista completa publicada)
+  phoenix:
+    lander_kg: {valor: 410, fonte: "[F40] p. 6: lander de 410 kg"}
+    combustivel_kg: {valor: 67, fonte: "[F40] p. 6"}
+    instrumentos_kg: {valor: 59, fonte: "[F40] p. 6: \"59 kilograms … of science-instrument payload\" (inclui o braço robótico)"}
+  subsistemas:
+    uhf:
+      massa_kg: 6.5
+      fonte: "[F74] Phoenix Telecommunications, DESCANSO, Tab. 2-16, p. 70: \"UHF 6.5\""
+      categoria: eletronica_0_5kg
+    banda_x_cruzeiro:
+      massa_kg: 14.7
+      fonte: "[F74] Tab. 2-16, p. 70: \"X-band 14.7\" (\"used during cruise only\")"
+      categoria: eletronica_0_5kg
+    radar:
+      massa_kg: 5.0
+      fonte: "[F74] Tab. 2-16, p. 70: \"Radar and electronics 5.0\""
+      categoria: eletronica_0_5kg
+    amostras:
+      massa_kg: 59
+      fonte: "[F40] p. 6: carga útil do Phoenix (braço que coleta e entrega amostras + instrumentos), usada como análogo do sistema de coleta e transferência"
+      categoria: instrumentacao
+      premissa: P-034
+    nucleo:
+      # Phoenix sem combustível, sem instrumentos, sem as comunicações e o radar listados acima: estrutura,
+      # pernas, térmico, comando e dados, GNC, propulsão de descida seca, energia e cabeamento, sem divisão publicada.
+      categoria: estrutura_primaria
+      nota: "Contém o painel e as baterias do Phoenix; somar a energia dimensionada aqui é conservador."
+  escala_nucleo:
+    # P-035. Opções para o Fabio decidir:
+    #   L1: núcleo do Phoenix sem escala;
+    #   L2: núcleo como fração constante da massa pousada seca do Phoenix (cresce com o MAV).
+    opcoes: [L1, L2]
+  energia:
+    energia_por_sol_wh: {valor: 3500, premissa: P-032}
+    rendimento_painel_wh_sol_m2:
+      # 3500 Wh/sol [F76] com 4,2 m² de área funcional [F75] (calculado aqui), a ~68° N no verão.
+      energia_wh: {valor: 3500, fonte: "[F76] JPL, 09/09/2008: \"we generated about 3,500 watt-hours every sol\""}
+      area_m2: {valor: 4.2, fonte: "[F75] Phoenix Landing Press Kit, p. 27: \"a total of 4.2 square meters … of functional surface area\""}
+    densidade_area_painel_w_m2: {valor: 330, fonte: "[F55] p. 26: \"Areal power density is typically ~330 W/m2\""}
+    noite_fracao_sol: {valor: 0.5, premissa: P-032}
+    duracao_sol_h: {valor: 24.6597, fonte: "[F47] NASA GSFC, Mars Fact Sheet: \"Length of day (hrs) 24.6597\""}
+  topo_para_baixo:
+    srl_seco_superficie_kg: {valor: 2100, fonte: "[F77] Ivanov & Sell (JPL) 2020, resumo: \"as much as 2100 kg of dry mass to the surface\""}
+    srl_mav_kg: {valor: 400, fonte: "[F35]"}
+    srl_sfr_kg: {valor: 230, fonte: "[F78] Gramling 2020, slide 11: SFR \"Mass = < 230 kg\""}

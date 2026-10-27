@@ -18,5 +18,24 @@
 | P-014 | margem_dv | 0.1 | fração, aplicada a todos os trechos | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-015 | perdas_gravitacionais_do_dra | saida_terra: 0.148; captura_marte: 0.018; saida_marte: 0.011 | km/s | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-016 | plataforma_orbitador_kg | 850 | kg (massa seca da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
+| P-017 | plataforma_superficie_kg | 850 | kg (massa pousada sem o MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
+| P-018 | razao_massa_pousada_entrada | entrada_direta: 0.509; a_partir_de_orbita: 0.624 | adimensional (massa pousada / massa de entrada) | NÃO VALIDADA | config/superficie.yaml — massa do sistema de entrada, descida e pouso |
+| P-019 | mav_estagios | fracao_estrutural: 0.286; fracao_dv_estagio_1: 0.481 | adimensional | NÃO VALIDADA | config/superficie.yaml — dimensionamento do MAV sólido de dois estágios |
+| P-020 | aerofrenagem_orbitador | dv_saida_km_s: 0.09; duracao_dias: 205 | km/s; dias | NÃO VALIDADA | config/superficie.yaml — arquitetura S4 |
+| P-021 | mav_loxch4_fracao_estrutural | 0.295 | adimensional (por estágio, MAV de dois estágios) | NÃO VALIDADA | config/mav_propulsao.yaml (O2) e config/isru.yaml (Etapa 2.2) |
+| P-022 | escala_planta_moxie | expoente_massa: 1.0; expoente_potencia: 1.0 | adimensional | NÃO VALIDADA | config/isru.yaml — planta de O2 da opção O3 |
+| P-023 | escala_liquefacao_o2 | 1.0 | adimensional | NÃO VALIDADA | config/isru.yaml — liquefação de O2 (O3) |
+| P-024 | escala_armazenamento_zbo | 0.6667 | adimensional (expoente sobre a massa armazenada) | NÃO VALIDADA | config/isru.yaml — armazenamento sem evaporação na superfície (O2 e O3) |
+| P-025 | escala_energia_solar | 1.0 | adimensional | NÃO VALIDADA | config/isru.yaml — massa de painéis solares |
+| P-026 | armazenamento_cruzeiro | referencia_kg: 6567; expoente: 0.6667 | kg; adimensional | NÃO VALIDADA | config/mav_propulsao.yaml — armazenamento sem evaporação de LOX e CH4 no cruzeiro (O2) |
+| P-027 | aquecimento_mav_superficie | expoente_area: 0.6667; margem_congelamento_k: 10 | adimensional; K | NÃO VALIDADA | config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada |
+| P-028 | carga_eletrica_orbitador_w | 510 | W (mesma carga no sol e no eclipse) | NÃO VALIDADA | config/plataformas.yaml — painel e bateria do orbitador |
+| P-029 | eficiencia_recarga_bateria | 0.8 | adimensional (energia devolvida / energia de recarga) | NÃO VALIDADA | config/plataformas.yaml — potência do painel do orbitador |
+| P-030 | fator_perdas_painel_orbitador | 0.774 | adimensional (multiplica a potência específica a 1 UA escalada por 1/d²) | NÃO VALIDADA | config/plataformas.yaml — massa do painel do orbitador |
+| P-031 | base_do_cabeamento_orbitador | plataforma + CU-2 | — | NÃO VALIDADA | config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71] |
+| P-032 | energia_lander | energia_por_sol_wh: 3500; fracao_noite: 0.5 | Wh/sol; adimensional | NÃO VALIDADA | config/plataformas.yaml — painel e bateria do lander |
+| P-033 | margem_crescimento_e1_ponto_medio | ponto médio da faixa E1 do AIAA S-120A | — | NÃO VALIDADA | config/plataformas.yaml — margem por subsistema |
+| P-034 | sistema_de_amostras_lander | 59 | kg | NÃO VALIDADA | config/plataformas.yaml — coleta e transferência de amostras no lander |
+| P-035 | escala_nucleo_lander | opcoes: ['L1', 'L2'] | — | NÃO VALIDADA | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
 
-Total: 16 premissas, 16 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 35 premissas, 35 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
