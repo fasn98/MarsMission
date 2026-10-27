@@ -81,3 +81,54 @@ def test_item_tem_largura_automatica_so_nas_tabelas_estreitas():
     estreitas = [c for c in colunas("pagina_orcamento") if "Origem" in c]
     assert len(estreitas) == 2   # orbitador e lander
     assert all("Item" not in c and c["Origem"]["width"] == 320 for c in estreitas)
+
+
+def _trajetoria_com_falha_no_download():
+    """Página Trajetória com garantir_kernels trocado: levanta TimeoutError enquanto painel.dados._teste_falhar for
+    verdadeiro (estado no módulo, compartilhado com o teste no mesmo processo; AppTest só serializa esta função)."""
+    import sys
+
+    import streamlit as st
+
+    from painel import dados
+
+    if not hasattr(dados, "_garantir_original"):
+        dados._garantir_original = dados.garantir_kernels
+
+    def garantir():
+        if dados._teste_falhar:
+            raise TimeoutError("o download de X passou do prazo de 120 s (config/operacional.yaml)")
+        return dados._garantir_original()
+
+    dados.garantir_kernels = garantir
+    original = st.navigation
+    st.navigation = lambda paginas, **k: type("SemNavegacao", (), {"run": lambda self: None})()
+    try:
+        sys.modules.pop("painel.app", None)
+        import painel.app as app
+    finally:
+        st.navigation = original
+    app._kernels.clear()
+    app.pagina_trajetoria()
+
+
+def test_trajetoria_mostra_erro_do_download_e_tentar_de_novo_funciona():
+    from painel import dados
+
+    dados._teste_falhar = True
+    try:
+        at = AppTest.from_function(_trajetoria_com_falha_no_download, default_timeout=180)
+        at.run()
+        assert not at.exception
+        assert "passou do prazo de 120 s" in at.error[0].value and "Nada foi calculado" in at.error[0].value
+        botao = at.button(key="kernels_tentar_de_novo")
+        assert botao.label == "Tentar de novo"
+        dados._teste_falhar = False   # a rede voltou
+        botao.click().run()
+        assert not at.exception and not at.error
+        assert any("Partida da Terra" in str(df.value) for df in at.dataframe)   # a trajetória foi calculada
+    finally:
+        if hasattr(dados, "_garantir_original"):
+            dados.garantir_kernels = dados._garantir_original
+            del dados._garantir_original
+        del dados._teste_falhar

@@ -16,6 +16,8 @@ genéricas.
    - Formato novo de resultado: um script novo em `tools/`.
    - Todo número em relatório, ADR, PR ou painel vem de `results/` (ou de `src/` chamado sobre `config/`), nunca
      digitado.
+   - A regra de números só de `results/` vale para resultados científicos; observações de ambiente são permitidas
+     com data e máquina.
 5. **Erratas são acrescentadas.** Nunca apagar o texto original de relatórios e ADRs: acrescentar uma seção
    "Errata" ou "Nota", com data, que diga o que muda e quais números estão vigentes.
 6. **Reprodutibilidade.**

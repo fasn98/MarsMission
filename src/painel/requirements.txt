@@ -1,0 +1,6 @@
+# Streamlit Community Cloud: não é uma lista de dependências. Só instala este repositório (pyproject.toml, fonte única,
+# ADR 0010) com o extra "painel", em modo editável (orbital.config.RAIZ precisa da árvore do repositório).
+# Fica na pasta do arquivo de entrada (src/painel/app.py) porque o Community Cloud procura primeiro ali e usa o
+# primeiro arquivo que achar; sem ele, valeria o environment.yml da raiz. O caminho "." é resolvido pelo pip a partir
+# da pasta atual, que precisa ser a raiz do repositório (ver docs/painel.md, "Publicar no Streamlit Community Cloud").
+-e .[painel]

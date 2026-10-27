@@ -18,6 +18,7 @@ import numpy as np
 
 from orbital import ephemeris as eph
 from orbital import kepler, lambert
+from orbital import kernels as krn
 from orbital import porkchop as pc
 from orbital.config import RAIZ, ler, v
 from orbital.constantes import GM_SOL, UA_KM
@@ -320,13 +321,15 @@ def mascara_porkchop(g: dict, c3_max: float) -> np.ndarray:
 
 # ---------------------------------------------------------------- trajetória heliocêntrica
 
-def kernels_presentes() -> bool:
-    return all(p.exists() for p in eph.kernels_configurados())
+def garantir_kernels() -> list[dict]:
+    """Baixa os kernels de config/kernels.yaml que faltam (ex.: primeira execução no Streamlit Community Cloud) e confere
+    o MD5 de todos, com a rotina de tools/fetch_kernels.py (orbital.kernels). ValueError se algum MD5 não conferir."""
+    return krn.garantir(avisar=lambda _: None)
 
 
 def trajetoria(pontos_arco: int = 200, passo_planetas_dias: float = 2.0) -> dict:
     """Trajetória 2D (plano da eclíptica J2000, em UA) da missão de referência: Terra e Marte nas datas reais (DE440)
-    e os arcos de Lambert da ida e da volta, propagados por Kepler. Precisa dos kernels (tools/fetch_kernels.py)."""
+    e os arcos de Lambert da ida e da volta, propagados por Kepler. Precisa dos kernels (garantir_kernels)."""
     eph.carregar_kernels()
     m = missao_referencia()
     datas = dict(m["eventos"])

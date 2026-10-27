@@ -1,0 +1,17 @@
+# Parâmetros operacionais: controlam a execução do software (download, interface) e não entram em nenhum cálculo do
+# estudo. Não são premissas científicas (não vão para config/premissas.yaml) nem dados de fonte publicada: são escolhas
+# de operação, decididas pelo Fabio.
+download_kernels:
+  timeout_s:
+    valor: 120
+    tipo: parâmetro operacional
+    decisao: Fabio, 2026-10-27 (PR #19)
+    uso: >
+      Prazo para baixar cada kernel de config/kernels.yaml (src/orbital/kernels.py), usado pelo painel na primeira
+      execução e por tools/fetch_kernels.py (também no CI, quando o cache dos kernels falha). Limita cada operação de
+      rede e o tempo total, conferido a cada bloco; no pior caso o arquivo leva perto de 2× o prazo, e a resolução de
+      DNS não obedece ao prazo.
+    justificativa: >
+      Sem prazo, uma conexão travada prende a página Trajetória: o st.cache_resource tem uma trava por chave, e as
+      outras sessões esperariam atrás dela até o app reiniciar. Com o prazo, o download falha com mensagem clara e a
+      página oferece tentar de novo. O valor dá folga a conexões lentas.
