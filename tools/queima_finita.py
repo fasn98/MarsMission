@@ -63,7 +63,7 @@ def main():
     pl = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
     rp_enc, ra_enc = R + pl["periapse_alt_km"], R + pl["apoapse_regra_5pct_km"]
     perda_p015 = {k: v(x) for k, x in dcfg["dv"]["perda_gravitacional"].items()}
-    vei, _, _ = ve.veiculos()
+    vei, _, _ = ve.veiculos(detalhe=True)
     orb, lan = vei["orbitador_regra_iii"], vei["lander"]
     cs = casos()
     out = {"gerado_por": "tools/queima_finita.py",

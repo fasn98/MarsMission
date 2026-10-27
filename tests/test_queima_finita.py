@@ -76,7 +76,9 @@ def test_conjunto_soma_empuxo_e_massa():
 
 
 def test_massa_antes_de_cada_queima_fecha_com_o_propelente():
-    vei = ve.veiculos()[0]
+    vei = ve.veiculos(detalhe=True)[0]
+    sem = ve.veiculos()[0]   # sem detalhe: as chaves de antes (lancamento.yaml grava este dicionário)
+    assert "queimas" not in sem["lander"]["estagios"][0] and "mav_estagios" not in sem["lander"]
     for veic in ("orbitador_regra_iii", "lander"):
         for e in vei[veic]["estagios"]:
             q = e["queimas"]
