@@ -1,0 +1,8 @@
+# Massas publicadas do MSR usadas na comparação de ordem de grandeza (Etapa 1.4).
+# Cada valor conferido no texto do documento (2026-10-27).
+ero_massa_umida_kg: {valor: 6500, fonte: "[F22] Yau (ESA) 2021, slide 7: \"Approx 6.5 Tonnes (wet mass)\""}
+ero_lancamento_tfaws_kg: {valor: 7200, fonte: "[F29] Buchwalter & Lepilliez 2023, slide 6: \"Launch mass: 7.2 tons (~4 tons of Xenon and chemical propellant)\""}
+ero_oim_seco_kg: {valor: 600, fonte: "[F22] slide 8"}
+ero_oim_propelente_kg: {valor: 1900, fonte: "[F22] slide 8"}
+ero_modulo_principal_seco_kg: {valor: 2200, fonte: "[F22] slide 8"}
+ero_xenonio_kg: {valor: 1100, fonte: "[F22] slide 8 (propulsão elétrica, Isp 4000 s)"}

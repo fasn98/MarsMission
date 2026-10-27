@@ -21,6 +21,13 @@ opcoes:
     volta_a_terra:
       - {item: "EEV com COS (contêiner com OS e amostras)", massa: 89.9, fonte: "[F24] slide 30"}
     ressalva: "A fonte não diz se os 620 kg do CCRS incluem o EES; aqui a cápsula é somada à parte (escolha conservadora)."
+  CU-2b:
+    nome: "Leitura alternativa da CU-2: os 620 kg do CCRS já incluem a cápsula (só sensibilidade)"
+    ate_orbita_marte:
+      - {item: "CCRS incluindo o EES", massa: 620, fonte: "[F23] p. 5 (620 kg); [F32] Martin-Mur et al. 2024, p. 5: \"Capture, Containment, and Return System (CCRS), including the Earth Entry System (EES)\""}
+    volta_a_terra:
+      - {item: "EEV com COS", massa: 89.9, fonte: "[F24] slide 30"}
+    ressalva: "Nenhuma das fontes diz explicitamente se a massa de 620 kg inclui a cápsula."
   CU-3:
     nome: Cota inferior — só cápsula com amostras
     ate_orbita_marte:

@@ -1,0 +1,189 @@
+gerado_por: tools/dimensionamento.py
+caso_base:
+  carga_util: CU-2
+  acrescimo_capsula: 0.0
+margem_dv: 0.1
+variantes:
+  missao_A:
+    descricao: missão A em todos os estágios
+    massa_orbita_baixa_kg: 6179.7
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 3741.2
+      inerte_kg: 402.8
+      massa_inicial_kg: 6179.7
+    - nome: insercao_marte
+      propelente_kg: 670.0
+      inerte_kg: 211.6
+      massa_inicial_kg: 2035.8
+    - nome: retorno
+      propelente_kg: 337.6
+      inerte_kg: 106.6
+      massa_inicial_kg: 1154.1
+  i_sistema_unico:
+    descricao: (i) saída da Terra com estágio próprio + um só estágio para captura
+      e retorno; cada janela com a sua missão, projeto pela pior janela
+    massa_orbita_baixa_kg: 10351.7
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 6267.6
+      inerte_kg: 674.8
+      massa_inicial_kg: 10351.7
+    - nome: marte_unico
+      propelente_kg: 2051.6
+      inerte_kg: 647.9
+      massa_inicial_kg: 3409.3
+    janela_que_define: '2033'
+  ii_estagios_pior_trecho:
+    descricao: (ii) cada estágio pelo pior caso do seu trecho
+    massa_orbita_baixa_kg: 10628.7
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 6508.2
+      inerte_kg: 700.7
+      massa_inicial_kg: 10628.7
+    - nome: insercao_marte
+      propelente_kg: 1342.7
+      inerte_kg: 424.0
+      massa_inicial_kg: 3419.9
+    - nome: retorno
+      propelente_kg: 716.8
+      inerte_kg: 226.4
+      massa_inicial_kg: 1653.1
+  iii_marte_pior_terra_ref:
+    descricao: (iii) estágios de Marte pelo pior caso; saída da Terra pela janela
+      de referência (A)
+    massa_orbita_baixa_kg: 10381.3
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 6284.8
+      inerte_kg: 676.6
+      massa_inicial_kg: 10381.3
+    - nome: insercao_marte
+      propelente_kg: 1342.7
+      inerte_kg: 424.0
+      massa_inicial_kg: 3419.9
+    - nome: retorno
+      propelente_kg: 716.8
+      inerte_kg: 226.4
+      massa_inicial_kg: 1653.1
+sensibilidade:
+- parametro: Carga útil
+  valor: CU-1
+  massa_orbita_baixa_kg:
+    missao_A: 6292.1
+    i_sistema_unico: 10257.7
+    ii_estagios_pior_trecho: 10264.1
+    iii_marte_pior_terra_ref: 10025.1
+- parametro: Carga útil
+  valor: CU-2
+  massa_orbita_baixa_kg:
+    missao_A: 6179.7
+    i_sistema_unico: 10351.7
+    ii_estagios_pior_trecho: 10628.7
+    iii_marte_pior_terra_ref: 10381.3
+- parametro: Carga útil
+  valor: CU-2b
+  massa_orbita_baixa_kg:
+    missao_A: 5396.3
+    i_sistema_unico: 9038.4
+    ii_estagios_pior_trecho: 9280.3
+    iii_marte_pior_terra_ref: 9064.2
+- parametro: Carga útil
+  valor: CU-3
+  massa_orbita_baixa_kg:
+    missao_A: 799.2
+    i_sistema_unico: 1332.2
+    ii_estagios_pior_trecho: 1367.9
+    iii_marte_pior_terra_ref: 1336.0
+- parametro: Margem de Δv
+  valor: 0 %
+  massa_orbita_baixa_kg:
+    missao_A: 4989.8
+    i_sistema_unico: 7596.3
+    ii_estagios_pior_trecho: 8070.3
+    iii_marte_pior_terra_ref: 7903.8
+- parametro: Margem de Δv
+  valor: 5 %
+  massa_orbita_baixa_kg:
+    missao_A: 5549.7
+    i_sistema_unico: 8839.1
+    ii_estagios_pior_trecho: 9251.8
+    iii_marte_pior_terra_ref: 9048.9
+- parametro: Margem de Δv
+  valor: 10 %
+  massa_orbita_baixa_kg:
+    missao_A: 6179.7
+    i_sistema_unico: 10351.7
+    ii_estagios_pior_trecho: 10628.7
+    iii_marte_pior_terra_ref: 10381.3
+- parametro: Margem de Δv
+  valor: 20 %
+  massa_orbita_baixa_kg:
+    missao_A: 7691.9
+    i_sistema_unico: 14541.2
+    ii_estagios_pior_trecho: 14124.4
+    iii_marte_pior_terra_ref: 13755.3
+- parametro: Acréscimo na massa da cápsula
+  valor: 0 %
+  massa_orbita_baixa_kg:
+    missao_A: 6179.7
+    i_sistema_unico: 10351.7
+    ii_estagios_pior_trecho: 10628.7
+    iii_marte_pior_terra_ref: 10381.3
+- parametro: Acréscimo na massa da cápsula
+  valor: 15 %
+  massa_orbita_baixa_kg:
+    missao_A: 6296.2
+    i_sistema_unico: 10545.9
+    ii_estagios_pior_trecho: 10828.1
+    iii_marte_pior_terra_ref: 10576.0
+- parametro: Acréscimo na massa da cápsula
+  valor: 30 %
+  massa_orbita_baixa_kg:
+    missao_A: 6412.7
+    i_sistema_unico: 10740.1
+    ii_estagios_pior_trecho: 11027.5
+    iii_marte_pior_terra_ref: 10770.8
+- parametro: Acréscimo na massa da cápsula
+  valor: 50 %
+  massa_orbita_baixa_kg:
+    missao_A: 6568.0
+    i_sistema_unico: 10999.1
+    ii_estagios_pior_trecho: 11293.4
+    iii_marte_pior_terra_ref: 11030.5
+- parametro: Isp de todos os estágios
+  valor: -5 %
+  massa_orbita_baixa_kg:
+    missao_A: 7010.1
+    i_sistema_unico: 12547.6
+    ii_estagios_pior_trecho: 12516.0
+    iii_marte_pior_terra_ref: 12204.3
+- parametro: Isp de todos os estágios
+  valor: +5 %
+  massa_orbita_baixa_kg:
+    missao_A: 5521.5
+    i_sistema_unico: 8774.3
+    ii_estagios_pior_trecho: 9191.4
+    iii_marte_pior_terra_ref: 8990.4
+- parametro: Frações estruturais × fator
+  valor: 0,50
+  massa_orbita_baixa_kg:
+    missao_A: 4670.6
+    i_sistema_unico: 6171.4
+    ii_estagios_pior_trecho: 7088.6
+    iii_marte_pior_terra_ref: 6946.8
+- parametro: Frações estruturais × fator
+  valor: 1,50
+  massa_orbita_baixa_kg:
+    missao_A: 9243.5
+    i_sistema_unico: 41007.9
+    ii_estagios_pior_trecho: 20129.0
+    iii_marte_pior_terra_ref: 19568.8
+orcamento_total_km_s:
+  A: 5.8694
+  jan. 2028: 5.8694
+  jan. 2031: 6.2565
+  jan. 2033: 6.3721
+  jan. 2035: 6.3895
+  pior_por_trecho: 6.8625
