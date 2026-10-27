@@ -3,6 +3,13 @@
 # Versões fixas: as mesmas do ambiente conda conferido em 2026-10-26 (agora como wheels do PyPI); streamlit e plotly
 # com versões publicadas há mais de duas semanas em 2026-10-27 (streamlit 1.65.0: 02/10/2026; plotly 7.1.0: 15/09/2026;
 # pandas 3.0.6: 17/09/2026, datas de upload no PyPI). As dependências transitivas não são fixadas.
+#
+# EXCEÇÃO à regra das duas semanas (decisão do Fabio, 2026-10-27): streamlit 1.66.1 (upload no PyPI em 21/10/2026) e
+# pillow>=13.0.0 (13.0.0: 16/10/2026). Motivo: CVE-2026-96639 e CVE-2026-112398, classificados como "Critical" nas notas
+# oficiais do Pillow 13.0.0 (https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html, seção Security), afetam
+# o pillow até a 12.3.0 e são corrigidos na 13.0.0; o streamlit até a 1.66.0 exige pillow<13 (1.66.1: pillow<14).
+# O pillow é dependência do matplotlib e do streamlit, por isso fica nas obrigatórias, só com o piso.
+# A regra das duas semanas volta a valer na próxima atualização de dependências.
 
 [build-system]
 requires = ["setuptools>=77"]   # license = "MIT" como string (PEP 639) exige setuptools ≥ 77
@@ -21,11 +28,12 @@ dependencies = [
     "matplotlib==3.11.2",
     "pyyaml==6.0.3",
     "spiceypy==8.3.0",
+    "pillow>=13.0.0",   # exceção de 2026-10-27, ver o cabeçalho
 ]
 
 [project.optional-dependencies]
 dev = ["pytest==9.1.1"]
-painel = ["streamlit==1.65.0", "plotly==7.1.0", "pandas==3.0.6"]   # pandas: usado direto em src/painel/app.py
+painel = ["streamlit==1.66.1", "plotly==7.1.0", "pandas==3.0.6"]   # pandas: usado direto em src/painel/app.py
 
 [tool.setuptools.packages.find]
 where = ["src"]

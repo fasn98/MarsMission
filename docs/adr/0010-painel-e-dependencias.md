@@ -38,3 +38,17 @@ ambiente de execução: ele importa o repositório do GitHub e roda, sem altera�
   versionado. Para este PR: `results/conferencia/regeneracao_painel.md`.
 - **Uso e publicação no Replit:** `docs/painel.md`, inclusive o que exige plano pago e a alternativa estática
   (GitHub Pages).
+
+## Nota (2026-10-27): pillow ≥ 13.0.0 e streamlit 1.66.1
+- **Decisão do Fabio:** exceção à regra de versões publicadas há mais de duas semanas (cabeçalho do `pyproject.toml`).
+  - O streamlit vai de 1.65.0 para 1.66.1 (upload no PyPI em 21/10/2026).
+  - Entra `pillow>=13.0.0` nas dependências obrigatórias (13.0.0: 16/10/2026).
+  - A regra volta a valer na próxima atualização de dependências.
+- **Motivo:** as notas oficiais do Pillow 13.0.0 (https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html, seção
+  Security) classificam como "Critical" o CVE-2026-96639 e o CVE-2026-112398, que afetam o pillow até a 12.3.0 e são
+  corrigidos na 13.0.0.
+  - O streamlit até a 1.66.0 exige `pillow<13`; a 1.66.1 exige `pillow<14`.
+  - O firewall de pacotes do Replit bloqueia o pillow até a 12.3.0 ("Critical CVE"), e a instalação do painel parava
+    nele (`docs/painel.md`).
+- **Prova:** pytest e `results/` regenerado no ambiente novo (`results/conferencia/regeneracao_pillow13.md`).
+- O restante desta ADR continua vigente.
