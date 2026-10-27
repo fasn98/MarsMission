@@ -1,7 +1,41 @@
 # Etapa 1.3: missões completas Terra→Marte→Terra
 
-Estado: aguardando o portão do Fabio, que escolhe a missão de referência. Nenhuma missão foi
-escolhida aqui.
+Estado: portão de 2026-10-27 feito. O Fabio escolheu a missão de referência (seção 0). As seções
+1 a 6 descrevem o cálculo apresentado no portão; os números que mudaram com o limite de
+reentrada (P-011) estão indicados.
+
+## 0. Decisões do portão (2026-10-27)
+
+1. **Missão de referência: candidata A**, 2028, classe conjunção: partida em 2028-11-23 e chegada à
+   Terra em 2031-09-22. Órbita elíptica de 1 sol e captura **propulsiva** como linha de base
+   (ADR 0003). A aerocaptura fica como opção comparada, com a ressalva de que **nunca foi feita em
+   voo**:
+   - "Aerocapture has never been performed" (Wercinski, Munk, Powell & Hall, NASA/TM-2002-211386 [F21]);
+   - "aerocapture has never been demonstrated at any planetary destination" (Dutta et al., NASA,
+     2025, NTRS 20250006035 [F21]).
+2. **Envelope de dimensionamento** (ADR 0004): o Δv de projeto é o da pior conjunção de 2028 a 2035.
+   O valor sai de `tools/missoes.py`, pela regra em `config/missao_referencia.yaml`.
+   **Pendência:** aplicada a todas as conjunções calculadas e com o limite de reentrada dentro da
+   busca, a regra dá **6,64 km/s** (`2028-conjuncao_transito_curto`), e não os 6,17 km/s da D citados
+   no portão. A D era a pior só entre as cinco candidatas apresentadas. Falta confirmar a leitura:
+   - (a) 6,64 km/s, como está configurado;
+   - (b) só a classe conjunção sem limite de trânsito: 5,91 km/s;
+   - (c) só as candidatas apresentadas: 6,17 km/s.
+3. **P-009 e P-010** aprovadas, continuam NÃO VALIDADA.
+4. **Limite de reentrada de 12,9 km/s** (P-011, NÃO VALIDADA), valor da Stardust, a maior reentrada
+   já feita: "The inertial entry velocity and flight-path angle for Stardust were 12.9 km/s and
+   –8.2 deg" (Desai, Lyons, Tooley & Kangas, NTRS 20060028186 [F20]; mesmo valor em Desai,
+   Mitcheltree & Cheatwood, NTRS 20050042027).
+   - A fonte não declara a altitude da interface. Trocar 121,9 km por 125 km mudaria a velocidade
+     calculada em ~0,002 km/s.
+   - O limite agora é aplicado **dentro da busca**. A missão A não muda (reentrada a 12,34 km/s). A
+     conjunção de 2028 com trânsitos ≤ 210 d muda pouco: chegada 2 dias depois, 6,64 km/s,
+     reentrada a 12,84 km/s. A oposição balística passa a custar de 17 a 30 km/s (seção 2).
+5. **A órbita de 1 sol aumenta o Δv da subida a partir da superfície** em relação a uma órbita
+   baixa, porque o veículo de subida precisa chegar a uma órbita de energia maior. Ela barateia
+   captura e saída (seção 2) e encarece a subida. Essa troca será fechada na Fase 2.
+6. **DRA, Tabela 4-1 (3,487) × Tabela 4-2 (3,847):** registrado como possível transposição de
+   dígitos, sem afirmar qual valor está certo (seção 4).
 
 ## 1. Método
 
@@ -42,20 +76,23 @@ escolhida aqui.
 | Interface de reentrada na Terra | 121,92 km (400.000 ft) | NASA TN D-6725, p. 8 [F19] |
 | Raios equatoriais da Terra e de Marte | 6378,1366 km; 3396,19 km | pck00011.tpc / IAU 2015 [F17] |
 | GM da Terra e de Marte | 398600,4355; 42828,3736 km³/s² | gm_de440.tpc [F10] |
+| Velocidade máxima de reentrada | 12,9 km/s | **NÃO VALIDADA** (P-011), valor da Stardust [F20]; incluída depois do portão |
 
 ## 2. Resultados
 
 Tabelas completas: `results/etapa1.3/missoes.md` e `missoes.yaml`, geradas por `tools/missoes.py`.
 Gráfico Δv × duração: `results/etapa1.3/dv_x_duracao.png` (`tools/grafico_missoes.py`). Nenhuma das
-12 combinações (4 janelas × 3 classes) tem data na borda do domínio de busca.
+12 combinações (4 janelas × 3 classes) tinha data na borda do domínio no cálculo do portão. Com a
+P-011, três oposições ficam na borda (sem efeito nas conjunções).
 
 Leitura geral:
 
-- **Oposição balística: v∞ na Terra de 11,9 a 15,2 km/s e reentrada a 16 a 19 km/s.** É bem acima
-  dos limites de reentrada citados no DRA 5.0 (12 km/s no SP p. 31; 13 a 13,5 km/s no Addendum). As
-  missões de oposição do DRA usam passagem por Vênus (SP Fig. 6-2), que não está no modelo. Na
-  forma balística deste estudo, a oposição exigiria Δv de frenagem na Terra ou outra arquitetura de
-  retorno, não modelados.
+- **Oposição balística.** Sem limite de reentrada (cálculo apresentado no portão), o v∞ na Terra
+  ficou entre 11,9 e 15,2 km/s e a reentrada entre 16 e 19 km/s, acima dos limites citados no
+  DRA 5.0 (12 km/s no SP p. 31; 13 a 13,5 km/s no Addendum). **Com o limite de 12,9 km/s (P-011)**,
+  o Δv propulsivo da oposição balística vai a **17 a 30 km/s** (órbita de 1 sol), com C3 de até 345 km²/s², e três das
+  quatro janelas ficam na borda do domínio de busca. Na prática é inviável. As oposições do DRA
+  usam passagem por Vênus (SP Fig. 6-2), que não está no modelo.
 - **Conjunção: Δv total de 5,4 a 6,6 km/s** com órbita de 1 sol e captura propulsiva, e de 4,3 a
   5,2 km/s com aerocaptura. Com a órbita circular baixa, o total sobe 2,3 a 2,4 km/s, porque captura
   e saída ficam mais profundas no poço gravitacional.
@@ -87,8 +124,8 @@ Compromissos (fatos do modelo, sem recomendação):
 
 - **A (2028):** menor Δv do conjunto e a missão mais cedo. Também é a mais longa (1033 d), com
   trânsitos de cerca de 300 d. A reentrada de 12,34 km/s passa do limite de 12 km/s do SP do DRA,
-  mas fica abaixo dos 13,5 km/s do Addendum. Com trânsitos limitados a 210 d, a janela de 2028 sobe
-  para 6,64 km/s, com reentrada de 12,95 km/s.
+  mas fica abaixo dos 13,5 km/s do Addendum e do limite da P-011. Com trânsitos limitados a 210 d, a
+  janela de 2028 sobe para 6,64 km/s; com a P-011, a reentrada fica em 12,84 km/s.
 - **B (2033):** Δv baixo, trânsitos de ~200 d sem precisar de restrição e a menor velocidade de
   reentrada (11,48 km/s). A DLA de −55,5° é a maior em módulo do conjunto. Uma partida no plano de
   uma órbita de estacionamento exige inclinação ≥ |DLA|, então seria preciso uma órbita baixa de alta
@@ -102,7 +139,8 @@ Compromissos (fatos do modelo, sem recomendação):
   (3,87). Com aerocaptura, o total cai para 4,61 km/s, porque a saída de Marte é barata. DLA de −30°.
 - **E (2033, oposição):** menos da metade da duração (463 d), mas com Δv ~50 % maior e reentrada de
   16,2 km/s, fora dos limites citados no DRA. Está aqui só para mostrar o compromisso de classe.
-  Na forma balística, não é viável sem frenagem na Terra.
+  Valores calculados **sem** a P-011. Com o limite de 12,9 km/s, a melhor oposição de 2033 passa a
+  28,2 km/s (`results/etapa1.3/missoes.md`).
 
 Variantes que aparecem só na tabela completa: 2031 conjunção sem restrição de trânsito (5,78 km/s,
 982 d, DLA 14,8°) e 2035 conjunção sem restrição (5,91 km/s, 1014 d).
@@ -135,12 +173,15 @@ Explicação das diferenças, separando o modelo de Δv da trajetória:
    Δv de saída de Marte do DRA (1,573 contra 0,79 e 1,05). Em 2035 as trajetórias são parecidas e a
    razão chega a 0,96.
 3. A Tabela 4-1 do Addendum dá "Maximum TEI V∞ 3.487 km/s", mas a Tabela 4-2 traz 3.847 em todas as
-   linhas. A inconsistência é da fonte, e não se decide aqui qual valor é o erro tipográfico.
+   linhas. É uma possível transposição de dígitos; não se afirma qual valor está certo.
 
 ## 5. Premissas novas (NÃO VALIDADAS)
 
 - **P-009:** faixa de permanência de 400 a 700 d na busca da conjunção.
 - **P-010:** periapse de 50 km na passagem de aerocaptura.
+- **P-011:** velocidade máxima de reentrada de 12,9 km/s (Stardust), incluída depois do portão.
+
+P-009 e P-010 foram aprovadas no portão de 2026-10-27 e continuam NÃO VALIDADA.
 
 ## 6. Limitações
 

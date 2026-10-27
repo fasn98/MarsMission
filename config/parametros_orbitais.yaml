@@ -42,3 +42,8 @@ interface_reentrada_alt_km:
   fonte: >
     [F19] Graves & Harpold, NASA TN D-6725 (1972), p. 8: "This interface is defined as an
     altitude of 400 000 feet above the surface of the earth" (400.000 ft = 121,92 km).
+reentrada_max_km_s:
+  valor: 12.9
+  status: NÃO VALIDADA
+  premissa: P-011
+  fonte: "[F20] Stardust, NTRS 20060028186 (12,9 km/s inerciais na entrada)"

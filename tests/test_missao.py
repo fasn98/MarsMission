@@ -33,7 +33,7 @@ def _grades(rng, n_dep=6, n_M=12, n_arr=10):
     return ida, volta
 
 
-def _forca_bruta(ida, volta, perm, dur, orbita, aero, tofmax=np.inf):
+def _forca_bruta(ida, volta, perm, dur, orbita, aero, tofmax=np.inf, p=P):
     melhor = (np.inf, None)
     for i, a, d, k in itertools.product(*(range(n) for n in (len(ida.et_partida), len(ida.et_chegada),
                                                                 len(volta.et_partida), len(volta.et_chegada)))):
@@ -42,10 +42,12 @@ def _forca_bruta(ida, volta, perm, dur, orbita, aero, tofmax=np.inf):
             continue
         if ida.tof_dias[i, a] > tofmax or volta.tof_dias[d, k] > tofmax:
             continue
+        if np.sqrt(volta.vinf_chegada[d, k] ** 2 + 2 * p.mu_terra / p.r_interface_terra) > p.v_reentrada_max:
+            continue
         if not np.isfinite(ida.c3[i, a]) or abs(ida.angulo_transf[i, a] - 180) <= 1 or abs(volta.angulo_transf[d, k] - 180) <= 1:
             continue
-        c = (ms.custo_saida_terra(P, ida.c3[i, a]) + ms.custo_captura_marte(P, ida.vinf_chegada[i, a], orbita, aero)
-             + ms.custo_saida_marte(P, volta.c3[d, k], orbita))
+        c = (ms.custo_saida_terra(p, ida.c3[i, a]) + ms.custo_captura_marte(p, ida.vinf_chegada[i, a], orbita, aero)
+             + ms.custo_saida_marte(p, volta.c3[d, k], orbita))
         if c < melhor[0]:
             melhor = (float(c), (i, a, d, k))
     return melhor
@@ -59,6 +61,19 @@ def test_busca_igual_forca_bruta(semente, orbita, aero, perm, dur, tofmax):
     ida, volta = _grades(np.random.default_rng(semente))
     esperado = _forca_bruta(ida, volta, perm, dur, orbita, aero, tofmax)
     obtido = ms.melhor_combinacao(P, ida, volta, perm, dur, orbita, aero, tofmax)
+    if esperado[1] is None:
+        assert obtido is None
+    else:
+        assert obtido[0] == pytest.approx(esperado[0], rel=1e-12)
+
+
+@pytest.mark.parametrize("semente", range(6))
+def test_limite_de_reentrada_igual_forca_bruta(semente):
+    import dataclasses
+    p = dataclasses.replace(P, v_reentrada_max=11.9)  # corta parte dos v∞ sintéticos (2–6 km/s)
+    ida, volta = _grades(np.random.default_rng(semente))
+    esperado = _forca_bruta(ida, volta, (20, 90), 1e9, "alta", False, np.inf, p)
+    obtido = ms.melhor_combinacao(p, ida, volta, (20, 90), 1e9, "alta", False)
     if esperado[1] is None:
         assert obtido is None
     else:

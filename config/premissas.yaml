@@ -100,3 +100,16 @@ premissas:
       aerocaptura, não como valor de projeto. No modelo ideal, a elevação de periapse depois da
       passagem fica maior quanto mais baixo for o periapse, então 50 km tende a superestimar esse Δv.
     status: NÃO VALIDADA
+  - id: P-011
+    nome: reentrada_max_km_s
+    valor: 12.9
+    unidade: km/s (velocidade inercial na interface de reentrada)
+    uso: config/parametros_orbitais.yaml — limite na busca de missões (tools/missoes.py)
+    justificativa: >
+      Decisão do Fabio (portão da Etapa 1.3, 2026-10-27): usar a maior reentrada já feita, a da
+      cápsula Stardust. Fonte: Desai, Lyons, Tooley & Kangas, "Entry, Descent, and Landing
+      Operations Analysis for the Stardust Re-Entry Capsule", AIAA/AAS (NTRS 20060028186): "The
+      inertial entry velocity and flight-path angle for Stardust were 12.9 km/s and –8.2 deg". A
+      fonte não declara a altitude da interface. O valor é um precedente de voo, não um limite
+      de projeto para a cápsula deste estudo.
+    status: NÃO VALIDADA

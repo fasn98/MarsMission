@@ -46,7 +46,8 @@ def parametros():
         mu_terra=_valor(po["gm_terra"]), mu_marte=_valor(po["gm_marte"]), leo=ms.Orbita(leo, leo),
         orbitas_marte=orbitas, rp_aerocaptura_marte=rm + _valor(po["aerocaptura_periapse_alt_km"]),
         r_interface_terra=rt + _valor(po["interface_reentrada_alt_km"]),
-        exclusao_180=float(premissas["exclusao_angulo_180_graus"]))
+        exclusao_180=float(premissas["exclusao_angulo_180_graus"]),
+        v_reentrada_max=_valor(po["reentrada_max_km_s"]))
 
 
 def _eixo(ini, fim, passo):
@@ -89,10 +90,26 @@ def main():
             return {k: arred(v) for k, v in x.items()}
         return x
 
+    # Envelope de dimensionamento (ADR 0004): regra em config/missao_referencia.yaml.
+    ref = _ler("missao_referencia.yaml")
+    regra = ref["envelope_dimensionamento"]
+    chave = "dv_total_sem_aerocaptura_km_s" if regra["captura"] == "propulsiva" else "dv_total_com_aerocaptura_km_s"
+    elegiveis = [c for c in candidatas if c["janela_ida"] in regra["janelas"] and c["classe"] in regra["classes"]]
+    pior = max(elegiveis, key=lambda c: c["por_orbita_marte"][regra["orbita_marte"]][chave])
+    envelope = {"regra": regra, "missao_que_define": pior["id"],
+                "dv_total_km_s": round(float(pior["por_orbita_marte"][regra["orbita_marte"]][chave]), 4),
+                "elegiveis": {c["id"]: round(float(c["por_orbita_marte"][regra["orbita_marte"]][chave]), 4) for c in elegiveis}}
+    referencia = next(c for c in candidatas if c["id"] == ref["missao_referencia"]["id"])
+    print("envelope:", envelope["missao_que_define"], envelope["dv_total_km_s"])
+
     SAIDA.mkdir(parents=True, exist_ok=True)
     out = {"gerado_por": "tools/missoes.py", "criterio_selecao": crit,
+           "missao_referencia": {**ref["missao_referencia"], "datas": [referencia[k] for k in (
+               "partida_terra", "chegada_marte", "partida_marte", "chegada_terra")]},
+           "envelope_dimensionamento": envelope,
            "parametros": {"leo_raio_km": p.leo.rp, "orbitas_marte_km": {k: [v.rp, v.ra] for k, v in p.orbitas_marte.items()},
-                          "rp_aerocaptura_marte_km": p.rp_aerocaptura_marte, "r_interface_terra_km": p.r_interface_terra},
+                          "rp_aerocaptura_marte_km": p.rp_aerocaptura_marte, "r_interface_terra_km": p.r_interface_terra,
+                          "v_reentrada_max_km_s": p.v_reentrada_max},
            "candidatas": [arred(c) for c in candidatas]}
     (SAIDA / "missoes.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
 
@@ -100,7 +117,10 @@ def main():
     orbs = list(p.orbitas_marte)
     md = ["# Missões candidatas (gerado por tools/missoes.py)", "",
           f"Critério de seleção da trajetória: menor Δv propulsivo com órbita de Marte `{crit['orbita_marte']}`, "
-          f"aerocaptura = {crit['aerocaptura']}. Δv em km/s, C3 em km²/s², durações em dias.", "",
+          f"aerocaptura = {crit['aerocaptura']}. Reentrada limitada a {br(p.v_reentrada_max, 1)} km/s (P-011). "
+          f"Δv em km/s, C3 em km²/s², durações em dias.", "",
+          f"Missão de referência: **{ref['missao_referencia']['id']}**. Envelope de dimensionamento: "
+          f"**{br(envelope['dv_total_km_s'])} km/s**, definido por {envelope['missao_que_define']}.", "",
           "| Missão | Partida Terra | Chegada Marte | Partida Marte | Chegada Terra | Ida | Em Marte | Volta | Total | C3 | DLA (°) | v∞ Marte | v∞ Terra | v reentrada | Δv saída Terra |",
           "| :- | :- | :- | :- | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for c in candidatas:

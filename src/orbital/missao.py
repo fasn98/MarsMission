@@ -46,6 +46,7 @@ class Parametros:
     rp_aerocaptura_marte: float  # raio do periapse na passagem atmosférica
     r_interface_terra: float     # raio da interface de reentrada
     exclusao_180: float          # premissa P-006
+    v_reentrada_max: float = np.inf  # limite de velocidade de reentrada (km/s), premissa P-011
 
 
 def custo_saida_terra(p: Parametros, c3):
@@ -74,7 +75,8 @@ def melhor_combinacao(p: Parametros, ida: pc.Grade, volta: pc.Grade, permanencia
                       orbita: str, aerocaptura: bool, tof_max_dias: float = np.inf):
     """Melhor missão (menor Δv propulsivo) para uma classe. Devolve índices e custo, ou None.
 
-    `tof_max_dias` limita o tempo de voo de cada trecho (ida e volta).
+    `tof_max_dias` limita o tempo de voo de cada trecho (ida e volta). Retornos com velocidade
+    na interface de reentrada acima de `p.v_reentrada_max` são excluídos.
 
     `ida.et_chegada` e `volta.et_partida` precisam ser o mesmo eixo de datas em Marte.
     """
@@ -82,7 +84,10 @@ def melhor_combinacao(p: Parametros, ida: pc.Grade, volta: pc.Grade, permanencia
     custo_ida = custo_saida_terra(p, ida.c3) + custo_captura_marte(p, ida.vinf_chegada, orbita, aerocaptura)
     custo_ida = np.where(_mascara_180(ida, p.exclusao_180) | (ida.tof_dias > tof_max_dias), np.inf, custo_ida)
     custo_volta = custo_saida_marte(p, volta.c3, orbita)
-    custo_volta = np.where(_mascara_180(volta, p.exclusao_180) | (volta.tof_dias > tof_max_dias), np.inf, custo_volta)
+    v_ei = mn.velocidade_reentrada(p.mu_terra, volta.vinf_chegada, p.r_interface_terra)
+    excede = np.nan_to_num(v_ei, nan=np.inf) > p.v_reentrada_max
+    custo_volta = np.where(_mascara_180(volta, p.exclusao_180) | (volta.tof_dias > tof_max_dias) | excede,
+                           np.inf, custo_volta)
 
     # Mínimo cumulativo da volta ao longo da data de chegada à Terra (para limitar a duração).
     cum = np.minimum.accumulate(custo_volta, axis=1)
