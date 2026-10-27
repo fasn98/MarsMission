@@ -44,8 +44,10 @@ from superficie import _ler, _v, lander_estagios  # noqa: E402
 SAIDA = RAIZ / "results" / "etapa2.4"
 
 
-def veiculos():
-    """Massas injetadas (sem estágio de saída) do orbitador (iii e A) e do lander, no caso de base da Etapa 2.3."""
+def veiculos(plataforma_lander_kg=None):
+    """Massas injetadas (sem estágio de saída) do orbitador (iii e A) e do lander, no caso de base da Etapa 2.3.
+
+    `plataforma_lander_kg` substitui a plataforma do lander do config (usado na Etapa 2.5 para as opções de coleta)."""
     dcfg, scfg, cu = _ler("config/dimensionamento.yaml"), _ler("config/superficie.yaml"), _ler("config/carga_util.yaml")
     mcfg, icfg, po = _ler("config/mav_propulsao.yaml"), _ler("config/isru.yaml"), _ler("config/parametros_orbitais.yaml")
     p = dm.parametros()
@@ -75,7 +77,8 @@ def veiculos():
     dv = sf.dv_subida(mu, R, _v(scfg["subida"]["dv_100x100_km_s"]), rp, ra, v_eq,
                       _v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"]), _v(scfg["sitio_e_encontro"]["latitude_sitio_graus"]))
     pous, cruz, _ = massas_opcao((1 + margem) * dv, op_mav, mcfg, scfg, icfg, fonte_mav)
-    chegada = (pous + _v(scfg["lander"]["plataforma_superficie_kg"])) / _v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]) + cruz
+    plat = _v(scfg["lander"]["plataforma_superficie_kg"]) if plataforma_lander_kg is None else plataforma_lander_kg
+    chegada = (pous + plat) / _v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]) + cruz
     r = lander_estagios(chegada, scfg, dcfg, p, a_caso)
     out["lander"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial}
     return out, janelas, ref

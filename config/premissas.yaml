@@ -156,8 +156,8 @@ premissas:
     status: NÃO VALIDADA
   - id: P-016
     nome: plataforma_orbitador_kg
-    valor: 442.3
-    faixa: [422, 510]
+    valor: 496.5
+    faixa: [473, 574]
     unidade: kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil)
     uso: config/dimensionamento.yaml
     justificativa: >
@@ -166,6 +166,9 @@ premissas:
       plataforma [F71], margem de crescimento no ponto médio da categoria E1 do AIAA S-120A [F70]. Básica 354,1 kg;
       prevista 442,3 kg. Faixa: E1 mínimo (422) a ESA 20 % × 20 % (510). Depende das premissas P-028 a P-031 e
       P-033. Histórico: até a Etapa 2.2 valia 850 kg (média geométrica de Odyssey 331,8 kg [F33] e ERO 2200 kg [F22]).
+      Etapa 2.5 (pedido do Fabio): sensores de encontro alocados (2 NAC do ERO, 2 × 14,5 kg [F88]; LIDAR análogo,
+      RVS3000-3D, ca. 13 kg [F89]); prevista 442,3 → 496,5 kg (faixa E1 mínimo 473 a ESA 574). Câmera de ângulo
+      largo e potência do RSS: lacuna.
     status: NÃO VALIDADA
   - id: P-017
     nome: plataforma_superficie_kg

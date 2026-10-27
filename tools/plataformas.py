@@ -78,7 +78,7 @@ def orbitador(cfg, po, apoapse_km, rp_alt_km):
     er = s["energia_restante"]
     m_rest = _v(er["massa_energia_odyssey_kg"]) - _v(er["painel_odyssey_w_1ua"]) / _v(e["painel_w_kg_1ua"])
     itens = [(k, float(s[k]["massa_kg"]), s[k]["categoria"]) for k in
-             ("estrutura", "termico", "comunicacao", "comando_e_dados", "gnc", "mecanismos")]
+             ("estrutura", "termico", "comunicacao", "comando_e_dados", "gnc", "mecanismos", "rss_nac", "rss_lidar")]
     itens += [("painel_solar", m_sa, "painel_solar"), ("bateria", m_bat, "baterias"),
               ("energia_restante", m_rest, er["categoria"])]
     f = _v(o["cabeamento"]["fracao"])

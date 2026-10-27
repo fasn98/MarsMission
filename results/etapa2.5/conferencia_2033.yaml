@@ -1,0 +1,48 @@
+gerado_por: tools/confere_2033.py
+commit: 3ea91d5
+plataformas_usadas_kg:
+  orbitador: 850
+  lander: 850
+ferramentas:
+- tools/superficie.py
+- tools/varredura_encontro.py
+- tools/isru.py
+- tools/mav_propulsao.py
+arquivos:
+- arquivo: results/etapa2.1/arquiteturas.md
+  igual: true
+- arquivo: results/etapa2.1/arquiteturas.yaml
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro.md
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro.png
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro.yaml
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.md
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.png
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.yaml
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.md
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.png
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.yaml
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.md
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.png
+  igual: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  igual: true
+- arquivo: results/etapa2.2/isru.md
+  igual: true
+- arquivo: results/etapa2.2/isru.yaml
+  igual: true
+- arquivo: results/etapa2.2/mav_propulsao.md
+  igual: true
+- arquivo: results/etapa2.2/mav_propulsao.yaml
+  igual: true
+todos_iguais: true

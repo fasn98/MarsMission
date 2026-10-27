@@ -275,3 +275,15 @@ Pior margem com cada alternativa de 2033 está em `results/etapa2.4/lancamento.m
 - Lander: a velocidade de entrada em Marte muda com a janela, mas a razão pousada/entrada (P-018) foi
   mantida.
 - Opção (b): o armazenamento de LH2 na órbita baixa antes da queima não foi modelado.
+
+## Atualização (Etapa 2.5, 2026-10-27): sensores de encontro no orbitador
+Com os sensores de encontro alocados (Etapa 2.5), o orbitador da regra (iii) passa de 6.027 para **6.310 kg**
+injetados. Pior margem na forma (a) (`results/etapa2.4/lancamento.yaml`):
+
+| Lançador | Antes | Depois |
+| :- | -: | -: |
+| Falcon Heavy descartável | +86 % | **+78 %** |
+| Vulcan VC6 | +38 % | **+31 %** |
+
+Os dois continuam servindo. O lander não muda. Os números das seções acima são os de antes desta atualização.
+

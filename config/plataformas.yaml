@@ -11,7 +11,9 @@
 #   opção O4). A plataforma de superfície é o resto.
 #
 # Itens sem alocação ou provisórios (decisões do Fabio sobre a revisão independente, portão da Etapa 2.3):
-# - Sensores de encontro (RSS) do orbitador: LACUNA DECLARADA, sem massa. Verificado em [F23]: os 620 kg do CCRS
+# - Sensores de encontro (RSS) do orbitador: ALOCADOS na Etapa 2.5 (2 NAC do ERO [F88] + LIDAR análogo [F89]);
+#   a câmera de ângulo largo e a potência do RSS seguem como lacuna. Texto original da Etapa 2.3:
+#   Sensores de encontro (RSS) do orbitador: LACUNA DECLARADA, sem massa. Verificado em [F23]: os 620 kg do CCRS
 #   de 2024 são "composed of the capture, assembly and micrometeoroid enclosures with approximate masses of 240 kg,
 #   280 kg, and 100 kg" (p. 5); "detect and rendezvous with the OS" é objetivo da missão ERO, não do CCRS (p. 3).
 #   Logo a CU-2 não inclui o RSS. A lista do Odyssey também não. Massa publicada do RSS: pesquisa da Etapa 2.5.
@@ -76,6 +78,17 @@ orbitador:
       massa_kg: 24.2
       fonte: "[F33] p. 31: \"All of the mechanisms combined weigh 24.2 kilograms\""
       categoria: mecanismos
+    # Sensores de encontro (RSS), alocados na Etapa 2.5 (pedido do Fabio). O ERO usa duas câmeras de ângulo estreito
+    # (NAC) para detectar e seguir o contêiner e um LIDAR na aproximação final ([F32] p. 5). Câmera de ângulo largo:
+    # sem massa publicada (lacuna). Potência do RSS fora da carga P-028 (lacuna; NAC: Pmax 12 W [F88]).
+    rss_nac:
+      massa_kg: 29.0
+      fonte: "[F32] p. 5: \"use one of its two Narrow Angle Cameras (NAC)\"; [F88] Sodern 2022, p. 8: NAC do ERO, \"14,5 kg\", \"Pmax = 12 W\" (2 × 14,5 kg, calculado aqui)"
+      categoria: eletronica_5_15kg
+    rss_lidar:
+      massa_kg: 13.0
+      fonte: "[F89] Jena-Optronik 2018, slide 17: RVS3000-3D (LIDAR 3D, alvos não cooperativos, \"ca. 1400 m\"), \"Mass … ca. 13 kg\" — análogo; a massa do LIDAR do ERO não é publicada ([F32] p. 5 só diz \"ERO would use a LIDAR\")"
+      categoria: eletronica_5_15kg
     energia_restante:
       # Subsistema de energia do Odyssey (86,0 kg: painel, bateria NiH2 de 16 Ah, PDDU, pirotécnicos, acionamentos)
       # menos o painel estimado pela mesma potência específica usada aqui (1500 W no início / 80 W/kg).

@@ -17,7 +17,7 @@
 | P-013 | desvio_orbitador_parametros | periapse_seguro_alt_km: 300; antecedencia_dias: 1 | km; dias | NÃO VALIDADA | config/dimensionamento.yaml — Δv de desvio do orbitador após soltar a cápsula (plano B) |
 | P-014 | margem_dv | 0.1 | fração, aplicada a todos os trechos | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-015 | perdas_gravitacionais_do_dra | saida_terra: 0.148; captura_marte: 0.018; saida_marte: 0.011 | km/s | NÃO VALIDADA | config/dimensionamento.yaml |
-| P-016 | plataforma_orbitador_kg | 442.3 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
+| P-016 | plataforma_orbitador_kg | 496.5 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-017 | plataforma_superficie_kg | 1558.5 | kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
 | P-018 | razao_massa_pousada_entrada | entrada_direta: 0.509; a_partir_de_orbita: 0.624 | adimensional (massa pousada / massa de entrada) | NÃO VALIDADA | config/superficie.yaml — massa do sistema de entrada, descida e pouso |
 | P-019 | mav_estagios | fracao_estrutural: 0.286; fracao_dv_estagio_1: 0.481 | adimensional | NÃO VALIDADA | config/superficie.yaml — dimensionamento do MAV sólido de dois estágios |

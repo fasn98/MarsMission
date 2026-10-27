@@ -42,3 +42,15 @@ lançamentos separados (ADR 0005), em cada janela do envelope (2028–2035), com
 - **Massa na órbita baixa da Terra:** a soma da Etapa 2.3 (29,6 t pela regra iii) deixa de ser a medida
   de lançamento. Com (a), o orbitador não leva estágio de saída próprio. A Etapa 2.5 consolida a arquitetura
   com essa escolha.
+
+## Atualização (Etapa 2.5, 2026-10-27): sensores de encontro no orbitador
+Com os sensores de encontro alocados (Etapa 2.5), o orbitador da regra (iii) passa de 6.027 para **6.310 kg**
+injetados. Pior margem na forma (a) (`results/etapa2.4/lancamento.yaml`):
+
+| Lançador | Antes | Depois |
+| :- | -: | -: |
+| Falcon Heavy descartável | +86 % | **+78 %** |
+| Vulcan VC6 | +38 % | **+31 %** |
+
+Os dois continuam servindo. O lander não muda. Os números das seções acima são os de antes desta atualização.
+
