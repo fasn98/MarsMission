@@ -125,7 +125,8 @@ marcado "não conferido" precisa ser confirmado na primeira importação.
     - Em `/visao-geral` aparece ainda o aviso "The page that you have requested does not seem to exist. Running the
       app's main page.": a página padrão fica em `/`.
       - **Nota (2026-10-27):** com o alias `/visao-geral` (ver "Endereços", no início), o aviso deixou de aparecer: o
-        endereço abre a Visão geral, observado no mesmo Chromium headless. Os dois 404 de `/<página>/_stcore/...`
+        endereço abre a Visão geral. Observado no mesmo workspace e no mesmo Chromium headless, em `127.0.0.1:8502`,
+        com o código deste alias antes do rebase (commit f256ba0). Os dois 404 de `/<página>/_stcore/...`
         continuam e não foram investigados.
   - **Números exibidos, conferidos contra `results/`:**
     - partida da missão de referência: 2028-11-24 (`results/etapa1.3/missoes.yaml`);
