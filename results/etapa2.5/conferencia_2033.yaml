@@ -1,5 +1,5 @@
 gerado_por: tools/confere_2033.py
-commit: 6eff417
+commit: 799c3b7
 plataformas_usadas_kg:
   orbitador: 850
   lander: 850
@@ -15,15 +15,6 @@ arquivos:
 - arquivo: results/etapa2.1/arquiteturas.yaml
   regenerado: true
   igual: true
-- arquivo: results/etapa2.1/varredura_encontro.md
-  regenerado: false
-  igual: null
-- arquivo: results/etapa2.1/varredura_encontro.png
-  regenerado: false
-  igual: null
-- arquivo: results/etapa2.1/varredura_encontro.yaml
-  regenerado: false
-  igual: null
 - arquivo: results/etapa2.1/varredura_encontro_rp250.md
   regenerado: true
   igual: true
@@ -65,7 +56,4 @@ arquivos:
   igual: true
 regenerados: 15
 todos_regenerados_iguais: true
-nao_regenerados:
-- results/etapa2.1/varredura_encontro.md
-- results/etapa2.1/varredura_encontro.png
-- results/etapa2.1/varredura_encontro.yaml
+nao_regenerados: []
