@@ -39,7 +39,10 @@ orbita_estacionamento_b:
 escolha:
   forma: a_injecao_direta
   orbitador: [Falcon Heavy (descartável), Vulcan VC6]
-  lander: lista de results/etapa2.4/lancamento.yaml (lancadores_que_servem.lander)
+  # Lander em (a): os que servem por injeção direta em todas as janelas (results/etapa2.4/lancamento.yaml).
+  # O Falcon 9 serve o lander só em (b) e fica fora da escolha.
+  lander: [Falcon Heavy (recuperação), Falcon Heavy (descartável), Vulcan VC2, Vulcan VC4, Vulcan VC6]
+  lander_anunciados: [New Glenn, SLS Block 1 (5 m + iCPS)]
 
 lancadores:
   # massa separada de espaçonave (kg) × C3 (km²/s²); LEO (kg) por inclinação.

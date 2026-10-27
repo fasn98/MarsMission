@@ -222,6 +222,10 @@ Datas corrigidas (antigo → correto, calendário TDB):
 | 2035-conjuncao | 2035-06-28 → **2035-06-29** | 2036-01-16 → **2036-01-17** | 2037-07-11 → **2037-07-12** | 2038-04-07 → **2038-04-08** |
 | 2035-conjuncao_transito_curto | 2035-06-28 → **2035-06-29** | 2036-01-16 → **2036-01-17** | 2037-07-07 → **2037-07-08** | 2038-01-19 → **2038-01-20** |
 
+A coluna "E: 2033 oposição" da tabela de candidatas acima (2033-04-08, 2033-10-09, 2033-11-08, 2034-07-15)
+vem de uma rodada anterior à P-011, que não está em `results/` e não foi regenerada. As datas dela têm o mesmo
+defeito de rótulo: o dia correto é o seguinte a cada uma, mas isso não foi conferido rodando de novo.
+
 As conjunções de 2033 (`2033-conjuncao` e `2033-conjuncao_transito_curto`) não estão na tabela: foram trocadas
 por decisão do Fabio no portão da Etapa 2.4 (|DLA| ≤ 50°). A trajetória nova parte em 2033-04-23, chega a Marte
 em 2033-11-03, parte de Marte em 2035-05-07 e chega à Terra em 2035-11-22, com Δv de 5,912 km/s. Com isso o

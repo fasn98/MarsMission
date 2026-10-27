@@ -56,4 +56,10 @@ do Cabo [F13], com penalidade de lançamento aproximada de 0,76 (P-036).
   resultados da Etapa 2.3 foram regenerados sem diferença.
 - O item de consequências acima ("se a avaliação de DLA da Fase 2 exigir mudança de plano em 2033…") fica
   atendido por esta atualização.
+- **Resultados da Etapa 1.4 desatualizados para a regra (i):** a regra (i), "sistema único", tinha a janela de
+  2033 como a que define, e foi calculada com a 2033 antiga (saída da Terra 3,5873 km/s, captura 1,2484 km/s).
+  A 2033 nova tem 3,6088 e 1,2495 km/s. `results/etapa1.4` não foi regenerado: ele também usa a plataforma de
+  850 kg da época. A regra (iii), a escolhida, não muda.
+- **Etapas 2.1 e 2.2:** não foram regeneradas. Pelos dados, os máximos que elas usam (C3 de partida de Marte,
+  v∞ de chegada a Marte) não vêm de 2033, e a volta de 2033 é a mesma. Isso não foi conferido rodando de novo.
 

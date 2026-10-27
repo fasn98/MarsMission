@@ -54,8 +54,8 @@ def _datas(ets):
     return np.array([np.datetime64(eph.instante_tdb(t)) for t in ets])
 
 
-def _utc(et):
-    """Instante em TDB (o nome da função é histórico; antes devolvia UTC com rótulo "_tdb")."""
+def _instante(et):
+    """Instante em TDB (antes da errata da Etapa 2.4 esta função devolvia UTC com rótulo "_tdb")."""
     return eph.instante_tdb(et)
 
 
@@ -74,7 +74,7 @@ def porkchop(sentido, nome, jan, cfg):
         mv = pc.minimo_c3_por_tipo(cfg["partida"], cfg["chegada"], g, tipo, _exclusao(), "vinf")
         if mv is not None:
             minimos[f"min_vinf_tipo_{tipo}"] = {
-                "partida_tdb": _utc(mv["et_partida"]), "chegada_tdb": _utc(mv["et_chegada"]),
+                "partida_tdb": _instante(mv["et_partida"]), "chegada_tdb": _instante(mv["et_chegada"]),
                 "tof_dias": round(mv["tof_dias"], 2), "c3_km2_s2": round(mv["c3"], 4),
                 "vinf_chegada_km_s": round(mv["vinf_chegada"], 4), "angulo_transf_graus": round(mv["angulo"], 2),
                 "na_borda_do_dominio": mv["na_borda"],
@@ -84,7 +84,7 @@ def porkchop(sentido, nome, jan, cfg):
         if m is None:
             continue
         minimos[f"tipo_{tipo}"] = {
-            "partida_tdb": _utc(m["et_partida"]), "chegada_tdb": _utc(m["et_chegada"]),
+            "partida_tdb": _instante(m["et_partida"]), "chegada_tdb": _instante(m["et_chegada"]),
             "tof_dias": round(m["tof_dias"], 2), "c3_km2_s2": round(m["c3"], 4),
             "vinf_chegada_km_s": round(m["vinf_chegada"], 4), "angulo_transf_graus": round(m["angulo"], 2),
             "na_borda_do_dominio": m["na_borda"],

@@ -9,7 +9,7 @@ e `.yaml`, gerados por `tools/lancamento.py` a partir de `config/lancadores.yaml
 | :- | :- |
 | Chegada à trajetória | **(a) injeção direta pelo lançador.** (b) fica como alternativa: exige estágio criogênico próprio |
 | Orbitador | **Falcon Heavy descartável ou Vulcan VC6** |
-| Lander | lista de lançadores que servem (abaixo) |
+| Lander | por injeção direta: Falcon Heavy (recuperação ou descartável), Vulcan VC2, VC4 ou VC6 |
 | 2033 | **\|DLA\| ≤ 50°** (`config/missoes.yaml`); envelope reaplicado (ADR 0004) |
 | P-036, P-037 | aprovadas como premissas, NÃO VALIDADAS; a tabela da P-036 é de Atlas V/Delta IV |
 | Datas | corrigidas para o calendário TDB, com errata nos relatórios e ADRs anteriores (seção 7) |
@@ -244,7 +244,7 @@ Pior margem com cada alternativa de 2033 está em `results/etapa2.4/lancamento.m
   - Exemplo: a partida da missão A é 2028-11-24 00:00 TDB, impressa como "2028-11-23".
 - **Alcance:** só os rótulos de data estão errados. C3, DLA e Δv estão certos para as épocas reais.
   - `tests/test_lancamento.py` documenta isso: reconstrói a época da missão A a partir da data gravada
-    + 1 dia e reproduz C3 e DLA.
+    + 1 dia e reproduz C3 e DLA. (Teste atualizado após a correção: agora usa a data gravada em TDB.)
 - **Não corrigido nesta etapa.** A correção (imprimir em TDB ou somar o dia) mexe nos relatórios da
   Fase 1 e nos ADRs. A decisão é do Fabio.
 - **Correção (decisão do Fabio no portão):**

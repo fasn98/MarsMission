@@ -13,7 +13,9 @@ lançamentos separados (ADR 0005), em cada janela do envelope (2028–2035), com
 ## Decisão
 1. **Forma (a), injeção direta pelo lançador.**
 2. **Orbitador:** Falcon Heavy descartável ou Vulcan VC6.
-3. **Lander:** a lista de lançadores que servem (`results/etapa2.4/lancamento.yaml`).
+3. **Lander:** os lançadores que servem por injeção direta em todas as janelas: Falcon Heavy (recuperação ou
+   descartável) e Vulcan VC2, VC4 ou VC6. New Glenn e SLS ficam como "desempenho anunciado, não demonstrado".
+   O Falcon 9 serve o lander só na forma (b) e fica fora.
 4. **Janela de 2033 limitada a |DLA| ≤ 50°.** A regra do envelope (ADR 0004) foi reaplicada.
 5. **A forma (b) fica documentada como alternativa.** Ressalva: exige estágio criogênico (LOX/LH2) próprio,
    com armazenamento na órbita baixa antes da queima de saída, que não foi modelado.
