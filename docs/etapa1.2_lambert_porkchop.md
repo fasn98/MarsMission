@@ -92,7 +92,9 @@ absoluto e relativo, estão em `results/etapa1.2/verificacao_burke2010.md`, gera
 `results/etapa1.2/porkchop_terra_marte_<ano>.png` (2028, 2031, 2033, 2035), gerados por
 `tools/porkchop.py terra_marte`. Mostram curvas de C3 de partida (azul), v∞ de chegada (laranja
 tracejado) e tempo de voo (cinza pontilhado). Os mínimos próprios por tipo aparecem como marcadores
-cheios e os do manual como marcadores vazados. Partida no centro da Terra; chegada no baricentro de
+cheios e os do manual como marcadores vazados. Desde 2026-10-27 a faixa de ±1° em torno de 180°
+(P-006) é mascarada no desenho, com nota de rodapé; os contornos se limitam a C3 ≤ 20 km²/s² e
+v∞ ≤ 6 km/s; os números usam vírgula decimal. Partida no centro da Terra; chegada no baricentro de
 Marte. Domínios de busca em `config/janelas.yaml`.
 
 ## 4. Retorno Marte→Terra: fontes publicadas (antes de calcular)

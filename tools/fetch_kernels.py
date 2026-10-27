@@ -1,6 +1,6 @@
 """Baixa os kernels SPICE listados em config/kernels.yaml e confere o MD5.
 
-Uso: python tools/fetch_kernels.py
+Uso: python tools/fetch_kernels.py [config/kernels.yaml]
 """
 
 from __future__ import annotations
@@ -24,7 +24,8 @@ def md5(caminho: Path) -> str:
 
 
 def main() -> int:
-    cfg = yaml.safe_load((RAIZ / "config" / "kernels.yaml").read_text(encoding="utf-8"))
+    arquivo = Path(sys.argv[1]) if len(sys.argv) > 1 else RAIZ / "config" / "kernels.yaml"
+    cfg = yaml.safe_load((RAIZ / arquivo).read_text(encoding="utf-8"))
     diretorio = RAIZ / cfg["diretorio"]
     diretorio.mkdir(parents=True, exist_ok=True)
     falhas = 0

@@ -1,0 +1,9 @@
+# Kernels usados só em verificações pontuais, fora do CI (não carregados por orbital.ephemeris).
+# Baixar com: python tools/fetch_kernels.py config/kernels_verificacao.yaml
+diretorio: data/kernels
+kernels:
+  - arquivo: de200.bsp
+    url: https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de200.bsp
+    # MD5 publicado pelo NAIF em a_old_versions/aa_checksums.txt (conferido em 2026-10-27).
+    md5: 28a0c0257d7256683b38ecddcc5876b3
+    md5_fonte: https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/aa_checksums.txt

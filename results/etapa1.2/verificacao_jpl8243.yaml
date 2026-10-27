@@ -1,0 +1,1155 @@
+gerado_por: tools/verifica_jpl8243.py
+fonte: JPL Publication 82-43, Vol. I, Part 5
+linhas:
+- janela: '1992'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1992-08-06'
+    chegada: '1993-03-20'
+    valor: 12.981
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-08-06'
+    chegada: '1993-03-20'
+    valor: 12.9808
+    angulo: 153.8
+  nas_datas_jpl:
+    valor: 12.9817
+    angulo: 153.4
+- janela: '1992'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1992-07-23'
+    chegada: '1993-05-07'
+    valor: 9.138
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-07-23'
+    chegada: '1993-05-07'
+    valor: 9.1385
+    angulo: 209.2
+  nas_datas_jpl:
+    valor: 9.1393
+    angulo: 208.9
+- janela: '1992'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1992-09-10'
+    chegada: '1993-04-27'
+    valor: 2.794
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-09-09'
+    chegada: '1993-04-26'
+    valor: 2.7862
+    angulo: 169.8
+  nas_datas_jpl:
+    valor: 2.7875
+    angulo: 170.5
+- janela: '1992'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1992-07-20'
+    chegada: '1993-05-06'
+    valor: 2.818
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-07-22'
+    chegada: '1993-05-07'
+    valor: 2.8292
+    angulo: 209.5
+  nas_datas_jpl:
+    valor: 2.8297
+    angulo: 209.8
+- janela: '1992'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1992-08-06'
+    chegada: '1993-03-20'
+    valor: 12.981
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-08-06'
+    chegada: '1993-03-20'
+    valor: 12.9814
+    angulo: 153.8
+  nas_datas_jpl:
+    valor: 12.9823
+    angulo: 153.4
+- janela: '1992'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1992-07-23'
+    chegada: '1993-05-07'
+    valor: 9.138
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-07-23'
+    chegada: '1993-05-07'
+    valor: 9.1377
+    angulo: 209.2
+  nas_datas_jpl:
+    valor: 9.1385
+    angulo: 208.9
+- janela: '1992'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1992-09-10'
+    chegada: '1993-04-27'
+    valor: 2.794
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-09-10'
+    chegada: '1993-04-26'
+    valor: 2.7943
+    angulo: 170.4
+  nas_datas_jpl:
+    valor: 2.7943
+    angulo: 170.5
+- janela: '1992'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1992-07-20'
+    chegada: '1993-05-06'
+    valor: 2.818
+    pagina: 11
+  minimo_proprio:
+    partida: '1992-07-20'
+    chegada: '1993-05-06'
+    valor: 2.8177
+    angulo: 210.0
+  nas_datas_jpl:
+    valor: 2.8178
+    angulo: 209.8
+- janela: '1994'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1994-08-05'
+    chegada: '1995-05-10'
+    valor: 7.433
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-08-05'
+    chegada: '1995-05-10'
+    valor: 7.4333
+    angulo: 179.0
+  nas_datas_jpl:
+    valor: 7.5859
+    angulo: 178.6
+- janela: '1994'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1994-07-30'
+    chegada: '1995-06-04'
+    valor: 7.37
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-07-29'
+    chegada: '1995-06-04'
+    valor: 7.3695
+    angulo: 206.3
+  nas_datas_jpl:
+    valor: 7.3695
+    angulo: 206.1
+- janela: '1994'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1994-10-07'
+    chegada: '1995-05-23'
+    valor: 3.701
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-10-08'
+    chegada: '1995-05-23'
+    valor: 3.7
+    angulo: 158.2
+  nas_datas_jpl:
+    valor: 3.7024
+    angulo: 157.8
+- janela: '1994'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1994-07-31'
+    chegada: '1995-06-05'
+    valor: 2.938
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-07-30'
+    chegada: '1995-06-04'
+    valor: 2.9342
+    angulo: 206.3
+  nas_datas_jpl:
+    valor: 2.9347
+    angulo: 206.5
+- janela: '1994'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1994-08-05'
+    chegada: '1995-05-10'
+    valor: 7.433
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-08-05'
+    chegada: '1995-05-10'
+    valor: 7.4325
+    angulo: 179.0
+  nas_datas_jpl:
+    valor: 7.5874
+    angulo: 178.6
+- janela: '1994'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1994-07-30'
+    chegada: '1995-06-04'
+    valor: 7.37
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-07-30'
+    chegada: '1995-06-04'
+    valor: 7.3696
+    angulo: 206.4
+  nas_datas_jpl:
+    valor: 7.3697
+    angulo: 206.1
+- janela: '1994'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1994-10-07'
+    chegada: '1995-05-23'
+    valor: 3.701
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-10-07'
+    chegada: '1995-05-23'
+    valor: 3.7012
+    angulo: 158.2
+  nas_datas_jpl:
+    valor: 3.7017
+    angulo: 157.8
+- janela: '1994'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1994-07-31'
+    chegada: '1995-06-05'
+    valor: 2.938
+    pagina: 23
+  minimo_proprio:
+    partida: '1994-07-31'
+    chegada: '1995-06-05'
+    valor: 2.9377
+    angulo: 206.9
+  nas_datas_jpl:
+    valor: 2.9381
+    angulo: 206.5
+- janela: '1996'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1996-09-03'
+    chegada: '1997-05-28'
+    valor: 6.621
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-09-03'
+    chegada: '1997-05-28'
+    valor: 6.6212
+    angulo: 158.6
+  nas_datas_jpl:
+    valor: 6.6231
+    angulo: 158.1
+- janela: '1996'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1996-08-26'
+    chegada: '1997-07-30'
+    valor: 6.373
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-08-26'
+    chegada: '1997-07-30'
+    valor: 6.3723
+    angulo: 223.0
+  nas_datas_jpl:
+    valor: 6.3731
+    angulo: 222.3
+- janela: '1996'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1996-11-17'
+    chegada: '1997-06-23'
+    valor: 4.229
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-11-17'
+    chegada: '1997-06-23'
+    valor: 4.24
+    angulo: 148.3
+  nas_datas_jpl:
+    valor: 4.2416
+    angulo: 147.7
+- janela: '1996'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1996-07-07'
+    chegada: '1997-06-29'
+    valor: 3.329
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-07-10'
+    chegada: '1997-07-01'
+    valor: 3.3214
+    angulo: 219.0
+  nas_datas_jpl:
+    valor: 3.3264
+    angulo: 218.8
+- janela: '1996'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1996-09-03'
+    chegada: '1997-05-28'
+    valor: 6.621
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-09-03'
+    chegada: '1997-05-28'
+    valor: 6.6211
+    angulo: 158.6
+  nas_datas_jpl:
+    valor: 6.623
+    angulo: 158.1
+- janela: '1996'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1996-08-26'
+    chegada: '1997-07-30'
+    valor: 6.373
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-08-26'
+    chegada: '1997-07-30'
+    valor: 6.3728
+    angulo: 222.9
+  nas_datas_jpl:
+    valor: 6.3735
+    angulo: 222.3
+- janela: '1996'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1996-11-17'
+    chegada: '1997-06-23'
+    valor: 4.229
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-11-17'
+    chegada: '1997-06-23'
+    valor: 4.2289
+    angulo: 148.1
+  nas_datas_jpl:
+    valor: 4.2297
+    angulo: 147.7
+- janela: '1996'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1996-07-07'
+    chegada: '1997-06-29'
+    valor: 3.329
+    pagina: 35
+  minimo_proprio:
+    partida: '1996-07-07'
+    chegada: '1997-06-29'
+    valor: 3.3294
+    angulo: 219.3
+  nas_datas_jpl:
+    valor: 3.3301
+    angulo: 218.8
+- janela: '1998'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1998-10-18'
+    chegada: '1999-06-28'
+    valor: 5.895
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-10-18'
+    chegada: '1999-06-28'
+    valor: 5.8959
+    angulo: 146.3
+  nas_datas_jpl:
+    valor: 5.8973
+    angulo: 146.2
+- janela: '1998'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1998-10-23'
+    chegada: '1999-09-14'
+    valor: 5.531
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-10-23'
+    chegada: '1999-09-14'
+    valor: 5.5303
+    angulo: 219.0
+  nas_datas_jpl:
+    valor: 5.5304
+    angulo: 218.9
+- janela: '1998'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '1998-12-28'
+    chegada: '1999-07-29'
+    valor: 4.24
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-12-28'
+    chegada: '1999-07-29'
+    valor: 4.252
+    angulo: 144.5
+  nas_datas_jpl:
+    valor: 4.2521
+    angulo: 144.6
+- janela: '1998'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '1998-06-19'
+    chegada: '1999-07-20'
+    valor: 3.724
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-06-11'
+    chegada: '1999-07-17'
+    valor: 3.7203
+    angulo: 227.1
+  nas_datas_jpl:
+    valor: 3.7228
+    angulo: 225.0
+- janela: '1998'
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1998-10-18'
+    chegada: '1999-06-28'
+    valor: 5.895
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-10-18'
+    chegada: '1999-06-28'
+    valor: 5.8951
+    angulo: 146.3
+  nas_datas_jpl:
+    valor: 5.8965
+    angulo: 146.2
+- janela: '1998'
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1998-10-23'
+    chegada: '1999-09-14'
+    valor: 5.531
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-10-23'
+    chegada: '1999-09-14'
+    valor: 5.531
+    angulo: 219.0
+  nas_datas_jpl:
+    valor: 5.5312
+    angulo: 218.9
+- janela: '1998'
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '1998-12-28'
+    chegada: '1999-07-29'
+    valor: 4.24
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-12-28'
+    chegada: '1999-07-29'
+    valor: 4.2398
+    angulo: 144.5
+  nas_datas_jpl:
+    valor: 4.2399
+    angulo: 144.6
+- janela: '1998'
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '1998-06-19'
+    chegada: '1999-07-20'
+    valor: 3.724
+    pagina: 47
+  minimo_proprio:
+    partida: '1998-06-19'
+    chegada: '1999-07-20'
+    valor: 3.7237
+    angulo: 225.6
+  nas_datas_jpl:
+    valor: 3.7244
+    angulo: 225.0
+- janela: 2000/1
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2001-01-04'
+    chegada: '2001-08-16'
+    valor: 5.643
+    pagina: 59
+  minimo_proprio:
+    partida: '2001-01-04'
+    chegada: '2001-08-16'
+    valor: 5.6417
+    angulo: 140.2
+  nas_datas_jpl:
+    valor: 5.6428
+    angulo: 139.8
+- janela: 2000/1
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2001-01-20'
+    chegada: '2001-10-25'
+    valor: 5.626
+    pagina: 59
+  minimo_proprio:
+    partida: '2001-01-20'
+    chegada: '2001-10-25'
+    valor: 5.6261
+    angulo: 200.9
+  nas_datas_jpl:
+    valor: 5.6265
+    angulo: 201.1
+- janela: 2000/1
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2001-02-16'
+    chegada: '2001-09-11'
+    valor: 3.705
+    pagina: 59
+  minimo_proprio:
+    partida: '2001-02-17'
+    chegada: '2001-09-12'
+    valor: 3.7002
+    angulo: 146.5
+  nas_datas_jpl:
+    valor: 3.7046
+    angulo: 145.4
+- janela: 2000/1
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2000-06-08'
+    chegada: '2001-08-08'
+    valor: 4.085
+    pagina: 59
+  minimo_proprio:
+    partida: '2000-06-22'
+    chegada: '2001-08-13'
+    valor: 4.0865
+    angulo: 225.3
+  nas_datas_jpl:
+    valor: 4.0961
+    angulo: 226.9
+- janela: 2000/1
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2001-01-04'
+    chegada: '2001-08-16'
+    valor: 5.643
+    pagina: 59
+  minimo_proprio:
+    partida: '2001-01-04'
+    chegada: '2001-08-16'
+    valor: 5.6425
+    angulo: 140.2
+  nas_datas_jpl:
+    valor: 5.6435
+    angulo: 139.8
+- janela: 2000/1
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2001-01-20'
+    chegada: '2001-10-25'
+    valor: 5.626
+    pagina: 59
+  minimo_proprio:
+    partida: '2001-01-20'
+    chegada: '2001-10-25'
+    valor: 5.6258
+    angulo: 200.9
+  nas_datas_jpl:
+    valor: 5.6262
+    angulo: 201.1
+- janela: 2000/1
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2001-02-16'
+    chegada: '2001-09-11'
+    valor: 3.705
+    pagina: 59
+  minimo_proprio:
+    partida: '2001-02-16'
+    chegada: '2001-09-11'
+    valor: 3.7051
+    angulo: 145.8
+  nas_datas_jpl:
+    valor: 3.7056
+    angulo: 145.4
+- janela: 2000/1
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2000-06-08'
+    chegada: '2001-08-08'
+    valor: 4.085
+    pagina: 59
+  minimo_proprio:
+    partida: '2000-06-08'
+    chegada: '2001-08-08'
+    valor: 4.0853
+    angulo: 227.8
+  nas_datas_jpl:
+    valor: 4.0869
+    angulo: 226.9
+- janela: 2002/3
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2003-04-18'
+    chegada: '2003-11-10'
+    valor: 7.426
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-04-18'
+    chegada: '2003-11-10'
+    valor: 7.4276
+    angulo: 152.2
+  nas_datas_jpl:
+    valor: 7.4281
+    angulo: 152.0
+- janela: 2002/3
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2003-02-27'
+    chegada: '2003-11-12'
+    valor: 9.525
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-02-26'
+    chegada: '2003-11-12'
+    valor: 9.6295
+    angulo: 181.0
+  nas_datas_jpl:
+    valor: 11.963
+    angulo: 180.2
+- janela: 2002/3
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2003-04-06'
+    chegada: '2003-11-07'
+    valor: 2.99
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-03-13'
+    chegada: '2003-11-03'
+    valor: 2.9974
+    angulo: 164.8
+  nas_datas_jpl:
+    valor: 3.002
+    angulo: 155.5
+- janela: 2002/3
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2003-02-27'
+    chegada: '2003-11-04'
+    valor: 3.014
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-02-28'
+    chegada: '2003-11-13'
+    valor: 3.1126
+    angulo: 181.0
+  nas_datas_jpl:
+    valor: 3.0234
+    angulo: 172.2
+- janela: 2002/3
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2003-04-18'
+    chegada: '2003-11-10'
+    valor: 7.426
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-04-18'
+    chegada: '2003-11-10'
+    valor: 7.4259
+    angulo: 152.2
+  nas_datas_jpl:
+    valor: 7.4264
+    angulo: 152.0
+- janela: 2002/3
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2003-02-27'
+    chegada: '2003-11-12'
+    valor: 9.525
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-02-26'
+    chegada: '2003-11-12'
+    valor: 9.6268
+    angulo: 181.0
+  nas_datas_jpl:
+    valor: 11.9558
+    angulo: 180.2
+- janela: 2002/3
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2003-04-06'
+    chegada: '2003-11-07'
+    valor: 2.99
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-04-06'
+    chegada: '2003-11-08'
+    valor: 2.99
+    angulo: 156.2
+  nas_datas_jpl:
+    valor: 2.9914
+    angulo: 155.5
+- janela: 2002/3
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2003-02-27'
+    chegada: '2003-11-04'
+    valor: 3.014
+    pagina: 81
+  minimo_proprio:
+    partida: '2003-02-28'
+    chegada: '2003-11-13'
+    valor: 3.1069
+    angulo: 181.0
+  nas_datas_jpl:
+    valor: 3.0167
+    angulo: 172.2
+- janela: 2004/5
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2005-06-28'
+    chegada: '2006-01-06'
+    valor: 13.558
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-06-28'
+    chegada: '2006-01-06'
+    valor: 13.5583
+    angulo: 142.2
+  nas_datas_jpl:
+    valor: 13.5614
+    angulo: 141.7
+- janela: 2004/5
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2005-07-08'
+    chegada: '2006-06-30'
+    valor: 13.197
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-07-08'
+    chegada: '2006-03-30'
+    valor: 13.1955
+    angulo: 219.4
+  nas_datas_jpl:
+    valor: 60.5536
+    angulo: 307.9
+- janela: 2004/5
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2005-08-14'
+    chegada: '2006-02-03'
+    valor: 2.899
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-08-14'
+    chegada: '2006-02-02'
+    valor: 2.8915
+    angulo: 140.0
+  nas_datas_jpl:
+    valor: 2.8917
+    angulo: 140.4
+- janela: 2004/5
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2005-02-23'
+    chegada: '2005-12-26'
+    valor: 3.007
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-02-28'
+    chegada: '2005-12-29'
+    valor: 2.996
+    angulo: 205.0
+  nas_datas_jpl:
+    valor: 3.0007
+    angulo: 204.5
+- janela: 2004/5
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2005-06-28'
+    chegada: '2006-01-06'
+    valor: 13.558
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-06-28'
+    chegada: '2006-01-06'
+    valor: 13.5584
+    angulo: 142.2
+  nas_datas_jpl:
+    valor: 13.562
+    angulo: 141.7
+- janela: 2004/5
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2005-07-08'
+    chegada: '2006-06-30'
+    valor: 13.197
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-07-08'
+    chegada: '2006-03-30'
+    valor: 13.1965
+    angulo: 219.5
+  nas_datas_jpl:
+    valor: 60.5584
+    angulo: 307.9
+- janela: 2004/5
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2005-08-14'
+    chegada: '2006-02-03'
+    valor: 2.899
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-08-14'
+    chegada: '2006-02-03'
+    valor: 2.8986
+    angulo: 140.6
+  nas_datas_jpl:
+    valor: 2.8992
+    angulo: 140.4
+- janela: 2004/5
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2005-02-23'
+    chegada: '2005-12-26'
+    valor: 3.007
+    pagina: 103
+  minimo_proprio:
+    partida: '2005-02-23'
+    chegada: '2005-12-26'
+    valor: 3.0071
+    angulo: 204.2
+  nas_datas_jpl:
+    valor: 3.0074
+    angulo: 204.5
+- janela: 2006/7
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2007-07-30'
+    chegada: '2008-02-29'
+    valor: 14.23
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-07-30'
+    chegada: '2008-02-29'
+    valor: 14.2294
+    angulo: 148.8
+  nas_datas_jpl:
+    valor: 14.2333
+    angulo: 148.7
+- janela: 2006/7
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2007-07-21'
+    chegada: '2008-04-29'
+    valor: 10.196
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-07-21'
+    chegada: '2008-04-29'
+    valor: 10.196
+    angulo: 213.8
+  nas_datas_jpl:
+    valor: 10.1965
+    angulo: 213.6
+- janela: 2006/7
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '399'
+  jpl:
+    partida: '2007-09-10'
+    chegada: '2008-04-06'
+    valor: 2.809
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-09-10'
+    chegada: '2008-04-06'
+    valor: 2.7957
+    angulo: 160.2
+  nas_datas_jpl:
+    valor: 2.7963
+    angulo: 160.3
+- janela: 2006/7
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '399'
+  jpl:
+    partida: '2007-06-24'
+    chegada: '2008-04-16'
+    valor: 2.881
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-06-09'
+    chegada: '2008-04-09'
+    valor: 2.8829
+    angulo: 220.0
+  nas_datas_jpl:
+    valor: 2.8901
+    angulo: 217.8
+- janela: 2006/7
+  linha: c3l_1
+  grandeza: c3
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2007-07-30'
+    chegada: '2008-02-29'
+    valor: 14.23
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-07-30'
+    chegada: '2008-02-29'
+    valor: 14.23
+    angulo: 148.8
+  nas_datas_jpl:
+    valor: 14.2338
+    angulo: 148.7
+- janela: 2006/7
+  linha: c3l_2
+  grandeza: c3
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2007-07-21'
+    chegada: '2008-04-29'
+    valor: 10.196
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-07-21'
+    chegada: '2008-04-29'
+    valor: 10.1963
+    angulo: 213.8
+  nas_datas_jpl:
+    valor: 10.1967
+    angulo: 213.6
+- janela: 2006/7
+  linha: vhp_1
+  grandeza: vinf
+  tipo: 1
+  corpo_chegada: '3'
+  jpl:
+    partida: '2007-09-10'
+    chegada: '2008-04-06'
+    valor: 2.809
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-09-10'
+    chegada: '2008-04-06'
+    valor: 2.8089
+    angulo: 160.2
+  nas_datas_jpl:
+    valor: 2.8094
+    angulo: 160.3
+- janela: 2006/7
+  linha: vhp_2
+  grandeza: vinf
+  tipo: 2
+  corpo_chegada: '3'
+  jpl:
+    partida: '2007-06-24'
+    chegada: '2008-04-16'
+    valor: 2.881
+    pagina: 125
+  minimo_proprio:
+    partida: '2007-06-24'
+    chegada: '2008-04-16'
+    valor: 2.8808
+    angulo: 217.5
+  nas_datas_jpl:
+    valor: 2.8809
+    angulo: 217.8

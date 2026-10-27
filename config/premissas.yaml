@@ -69,3 +69,14 @@ premissas:
       (v∞). 2035 fica fora do teste: as datas da Tabela 6 do manual parecem deslocadas cerca de
       63 dias (docs/etapa1.2_lambert_porkchop.md). Valor sem fonte.
     status: NÃO VALIDADA
+  - id: P-008
+    nome: tolerancia_jpl8243_rel
+    valor: 0.002
+    unidade: adimensional (erro relativo de C3L e de VHP)
+    uso: tests/test_retorno.py — C3L e VHP nas datas impressas no JPL 82-43 Parte 5, 1992–2007
+    justificativa: >
+      As tabelas imprimem 3 decimais e datas inteiras. Efeito da efeméride (DE-118, representada
+      pela DE200, contra a DE440) medido em ≤ 1,5e-5 (results/etapa1.2/efeito_efemeride_de200.yaml).
+      Erros observados em 2026-10-27, com chegada no baricentro Terra–Lua: ≤ 0,09 %, fora as três
+      linhas tratadas à parte em docs/etapa1.2_retorno.md. Valor sem fonte.
+    status: NÃO VALIDADA
