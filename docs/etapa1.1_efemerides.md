@@ -10,7 +10,9 @@
 - Leap seconds `naif0012.tls` [F2]. Acesso via spiceypy 8.3.0 / CSPICE N0067 [F4, F5].
 - O arquivo traz os baricentros dos sistemas planetários. Para Marte, o corpo disponível é o
   **baricentro do sistema marciano (NAIF 4)**, não o centro de Marte (499). Para trajetórias
-  heliocêntricas isso é o adequado. Se uma etapa futura precisar do centro de Marte, será preciso
+  heliocêntricas isso é o adequado. Numa consulta exploratória ao Horizons (2028-01-01 TDB), os
+  alvos 499 e 4 diferiram em ~41 m na coordenada X. Esse valor não foi investigado nem está nos
+  testes. Se uma etapa futura precisar do centro de Marte, será preciso
   um kernel de satélites marcianos (por exemplo `mar099.bsp`), e essa decisão fica para então.
 
 ## Verificação contra o JPL Horizons

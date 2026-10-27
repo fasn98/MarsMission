@@ -24,8 +24,8 @@ RAIZ = Path(__file__).resolve().parents[2]
 CONFIG_KERNELS = RAIZ / "config" / "kernels.yaml"
 
 # Códigos NAIF (NAIF, "NAIF Integer ID codes" Required Reading).
-# de440s.bsp traz o baricentro de Marte (4), não o centro do corpo (499);
-# a diferença é dominada por Fobos e Deimos e fica na ordem de decímetros.
+# de440s.bsp traz o baricentro de Marte (4), não o centro do corpo (499).
+# A distância entre os dois não foi quantificada com fonte; ver docs/etapa1.1_efemerides.md.
 SOL = "10"
 TERRA = "399"
 BARICENTRO_TERRA_LUA = "3"
