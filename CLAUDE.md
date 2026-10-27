@@ -22,6 +22,11 @@ genéricas.
    - Todo `results/` versionado precisa sair do código e do `config/` atuais.
    - `tools/confere_regeneracao.py` regenera tudo numa cópia e compara com o versionado.
    - O CI roda essa verificação (`.github/workflows/regeneracao.yml`).
+   - **"Idêntico" significa dentro das tolerâncias declaradas.** Números (YAML, Markdown, NPZ):
+     |a − b| ≤ max(1e-12 · max(|a|, |b|), 1e-13) (P-039). PNG: até 0,1 % dos pixels diferentes (P-040). As duas são
+     premissas NÃO VALIDADAS, decididas pelo Fabio porque CPUs diferentes mudam os últimos dígitos.
+   - Texto, estrutura, forma e NaN nunca são tolerados.
+   - A verificação é bloqueante, e cada relatório lista as diferenças abaixo do limite, com o tamanho.
    - Quando uma mudança altera um resultado de etapa anterior, regenerar e registrar errata no mesmo PR.
 
 ## Fluxo
