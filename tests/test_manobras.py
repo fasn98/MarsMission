@@ -44,3 +44,21 @@ def test_declinacao():
     assert mn.declinacao_graus([1, 0, 0]) == pytest.approx(0.0)
     assert mn.declinacao_graus([0, 0, 2]) == pytest.approx(90.0)
     assert mn.declinacao_graus([1, 0, -1]) == pytest.approx(-45.0)
+
+
+def test_h_entrada_com_gama_zero_e_periapse_na_interface():
+    # γ = 0 na interface significa que a interface é o periapse.
+    assert mn.h_entrada(MU, 4.0, R1, 0.0) == pytest.approx(mn.h_periapse(MU, 4.0, R1), rel=1e-14)
+
+
+def test_hiperbole_de_entrada_tem_o_gama_pedido():
+    vinf, r, gama = 5.4, 6500.0, -25.0
+    h = mn.h_entrada(MU, vinf, r, gama)
+    v = mn.v_hiperbole(MU, vinf, r)
+    assert np.degrees(np.arccos(h / (r * v))) == pytest.approx(25.0, rel=1e-12)
+
+
+def test_desvio_cai_com_a_antecedencia():
+    a = mn.dv_desvio(MU, 5.44, 6500.0, -25.0, 6678.0, 86400.0)
+    b = mn.dv_desvio(MU, 5.44, 6500.0, -25.0, 6678.0, 2 * 86400.0)
+    assert a == pytest.approx(2 * b, rel=1e-12)

@@ -113,3 +113,59 @@ premissas:
       fonte não declara a altitude da interface. O valor é um precedente de voo, não um limite
       de projeto para a cápsula deste estudo.
     status: NÃO VALIDADA
+  - id: P-012
+    nome: acrescimo_massa_capsula_faixa
+    valor: [0.0, 0.15, 0.30, 0.50]
+    unidade: fração da massa da cápsula com amostras (89,9 kg na CU-2)
+    uso: config/dimensionamento.yaml — sensibilidade da massa na órbita baixa
+    justificativa: >
+      A cápsula do MSR foi projetada para 12,0 km/s [F24]; a missão A reentra a 12,34 km/s. Não há
+      fonte para a massa de uma cápsula mais rápida, então não se usa lei de escala: aplica-se uma faixa
+      de acréscimo (0 a 50 %) só para mostrar o efeito na massa total (decisão do Fabio, 2026-10-27).
+    status: NÃO VALIDADA
+  - id: P-013
+    nome: desvio_orbitador_parametros
+    valor: {periapse_seguro_alt_km: 300, antecedencia_dias: 1}
+    unidade: km; dias
+    uso: config/dimensionamento.yaml — Δv de desvio do orbitador após soltar a cápsula (plano B)
+    justificativa: >
+      O orbitador precisa sair da trajetória de entrada da cápsula (γ = −25° [F24]) para uma passagem com
+      periapse seguro. Com 1 dia de antecedência, a aproximação linear do plano B dá ~19 m/s para a
+      missão A; com 2 dias, ~9 m/s. Para comparar: a Stardust soltou a cápsula 4 h antes da entrada
+      [F20], caso em que a aproximação linear não vale. Valores sem fonte direta.
+    status: NÃO VALIDADA
+  - id: P-014
+    nome: margem_dv
+    valor: 0.10
+    unidade: fração, aplicada a todos os trechos
+    uso: config/dimensionamento.yaml
+    justificativa: >
+      Cobre o que não está modelado: perdas de queima finita com motor de baixo empuxo (2 × 400 N na
+      arquitetura do ERO), mudança de plano por DLA (Fase 2), dispersões de navegação e a diferença entre
+      o Δv impulsivo e o real. Sem valor publicado aplicável a este veículo.
+    status: NÃO VALIDADA
+  - id: P-015
+    nome: perdas_gravitacionais_do_dra
+    valor: {saida_terra: 0.148, captura_marte: 0.018, saida_marte: 0.011}
+    unidade: km/s
+    uso: config/dimensionamento.yaml
+    justificativa: >
+      Diferenças entre o Δv com perdas e o ideal do DRA 5.0 (Addendum, p. 211 [F18]) para um veículo
+      tripulado com outra relação empuxo/peso. Usadas como ordem de grandeza; o valor real depende do
+      empuxo deste veículo, que não foi definido.
+    status: NÃO VALIDADA
+  - id: P-016
+    nome: plataforma_orbitador_kg
+    valor: 850
+    faixa: [331.8, 2200]
+    unidade: kg (massa seca da plataforma, sem módulos propulsivos e sem carga útil)
+    uso: config/dimensionamento.yaml
+    justificativa: >
+      Decisão do Fabio (portão da Parte B, 2026-10-27): incluir a plataforma já na Fase 1, com faixa
+      entre análogos publicados. Limite inferior: Mars Odyssey, 331,8 kg secos [F33], orbitador
+      químico sem carga de captura. Limite superior: módulo principal do ERO, 2200 kg secos [F22], que
+      inclui propulsão elétrica e painéis de 41 kW, desnecessários aqui. Base de 850 kg ≈ média
+      geométrica dos dois (√(331,8 × 2200) ≈ 854 kg), arredondada. A faixa cobre um fator de 6,6;
+      sem análogo direto (orbitador químico com captura em órbita), o centro em escala logarítmica é
+      a escolha neutra. Leva os sensores de encontro, que o CCRS de 2021 não inclui ("w/o RSS" [F22]).
+    status: NÃO VALIDADA

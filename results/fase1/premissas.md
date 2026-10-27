@@ -1,0 +1,22 @@
+# Premissas da Fase 1 (gerado por tools/lista_premissas.py a partir de config/premissas.yaml)
+
+| Id | Nome | Valor | Unidade | Status | Uso |
+| :- | :- | :- | :- | :- | :- |
+| P-001 | tolerancia_efemeride_vs_horizons_km | 1.0 | km | NÃO VALIDADA | tests/test_ephemeris.py — tolerância de posição entre DE440 (local) e Horizons (DE441) |
+| P-002 | tolerancia_velocidade_vs_horizons_km_s | 1e-06 | km/s | NÃO VALIDADA | tests/test_ephemeris.py — tolerância de velocidade entre DE440 (local) e Horizons (DE441) |
+| P-003 | tolerancia_lambert_vs_kepler_rel | 1e-10 | adimensional (erro relativo de posição e velocidade) | NÃO VALIDADA | tests/test_lambert.py — solução de Lambert propagada por Kepler analítico (variável universal) |
+| P-004 | tolerancia_kepler_vs_integrador_rel | 1e-08 | adimensional (erro relativo de posição) | NÃO VALIDADA | tests/test_kepler.py — propagação analítica comparada com integração numérica (DOP853, rtol 1e-13) |
+| P-005 | tolerancia_lambert_vs_referencia_km_s | 1e-08 | km/s (maior diferença por componente) | NÃO VALIDADA | tests/test_lambert.py — comparação com os testes oficiais do valladopy |
+| P-006 | exclusao_angulo_180_graus | 1.0 | graus | NÃO VALIDADA | tools/porkchop.py e tools/verifica_burke2010.py — busca do mínimo de C3 por tipo |
+| P-007 | tolerancia_burke2010_rel | 0.002 | adimensional (erro relativo de C3 e de v∞ de chegada) | NÃO VALIDADA | tests/test_porkchop.py — C3 e v∞ nas datas impressas em NASA/TM-2010-216764, janelas 2028–2033 |
+| P-008 | tolerancia_jpl8243_rel | 0.002 | adimensional (erro relativo de C3L e de VHP) | NÃO VALIDADA | tests/test_retorno.py — C3L e VHP nas datas impressas no JPL 82-43 Parte 5, 1992–2007 |
+| P-009 | conjuncao_permanencia_busca_dias | [400, 700] | dias | NÃO VALIDADA | config/missoes.yaml, classes conjuncao e conjuncao_transito_curto (faixa de busca) |
+| P-010 | aerocaptura_periapse_altitude_km | 50 | km | NÃO VALIDADA | config/parametros_orbitais.yaml — periapse da passagem atmosférica em Marte |
+| P-011 | reentrada_max_km_s | 12.9 | km/s (velocidade inercial na interface de reentrada) | NÃO VALIDADA | config/parametros_orbitais.yaml — limite na busca de missões (tools/missoes.py) |
+| P-012 | acrescimo_massa_capsula_faixa | [0.0, 0.15, 0.3, 0.5] | fração da massa da cápsula com amostras (89,9 kg na CU-2) | NÃO VALIDADA | config/dimensionamento.yaml — sensibilidade da massa na órbita baixa |
+| P-013 | desvio_orbitador_parametros | periapse_seguro_alt_km: 300; antecedencia_dias: 1 | km; dias | NÃO VALIDADA | config/dimensionamento.yaml — Δv de desvio do orbitador após soltar a cápsula (plano B) |
+| P-014 | margem_dv | 0.1 | fração, aplicada a todos os trechos | NÃO VALIDADA | config/dimensionamento.yaml |
+| P-015 | perdas_gravitacionais_do_dra | saida_terra: 0.148; captura_marte: 0.018; saida_marte: 0.011 | km/s | NÃO VALIDADA | config/dimensionamento.yaml |
+| P-016 | plataforma_orbitador_kg | 850 | kg (massa seca da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
+
+Total: 16 premissas, 16 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

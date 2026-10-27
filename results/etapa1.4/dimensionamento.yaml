@@ -1,0 +1,214 @@
+gerado_por: tools/dimensionamento.py
+caso_base:
+  carga_util: CU-2
+  acrescimo_capsula: 0.0
+margem_dv: 0.1
+regra_projeto: iii_marte_pior_terra_ref
+plataforma_orbitador_kg: 850.0
+variantes:
+  missao_A:
+    descricao: missão A em todos os estágios
+    massa_orbita_baixa_kg: 13587.0
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 8225.5
+      inerte_kg: 885.6
+      massa_inicial_kg: 13587.0
+    - nome: insercao_marte
+      propelente_kg: 1473.2
+      inerte_kg: 465.2
+      massa_inicial_kg: 4475.9
+    - nome: retorno
+      propelente_kg: 743.0
+      inerte_kg: 234.6
+      massa_inicial_kg: 2537.5
+  i_sistema_unico:
+    descricao: (i) saída da Terra com estágio próprio + um só estágio para captura
+      e retorno; cada janela com a sua missão, projeto pela pior janela
+    massa_orbita_baixa_kg: 22768.5
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 13785.5
+      inerte_kg: 1484.2
+      massa_inicial_kg: 22768.5
+    - nome: marte_unico
+      propelente_kg: 4513.6
+      inerte_kg: 1425.3
+      massa_inicial_kg: 7498.8
+    janela_que_define: '2033'
+  ii_estagios_pior_trecho:
+    descricao: (ii) cada estágio pelo pior caso do seu trecho
+    massa_orbita_baixa_kg: 23377.8
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 14314.6
+      inerte_kg: 1541.2
+      massa_inicial_kg: 23377.8
+    - nome: insercao_marte
+      propelente_kg: 2953.3
+      inerte_kg: 932.6
+      massa_inicial_kg: 7521.9
+    - nome: retorno
+      propelente_kg: 1577.8
+      inerte_kg: 498.3
+      massa_inicial_kg: 3636.0
+  iii_marte_pior_terra_ref:
+    descricao: (iii) estágios de Marte pelo pior caso; saída da Terra pela janela
+      de referência (A)
+    massa_orbita_baixa_kg: 22833.5
+    estagios:
+    - nome: saida_terra
+      propelente_kg: 13823.2
+      inerte_kg: 1488.3
+      massa_inicial_kg: 22833.5
+    - nome: insercao_marte
+      propelente_kg: 2953.3
+      inerte_kg: 932.6
+      massa_inicial_kg: 7521.9
+    - nome: retorno
+      propelente_kg: 1577.8
+      inerte_kg: 498.3
+      massa_inicial_kg: 3636.0
+sensibilidade:
+- parametro: Carga útil
+  valor: CU-1
+  massa_orbita_baixa_kg:
+    missao_A: 13699.4
+    i_sistema_unico: 22674.5
+    ii_estagios_pior_trecho: 23013.1
+    iii_marte_pior_terra_ref: 22477.3
+- parametro: Carga útil
+  valor: CU-2
+  massa_orbita_baixa_kg:
+    missao_A: 13587.0
+    i_sistema_unico: 22768.5
+    ii_estagios_pior_trecho: 23377.8
+    iii_marte_pior_terra_ref: 22833.5
+- parametro: Carga útil
+  valor: CU-2b
+  massa_orbita_baixa_kg:
+    missao_A: 12803.6
+    i_sistema_unico: 21455.2
+    ii_estagios_pior_trecho: 22029.4
+    iii_marte_pior_terra_ref: 21516.5
+- parametro: Carga útil
+  valor: CU-3
+  massa_orbita_baixa_kg:
+    missao_A: 8206.5
+    i_sistema_unico: 13749.0
+    ii_estagios_pior_trecho: 14116.9
+    iii_marte_pior_terra_ref: 13788.2
+- parametro: Margem de Δv
+  valor: 0 %
+  massa_orbita_baixa_kg:
+    missao_A: 10970.2
+    i_sistema_unico: 16706.5
+    ii_estagios_pior_trecho: 17749.0
+    iii_marte_pior_terra_ref: 17382.7
+- parametro: Margem de Δv
+  valor: 5 %
+  massa_orbita_baixa_kg:
+    missao_A: 12201.5
+    i_sistema_unico: 19440.6
+    ii_estagios_pior_trecho: 20348.5
+    iii_marte_pior_terra_ref: 19902.1
+- parametro: Margem de Δv
+  valor: 10 %
+  massa_orbita_baixa_kg:
+    missao_A: 13587.0
+    i_sistema_unico: 22768.5
+    ii_estagios_pior_trecho: 23377.8
+    iii_marte_pior_terra_ref: 22833.5
+- parametro: Margem de Δv
+  valor: 20 %
+  massa_orbita_baixa_kg:
+    missao_A: 16912.8
+    i_sistema_unico: 31986.0
+    ii_estagios_pior_trecho: 31069.3
+    iii_marte_pior_terra_ref: 30257.4
+- parametro: Acréscimo na massa da cápsula
+  valor: 0 %
+  massa_orbita_baixa_kg:
+    missao_A: 13587.0
+    i_sistema_unico: 22768.5
+    ii_estagios_pior_trecho: 23377.8
+    iii_marte_pior_terra_ref: 22833.5
+- parametro: Acréscimo na massa da cápsula
+  valor: 15 %
+  massa_orbita_baixa_kg:
+    missao_A: 13703.5
+    i_sistema_unico: 22962.7
+    ii_estagios_pior_trecho: 23577.2
+    iii_marte_pior_terra_ref: 23028.2
+- parametro: Acréscimo na massa da cápsula
+  valor: 30 %
+  massa_orbita_baixa_kg:
+    missao_A: 13820.0
+    i_sistema_unico: 23156.9
+    ii_estagios_pior_trecho: 23776.6
+    iii_marte_pior_terra_ref: 23223.0
+- parametro: Acréscimo na massa da cápsula
+  valor: 50 %
+  massa_orbita_baixa_kg:
+    missao_A: 13975.4
+    i_sistema_unico: 23415.8
+    ii_estagios_pior_trecho: 24042.5
+    iii_marte_pior_terra_ref: 23482.7
+- parametro: Isp de todos os estágios
+  valor: -5 %
+  massa_orbita_baixa_kg:
+    missao_A: 15413.3
+    i_sistema_unico: 27599.8
+    ii_estagios_pior_trecho: 27530.3
+    iii_marte_pior_terra_ref: 26844.7
+- parametro: Isp de todos os estágios
+  valor: +5 %
+  massa_orbita_baixa_kg:
+    missao_A: 12139.5
+    i_sistema_unico: 19298.1
+    ii_estagios_pior_trecho: 20215.5
+    iii_marte_pior_terra_ref: 19773.3
+- parametro: Frações estruturais × fator
+  valor: 0,50
+  massa_orbita_baixa_kg:
+    missao_A: 10268.3
+    i_sistema_unico: 13572.1
+    ii_estagios_pior_trecho: 15589.3
+    iii_marte_pior_terra_ref: 15277.3
+- parametro: Frações estruturais × fator
+  valor: 1,50
+  massa_orbita_baixa_kg:
+    missao_A: 20325.5
+    i_sistema_unico: 90213.0
+    ii_estagios_pior_trecho: 44281.6
+    iii_marte_pior_terra_ref: 43049.3
+- parametro: Plataforma do orbitador
+  valor: 331,8 kg
+  massa_orbita_baixa_kg:
+    missao_A: 9071.2
+    i_sistema_unico: 15198.6
+    ii_estagios_pior_trecho: 15605.3
+    iii_marte_pior_terra_ref: 15242.0
+- parametro: Plataforma do orbitador
+  valor: 850,0 kg
+  massa_orbita_baixa_kg:
+    missao_A: 13587.0
+    i_sistema_unico: 22768.5
+    ii_estagios_pior_trecho: 23377.8
+    iii_marte_pior_terra_ref: 22833.5
+- parametro: Plataforma do orbitador
+  valor: 2 200,0 kg
+  massa_orbita_baixa_kg:
+    missao_A: 25351.6
+    i_sistema_unico: 42489.2
+    ii_estagios_pior_trecho: 43626.2
+    iii_marte_pior_terra_ref: 42610.5
+orcamento_total_km_s:
+  A: 5.8694
+  jan. 2028: 5.8694
+  jan. 2031: 6.2565
+  jan. 2033: 6.3721
+  jan. 2035: 6.3895
+  pior_por_trecho: 6.8625
+  projeto: 6.7914
+  projeto_com_margem: 7.4705

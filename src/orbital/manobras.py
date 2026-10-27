@@ -60,3 +60,32 @@ def declinacao_graus(vetor_equatorial) -> float:
     """Declinação (graus) de um vetor dado no frame equatorial J2000."""
     v = np.asarray(vetor_equatorial, dtype=float)
     return float(np.degrees(np.arcsin(v[2] / np.linalg.norm(v))))
+
+
+def parametro_b(mu: float, vinf: float, h: float) -> float:
+    """Parâmetro de impacto B (km) de uma hipérbole de excesso v∞ e momento angular h: B = h / v∞."""
+    return h / vinf
+
+
+def h_entrada(mu: float, vinf: float, r_interface: float, gama_graus: float) -> float:
+    """Momento angular da hipérbole que cruza r_interface com ângulo de trajetória γ (negativo na descida)."""
+    v = v_hiperbole(mu, vinf, r_interface)
+    return float(r_interface * v * np.cos(np.radians(gama_graus)))
+
+
+def h_periapse(mu: float, vinf: float, rp: float) -> float:
+    """Momento angular da hipérbole de excesso v∞ com periapse rp."""
+    return float(rp * v_hiperbole(mu, vinf, rp))
+
+
+def dv_desvio(mu: float, vinf: float, r_interface: float, gama_graus: float, rp_seguro: float,
+              antecedencia_s: float) -> float:
+    """Δv de desvio do orbitador depois de soltar a cápsula, na aproximação linear do plano B.
+
+    A cápsula segue a hipérbole de entrada (γ na interface); o orbitador precisa passar com
+    periapse rp_seguro. Uma queima perpendicular Δv feita `antecedencia_s` antes do encontro
+    desloca o ponto no plano B de ≈ Δv·t (aproximação linear, sem foco gravitacional no
+    deslocamento, que já está em B). Logo Δv ≈ ΔB / t.
+    """
+    db = (h_periapse(mu, vinf, rp_seguro) - h_entrada(mu, vinf, r_interface, gama_graus)) / vinf
+    return float(abs(db) / antecedencia_s)
