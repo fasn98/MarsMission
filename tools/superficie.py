@@ -48,6 +48,11 @@ def mav(dv_total, cfg):
 
 def lander_leo(chegada, cfg, dcfg, p, caso_saida):
     """Massa na órbita baixa do lander: chegada a Marte + estágio de cruzeiro + estágio de saída da Terra."""
+    return lander_estagios(chegada, cfg, dcfg, p, caso_saida)[0].massa_inicial
+
+
+def lander_estagios(chegada, cfg, dcfg, p, caso_saida):
+    """Estágios do lander [saída da Terra, cruzeiro]; [1].massa_inicial é a massa injetada na trajetória."""
     margem = _v(dcfg["margem_dv"])
     dv = dm.orcamento(caso_saida, dcfg, p)
     cz = cfg["lancamento"]["cruzeiro_lander"]
@@ -56,8 +61,7 @@ def lander_leo(chegada, cfg, dcfg, p, caso_saida):
                       [fg.Queima("correcoes_ida", (1 + margem) * dv["correcoes_ida"])])
     saida = fg.Estagio("saida_terra_lander", _v(st["isp_s"]), _v(st["fracao_estrutural"]),
                        [fg.Queima("saida_terra", (1 + margem) * dv["saida_terra"])])
-    r = fg.dimensionar_veiculo([saida, cruz], chegada)
-    return r[0].massa_inicial
+    return fg.dimensionar_veiculo([saida, cruz], chegada)
 
 
 def main():

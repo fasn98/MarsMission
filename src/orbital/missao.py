@@ -72,17 +72,22 @@ def _mascara_180(grade: pc.Grade, excl: float):
 
 
 def melhor_combinacao(p: Parametros, ida: pc.Grade, volta: pc.Grade, permanencia_dias, duracao_max_dias,
-                      orbita: str, aerocaptura: bool, tof_max_dias: float = np.inf):
+                      orbita: str, aerocaptura: bool, tof_max_dias: float = np.inf, dla_max_graus: float = np.inf):
     """Melhor missão (menor Δv propulsivo) para uma classe. Devolve índices e custo, ou None.
 
     `tof_max_dias` limita o tempo de voo de cada trecho (ida e volta). Retornos com velocidade
     na interface de reentrada acima de `p.v_reentrada_max` são excluídos.
 
+    `dla_max_graus` limita |DLA| da partida da Terra (exige `ida.dla_graus`).
+
     `ida.et_chegada` e `volta.et_partida` precisam ser o mesmo eixo de datas em Marte.
     """
     assert np.array_equal(ida.et_chegada, volta.et_partida), "eixos de datas em Marte diferentes"
     custo_ida = custo_saida_terra(p, ida.c3) + custo_captura_marte(p, ida.vinf_chegada, orbita, aerocaptura)
-    custo_ida = np.where(_mascara_180(ida, p.exclusao_180) | (ida.tof_dias > tof_max_dias), np.inf, custo_ida)
+    fora_dla = np.zeros_like(custo_ida, dtype=bool)
+    if np.isfinite(dla_max_graus):
+        fora_dla = ~(np.abs(np.nan_to_num(ida.dla_graus, nan=np.inf)) <= dla_max_graus)
+    custo_ida = np.where(_mascara_180(ida, p.exclusao_180) | (ida.tof_dias > tof_max_dias) | fora_dla, np.inf, custo_ida)
     custo_volta = custo_saida_marte(p, volta.c3, orbita)
     v_ei = mn.velocidade_reentrada(p.mu_terra, volta.vinf_chegada, p.r_interface_terra)
     excede = np.nan_to_num(v_ei, nan=np.inf) > p.v_reentrada_max

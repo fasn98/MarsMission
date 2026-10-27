@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	Performance Website - Query
+</title><link href="../styles/site.css" rel="Stylesheet" type="text/css" />
+         
+    
+<link href="/WebResource.axd?d=DSgCKnaJlQjfnXvLWZApACOepsM4_nTAkwQoHxIcFHHwdupGzWyIMg5ZpyW2rvbQwNxBTyzu3qbqvqrPy8bST9GpGNx-pGLiVRVkYOkypKS3Te7Tj6Qf5MIAyPz5EVBitRe3fPv0ZzBbdwOiFCQt8g2&amp;t=637255658400000000" type="text/css" rel="stylesheet" /><link href="/WebResource.axd?d=hcXDZhXiidgsQUtEo5iT3xSRll8pbvTccS3rJH-WDtNoKhnCxsQpep1WgAqSH_u-_ryUgv4N7TYAZZtaBmBp1cfGuNGM4gG51wKtPC8FmgD8R6QGnW4CLniU9kNpW3n7JL-o9KNMuhNPoQVHclQDr4llwuiHcRtC6PdOzbepPFE1&amp;t=637255658400000000" type="text/css" rel="stylesheet" /></head>
+<body>
+    <div id="Page">
+        <form method="post" action="./Results.aspx" id="form1">
+<div class="aspNetHidden">
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="aspNetHidden">
+
+	
+	
+	
+</div>
+            
+
+            <div id="PageHeader">
+                <div class="Logo">
+                    <img id="imgLogo" src="../Images/nasa_meatball.gif" alt="NASA logo" style="height:68px;width:80px;" />
+                </div>
+                <div>
+                    <div class="bannerTop">NASA Launch Services Program</div>
+                    <div class="bannerBottom">Launch Vehicle Performance Website</div>
+                </div>
+            </div>
+            
+
+
+            <div id="cssmenu">
+                <ul>
+                    <li class="spacer"></li>
+                    <li>
+                        <a id="lnkDefault" href="../default.aspx">Home</a>
+                    </li>
+                    <li class="spacer">|</li>
+                    <li>
+                        <a id="lnkCapabilities" href="Capabilities.aspx">Mission Capabilities</a>
+                    </li>
+                    <li class="spacer">|</li>
+                    <li>
+                        <a id="lnkVehicle" href="Vehicles.aspx">Vehicle Information</a>
+                    </li>
+                    <li class="spacer">|</li>
+                    <li>
+                        <a id="lnkQuery" href="Query.aspx">Performance Query</a>
+                    </li>
+                    <li class="spacer">|</li>
+                    <li>
+                        <a id="lnkContacts" href="Contacts.aspx">Contacts</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+            </div>
+            <div id="PageBody" class="clear">
+                
+    
+    <div class="PageTitle">
+        <h1>Performance Query</h1>
+    </div>
+    <div class="Section">
+        <div class="SectionContent">
+            <div id="cphPageBody_UpdatePanel1">
+	
+                    <table id="cphPageBody_tblParameters">
+		<tr>
+			<td class="bold">Orbit Class:</td><td>LEO Circular</td>
+		</tr><tr>
+			<td class="bold">Graph Type:</td><td><span>Altitude (km) vs. Mass (kg)</span></td>
+		</tr><tr>
+			<td class="bold">Altitude (km):</td><td>400</td>
+		</tr><tr>
+			<td class="bold">Inclination (deg):</td><td>51.6</td>
+		</tr>
+	</table>
+                    
+                    
+                    
+                    
+                    
+                    <br />
+                    <input type="submit" name="ctl00$cphPageBody$btnClear" value="Clear Vehicles" id="cphPageBody_btnClear" disabled="disabled" class="aspNetDisabled" />
+                    |
+                    <input type="submit" name="ctl00$cphPageBody$btnNew" value="Create New Query" id="cphPageBody_btnNew" />
+                    |
+                     <input type="submit" name="ctl00$cphPageBody$btnChange" value="Change Query Parameters" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$cphPageBody$btnChange&quot;, &quot;&quot;, false, &quot;&quot;, &quot;Query.aspx&quot;, false, false))" id="cphPageBody_btnChange" />
+                    |
+                     <input type="submit" name="ctl00$cphPageBody$btnReport" value="Generate Report" id="cphPageBody_btnReport" disabled="disabled" class="aspNetDisabled" />
+                    <span id="cphPageBody_lblMessage"></span>
+                    <br />
+                    <br />
+                    <div id="cphPageBody_tabResults" style="width:95%;visibility:hidden;">
+		<div id="cphPageBody_tabResults_header" class="ajax__tab_header">
+			<span id="cphPageBody_tabResults_TabPanel1_tab" class="ajax__tab"><span class="ajax__tab_outer"><span class="ajax__tab_inner"><a class="ajax__tab_tab" id="__tab_cphPageBody_tabResults_TabPanel1" href="#" style="text-decoration:none;"><span>Results</span></a></span></span></span><span id="cphPageBody_tabResults_TabPanel2_tab" class="ajax__tab"><span class="ajax__tab_outer"><span class="ajax__tab_inner"><a class="ajax__tab_tab" id="__tab_cphPageBody_tabResults_TabPanel2" href="#" style="text-decoration:none;"><span>Plot</span></a></span></span></span>
+		</div><div id="cphPageBody_tabResults_body" class="ajax__tab_body" style="display:block;">
+			<div id="cphPageBody_tabResults_TabPanel1" class="ajax__tab_panel">
+				
+                                
+                                        <table style="width: 100%">
+                                            <tr>
+                                                <th style="width: 60px">Plot<br />
+                                                    <span id="cphPageBody_tabResults_TabPanel1_lvResults_lblHeader">(up to 5)</span>
+                                                </th>
+                                                <th style="width: 190px">Vehicle
+                                                </th>
+                                                <th style="width: 80px">Launch Site
+                                                </th>
+                                                <th style="width: 90px">Capability, kg
+                                                </th>
+                                                <th style="width: 70px">Fairing
+                                                </th>
+                                                <th style="width: 350px">Adapter
+                                                </th>
+                                                <th>Ground Rules
+                                                </th>
+                                            </tr>
+                                            
+                                        
+                                        <tr>
+                                            <td style="text-align: center; background-color: #F5F5F5;">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl0_cbVehicle_0" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl0$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl0$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl0_cbVehicle_0" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl0_lblName_0">Pegasus</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl0_lblConfig_0">(XL)</span>
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                WFF 
+                                               
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                365
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                50in (1.3m)
+
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                38in (967mm)
+
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl0_lkbToggle_0" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl0$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl0_pnlComments_0" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl0_bl_Notes_0">
+						<li>   This performance does not include the effects of orbital debris compliance, which must be evaluated on a mission-specific basis. This could result in a significant performance impact for missions in which launch vehicle hardware remains in Earth orbit.</li><li>   Guidance reserves account for 3-sigma flight performance.</li><li>   38-inch (0.96-meter) separation system.</li><li>   Mass of entire separation system is book-kept on the launch vehicle side.</li><li>   Performance is for baseline configuration; non-standard, mission-unique hardware will require additional assessment.</li><li>   Launch from WFF (Wallops Flight Facility) is a non-standard service, with availability at additional cost.</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        
+                                        <tr>
+                                            <td style="text-align: center">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl1_cbVehicle_1" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl1$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl1$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td>
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl1_cbVehicle_1" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl1_lblName_1">Vulcan</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl1_lblConfig_1">(VC0)</span>
+                                            </td>
+                                            <td>
+                                                CCSFS
+                                               
+                                            </td>
+                                            <td>
+                                                8720
+                                            </td>
+                                            <td>
+                                                5.4m
+                                            </td>
+                                            <td>
+                                                47in (1194mm) payload separation ring with C22 adapter
+
+                                            </td>
+                                            <td>
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl1_lkbToggle_1" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl1$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl1_pnlComments_1" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl1_bl_Notes_1">
+						<li>   This performance does not include the effects of orbital debris compliance, which must be evaluated on a mission-specific basis. This could result in a significant performance impact for missions in which launch vehicle hardware remains in Earth orbit.</li><li>   3-sigma mission required margin.</li><li>   Instantaneous launch attempt. Finite window accommodations may significantly reduce performance for missions with inertially fixed targets.</li><li>   1194-mm (47-in) payload separation system with lightweight C22 adapter.</li><li>   Performance values assume harness, logo, reradiating antenna, 2 payload fairing doors.</li><li>   Payload mass greater than 9,000 kg (19,841 lbm) may require mission unique accommodations, resulting in cost and/or performance impacts.</li><li>   Park-orbit coast duration up to 60 minutes. Longer coast periods may require additional consumables, which could affect performance capability.</li><li>   185 km (100 nmi) minimum park orbit perigee altitude.</li><li>   Launch from SLC-41 at CCSFS (Cape Canaveral Space Force Station).</li><li>   Circular orbits up to 1,100 km assume single upper stage burn (direct-inject).</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        
+                                        <tr>
+                                            <td style="text-align: center; background-color: #F5F5F5;">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl2_cbVehicle_2" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl2$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl2$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl2_cbVehicle_2" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl2_lblName_2">Falcon 9</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl2_lblConfig_2">(Full Thrust, RTLS )</span>
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                CCSFS 
+                                               
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                10860
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                5.2m
+
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                47in (1194mm)
+
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl2_lkbToggle_2" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl2$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl2_pnlComments_2" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl2_bl_Notes_2">
+						<li>   First stage recovery has been accounted for in the performance capability. RTLS indicates a first stage return to the launch site; ASDS indicates a first stage downrange landing on the Automated Spaceport Drone Ship (ASDS).</li><li>   3-sigma guidance reserves.</li><li>   Instantaneous launch attempt. Finite window accommodations may significantly reduce performance for missions with inertially fixed targets.</li><li>   937-mm or 1194-mm payload adapter/separation systems are available; masses of each are comparable and have been accounted for to provide separated spacecraft mass.</li><li>   2 payload fairing doors.</li><li>   Payload mass greater than 7,250 kg (15,983 lbm) may require mission-unique adapter/accommodations, resulting in cost and/or performance impacts.</li><li>   160 km (86 nmi) park orbit perigee altitude.</li><li>   Performance accounts for second stage controlled entry for compliance with orbital debris policy.</li><li>   Launch from SLC-40 at CCSFS (Cape Canaveral Space Force Station).</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        
+                                        <tr>
+                                            <td style="text-align: center">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl3_cbVehicle_3" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl3$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl3$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td>
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl3_cbVehicle_3" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl3_lblName_3">Falcon 9</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl3_lblConfig_3">(Full Thrust, ASDS)</span>
+                                            </td>
+                                            <td>
+                                                CCSFS
+                                               
+                                            </td>
+                                            <td>
+                                                14460
+                                            </td>
+                                            <td>
+                                                5.2m
+
+                                            </td>
+                                            <td>
+                                                47in (1194mm)
+
+                                            </td>
+                                            <td>
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl3_lkbToggle_3" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl3$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl3_pnlComments_3" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl3_bl_Notes_3">
+						<li>   First stage recovery has been accounted for in the performance capability. RTLS indicates a first stage return to the launch site; ASDS indicates a first stage downrange landing on the Automated Spaceport Drone Ship (ASDS).</li><li>   3-sigma guidance reserves.</li><li>   Instantaneous launch attempt. Finite window accommodations may significantly reduce performance for missions with inertially fixed targets.</li><li>   937-mm or 1194-mm payload adapter/separation systems are available; masses of each are comparable and have been accounted for to provide separated spacecraft mass.</li><li>   2 payload fairing doors.</li><li>   Payload mass greater than 7,250 kg (15,983 lbm) may require mission-unique adapter/accommodations, resulting in cost and/or performance impacts.</li><li>   160 km (86 nmi) park orbit perigee altitude.</li><li>   Performance accounts for second stage controlled entry for compliance with orbital debris policy.</li><li>   Launch from SLC-40 at CCSFS (Cape Canaveral Space Force Station).</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        
+                                        <tr>
+                                            <td style="text-align: center; background-color: #F5F5F5;">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl4_cbVehicle_4" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl4$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl4$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl4_cbVehicle_4" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl4_lblName_4">Vulcan</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl4_lblConfig_4">(VC2)</span>
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                CCSFS 
+                                               
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                15660
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                5.4m
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                47in (1194mm) payload separation ring with C22 adapter
+
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl4_lkbToggle_4" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl4$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl4_pnlComments_4" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl4_bl_Notes_4">
+						<li>   This performance does not include the effects of orbital debris compliance, which must be evaluated on a mission-specific basis. This could result in a significant performance impact for missions in which launch vehicle hardware remains in Earth orbit.</li><li>   3-sigma mission required margin.</li><li>   Instantaneous launch attempt. Finite window accommodations may significantly reduce performance for missions with inertially fixed targets.</li><li>   1194-mm (47-in) payload separation system with lightweight C22 adapter.</li><li>   Performance values assume harness, logo, reradiating antenna, 2 payload fairing doors.</li><li>   Payload mass greater than 9,000 kg (19,841 lbm) may require mission unique accommodations, resulting in cost and/or performance impacts.</li><li>   Park-orbit coast duration up to 60 minutes. Longer coast periods may require additional consumables, which could affect performance capability.</li><li>   185 km (100 nmi) minimum park orbit perigee altitude.</li><li>   Launch from SLC-41 at CCSFS (Cape Canaveral Space Force Station).</li><li>   Circular orbits up to 900 km assume single upper stage burn (direct-inject).</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        
+                                        <tr>
+                                            <td style="text-align: center">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl5_cbVehicle_5" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl5$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl5$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td>
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl5_cbVehicle_5" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl5_lblName_5">Vulcan</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl5_lblConfig_5">(VC4)</span>
+                                            </td>
+                                            <td>
+                                                CCSFS
+                                               
+                                            </td>
+                                            <td>
+                                                20800
+                                            </td>
+                                            <td>
+                                                5.4m
+                                            </td>
+                                            <td>
+                                                47in (1194mm) payload separation ring with C22 adapter
+
+                                            </td>
+                                            <td>
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl5_lkbToggle_5" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl5$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl5_pnlComments_5" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl5_bl_Notes_5">
+						<li>   This performance does not include the effects of orbital debris compliance, which must be evaluated on a mission-specific basis. This could result in a significant performance impact for missions in which launch vehicle hardware remains in Earth orbit.</li><li>   3-sigma mission required margin.</li><li>   Instantaneous launch attempt. Finite window accommodations may significantly reduce performance for missions with inertially fixed targets.</li><li>   1194-mm (47-in) payload separation system with lightweight C22 adapter.</li><li>   Performance values assume harness, logo, reradiating antenna, 2 payload fairing doors.</li><li>   Payload mass greater than 9,000 kg (19,841 lbm) may require mission unique accommodations, resulting in cost and/or performance impacts.</li><li>   Park-orbit coast duration up to 60 minutes. Longer coast periods may require additional consumables, which could affect performance capability.</li><li>   185 km (100 nmi) minimum park orbit perigee altitude.</li><li>   Launch from SLC-41 at CCSFS (Cape Canaveral Space Force Station).</li><li>   Circular orbits up to 900 km assume single upper stage burn (direct-inject).</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        
+                                        <tr>
+                                            <td style="text-align: center; background-color: #F5F5F5;">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl6_cbVehicle_6" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl6$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl6$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl6_cbVehicle_6" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl6_lblName_6">Vulcan</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl6_lblConfig_6">(VC6)</span>
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                CCSFS 
+                                               
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                24730
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                5.4m
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                47in (1194mm) payload separation ring with C22 adapter
+
+                                            </td>
+                                            <td style="background-color: #F5F5F5;">
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl6_lkbToggle_6" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl6$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl6_pnlComments_6" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl6_bl_Notes_6">
+						<li>   This performance does not include the effects of orbital debris compliance, which must be evaluated on a mission-specific basis. This could result in a significant performance impact for missions in which launch vehicle hardware remains in Earth orbit.</li><li>   3-sigma mission required margin.</li><li>   Instantaneous launch attempt. Finite window accommodations may significantly reduce performance for missions with inertially fixed targets.</li><li>   1194-mm (47-in) payload separation system with lightweight C22 adapter.</li><li>   Performance values assume harness, logo, reradiating antenna, 2 payload fairing doors.</li><li>   Payload mass greater than 9,000 kg (19,841 lbm) may require mission unique accommodations, resulting in cost and/or performance impacts.</li><li>   Park-orbit coast duration up to 60 minutes. Longer coast periods may require additional consumables, which could affect performance capability.</li><li>   185 km (100 nmi) minimum park orbit perigee altitude.</li><li>   Launch from SLC-41 at CCSFS (Cape Canaveral Space Force Station).</li><li>   Circular orbits up to 700 km assume single upper stage burn (direct-inject).</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        
+                                        <tr>
+                                            <td style="text-align: center">
+                                                <input id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl7_cbVehicle_7" type="checkbox" name="ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl7$ctl00$cbVehicle" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl7$ctl00$cbVehicle\&#39;,\&#39;\&#39;)&#39;, 0)" />
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </td>
+                                            <td>
+                                                <label for="cphPageBody_tabResults_TabPanel1_lvResults_ctrl7_cbVehicle_7" id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl7_lblName_7">New Glenn</label>
+                                                <span id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl7_lblConfig_7">(New Glenn)</span>
+                                            </td>
+                                            <td>
+                                                CCSFS
+                                               
+                                            </td>
+                                            <td>
+                                                34110
+                                            </td>
+                                            <td>
+                                                7m
+                                            </td>
+                                            <td>
+                                                Various – see ground rules for specifics
+                                            </td>
+                                            <td>
+                                                
+                                                <a id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl7_lkbToggle_7" href="javascript:__doPostBack(&#39;ctl00$cphPageBody$tabResults$TabPanel1$lvResults$ctrl7$ctl00$lkbToggle&#39;,&#39;&#39;)">Click To Expand</a>
+                                                <div id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl7_pnlComments_7" style="height:100%;">
+					
+                                                    <ul id="cphPageBody_tabResults_TabPanel1_lvResults_ctrl7_bl_Notes_7">
+						<li>   This performance takes into account the general effects of additional maneuvers associated with orbital debris compliance. This will also need to be evaluated on a mission-specific basis, which could result in additional performance impacts.</li><li>   First stage recovery has been accounted for in the performance capability.</li><li>   3-sigma guidance reserves.</li><li>   This configuration is under development; reserves are based on assumptions that are believed to be conservative. However, vehicle performance may change as the vehicle evolves and postflight data becomes available. Please contact LSP for guidance on use of performance data.</li><li>   Instantaneous launch attempt. Finite window accommodations may significantly reduce performance for missions with inertially fixed targets.</li><li>   Standard-capacity 1575-mm (62-in) payload adapter and one of various commercial-off-the-shelf (COTS) separation systems for payloads less than 10,000 kg (22,046 lbm). Masses of COTS separation systems are comparable and have been accounted for to provide separated spacecraft mass.</li><li>   Payload mass greater than 10,000 kg (22,046 lbm) requires the standard service high-capacity 3169.9-mm (124.8-in) payload adapter; however, a mission-unique separation system or other accommodations may be required, which could have cost and/or performance impacts.</li><li>   2 payload fairing doors.</li><li>   Vehicle environments and accelerations are based on a payload mass greater than 2,267 kg (5,000 lbm). Smaller payloads may be subject to higher accelerations and may require mission-unique accommodations, resulting in cost and/or performance impacts.</li><li>   Launch from SLC-36 at CCSFS (Cape Canaveral Space Force Station).</li><li>   185 km (100 nmi) minimum park orbit perigee altitude.</li><li>   Circular orbits up to 400 km assume single upper stage burn (direct-inject).</li>
+					</ul>
+                                                    <br />
+                                                
+				</div>
+                                            </td>
+                                        </tr>
+                                    
+                                    
+                                        </table>
+                                    
+                            
+			</div><div id="cphPageBody_tabResults_TabPanel2" class="ajax__tab_panel" style="display:none;visibility:hidden;">
+				
+                                <img id="cphPageBody_tabResults_TabPanel2_ctrlPerformanceGraph" src="/Pages/ChartImg.axd?i=chart_bf9e20e815444f819efaf2cc3fda38dd_8.png&amp;g=932d577c367a4a938460cb902d22d551" alt="Performance Graph" style="height:425px;width:670px;border-width:0px;" />
+                            
+			</div>
+		</div>
+	</div>
+                
+</div>
+        </div>
+    </div>
+    <br />
+
+            </div>
+            <div id="PageFooter">
+                <div id="footercontent">
+                    Responsible NASA Official: Brian Beaver (<a href='mailto:brian.beaver-1@nasa.gov'>brian.beaver-1@nasa.gov</a>) 
+                    <br />
+                    Curator: Eric Haddox (<a href='mailto:Eric.M.Haddox@nasa.gov'>Eric.M.Haddox@nasa.gov</a>) 
+                    <br />
+                    
+    Page updated: 29 February 2024
+
+                    <br />
+                    <a href="http://www.nasa.gov/about/highlights/HP_Privacy.html">NASA Privacy Statement, Disclaimer, and Accessibility Certification</a>
+                </div>
+            </div>
+            
+
+        
+
+
+</form>
+    </div>
+</body>
+</html>

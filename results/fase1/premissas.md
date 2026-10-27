@@ -37,5 +37,7 @@
 | P-033 | margem_crescimento_e1_ponto_medio | ponto médio da faixa E1 do AIAA S-120A | — | NÃO VALIDADA | config/plataformas.yaml — margem por subsistema |
 | P-034 | sistema_de_amostras_lander | 59 | kg | NÃO VALIDADA | config/plataformas.yaml — coleta e transferência de amostras na base do lander (L3 + amostras, alocação provisória) e nos limites L1/L2 |
 | P-035 | escala_nucleo_lander | limite_inferior: L1; limite_superior: SRL 2024 − MAV; referencia: L2; base: L3 + amostras | — | NÃO VALIDADA | config/plataformas.yaml — estrutura, pernas, térmico, comando e dados, GNC, propulsão de descida seca e cabeamento do lander |
+| P-036 | multiplicador_dla | dla_graus: [28.5, 40, 50, 60]; fator: [1.0, 0.95, 0.9, 0.65] | adimensional (multiplica a massa entregue pelo lançador na injeção direta) | NÃO VALIDADA | config/lancadores.yaml — injeção direta com |DLA| > 28,5° a partir do Cabo |
+| P-037 | saida_propria_fora_do_plano | orbita_baixa_km: 407; inclinacoes_com_dado_graus: [28.5, 51.6] | km; graus | NÃO VALIDADA | tools/lancamento.py — opção (b), órbita baixa + estágio criogênico próprio |
 
-Total: 35 premissas, 35 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 37 premissas, 37 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
