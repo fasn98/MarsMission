@@ -1,0 +1,50 @@
+# Tabelas "ENERGY MINIMA" de Sergeyevsky & Cunniff, JPL Publication 82-43, Vol. I, Part 5:
+# Mars-to-Earth Ballistic Mission Opportunities, 1992–2007 (docs/fontes.md [F14]).
+# C3L = energia de partida de Marte (km²/s²); VHP = v∞ de chegada à Terra (km/s).
+# Linhas c3l_*: mínimo de C3L por tipo; vhp_*: mínimo de VHP por tipo.
+# Transcrição: o PDF do NTRS é um escaneamento. O texto por OCR tem erros (ex.: 1992 lido
+# "12.961" e "9.136"); TODOS os valores abaixo foram conferidos visualmente na imagem da
+# página (pdftoppm, 110–300 dpi) em 2026-10-27. "pagina_pdf" = página do arquivo PDF;
+# "pagina" = numeração impressa.
+# Efeméride do documento: DE-118 (Seção IV, "Table of Constants").
+janelas:
+  "1992":   {pagina_pdf: 17, pagina: 11,
+    c3l_1: {partida: "1992-08-06", chegada: "1993-03-20", valor: "12.981"},
+    c3l_2: {partida: "1992-07-23", chegada: "1993-05-07", valor: "9.138"},
+    vhp_1: {partida: "1992-09-10", chegada: "1993-04-27", valor: "2.794"},
+    vhp_2: {partida: "1992-07-20", chegada: "1993-05-06", valor: "2.818"}}
+  "1994":   {pagina_pdf: 29, pagina: 23,
+    c3l_1: {partida: "1994-08-05", chegada: "1995-05-10", valor: "7.433"},
+    c3l_2: {partida: "1994-07-30", chegada: "1995-06-04", valor: "7.370"},
+    vhp_1: {partida: "1994-10-07", chegada: "1995-05-23", valor: "3.701"},
+    vhp_2: {partida: "1994-07-31", chegada: "1995-06-05", valor: "2.938"}}
+  "1996":   {pagina_pdf: 41, pagina: 35,
+    c3l_1: {partida: "1996-09-03", chegada: "1997-05-28", valor: "6.621"},
+    c3l_2: {partida: "1996-08-26", chegada: "1997-07-30", valor: "6.373"},
+    vhp_1: {partida: "1996-11-17", chegada: "1997-06-23", valor: "4.229"},
+    vhp_2: {partida: "1996-07-07", chegada: "1997-06-29", valor: "3.329"}}
+  "1998":   {pagina_pdf: 53, pagina: 47,
+    c3l_1: {partida: "1998-10-18", chegada: "1999-06-28", valor: "5.895"},
+    c3l_2: {partida: "1998-10-23", chegada: "1999-09-14", valor: "5.531"},
+    vhp_1: {partida: "1998-12-28", chegada: "1999-07-29", valor: "4.240"},
+    vhp_2: {partida: "1998-06-19", chegada: "1999-07-20", valor: "3.724"}}
+  "2000/1": {pagina_pdf: 65, pagina: 59,
+    c3l_1: {partida: "2001-01-04", chegada: "2001-08-16", valor: "5.643"},
+    c3l_2: {partida: "2001-01-20", chegada: "2001-10-25", valor: "5.626"},
+    vhp_1: {partida: "2001-02-16", chegada: "2001-09-11", valor: "3.705"},
+    vhp_2: {partida: "2000-06-08", chegada: "2001-08-08", valor: "4.085"}}
+  "2002/3": {pagina_pdf: 87, pagina: 81,
+    c3l_1: {partida: "2003-04-18", chegada: "2003-11-10", valor: "7.426"},
+    c3l_2: {partida: "2003-02-27", chegada: "2003-11-12", valor: "9.525"},
+    vhp_1: {partida: "2003-04-06", chegada: "2003-11-07", valor: "2.990"},
+    vhp_2: {partida: "2003-02-27", chegada: "2003-11-04", valor: "3.014"}}
+  "2004/5": {pagina_pdf: 109, pagina: 103,
+    c3l_1: {partida: "2005-06-28", chegada: "2006-01-06", valor: "13.558"},
+    c3l_2: {partida: "2005-07-08", chegada: "2006-06-30", valor: "13.197"},
+    vhp_1: {partida: "2005-08-14", chegada: "2006-02-03", valor: "2.899"},
+    vhp_2: {partida: "2005-02-23", chegada: "2005-12-26", valor: "3.007"}}
+  "2006/7": {pagina_pdf: 131, pagina: 125,
+    c3l_1: {partida: "2007-07-30", chegada: "2008-02-29", valor: "14.230"},
+    c3l_2: {partida: "2007-07-21", chegada: "2008-04-29", valor: "10.196"},
+    vhp_1: {partida: "2007-09-10", chegada: "2008-04-06", valor: "2.809"},
+    vhp_2: {partida: "2007-06-24", chegada: "2008-04-16", valor: "2.881"}}

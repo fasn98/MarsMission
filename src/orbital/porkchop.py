@@ -81,14 +81,16 @@ def calcular_grade(partida: str, chegada: str, et_partida, et_chegada) -> Grade:
     return Grade(et_partida, et_chegada, c3, vinf, ang, tof)
 
 
-def minimo_c3_por_tipo(partida: str, chegada: str, grade: Grade, tipo: int, exclusao_180: float = 0.0):
-    """Mínimo local de C3 entre as transferências do tipo dado (1 ou 2).
+def minimo_c3_por_tipo(partida: str, chegada: str, grade: Grade, tipo: int, exclusao_180: float = 0.0,
+                       grandeza: str = "c3"):
+    """Mínimo local de C3 (ou, com grandeza="vinf", do v∞ de chegada) no tipo dado (1 ou 2).
 
     `exclusao_180` (graus) remove da busca os ângulos dentro de ±exclusao_180 de 180°, onde o
     plano da transferência é mal definido (premissa P-006).
 
-    Parte do menor C3 da grade nesse tipo e refina com Nelder–Mead em (partida, chegada),
-    penalizando pontos que mudem de tipo. Devolve dict com datas, C3, v∞ e ângulo.
+    Parte do menor valor da grade nesse tipo e refina com Nelder–Mead em (partida, chegada),
+    penalizando pontos que mudem de tipo ou saiam do domínio da grade. Se o mínimo cair na
+    borda do domínio, o campo "na_borda" fica True: o mínimo verdadeiro pode estar fora. Devolve dict com datas, C3, v∞ e ângulo.
     """
     from scipy.optimize import minimize
 
@@ -98,23 +100,31 @@ def minimo_c3_por_tipo(partida: str, chegada: str, grade: Grade, tipo: int, excl
     mascara = do_tipo(np.nan_to_num(grade.angulo_transf, nan=-1.0)) & np.isfinite(grade.c3)
     if not mascara.any():
         return None
-    c3m = np.where(mascara, grade.c3, np.inf)
+    alvo = grade.c3 if grandeza == "c3" else grade.vinf_chegada
+    c3m = np.where(mascara, alvo, np.inf)
     i, j = np.unravel_index(np.argmin(c3m), c3m.shape)
     x0 = np.array([grade.et_partida[i], grade.et_chegada[j]]) / DIA
 
+    lim_p = (grade.et_partida[0], grade.et_partida[-1])
+    lim_c = (grade.et_chegada[0], grade.et_chegada[-1])
+
     def f(x):
         et1, et2 = x * DIA
-        if et2 <= et1:
+        # Refinamento restrito ao domínio da grade, para não sair da janela estudada.
+        if et2 <= et1 or not (lim_p[0] <= et1 <= lim_p[1] and lim_c[0] <= et2 <= lim_c[1]):
             return 1e6
         try:
-            c3, _, a, _ = transferencia(partida, chegada, et1, et2)
+            c3, vinf, a, _ = transferencia(partida, chegada, et1, et2)
         except lambert.LambertError:
             return 1e6
-        return c3 if do_tipo(a) else 1e6
+        valor = c3 if grandeza == "c3" else vinf
+        return valor if do_tipo(a) else 1e6
 
     res = minimize(f, x0, method="Nelder-Mead",
                    options={"xatol": 1e-4, "fatol": 1e-8, "initial_simplex": [x0, x0 + [2, 0], x0 + [0, 2]]})
     et1, et2 = res.x * DIA
     c3, vinf2, a, _ = transferencia(partida, chegada, et1, et2)
+    passo = 1.5 * min(np.diff(grade.et_partida).min(), np.diff(grade.et_chegada).min())
+    na_borda = bool(min(et1 - lim_p[0], lim_p[1] - et1, et2 - lim_c[0], lim_c[1] - et2) < passo)
     return {"et_partida": float(et1), "et_chegada": float(et2), "c3": c3, "vinf_chegada": vinf2,
-            "angulo": a, "tof_dias": float((et2 - et1) / DIA)}
+            "angulo": a, "tof_dias": float((et2 - et1) / DIA), "na_borda": na_borda}

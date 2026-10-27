@@ -57,7 +57,7 @@ absoluto e relativo, estão em `results/etapa1.2/verificacao_burke2010.md`, gera
    dias. Com partida no centro da Terra, o C3 difere até 0,9 %. A diferença tem causa física
    conhecida: a Terra se move cerca de 12 m/s em torno do baricentro Terra–Lua, e isso altera
    v∞,partida em até ~0,012 km/s. Como C3 = v∞², o efeito no C3 é de ~2·v∞·δv ≈ 0,07 km²/s², a
-   ordem observada. **Conclusão provável:** o manual usou o baricentro Terra–Lua (ou uma efeméride
+   ordem observada. **Convenção INFERIDA, não declarada pelo manual:** o manual usou o baricentro Terra–Lua (ou uma efeméride
    em que a Terra coincide com ele). O documento não diz isso. Para a missão, o fisicamente correto
    é partir do centro da Terra, e os porkchops usam 399.
 2. **v∞ de chegada nos mínimos próprios.** A tabela (a) do arquivo de resultados compara o mínimo de
@@ -77,7 +77,8 @@ absoluto e relativo, estão em `results/etapa1.2/verificacao_burke2010.md`, gera
    As figuras de 2035 do mesmo documento (pp. 41–42) mostram a bacia de mínimo do Tipo I perto da
    partida em ~28/06/35 e da chegada em ~02/01/36. Essa posição é coerente com as datas calculadas
    aqui e não com as da Tabela 6. É uma leitura visual da figura, sem extração numérica. Não se
-   afirma aqui qual das duas está certa. A janela de 2035 fica fora do teste automático.
+   afirma aqui qual das duas está certa. A janela de 2035 fica fora do teste automático, pela lista
+   explícita `config/excecoes_verificacao.yaml`.
 
    **Busca por errata (2026-10-27):** o registro NTRS 20100037210 tem um único documento (PDF
    original), sem itens relacionados nem versão revisada. A busca na web por errata ou revisão do
@@ -92,7 +93,9 @@ absoluto e relativo, estão em `results/etapa1.2/verificacao_burke2010.md`, gera
 `results/etapa1.2/porkchop_terra_marte_<ano>.png` (2028, 2031, 2033, 2035), gerados por
 `tools/porkchop.py terra_marte`. Mostram curvas de C3 de partida (azul), v∞ de chegada (laranja
 tracejado) e tempo de voo (cinza pontilhado). Os mínimos próprios por tipo aparecem como marcadores
-cheios e os do manual como marcadores vazados. Partida no centro da Terra; chegada no baricentro de
+cheios e os do manual como marcadores vazados. Desde 2026-10-27 a faixa de ±1° em torno de 180°
+(P-006) é mascarada no desenho, com nota de rodapé; os contornos se limitam a C3 ≤ 20 km²/s² e
+v∞ ≤ 6 km/s; os números usam vírgula decimal. Partida no centro da Terra; chegada no baricentro de
 Marte. Domínios de busca em `config/janelas.yaml`.
 
 ## 4. Retorno Marte→Terra: fontes publicadas (antes de calcular)

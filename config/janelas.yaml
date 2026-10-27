@@ -8,10 +8,28 @@ terra_marte:
   passo_dias: 2      # mesmo passo da grade do manual
   referencia: tests/data/burke2010_minimos.yaml   # mínimos do manual, marcados no gráfico
   c3_max: 60
-  niveis_c3: [8, 9, 10, 12, 15, 20, 25, 30, 40, 50]
-  niveis_vinf: [2.5, 3, 3.5, 4, 5, 6, 7]
+  # Níveis de contorno limitados à região útil (C3 ≤ 20 km²/s², v∞ ≤ 6 km/s).
+  niveis_c3: [8, 8.5, 9, 10, 12, 15, 20]
+  niveis_vinf: [2.5, 3, 3.5, 4, 5, 6]
   janelas:
     "2028": {partida: ["2028-09-15", "2029-02-28"], chegada: ["2029-05-01", "2030-02-28"]}
     "2031": {partida: ["2030-11-01", "2031-05-15"], chegada: ["2031-06-01", "2032-04-30"]}
     "2033": {partida: ["2033-01-01", "2033-07-31"], chegada: ["2033-08-01", "2034-05-31"]}
     "2035": {partida: ["2035-03-15", "2035-10-15"], chegada: ["2035-10-01", "2036-12-31"]}
+marte_terra:
+  titulo: "Marte → Terra, balístico"
+  partida: "4"       # baricentro de Marte (ADR 0002)
+  chegada: "399"     # centro da Terra (fisicamente correto para a reentrada)
+  passo_dias: 2
+  c3_max: 60
+  # Níveis de contorno limitados à região útil (C3 ≤ 20 km²/s², v∞ ≤ 6 km/s).
+  niveis_c3: [5.5, 6, 7, 8, 10, 12, 15, 20]
+  niveis_vinf: [2.5, 3, 3.5, 4, 5, 6]
+  # Janelas com partida de Marte entre 2029 e 2040, localizadas por varredura de 2028 a 2041
+  # (mínimos locais de C3L em nov/2030, dez/2032–fev/2033, fev–mai/2035, jul/2037, jul/2039).
+  janelas:
+    "2030": {partida: ["2030-01-01", "2031-04-30"], chegada: ["2031-02-01", "2032-03-31"]}
+    "2032": {partida: ["2032-02-01", "2033-06-30"], chegada: ["2033-05-01", "2034-04-30"]}
+    "2035": {partida: ["2034-09-01", "2035-09-30"], chegada: ["2035-04-01", "2036-09-30"]}
+    "2037": {partida: ["2037-02-01", "2037-12-31"], chegada: ["2037-09-01", "2038-12-31"]}
+    "2039": {partida: ["2039-02-01", "2040-01-31"], chegada: ["2039-09-01", "2041-01-31"]}

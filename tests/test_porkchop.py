@@ -2,8 +2,8 @@
 
 Nas datas impressas no manual, com partida no baricentro Terra–Lua (o manual não declara o
 corpo de partida; ver docs/etapa1.2_lambert_porkchop.md), C3 e v∞ de chegada devem bater
-dentro de P-007 (NÃO VALIDADA). Janela de 2035 excluída: datas da Tabela 6 inconsistentes
-com as figuras do próprio manual.
+dentro de P-007 (NÃO VALIDADA). As linhas fora do teste vêm da lista explícita em
+config/excecoes_verificacao.yaml, cada uma com o motivo.
 """
 
 from __future__ import annotations
@@ -19,7 +19,9 @@ from orbital import porkchop as pc
 
 RAIZ = Path(__file__).resolve().parents[1]
 REF = yaml.safe_load((RAIZ / "tests/data/burke2010_minimos.yaml").read_text(encoding="utf-8"))["janelas"]
-CASOS = [(ano, t) for ano in ("2028", "2031", "2033") for t in (1, 2)]
+EXCECOES = yaml.safe_load((RAIZ / "config/excecoes_verificacao.yaml").read_text(encoding="utf-8"))
+FORA = {(e["janela"], e["linha"]) for e in EXCECOES["burke2010"]}
+CASOS = [(ano, t) for ano in REF for t in (1, 2) if (ano, f"tipo_{t}") not in FORA]
 
 
 def _premissa(nome):

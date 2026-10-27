@@ -1,0 +1,191 @@
+gerado_por: tools/porkchop.py
+sentido: marte_terra
+nota: tipo_N = mínimo de C3 de partida; min_vinf_tipo_N = mínimo do v∞ de chegada
+partida: '4'
+chegada: '399'
+janelas:
+  '2030':
+    min_vinf_tipo_1:
+      partida_tdb: '2031-01-08T11:52:54'
+      chegada_tdb: '2031-08-07T22:10:00'
+      tof_dias: 211.43
+      c3_km2_s2: 12.9626
+      vinf_chegada_km_s: 4.1791
+      angulo_transf_graus: 144.73
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_1:
+      partida_tdb: '2030-11-01T15:04:30'
+      chegada_tdb: '2031-07-07T06:47:50'
+      tof_dias: 247.66
+      c3_km2_s2: 5.7875
+      vinf_chegada_km_s: 5.6356
+      angulo_transf_graus: 144.2
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    min_vinf_tipo_2:
+      partida_tdb: '2030-06-09T16:54:46'
+      chegada_tdb: '2031-07-23T01:01:28'
+      tof_dias: 408.34
+      c3_km2_s2: 12.7994
+      vinf_chegada_km_s: 3.798
+      angulo_transf_graus: 227.67
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_2:
+      partida_tdb: '2030-11-09T08:03:04'
+      chegada_tdb: '2031-09-23T13:12:18'
+      tof_dias: 318.21
+      c3_km2_s2: 5.43
+      vinf_chegada_km_s: 5.4716
+      angulo_transf_graus: 216.22
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+  '2032':
+    min_vinf_tipo_1:
+      partida_tdb: '2033-02-28T06:50:07'
+      chegada_tdb: '2033-09-23T20:22:42'
+      tof_dias: 207.56
+      c3_km2_s2: 6.7062
+      vinf_chegada_km_s: 3.5068
+      angulo_transf_graus: 147.53
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_1:
+      partida_tdb: '2033-01-27T23:23:31'
+      chegada_tdb: '2033-09-02T11:58:07'
+      tof_dias: 217.52
+      c3_km2_s2: 5.7168
+      vinf_chegada_km_s: 4.0555
+      angulo_transf_graus: 141.42
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    min_vinf_tipo_2:
+      partida_tdb: '2032-06-25T05:39:13'
+      chegada_tdb: '2033-08-19T12:57:22'
+      tof_dias: 420.3
+      c3_km2_s2: 14.9642
+      vinf_chegada_km_s: 4.159
+      angulo_transf_graus: 224.91
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_2:
+      partida_tdb: '2033-02-12T16:23:44'
+      chegada_tdb: '2033-11-02T22:02:42'
+      tof_dias: 263.24
+      c3_km2_s2: 5.8079
+      vinf_chegada_km_s: 4.9482
+      angulo_transf_graus: 194.61
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+  '2035':
+    min_vinf_tipo_1:
+      partida_tdb: '2035-06-03T12:37:16'
+      chegada_tdb: '2035-11-30T18:49:33'
+      tof_dias: 180.26
+      c3_km2_s2: 10.1967
+      vinf_chegada_km_s: 2.9785
+      angulo_transf_graus: 140.73
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_1:
+      partida_tdb: '2035-05-08T01:35:48'
+      chegada_tdb: '2035-11-22T04:07:47'
+      tof_dias: 198.11
+      c3_km2_s2: 8.7569
+      vinf_chegada_km_s: 3.0368
+      angulo_transf_graus: 147.53
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    min_vinf_tipo_2:
+      partida_tdb: '2035-02-18T10:43:06'
+      chegada_tdb: '2035-11-13T10:22:16'
+      tof_dias: 267.99
+      c3_km2_s2: 13.3859
+      vinf_chegada_km_s: 3.0124
+      angulo_transf_graus: 181.0
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: true
+    tipo_2:
+      partida_tdb: '2035-02-16T14:11:57'
+      chegada_tdb: '2035-11-12T12:09:08'
+      tof_dias: 268.91
+      c3_km2_s2: 12.9375
+      vinf_chegada_km_s: 3.1578
+      angulo_transf_graus: 181.0
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: true
+  '2037':
+    min_vinf_tipo_1:
+      partida_tdb: '2037-08-24T04:47:21'
+      chegada_tdb: '2038-02-18T20:16:13'
+      tof_dias: 178.65
+      c3_km2_s2: 28.0265
+      vinf_chegada_km_s: 2.8813
+      angulo_transf_graus: 144.0
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_1:
+      partida_tdb: '2037-07-08T05:30:01'
+      chegada_tdb: '2038-01-19T11:12:23'
+      tof_dias: 195.24
+      c3_km2_s2: 14.3066
+      vinf_chegada_km_s: 3.9144
+      angulo_transf_graus: 142.78
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    min_vinf_tipo_2:
+      partida_tdb: '2037-02-28T05:09:22'
+      chegada_tdb: '2038-01-07T12:20:19'
+      tof_dias: 313.3
+      c3_km2_s2: 31.7075
+      vinf_chegada_km_s: 3.0005
+      angulo_transf_graus: 209.14
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_2:
+      partida_tdb: '2037-07-12T10:06:28'
+      chegada_tdb: '2038-04-07T23:55:22'
+      tof_dias: 269.58
+      c3_km2_s2: 12.5497
+      vinf_chegada_km_s: 3.5316
+      angulo_transf_graus: 218.98
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+  '2039':
+    min_vinf_tipo_1:
+      partida_tdb: '2039-09-11T06:20:58'
+      chegada_tdb: '2040-04-17T08:30:48'
+      tof_dias: 219.09
+      c3_km2_s2: 22.0057
+      vinf_chegada_km_s: 2.7897
+      angulo_transf_graus: 165.13
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_1:
+      partida_tdb: '2039-08-04T07:54:59'
+      chegada_tdb: '2040-03-11T23:28:48'
+      tof_dias: 220.65
+      c3_km2_s2: 13.6006
+      vinf_chegada_km_s: 4.4062
+      angulo_transf_graus: 151.52
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    min_vinf_tipo_2:
+      partida_tdb: '2039-07-17T02:02:32'
+      chegada_tdb: '2040-05-01T09:42:26'
+      tof_dias: 289.32
+      c3_km2_s2: 9.7056
+      vinf_chegada_km_s: 2.8451
+      angulo_transf_graus: 212.34
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
+    tipo_2:
+      partida_tdb: '2039-07-23T08:02:44'
+      chegada_tdb: '2040-05-04T06:47:03'
+      tof_dias: 285.95
+      c3_km2_s2: 9.5942
+      vinf_chegada_km_s: 2.8504
+      angulo_transf_graus: 211.28
+      na_borda_do_dominio: false
+      na_borda_da_exclusao_180: false
