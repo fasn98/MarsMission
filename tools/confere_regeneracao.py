@@ -7,8 +7,9 @@ de física não altera nenhum resultado. A ordem e as plataformas seguem a hist�
      "antes_etapa_2_3"), como em tools/confere_2033.py;
   3. Etapas 2.3 a 2.5 com o config atual.
 "Idêntico" significa dentro das tolerâncias declaradas (decisão do Fabio, 2026-10-27; premissas NÃO VALIDADAS):
-  - números (YAML, Markdown, NPZ): |a − b| ≤ max(relativa · max(|a|, |b|), piso absoluto), P-039. O numpy e a OpenBLAS
-    escolhem o código pela CPU, e CPUs diferentes mudam os últimos dígitos (1e-16 a 8e-15 relativo observado);
+  - números (YAML, Markdown, NPZ): a (versionado) e b (regenerado) passam se |a − b| ≤ max(relativa · |b|, piso
+    absoluto), P-039. O limite vem da precisão relevante do estudo (~1e-4 relativo), com folga para o ruído entre CPUs
+    amplificado por cálculos mal condicionados; diferença acima dele é problema a investigar, não motivo para alargá-lo;
   - PNG: até a fração de pixels diferentes da P-040 (os dados de origem das figuras são conferidos pela P-039).
 Cada arquivo sai em um de três estados: "idêntico" (byte a byte; PNG pixel a pixel; NPZ array a array; controle sem
 o hash), "dentro da tolerância" (as diferenças abaixo do limite ficam listadas no relatório, com o tamanho) ou
@@ -88,7 +89,8 @@ def _tolerancias():
 
 
 def _dentro(a, b, rtol, atol) -> bool:
-    return abs(a - b) <= max(rtol * max(abs(a), abs(b)), atol)
+    """P-039: a (versionado) e b (regenerado) passam se |a − b| ≤ max(rtol · |b|, atol)."""
+    return abs(a - b) <= max(rtol * abs(b), atol)
 
 
 def _eh_num(x) -> bool:
@@ -138,7 +140,7 @@ def avaliar(p: Path, q: Path, rel: str = "") -> dict:
                     continue
                 ok = ~np.isnan(x)
                 dif = np.abs(x[ok] - y[ok])
-                lim = np.maximum(rtol * np.maximum(np.abs(x[ok]), np.abs(y[ok])), atol)
+                lim = np.maximum(rtol * np.abs(y[ok]), atol)   # P-039: max(rtol · |regenerado|, atol)
                 rel_ = dif / np.where(np.abs(x[ok]) > 0, np.abs(x[ok]), np.inf)
                 r = {"onde": f"{k} ({int((dif > 0).sum())} elementos)", "versionado": "", "regenerado": "",
                      "dif_abs": float(dif.max()), "dif_rel": float(rel_.max())}
@@ -341,8 +343,8 @@ def main():
           f"Não regenerados: {', '.join(out['nao_regenerados']) or 'nenhum'}.", "",
           f"Gerados sem versão no repositório: {', '.join(novos) or 'nenhum'}.", "",
           f"Copiados sobre os versionados (--atualizar): {', '.join(atualizar) or 'nenhum'}.", "",
-          f"Critério (\"idêntico\" = dentro das tolerâncias): números com |a − b| ≤ max({_tolerancias()[0]:g} · max(|a|, |b|), "
-          f"{_tolerancias()[1]:g}) (P-039); PNG com até {100 * _tolerancias()[2]:g} % de pixels diferentes (P-040); "
+          f"Critério (\"idêntico\" = dentro das tolerâncias): números com |a − b| ≤ max({_tolerancias()[0]:g} · |b|, "
+          f"{_tolerancias()[1]:g}), a versionado e b regenerado (P-039); PNG com até {100 * _tolerancias()[2]:g} % de pixels diferentes (P-040); "
           f"arquivos de controle ({', '.join(sorted(CONTROLE))}) sem o hash do commit. Premissas NÃO VALIDADAS.", "",
           "Ferramentas não rodadas: " + (", ".join(f"{x['ferramenta']} ({x['motivo']})" for x in log if not x["rodou"]) or "nenhuma") + ".", "",
           "## Arquivos diferentes (acima do limite)", ""]

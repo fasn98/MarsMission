@@ -59,7 +59,7 @@ def test_npz_array_a_array(cr, tmp_path):
     r = cr.avaliar(tmp_path / "a.npz", tmp_path / "c.npz")
     assert r["estado"] == "tolerancia" and r["abaixo"][0]["dif_abs"] > 0
     z = x.copy()
-    z[1, 1] = 3.0 * (1 + 1e-9)
+    z[1, 1] = 3.0 * (1 + 1e-8)
     np.savez_compressed(tmp_path / "d.npz", c3=z, datas=np.array(["2028-11-24"]))
     assert cr.avaliar(tmp_path / "a.npz", tmp_path / "d.npz")["estado"] == "diferente"
     w = x.copy()
@@ -69,13 +69,19 @@ def test_npz_array_a_array(cr, tmp_path):
 
 
 def test_tolerancia_numerica_p039(cr, tmp_path):
-    """Relativa 1e-12 com piso absoluto 1e-13 (lidos de config/premissas.yaml)."""
+    """P-039: passa se |a − b| ≤ max(1e-9 · |b|, 1e-10), a = versionado, b = regenerado (lidos de config/premissas.yaml)."""
     rtol, atol, fpx = cr._tolerancias()
-    assert (rtol, atol, fpx) == (1e-12, 1e-13, 1e-3)
+    assert (rtol, atol, fpx) == (1e-9, 1e-10, 1e-3)
+    # a forma exata: relativa sobre |b| (regenerado), com piso absoluto
+    assert cr._dentro(1000.0 + 0.99e-6, 1000.0, rtol, atol) and not cr._dentro(1000.0 + 1.01e-6, 1000.0, rtol, atol)
+    assert cr._dentro(1e-3 + 0.99e-10, 1e-3, rtol, atol) and not cr._dentro(1e-3 + 1.01e-10, 1e-3, rtol, atol)
+    assert cr._dentro(0.99e-10, 0.0, rtol, atol) and not cr._dentro(1.01e-10, 0.0, rtol, atol)
+    # Nota: com relativa 1e-9, a forma |b| e a forma max(|a|, |b|) só diferem em segunda ordem (~1e-18 relativo), o que
+    # o float não representa; a forma |b| está no código (_dentro e o ramo NPZ de avaliar) e nos limites acima.
     a, b, c, z = tmp_path / "a.yaml", tmp_path / "b.yaml", tmp_path / "c.yaml", tmp_path / "z.yaml"
     a.write_text("c3: 9.597990318099248\nrel: -4.685807331155793e-08\nnome: x\n", encoding="utf-8")
     b.write_text("c3: 9.597990318099326\nrel: -4.6858071395951336e-08\nnome: x\n", encoding="utf-8")   # observado no CI
-    c.write_text("c3: 9.597990318109248\nrel: -4.685807331155793e-08\nnome: x\n", encoding="utf-8")   # 1e-12 rel acima
+    c.write_text("c3: 9.597990327699248\nrel: -4.685807331155793e-08\nnome: x\n", encoding="utf-8")   # 1e-9 rel acima
     z.write_text("c3: 9.597990318099248\nrel: -4.685807331155793e-08\nnome: y\n", encoding="utf-8")
     r = cr.avaliar(a, b)
     assert r["estado"] == "tolerancia" and len(r["abaixo"]) == 2 and not r["acima"]
