@@ -65,3 +65,19 @@ def test_visao_geral_tambem_em_visao_geral():
           for c in paginas if c.args and getattr(c.args[0], "id", "") == "visao_geral"]
     assert {"default": True} in kw
     assert {"url_path": "visao-geral", "visibility": "hidden"} in kw
+
+
+def test_item_tem_largura_automatica_so_nas_tabelas_estreitas():
+    """Visão geral (largura total): "Item" com largura fixa. Orçamento (meia largura): "Item" automático, "Origem" fixa."""
+    import json
+
+    def colunas(nome):
+        at = AppTest.from_function(_pagina, args=(nome,), default_timeout=180)
+        at.run()
+        return [json.loads(df.proto.columns) for df in at.dataframe]
+
+    largas = [c for c in colunas("visao_geral") if "Origem" in c]
+    assert largas and all("width" in c.get("Item", {}) for c in largas if "Item" in c)
+    estreitas = [c for c in colunas("pagina_orcamento") if "Origem" in c]
+    assert len(estreitas) == 2   # orbitador e lander
+    assert all("Item" not in c and c["Origem"]["width"] == 320 for c in estreitas)

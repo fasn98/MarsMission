@@ -28,15 +28,17 @@ def metrica(rotulo: str, x: d.Valor, casas: int = 2, sufixo: str | None = None, 
 
 
 # Colunas de texto com largura fixa (TextColumn não quebra linha): "Origem" cabe um caminho de results/ inteiro; "Item"
-# fica larga, e um item mais longo que ela aparece cortado (o texto inteiro aparece ao clicar na célula).
+# fica larga, e um item mais longo que ela aparece cortado. Nas tabelas estreitas (meia largura, no Orçamento) o "Item"
+# fica com a largura automática, para não empurrar as outras colunas para a rolagem horizontal.
 COLUNAS = {"Origem": st.column_config.TextColumn("Origem", width=320, help="De onde vem o número: arquivo de results/, "
                                                  "item de config/ ou função de src/orbital recalculada no painel"),
            "Item": st.column_config.TextColumn("Item", width="large")}
 
 
-def tabela(linhas: list[dict]):
+def tabela(linhas: list[dict], estreita: bool = False):
     df = pd.DataFrame(linhas)
-    st.dataframe(df, hide_index=True, width="stretch", column_config={k: c for k, c in COLUNAS.items() if k in df.columns})
+    cfg = {k: c for k, c in COLUNAS.items() if k in df.columns and not (estreita and k == "Item")}
+    st.dataframe(df, hide_index=True, width="stretch", column_config=cfg)
 
 
 def linha_valor(nome: str, x: d.Valor | None, casas: int = 1) -> dict:
@@ -205,7 +207,7 @@ def pagina_orcamento():
                 if k in x:
                     linhas.append(linha_valor({"entrada": "Massa de entrada", "pousada": "Massa pousada",
                                                "mav": "MAV + energia do aquecimento", "plataforma": "Plataforma de superfície"}[k], x[k]))
-            tabela(linhas)
+            tabela(linhas, estreita=True)
     st.header("Lançadores que continuam servindo")
     for veic in ("orbitador", "lander"):
         servem = [x["lancador"] + (" (desempenho anunciado, não demonstrado)" if x["categoria"] == "anunciado" else "")
