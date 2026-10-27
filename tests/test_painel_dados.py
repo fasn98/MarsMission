@@ -208,3 +208,34 @@ def test_ferramentas_chamam_as_funcoes_de_src(monkeypatch):
     assert pl_t.prevista is massa_plataformas.prevista and pl_t.lander_base is massa_plataformas.lander_base
     for m in ("dimensionamento", "lancamento", "plataformas"):
         sys.modules.pop(m, None)
+
+
+def test_nomes_legiveis_vem_do_config_e_de_results():
+    """Nomes de exibição: órbita pela descrição do config, missão pelo id de results/ e mínimos pela nota do arquivo."""
+    m = d.missao_referencia()
+    orbitas = yaml.safe_load((d.RAIZ / "config" / "parametros_orbitais.yaml").read_text(encoding="utf-8"))["orbitas_marte"]
+    om = d.orbita_marte(m["orbita_marte"])
+    it = orbitas[m["orbita_marte"]]
+    assert om["nome"] == it["descricao"].split(",")[0] == "elíptica de 1 sol"
+    assert (om["periapse"].valor, om["apoapse"].valor) == (it["periapse_alt_km"]["valor"], it["apoapse_alt_km"]["valor"])
+    assert om["periapse"].rotulo == om["apoapse"].rotulo == "dado de fonte publicada [F18]"
+    assert d.nome_missao("2028-conjuncao") == "conjunção de 2028"
+    assert d.nome_missao("2031-conjuncao_transito_curto") == "conjunção com trânsito curto de 2031"
+    classes = yaml.safe_load((d.RAIZ / "config" / "missoes.yaml").read_text(encoding="utf-8"))["classes"]
+    assert set(d.NOMES_CLASSE) == set(classes)   # todo nome de classe corresponde a uma classe do config
+    assert d.nome_minimo("tipo_1") == "Mín. C3 de partida, tipo I"
+    assert d.nome_minimo("min_vinf_tipo_2") == "Mín. v∞ de chegada, tipo II"
+    for sentido in ("terra_marte", "marte_terra"):
+        nota = _ler(f"results/etapa1.2/minimos_{sentido}.yaml")["nota"]
+        assert nota == "tipo_N = mínimo de C3 de partida; min_vinf_tipo_N = mínimo do v∞ de chegada"
+        for janela in d.minimos(sentido).values():
+            assert all(d.nome_minimo(k) != k for k in janela)   # nenhuma chave de mínimo fica sem nome
+
+
+def test_estagios_do_orcamento_tem_os_nomes_de_results():
+    """Os estágios recalculados no orçamento aparecem com os mesmos nomes dos itens de results/etapa2.5/arquitetura.yaml."""
+    a = _ler("results/etapa2.5/arquitetura.yaml")
+    itens = {x["item"] for v in ("orbitador", "lander") for x in a[v]["composicao"]}
+    assert set(d.NOMES_ESTAGIO.values()) <= itens
+    nomes = {e["nome"] for x in d.orcamento()["veiculos"].values() for e in x["estagios"]}
+    assert nomes <= set(d.NOMES_ESTAGIO.values())   # nenhum estágio fica com a chave interna
