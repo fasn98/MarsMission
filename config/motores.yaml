@@ -29,15 +29,17 @@ motores:
     nome: L3Harris (ex-Aerojet) R-4D-11
     propelentes: MON-3 / MMH
     empuxo_n: {valor_original: 110, unidade_original: lbf, fonte: "[F106] p. 3, linha R-4D-11, coluna \"THRUST, LB\": 110"}
-    # Decisão do Fabio no portão da Etapa 3.1 (2026-10-27): usar a variante que voou no Orion (bocal 164:1), com o
-    # Isp e os limites dela [F107 Tab. 3]. A ficha [F106] dá 315 s e 12,000 s de queima longa.
+    # Decisão do Fabio no portão da Etapa 3.1 (2026-10-27): usar o Isp da variante que voou no Orion (bocal 164:1) [F107
+    # Tab. 3]. A ficha [F106] dá 315 s e 12,000 s de queima longa. Os 2000 s e as 40 queimas abaixo são REQUISITOS da
+    # missão Artemis I, não vida qualificada do motor: [F107] p. 6, "the maximum burn duration for abort burns would be
+    # 2000 seconds instead of the worst case 7200 seconds originally specified". Uso conservador; a confirmar pelo Fabio.
     isp_s: {valor: 310, fonte: "[F107] p. 6 (Tab. 3, \"Artemis I Auxiliary Engine Requirements\"): \"Specific Impulse 310 seconds\""}
     massa_kg: {valor_original: 9.5, unidade_original: lb, fonte: "[F106] p. 3, coluna \"WT, LB\": 9.5 (ficha; massa da variante do Orion não encontrada)"}
-    queima_unica_max_s: {valor: 2000, fonte: "[F107] p. 6 (Tab. 3): \"Max Firing Time 2000 seconds\""}
-    partidas: {valor: 40, fonte: "[F107] p. 6 (Tab. 3): \"Number of Burns 40\""}
+    queima_unica_max_s: {valor: 2000, natureza: requisito do Artemis I, fonte: "[F107] p. 6 (Tab. 3): \"Max Firing Time 2000 seconds\""}
+    partidas: {valor: 40, natureza: requisito do Artemis I, fonte: "[F107] p. 6 (Tab. 3): \"Number of Burns 40\""}
     pulsos: {valor: 59000, fonte: "[F106] p. 3, coluna \"LIFE PULSES\": 59,000 (ficha)"}
     voo: "[F106] p. 3: \"Q, F, IP\" (\"Q=Qualified, F=Flown, IP=In-Production\"); Orion ESM, 8 motores auxiliares no Artemis I: [F107] p. 5, \"The auxiliary engines are modified Aerojet Rocketdyne R-4D-11 engines produced specifically for the Orion program\""
-    nota: "a variante que voou no Orion (bocal 164:1) tem o mesmo empuxo, mas Isp e limites menores: [F107] p. 6 (Tab. 3), \"Thrust 489 N\", \"Specific Impulse 310 seconds\", \"Max Firing Time 2000 seconds\", \"Number of Burns 40\". O catálogo usa a ficha [F106] (315 s); com a variante do Orion, Isp 310 s"
+    nota: "a variante que voou no Orion (bocal 164:1) tem o mesmo empuxo e Isp menor: [F107] p. 6 (Tab. 3), \"Thrust 489 N\", \"Specific Impulse 310 seconds\". O catálogo usa 310 s (decisão do Fabio); a ficha [F106] dá 315 s"
   R-42:
     nome: L3Harris (ex-Aerojet) R-42
     propelentes: MON-3 / MMH

@@ -40,6 +40,7 @@ class Sequencia:
     apoapses_intermediarios_km: list = field(default_factory=list)   # altitudes
     duracao_sequencia_dias: float = float("nan")
     altitude_minima_km: float = float("nan")
+    apsides_finais_km: tuple = (float("nan"), float("nan"))   # altitudes (periapse, apoapse) ao fim, já com a correção
 
 
 def raio_hill(mu_planeta, mu_sol, semieixo_km):
@@ -122,7 +123,7 @@ def captura_multipla(mu, raio, motor, m0, vinf, rp_alvo, ra_alvo, n, r_hill, f_h
     m_fim = m * math.exp(-corr / (motor.isp_s * G0))
     dv_mot = motor.isp_s * G0 * math.log(m0 / m_fim)
     return Sequencia(n, True, "", duracoes, m0 - m_fim, dv_mot, dv_imp, dv_mot - dv_imp, corr,
-                     [x - raio for x in ras[:-1]], espera / 86400, hmin)
+                     [x - raio for x in ras[:-1]], espera / 86400, hmin, (rp_alvo - raio, ra_c - raio))
 
 
 def saida_multipla(mu, raio, motor, m0, rp, ra, vinf, n, r_hill, f_hill):

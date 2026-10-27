@@ -145,8 +145,7 @@ def _seq(s, c, prop_dim, estada_dias):
         return d
     return {**d, "duracoes_s": s.duracoes_s, "maior_queima_s": max(s.duracoes_s), "soma_queimas_s": sum(s.duracoes_s),
             "propelente_kg": s.propelente_kg, "dv_motor_km_s": s.dv_motor_km_s, "dv_impulsivo_km_s": s.dv_impulsivo_km_s,
-            "perda_km_s": _arredondar(s.perda_km_s, v(arr["perda_varias_queimas_km_s"])),
-            "correcao_periapse_km_s": _arredondar(s.correcao_periapse_km_s, v(arr["perda_varias_queimas_km_s"])),
+            "perda_km_s": s.perda_km_s, "correcao_periapse_km_s": s.correcao_periapse_km_s,
             "apoapses_intermediarios_km": s.apoapses_intermediarios_km, "duracao_sequencia_dias": s.duracao_sequencia_dias,
             "estada_dias": estada_dias, "altitude_minima_km": _arredondar(s.altitude_minima_km, v(arr["altitude_km"])),
             "cabe_no_dimensionado": bool(s.propelente_kg <= prop_dim),
@@ -192,20 +191,25 @@ def varias_queimas(mu, R, um, rp_enc, ra_enc, orb, cs):
                                                    "por_n": linhas, "melhor_n": _melhor(linhas)})
     # Sensibilidade à fração do raio de Hill: combinações de 400 N, caso de projeto, maior N
     proj_cap, proj_sai = cs["captura"][0][1], cs["saida"][0][1]
-    for f in vq["fracao_raio_hill_sensibilidade"]["valor"]:
-        c = next(x for x in mt.conjuntos("captura") if x.nome == "C1")
-        s = qm.captura_multipla(mu, R, c.motor, q_cap["massa_antes_kg"], proj_cap["vinf_chegada_marte_km_s"], um.rp, um.ra, max(ns), r_h, f)
-        arr = ler("config/queima_finita.yaml")["arredondamento_resultados"]
-        out["sensibilidade_fracao_hill"].append({"fracao_raio_hill": f, "combinacao": "C1", "n": max(ns),
-                                                  "perda_km_s": _arredondar(s.perda_km_s, v(arr["perda_varias_queimas_km_s"])),
+    vinf_sai = math.sqrt(proj_sai["c3l_partida_marte_km2_s2"])
+    for f in [f_h] + list(vq["fracao_raio_hill_sensibilidade"]["valor"]):
+        for c in [x for x in mt.conjuntos("captura") if x.nome in ("C1", "C2")]:
+            s = qm.captura_multipla(mu, R, c.motor, q_cap["massa_antes_kg"], proj_cap["vinf_chegada_marte_km_s"], um.rp, um.ra, max(ns), r_h, f)
+            out["sensibilidade_fracao_hill"].append({"fracao_raio_hill": f, "combinacao": c.nome, "manobra": "captura", "n": max(ns),
+                                                      "perda_km_s": s.perda_km_s, "propelente_kg": s.propelente_kg,
+                                                      "maior_queima_s": max(s.duracoes_s) if s.viavel else None, "viavel": s.viavel})
+        c = next(x for x in mt.conjuntos("retorno") if x.nome == "R3")
+        s = qm.saida_multipla(mu, R, c.motor, q_sai["massa_antes_kg"], um.rp, um.ra, vinf_sai, max(ns), r_h, f)
+        out["sensibilidade_fracao_hill"].append({"fracao_raio_hill": f, "combinacao": "R3", "manobra": "saída", "n": max(ns),
+                                                  "perda_km_s": s.perda_km_s, "propelente_kg": s.propelente_kg,
                                                   "maior_queima_s": max(s.duracoes_s) if s.viavel else None, "viavel": s.viavel})
     # Conferência de coerência com o ERO [F22, F29] (P-043)
     cat = mt.catalogo()
     me = cat[ero["motor"]["valor"]]
     motor = qf.Motor(me["empuxo_n"] * ero["motor"]["quantidade"], me["isp_s"])
-    m0, prop = v(ero["massa_kg"]), v(ero["propelente_kg"])
+    prop = v(ero["propelente_kg"])
     vinfs = list(ero["vinf_km_s"]["valor"]) + [cs["captura"][1][1]["vinf_chegada_marte_km_s"]]
-    for vinf in vinfs:
+    for m0, vinf in [(v(m), x) for m in ero["massa_kg"] for x in vinfs]:
         for nome_orb, ra_alvo in (("órbita de 1 sol", um.ra), ("órbita alta (f_H · raio de Hill)", f_h * r_h)):
             melhor = None
             for n in ns:
@@ -214,13 +218,12 @@ def varias_queimas(mu, R, um, rp_enc, ra_enc, orb, cs):
                 s = qm.captura_multipla(mu, R, motor, m0, vinf, um.rp, ra_alvo, n, r_h, f_h)
                 if s.viavel and (melhor is None or s.propelente_kg < melhor.propelente_kg):
                     melhor = s
-            arr = ler("config/queima_finita.yaml")["arredondamento_resultados"]
-            out["conferencia_ero"].append({"vinf_km_s": vinf, "orbita": nome_orb, "n": melhor.n, "dv_impulsivo_km_s": melhor.dv_impulsivo_km_s,
-                                           "perda_km_s": _arredondar(melhor.perda_km_s, v(arr["perda_varias_queimas_km_s"])), "propelente_kg": melhor.propelente_kg, "propelente_ero_kg": prop,
+            out["conferencia_ero"].append({"massa_kg": m0, "vinf_km_s": vinf, "orbita": nome_orb, "n": melhor.n,
+                                           "dv_impulsivo_km_s": melhor.dv_impulsivo_km_s, "perda_km_s": melhor.perda_km_s, "propelente_kg": melhor.propelente_kg, "propelente_ero_kg": prop,
                                            "fecha": bool(melhor.propelente_kg <= prop), "maior_queima_s": max(melhor.duracoes_s),
                                            "queima_unica_max_s": me["queima_unica_max_s"],
                                            "queima_unica_ok": bool(max(melhor.duracoes_s) <= me["queima_unica_max_s"])})
-    out["dv_motor_ero_km_s"] = me["isp_s"] * qf.G0 * math.log(m0 / (m0 - prop))
+    out["dv_motor_ero_km_s"] = {str(int(v(m))): me["isp_s"] * qf.G0 * math.log(v(m) / (v(m) - prop)) for m in ero["massa_kg"]}
     return out
 
 
@@ -258,19 +261,28 @@ def _md_varias(out, br, sim, nao):
                           f"{br(l['propelente_kg'])} | {nao(l['cabe_no_dimensionado'])} | {br(l['maior_queima_s'])} | {br(x['queima_unica_max_s'])} | "
                           f"{ok(l['queima_unica_ok'])} | {ok(l['vida_acumulada_ok'])} | {ok(l['partidas_ok'])} | {br(l['duracao_sequencia_dias'], 1)} | {ok(l['tempo_ok'])} |")
         md.append("")
-    md += ["### Sensibilidade à fração do raio de Hill (C1, caso de projeto, maior N)", "",
-           "| Fração | Perda (m/s) | Maior queima (s) |", "| -: | -: | -: |"]
+    md += ["Natureza dos limites: S400-15, queima única qualificada de 1,85 h; vida acumulada e partidas \"planned\" [F105]. "
+           "R-4D-11, 2000 s e 40 queimas são requisitos da missão Artemis I, não vida qualificada do motor [F107]. "
+           "OMS-E, 1030 s e 10 partidas são requisitos do Orion; 15 h acumuladas, do Shuttle [F107, F108]. "
+           "Captura e retorno usam estágios e motores diferentes: as vidas não se somam.", ""]
+    md += ["### Sensibilidade à fração do raio de Hill (caso de projeto, maior N)", "",
+           "Com 1/3, a perturbação solar (não modelada) muda o periapse em centenas a milhares de km por volta (estimativa da "
+           "revisão independente, não conferida em fonte): fora da validade do modelo de dois corpos.", "",
+           "| Fração | Combinação | Perda (m/s) | Propelente (kg) | Maior queima (s) |", "| -: | :- | -: | -: | -: |"]
     for x in out["sensibilidade_fracao_hill"]:
-        md.append(f"| {br(x['fracao_raio_hill'], 2)} | {br(1e3 * x['perda_km_s'], 1)} | {br(x['maior_queima_s'])} |")
+        md.append(f"| {br(x['fracao_raio_hill'], 3)} | {x['combinacao']} ({x['manobra']}) | {br(1e3 * x['perda_km_s'], 1)} | "
+                  f"{br(x['propelente_kg'])} | {br(x['maior_queima_s'])} |")
     md += ["", "## Conferência de coerência com o ERO da ESA (P-043; não é verificação)", "",
-           f"ERO: massa úmida de ~6,5 t e 1.900 kg de propelente no módulo de inserção [F22], 2 × 400 N [F29]. Admitidos (P-043): a massa "
-           f"úmida como massa na captura e todo o propelente do módulo na captura; assim, Δv do motor = "
-           f"{br(1e3 * out['dv_motor_ero_km_s'])} m/s. As fontes não publicam v∞, órbita-alvo nem Δv da captura: "
-           "a tabela varre o v∞ (o último é o da missão de referência) e mostra o melhor N.", "",
-           "| v∞ (km/s) | Órbita-alvo | N | Δv impulsivo (m/s) | Perda (m/s) | Propelente (kg) | Fecha com 1.900 kg? | Maior queima (s) | Dentro da queima única? |",
-           "| -: | :- | -: | -: | -: | -: | :- | -: | :- |"]
+           "ERO: massa úmida de ~6,5 t [F22] ou massa de lançamento de 7,2 t [F29]; 1.900 kg de propelente no módulo de inserção "
+           "[F22]; 2 × 400 N [F29]. Admitidos (P-043): essa massa na captura, todo o propelente do módulo na captura, o motor como "
+           "S400-15 e o periapse da órbita de 1 sol. Δv do motor com todo o propelente: "
+           + "; ".join(f"{br(1e3 * d)} m/s com {br(int(k))} kg" for k, d in out["dv_motor_ero_km_s"].items())
+           + ". As fontes não publicam v∞, órbita-alvo nem Δv da captura: a tabela varre o v∞ (o último é o da missão de "
+           "referência) e mostra o melhor N.", "",
+           "| Massa (kg) | v∞ (km/s) | Órbita-alvo | N | Δv impulsivo (m/s) | Perda (m/s) | Propelente (kg) | Fecha com 1.900 kg? | Maior queima (s) | Dentro da queima única? |",
+           "| -: | -: | :- | -: | -: | -: | -: | :- | -: | :- |"]
     for x in out["conferencia_ero"]:
-        md.append(f"| {br(x['vinf_km_s'], 3)} | {x['orbita']} | {x['n']} | {br(1e3 * x['dv_impulsivo_km_s'])} | {br(1e3 * x['perda_km_s'])} | "
+        md.append(f"| {br(x['massa_kg'])} | {br(x['vinf_km_s'], 3)} | {x['orbita']} | {x['n']} | {br(1e3 * x['dv_impulsivo_km_s'])} | {br(1e3 * x['perda_km_s'])} | "
                   f"{br(x['propelente_kg'])} | {nao(x['fecha'])} | {br(x['maior_queima_s'])} | {nao(x['queima_unica_ok'])} |")
     return md
 
