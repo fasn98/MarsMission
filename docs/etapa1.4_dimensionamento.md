@@ -165,3 +165,32 @@ Explicação das diferenças:
 - Os resultados desta etapa não foram regenerados (também usam a plataforma de 850 kg da época).
 - A regra (iii), a escolhida, não muda.
 
+## Errata (2026-10-27): resultados desta etapa regenerados com a 2033 atual
+**Os números de arquitetura vigentes são os das Etapas 2.3 a 2.5** (`docs/etapa2.3_plataformas.md`,
+`docs/etapa2.4_lancamento.md`, `docs/fase2_relatorio.md`). Esta etapa usou a plataforma do orbitador de 850 kg e o
+lançamento a partir da órbita baixa com estágio próprio, ambos substituídos depois. Os números abaixo corrigem só a
+reprodutibilidade dos arquivos desta etapa; nenhum deles é vigente.
+
+**O que estava errado.** Os arquivos de `results/etapa1.4/` foram gerados em 2026-10-26 (commit 60683bb). Na Etapa 2.4,
+a missão de 2033 mudou para |DLA| ≤ 50° e `results/etapa1.3/missoes.yaml` foi regenerado (commit 286c1c1); os
+arquivos desta etapa, não. A verificação de regeneração (`tools/confere_regeneracao.py`) mostrou que eles não saíam
+do código e do config da `main`.
+
+**Correção.** Os quatro arquivos (`dimensionamento.yaml` e `.md`, `orcamento_dv.md`, `comparacao_msr.md`) foram
+regenerados com a mesma rotina, na ordem histórica, com a plataforma da época (850 kg) e a 2033 atual
+(`results/conferencia/regeneracao_reprodutibilidade_1.4.md`). Valores que mudam, todos da janela de 2033 ou da regra (i):
+
+| Grandeza | Antes (texto original acima) | Regenerado |
+| :- | -: | -: |
+| Δv saída da Terra, jan. 2033 (ideal + perdas) | 3,735 km/s | 3,757 km/s |
+| Δv captura em Marte, jan. 2033 | 1,266 km/s | 1,268 km/s |
+| Δv total jan. 2033, sem / com margem | 6,372 / 7,009 km/s | 6,395 / 7,034 km/s |
+| Regra (i): massa na órbita baixa | 22.768 kg | 22.953 kg |
+| Regra (i): massa depois da injeção trans-Marte | 7.499 kg | 7.506 kg |
+| Regra (i) com ε × 1,5 (sensibilidade) | 90.213 kg | 91.351 kg |
+
+- **Não mudam:** a missão A, a regra (ii) e a regra (iii), que foi a escolhida (ADR 0004). A sensibilidade da (iii) e a
+  comparação com o MSR também ficam iguais, exceto a coluna da (i).
+- **Afirmação da seção 3 que deixa de valer:** "Na (i), a janela que define a massa é 2033, não 2035 (a de maior Δv
+  total)". Com a 2033 atual, 2033 passa a ter também o maior Δv total (6,395 contra 6,389 km/s de 2035).
+- **Substitui** a "Nota (Etapa 2.4)" acima, que dizia que os resultados desta etapa não tinham sido regenerados.

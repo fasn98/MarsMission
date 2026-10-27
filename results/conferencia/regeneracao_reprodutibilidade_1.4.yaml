@@ -1,0 +1,662 @@
+gerado_por: tools/confere_regeneracao.py
+rotulo: reprodutibilidade_1.4
+comparado_com: results/ versionado
+ambiente:
+  python: 3.11.18
+  numpy: 2.4.6
+  scipy: 1.17.1
+  matplotlib: 3.11.2
+  pyyaml: 6.0.3
+  spiceypy: 8.3.0
+  streamlit: null
+  plotly: null
+ferramentas:
+- ferramenta: tools/baricentro_marte.py
+  rodou: true
+- ferramenta: tools/porkchop.py terra_marte
+  rodou: true
+- ferramenta: tools/porkchop.py marte_terra
+  rodou: true
+- ferramenta: tools/verifica_burke2010.py
+  rodou: true
+- ferramenta: tools/verifica_jpl8243.py
+  rodou: true
+- ferramenta: tools/efeito_efemeride.py
+  rodou: true
+- ferramenta: tools/missoes.py
+  rodou: true
+- ferramenta: tools/compara_dra5.py
+  rodou: true
+- ferramenta: tools/grafico_missoes.py
+  rodou: true
+- ferramenta: tools/lista_premissas.py
+  rodou: true
+- ferramenta: tools/dimensionamento.py
+  rodou: true
+- ferramenta: tools/compara_msr.py
+  rodou: true
+- ferramenta: tools/superficie.py
+  rodou: true
+- ferramenta: tools/varredura_encontro.py
+  rodou: true
+- ferramenta: tools/isru.py
+  rodou: true
+- ferramenta: tools/mav_propulsao.py
+  rodou: true
+- ferramenta: tools/plataformas.py
+  rodou: true
+- ferramenta: tools/lancamento.py
+  rodou: true
+- ferramenta: tools/coleta.py
+  rodou: true
+- ferramenta: tools/arquitetura.py
+  rodou: true
+- ferramenta: tools/confere_2033.py
+  rodou: true
+- ferramenta: tools/exporta_painel.py
+  rodou: false
+  motivo: ferramenta ausente nesta versão do código
+versionados: 52
+regenerados: 52
+identicos: 46
+nao_regenerados: []
+diferentes:
+- results/etapa1.4/comparacao_msr.md
+- results/etapa1.4/dimensionamento.md
+- results/etapa1.4/dimensionamento.yaml
+- results/etapa1.4/orcamento_dv.md
+- results/etapa2.5/conferencia_2033.md
+- results/etapa2.5/conferencia_2033.yaml
+gerados_sem_versao: []
+atualizados:
+- results/etapa1.4/dimensionamento.yaml
+- results/etapa1.4/dimensionamento.md
+- results/etapa1.4/orcamento_dv.md
+- results/etapa1.4/comparacao_msr.md
+arquivos:
+- arquivo: results/etapa1.1/baricentro_marte.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.2/efeito_efemeride_de200.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.2/minimos_marte_terra.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.2/minimos_terra_marte.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2030.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2032.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2035.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2037.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_marte_terra_2039.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2028.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2031.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2033.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/porkchop_terra_marte_2035.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.2/verificacao_burke2010.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.2/verificacao_burke2010.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.2/verificacao_jpl8243.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.2/verificacao_jpl8243.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.3/comparacao_dra5.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.3/dv_x_duracao.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa1.3/missoes.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.3/missoes.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa1.4/comparacao_msr.md
+  regenerado: true
+  identico: false
+  valores:
+  - onde: linha 7
+    versionado: '7 499 '
+    regenerado: '7 506 '
+    dif_abs: 7.0
+    dif_rel: 0.000933457794372583
+  - onde: linha 9
+    versionado: '22 768 '
+    regenerado: '22 953 '
+    dif_abs: 185.0
+    dif_rel: 0.008125439212930428
+- arquivo: results/etapa1.4/dimensionamento.md
+  regenerado: true
+  identico: false
+  valores:
+  - onde: linha 18
+    versionado: '13 785 '
+    regenerado: '13 946 '
+    dif_abs: 161.0
+    dif_rel: 0.01167936162495466
+  - onde: linha 18
+    versionado: '1 484 '
+    regenerado: '1 501 '
+    dif_abs: 17.0
+    dif_rel: 0.011455525606469003
+  - onde: linha 18
+    versionado: '22 768 '
+    regenerado: '22 953 '
+    dif_abs: 185.0
+    dif_rel: 0.008125439212930428
+  - onde: linha 19
+    versionado: '4 514 '
+    regenerado: '4 519 '
+    dif_abs: 5.0
+    dif_rel: 0.0011076650420912715
+  - onde: linha 19
+    versionado: '1 425 '
+    regenerado: '1 427 '
+    dif_abs: 2.0
+    dif_rel: 0.0014035087719298245
+  - onde: linha 19
+    versionado: '7 499 '
+    regenerado: '7 506 '
+    dif_abs: 7.0
+    dif_rel: 0.000933457794372583
+  - onde: linha 20
+    versionado: 22 768
+    regenerado: 22 953
+    dif_abs: 185.0
+    dif_rel: 0.008125439212930428
+  - onde: linha 46
+    versionado: '22 675 '
+    regenerado: '22 858 '
+    dif_abs: 183.0
+    dif_rel: 0.008070562293274531
+  - onde: linha 47
+    versionado: '22 768 '
+    regenerado: '22 953 '
+    dif_abs: 185.0
+    dif_rel: 0.008125439212930428
+  - onde: linha 48
+    versionado: '21 455 '
+    regenerado: '21 629 '
+    dif_abs: 174.0
+    dif_rel: 0.0081099976695409
+  - onde: linha 49
+    versionado: '13 749 '
+    regenerado: '13 860 '
+    dif_abs: 111.0
+    dif_rel: 0.008073314422867118
+  - onde: linha 50
+    versionado: '16 707 '
+    regenerado: '16 825 '
+    dif_abs: 118.0
+    dif_rel: 0.007062907763213024
+  - onde: linha 51
+    versionado: '19 441 '
+    regenerado: '19 588 '
+    dif_abs: 147.0
+    dif_rel: 0.007561339437271745
+  - onde: linha 52
+    versionado: '22 768 '
+    regenerado: '22 953 '
+    dif_abs: 185.0
+    dif_rel: 0.008125439212930428
+  - onde: linha 53
+    versionado: '31 986 '
+    regenerado: '32 282 '
+    dif_abs: 296.0
+    dif_rel: 0.009254048646282749
+  - onde: linha 54
+    versionado: '22 768 '
+    regenerado: '22 953 '
+    dif_abs: 185.0
+    dif_rel: 0.008125439212930428
+  - onde: linha 55
+    versionado: '22 963 '
+    regenerado: '23 149 '
+    dif_abs: 186.0
+    dif_rel: 0.008099986935504943
+  - onde: linha 56
+    versionado: '23 157 '
+    regenerado: '23 345 '
+    dif_abs: 188.0
+    dif_rel: 0.008118495487325647
+  - onde: linha 57
+    versionado: '23 416 '
+    regenerado: '23 606 '
+    dif_abs: 190.0
+    dif_rel: 0.008114110010249403
+  - onde: linha 58
+    versionado: '27 600 '
+    regenerado: '27 841 '
+    dif_abs: 241.0
+    dif_rel: 0.008731884057971014
+  - onde: linha 59
+    versionado: '19 298 '
+    regenerado: '19 444 '
+    dif_abs: 146.0
+    dif_rel: 0.007565550834283345
+  - onde: linha 60
+    versionado: '13 572 '
+    regenerado: '13 663 '
+    dif_abs: 91.0
+    dif_rel: 0.006704980842911878
+  - onde: linha 61
+    versionado: '90 213 '
+    regenerado: '91 351 '
+    dif_abs: 1138.0
+    dif_rel: 0.012614589914978994
+  - onde: linha 62
+    versionado: '15 199 '
+    regenerado: '15 322 '
+    dif_abs: 123.0
+    dif_rel: 0.008092637673531154
+  - onde: linha 63
+    versionado: '22 768 '
+    regenerado: '22 953 '
+    dif_abs: 185.0
+    dif_rel: 0.008125439212930428
+  - onde: linha 64
+    versionado: '42 489 '
+    regenerado: '42 834 '
+    dif_abs: 345.0
+    dif_rel: 0.008119748640824685
+- arquivo: results/etapa1.4/dimensionamento.yaml
+  regenerado: true
+  identico: false
+  valores:
+  - onde: /variantes/i_sistema_unico/massa_orbita_baixa_kg
+    versionado: 22768.5
+    regenerado: 22953.1
+    dif_abs: 184.59999999999854
+    dif_rel: 0.008107692645540924
+  - onde: /variantes/i_sistema_unico/estagios[0]/propelente_kg
+    versionado: 13785.5
+    regenerado: 13945.6
+    dif_abs: 160.10000000000036
+    dif_rel: 0.011613652025679181
+  - onde: /variantes/i_sistema_unico/estagios[0]/inerte_kg
+    versionado: 1484.2
+    regenerado: 1501.5
+    dif_abs: 17.299999999999955
+    dif_rel: 0.011656111036248452
+  - onde: /variantes/i_sistema_unico/estagios[0]/massa_inicial_kg
+    versionado: 22768.5
+    regenerado: 22953.1
+    dif_abs: 184.59999999999854
+    dif_rel: 0.008107692645540924
+  - onde: /variantes/i_sistema_unico/estagios[1]/propelente_kg
+    versionado: 4513.6
+    regenerado: 4519.1
+    dif_abs: 5.5
+    dif_rel: 0.0012185395249911378
+  - onde: /variantes/i_sistema_unico/estagios[1]/inerte_kg
+    versionado: 1425.3
+    regenerado: 1427.1
+    dif_abs: 1.7999999999999545
+    dif_rel: 0.0012628920227320246
+  - onde: /variantes/i_sistema_unico/estagios[1]/massa_inicial_kg
+    versionado: 7498.8
+    regenerado: 7506.1
+    dif_abs: 7.300000000000182
+    dif_rel: 0.0009734890915880116
+  - onde: /sensibilidade[0]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 22674.5
+    regenerado: 22858.4
+    dif_abs: 183.90000000000146
+    dif_rel: 0.008110432424088798
+  - onde: /sensibilidade[1]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 22768.5
+    regenerado: 22953.1
+    dif_abs: 184.59999999999854
+    dif_rel: 0.008107692645540924
+  - onde: /sensibilidade[2]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 21455.2
+    regenerado: 21629.2
+    dif_abs: 174.0
+    dif_rel: 0.00810992207017413
+  - onde: /sensibilidade[3]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 13749.0
+    regenerado: 13860.5
+    dif_abs: 111.5
+    dif_rel: 0.008109680704051204
+  - onde: /sensibilidade[4]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 16706.5
+    regenerado: 16825.2
+    dif_abs: 118.70000000000073
+    dif_rel: 0.0071050190045791
+  - onde: /sensibilidade[5]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 19440.6
+    regenerado: 19588.3
+    dif_abs: 147.70000000000073
+    dif_rel: 0.007597502134707814
+  - onde: /sensibilidade[6]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 22768.5
+    regenerado: 22953.1
+    dif_abs: 184.59999999999854
+    dif_rel: 0.008107692645540924
+  - onde: /sensibilidade[7]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 31986.0
+    regenerado: 32281.8
+    dif_abs: 295.7999999999993
+    dif_rel: 0.009247795910710913
+  - onde: /sensibilidade[8]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 22768.5
+    regenerado: 22953.1
+    dif_abs: 184.59999999999854
+    dif_rel: 0.008107692645540924
+  - onde: /sensibilidade[9]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 22962.7
+    regenerado: 23148.9
+    dif_abs: 186.20000000000073
+    dif_rel: 0.00810880253628714
+  - onde: /sensibilidade[10]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 23156.9
+    regenerado: 23344.7
+    dif_abs: 187.79999999999927
+    dif_rel: 0.008109893811347774
+  - onde: /sensibilidade[11]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 23415.8
+    regenerado: 23605.8
+    dif_abs: 190.0
+    dif_rel: 0.008114179314821616
+  - onde: /sensibilidade[12]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 27599.8
+    regenerado: 27841.3
+    dif_abs: 241.5
+    dif_rel: 0.008750063406256567
+  - onde: /sensibilidade[13]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 19298.1
+    regenerado: 19444.2
+    dif_abs: 146.10000000000218
+    dif_rel: 0.007570693487960068
+  - onde: /sensibilidade[14]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 13572.1
+    regenerado: 13662.8
+    dif_abs: 90.69999999999891
+    dif_rel: 0.00668282727065074
+  - onde: /sensibilidade[15]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 90213.0
+    regenerado: 91351.5
+    dif_abs: 1138.5
+    dif_rel: 0.012620132353430215
+  - onde: /sensibilidade[16]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 15198.6
+    regenerado: 15321.9
+    dif_abs: 123.29999999999927
+    dif_rel: 0.008112589317437083
+  - onde: /sensibilidade[17]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 22768.5
+    regenerado: 22953.1
+    dif_abs: 184.59999999999854
+    dif_rel: 0.008107692645540924
+  - onde: /sensibilidade[18]/massa_orbita_baixa_kg/i_sistema_unico
+    versionado: 42489.2
+    regenerado: 42833.8
+    dif_abs: 344.6000000000058
+    dif_rel: 0.00811029626352122
+  - onde: /orcamento_total_km_s/jan. 2033
+    versionado: 6.3721
+    regenerado: 6.3947
+    dif_abs: 0.02260000000000062
+    dif_rel: 0.003546711445206544
+- arquivo: results/etapa1.4/orcamento_dv.md
+  regenerado: true
+  identico: false
+  valores:
+  - onde: linha 7
+    versionado: 3,735
+    regenerado: 3,757
+    dif_abs: 0.02200000000000024
+    dif_rel: 0.00589022757697463
+  - onde: linha 9
+    versionado: 1,266
+    regenerado: 1,268
+    dif_abs: 0.0020000000000000018
+    dif_rel: 0.0015797788309636664
+  - onde: linha 14
+    versionado: 6,372
+    regenerado: 6,395
+    dif_abs: 0.022999999999999687
+    dif_rel: 0.0036095417451349164
+  - onde: linha 15
+    versionado: 7,009
+    regenerado: 7,034
+    dif_abs: 0.024999999999999467
+    dif_rel: 0.0035668426309030483
+- arquivo: results/etapa2.1/arquiteturas.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.1/arquiteturas.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa2.1/varredura_encontro_rp250.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.png
+  regenerado: true
+  identico: true
+  igual_bytes: true
+- arquivo: results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.2/isru.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.2/isru.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.2/mav_propulsao.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.2/mav_propulsao.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.3/plataformas.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.3/plataformas.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.4/lancamento.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.4/lancamento.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.5/arquitetura.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.5/arquitetura.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.5/coleta.md
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.5/coleta.yaml
+  regenerado: true
+  identico: true
+- arquivo: results/etapa2.5/conferencia_2033.md
+  regenerado: true
+  identico: false
+  igual_bytes: false
+  valores:
+  - onde: 'linhas: 26 vs 23'
+    versionado: null
+    regenerado: null
+- arquivo: results/etapa2.5/conferencia_2033.yaml
+  regenerado: true
+  identico: false
+  igual_bytes: false
+  valores:
+  - onde: /commit
+    versionado: 6eff417
+    regenerado: 4d63869
+  - onde: /arquivos
+    versionado:
+    - arquivo: results/etapa2.1/arquiteturas.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/arquiteturas.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro.md
+      regenerado: false
+      igual: null
+    - arquivo: results/etapa2.1/varredura_encontro.png
+      regenerado: false
+      igual: null
+    - arquivo: results/etapa2.1/varredura_encontro.yaml
+      regenerado: false
+      igual: null
+    - arquivo: results/etapa2.1/varredura_encontro_rp250.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp250.png
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp250.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300.png
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.png
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/isru.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/isru.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/mav_propulsao.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/mav_propulsao.yaml
+      regenerado: true
+      igual: true
+    regenerado:
+    - arquivo: results/etapa2.1/arquiteturas.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/arquiteturas.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp250.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp250.png
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp250.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300.png
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.png
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.1/varredura_encontro_rp300_O4.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/isru.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/isru.yaml
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/mav_propulsao.md
+      regenerado: true
+      igual: true
+    - arquivo: results/etapa2.2/mav_propulsao.yaml
+      regenerado: true
+      igual: true
+  - onde: /nao_regenerados
+    versionado:
+    - results/etapa2.1/varredura_encontro.md
+    - results/etapa2.1/varredura_encontro.png
+    - results/etapa2.1/varredura_encontro.yaml
+    regenerado: []
+- arquivo: results/fase1/premissas.md
+  regenerado: true
+  identico: true
+- arquivo: results/fase2/premissas_nao_validadas.md
+  regenerado: true
+  identico: true

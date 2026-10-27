@@ -180,3 +180,11 @@ Quando o documento original é pago (AIAA S-120A), a fonte usada é a reproduç�
 
 A lista é gerada em **`results/fase2/premissas_nao_validadas.md`** por `tools/lista_premissas.py`. Ao fim
 da Fase 2, as 38 premissas (P-001 a P-038) estão com status NÃO VALIDADA. Só o Fabio altera o status.
+
+## Nota (2026-10-27): reprodutibilidade
+- **Arquivos antigos removidos:** os três arquivos sem sufixo citados na conferência das Etapas 2.1 e 2.2 foram
+  removidos (último commit em que existiam: b97d565). Detalhes em `docs/etapa2.1_superficie.md`.
+- **Etapa 1.4 regenerada:** os resultados da 1.4 estavam atrasados em relação à 2033 com |DLA| ≤ 50° e foram
+  regenerados. Errata em `docs/etapa1.4_dimensionamento.md`. Os números desta fase não mudam.
+- **Prevenção:** a verificação de CI `.github/workflows/regeneracao.yml` regenera todo o `results/` e compara com o
+  versionado.

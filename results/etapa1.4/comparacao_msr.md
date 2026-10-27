@@ -4,6 +4,6 @@
 
 | Grandeza | ERO (MSR) | missao_A | i_sistema_unico | ii_estagios_pior_trecho | iii_marte_pior_terra_ref |
 | :- | -: | -: | -: | -: | -: |
-| Massa a caminho de Marte (ERO: massa úmida no lançamento; aqui: depois da injeção trans-Marte) | 6 500 | 4 476 | 7 499 | 7 522 | 7 522 |
+| Massa a caminho de Marte (ERO: massa úmida no lançamento; aqui: depois da injeção trans-Marte) | 6 500 | 4 476 | 7 506 | 7 522 | 7 522 |
 | Módulo de inserção em Marte (seco + propelente) | 2 500 | 1 938 | — | 3 886 | 3 886 |
-| Massa na órbita baixa da Terra (inclui o estágio de saída da Terra; o ERO seria lançado num Ariane 64 [F32], sem esse estágio) | — | 13 587 | 22 768 | 23 378 | 22 834 |
+| Massa na órbita baixa da Terra (inclui o estágio de saída da Terra; o ERO seria lançado num Ariane 64 [F32], sem esse estágio) | — | 13 587 | 22 953 | 23 378 | 22 834 |
