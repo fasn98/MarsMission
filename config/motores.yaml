@@ -33,7 +33,7 @@ motores:
     queima_unica_max_s: {valor: 12000, fonte: "[F106] p. 3, coluna \"LONG BURN, SEC\": 12,000"}
     pulsos: {valor: 59000, fonte: "[F106] p. 3, coluna \"LIFE PULSES\": 59,000"}
     voo: "[F106] p. 3: \"Q, F, IP\" (\"Q=Qualified, F=Flown, IP=In-Production\"); Orion ESM, 8 motores auxiliares no Artemis I: [F107] p. 5, \"The auxiliary engines are modified Aerojet Rocketdyne R-4D-11 engines produced specifically for the Orion program\""
-    nota: "no Orion, a variante de bocal 164:1 tem limites menores: [F107] p. 6, \"Max Firing Time 2000 seconds\", \"Number of Burns 40\""
+    nota: "a variante que voou no Orion (bocal 164:1) tem desempenho e limites menores: [F107] p. 6 (Tab. 3), \"Thrust 489 N\", \"Specific Impulse 310 seconds\", \"Max Firing Time 2000 seconds\", \"Number of Burns 40\". O catálogo usa a ficha [F106] (315 s); com a variante do Orion, Isp 310 s"
   R-42:
     nome: L3Harris (ex-Aerojet) R-42
     propelentes: MON-3 / MMH
@@ -70,7 +70,7 @@ motores:
     queima_unica_max_s: {valor: 2520, fonte: "[F109] p. 2: \"Maximum Duration Single Firing 2,520 s demonstrated in Qualification\""}
     vida_acumulada_s: {valor: 20500, fonte: "[F109] p. 2: \"Cumulative Duration 20,500 s demonstrated in Qualification\""}
     reacendimentos: {valor: 70, fonte: "[F109] p. 2: \"Restarts Demonstrated 70 off\""}
-    voo: "[F109] p. 1: \"18 off the LEROS 1b ... flown successfully on deep space missions\" (texto em colunas na ficha; missões não nomeadas nela)"
+    voo: "[F109] p. 1: \"18 off the LEROS 1b ... flown successfully on deep space missions and telecoms platforms\" (texto em colunas na ficha; missões não nomeadas nela)"
     nota: o combustível é hidrazina, diferente do MMH dos estágios de Marte (Isp de 321 s); trocar exigiria rever o propelente do estágio
   LEROS-4:
     nome: Nammo LEROS 4

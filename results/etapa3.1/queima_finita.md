@@ -8,7 +8,7 @@ Perdas do DRA usadas hoje (P-015, NÃO VALIDADA): captura 18 m/s; saída de Mart
 
 ## Captura em Marte (órbita de 1 sol)
 
-| Combinação | Empuxo (N) | Isp (s) | Caso | v∞ (km/s) | m0 (kg) | Queima (s) | Propelente (kg) | Δv impulsivo (m/s) | Perda (m/s) | Perda (% do Δv) | Perda / P-015 | Periapse de chegada (km) | Altitude mínima (km) | Propelente dimensionado (kg) | Cabe? | Queima única máx. (s) | Excede? |
+| Combinação | Empuxo (N) | Isp (s) | Caso | v∞ (km/s) | m0 (kg) | Queima (s) | Propelente (kg) | Δv impulsivo (m/s) | Perda (m/s) | Perda (% do Δv) | Perda / P-015 | Periapse de chegada (km) | Altitude mínima durante a queima (km) | Propelente dimensionado (kg) | Cabe? | Queima única máx. (s) | Excede? |
 | :- | -: | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | -: | :- |
 | C1: 2 × S400-15 | 850 | 321,0 | projeto (pior janela) (2031-conjuncao) | 3,484 | 6 169 | 9 901 | 2 674 | 1 344 | 444,5 | 33,1 | 24,7× | 1 471 | 454 | 2 336 | **não** | 6 660 | **sim** |
 | C1: 2 × S400-15 | 850 | 321,0 | referência (2028-conjuncao) | 2,971 | 6 169 | 8 151 | 2 201 | 1 059 | 329,7 | 31,1 | 18,3× | 1 210 | 449 | 2 336 | sim | 6 660 | **sim** |

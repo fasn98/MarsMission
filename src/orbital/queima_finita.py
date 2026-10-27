@@ -55,7 +55,7 @@ class Resultado:
     dv_impulsivo_km_s: float
     perda_km_s: float         # dv_motor − dv_impulsivo
     inicio_rel_periapse_s: float
-    altitude_minima_km: float
+    altitude_minima_km: float  # mínima DURANTE a queima (a órbita final pode descer mais, até o periapse final)
     rp_final_km: float
     ra_final_km: float        # inf se hiperbólica
     vinf_final_km_s: float    # nan se elíptica
@@ -116,6 +116,7 @@ def _dv_motor(motor, m0, mf):
     return motor.isp_s * G0 * np.log(m0 / mf)
 
 
+INVIAVEL = 1e3   # custo (duração/t_imp) atribuído a um início sem solução; muito maior que qualquer solução real
 PASSO_CONTINUACAO = v(_NUM["continuacao"]["passo"])               # razão entre empuxos sucessivos (P-041)
 DURACAO_INICIAL_S = v(_NUM["continuacao"]["duracao_inicial_s"])  # começo da continuação (P-041)
 
@@ -151,15 +152,19 @@ def _captura_um(mu, raio, motor, m0, vinf, rp_alvo, ra_alvo, chute):
         return sol.x
 
     f0, x0 = chute[0], chute[1:]
-    memo = {}
+    ultimo = [tuple(x0)]   # warm start: parte da última solução bem-sucedida
 
     def custo(f):
-        memo[f] = ajuste(f, memo.get(f, x0) if f in memo else x0)
-        return memo[f][1]
+        try:
+            x = ajuste(f, ultimo[0])
+        except RuntimeError:
+            return INVIAVEL   # início sem solução: ponto inviável para o otimizador
+        ultimo[0] = tuple(x)
+        return x[1]
 
     opt = minimize_scalar(custo, bounds=(f0 - 0.25, min(f0 + 0.25, 0.0)), method="bounded", options={"xatol": 1e-6})
     f_ini = opt.x
-    x = ajuste(f_ini, memo.get(f_ini, x0))
+    x = ajuste(f_ini, ultimo[0])
     rf, vf, mf, rmin, rp0, dur = final(f_ini, x, raio_minimo=True)
     rp, ra, _ = elementos(mu, rf, vf)
     dvm = _dv_motor(motor, m0, mf)

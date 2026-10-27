@@ -14,17 +14,17 @@ captura:
   missao: 2031-conjuncao
   vinf_km_s: 3.4843
   m0_kg: 6168.6354444691115
-  duracao_s: 9901.32611409538
-  propelente_kg: 2673.5393623819596
-  dv_motor_km_s: 1.7883945194290223
+  duracao_s: 9901.326114095371
+  propelente_kg: 2673.539362381957
+  dv_motor_km_s: 1.7883945194290198
   dv_impulsivo_km_s: 1.343873679497805
-  perda_km_s: 0.44452083993121727
-  inicio_rel_periapse_s: -6942.546343695277
-  altitude_minima_km: 454.4002578405243
-  periapse_final_km: 249.99999999999181
-  apoapse_final_km: 33792.99999999958
+  perda_km_s: 0.44452083993121483
+  inicio_rel_periapse_s: -6942.54634356584
+  altitude_minima_km: 454.4002578863692
+  periapse_final_km: 249.9999999999991
+  apoapse_final_km: 33792.999999999876
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 1471.1574883139506
+  periapse_chegada_alt_km: 1471.1574883151893
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: false
   queima_unica_max_s: 6660.0
@@ -39,17 +39,17 @@ captura:
   missao: 2028-conjuncao
   vinf_km_s: 2.9707
   m0_kg: 6168.6354444691115
-  duracao_s: 8151.014628993871
-  propelente_kg: 2200.9232099671394
-  dv_motor_km_s: 1.3891457495727615
+  duracao_s: 8151.014628993858
+  propelente_kg: 2200.9232099671367
+  dv_motor_km_s: 1.3891457495727593
   dv_impulsivo_km_s: 1.059400066818057
-  perda_km_s: 0.3297456827547045
-  inicio_rel_periapse_s: -5533.406017346778
-  altitude_minima_km: 449.0632013613199
-  periapse_final_km: 249.99999999999636
-  apoapse_final_km: 33793.00000000016
+  perda_km_s: 0.3297456827547023
+  inicio_rel_periapse_s: -5533.406017222222
+  altitude_minima_km: 449.0632014001767
+  periapse_final_km: 250.00000000000637
+  apoapse_final_km: 33793.00000000044
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 1210.2882739164847
+  periapse_chegada_alt_km: 1210.288273917075
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: true
   queima_unica_max_s: 6660.0
@@ -64,17 +64,17 @@ captura:
   missao: 2031-conjuncao
   vinf_km_s: 3.4843
   m0_kg: 6168.6354444691115
-  duracao_s: 1794.1734682589304
-  propelente_kg: 2273.5385718183634
-  dv_motor_km_s: 1.4202394334667356
+  duracao_s: 1794.173468258938
+  propelente_kg: 2273.538571818372
+  dv_motor_km_s: 1.4202394334667428
   dv_impulsivo_km_s: 1.343873679497805
-  perda_km_s: 0.07636575396893064
-  inicio_rel_periapse_s: -1051.5565213133218
-  altitude_minima_km: 301.8109913459002
-  periapse_final_km: 249.9999999999991
-  apoapse_final_km: 33792.9999999997
+  perda_km_s: 0.07636575396893774
+  inicio_rel_periapse_s: -1051.5565214129108
+  altitude_minima_km: 301.8109913131648
+  periapse_final_km: 250.0000000000009
+  apoapse_final_km: 33793.00000000018
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 411.93875238030523
+  periapse_chegada_alt_km: 411.93875237718566
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: true
   queima_unica_max_s: 12000.0
@@ -89,17 +89,17 @@ captura:
   missao: 2028-conjuncao
   vinf_km_s: 2.9707
   m0_kg: 6168.6354444691115
-  duracao_s: 1461.0985536176147
+  duracao_s: 1461.0985536176142
   propelente_kg: 1851.4731031560796
   dv_motor_km_s: 1.1024340731500115
   dv_impulsivo_km_s: 1.059400066818057
   perda_km_s: 0.04303400633195453
-  inicio_rel_periapse_s: -818.4796456443025
-  altitude_minima_km: 285.63521193898396
-  periapse_final_km: 249.999999999995
-  apoapse_final_km: 33793.00000000034
+  inicio_rel_periapse_s: -818.4796456303443
+  altitude_minima_km: 285.6352119423227
+  periapse_final_km: 249.99999999999864
+  apoapse_final_km: 33792.999999999905
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 347.8020051524227
+  periapse_chegada_alt_km: 347.8020051527137
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: true
   queima_unica_max_s: 12000.0
@@ -114,17 +114,17 @@ captura:
   missao: 2031-conjuncao
   vinf_km_s: 3.4843
   m0_kg: 6168.6354444691115
-  duracao_s: 252.09476497817644
-  propelente_kg: 2178.241408686562
-  dv_motor_km_s: 1.3459987559146527
+  duracao_s: 252.09476497817667
+  propelente_kg: 2178.2414086865656
+  dv_motor_km_s: 1.345998755914656
   dv_impulsivo_km_s: 1.343873679497805
-  perda_km_s: 0.002125076416847671
-  inicio_rel_periapse_s: -137.00158576061975
-  altitude_minima_km: 251.65040137268807
-  periapse_final_km: 250.00000000000136
-  apoapse_final_km: 33793.00000000013
+  perda_km_s: 0.0021250764168510017
+  inicio_rel_periapse_s: -137.00158662684413
+  altitude_minima_km: 251.65040130941725
+  periapse_final_km: 249.99999999999773
+  apoapse_final_km: 33792.99999999984
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 254.25415037105904
+  periapse_chegada_alt_km: 254.25415036267486
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: true
   queima_unica_max_s: 1030.0
@@ -144,12 +144,12 @@ captura:
   dv_motor_km_s: 1.0604767092102387
   dv_impulsivo_km_s: 1.059400066818057
   perda_km_s: 0.001076642392181748
-  inicio_rel_periapse_s: -110.68062314937316
-  altitude_minima_km: 250.95485222670368
-  periapse_final_km: 250.0
-  apoapse_final_km: 33792.99999999977
+  inicio_rel_periapse_s: -110.6805581689256
+  altitude_minima_km: 250.95485523937487
+  periapse_final_km: 249.99999999999955
+  apoapse_final_km: 33792.999999999636
   vinf_final_km_s: null
-  periapse_chegada_alt_km: 252.3489562786208
+  periapse_chegada_alt_km: 252.34895661284054
   propelente_dimensionado_kg: 2335.8895214037116
   cabe_no_dimensionado: true
   queima_unica_max_s: 1030.0

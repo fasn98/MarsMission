@@ -151,7 +151,7 @@ def _md(out):
           f"Perdas do DRA usadas hoje (P-015, NÃO VALIDADA): captura {br(1e3 * p15['captura_marte'])} m/s; "
           f"saída de Marte {br(1e3 * p15['saida_marte'])} m/s.", "",
           "## Captura em Marte (órbita de 1 sol)", "",
-          "| Combinação | Empuxo (N) | Isp (s) | Caso | v∞ (km/s) | m0 (kg) | Queima (s) | Propelente (kg) | Δv impulsivo (m/s) | Perda (m/s) | Perda (% do Δv) | Perda / P-015 | Periapse de chegada (km) | Altitude mínima (km) | Propelente dimensionado (kg) | Cabe? | Queima única máx. (s) | Excede? |",
+          "| Combinação | Empuxo (N) | Isp (s) | Caso | v∞ (km/s) | m0 (kg) | Queima (s) | Propelente (kg) | Δv impulsivo (m/s) | Perda (m/s) | Perda (% do Δv) | Perda / P-015 | Periapse de chegada (km) | Altitude mínima durante a queima (km) | Propelente dimensionado (kg) | Cabe? | Queima única máx. (s) | Excede? |",
           "| :- | -: | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | -: | :- |"]
     for x in out["captura"]:
         md.append(f"| {x['combinacao']}: {x['motores']} | {br(x['empuxo_n'])} | {br(x['isp_s'], 1)} | {x['caso']} ({x['missao']}) | "

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 from orbital.config import ler, v
@@ -54,5 +55,5 @@ def conjuntos(funcao: str, cfg: dict | None = None) -> list[Conjunto]:
         massa = sum(m["massa_kg"] * q for m, q, _ in partes)
         desc = " + ".join(f"{q} × {chave}" for _, q, chave in partes)
         out.append(Conjunto(nome, desc, Motor(empuxo, isps.pop()), massa,
-                            min(m["queima_unica_max_s"] for m, _, _ in partes), c.get("nota", "")))
+                            min((m["queima_unica_max_s"] for m, _, _ in partes), key=lambda x: (math.isnan(x), x)), c.get("nota", "")))
     return out
