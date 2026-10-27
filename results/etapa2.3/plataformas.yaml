@@ -16,9 +16,9 @@ mav:
   massa_pousada_kg: 285.7675825736493
 escolha:
   plataforma_orbitador_kg: 442.27449498455564
-  plataforma_lander_kg: 1470.0
-  criterio: 'orbitador: lista por subsistema, E1 médio; lander: L3 (decisão do Fabio,
-    portão 2.3)'
+  plataforma_lander_kg: 1558.5
+  criterio: 'orbitador: lista por subsistema, E1 médio; lander: L3 + amostras (provisório)
+    (decisões do Fabio, portão 2.3)'
 orbitador:
   subsistemas:
   - subsistema: estrutura
@@ -196,10 +196,12 @@ lander:
     basica_kg: 1512.2686751269966
   L3:
     basica_kg: 1470.0
+  base_L3_mais_amostras:
     prevista_kg:
-      e1_medio: 1470.0
-      e1_medio_mais_gsfc: 1690.4999999999998
-      esa: 2116.7999999999997
+      e1_medio: 1558.5
+      e1_medio_mais_gsfc: 1787.8499999999997
+      esa: 2201.7599999999998
+  limite_superior_srl_2024_kg: 2500.0
 totais:
   antes:
     caso: Antes (P-016 = P-017 = 850 kg)
@@ -218,82 +220,82 @@ totais:
       apoapse_do_minimo_km: 33793.0
       minimo_no_extremo: true
   base:
-    caso: '**Base: orbitador E1 médio + L3**'
+    caso: '**Base: orbitador E1 médio + L3 + amostras**'
     plataforma_orbitador_kg: 442.27449498455564
-    plataforma_lander_kg: 1470.0
+    plataforma_lander_kg: 1558.5
     no_apoapse_anterior:
-      total_regra_iii_kg: 28698.9
-      total_missao_A_kg: 21363.5
+      total_regra_iii_kg: 29242.8
+      total_missao_A_kg: 21907.4
     regra_5pct:
       apoapse_alt_km: 24991.9
-      total_regra_iii_kg: 29063.2
-      total_missao_A_kg: 21539.0
-      minimo_kg: 27765.2
-      acima_do_minimo: 0.046749168023280996
+      total_regra_iii_kg: 29607.1
+      total_missao_A_kg: 22082.9
+      minimo_kg: 28309.0
+      acima_do_minimo: 0.04585467519163511
       mav_glom_kg: 282.5
       apoapse_do_minimo_km: 33793.0
       minimo_no_extremo: true
   gsfc:
-    caso: 'GSFC: orbitador E1 médio + 15 %; L3 + 15 %'
+    caso: 'GSFC: E1 médio + 15 % nos dois'
     plataforma_orbitador_kg: 495.38339563059117
-    plataforma_lander_kg: 1690.4999999999998
+    plataforma_lander_kg: 1787.8499999999997
     no_apoapse_anterior:
-      total_regra_iii_kg: 30880.4
-      total_missao_A_kg: 23206.3
+      total_regra_iii_kg: 31478.7
+      total_missao_A_kg: 23804.5
     regra_5pct:
       apoapse_alt_km: 24991.9
-      total_regra_iii_kg: 31262.5
-      total_missao_A_kg: 23390.8
-      minimo_kg: 29900.9
-      acima_do_minimo: 0.045537090856796913
+      total_regra_iii_kg: 31860.7
+      total_missao_A_kg: 23989.1
+      minimo_kg: 30499.2
+      acima_do_minimo: 0.044640515161053385
       mav_glom_kg: 282.5
       apoapse_do_minimo_km: 33793.0
       minimo_no_extremo: true
   esa:
     caso: 'ESA: 20 % × 20 % nos dois'
     plataforma_orbitador_kg: 509.8454462019413
-    plataforma_lander_kg: 2116.7999999999997
+    plataforma_lander_kg: 2201.7599999999998
     no_apoapse_anterior:
-      total_regra_iii_kg: 33725.2
-      total_missao_A_kg: 25958.9
+      total_regra_iii_kg: 34247.3
+      total_missao_A_kg: 26481.0
     regra_5pct:
       apoapse_alt_km: 24066.9
-      total_regra_iii_kg: 34317.5
-      total_missao_A_kg: 26244.8
-      minimo_kg: 32733.3
-      acima_do_minimo: 0.04839719796048669
+      total_regra_iii_kg: 34839.6
+      total_missao_A_kg: 26766.9
+      minimo_kg: 33255.4
+      acima_do_minimo: 0.04763737618552155
       mav_glom_kg: 280.8
       apoapse_do_minimo_km: 33793.0
       minimo_no_extremo: true
   orb_e1_min:
-    caso: Orbitador E1 mínimo + L3
+    caso: Orbitador E1 mínimo + lander de base
     plataforma_orbitador_kg: 421.644095232888
-    plataforma_lander_kg: 1470.0
+    plataforma_lander_kg: 1558.5
     no_apoapse_anterior:
-      total_regra_iii_kg: 28377.9
-      total_missao_A_kg: 21174.1
+      total_regra_iii_kg: 28921.8
+      total_missao_A_kg: 21717.9
     regra_5pct:
       apoapse_alt_km: 24991.9
-      total_regra_iii_kg: 28735.3
-      total_missao_A_kg: 21346.0
-      minimo_kg: 27461.9
-      acima_do_minimo: 0.04636969765384036
+      total_regra_iii_kg: 29279.2
+      total_missao_A_kg: 21889.9
+      minimo_kg: 28005.8
+      acima_do_minimo: 0.04546915281834485
       mav_glom_kg: 282.5
       apoapse_do_minimo_km: 33793.0
       minimo_no_extremo: true
   orb_e1_max:
-    caso: Orbitador E1 máximo + L3
+    caso: Orbitador E1 máximo + lander de base
     plataforma_orbitador_kg: 462.9048947362234
-    plataforma_lander_kg: 1470.0
+    plataforma_lander_kg: 1558.5
     no_apoapse_anterior:
-      total_regra_iii_kg: 29019.9
-      total_missao_A_kg: 21553.0
+      total_regra_iii_kg: 29563.8
+      total_missao_A_kg: 22096.8
     regra_5pct:
       apoapse_alt_km: 24991.9
-      total_regra_iii_kg: 29391.2
-      total_missao_A_kg: 21732.0
-      minimo_kg: 28068.4
-      acima_do_minimo: 0.04712773082897481
+      total_regra_iii_kg: 29935.0
+      total_missao_A_kg: 22275.8
+      minimo_kg: 28612.3
+      acima_do_minimo: 0.0462283703162627
       mav_glom_kg: 282.5
       apoapse_do_minimo_km: 33793.0
       minimo_no_extremo: true
@@ -313,8 +315,24 @@ totais:
       mav_glom_kg: 285.8
       apoapse_do_minimo_km: 33793.0
       minimo_no_extremo: true
-  limite_L2:
-    caso: 'Limite superior do lander: L2 (E1 médio)'
+  limite_srl_2024:
+    caso: 'Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada)'
+    plataforma_orbitador_kg: 442.27449498455564
+    plataforma_lander_kg: 2500.0
+    no_apoapse_anterior:
+      total_regra_iii_kg: 35028.7
+      total_missao_A_kg: 27693.3
+    regra_5pct:
+      apoapse_alt_km: 23176.2
+      total_regra_iii_kg: 35787.7
+      total_missao_A_kg: 28058.1
+      minimo_kg: 34094.9
+      acima_do_minimo: 0.04964965434713098
+      mav_glom_kg: 279.0
+      apoapse_do_minimo_km: 33793.0
+      minimo_no_extremo: true
+  referencia_L2:
+    caso: 'Referência: L2 (E1 médio), antigo limite superior'
     plataforma_orbitador_kg: 442.27449498455564
     plataforma_lander_kg: 1857.4162736126343
     no_apoapse_anterior:

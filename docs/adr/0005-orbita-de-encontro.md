@@ -41,14 +41,16 @@ O valor de 18.483 km dos itens 4 e seguintes vale para o MAV sólido e fica como
 ## Atualização (Etapa 2.3, plataformas)
 Com as plataformas escolhidas pelo Fabio no portão da Etapa 2.3, a mesma regra dos 5 % escolhe
 **apoapse de 24.992 km**. A órbita de encontro passa a ser **300 × 24.992 km**.
-- Plataformas: orbitador de 442,3 kg (lista por subsistema, P-016) e lander de 1470 kg (L3, P-017),
-  no lugar dos 850 kg de cada.
+- Plataformas: orbitador de 442,3 kg (lista por subsistema, P-016) e lander de 1558,5 kg (L3 + amostras
+  provisórias, P-017), no lugar dos 850 kg de cada.
 - A bateria do orbitador depende do eclipse e, portanto, do apoapse. Plataforma e apoapse foram
   iterados até o apoapse não mudar (duas iterações).
-- Total pela regra (iii): 29.063 kg, 4,7 % acima do mínimo de 27.765 kg no extremo da varredura.
-- Total na missão A: 21.539 kg.
+- Total pela regra (iii): 29.607 kg, 4,6 % acima do mínimo de 28.309 kg no extremo da varredura.
+- Total na missão A: 22.083 kg.
 - MAV: 282,5 kg.
 - Fonte: `results/etapa2.3/plataformas.yaml`, gerado por `tools/plataformas.py`.
+- No primeiro portão da Etapa 2.3, com o lander sem o item de amostras (1470 kg), o apoapse também
+  era 24.992 km, com 29.063 kg (iii) e 21.539 kg (A).
 
 Os valores de 26.950 km acima ficam como histórico.
 

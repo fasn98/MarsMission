@@ -9,17 +9,20 @@ Estado: **decidida pelo Fabio no portão da Etapa 2.3** (2026-10-27). Resultados
 | Item | Decisão | Onde |
 | :- | :- | :- |
 | Orbitador | Lista por subsistema desta etapa, margem média da categoria E1 do S-120A: **442,3 kg** | P-016, `config/dimensionamento.yaml` |
-| Lander | Base **L3** = lander do MSR sem MAV e sem rover de busca: **1470 kg**; L1 e L2 ficam como limites | P-017, `config/superficie.yaml` |
+| Lander | Base = **L3** (lander do MSR sem MAV e sem rover de busca, 1470 kg) **+ amostras da P-034 como alocação provisória** (88,5 kg): **1558,5 kg**. Faixa de L1 (529 kg) ao SRL 2024 − MAV (~2500 kg, comparabilidade não confirmada); L2 só como referência | P-017, P-034, P-035, `config/superficie.yaml` |
 | Margem | Ponto médio da E1 na base; GSFC (+15 %) e ESA na sensibilidade | P-033 |
 | Cabeamento | Base corrigida: só a plataforma (seção 3) | P-031 |
 | Órbita de encontro | Regra dos 5 % reaplicada: **300 × 24.992 km** | ADR 0005 (atualização) |
+| RSS do orbitador | Lacuna declarada, sem número; massa publicada do RSS é pesquisa da Etapa 2.5 | seção 7 |
+| Coleta de amostras | Conceito (braço no lander, rover próprio, outro) e objetivo científico (solo no sítio × rochas selecionadas) ficam para a Etapa 2.5, decisão do Fabio | seção 7 |
+| SRL 2024 | Documento com massa seca: pesquisa da Etapa 2.5 | seção 7 |
 
 `tests/test_plataforma.py` confere que os valores do `config` são os calculados pela ferramenta.
 
 ## 1. O que existe publicado
 
 - **Orbitador.**
-  - Só o **Mars Odyssey** tem massa publicada por subsistema (press kit, pp. 28–31 [F63]).
+  - Só o **Mars Odyssey** tem massa publicada por subsistema (press kit, pp. 28–31 [F33]).
   - Do MRO, só a comunicação (107,7 kg [F64]).
   - Do MAVEN, Mars Express, TGO, MGS, MCO e ERO, só totais. Massas por subsistema desses veículos não
     foram encontradas em fonte primária.
@@ -68,7 +71,7 @@ Sobreposições que restam, todas para o lado conservador:
 
 | Subsistema | Básica | Análogo e fonte | Categoria S-120A | MGA (E1 média) | Prevista |
 | :- | -: | :- | :- | -: | -: |
-| Estrutura | 81,7 | Odyssey, p. 30 [F63] | estrutura primária | 21,5 % | 99,3 |
+| Estrutura | 81,7 | Odyssey, p. 30 [F33] | estrutura primária | 21,5 % | 99,3 |
 | Controle térmico | 20,3 | Odyssey, p. 30 | controle térmico | 40,0 % | 28,4 |
 | Comunicação (X + UHF, relé) | 23,9 | Odyssey, p. 28 | eletrônica 0–5 kg | 27,5 % | 30,5 |
 | Comando e dados | 11,1 | Odyssey, p. 28 | eletrônica 5–15 kg | 20,0 % | 13,3 |
@@ -107,22 +110,35 @@ Sobreposições que restam, todas para o lado conservador:
 
 ## 5. Lander (massas em kg)
 
-**Base L3 (P-017): 1470 kg**, lander do MSR sem MAV e sem rover de busca.
+**Base (P-017): 1558,5 kg** = L3 + amostras.
+
+**L3: 1470 kg**, lander do MSR sem MAV e sem rover de busca.
 - **Conta:** até 2100 kg secos na superfície ("as much as 2100 kg of dry mass to the surface" [F77]),
   menos o MAV de 400 kg [F35] e o rover de busca (SFR, "Mass = < 230 kg" [F78]).
 - **É um limite inferior dessa conta:** como o SFR é "< 230 kg", um SFR mais leve daria um L3 maior.
 - **Sem margem adicional no caso de base:** é um valor de alocação.
-  - Com GSFC (+15 %), vira 1690 kg.
-  - Com ESA (× 1,2 × 1,2), vira 2117 kg.
 - **Cobre ao menos parte do sistema de lançamento e ereção do MAV (MLS)**, que não tem massa publicada.
 - **Incerteza declarada:** os itens próprios do MSR, como o braço de transferência de amostras e o apoio
-  aos helicópteros. O valor é de 2020; versões posteriores do SRL não foram comparadas.
+  aos helicópteros.
 - **Fonte de 2020:** o documento do SRL só tem o resumo público.
-- **Dado posterior já no repositório:** em 2024, o SRL aparece com ~2900 kg pousados [F41] (o antigo teto da P-017).
-  Menos o MAV de 400 kg, dá ~2500 kg, acima do limite L2 (1857 kg). Não se sabe se os 2900 kg são comparáveis aos
-  2100 kg "secos" de 2020.
 
-**Limites da faixa (P-035), por subsistema:**
+**Amostras: 88,5 kg**, ALOCAÇÃO PROVISÓRIA.
+- É o item da P-034: carga útil do Phoenix (braço e instrumentos [F40]), 59 kg com MGA E1 de 50 %.
+- Entra porque o L3 tira o rover de busca e nada mais coleta amostras.
+- O conceito de coleta e o objetivo científico ficam para a Etapa 2.5.
+
+**Base com margem alternativa:**
+- GSFC: 1787,9 kg (L3 × 1,15 + amostras com E1 e 15 %).
+- ESA: 2201,8 kg ((1470 + 59) × 1,44).
+
+**Limite superior da faixa: SRL de 2024 − MAV ≈ 2500 kg, COMPARABILIDADE NÃO CONFIRMADA.**
+- Conta: ~2900 kg ("nearly 1100 kg capability for Mars2020 vs 2900 kg for SRL", [F41] p. 1) menos o
+  MAV de 400 kg [F35].
+- A fonte fala em carga pousada, não em massa seca. Não se sabe se é a mesma grandeza dos 2100 kg
+  "secos" de 2020.
+- Documento do SRL 2024 com massa seca: pesquisa da Etapa 2.5.
+
+**Limite inferior L1 e referência L2 (P-035), por subsistema:**
 
 | Subsistema | Básica | Análogo e fonte | Categoria | MGA | Prevista |
 | :- | -: | :- | :- | -: | -: |
@@ -132,11 +148,11 @@ Sobreposições que restam, todas para o lado conservador:
 | Banda X (cruzeiro) | 14,7 | Phoenix [F74] | eletrônica 0–5 kg | 27,5 % | 18,7 |
 | Radar de pouso | 5,0 | Phoenix [F74] | eletrônica 0–5 kg | 27,5 % | 6,4 |
 | Amostras | 59,0 | carga útil do Phoenix [F40] (P-034) | instrumentação | 50,0 % | 88,5 |
-| Painel solar (4,2 m²) | 17,3 | Phoenix [F75][F76]; [F55] | painel solar | 27,5 % | 22,1 |
+| Painel solar (4,2 m²) | 17,3 | Phoenix [F40][F76]; [F55] | painel solar | 27,5 % | 22,1 |
 | Bateria | 58,3 | 1750 Wh na noite [F73] | baterias | 22,5 % | 71,5 |
 | **L1 / L2** | 418,7 / 1512,3 | | | | **529 / 1857** |
 
-O L3 (1470 kg) fica dentro da faixa, perto do L2.
+A base (1558,5 kg) fica dentro da faixa de 529 a ~2500 kg, entre o L2 (1857 kg) e o L1.
 
 ## 6. Massa total na órbita baixa, antes e depois (kg)
 
@@ -146,62 +162,82 @@ A regra dos 5 % do ADR 0005 foi reaplicada em todos os casos. O mínimo da varre
 | Caso | Plataforma orbitador | Plataforma lander | Apoapse pela regra dos 5 % | **Total (iii)** | **Total (A)** |
 | :- | -: | -: | -: | -: | -: |
 | Antes (P-016 = P-017 = 850) | 850 | 850 | 26.950 | 31.233 | 21.298 |
-| **Base: orbitador E1 médio + L3** | **442** | **1470** | **24.992** | **29.063** | **21.539** |
-| GSFC: +15 % nos dois | 495 | 1690 | 24.992 | 31.262 | 23.391 |
-| ESA: 20 % × 20 % nos dois | 510 | 2117 | 24.067 | 34.318 | 26.245 |
-| Orbitador E1 mínimo + L3 | 422 | 1470 | 24.992 | 28.735 | 21.346 |
-| Orbitador E1 máximo + L3 | 463 | 1470 | 24.992 | 29.391 | 21.732 |
-| Limite inferior do lander (L1) | 442 | 529 | 26.950 | 22.914 | 15.579 |
-| Limite superior do lander (L2) | 442 | 1857 | 24.067 | 31.637 | 24.013 |
+| **Base: orbitador E1 médio + L3 + amostras** | **442** | **1558,5** | **24.992** | **29.607** | **22.083** |
+| *Faixa de margens* | | | | | |
+| Orbitador E1 mínimo | 422 | 1558,5 | 24.992 | 29.279 | 21.890 |
+| Orbitador E1 máximo | 463 | 1558,5 | 24.992 | 29.935 | 22.276 |
+| GSFC: +15 % nos dois | 495 | 1788 | 24.992 | 31.861 | 23.989 |
+| ESA: 20 % × 20 % nos dois | 510 | 2202 | 24.067 | 34.840 | 26.767 |
+| *Faixa do lander (orbitador E1 médio)* | | | | | |
+| Limite inferior: L1 | 442 | 529 | 26.950 | 22.914 | 15.579 |
+| Limite superior: SRL 2024 − MAV (comparabilidade não confirmada) | 442 | 2500 | 23.176 | 35.788 | 28.058 |
+| Referência: L2 (antigo limite superior) | 442 | 1857 | 24.067 | 31.637 | 24.013 |
 
 - **No caso de base:**
-  - O total pela regra (iii) cai 7 % (31.233 → 29.063 kg), 4,7 % acima do mínimo de 27.765 kg.
-  - O total da missão A sobe 1 % (21.298 → 21.539 kg).
+  - O total pela regra (iii) cai 5,2 % (31.233 → 29.607 kg), 4,6 % acima do mínimo de 28.309 kg.
+  - O total da missão A sobe 3,7 % (21.298 → 22.083 kg).
 - **Por que os dois andam em sentidos opostos:**
   - O orbitador ficou 408 kg mais leve, e ele pesa mais na regra (iii), que usa a pior janela de volta.
-  - O lander ficou 620 kg mais pesado.
-- **Para comparar no apoapse antigo** (26.950 km), o caso de base dá 28.699 kg (iii) e 21.364 kg (A).
+  - O lander ficou 708,5 kg mais pesado.
+- **Para comparar no apoapse antigo** (26.950 km), o caso de base dá 29.243 kg (iii) e 21.907 kg (A).
+- **Primeiro portão desta etapa** (L3 sem amostras, 1470 kg): mesmo apoapse, 29.063 kg (iii) e
+  21.539 kg (A).
 - **Nos casos de sensibilidade,** a plataforma do orbitador é a calculada no apoapse do caso de base.
 - **A conta "antes" reproduz exatamente os 31.233 / 21.298 kg da Etapa 2.2.**
 
-## 7. Lacunas apontadas na revisão independente (decisão do Fabio)
+## 7. Lacunas e decisões sobre a revisão independente
 
-1. **Sensores de encontro (RSS) do orbitador sem alocação.**
-   - A P-016 antiga (850 kg) dizia que a plataforma os levava, porque o CCRS de 2021 é "w/o RSS" [F22].
-   - A lista nova vem do Odyssey, que não tinha RSS.
-   - Não se sabe se os 620 kg do CCRS de 2024 (CU-2 [F23]) os incluem.
-   - O RSS pode ter ficado fora das duas contas.
-2. **A base L3 não tem coleta nem busca de amostras.**
-   - O L3 tira o rover de busca do MSR (230 kg).
-   - O item "amostras" (P-034: 59 kg básicos, 88,5 kg previstos) só entra nos limites L1 e L2.
-   - O braço do SRL só transfere tubos já coletados. O conceito de coleta deste estudo não está definido.
+1. **Sensores de encontro (RSS) do orbitador: lacuna declarada, sem número.**
+   - **Verificado agora:** os 620 kg do CCRS de 2024 (CU-2) **não** incluem o RSS.
+     - A fonte diz que são "composed of the capture, assembly and micrometeoroid enclosures with
+       approximate masses of 240 kg, 280 kg, and 100 kg" ([F23] p. 5).
+     - "detect and rendezvous with the OS" é objetivo da missão ERO, não do CCRS (p. 3).
+     - O RSS só aparece na lista de siglas do artigo.
+   - A lista do Odyssey também não o tem. Logo, o RSS está fora das duas contas.
+   - Massa publicada do RSS do ERO ou de outro análogo: pesquisa da Etapa 2.5. Nenhum número sem fonte.
+2. **Coleta de amostras: alocação provisória.**
+   - O item da P-034 (88,5 kg previstos) foi somado ao L3.
+   - O conceito (braço no lander, rover próprio, outro) e o objetivo científico (solo no sítio ×
+     rochas selecionadas) ficam para a Etapa 2.5, como decisão do Fabio.
+3. **SRL 2024:**
+   - O limite superior da faixa do lander passa a ~2500 kg, com comparabilidade não confirmada.
+   - Pesquisa de documento do SRL 2024 com massa seca: Etapa 2.5.
 
-## 8. Resultados de etapas anteriores
+## 8. Resultados de etapas anteriores e dependências da ferramenta
 
-Os resultados das Etapas 1.4, 2.1 e 2.2 (`results/etapa1.4`, `etapa2.1`, `etapa2.2`) foram gerados com
-P-016 = P-017 = 850 kg. Eles ficam como registro dessas etapas e não foram regenerados. Se as
-ferramentas delas forem rodadas de novo, usarão as plataformas novas do `config`.
+- **Etapas 1.4, 2.1 e 2.2:** os resultados (`results/etapa1.4`, `etapa2.1`, `etapa2.2`) foram gerados
+  com P-016 = P-017 = 850 kg.
+  - Ficam como registro dessas etapas e não foram regenerados.
+  - Se as ferramentas delas forem rodadas de novo, usarão as plataformas novas do `config`.
+- **Arquivos que `tools/plataformas.py` lê, sem recalcular:**
+  - `results/etapa2.1/varredura_encontro_rp300_O4.yaml`: o apoapse e o Δv do MAV antes desta etapa.
+    Servem de ponto de partida da iteração, das colunas "no apoapse anterior" e do MAV da referência L2.
+  - `results/etapa2.2/mav_propulsao.yaml`: a opção e a fonte de energia do MAV.
+- **Efeito de regenerar essas etapas:** o ponto de partida muda.
+  - A iteração converge no mesmo apoapse se as plataformas forem as mesmas.
+  - O caso "antes" usa 850/850 explícitos e não depende delas.
 
 ## 9. Premissas (NÃO VALIDADAS)
 
 | Premissa | Conteúdo |
 | :- | :- |
 | P-016 | Revista: 442,3 kg |
-| P-017 | Revista: 1470 kg |
+| P-017 | Revista: 1558,5 kg (L3 + amostras provisórias); faixa 529 a ~2500 kg |
 | P-028 | Carga de 510 W |
 | P-029 | Eficiência de recarga de 0,8 |
 | P-030 | Fator de perdas do painel de 0,774 |
 | P-031 | Revista: cabeamento só sobre a plataforma |
 | P-032 | Energia do lander (limites L1/L2) |
 | P-033 | Ponto médio da E1 |
-| P-034 | Amostras = carga útil do Phoenix (só nos limites L1 e L2) |
-| P-035 | L1 e L2 como limites; L3 como base |
+| P-034 | Amostras = carga útil do Phoenix (base provisória e limites L1/L2) |
+| P-035 | L1 limite inferior; SRL 2024 − MAV limite superior; L2 referência |
 
 ## 10. Limitações
 
 - Potência do sistema de captura (CU-2) não incluída: não tem valor publicado.
 - O L3 é uma alocação de 2020 com só o resumo público. O conteúdo exato da massa "seca na superfície"
   não está publicado.
+- Sensores de encontro (RSS) sem massa: fora das contas do orbitador e da CU-2.
 - A estrutura, o GNC e o térmico do Odyssey (725 kg no lançamento) não foram escalados.
 - Eclipse no pior caso geométrico. Painel do lander (limites L1/L2) sem poeira.
 - A tabela do S-120A é a reproduzida pelo NESC (2024). A Rev B da norma está em revisão (NTRS

@@ -34,25 +34,6 @@ def test_com_margem():
     assert pf.com_margem(100.0, 0.25) == pytest.approx(125.0)
 
 
-def test_config_coincide_com_a_etapa_2_3():
-    """P-016 e P-017 no config são os valores calculados por tools/plataformas.py (sem cópia à mão divergente)."""
-    import sys
-    from pathlib import Path
-
-    import yaml
-
-    raiz = Path(__file__).resolve().parents[1]
-    sys.path.insert(0, str(raiz / "tools"))
-    import plataformas as pl
-
-    ler = lambda c: yaml.safe_load((raiz / c).read_text(encoding="utf-8"))  # noqa: E731
-    cfg, po = ler("config/plataformas.yaml"), ler("config/parametros_orbitais.yaml")
-    res = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
-    m_o = pl.plataforma_orbitador(cfg, po, res["apoapse_regra_5pct_km"], res["periapse_alt_km"])
-    assert ler("config/dimensionamento.yaml")["plataforma_orbitador_kg"]["valor"] == pytest.approx(m_o, abs=0.05)
-    assert ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"]["valor"] == pytest.approx(pl.lander_l3(cfg))
-
-
 def test_eclipse_eliptico_sombra_no_apoapse_analitico():
     # Sol ao longo da linha das apsides, apoapse atrás do planeta: a sombra é a faixa |y| < R no ramo do apoapse.
     # Entrada e saída em E = π ∓ asin(R/b); tempo pela equação de Kepler. Para apoapse alto é o pior caso.
@@ -66,22 +47,24 @@ def test_eclipse_eliptico_sombra_no_apoapse_analitico():
     assert t == pytest.approx(t_analitico, rel=2e-3)
 
 
-def _ferramenta():
-    import sys
+@pytest.fixture
+def ferramenta(monkeypatch):
+    """Importa tools/plataformas.py com tools/ no sys.path só durante o teste."""
+    import importlib
     from pathlib import Path
 
     import yaml
 
     raiz = Path(__file__).resolve().parents[1]
-    if str(raiz / "tools") not in sys.path:
-        sys.path.insert(0, str(raiz / "tools"))
-    import plataformas as pl
+    monkeypatch.syspath_prepend(str(raiz / "tools"))
+    pl = importlib.import_module("plataformas")
+    ler = lambda c: yaml.safe_load((raiz / c).read_text(encoding="utf-8"))  # noqa: E731
+    return pl, ler
 
-    return pl, yaml.safe_load((raiz / "config/plataformas.yaml").read_text(encoding="utf-8"))
 
-
-def test_criterios_de_margem():
-    pl, cfg = _ferramenta()
+def test_criterios_de_margem(ferramenta):
+    pl, ler = ferramenta
+    cfg = ler("config/plataformas.yaml")
     itens = [("a", 100.0, "estrutura_primaria"), ("b", 10.0, "cabeamento")]
     assert pl.prevista(itens, cfg, "e1_medio") == pytest.approx(121.5 + 17.5)
     assert pl.prevista(itens, cfg, "e1_minimo") == pytest.approx(118.0 + 15.0)
@@ -92,8 +75,9 @@ def test_criterios_de_margem():
         pl.prevista(itens, cfg, "e1_meio")
 
 
-def test_lander_l1_l2_l3():
-    pl, cfg = _ferramenta()
+def test_lander_l1_l2_l3(ferramenta):
+    pl, ler = ferramenta
+    cfg = ler("config/plataformas.yaml")
     assert pl.lander_l3(cfg) == pytest.approx(2100 - 400 - 230)
     assert pl.l3_com_margem(1000.0, cfg, "e1_medio_mais_gsfc") == pytest.approx(1150.0)
     assert pl.l3_com_margem(1000.0, cfg, "esa") == pytest.approx(1440.0)
@@ -104,3 +88,22 @@ def test_lander_l1_l2_l3():
     resto = sum(m for n, m, _ in it2 if n != "nucleo")
     nucleo = dict((n, m) for n, m, _ in it2)["nucleo"]
     assert nucleo / (nucleo + resto + 300.0) == pytest.approx(k)
+
+
+def test_lander_base_e_limite_superior(ferramenta):
+    pl, ler = ferramenta
+    cfg = ler("config/plataformas.yaml")
+    assert pl.lander_base(cfg) == pytest.approx(1470 + 59 * 1.5)
+    assert pl.lander_base(cfg, "e1_medio_mais_gsfc") == pytest.approx(1470 * 1.15 + 59 * 1.5 + 0.15 * 59)
+    assert pl.lander_base(cfg, "esa") == pytest.approx((1470 + 59) * 1.44)
+    assert pl.limite_srl_2024(cfg) == pytest.approx(2900 - 400)
+
+
+def test_config_coincide_com_a_etapa_2_3(ferramenta):
+    """P-016 e P-017 no config são os valores calculados por tools/plataformas.py (sem cópia à mão divergente)."""
+    pl, ler = ferramenta
+    cfg, po = ler("config/plataformas.yaml"), ler("config/parametros_orbitais.yaml")
+    res = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
+    m_o = pl.plataforma_orbitador(cfg, po, res["apoapse_regra_5pct_km"], res["periapse_alt_km"])
+    assert ler("config/dimensionamento.yaml")["plataforma_orbitador_kg"]["valor"] == pytest.approx(m_o, abs=0.05)
+    assert ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"]["valor"] == pytest.approx(pl.lander_base(cfg))
