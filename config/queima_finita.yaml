@@ -38,4 +38,8 @@ verificacao_ero:
   propelente_kg: {valor: 1900, fonte: "[F22] slide 8, Orbit Insertion Module: \"Prop Mass = 1900 kg\""}
   motor: {valor: S400-15, quantidade: 2, fonte: "[F29] slide 6: \"Chemical propulsion: 2 x 400 N (OIM - for Mars orbit insertion)\"; o modelo S400-15 (Isp 321 s) é hipótese (P-043)"}
   vinf_km_s: {valor: [2.0, 2.25, 2.5, 2.75], premissa: P-043}   # mais o v∞ da missão de referência, lido de results/
+redimensionamento:
+  # Ponto fixo entre as perdas de queima finita e as massas (tools/redimensiona.py). Premissa P-044 (NÃO VALIDADA).
+  tolerancia_km_s: {valor: 1.0e-6, premissa: P-044}   # maior mudança aceita entre duas iterações, em cada perda
+  max_iteracoes: {valor: 10, premissa: P-044}
 

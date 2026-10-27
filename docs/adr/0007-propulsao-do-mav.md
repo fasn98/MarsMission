@@ -35,3 +35,11 @@ por critérios operacionais (`docs/etapa2.2b_propulsao_mav.md`).
   26.950 km (ADR 0005, atualizado).
 - O aquecimento e a operação a baixa temperatura do hipergólico (NTO a −11 °C) são requisitos de projeto
   do lander para a Fase 4.
+
+## Nota (2026-10-27): Isp de voo (ADR 0011)
+- **Motores:** o MAV O4 passa a usar motores com voo comprovado, 4 × R-4D-11 no estágio 1 e 1 × R-4D-11 no estágio 2.
+  O Isp é de **310 s** [F107, Tab. 3], no lugar dos 343 s do motor com turbobomba [F46].
+- **Massas:** o MAV com a energia do aquecimento passa de 282 kg para 438 kg (`results/etapa2.5/arquitetura.md`).
+- **A decisão O4 não foi reavaliada contra O1 e O2 com o Isp novo.** A comparação da Etapa 2.2 fica como registro da
+  época.
+- **Limitação:** a fração estrutural (0,238) continua a do MAV com turbobomba [F46]. Ver o ADR 0011.

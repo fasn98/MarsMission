@@ -264,3 +264,22 @@ Caso de projeto. "Várias queimas" é o melhor N calculado (N = 2 a 4 dão o mes
 | R3: 4 × R-4D-11 (310 s) | 71,0 m/s; cabe (1.050 de 1.065 kg) | 50,3 m/s; cabe (1.038 kg) | margem apertada |
 
 Depois da escolha, segue o redimensionamento, com a perda calculada no lugar da P-015 e as decisões de MAV e cruzeiro.
+
+## Nota (2026-10-27): redimensionamento (ADR 0011)
+- **Decisões do Fabio:**
+  - captura C2 e retorno R3;
+  - limites do R-4D-11 usados como requisito do Artemis I, conservador;
+  - fração do raio de Hill de 0,1;
+  - mudança de valor-base de premissa só com aprovação prévia (regra acrescentada ao CLAUDE.md).
+- **O que foi refeito:** com os motores escolhidos, Isp de voo e perdas calculadas (`results/etapa3.1/perdas_calculadas.md`),
+  o dimensionamento foi refeito.
+- **Consequência para esta etapa:** `results/etapa3.1/queima_finita.md` agora avalia as combinações nas massas do
+  veículo redimensionado. Os números das tabelas das §4 e da nota anterior ficam como registro da época; os vigentes
+  estão no arquivo de resultados.
+- **Nas massas novas:**
+  - C2 e R3 cabem;
+  - C1 e R1 continuam sem caber, e a queima deles continua passando da vida qualificada;
+  - o R2 (2 × S400-15) passa a caber com N ≥ 2: 1.166 de 1.198 kg.
+  
+  Isso é circular: o estágio de retorno foi redimensionado com a perda maior do R3 e ganhou propelente. Não reabre a
+  escolha, que considerou o caso de antes, mas fica registrado.

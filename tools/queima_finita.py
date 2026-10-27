@@ -28,6 +28,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 
 from orbital import manobras as mn  # noqa: E402
 from orbital import motores as mt  # noqa: E402
+from orbital import perdas as pd  # noqa: E402
 from orbital import queima_finita as qf  # noqa: E402
 from orbital import queima_multipla as qm  # noqa: E402
 from orbital.constantes import GM_SOL, UA_KM  # noqa: E402
@@ -42,18 +43,7 @@ def _queima(estagios, estagio, queima):
     return next(q for q in e["queimas"] if q["nome"] == queima)
 
 
-def casos():
-    """Missões de cálculo: pior janela do envelope por trecho (como no dimensionamento, regra iii) e a de referência."""
-    ms = ler("results/etapa1.3/missoes.yaml")
-    ref = ler("config/missao_referencia.yaml")["missao_referencia"]
-    orb = ref["orbita_marte"]
-    cand = {c["id"]: c for c in ms["candidatas"]}
-    jan = [cand[w["missao"]] for w in ms["envelope_dimensionamento"]["minimo_admissivel_por_janela"].values()]
-    pior_cap = max(jan, key=lambda c: c["por_orbita_marte"][orb]["dv_captura_propulsiva_km_s"])
-    pior_sai = max(jan, key=lambda c: c["por_orbita_marte"][orb]["dv_saida_marte_km_s"])
-    a = cand[ref["id"]]
-    return {"captura": [("projeto (pior janela)", pior_cap), ("referência", a)],
-            "saida": [("projeto (pior janela)", pior_sai), ("referência", a)]}
+casos = pd.casos   # mesmas missões de cálculo do redimensionamento (orbital.perdas)
 
 
 def main():
@@ -64,7 +54,8 @@ def main():
     um = p.orbitas_marte["eliptica_alta"]
     pl = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
     rp_enc, ra_enc = R + pl["periapse_alt_km"], R + pl["apoapse_regra_5pct_km"]
-    perda_p015 = {k: v(x) for k, x in dcfg["dv"]["perda_gravitacional"].items()}
+    # P-015 da lista de premissas: desde o redimensionamento (ADR 0011), config/dimensionamento.yaml usa a perda calculada
+    perda_p015 = {k: float(x) for k, x in next(p_ for p_ in ler("config/premissas.yaml")["premissas"] if p_["id"] == "P-015")["valor"].items()}
     vei, _, _ = ve.veiculos(detalhe=True)
     orb, lan = vei["orbitador_regra_iii"], vei["lander"]
     cs = casos()
@@ -298,10 +289,10 @@ def _md(out):
           "O mínimo do propelente no início da queima é plano: o início, a altitude mínima durante a queima e o periapse de "
           "chegada são mal condicionados, e as apsides finais da captura carregam o resíduo do ajuste ao alvo; vão "
           "arredondados (config/queima_finita.yaml, P-041). A perda, a duração e o propelente não.", "",
-          "Massa no início de cada queima e propelente dimensionado: dimensionamento atual (regra iii, Isp de 321 s, perdas da P-015 e "
-          "margem de Δv da P-014), sem refazer com o Isp de cada combinação. \"Cabe?\" compara o propelente da queima finita com o "
+          "Massa no início de cada queima e propelente dimensionado: dimensionamento atual (regra iii; desde o ADR 0011, Isp dos "
+          "motores escolhidos e perdas calculadas por tools/redimensiona.py; margem de Δv da P-014), sem refazer com o Isp de cada combinação. \"Cabe?\" compara o propelente da queima finita com o "
           "dimensionado para aquela queima; o caso de referência usa o mesmo veículo.", "",
-          f"Perdas do DRA usadas hoje (P-015, NÃO VALIDADA): captura {br(1e3 * p15['captura_marte'])} m/s; "
+          f"Perdas do DRA usadas até o redimensionamento do ADR 0011 (P-015, NÃO VALIDADA): captura {br(1e3 * p15['captura_marte'])} m/s; "
           f"saída de Marte {br(1e3 * p15['saida_marte'])} m/s.", "",
           "## Captura em Marte (órbita de 1 sol)", "",
           "| Combinação | Empuxo (N) | Isp (s) | Caso | v∞ (km/s) | m0 (kg) | Queima (s) | Propelente (kg) | Δv impulsivo (m/s) | Perda (m/s) | Perda (% do Δv) | Perda / P-015 | Periapse de chegada (km) | Altitude mínima durante a queima (km) | Propelente dimensionado (kg) | Cabe? | Queima única máx. (s) | Excede? |",

@@ -4,7 +4,8 @@ Serve para provar que uma mudança de ambiente (ex.: conda-forge → wheels do P
 de física não altera nenhum resultado. A ordem e as plataformas seguem a história do estudo:
   1. Fase 1 (Etapas 1.1 a 1.3) e lista de premissas, com o config atual;
   2. Etapas 1.4, 2.1 e 2.2 com as plataformas da época (P-016 = P-017 = 850 kg, histórico em config/plataformas.yaml,
-     "antes_etapa_2_3"), como em tools/confere_2033.py;
+     "antes_etapa_2_3") e a propulsão da época (Isp de 321 e 343 s, P-015; config/motores.yaml, "antes_etapa_3_1"),
+     como em tools/confere_2033.py;
   3. Etapas 2.3 a 2.5 com o config atual.
 "Idêntico" significa dentro das tolerâncias declaradas (decisão do Fabio, 2026-10-27; premissas NÃO VALIDADAS):
   - números (YAML, Markdown, NPZ): a (versionado) e b (regenerado) passam se |a − b| ≤ max(relativa · |b|, piso
@@ -45,6 +46,9 @@ import tempfile
 import tomllib
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from orbital.historico import aplicar_antes_etapa_3_1  # noqa: E402
+
 import numpy as np
 import yaml
 
@@ -56,7 +60,7 @@ FASE_1 = [["tools/baricentro_marte.py"], ["tools/porkchop.py", "terra_marte"], [
           ["tools/missoes.py"], ["tools/compara_dra5.py"], ["tools/grafico_missoes.py"], ["tools/lista_premissas.py"]]
 FASE_850 = [["tools/dimensionamento.py"], ["tools/compara_msr.py"], ["tools/superficie.py"],
             ["tools/varredura_encontro.py"], ["tools/isru.py"], ["tools/mav_propulsao.py"]]
-FASE_ATUAL = [["tools/plataformas.py"], ["tools/lancamento.py"], ["tools/coleta.py"], ["tools/arquitetura.py"],
+FASE_ATUAL = [["tools/redimensiona.py"], ["tools/plataformas.py"], ["tools/lancamento.py"], ["tools/coleta.py"], ["tools/arquitetura.py"],
               ["tools/confere_2033.py"], ["tools/exporta_painel.py"], ["tools/queima_finita.py"]]
 _SO_NA_RAIZ = {".git", "data", "results", "hanatrial", ".venv", ".pythonlibs", ".cache", ".claude"}
 
@@ -323,8 +327,10 @@ def regenerar(d: Path):
     antes = yaml.safe_load((d / "config/plataformas.yaml").read_text(encoding="utf-8"))["antes_etapa_2_3"]
     for c in FASE_1:
         rodar(c)
-    originais = {a: (d / a).read_text(encoding="utf-8") for a in ("config/dimensionamento.yaml", "config/superficie.yaml")}
+    originais = {a: (d / a).read_text(encoding="utf-8") for a in ("config/dimensionamento.yaml", "config/superficie.yaml",
+                                                                    "config/mav_propulsao.yaml")}
     _patch_850(d, antes)
+    aplicar_antes_etapa_3_1(d)   # e a propulsão de antes da Etapa 3.1 (ADR 0011)
     for c in FASE_850:
         rodar(c)
     for a, t in originais.items():

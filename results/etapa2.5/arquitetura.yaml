@@ -7,27 +7,27 @@ envelope_dv_km_s: 5.9118
 orbitador:
   composicao:
   - item: Estágio de inserção em Marte (MMH/MON)
-    propelente_kg: 2477.602917453915
-    inerte_kg: 782.4009213012363
+    propelente_kg: 2989.8846452779576
+    inerte_kg: 944.1740985088287
   - item: Estágio de retorno (MMH/MON)
-    propelente_kg: 1401.3982013397567
-    inerte_kg: 442.54680042308104
+    propelente_kg: 1569.2689792071951
+    inerte_kg: 495.5586250127984
   - item: 'Carga útil CU-2: CCRS (captura + montagem + proteção contra micrometeoroides)'
     massa_kg: 620.0
   - item: 'Carga útil CU-2: EEV com COS (valor máximo esperado)'
     massa_kg: 89.9
   - item: Plataforma (P-016, lista por subsistema + sensores de encontro)
     massa_kg: 496.5
-  injetado_kg: 6310.348840517989
-  soma_kg: 6310.348840517989
+  injetado_kg: 7205.286348006781
+  soma_kg: 7205.286348006779
 lander:
   composicao:
   - item: Estágio de cruzeiro (correções de trajetória)
-    propelente_kg: 83.98674417620516
-    inerte_kg: 26.52212973985426
+    propelente_kg: 100.27394211402174
+    inerte_kg: 31.665455404427917
   - item: Sistema de entrada, descida e pouso (aeroshell, paraquedas, propelente de
       descida; P-018)
-    massa_kg: 1782.0023681961006
+    massa_kg: 1931.7565396245584
   - item: Plataforma de superfície L3 (lander do MSR sem MAV e sem rover de busca)
     massa_kg: 1470.0
   - item: Braço de coleta de reserva (P-034, com margem)
@@ -35,14 +35,14 @@ lander:
   - item: Helicópteros de recuperação (ADR 0009, com margem)
     massa_kg: 6.375
   - item: MAV hipergólico + energia do aquecimento (ADR 0007)
-    massa_kg: 282.45535725420643
+    massa_kg: 437.69949830733253
   - item: Painéis do armazenamento criogênico no cruzeiro (só MAV criogênico; descartados
       antes da entrada)
     massa_kg: 0.0
-  injetado_kg: 3739.8415993663666
-  soma_kg: 3739.8415993663666
-  massa_entrada_kg: 3629.332725450307
-  massa_pousada_kg: 1847.3303572542063
+  injetado_kg: 4066.2704354503408
+  soma_kg: 4066.2704354503403
+  massa_entrada_kg: 3934.331037931891
+  massa_pousada_kg: 2002.5744983073325
 lancadores:
   orbitador:
   - Falcon Heavy (descartável)
@@ -55,14 +55,14 @@ lancadores:
   - Vulcan VC6
   margens_base:
     orbitador:
-      Falcon Heavy (descartável): 0.7787060800348165
-      Vulcan VC6: 0.3141237151049956
+      Falcon Heavy (descartável): 0.5577806776374681
+      Vulcan VC6: 0.15090208235846192
     lander:
-      Falcon Heavy (recuperação): 0.25096773553795826
-      Falcon Heavy (descartável): 2.001265040656188
-      Vulcan VC2: 0.1564367030792846
-      Vulcan VC4: 0.7346369710923382
-      Vulcan VC6: 1.2173610409903444
+      Falcon Heavy (recuperação): 0.15054353887602745
+      Falcon Heavy (descartável): 1.7603318637922594
+      Vulcan VC2: 0.06360119373885587
+      Vulcan VC4: 0.595385158776714
+      Vulcan VC6: 1.0393574882806815
 lancamentos: 2
 cronograma:
 - evento: Lançamentos do orbitador e do lander (injeção direta, lançamentos separados)
@@ -79,128 +79,128 @@ cronograma:
 sensibilidade:
 - caso: Base
   premissa: —
-  orbitador_injetado_kg: 6310.348840517989
-  lander_injetado_kg: 3739.8415993663666
+  orbitador_injetado_kg: 7205.286348006781
+  lander_injetado_kg: 4066.2704354503408
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.7787060800348165
-      Vulcan VC6: 0.3141237151049956
+      Falcon Heavy (descartável): 0.5577806776374681
+      Vulcan VC6: 0.15090208235846192
     lander:
-      Falcon Heavy (recuperação): 0.25096773553795826
-      Falcon Heavy (descartável): 2.001265040656188
-      Vulcan VC2: 0.1564367030792846
-      Vulcan VC4: 0.7346369710923382
-      Vulcan VC6: 1.2173610409903444
+      Falcon Heavy (recuperação): 0.15054353887602745
+      Falcon Heavy (descartável): 1.7603318637922594
+      Vulcan VC2: 0.06360119373885587
+      Vulcan VC4: 0.595385158776714
+      Vulcan VC6: 1.0393574882806815
 - caso: Margem de massa GSFC (+15 % da básica) nas duas plataformas
   premissa: P-033
-  orbitador_injetado_kg: 6623.387856605588
-  lander_injetado_kg: 4205.669245534305
+  orbitador_injetado_kg: 7562.733993749349
+  lander_injetado_kg: 4533.493416661831
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.6946396757628968
-      Vulcan VC6: 0.25201471534536624
+      Falcon Heavy (descartável): 0.48415319896837894
+      Vulcan VC6: 0.09650545275873434
     lander:
-      Falcon Heavy (recuperação): 0.11240825269311783
-      Falcon Heavy (descartável): 1.6688394151984784
-      Vulcan VC2: 0.028347650924353207
-      Vulcan VC4: 0.5425053958245427
-      Vulcan VC6: 0.9717620615827762
+      Falcon Heavy (recuperação): 0.03196822998253834
+      Falcon Heavy (descartável): 1.4758513618918654
+      Vulcan VC2: -0.04601381501628676
+      Vulcan VC4: 0.4309643597247794
+      Vulcan VC6: 0.8291807883590387
 - caso: Margem de massa ESA (20 % × 20 %) nas duas plataformas
   premissa: P-033
-  orbitador_injetado_kg: 6713.58283889009
-  lander_injetado_kg: 5043.764239444702
+  orbitador_injetado_kg: 7665.724299805483
+  lander_injetado_kg: 5374.098831163414
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.6718726973547897
-      Vulcan VC6: 0.23519427121285896
+      Falcon Heavy (descartável): 0.4642133490314564
+      Vulcan VC6: 0.08177371603625572
     lander:
-      Falcon Heavy (recuperação): -0.07243460345698571
-      Falcon Heavy (descartável): 1.225372820162932
-      Vulcan VC2: -0.14252731018090714
-      Vulcan VC4: 0.2861956261865686
-      Vulcan VC6: 0.6441250360312203
+      Falcon Heavy (recuperação): -0.1294501043224785
+      Falcon Heavy (descartável): 1.0885838170080908
+      Vulcan VC2: -0.19523435926954757
+      Vulcan VC4: 0.20713587674858625
+      Vulcan VC6: 0.5430641159449572
 - caso: Plataforma do lander no limite inferior (L1; sem os helicópteros, como definido
     na Etapa 2.3)
   premissa: P-017, P-035
-  orbitador_injetado_kg: 6310.348840517989
-  lander_injetado_kg: 1642.1083803862336
+  orbitador_injetado_kg: 7205.286348006781
+  lander_injetado_kg: 1962.2536892976354
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.7787060800348165
-      Vulcan VC6: 0.3141237151049956
+      Falcon Heavy (descartável): 0.5577806776374681
+      Vulcan VC6: 0.15090208235846192
     lander:
-      Falcon Heavy (recuperação): 1.84903312881797
-      Falcon Heavy (descartável): 5.835271035599971
-      Vulcan VC2: 1.633742170046511
-      Vulcan VC4: 2.9505720705013125
-      Vulcan VC6: 4.049958432073489
+      Falcon Heavy (recuperação): 1.384208118627405
+      Falcon Heavy (descartável): 4.720083958047027
+      Vulcan VC2: 1.2040422768974595
+      Vulcan VC4: 2.3060289501160462
+      Vulcan VC6: 3.2260483989092297
 - caso: Plataforma do lander no limite superior (SRL 2024 − MAV)
   premissa: P-017, P-035
-  orbitador_injetado_kg: 6310.348840517989
-  lander_injetado_kg: 5632.962319152368
+  orbitador_injetado_kg: 7205.286348006781
+  lander_injetado_kg: 5965.061788363653
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.7787060800348165
-      Vulcan VC6: 0.3141237151049956
+      Falcon Heavy (descartável): 0.5577806776374681
+      Vulcan VC6: 0.15090208235846192
     lander:
-      Falcon Heavy (recuperação): -0.16945633367311508
-      Falcon Heavy (descartável): 0.9926026864420772
-      Vulcan VC2: -0.2322174649553137
-      Vulcan VC4: 0.15166179653518186
-      Vulcan VC6: 0.4721524114789115
+      Falcon Heavy (recuperação): -0.21569610796715766
+      Falcon Heavy (descartável): 0.8816663176340809
+      Vulcan VC2: -0.2749630695114037
+      Vulcan VC4: 0.08754405812611021
+      Vulcan VC6: 0.39019164530479
 - caso: Razão pousada/entrada 0,624 (Viking, a partir de órbita) em vez de 0,509
   premissa: P-018
-  orbitador_injetado_kg: 6310.348840517989
-  lander_injetado_kg: 3050.607971277973
+  orbitador_injetado_kg: 7205.286348006781
+  lander_injetado_kg: 3316.877646865743
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.7787060800348165
-      Vulcan VC6: 0.3141237151049956
+      Falcon Heavy (descartável): 0.5577806776374681
+      Vulcan VC6: 0.15090208235846192
     lander:
-      Falcon Heavy (recuperação): 0.5336028820740599
-      Falcon Heavy (descartável): 2.679350462415494
-      Vulcan VC2: 0.41771415072982965
-      Vulcan VC4: 1.1265490568990835
-      Vulcan VC6: 1.7183365217642308
+      Falcon Heavy (recuperação): 0.4104895250660925
+      Falcon Heavy (descartável): 2.383982481348467
+      Vulcan VC2: 0.3039040174716032
+      Vulcan VC4: 0.9558356366928673
+      Vulcan VC6: 1.500116056359814
 - caso: Margem de Δv 5 % (base 10 %)
   premissa: P-014
-  orbitador_injetado_kg: 5784.805979906441
-  lander_injetado_kg: 3644.9639866030643
+  orbitador_injetado_kg: 6549.374861425379
+  lander_injetado_kg: 3889.018210572691
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.9402994480294624
-      Vulcan VC6: 0.4335103183606026
+      Falcon Heavy (descartável): 0.7137904131703954
+      Vulcan VC6: 0.2661634487822304
     lander:
-      Falcon Heavy (recuperação): 0.28353015119638236
-      Falcon Heavy (descartável): 2.07938731110221
-      Vulcan VC2: 0.1865384967055861
-      Vulcan VC4: 0.7797891908215613
-      Vulcan VC6: 1.2750784623357267
+      Falcon Heavy (recuperação): 0.2029825841677051
+      Falcon Heavy (descartável): 1.8861412423463904
+      Vulcan VC2: 0.11207761317556897
+      Vulcan VC4: 0.668099029892353
+      Vulcan VC6: 1.1323065650260475
 - caso: Margem de Δv 20 % (base 10 %)
   premissa: P-014
-  orbitador_injetado_kg: 7547.876389527382
-  lander_injetado_kg: 4007.030753372646
+  orbitador_injetado_kg: 8777.521852709991
+  lander_injetado_kg: 4626.587344172648
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.487074677765466
-      Vulcan VC6: 0.09866386702038299
+      Falcon Heavy (descartável): 0.2787499750062825
+      Vulcan VC6: -0.05524825787249599
     lander:
-      Falcon Heavy (recuperação): 0.1675530997340755
-      Falcon Heavy (descartável): 1.8011404305601464
-      Vulcan VC2: 0.0793254046203209
-      Vulcan VC4: 0.6189712292149949
-      Vulcan VC6: 1.069507216766501
+      Falcon Heavy (recuperação): 0.011203470031240004
+      Falcon Heavy (descartável): 1.4260334918149447
+      Vulcan VC2: -0.06520945840191394
+      Vulcan VC4: 0.4021711948140232
+      Vulcan VC6: 0.7923749072531399
 - caso: Sem penalidade de DLA (multiplicador 1)
   premissa: P-036
-  orbitador_injetado_kg: 6310.348840517989
-  lander_injetado_kg: 3739.8415993663666
+  orbitador_injetado_kg: 7205.286348006781
+  lander_injetado_kg: 4066.2704354503408
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.9304566289238687
-      Vulcan VC6: 0.429037954621186
+      Falcon Heavy (descartável): 0.6906829460525052
+      Vulcan VC6: 0.2515433203420985
     lander:
-      Falcon Heavy (recuperação): 0.3468551050005466
-      Falcon Heavy (descartável): 2.2573183720037626
-      Vulcan VC2: 0.24946815950485846
-      Vulcan VC4: 0.8847800936794379
-      Vulcan VC6: 1.411259343584994
+      Falcon Heavy (recuperação): 0.23873333806981467
+      Falcon Heavy (descartável): 1.9958299486912647
+      Vulcan VC2: 0.14916434461951478
+      Vulcan VC4: 0.733475210735546
+      Vulcan VC6: 1.2176901765760895

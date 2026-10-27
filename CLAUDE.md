@@ -9,6 +9,7 @@ genéricas.
    (`[Fnn]`), com a citação literal e a página quando houver. Fonte secundária ou de terceiros não basta.
 2. **Valor sem fonte é premissa.** Entra em `config/premissas.yaml` com status **NÃO VALIDADA**. Só o Fabio muda esse
    status. Tolerância de teste, faixa de busca e fator de escala sem fonte também são premissas.
+   - Mudança de valor-base de premissa só com aprovação prévia do Fabio; quando não der para esperar, pare e pergunte.
 3. **"Verificado" ≠ "validado".** "Verificado" só quando o resultado é comparado com dados publicados. Este estudo
    nunca afirma "validado".
 4. **Configuração em `config/`, resultados em `results/`.**

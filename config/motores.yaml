@@ -126,3 +126,33 @@ combinacoes:
   mav_2:            # MAV, estágio 2
     N1: {motores: [{motor: S400-15, quantidade: 1}]}
     N2: {motores: [{motor: R-4D-11, quantidade: 1}]}
+
+# Escolha do portão da Etapa 3.1 (decisão do Fabio, 2026-10-27; ADR 0011). Captura e retorno em várias queimas
+# (orbital.queima_multipla), com o melhor N de config/queima_finita.yaml que respeita os limites do motor.
+escolha:
+  captura: C2
+  retorno: R3
+  cruzeiro: Z1
+  mav_1: M2
+  mav_2: N2
+
+# Valores com que as etapas anteriores à 3.1 foram geradas (Isp do motor de 400 N [F28] nos estágios de Marte e no
+# cruzeiro, P-015 na captura e na saída, Isp de 343 s [F46] no MAV). Usados SÓ para regenerá-las como registro da época
+# (tools/confere_regeneracao.py e tools/confere_2033.py), como o antes_etapa_2_3 de config/plataformas.yaml.
+antes_etapa_3_1:
+  - arquivo: config/dimensionamento.yaml
+    procura: '^    isp_s: \{valor: 310, fonte: .*$'
+    troca: '    isp_s: {valor: 321, fonte: "[F28]"}'
+  - arquivo: config/dimensionamento.yaml
+    procura: '^    captura_marte: \{resultado: .*$'
+    troca: '    captura_marte: {valor: 0.018, premissa: P-015}'
+  - arquivo: config/dimensionamento.yaml
+    procura: '^    saida_marte: \{resultado: .*$'
+    troca: '    saida_marte: {valor: 0.011, premissa: P-015}'
+  - arquivo: config/superficie.yaml
+    procura: '^    isp_s: \{valor: 292, fonte: .*$'
+    troca: '    isp_s: {valor: 321, fonte: "[F28]"}'
+  - arquivo: config/mav_propulsao.yaml
+    procura: '^    isp_s: \[310, 310\]$'
+    troca: '    isp_s: [343, 343]'
+
