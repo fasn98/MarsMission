@@ -123,9 +123,20 @@ def missao_referencia() -> dict:
 NOMES_CLASSE = {"oposicao": "oposição", "conjuncao": "conjunção", "conjuncao_transito_curto": "conjunção com trânsito curto"}
 
 
-def nome_orbita_marte(chave: str) -> str:
-    """Descrição da órbita em Marte em config/parametros_orbitais.yaml (ex.: eliptica_alta → "elíptica de 1 sol, …")."""
-    return ler("config/parametros_orbitais.yaml")["orbitas_marte"][chave]["descricao"]
+# Nomes dos estágios de orbital.veiculos, iguais aos itens que tools/arquitetura.py grava em results/etapa2.5/arquitetura.yaml.
+NOMES_ESTAGIO = {"insercao_marte": "Estágio de inserção em Marte (MMH/MON)", "retorno": "Estágio de retorno (MMH/MON)",
+                 "cruzeiro_lander": "Estágio de cruzeiro (correções de trajetória)"}
+
+
+def orbita_marte(chave: str) -> dict:
+    """Órbita em Marte de config/parametros_orbitais.yaml: o nome (a descrição até a primeira vírgula; ex.: eliptica_alta →
+    "elíptica de 1 sol") e as altitudes de periapse e apoapse como Valor, com o rótulo da fonte do config."""
+    o = "config/parametros_orbitais.yaml"
+    it = ler(o)["orbitas_marte"][chave]
+    pe, ap = it["periapse_alt_km"], it["apoapse_alt_km"]
+    if str(ap.get("fonte", "")).strip() == "idem":   # "idem" no config = mesma citação do periapse, que traz os dois valores
+        ap = {**ap, "fonte": pe["fonte"]}
+    return {"nome": it["descricao"].split(",")[0], "periapse": valor_config(pe, "km", o), "apoapse": valor_config(ap, "km", o)}
 
 
 def nome_missao(mid: str) -> str:
@@ -135,8 +146,9 @@ def nome_missao(mid: str) -> str:
 
 
 def nome_minimo(chave: str) -> str:
-    """Chave de mínimo de results/etapa1.2/minimos_*.yaml por extenso, pela nota do próprio arquivo: tipo_N = mínimo de
-    C3 de partida; min_vinf_tipo_N = mínimo do v∞ de chegada (tipo em romano, como em tools/porkchop.py)."""
+    """Chave de mínimo de results/etapa1.2/minimos_*.yaml por extenso, segundo a nota gravada no arquivo ("tipo_N = mínimo
+    de C3 de partida; min_vinf_tipo_N = mínimo do v∞ de chegada"; o teste confere que a nota continua essa). Tipo em
+    romano, como em tools/porkchop.py."""
     m = re.fullmatch(r"(min_vinf_)?tipo_(\d+)", chave)
     if not m:
         return chave
@@ -264,7 +276,7 @@ def orcamento(plataforma_lander_kg=None, margem_dv=None, isp_armazenavel_s=None,
     for veic, chave in (("orbitador", "orbitador_regra_iii"), ("lander", "lander")):
         x = vei[chave]
         res["veiculos"][veic] = {"injetado": Valor(float(x["injetada_kg"]), "kg", CALCULADO, origem),
-                                 "estagios": [{"nome": e["nome"], "propelente": Valor(float(e["propelente_kg"]), "kg", CALCULADO, origem),
+                                 "estagios": [{"nome": NOMES_ESTAGIO.get(e["nome"], e["nome"]), "propelente": Valor(float(e["propelente_kg"]), "kg", CALCULADO, origem),
                                                "inerte": Valor(float(e["inerte_kg"]), "kg", CALCULADO, origem)}
                                               for e in x["estagios"][1:]]}   # [0] é a saída da Terra, que não voa na forma (a)
         if veic == "lander":

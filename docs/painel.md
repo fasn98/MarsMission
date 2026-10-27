@@ -21,7 +21,9 @@ mesmo conteúdo, para links salvos). As outras ficam em `/trajetoria`, `/porkcho
 **Nomes exibidos.** As chaves internas aparecem por extenso:
 - a órbita em Marte, pela `descricao` de `config/parametros_orbitais.yaml`;
 - a missão (ex.: `2028-conjuncao` → "conjunção de 2028"), pelo id de `results/etapa1.3/missoes.yaml`;
-- os mínimos dos porkchops, pela nota de `results/etapa1.2/minimos_*.yaml`.
+- os mínimos dos porkchops, segundo a nota gravada em `results/etapa1.2/minimos_*.yaml` (o teste confere a nota);
+- os estágios do orçamento, com os mesmos nomes de `results/etapa2.5/arquitetura.yaml`.
+A altitude da órbita em Marte aparece com o rótulo da fonte do config ([F18]).
 
 **Rótulos.** Todo número exibido traz um rótulo:
 - **verificado contra dados publicados:** comparação com NASA/TM-2010-216764 e JPL 82-43;

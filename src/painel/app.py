@@ -20,16 +20,17 @@ NOTA_ROTULOS = ("Cada número traz o seu rótulo: **verificado contra dados publ
                 "valores das tabelas de referência na verificação, como **dado publicado**.")
 
 
-def metrica(rotulo: str, x: d.Valor, casas: int = 2, sufixo: str | None = None):
+def metrica(rotulo: str, x: d.Valor, casas: int = 2, sufixo: str | None = None, ajuda: str | None = None):
     """Número grande com unidade, e o rótulo e a origem sempre visíveis logo abaixo."""
     u = x.unidade if sufixo is None else sufixo
-    st.metric(rotulo, f"{br(x.valor, casas)} {u}".strip())
+    st.metric(rotulo, f"{br(x.valor, casas)} {u}".strip(), help=ajuda)
     st.caption(f"{x.rotulo} · {x.origem}")
 
 
-# Colunas de texto com largura fixa: "Origem" cabe um caminho de results/ inteiro; "Item" quebra o resto da largura.
-COLUNAS = {"Origem": st.column_config.TextColumn("Origem", width=320,
-                                                 help="Arquivo de results/ ou item de config/ de onde vem o número"),
+# Colunas de texto com largura fixa (TextColumn não quebra linha): "Origem" cabe um caminho de results/ inteiro; "Item"
+# fica larga, e um item mais longo que ela aparece cortado (o texto inteiro aparece ao clicar na célula).
+COLUNAS = {"Origem": st.column_config.TextColumn("Origem", width=320, help="De onde vem o número: arquivo de results/, "
+                                                 "item de config/ ou função de src/orbital recalculada no painel"),
            "Item": st.column_config.TextColumn("Item", width="large")}
 
 
@@ -52,8 +53,10 @@ def visao_geral():
     m, a = d.missao_referencia(), d.arquitetura()
 
     st.header(f"Missão de referência: {d.nome_missao(m['id'])}")
-    st.caption(f"Órbita em Marte: {d.nome_orbita_marte(m['orbita_marte'])}; captura {m['captura']} (ADR 0003). Datas em "
-               f"TDB, de `results/etapa1.3/missoes.yaml`, missão `{m['id']}` (rótulo: calculado).")
+    om = d.orbita_marte(m["orbita_marte"])
+    st.caption(f"Órbita em Marte: {om['nome']}, {br(om['periapse'].valor, 0)} × {br(om['apoapse'].valor, 0)} km de altitude "
+               f"({om['periapse'].rotulo}, `{om['periapse'].origem}`); captura {m['captura']} (ADR 0003). Datas em TDB, de "
+               f"`results/etapa1.3/missoes.yaml`, missão `{m['id']}` (rótulo: calculado).")
     tabela([{"Evento": e, "Data (TDB)": dt, "Rótulo": d.CALCULADO} for e, dt in m["eventos"]])
     cols = st.columns(4)
     for c, (nome, x) in zip(cols, m["duracoes"].items()):
@@ -86,8 +89,8 @@ def visao_geral():
         metrica("Lançamentos", a["lancamentos"], 0, "")
     with cols[3]:
         ra, rb = a["orbita_encontro_km"]   # altitudes de periapse e apoapse (tools/arquitetura.py)
-        metrica("Encontro: altitude do periapse", ra, 0)
-        metrica("Encontro: altitude do apoapse", rb, 0)
+        metrica("Encontro: periapse", ra, 0, ajuda="Altitude do periapse da órbita de encontro")
+        metrica("Encontro: apoapse", rb, 0, ajuda="Altitude do apoapse da órbita de encontro")
     for veic, titulo in (("orbitador", "Orbitador (regra iii)"), ("lander", "Lander (MAV, helicópteros e braço a bordo)")):
         st.subheader(titulo)
         linhas = []

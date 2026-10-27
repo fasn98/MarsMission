@@ -50,7 +50,7 @@ def test_visao_geral_mostra_nomes_legiveis_e_orbita_sem_truncar():
     at.run()
     assert any(h.value == "Missão de referência: conjunção de 2028" for h in at.header)
     rotulos = [m.label for m in at.metric]
-    assert "Encontro: altitude do periapse" in rotulos and "Encontro: altitude do apoapse" in rotulos
+    assert "Encontro: periapse" in rotulos and "Encontro: apoapse" in rotulos
     assert not any("eliptica_alta" in c.value for c in at.caption)
 
 
