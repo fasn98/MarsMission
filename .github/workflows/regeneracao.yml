@@ -62,6 +62,10 @@ jobs:
       - name: Regenerar results/ e comparar com o versionado
         run: python tools/confere_regeneracao.py ci --ci
 
+      - name: Resumo no job (inclui as diferenças abaixo do limite)
+        if: always()
+        run: cat results/conferencia/regeneracao_ci.md >> "$GITHUB_STEP_SUMMARY" || true
+
       - name: Relatório da regeneração
         if: always()
         uses: actions/upload-artifact@v4
