@@ -255,7 +255,8 @@ def orcamento(plataforma_lander_kg=None, margem_dv=None, isp_armazenavel_s=None,
     """Recalcula orbitador e lander com orbital.veiculos e as margens de injeção direta (ADR 0008) de cada lançador.
 
     Isp e fração estrutural valem para os estágios armazenáveis (MMH/MON): inserção em Marte, retorno e cruzeiro do
-    lander. O Isp é o da inserção; o cruzeiro, que tem Isp de base próprio (ADR 0011), recebe a mesma variação relativa.
+    lander. Os valores são os da inserção; o cruzeiro, que tem Isp de base próprio (ADR 0011), recebe a mesma variação
+    relativa (Isp e fração estrutural).
     A órbita de encontro fica a de base (como na sensibilidade da Etapa 2.5). Sem argumentos, reproduz
     results/etapa2.5/arquitetura.yaml."""
     d, s, lcfg = ler("config/dimensionamento.yaml"), ler("config/superficie.yaml"), ler("config/lancadores.yaml")
