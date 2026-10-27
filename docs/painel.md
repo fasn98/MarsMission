@@ -39,7 +39,7 @@ python -m streamlit run src/painel/app.py
 ## Dependências: uma só lista
 
 As dependências estão só no `pyproject.toml`:
-- obrigatórias: numpy, scipy, matplotlib, pyyaml e spiceypy;
+- obrigatórias: numpy, scipy, matplotlib, pyyaml, spiceypy e pillow (só com piso, ver o cabeçalho do `pyproject.toml`);
 - extra `painel`: streamlit, plotly e pandas;
 - extra `dev`: pytest.
 

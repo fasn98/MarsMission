@@ -38,3 +38,31 @@ ambiente de execução: ele importa o repositório do GitHub e roda, sem altera�
   versionado. Para este PR: `results/conferencia/regeneracao_painel.md`.
 - **Uso e publicação no Replit:** `docs/painel.md`, inclusive o que exige plano pago e a alternativa estática
   (GitHub Pages).
+
+## Nota (2026-10-27): pillow ≥ 13.0.0 e streamlit 1.66.1
+- **Decisão do Fabio:** exceção à regra de versões publicadas há mais de duas semanas (cabeçalho do `pyproject.toml`).
+  - O streamlit vai de 1.65.0 para 1.66.1 (upload no PyPI em 21/10/2026).
+  - Entra `pillow>=13.0.0` nas dependências obrigatórias (13.0.0: 16/10/2026).
+  - A regra volta a valer na próxima atualização de dependências.
+- **Motivo:** avisos de segurança "Critical" do Pillow, corrigidos na 13.0.0.
+  - As notas oficiais do Pillow 13.0.0 (https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html, seção Security) listam como "Critical" o CVE-2026-96639
+    (GHSA-v9pv-5gc8-w2m6) e os GHSA-5x8w-8jj5-q52h e GHSA-8g5g-8vmr-9782, estes sem CVE nas notas.
+  - Avisos do projeto no GitHub (https://github.com/python-pillow/Pillow/security/advisories/):
+    - GHSA-v9pv-5gc8-w2m6: CVE-2026-96639, CVSS 9.8, afetadas ">= 11.0.0, <= 12.3.0", corrigida "13.0.0";
+    - GHSA-5x8w-8jj5-q52h: CVE-2026-112398, afetadas "<= 12.3.0", corrigida "13.0.0".
+  - O streamlit até a 1.66.0 exige `pillow<13`; a 1.66.1 exige `pillow<14` (metadados das wheels no PyPI).
+  - Observado no workspace do Replit em 2026-10-27, sem fonte oficial do Replit: o índice de pacotes dele devolve
+    HTTP 403 para o pillow de 10.4.0 a 12.3.0 ("Blocked by Security Policy. Reason: Critical CVE"), e a instalação do
+    painel parava nele. A 13.0.0 passa.
+- **Prova:**
+  - pytest: 183 passaram e 2 foram pulados (Vallado e Curtis, já pulados antes).
+  - `results/` regenerado num worktree fixo no commit 0a46b5e (`results/conferencia/regeneracao_pillow13.md`): 62
+    versionados, 45 idênticos, 17 dentro da tolerância e 0 diferentes.
+    - O relatório não registra a versão do pillow (`tools/confere_regeneracao.py` não a lista). O `pip` do ambiente
+      mostrava pillow 13.0.0 antes da regeneração.
+    - O ambiente foi o do Replit (Python 3.11.14, Xeon Platinum 8581C), não o do `environment.yml`. Com máquina e Python
+      diferentes dos da conferência anterior (`regeneracao_painel.md`, 62 idênticos), não se separa o efeito do pillow
+      do efeito da CPU.
+  - A conferência no ambiente oficial é o workflow `regeneracao.yml` do CI (conda, Python 3.11.18), que roda porque o
+    `pyproject.toml` mudou.
+- O restante desta ADR continua vigente.

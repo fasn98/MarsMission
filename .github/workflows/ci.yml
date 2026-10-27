@@ -26,7 +26,7 @@ jobs:
       - name: Versões instaladas
         run: |
           python --version
-          python -m pip list | grep -iE "^(numpy|scipy|matplotlib|pytest|pyyaml|spiceypy|streamlit|plotly|marsmission) "
+          python -m pip list | grep -iE "^(numpy|scipy|matplotlib|pillow|pytest|pyyaml|spiceypy|streamlit|plotly|marsmission) "
 
       # Kernels SPICE (~33 MB) ficam em cache; a chave muda se config/kernels.yaml mudar.
       - name: Cache dos kernels SPICE
