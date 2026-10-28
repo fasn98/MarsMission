@@ -60,6 +60,21 @@ lander:
   braco:   # referência; o braço do análogo (Phoenix) já está na P-032
     potencia_media_w: {valor: 10, fonte: "[F93] p. 123: braço do MarsFAST, \"average power of 10 watt\" (config/coleta.yaml)"}
   mmrtg_anos_antes_do_lancamento: {valor: 1.0, premissa: P-050}   # sensibilidade: abastecimento antes do lançamento
+  # Cargas de pico (decisão do Fabio no portão da 4.1: bateria das duas opções para os picos, mesmo critério).
+  # O aquecimento (MAV e plataforma) é contínuo e já está na demanda média.
+  picos:
+    braco: {potencia_w: 10, horas_por_sol: {valor: 2.0, premissa: P-054}, fonte: "[F93] p. 123: \"average power of 10 watt\""}
+    recarga_helicopteros:
+      energia_por_voo_wh: {valor: 8.75, fonte: "[F136] p. 28: \"about 350 watts\" por \"up-to-90-second flight\" (350 × 90 / 3600, calculado aqui)"}
+      voos_por_sol: {valor: 2, premissa: P-054}   # um voo por helicóptero por sol; conservador diante da P-052
+    transmissoes_uhf:
+      potencia_w: {valor: 69, fonte: "[F137] p. 87: \"about 69 W when transmitting\""}
+      passes_por_sol: {valor: 2, fonte: "[F137] p. 120: \"~ 03:00 and ~ 15:00 LMST 15-minute-long passes per sol\""}
+      minutos_por_passe: {valor: 15, fonte: "[F137] p. 120 (mesma citação)"}
+  mmrtg_margem_categoria: {valor: painel_solar, premissa: P-054}   # mesma margem de geração das opções solares
+  pu238:
+    por_unidade_g: {valor: 3478, fonte: "[F135] p. 3: \"238Pu 3,478 g\""}
+    estado: "[F53] p. 27 do PDF (2016): \"First new US Pu-238 production since the late 1980s\", \"~ 50 gm total Pu-238 was produced\"; disponibilidade para a missão não avaliada"
   ingenuity_voo:   # referência, fora da conta do lander (P-052)
     potencia_w: {valor: 350, fonte: "[F136] p. 28: \"Power expended by the helicopter during an up-to-90-second flight is about 350 watts\""}
     duracao_s: {valor: 90, fonte: "[F136] p. 28 (mesma citação)"}

@@ -19,14 +19,19 @@ lander:
     aquecimento_mav_w: 48.03802482873204
     aquecimento_mav_wh_sol: 1184.6032808690836
     total_wh_sol: 4684.603280869083
+  picos_wh:
+    braco: 20.0
+    recarga_helicopteros: 17.5
+    transmissoes_uhf: 34.5
+  pico_total_wh: 72.0
   solar:
   - tau: 0.4
     tau_usado: 0.4
     demanda_wh_sol: 4684.603280869083
     area_m2: 18.00302440968622
     painel_kg: 94.68465650469345
-    bateria_kg: 95.64398365107712
-    total_kg: 190.3286401557706
+    bateria_kg: 98.58398365107713
+    total_kg: 193.26864015577058
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 292.73851832041004
@@ -37,8 +42,8 @@ lander:
     demanda_wh_sol: 4684.603280869083
     area_m2: 28.706367373715203
     painel_kg: 150.9775509061334
-    bateria_kg: 95.64398365107712
-    total_kg: 246.6215345572105
+    bateria_kg: 98.58398365107713
+    total_kg: 249.5615345572105
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 183.5891885018974
@@ -49,8 +54,8 @@ lander:
     demanda_wh_sol: 4684.603280869083
     area_m2: 76.67804492211424
     painel_kg: 403.27859251224453
-    bateria_kg: 95.64398365107712
-    total_kg: 498.92257616332165
+    bateria_kg: 98.58398365107713
+    total_kg: 501.86257616332165
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -61,8 +66,8 @@ lander:
     demanda_wh_sol: 1184.6032808690836
     area_m2: 19.3897024228938
     painel_kg: 101.97771618040709
-    bateria_kg: 24.185650317743796
-    total_kg: 126.16336649815088
+    bateria_kg: 27.125650317743794
+    total_kg: 129.10336649815088
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -73,8 +78,8 @@ lander:
     demanda_wh_sol: 4684.603280869083
     area_m2: 7.130105152195935
     painel_kg: 37.4998967848305
-    bateria_kg: 95.64398365107712
-    total_kg: 133.14388043590762
+    bateria_kg: 98.58398365107713
+    total_kg: 136.08388043590764
     pior_sol: 137
     pior_sol_ls: 276.48234792718114
     energia_por_m2_no_pior_sol_wh: 739.1445958345515
@@ -85,9 +90,13 @@ lander:
     carga: operação normal com céu claro; só o MAV na tempestade global
     area_m2: 19.3897024228938
     painel_kg: 101.97771618040709
-    bateria_kg: 95.64398365107712
-    total_kg: 197.6216998314842
+    bateria_kg: 98.58398365107713
+    total_kg: 200.56169983148422
   fator_recarga: 1.125
+  fracao_energia_tau_max_sobre_claro: 0.23478721227142396
+  pu238_estado: '[F53] p. 27 do PDF (2016): "First new US Pu-238 production since
+    the late 1980s", "~ 50 gm total Pu-238 was produced"; disponibilidade para a missão
+    não avaliada'
   braco_potencia_media_w: 10.0
   mmrtg:
     potencia_inicio_w: 110.0
@@ -95,11 +104,15 @@ lander:
     potencia_fim_w: 99.91521975653386
     demanda_media_w: 189.97000291443462
     unidades: 2
-    massa_kg: 90.0
+    massa_sem_margem_kg: 90.0
+    margem_crescimento: 0.275
+    bateria_kg: 2.94
+    massa_kg: 117.68999999999998
+    sobra_por_sol_wh: 243.15540839131268
+    fracao_potencia_fim: 0.9083201796048532
+    pu238_g: 6956.0
     potencia_termica_total_w: 3950.0
     energia_por_sol_fim_wh: 4927.758689260396
-    margem_crescimento: 0.0
-    bateria_kg: null
     sensibilidade_abastecimento:
       anos: 2.9548254620123204
       potencia_fim_w: 95.11928920822022

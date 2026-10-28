@@ -57,5 +57,6 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-051 | sem_limpeza_dos_paineis | False | — | config/energia.yaml (lander.limpeza) | sim |
 | P-052 | helicopteros_com_energia_propria | True | — | config/energia.yaml (lander.helicopteros_energia_propria) | sim |
 | P-053 | carga_do_orbitador_por_modo | cruzeiro: [445, 300, 0]; captura: [310, 0, 0]; encontro: [445, 500, 77]; retorno: [445, 500, 0] | W (plataforma, CCRS, outros) | config/energia.yaml (orbitador.modos) — PROPOSTA lado a lado com a P-028, que continua o valor-base | sim |
+| P-054 | cargas_de_pico_e_base_do_mmrtg | braco_horas_por_sol: 2.0; voos_de_helicoptero_por_sol: 2; margem_do_mmrtg: painel_solar | h/sol; voos/sol; categoria E1 | config/energia.yaml (lander.picos, lander.mmrtg_margem_categoria) | sim |
 
-Total: 53 de 53 premissas com status NÃO VALIDADA; 13 criadas na Fase 3.
+Total: 54 de 54 premissas com status NÃO VALIDADA; 14 criadas na Fase 3.

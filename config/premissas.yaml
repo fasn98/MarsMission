@@ -606,3 +606,15 @@ premissas:
       é publicada). Encontro: + Electra 65 W [F69] + NAC 12 W [F138]; o lidar não tem potência em fonte de agência e
       fica de fora. A carga do modo dominante substituiria os 510 W da P-028 só com aprovação do Fabio.
     status: NÃO VALIDADA
+  - id: P-054
+    nome: cargas_de_pico_e_base_do_mmrtg
+    valor: {braco_horas_por_sol: 2.0, voos_de_helicoptero_por_sol: 2, margem_do_mmrtg: painel_solar}
+    unidade: h/sol; voos/sol; categoria E1
+    uso: config/energia.yaml (lander.picos, lander.mmrtg_margem_categoria)
+    justificativa: >
+      Base igual para solar e MMRTG (decisão do Fabio no portão da 4.1): bateria para os picos com a mesma profundidade
+      de descarga, e o MMRTG com a margem de crescimento da geração solar (categoria "painel_solar"). Picos: braço de
+      10 W médios [F93] por 2 h/sol; recarga de dois helicópteros, um voo de 350 W × 90 s cada por sol [F136], embora a
+      P-052 os tenha com energia própria (conservador); dois passes UHF de 15 min a 69 W [F137]. Horas do braço e voos por
+      sol sem fonte.
+    status: NÃO VALIDADA

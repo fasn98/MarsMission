@@ -14,17 +14,28 @@ O modelo de insolação vale até τ = 6; acima disso usa-se esse limite, e o re
 
 | Cenário | τ | τ usado | Carga | Demanda (Wh/sol) | Área (m²) | Painel (kg) | Bateria (kg) | Total (kg) | Pior sol (Ls) |
 | :- | -: | -: | :- | -: | -: | -: | -: | -: | -: |
-| claro_jezero | 0,4 | 0,4 | operação normal | 4 685 | 18,0 | 95 | 96 | 190 | 58° |
-| regional_jezero | 2,0 | 2,0 | operação normal | 4 685 | 28,7 | 151 | 96 | 247 | 58° |
-| global_2018 | 8,5 | 6,0 | operação normal | 4 685 | 76,7 | 403 | 96 | 499 | 58° |
-| global_2018 | 8,5 | 6,0 | só o aquecimento do MAV (sobrevivência) | 1 185 | 19,4 | 102 | 24 | 126 | 58° |
-| claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 4 685 | 7,1 | 37 | 96 | 133 | 276° |
+| claro_jezero | 0,4 | 0,4 | operação normal | 4 685 | 18,0 | 95 | 99 | 193 | 58° |
+| regional_jezero | 2,0 | 2,0 | operação normal | 4 685 | 28,7 | 151 | 99 | 250 | 58° |
+| global_2018 | 8,5 | 6,0 | operação normal | 4 685 | 76,7 | 403 | 99 | 502 | 58° |
+| global_2018 | 8,5 | 6,0 | só o aquecimento do MAV (sobrevivência) | 1 185 | 19,4 | 102 | 27 | 129 | 58° |
+| claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 4 685 | 7,1 | 37 | 99 | 136 | 276° |
 
-Solar com sobrevivência (operação normal com céu claro e só o MAV na tempestade global; a maior área e a maior bateria): 19,4 m², painel 102 kg, bateria 96 kg, total 198 kg.
+Solar com sobrevivência (operação normal com céu claro e só o MAV na tempestade global; a maior área e a maior bateria): 19,4 m², painel 102 kg, bateria 99 kg, total 201 kg.
+
+Picos por sol (na bateria das duas opções): braco 20,0 Wh, recarga_helicopteros 17,5 Wh, transmissoes_uhf 34,5 Wh; total 72,0 Wh.
 
 ### MMRTG
 
-2 unidade(s): 99,9 W cada no fim da estada (1,95 anos depois do lançamento), para 190,0 W médios; 90 kg (massa da unidade voada, sem margem de crescimento e sem bateria de pico); 3 950 W térmicos. Sensibilidade com o abastecimento 1 ano antes do lançamento: 95,1 W cada, 2 unidade(s).
+2 unidade(s): 99,9 W cada no fim da estada (1,95 anos depois do lançamento, 90,8 % da inicial), para 190,0 W médios (sobra de 243 Wh/sol); 90 kg sem margem + margem de 27,5 % + bateria dos picos 2,9 kg = 118 kg; 3 950 W térmicos; 6 956 g de Pu-238. Sensibilidade com o abastecimento 1 ano antes do lançamento: 95,1 W cada, 2 unidade(s).
+
+### Comparação com bases iguais (margens de crescimento e bateria dos picos nas duas fontes)
+
+| Opção | Massa (kg) | Área (m²) | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |
+| :- | -: | -: | :- | :- | :- |
+| A. MMRTG × 2 | 118 | — | 6 956 g; disponibilidade não avaliada ([F53] p. 27 do PDF (2016): "First new US Pu-238 production since the late 1980s", "~ 50 gm total Pu-238 was produced") | não depende de τ | potência no fim 90,8 % da inicial |
+| B. Solar, céu claro | 193 | 18,0 | — | não atravessa: com τ = 6 a energia cai a 23,5 % da de céu claro; τ > 6 não avaliado | poeira: fator 0,324 no fim, sem limpeza |
+| C. Solar com sobrevivência | 201 | 19,4 | — | só o aquecimento do MAV até τ = 6; τ > 6 não avaliado | poeira: fator 0,324 |
+| D. Solar operando na tempestade | 502 | 76,7 | — | opera até τ = 6; τ > 6 não avaliado | poeira: fator 0,324 |
 
 ### Verificação da insolação diária contra a tabela do VL1 (22,3° N) [F56]
 

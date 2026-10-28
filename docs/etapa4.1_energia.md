@@ -49,18 +49,23 @@ O portão é a escolha da fonte de energia do lander, pelo Fabio.
   - aquecimento do MAV: 48,0 W, ou 1.185 Wh/sol.
 - **Poeira acumulada:** no fim da estada, o fator é 0,324 (sem limpeza).
 
+Picos por sol, colocados na bateria das duas opções pelo mesmo critério (P-054), somando 72,0 Wh:
+- braço: 20,0 Wh;
+- recarga dos helicópteros: 17,5 Wh;
+- transmissões UHF: 34,5 Wh.
+
 | Fonte | Cenário | Área (m²) | Massa (kg) |
 | :- | :- | -: | -: |
-| Solar | Céu claro em Jezero, τ = 0,4 [F133] | 18,0 | 190 |
-| Solar | Tempestade regional de Jezero, τ = 2 [F133] | 28,7 | 247 |
-| Solar | Tempestade global de 2018, τ = 8,5 [F134], calculada com τ = 6 (limite do modelo; otimista) | 76,7 | 499 |
-| Solar | Global, só o aquecimento do MAV (o caso que dimensiona a área na sobrevivência) | 19,4 | 126 |
-| Solar | **Com sobrevivência:** operação normal com céu claro e só o MAV na tempestade global (maior área e maior bateria) | 19,4 | **198** |
-| Solar | Céu claro, sem poeira acumulada (sensibilidade) | 7,1 | 133 |
-| **MMRTG** | 2 unidades; 99,9 W cada no fim da estada, para 190,0 W médios. Com abastecimento um ano antes do lançamento: 95,1 W cada, ainda 2 unidades | — | **90** (sem margem e sem bateria) |
+| Solar | Céu claro em Jezero, τ = 0,4 [F133] | 18,0 | 193 |
+| Solar | Tempestade regional de Jezero, τ = 2 [F133] | 28,7 | 250 |
+| Solar | Tempestade global de 2018, τ = 8,5 [F134], calculada com τ = 6 (limite do modelo; otimista) | 76,7 | 502 |
+| Solar | Global, só o aquecimento do MAV (o caso que dimensiona a área na sobrevivência) | 19,4 | 129 |
+| Solar | **Com sobrevivência:** operação normal com céu claro e só o MAV na tempestade global (maior área e maior bateria) | 19,4 | **201** |
+| Solar | Céu claro, sem poeira acumulada (sensibilidade) | 7,1 | 136 |
+| **MMRTG** | 2 unidades: 90 kg + margem de 27,5 % + bateria dos picos de 2,9 kg. No fim da estada, 99,9 W cada (90,8 % da inicial), para 190,0 W médios, com sobra de 243 Wh/sol. Com abastecimento um ano antes do lançamento: 95,1 W cada, ainda 2 unidades | — | **118** |
 
-As linhas solares levam margem de crescimento E1 e bateria; a do MMRTG não leva nenhuma das duas. As bases são
-diferentes.
+As bases são iguais: as duas fontes levam margem de crescimento e bateria dos picos, com profundidade de descarga de
+30 %. O MMRTG usa a margem da geração solar (categoria "painel_solar", P-054).
 
 Leitura:
 - **A área solar fica muito além da dos landers que voaram.** Mesmo com céu claro, são 18,0 m², contra 5,14 m² do
@@ -117,16 +122,24 @@ As margens são de injeção direta, na pior janela, com a órbita de encontro f
 ## 5. Para decidir no portão (Fabio)
 1. **Fonte de energia do lander:**
 
-| Opção | Massa | Prós | Contras |
-| :- | -: | :- | :- |
-| **A. MMRTG × 2** | 90 kg (sem margem e sem bateria) | Energia constante, sem poeira nem tempestade; 3.950 W térmicos que podem aquecer o MAV | Pu-238 e processo de autorização do lançamento (NSPM-20 [F128]); disponibilidade de unidades não conferida |
-| **B. Solar, céu claro** | 190 kg, 18,0 m² | Sem material nuclear | 18,0 m² contra 5,14 m² do InSight; não atravessa uma tempestade |
-| **C. Solar com sobrevivência** | 198 kg, 19,4 m² | Sem material nuclear; o MAV atravessa a tempestade global (até τ = 6) | Na tempestade, só o aquecimento do MAV (a plataforma desliga, e os aquecedores dela não foram contados); risco de perder o MAV se τ passar de 6 |
-| **D. Solar operando na tempestade global** | 499 kg, 76,7 m² | Sem material nuclear; opera na tempestade | 76,7 m² contra 5,14 m² do InSight; ainda otimista (τ limitado a 6) |
+Comparação com bases iguais (`results/etapa4.1/energia.md`):
+
+| Opção | Massa | Área | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |
+| :- | -: | -: | :- | :- | :- |
+| **A. MMRTG × 2** | 118 kg | — | 6.956 g; **disponibilidade não avaliada**. Em 2016, a produção nos EUA tinha sido retomada, com cerca de 50 g [F53] | não depende de τ | potência no fim: 90,8 % da inicial |
+| **B. Solar, céu claro** | 193 kg | 18,0 m² | — | não atravessa: com τ = 6 a energia cai a 23,5 % da de céu claro; τ > 6 não avaliado | poeira: fator 0,324 no fim, sem limpeza |
+| **C. Solar com sobrevivência** | 201 kg | 19,4 m² | — | só o aquecimento do MAV até τ = 6 (os aquecedores do lander não foram contados); τ > 6 não avaliado | poeira: fator 0,324 |
+| **D. Solar operando na tempestade** | 502 kg | 76,7 m² | — | opera até τ = 6; τ > 6 não avaliado (o pico de 2018 foi 8,5 [F134]) | poeira: fator 0,324 |
+
+Outros pontos:
+- **MMRTG:** fornece 3.950 W térmicos, que podem aquecer o MAV (não modelado). O lançamento depende do processo do
+  NSPM-20 [F128].
+- **Solar:** sem material nuclear. As áreas se comparam com os 5,14 m² do InSight [F131] e os 4,2 m² do Phoenix [F40].
 
 2. **Carga do orbitador:** adotar a proposta por modo (P-053) no lugar dos 510 W da P-028? Isso muda o valor-base de uma
    premissa: o orbitador injetado passa de 7.205 para 7.882 kg, e a margem do Vulcan VC6 cai de +15 para +5 %.
 3. **Premissas novas** (NÃO VALIDADAS):
+   - **P-054:** cargas de pico e margem do MMRTG;
    - **P-050:** modelo solar (albedo 0,1, data de calibração, painel horizontal, τ constante);
    - **P-051:** sem limpeza;
    - **P-052:** helicópteros com energia própria;
@@ -140,7 +153,7 @@ As margens são de injeção direta, na pior janela, com a órbita de encontro f
 - **Limite do modelo:** τ acima de 6 fica fora do ajuste de Appelbaum, e o pico de 2018 foi 8,5.
 - **Painel:** horizontal; inclinação e rastreamento não foram estudados.
 - **Calor do MMRTG:** não foi modelado o uso dele para o MAV.
-- **MMRTG:** sem bateria de pico e sem margem de crescimento; a demanda é a média por sol.
+- **MMRTG:** a bateria cobre só os picos (P-054). A sobra de 243 Wh/sol recarrega essa bateria.
 - **Orbitador:** o eclipse é o pior caso geométrico (Sol no plano da órbita), e a carga do CCRS por fase não é publicada
   (P-053).
 - **Plataforma do lander:** a energia ainda é um análogo (P-032). A lista de baixo para cima fica para a Etapa 4.5.
