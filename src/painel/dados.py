@@ -415,7 +415,8 @@ def propulsao() -> dict:
             opcoes.append({"opcao": f"(c2) {nome} × {x['n_ativos']}", "orbitador": Valor(m, "kg", CALCULADO, o33),
                            "total": Valor(float(e["total_regra_iii_kg"]), "kg", CALCULADO, o33),
                            "tempo": Valor(float(e["tempo_total_dias"]), "d", CALCULADO, o33),
-                           "situacao": "cabe no tempo; " + ("algum lançador leva o orbitador" if algum_lancador(m) else "nenhum lançador leva o orbitador")})
+                           "situacao": "cabe no tempo; " + ("algum lançador leva o orbitador" if algum_lancador(m) else "nenhum lançador leva o orbitador")
+                           + " (injeção direta, pior janela)"})
     c1 = [{"opcao": f"(c1) {c['propulsor']} × {c['n_ativos']}", "descida": Valor(float(c["tempo_total_dias"]), "d", CALCULADO, o33),
            "periapse": Valor(float(c["rp_final_alt_km"]), "km", CALCULADO, o33),
            "situacao": ("só a descida passa da menor estada" if float(c["tempo_total_dias"]) > estada_min else "descida cabe na menor estada")
