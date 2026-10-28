@@ -53,5 +53,9 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.
 | P-047 | operacao_propulsao_eletrica | reservas: 1; desligado_no_eclipse: True; alimentacao_xips_kg: 11.4 | propulsores; kg | config/eletrica.yaml (orbital.hibrido, tools/orbitador_eletrico.py, Etapa 3.3) |
 | P-048 | perdas_quimicas_do_hibrido | captura_marte: Etapa 3.1; saida_marte: Etapa 3.1 | km/s | tools/orbitador_eletrico.py (Etapa 3.3) |
 | P-049 | varredura_orbitador_eletrico | encontro_alt_km: [300, 20000, 40]; captura_alt_km: [1000, 40000, 40]; n_ativos_max: 12; c1_meio_arco_graus: 30; n_ativos_ordem_de_grandeza: [1, 4, 12]; c1_folga_apoapse: 0.01; demonstracao_tangencial_empuxo_n: 1.0; convergencia_massas_kg: 1e-09; arredondamento: {'voltas': 0.1, 'excentricidade': 0.0001, 'altitude_km': 0.1} | km; propulsores | config/eletrica.yaml (tools/orbitador_eletrico.py, Etapa 3.3) |
+| P-050 | modelo_energia_solar_lander | albedo: 0.1; data_primeiro_sol_insight: 2018-11-27T12:00:00; painel: horizontal; tau_constante_na_estada: True | adimensional; data TDB | config/energia.yaml (orbital.energia, tools/energia.py, Etapa 4.1) |
+| P-051 | sem_limpeza_dos_paineis | False | — | config/energia.yaml (lander.limpeza) |
+| P-052 | helicopteros_com_energia_propria | True | — | config/energia.yaml (lander.helicopteros_energia_propria) |
+| P-053 | carga_do_orbitador_por_modo | cruzeiro: [445, 300, 0]; captura: [310, 0, 0]; encontro: [445, 500, 77]; retorno: [445, 500, 0] | W (plataforma, CCRS, outros) | config/energia.yaml (orbitador.modos) — PROPOSTA lado a lado com a P-028, que continua o valor-base |
 
-Total: 49 de 49 premissas com status NÃO VALIDADA.
+Total: 53 de 53 premissas com status NÃO VALIDADA.

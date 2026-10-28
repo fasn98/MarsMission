@@ -561,3 +561,45 @@ premissas:
       arredondamento dos campos sensíveis ao ruído entre CPUs (P-039). Escolhas do método, sem fonte.
     status: NÃO VALIDADA
 
+  - id: P-050
+    nome: modelo_energia_solar_lander
+    valor: {albedo: 0.1, data_primeiro_sol_insight: "2018-11-27T12:00:00", painel: horizontal, tau_constante_na_estada: true}
+    unidade: adimensional; data TDB
+    uso: config/energia.yaml (orbital.energia, tools/energia.py, Etapa 4.1)
+    justificativa: >
+      Insolação de Appelbaum & Landis [F130] com albedo 0,1, o das tabelas da fonte e da verificação contra o VL1 [F56]
+      (a média de Marte é 0,27 [F130]; albedo maior aumenta a insolação). O 1º sol do InSight é tomado como 27/11/2018,
+      o dia seguinte ao pouso [F132]. O painel do lander é horizontal, como o do InSight usado na calibração. Cada cenário
+      de τ é constante durante a estada inteira, como envoltória; as tempestades reais duram semanas a meses [F134].
+    status: NÃO VALIDADA
+  - id: P-051
+    nome: sem_limpeza_dos_paineis
+    valor: false
+    unidade: —
+    uso: config/energia.yaml (lander.limpeza)
+    justificativa: >
+      A poeira acumulada nos painéis não é removida durante a estada (0,28 %/sol [F131]). O InSight não teve grandes
+      eventos de limpeza; o Spirit teve, uma vez a cada algumas centenas de sóis [F131]. A sensibilidade sem poeira
+      acumulada aparece no resultado.
+    status: NÃO VALIDADA
+  - id: P-052
+    nome: helicopteros_com_energia_propria
+    valor: true
+    unidade: —
+    uso: config/energia.yaml (lander.helicopteros_energia_propria)
+    justificativa: >
+      Os helicópteros de recuperação têm painel e bateria próprios, como o Ingenuity [F136] e o helicóptero de
+      recuperação do MSR (painel maior, sem número publicado [F98]); o lander não os recarrega. A energia de um voo do
+      Ingenuity (350 W por até 90 s [F136]) fica como referência.
+    status: NÃO VALIDADA
+  - id: P-053
+    nome: carga_do_orbitador_por_modo
+    valor: {cruzeiro: [445, 300, 0], captura: [310, 0, 0], encontro: [445, 500, 77], retorno: [445, 500, 0]}
+    unidade: W (plataforma, CCRS, outros)
+    uso: config/energia.yaml (orbitador.modos) — PROPOSTA lado a lado com a P-028, que continua o valor-base
+    justificativa: >
+      Plataforma pelos modos do Mars Express [F68] (comunicação 445 W; manobra 310 W na captura). CCRS: "typically
+      consuming 300 W to 500 W" [F23]; 300 W no cruzeiro de ida e 500 W no encontro e no retorno (a divisão por fase não
+      é publicada). Encontro: + Electra 65 W [F69] + NAC 12 W [F138]; o lidar não tem potência em fonte de agência e
+      fica de fora. A carga do modo dominante substituiria os 510 W da P-028 só com aprovação do Fabio.
+    status: NÃO VALIDADA

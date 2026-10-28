@@ -1,0 +1,82 @@
+# Etapa 4.1: energia do orbitador e do lander (orbital.energia, tools/energia.py).
+geometria:
+  constante_solar_1ua_w_m2: {valor: 1371, fonte: "[F130] Appelbaum & Landis, NASA TM-105216, p. 11: \"S is the solar constant at the mean Sun-Earth distance of 1 AU, i.e., S = 1371 W/m2\""}
+  # Duração do sol: config/plataformas.yaml (lander.energia.duracao_sol_h, [F47]).
+
+lander:
+  # Latitude do sítio: config/superficie.yaml (sitio_e_encontro.latitude_sitio_graus, Jezero, [F34]).
+  calibracao_insight:
+    # 1º sol do InSight, painel limpo (Lorenz et al. 2020 [F131]).
+    energia_wh: {valor: 4600, fonte: "[F131] seção 4: \"The energy output of the first InSight sol, some 4.6 kWh\""}
+    area_m2: {valor: 5.14, fonte: "[F131] \"with an active area of some 5.14 m2\""}
+    tau: {valor: 0.7, fonte: "[F131] seção 3: \"The initial value was around 0.7\""}
+    latitude_graus: {valor: 4.5, fonte: "[F132] p. 13 e p. 54: \"about 4.5 degrees north latitude\""}
+    data_tdb: {valor: "2018-11-27T12:00:00", premissa: P-050}   # 1º sol depois do pouso de 26/11/2018 19:47 UTC [F132]
+  # Irradiância global horizontal: Appelbaum & Landis [F130], Eq. (19) G_h = G_ob cos z f(z,τ,al)/(1 − al), com f pela
+  # Eq. (20), p. 14: f = [Σ_i Σ_j Σ_k p(i,j,k) τ^i (z/100)^j al^k] (1 − al), z em graus; ajuste às Tabs. III e IV,
+  # "The mean error is about 0.7 percent ... The maximum error is about 7 percent". Coeficientes da Tab. V, p. 29
+  # (imagem conferida). Linhas: j = 0..5; colunas: i = 0..5.
+  fluxo_liquido:
+    fonte: "[F130] p. 14, Eq. (19) e (20); p. 29, Tab. V (imagem conferida)"
+    k0:
+      - [1.002800, -0.228681, 0.019613, 0.000231, -0.000130, 0.000003]
+      - [-0.450073, 1.335955, -1.131691, 0.402126, -0.063967, 0.003758]
+      - [5.566705, -16.912405, 13.739701, -4.756079, 0.743740, -0.043159]
+      - [-22.471579, 64.909973, -52.509470, 17.997548, -2.786548, 0.160340]
+      - [36.334497, -101.800319, 79.895539, -26.762885, 4.074117, -0.231476]
+      - [-20.420490, 53.207148, -39.949537, 12.977108, -1.931169, 0.107837]
+    k1:
+      - [0.009814, 0.226139, -0.117733, 0.030579, -0.004090, 0.000218]
+      - [-0.156701, 0.396821, -0.313648, 0.099227, -0.013508, 0.000651]
+      - [1.361122, -3.758111, 3.007907, -0.987457, 0.141693, -0.007320]
+      - [-4.365924, 12.539251, -10.394165, 3.486452, -0.513123, 0.027401]
+      - [5.991693, -17.498138, 14.291370, -4.765323, 0.703675, -0.037960]
+      - [-2.915099, 8.275686, -6.593125, 2.173999, -0.320308, 0.017335]
+    tau_max: {valor: 6.0, fonte: "[F130] Tabs. III e IV: τ de 0,10 a 6,00 (limite do ajuste)"}
+    z_max_graus: {valor: 85, fonte: "[F130] Tabs. III(b) e IV(b): z até 85°"}
+    albedo: {valor: 0.1, premissa: P-050}   # o das tabelas de [F56] e [F130]; a média de Marte é 0,27 ([F130] p. 14)
+  perda_poeira_por_sol: {valor: 0.0028, fonte: "[F131] seção 3: \"a drop in peak output of 0.28%/sol, as observed on the Sojourner solar arrays (Landis, 1996)\""}
+  limpeza: {valor: false, premissa: P-051}   # sem eventos de limpeza (o InSight não teve; o Spirit teve) [F131]
+  cenarios_tau:
+    claro_jezero: {valor: 0.4, fonte: "[F133] Lemmon et al. 2022, seção Optical Depth: \"In the next sols, visible optical depths were near 0.4\" (Jezero)"}
+    regional_jezero: {valor: 2.0, fonte: "[F133] resumo: \"Peak visible optical depth was ∼2\" (Jezero, jan./2022)"}
+    global_2018: {valor: 8.5, fonte: "[F134] Guzewich et al. 2019, p. 77: \"increased from prestorm values near 0.6 to a peak of 8.5 over just 12 sols\" (Gale)"}
+  conferencia_vl1:
+    # Insolação diária global numa superfície horizontal no VL1 (22,3° N), Whr/m²-dia em horas de Marte [F56, Tab. IV].
+    latitude_graus: {valor: 22.3, fonte: "[F56] Tab. IV, VL1"}
+    pontos:
+      - {ls: 69, tau: 0.65, hh: 3340, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 120, tau: 0.40, hh: 3860, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 153, tau: 0.50, hh: 3882, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 249, tau: 1.40, hh: 1900, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 299, tau: 3.25, hh: 1024, fonte: "[F56] p. 18, Tab. IV"}
+  painel_kg_m2:
+    # 330 W/m² ÷ 80 W/kg (calculado aqui): as duas densidades do mesmo documento [F55], para painel de espaçonave.
+    w_m2: {valor: 330, fonte: "[F55] p. 26: \"Areal power density is typically ~330 W/m2\""}
+    w_kg: {valor: 80, fonte: "[F55] p. 26: \"~80 W/kg\""}
+  helicopteros_energia_propria: {valor: true, premissa: P-052}
+  ingenuity_voo:   # referência, fora da conta do lander (P-052)
+    potencia_w: {valor: 350, fonte: "[F136] p. 28: \"Power expended by the helicopter during an up-to-90-second flight is about 350 watts\""}
+    duracao_s: {valor: 90, fonte: "[F136] p. 28 (mesma citação)"}
+  uhf_electra_lite:   # referência; o consumo de comunicação já está no análogo da P-032 (Phoenix)
+    transmitindo_w: {valor: 69, fonte: "[F137] p. 87: \"The ELTs each draw about 21 watts in standby mode and about 69 W when transmitting\""}
+    espera_w: {valor: 21, fonte: "[F137] p. 87 (mesma citação)"}
+  mmrtg:
+    # Potência e massa: config/isru.yaml (energia.mmrtg, [F52], [F53]).
+    potencia_termica_w: {valor: 1975, fonte: "[F135] p. 3, \"MMRTG Properties\": \"Thermal Power 1,975 W\""}
+    massa_alternativa_kg: {valor: 43.6, fonte: "[F135] p. 3: \"MMRTG Mass 43.6 kg\" (a [F52] dá 45 kg; usa-se 45)"}
+
+orbitador:
+  # Proposta de carga por modo (P-053), lado a lado com a carga atual de 510 W (P-028, inalterada).
+  modos:
+    cruzeiro: {plataforma_w: 445, ccrs_w: 300, outros_w: 0}
+    captura: {plataforma_w: 310, ccrs_w: 0, outros_w: 0}
+    encontro: {plataforma_w: 445, ccrs_w: 500, outros_w: 77}
+    retorno: {plataforma_w: 445, ccrs_w: 500, outros_w: 0}
+  fontes_modos:
+    plataforma: "[F68] Mars Express, potência média típica da plataforma: observação 270 W, manobra 310 W, comunicação 445 W"
+    ccrs: "[F23] Sarli et al. 2024, §4.1.2: \"with the payload typically consuming 300 W to 500 W\""
+    electra: "[F69] 65 W, full duplex, fim de vida"
+    nac: "[F138] Kanani et al. 2023, Tab. 2: \"Power consumption <5W (standby), <12W (imaging, TgC)\""
+  # outros_w no encontro = Electra 65 W [F69] + NAC 12 W [F138]; o lidar não tem potência em fonte de agência.
+  profundidade_descarga_mro: {valor: 0.40, fonte: "[F139] JPL, MRO Electrical Power: \"only about 40 percent of the battery capacity is ever planned to be used\""}

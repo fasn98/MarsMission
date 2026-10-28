@@ -1,0 +1,183 @@
+gerado_por: tools/energia.py
+lander:
+  estada:
+  - '2029-09-20'
+  - '2030-11-08'
+  ls_inicio: 189.74082675506008
+  ls_fim: 57.90768368119582
+  latitude_graus: 18.85
+  eficiencia_calibrada: 0.24705785086416276
+  insolacao_superficie_insight_wh: 3622.3970665611496
+  ls_insight: 296.0672480092326
+  insolacao_topo_min_wh: 3626.9632744637056
+  insolacao_topo_max_wh: 4671.5916710002275
+  fator_poeira_fim: 0.3239458885586218
+  albedo: 0.1
+  tau_max_modelo: 6.0
+  demanda:
+    plataforma_wh_sol: 3500.0
+    aquecimento_mav_w: 48.03802482873204
+    aquecimento_mav_wh_sol: 1184.6032808690836
+    total_wh_sol: 4684.603280869083
+  solar:
+  - tau: 0.4
+    tau_usado: 0.4
+    demanda_wh_sol: 4684.603280869083
+    area_m2: 16.00268836416553
+    painel_kg: 84.16413911528308
+    bateria_kg: 95.64398365107712
+    total_kg: 179.8081227663602
+    pior_sol: 402
+    pior_sol_ls: 57.90768368119582
+    energia_por_m2_no_pior_sol_wh: 292.73851832041004
+    cenario: claro_jezero
+    carga: operação normal
+  - tau: 2.0
+    tau_usado: 2.0
+    demanda_wh_sol: 4684.603280869083
+    area_m2: 25.51677099885796
+    painel_kg: 134.2022674721186
+    bateria_kg: 95.64398365107712
+    total_kg: 229.8462511231957
+    pior_sol: 402
+    pior_sol_ls: 57.90768368119582
+    energia_por_m2_no_pior_sol_wh: 183.5891885018974
+    cenario: regional_jezero
+    carga: operação normal
+  - tau: 8.5
+    tau_usado: 6.0
+    demanda_wh_sol: 4684.603280869083
+    area_m2: 68.15826215299045
+    painel_kg: 358.46986001088413
+    bateria_kg: 95.64398365107712
+    total_kg: 454.11384366196125
+    pior_sol: 402
+    pior_sol_ls: 57.90768368119582
+    energia_por_m2_no_pior_sol_wh: 68.73126064091625
+    cenario: global_2018
+    carga: operação normal
+  - tau: 8.5
+    tau_usado: 6.0
+    demanda_wh_sol: 1184.6032808690836
+    area_m2: 17.235291042572268
+    painel_kg: 90.64685882702851
+    bateria_kg: 24.185650317743796
+    total_kg: 114.8325091447723
+    pior_sol: 402
+    pior_sol_ls: 57.90768368119582
+    energia_por_m2_no_pior_sol_wh: 68.73126064091625
+    cenario: global_2018
+    carga: só o aquecimento do MAV (sobrevivência)
+  - tau: 0.4
+    tau_usado: 0.4
+    demanda_wh_sol: 4684.603280869083
+    area_m2: 6.3378712463963875
+    painel_kg: 33.333241586515996
+    bateria_kg: 95.64398365107712
+    total_kg: 128.97722523759313
+    pior_sol: 137
+    pior_sol_ls: 276.48234792718114
+    energia_por_m2_no_pior_sol_wh: 739.1445958345515
+    cenario: claro_jezero
+    carga: operação normal, sem poeira acumulada (sensibilidade)
+  mmrtg:
+    potencia_inicio_w: 110.0
+    anos_do_lancamento_ao_fim: 1.9548254620123204
+    potencia_fim_w: 99.91521975653386
+    demanda_media_w: 189.97000291443462
+    unidades: 2
+    massa_kg: 90.0
+    potencia_termica_total_w: 3950.0
+    energia_por_sol_fim_wh: 4927.758689260396
+  verificacao_vl1:
+    pontos:
+    - ls: 69
+      tau: 0.65
+      hh_publicado_wh: 3430.4583333333335
+      hh_calculado_wh: 3443.069501189045
+      diferenca_relativa: 0.003676234086031643
+    - ls: 120
+      tau: 0.4
+      hh_publicado_wh: 3964.5416666666665
+      hh_calculado_wh: 3959.6749409825125
+      diferenca_relativa: -0.001227563257834528
+    - ls: 153
+      tau: 0.5
+      hh_publicado_wh: 3987.1374999999994
+      hh_calculado_wh: 3976.126096028991
+      diferenca_relativa: -0.0027617316862055424
+    - ls: 249
+      tau: 1.4
+      hh_publicado_wh: 1951.4583333333333
+      hh_calculado_wh: 1930.5087097022201
+      diferenca_relativa: -0.010735368146615033
+    - ls: 299
+      tau: 3.25
+      hh_publicado_wh: 1051.7333333333333
+      hh_calculado_wh: 1070.3015586826525
+      diferenca_relativa: 0.01765487957909403
+    maior_diferenca_relativa: 0.01765487957909403
+orbitador:
+  distancia_max_ua_por_fase:
+    ida: 1.5067091232649392
+    marte: 1.6660668024526228
+    volta: 1.6647324995053354
+  afelio_marte_ua: 1.6659692411955
+  eclipse_max_h:
+    encontro: 3.23508208906129
+    captura_1sol: 4.194924549159836
+  modos:
+  - modo: cruzeiro
+    carga_w: 745
+    distancia_max_ua: 1.5067091232649392
+    eclipse_h: 0.0
+    painel_w: 745.0
+    painel_kg_sem_margem: 27.31392804726586
+    bateria_wh: 0.0
+  - modo: captura
+    carga_w: 310
+    distancia_max_ua: 1.6660668024526228
+    eclipse_h: 4.194924549159836
+    painel_w: 389.6440841420047
+    painel_kg_sem_margem: 17.467146423982356
+    bateria_wh: 1300.426610239549
+  - modo: encontro
+    carga_w: 1022
+    distancia_max_ua: 1.6660668024526228
+    eclipse_h: 3.23508208906129
+    painel_w: 1319.3090909090909
+    painel_kg_sem_margem: 59.142602203609
+    bateria_wh: 3306.2538950206385
+  - modo: retorno
+    carga_w: 945
+    distancia_max_ua: 1.6660668024526228
+    eclipse_h: 3.23508208906129
+    painel_w: 1219.909090909091
+    painel_kg_sem_margem: 54.68665272251518
+    bateria_wh: 3057.1525741629193
+  modo_dominante: encontro
+  atual:
+    carga_w: 510.0
+    plataforma_kg: 496.54291603718724
+    painel_w_afelio: 658.3636363636364
+    bateria_wh: 5499.639551404193
+    orbitador_injetado_kg: 7205.286348006781
+    leo_kg: 21872.24564705795
+  proposta:
+    carga_w: 1022
+    plataforma_kg: 609.7644721991851
+    painel_w_afelio: 1319.3090909090909
+    bateria_wh: 11020.846316735462
+    orbitador_injetado_kg: 7882.499786725008
+    leo_kg: 23927.98333349027
+  margens_escolhidos:
+    Falcon Heavy (descartável):
+      atual: 0.5577806776374681
+      proposta: 0.4239462294274814
+    Vulcan VC6:
+      atual: 0.15090208235846192
+      proposta: 0.0520240134830845
+  bateria_dod_mro_wh:
+    profundidade_descarga: 0.4
+    atual: 4124.729663553145
+    proposta: 8265.634737551596
