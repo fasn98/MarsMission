@@ -279,3 +279,8 @@ O apoapse não muda (24.992 km). Fonte: `results/etapa2.3/plataformas.yaml`.
 - A linha "Antes (P-016 = P-017 = 850 kg)" usa as plataformas de 850 kg com essa propulsão nova (35.630 / 23.799 kg).
   Ela não reproduz mais os 31.233 / 21.298 kg da Etapa 2.2; a frase da §6 sobre isso vale para a propulsão da época.
 - Os números vigentes estão na errata de 2026-10-27 de `docs/fase2_relatorio.md`.
+
+## Nota (2026-10-28): ε do MAV pressurizado (ADR 0007)
+Com ε = 0,230 no MAV, a linha "Antes (P-016 = P-017 = 850 kg)" de `results/etapa2.3/plataformas.md` passa a dar
+35.412 / 23.580 kg (a nota de 2026-10-27 citava 35.630 / 23.799 kg). Os números vigentes estão na errata de 2026-10-28
+de `docs/fase2_relatorio.md` e em `results/`.

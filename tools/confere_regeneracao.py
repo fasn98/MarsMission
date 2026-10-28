@@ -4,7 +4,7 @@ Serve para provar que uma mudança de ambiente (ex.: conda-forge → wheels do P
 de física não altera nenhum resultado. A ordem e as plataformas seguem a história do estudo:
   1. Fase 1 (Etapas 1.1 a 1.3) e lista de premissas, com o config atual;
   2. Etapas 1.4, 2.1 e 2.2 com as plataformas da época (P-016 = P-017 = 850 kg, histórico em config/plataformas.yaml,
-     "antes_etapa_2_3") e a propulsão da época (Isp de 321 e 343 s, P-015; config/motores.yaml, "antes_etapa_3_1"),
+     "antes_etapa_2_3") e a propulsão da época (Isp de 321 e 343 s, P-015, ε do MAV 0,238; config/motores.yaml, "antes_etapa_3_1"),
      como em tools/confere_2033.py;
   3. Etapas 2.3 a 2.5 com o config atual.
 "Idêntico" significa dentro das tolerâncias declaradas (decisão do Fabio, 2026-10-27; premissas NÃO VALIDADAS):

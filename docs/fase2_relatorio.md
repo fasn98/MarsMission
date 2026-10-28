@@ -269,8 +269,10 @@ VC2 / VC4 / VC6)
 
 ## Errata (2026-10-28): fração estrutural do MAV pressurizado (ADR 0007)
 **O que muda.** O ε do MAV O4 passa de 0,238 (MAV com turbobomba) para **0,230** (MAV pressurizado), ambos de Bowles et
-al. [F46], Tab. 5. Os números da errata de 2026-10-27 que mudam são os abaixo; **os vigentes são os da coluna "Agora"**,
-de `results/etapa2.5/arquitetura.md` e `results/etapa2.3/plataformas.md`.
+al. [F46], Tab. 5. Os principais números da errata de 2026-10-27 que mudam estão abaixo. Mudam também, entre outros, toda a coluna do
+lander na sensibilidade, a coleta, as margens por janela, o empuxo/peso do MAV e a queima do cruzeiro. **Os vigentes são
+todos os de `results/`** (`results/etapa2.5/arquitetura.md`, `results/etapa2.3/plataformas.md`, `results/etapa2.5/coleta.md`,
+`results/etapa2.4/lancamento.md`, `results/etapa3.1/queima_finita.md`).
 
 | Item | Errata de 2026-10-27 | Agora |
 | :- | -: | -: |

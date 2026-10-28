@@ -137,7 +137,7 @@ escolha:
   mav_2: N2
 
 # Valores com que as etapas anteriores à 3.1 foram geradas (Isp do motor de 400 N [F28] nos estágios de Marte e no
-# cruzeiro, P-015 na captura e na saída, Isp de 343 s [F46] no MAV). Usados SÓ para regenerá-las como registro da época
+# cruzeiro, P-015 na captura e na saída, Isp de 343 s e ε de 0,238 [F46] no MAV, este desde 2026-10-28). Usados SÓ para regenerá-las como registro da época
 # (tools/confere_regeneracao.py e tools/confere_2033.py), como o antes_etapa_2_3 de config/plataformas.yaml.
 antes_etapa_3_1:
   - arquivo: config/dimensionamento.yaml
