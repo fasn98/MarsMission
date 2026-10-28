@@ -513,4 +513,17 @@ premissas:
       de 5 km/s, o MAV está perto da assíntota da equação do foguete, e um ε um pouco acima do de Bowles et al. [F46]
       faz a massa crescer muito (ADR 0007, nota de 2026-10-28). Não é estimativa do ε do MAV.
     status: NÃO VALIDADA
+  - id: P-046
+    nome: espiral_baixo_empuxo_parametros
+    valor: {rtol: 1.0e-11, atol_relativo: 1.0e-12, tolerancia_verificacao_relativa: 1.0e-4, eps_conferencia: [1.0e-2, 1.0e-3, 1.0e-4], raio_terra_ua: 1.0, arredondamento: {raio_e_excentricidade: 1.0e-6, voltas: 1.0e-3}}
+    unidade: adimensional; UA
+    uso: config/baixo_empuxo.yaml (orbital.baixo_empuxo, tools/baixo_empuxo.py, Etapa 3.2)
+    justificativa: >
+      Parâmetros do método numérico da espiral de baixo empuxo, sem valor publicado. A tolerância da verificação contra
+      Schwenzfeger [F113] (1e-4 relativo, por componente) é a precisão relevante do estudo (CLAUDE.md, P-039). A faixa
+      de ε da conferência com a solução analítica (três décadas) serve para mostrar a convergência de uma solução para
+      a outra; o ε dos casos reais fica para a Etapa 3.3.
+      A órbita da Terra é tomada como circular de raio 1 UA (aproximação). O arredondamento só protege campos que
+      dependem do instante exato de chegada ao alvo contra o ruído entre CPUs (P-039).
+    status: NÃO VALIDADA
 
