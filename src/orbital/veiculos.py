@@ -91,6 +91,24 @@ def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None, detalhe=False, mcf
         m, r, _ = dm.massa_leo(vs[var], c2, cu, dcfg["caso_base"]["carga_util"], margem, float(dcfg["caso_base"]["acrescimo_capsula"]))
         out[f"orbitador_{caso}"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": m,
                                     "estagios": [_estagio(e, detalhe) for e in r]}
+    out["lander"] = lander(rp, ra, dcfg, scfg, mcfg, plataforma_lander_kg, detalhe)
+    return out, janelas, ref
+
+
+def lander(rp, ra, dcfg=None, scfg=None, mcfg=None, plataforma_lander_kg=None, detalhe=False):
+    """Lander do caso de base com o MAV subindo até a órbita de encontro rp × ra (raios, km). Usado por `veiculos` e
+    pela comparação de propulsão do orbitador (Etapa 3.3), que muda a órbita de encontro."""
+    dcfg = ler("config/dimensionamento.yaml") if dcfg is None else dcfg
+    scfg = ler("config/superficie.yaml") if scfg is None else scfg
+    mcfg = ler("config/mav_propulsao.yaml") if mcfg is None else mcfg
+    icfg, po = ler("config/isru.yaml"), ler("config/parametros_orbitais.yaml")
+    p = parametros()
+    a_caso, _, _ = dm.casos(dcfg, p)
+    mp = ler("results/etapa2.2/mav_propulsao.yaml")
+    op_mav = mp["melhor_opcao"]
+    fonte_mav = min((x for x in mp["opcoes"] if x["opcao"] == op_mav), key=lambda x: x["total_regra_iii_kg"])["energia"]
+    R, mu = v(po["raio_marte_km"]), p.mu_marte
+    margem = v(dcfg["margem_dv"])
     v_eq = 2 * np.pi * R / v(scfg["marte"]["periodo_rotacao_s"])
     dv = sf.dv_subida(mu, R, v(scfg["subida"]["dv_100x100_km_s"]), rp, ra, v_eq,
                       v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"]), v(scfg["sitio_e_encontro"]["latitude_sitio_graus"]))
@@ -100,10 +118,10 @@ def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None, detalhe=False, mcf
     plat = v(scfg["lander"]["plataforma_superficie_kg"]) if plataforma_lander_kg is None else plataforma_lander_kg
     chegada = (pous + plat) / v(scfg["lander"]["razao_pousada_entrada"]["entrada_direta"]) + cruz
     r = lander_estagios(chegada, scfg, dcfg, p, a_caso)
-    out["lander"] = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial,
-                     "estagios": [_estagio(e, detalhe) for e in r],
-                     "massa_entrada_kg": chegada - cruz, "massa_pousada_kg": pous + plat, "mav_e_aquecimento_kg": pous,
-                     "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz}
+    out = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial,
+           "estagios": [_estagio(e, detalhe) for e in r],
+           "massa_entrada_kg": chegada - cruz, "massa_pousada_kg": pous + plat, "mav_e_aquecimento_kg": pous,
+           "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz}
     if detalhe:
-        out["lander"].update({"mav_opcao": op_mav, "mav_estagios": est_mav})
-    return out, janelas, ref
+        out.update({"mav_opcao": op_mav, "mav_estagios": est_mav, "dv_subida_mav_km_s": dv})
+    return out

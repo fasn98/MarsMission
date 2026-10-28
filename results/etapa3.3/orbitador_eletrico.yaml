@@ -1,0 +1,1334 @@
+gerado_por: tools/orbitador_eletrico.py
+quimico:
+  orbitador_injetado_kg: 7205.286348006781
+  lander_injetado_kg: 3995.874249296971
+  total_regra_iii_kg: 34002.8
+  orbita_encontro_km:
+  - 300
+  - 24991.9
+  mav_kg: 403.03047926228237
+  dv_subida_mav_km_s: 5.239585049135653
+  margens:
+    orbitador:
+      Falcon Heavy (descartável): 0.5577806776374681
+      Vulcan VC6: 0.15090208235846192
+    lander:
+      Falcon Heavy (recuperação): 0.1708129147590458
+      Falcon Heavy (descartável): 1.8089612308857772
+      Vulcan VC2: 0.08233888740891082
+      Vulcan VC4: 0.6234914062752004
+      Vulcan VC6: 1.0752852929165595
+hibrido_c2:
+  NSTAR:
+    por_n:
+    - n_ativos: 1
+      viavel: true
+      minimo_kg: 141751.44707955685
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1459.8688613286934
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.8159066489448934
+          descida: 0.13114498273216926
+          encontro: 0.15950000000000003
+          subida: 0.13114498273216926
+          saida: 2.839231236121488
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 45392.2238292338
+          insercao:
+            propelente_kg: 27833.424601445564
+            inerte_kg: 8789.50250571965
+          retorno:
+            propelente_kg: 5564.093908513348
+            inerte_kg: 1757.082286898952
+          eletrico:
+            xenonio_kg: 72.0249083256731
+            tanque_e_residuo_kg: 9.620316555422429
+            seco_kg: 211.36407987285833
+          massa_antes_descida_kg: 8769.296722068586
+          massa_antes_subida_kg: 8285.927425329353
+          massa_final_kg: 3043.2779052286514
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 45392.2238292338
+        orbitador_leo_kg: 137791.868653672
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 148769.29062991953
+        tempo_descida_dias: 175.40732802064815
+        tempo_subida_dias: 165.74258386055772
+        tempo_empuxo_dias: 252.57163875209284
+        tempo_total_dias: 363.14991188120587
+        menor_folga_dias: 50.85008811879413
+        xenonio_por_propulsor_kg: 72.0249083256731
+        vida_kg: 235.0
+        viavel: true
+        margens:
+          orbitador:
+            Falcon 9 (ASDS): null
+            Falcon Heavy (recuperação): -0.896933422023334
+            Falcon Heavy (descartável): -0.7527273417580109
+            Vulcan VC2: -0.9047217843857949
+            Vulcan VC4: -0.8570841664709975
+            Vulcan VC6: -0.817312782623147
+            Atlas V 541: null
+            Atlas V 551: null
+            Ariane 64: null
+            New Glenn: -0.8997884529847503
+            SLS Block 1 (5 m + iCPS): -0.6090343804026057
+          lander:
+            Falcon 9 (ASDS): null
+            Falcon Heavy (recuperação): 0.29372236993758927
+            Falcon Heavy (descartável): 2.1038400199337053
+            Vulcan VC2: 0.1959605269492961
+            Vulcan VC4: 0.7939220888521845
+            Vulcan VC6: 1.293144338949471
+            Atlas V 541: null
+            Atlas V 551: null
+            Ariane 64: null
+            New Glenn: 0.2578851713601331
+            SLS Block 1 (5 m + iCPS): 3.907516848615768
+      potencia_eletrica_kw: 2.3
+      empuxo_total_n: 0.093
+    - n_ativos: 2
+      viavel: true
+      minimo_kg: 158132.02591429313
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1763.887034292977
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.8079286320184584
+          descida: 0.22884010639490018
+          encontro: 0.15950000000000003
+          subida: 0.22884010639490018
+          saida: 2.8319862786958567
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 50980.166363300275
+          insercao:
+            propelente_kg: 31207.997172247648
+            inerte_kg: 9855.157001762414
+          retorno:
+            propelente_kg: 6246.075588819927
+            inerte_kg: 1972.4449227852401
+          eletrico:
+            xenonio_kg: 141.687231738415
+            tanque_e_residuo_kg: 18.925064298890376
+            seco_kg: 382.7681597457167
+          massa_antes_descida_kg: 9917.01218929021
+          massa_antes_subida_kg: 9340.885785253115
+          massa_final_kg: 3439.3493687312657
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 50980.166363300275
+        orbitador_leo_kg: 154754.53271249856
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 165731.9546887461
+        tempo_descida_dias: 170.67420006229892
+        tempo_subida_dias: 160.76959029793375
+        tempo_empuxo_dias: 248.46470579564064
+        tempo_total_dias: 353.44379036023264
+        menor_folga_dias: 60.55620963976736
+        xenonio_por_propulsor_kg: 70.8436158692075
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 4.6
+      empuxo_total_n: 0.186
+    - n_ativos: 3
+      viavel: true
+      minimo_kg: 174512.604750166
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.28124457942435216
+          encontro: 0.15950000000000003
+          subida: 0.28124457942435216
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 56661.012783795915
+          insercao:
+            propelente_kg: 34658.67067699569
+            inerte_kg: 10944.843371682848
+          retorno:
+            propelente_kg: 6937.650834448667
+            inerte_kg: 2190.8371056153687
+          eletrico:
+            xenonio_kg: 193.83670113447624
+            tanque_e_residuo_kg: 25.89063239817799
+            seco_kg: 554.1722396185748
+          massa_antes_descida_kg: 11057.498735117377
+          massa_antes_subida_kg: 10397.518276757271
+          massa_final_kg: 3836.11119953354
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 56661.012783795915
+        orbitador_leo_kg: 171999.21423516748
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 182976.63621141503
+        tempo_descida_dias: 154.817904809558
+        tempo_subida_dias: 145.5915879637117
+        tempo_empuxo_dias: 226.62720225369645
+        tempo_total_dias: 322.40949277326973
+        menor_folga_dias: 91.59050722673027
+        xenonio_por_propulsor_kg: 64.61223371149208
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 6.9
+      empuxo_total_n: 0.279
+    - n_ativos: 4
+      viavel: true
+      minimo_kg: 190893.18359404575
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.28124457942435216
+          encontro: 0.15950000000000003
+          subida: 0.28124457942435216
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 62347.243018043286
+          insercao:
+            propelente_kg: 38136.85031763064
+            inerte_kg: 12043.215889778096
+          retorno:
+            propelente_kg: 7633.980469220721
+            inerte_kg: 2410.7306744907537
+          eletrico:
+            xenonio_kg: 213.28923218441196
+            tanque_e_residuo_kg: 28.488893345049057
+            seco_kg: 725.5763194914333
+          massa_antes_descida_kg: 12167.176810634548
+          massa_antes_subida_kg: 11440.963846853838
+          massa_final_kg: 4230.007109228654
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 62347.243018043286
+        orbitador_leo_kg: 189260.2387774344
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 200237.66075368194
+        tempo_descida_dias: 127.76602103200825
+        tempo_subida_dias: 120.15185138138261
+        tempo_empuxo_dias: 187.02782423769983
+        tempo_total_dias: 269.9178724133909
+        menor_folga_dias: 144.0821275866091
+        xenonio_por_propulsor_kg: 53.32230804610299
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 9.2
+      empuxo_total_n: 0.372
+    - n_ativos: 5
+      viavel: true
+      minimo_kg: 207273.76242991985
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.28124457942435216
+          encontro: 0.15950000000000003
+          subida: 0.28124457942435216
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 68033.47325229071
+          insercao:
+            propelente_kg: 41615.02995826563
+            inerte_kg: 13141.588407873356
+          retorno:
+            propelente_kg: 8330.310103992779
+            inerte_kg: 2630.6242433661405
+          eletrico:
+            xenonio_kg: 232.7417632343495
+            tanque_e_residuo_kg: 31.08715429192037
+            seco_kg: 896.9803993642917
+          massa_antes_descida_kg: 13276.85488615173
+          massa_antes_subida_kg: 12484.409416950415
+          massa_final_kg: 4623.903018923771
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 68033.47325229071
+        orbitador_leo_kg: 206521.26332211547
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 217498.685298363
+        tempo_descida_dias: 111.53489076547844
+        tempo_subida_dias: 104.8880094319853
+        tempo_empuxo_dias: 163.26819742810196
+        tempo_total_dias: 238.42290019746375
+        menor_folga_dias: 175.57709980253625
+        xenonio_por_propulsor_kg: 46.5483526468699
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 11.5
+      empuxo_total_n: 0.46499999999999997
+    - n_ativos: 6
+      viavel: true
+      minimo_kg: 223654.34126541112
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.28124457942435216
+          encontro: 0.15950000000000003
+          subida: 0.28124457942435216
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 73719.70348653808
+          insercao:
+            propelente_kg: 45093.209598900576
+            inerte_kg: 14239.960925968602
+          retorno:
+            propelente_kg: 9026.639738764834
+            inerte_kg: 2850.5178122415264
+          eletrico:
+            xenonio_kg: 252.1942942842852
+            tanque_e_residuo_kg: 33.68541523879144
+            seco_kg: 1068.38447923715
+          massa_antes_descida_kg: 14386.532961668901
+          massa_antes_subida_kg: 13527.854987046983
+          massa_final_kg: 5017.798928618886
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 73719.70348653808
+        orbitador_leo_kg: 223782.28786458413
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 234759.70984083167
+        tempo_descida_dias: 100.71413725445846
+        tempo_subida_dias: 94.71211479905365
+        tempo_empuxo_dias: 147.4284462217033
+        tempo_total_dias: 217.42625205351212
+        menor_folga_dias: 196.57374794648788
+        xenonio_por_propulsor_kg: 42.0323823807142
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 13.8
+      empuxo_total_n: 0.558
+    - n_ativos: 7
+      viavel: true
+      minimo_kg: 240034.92010318773
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.28124457942435216
+          encontro: 0.15950000000000003
+          subida: 0.28124457942435216
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 79405.9337207855
+          insercao:
+            propelente_kg: 48571.38923953556
+            inerte_kg: 15338.33344406386
+          retorno:
+            propelente_kg: 9722.96937353689
+            inerte_kg: 3070.4113811169123
+          eletrico:
+            xenonio_kg: 271.6468253342209
+            tanque_e_residuo_kg: 36.283676185662515
+            seco_kg: 1239.7885591100082
+          massa_antes_descida_kg: 15496.211037186082
+          massa_antes_subida_kg: 14571.300557143559
+          massa_final_kg: 5411.694838314002
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 79405.9337207855
+        orbitador_leo_kg: 241043.3124070529
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 252020.73438330044
+        tempo_descida_dias: 92.98502760372999
+        tempo_subida_dias: 87.44361863267396
+        tempo_empuxo_dias: 136.11433821713285
+        tempo_total_dias: 202.42864623640398
+        menor_folga_dias: 211.57135376359602
+        xenonio_por_propulsor_kg: 38.806689333460135
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 16.1
+      empuxo_total_n: 0.651
+    - n_ativos: 8
+      viavel: true
+      minimo_kg: 256415.49894096435
+      escolha:
+        encontro_alt_km: 1216.4403991146803
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.23519174567805595
+          encontro: 0.15950000000000003
+          subida: 0.23519174567805595
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 84593.85735429854
+          insercao:
+            propelente_kg: 51744.76239114913
+            inerte_kg: 16340.451281415515
+          retorno:
+            propelente_kg: 10387.867153622854
+            inerte_kg: 3280.379101144059
+          eletrico:
+            xenonio_kg: 242.36146621610533
+            tanque_e_residuo_kg: 32.372051281100504
+            seco_kg: 1411.1926389828668
+          massa_antes_descida_kg: 16508.643681733894
+          massa_antes_subida_kg: 15546.39127343009
+          massa_final_kg: 5788.515061894005
+        plataforma_orbitador_kg: 444.5712704859788
+        orbitador_injetado_kg: 84593.85735429854
+        orbitador_leo_kg: 256791.68584138583
+        lander_injetado_kg: 3629.8781782570813
+        lander_leo_kg: 11018.796942852236
+        mav_kg: 222.7831469758408
+        dv_subida_mav_km_s: 4.505422589476876
+        total_regra_iii_kg: 267810.48278423806
+        tempo_descida_dias: 72.094711635466
+        tempo_subida_dias: 67.89696811303634
+        tempo_empuxo_dias: 106.25309943901355
+        tempo_total_dias: 161.99167974850235
+        menor_folga_dias: 252.00832025149765
+        xenonio_por_propulsor_kg: 30.295183277013166
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 18.4
+      empuxo_total_n: 0.744
+    - n_ativos: 9
+      viavel: true
+      minimo_kg: 272796.0777817924
+      escolha:
+        encontro_alt_km: 1216.4403991146803
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.23519174567805595
+          encontro: 0.15950000000000003
+          subida: 0.23519174567805595
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 90248.1992903516
+          insercao:
+            propelente_kg: 55203.43644988099
+            inerte_kg: 17432.66414206768
+          retorno:
+            propelente_kg: 11082.269624008022
+            inerte_kg: 3499.6640917920067
+          eletrico:
+            xenonio_kg: 258.5611602006138
+            tanque_e_residuo_kg: 34.53583305958273
+            seco_kg: 1582.5967188557247
+          massa_antes_descida_kg: 17612.09869840293
+          massa_antes_subida_kg: 16585.5283323241
+          massa_final_kg: 6181.3679141932935
+        plataforma_orbitador_kg: 444.5712704859788
+        orbitador_injetado_kg: 90248.1992903516
+        orbitador_leo_kg: 273955.9108071813
+        lander_injetado_kg: 3629.8781782570813
+        lander_leo_kg: 11018.796942852236
+        mav_kg: 222.7831469758408
+        dv_subida_mav_km_s: 4.505422589476876
+        total_regra_iii_kg: 284974.7077500336
+        tempo_descida_dias: 68.36764230562238
+        tempo_subida_dias: 64.38690889089804
+        tempo_empuxo_dias: 100.76014913605181
+        tempo_total_dias: 154.75455119652042
+        menor_folga_dias: 259.2454488034796
+        xenonio_por_propulsor_kg: 28.729017800068203
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 20.7
+      empuxo_total_n: 0.837
+    - n_ativos: 10
+      viavel: true
+      minimo_kg: 289176.65662624623
+      escolha:
+        encontro_alt_km: 1216.4403991146803
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.23519174567805595
+          encontro: 0.15950000000000003
+          subida: 0.23519174567805595
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 95902.54122640946
+          insercao:
+            propelente_kg: 58662.11050861579
+            inerte_kg: 18524.877002720776
+          retorno:
+            propelente_kg: 11776.672094394238
+            inerte_kg: 3718.9490824402856
+          eletrico:
+            xenonio_kg: 274.76085418514776
+            tanque_e_residuo_kg: 36.69961483806835
+            seco_kg: 1754.0007987285833
+          massa_antes_descida_kg: 18715.5537150729
+          massa_antes_subida_kg: 17624.66539121899
+          massa_final_kg: 6574.2207664929165
+        plataforma_orbitador_kg: 444.5712704859788
+        orbitador_injetado_kg: 95902.54122640946
+        orbitador_leo_kg: 291120.13576318417
+        lander_injetado_kg: 3629.8781782570813
+        lander_leo_kg: 11018.796942852236
+        mav_kg: 222.7831469758408
+        dv_subida_mav_km_s: 4.505422589476876
+        total_regra_iii_kg: 302138.93270603643
+        tempo_descida_dias: 65.38598684175076
+        tempo_subida_dias: 61.57886151319048
+        tempo_empuxo_dias: 96.36578889368725
+        tempo_total_dias: 148.96484835494124
+        menor_folga_dias: 265.03515164505876
+        xenonio_por_propulsor_kg: 27.476085418514778
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 23.0
+      empuxo_total_n: 0.9299999999999999
+    - n_ativos: 11
+      viavel: true
+      minimo_kg: 305557.2354577286
+      escolha:
+        encontro_alt_km: 1216.4403991146803
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.23519174567805595
+          encontro: 0.15950000000000003
+          subida: 0.23519174567805595
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 101556.88316246281
+          insercao:
+            propelente_kg: 62120.78456734782
+            inerte_kg: 19617.089863372996
+          retorno:
+            propelente_kg: 12471.074564779472
+            inerte_kg: 3938.2340730882543
+          eletrico:
+            xenonio_kg: 290.9605481696635
+            tanque_e_residuo_kg: 38.86339661655155
+            seco_kg: 1925.4048786014414
+          massa_antes_descida_kg: 19819.00873174199
+          massa_antes_subida_kg: 18663.802450113053
+          massa_final_kg: 6967.073618792226
+        plataforma_orbitador_kg: 444.5712704859788
+        orbitador_injetado_kg: 101556.88316246281
+        orbitador_leo_kg: 308284.36072557775
+        lander_injetado_kg: 3629.8781782570813
+        lander_leo_kg: 11018.796942852236
+        mav_kg: 222.7831469758408
+        dv_subida_mav_km_s: 4.505422589476876
+        total_regra_iii_kg: 319303.15766843
+        tempo_descida_dias: 62.94645055312573
+        tempo_subida_dias: 59.281368204154425
+        tempo_empuxo_dias: 92.77040324083939
+        tempo_total_dias: 144.22781875728015
+        menor_folga_dias: 269.77218124271985
+        xenonio_por_propulsor_kg: 26.450958924514865
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 25.3
+      empuxo_total_n: 1.023
+    - n_ativos: 12
+      viavel: true
+      minimo_kg: 321937.81429569685
+      escolha:
+        encontro_alt_km: 1216.4403991146803
+        captura_alt_km: 1938.872403313642
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.804208059356743
+          descida: 0.23519174567805595
+          encontro: 0.15950000000000003
+          subida: 0.23519174567805595
+          saida: 2.828665718366927
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 107211.22509851617
+          insercao:
+            propelente_kg: 65579.45862607987
+            inerte_kg: 20709.30272402522
+          retorno:
+            propelente_kg: 13165.47703516471
+            inerte_kg: 4157.519063736224
+          eletrico:
+            xenonio_kg: 307.16024215417565
+            tanque_e_residuo_kg: 41.027178395034255
+            seco_kg: 2096.8089584742997
+          massa_antes_descida_kg: 20922.463748411083
+          massa_antes_subida_kg: 19702.93950900712
+          massa_final_kg: 7359.926471091536
+        plataforma_orbitador_kg: 444.5712704859788
+        orbitador_injetado_kg: 107211.22509851617
+        orbitador_leo_kg: 325448.58568797144
+        lander_injetado_kg: 3629.8781782570813
+        lander_leo_kg: 11018.796942852236
+        mav_kg: 222.7831469758408
+        dv_subida_mav_km_s: 4.505422589476876
+        total_regra_iii_kg: 336467.3826308237
+        tempo_descida_dias: 60.91350364593816
+        tempo_subida_dias: 57.366790446624314
+        tempo_empuxo_dias: 89.77424853013284
+        tempo_total_dias: 140.28029409256246
+        menor_folga_dias: 273.7197059074375
+        xenonio_por_propulsor_kg: 25.596686846181303
+        vida_kg: 235.0
+        viavel: true
+      potencia_eletrica_kw: 27.6
+      empuxo_total_n: 1.116
+    n_minimo: 1
+    conferencia_descida:
+      dv_quase_circular_km_s: 0.11922271157469932
+      dv_numerico_km_s: 0.11922271134059621
+      diferenca_relativa: -1.9635781538912406e-09
+      tempo_empuxo_quase_circular_dias: 129.86493901542391
+      tempo_empuxo_numerico_dias: 129.8649387606145
+      voltas: 1159.6
+      excentricidade_final: 0.0
+  XIPS-25:
+    por_n:
+    - n_ativos: 1
+      viavel: true
+      minimo_kg: 156702.5191932699
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 1763.887034292977
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.8079286320184584
+          descida: 0.22884010639490018
+          encontro: 0.15950000000000003
+          subida: 0.22884010639490018
+          saida: 2.8319862786958567
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 50353.187671561405
+          insercao:
+            propelente_kg: 30824.186160345344
+            inerte_kg: 9733.953524319582
+          retorno:
+            propelente_kg: 6178.861902288059
+            inerte_kg: 1951.219548090966
+          eletrico:
+            xenonio_kg: 124.67002671961382
+            tanque_e_residuo_kg: 16.652088144180905
+            seco_kg: 368.5331997512446
+          massa_antes_descida_kg: 9795.04798689648
+          massa_antes_subida_kg: 9233.494800666394
+          massa_final_kg: 3401.6160578878103
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 50353.187671561405
+        orbitador_leo_kg: 152851.28677445324
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 163828.70875070078
+        tempo_descida_dias: 190.10089371217896
+        tempo_subida_dias: 179.2129333060799
+        tempo_empuxo_dias: 276.8537017910816
+        tempo_total_dias: 391.31382701825885
+        menor_folga_dias: 22.68617298174115
+        xenonio_por_propulsor_kg: 124.67002671961382
+        vida_kg: null
+        viavel: true
+        margens:
+          orbitador:
+            Falcon 9 (ASDS): null
+            Falcon Heavy (recuperação): -0.9070878847363959
+            Falcon Heavy (descartável): -0.7770894680395922
+            Vulcan VC2: -0.9141089116855928
+            Vulcan VC4: -0.8711647106315397
+            Vulcan VC6: -0.8353117360513502
+            Atlas V 541: null
+            Atlas V 551: null
+            Ariane 64: null
+            New Glenn: -0.9096616285336172
+            SLS Block 1 (5 m + iCPS): -0.6475536160678248
+          lander:
+            Falcon 9 (ASDS): null
+            Falcon Heavy (recuperação): 0.29372236993758927
+            Falcon Heavy (descartável): 2.1038400199337053
+            Vulcan VC2: 0.1959605269492961
+            Vulcan VC4: 0.7939220888521845
+            Vulcan VC6: 1.293144338949471
+            Atlas V 541: null
+            Atlas V 551: null
+            Ariane 64: null
+            New Glenn: 0.2578851713601331
+            SLS Block 1 (5 m + iCPS): 3.907516848615768
+      potencia_eletrica_kw: 4.5
+      empuxo_total_n: 0.165
+    - n_ativos: 2
+      viavel: true
+      minimo_kg: 186586.72149845609
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 60650.01895857802
+          insercao:
+            propelente_kg: 37071.927448887596
+            inerte_kg: 11706.924457543451
+          retorno:
+            propelente_kg: 7435.82878235031
+            inerte_kg: 2348.156457584308
+          eletrico:
+            xenonio_kg: 221.14588927787736
+            tanque_e_residuo_kg: 29.538301529850603
+            seco_kg: 681.3863995024891
+          massa_antes_descida_kg: 11871.167052146966
+          massa_antes_subida_kg: 11156.211865255662
+          massa_final_kg: 4124.292380518066
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 60650.01895857802
+        orbitador_leo_kg: 184108.17407013485
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 195085.5960463824
+        tempo_descida_dias: 166.75013758018127
+        tempo_subida_dias: 156.72625602288645
+        tempo_empuxo_dias: 245.58268166256707
+        tempo_total_dias: 345.4763936030677
+        menor_folga_dias: 68.52360639693228
+        xenonio_por_propulsor_kg: 110.57294463893868
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 9.0
+      empuxo_total_n: 0.33
+    - n_ativos: 3
+      viavel: true
+      minimo_kg: 216470.92379887213
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 70989.3189512702
+          insercao:
+            propelente_kg: 43391.75695237297
+            inerte_kg: 13702.660090223042
+          retorno:
+            propelente_kg: 8703.619984716628
+            inerte_kg: 2748.51157412104
+          eletrico:
+            xenonio_kg: 258.8456910364912
+            tanque_e_residuo_kg: 34.57383764403207
+            seco_kg: 994.2395992537337
+          massa_antes_descida_kg: 13894.901908674181
+          massa_antes_subida_kg: 13058.064877629637
+          massa_final_kg: 4842.536232920224
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 70989.3189512702
+        orbitador_leo_kg: 215493.97864527337
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 226471.4006215209
+        tempo_descida_dias: 130.11788954737492
+        tempo_subida_dias: 122.29608902453637
+        tempo_empuxo_dias: 191.63222718153813
+        tempo_total_dias: 274.4139785719113
+        menor_folga_dias: 139.5860214280887
+        xenonio_por_propulsor_kg: 86.28189701216372
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 13.5
+      empuxo_total_n: 0.495
+    - n_ativos: 4
+      viavel: true
+      minimo_kg: 246355.126103362
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 81328.61894396238
+          insercao:
+            propelente_kg: 49711.58645585835
+            inerte_kg: 15698.395722902636
+          retorno:
+            propelente_kg: 9971.411187082947
+            inerte_kg: 3148.866690657773
+          eletrico:
+            xenonio_kg: 296.54549279510684
+            tanque_e_residuo_kg: 39.60937375821378
+            seco_kg: 1307.0927990049781
+          massa_antes_descida_kg: 15918.636765201398
+          massa_antes_subida_kg: 14959.917890003613
+          massa_final_kg: 5560.7800853223835
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 81328.61894396238
+        orbitador_leo_kg: 246879.78322471597
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 257857.2052009635
+        tempo_descida_dias: 111.80176553097178
+        tempo_subida_dias: 105.08100552536139
+        tempo_empuxo_dias: 164.6569999410237
+        tempo_total_dias: 238.88277105633316
+        menor_folga_dias: 175.11722894366684
+        xenonio_por_propulsor_kg: 74.13637319877671
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 18.0
+      empuxo_total_n: 0.66
+    - n_ativos: 5
+      viavel: true
+      minimo_kg: 276239.32841094345
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 91667.91893665942
+          insercao:
+            propelente_kg: 56031.41595934669
+            inerte_kg: 17694.131355583166
+          retorno:
+            propelente_kg: 11239.202389450318
+            inerte_kg: 3549.2218071948373
+          eletrico:
+            xenonio_kg: 334.2452945537516
+            tanque_e_residuo_kg: 44.644909872399374
+            seco_kg: 1619.9459987562227
+          massa_antes_descida_kg: 17942.371621729562
+          massa_antes_subida_kg: 16861.770902378477
+          massa_final_kg: 6279.023937724878
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 91667.91893665942
+        orbitador_leo_kg: 278265.5878074258
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 289243.0097836734
+        tempo_descida_dias: 100.81209112113514
+        tempo_subida_dias: 94.75195542586135
+        tempo_empuxo_dias: 148.47186359672284
+        tempo_total_dias: 217.56404654699648
+        menor_folga_dias: 196.43595345300352
+        xenonio_por_propulsor_kg: 66.84905891075032
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 22.5
+      empuxo_total_n: 0.8250000000000001
+    - n_ativos: 6
+      viavel: true
+      minimo_kg: 306123.5307089008
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 102007.21892935212
+          insercao:
+            propelente_kg: 62351.24546283238
+            inerte_kg: 19689.866988262856
+          retorno:
+            propelente_kg: 12506.993591816758
+            inerte_kg: 3949.5769237316076
+          eletrico:
+            xenonio_kg: 371.9450963123709
+            tanque_e_residuo_kg: 49.68044598658157
+            seco_kg: 1932.7991985074673
+          massa_antes_descida_kg: 19966.10647825688
+          massa_antes_subida_kg: 18763.62391475255
+          massa_final_kg: 6997.2677901270745
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 102007.21892935212
+        orbitador_leo_kg: 309651.3923872368
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 320628.8143634844
+        tempo_descida_dias: 93.48564151457353
+        tempo_subida_dias: 87.86592202619101
+        tempo_empuxo_dias: 137.6817727005165
+        tempo_total_dias: 203.35156354076454
+        menor_folga_dias: 210.64843645923546
+        xenonio_por_propulsor_kg: 61.990849385395144
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 27.0
+      empuxo_total_n: 0.99
+    - n_ativos: 7
+      viavel: true
+      minimo_kg: 336007.7330282162
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 112346.51892204485
+          insercao:
+            propelente_kg: 68671.07496631809
+            inerte_kg: 21685.602620942554
+          retorno:
+            propelente_kg: 13774.784794183195
+            inerte_kg: 4349.932040268377
+          eletrico:
+            xenonio_kg: 409.64489807099017
+            tanque_e_residuo_kg: 54.71598210076377
+            seco_kg: 2245.652398258712
+          massa_antes_descida_kg: 21989.841334784203
+          massa_antes_subida_kg: 20665.476927126627
+          massa_final_kg: 7715.511642529271
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 112346.51892204485
+        orbitador_leo_kg: 341037.1969590753
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 352014.61893532285
+        tempo_descida_dias: 88.25246322417236
+        tempo_subida_dias: 82.94732674071217
+        tempo_empuxo_dias: 129.97456491751197
+        tempo_total_dias: 193.1997899648845
+        menor_folga_dias: 220.8002100351155
+        xenonio_por_propulsor_kg: 58.52069972442717
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 31.5
+      empuxo_total_n: 1.155
+    - n_ativos: 8
+      viavel: true
+      minimo_kg: 365891.935333755
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 122685.81891473754
+          insercao:
+            propelente_kg: 74990.90446980378
+            inerte_kg: 23681.338253622245
+          retorno:
+            propelente_kg: 15042.57599654963
+            inerte_kg: 4750.287156805146
+          eletrico:
+            xenonio_kg: 447.34469982960945
+            tanque_e_residuo_kg: 59.75151821494596
+            seco_kg: 2558.5055980099564
+          massa_antes_descida_kg: 24013.57619131152
+          massa_antes_subida_kg: 22567.329939500698
+          massa_final_kg: 8433.755494931467
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 122685.81891473754
+        orbitador_leo_kg: 372423.0015468588
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 383400.4235231064
+        tempo_descida_dias: 84.32757950637144
+        tempo_subida_dias: 79.25838027660305
+        tempo_empuxo_dias: 124.19415908025853
+        tempo_total_dias: 185.58595978297447
+        menor_folga_dias: 228.41404021702553
+        xenonio_por_propulsor_kg: 55.91808747870118
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 36.0
+      empuxo_total_n: 1.32
+    - n_ativos: 9
+      viavel: true
+      minimo_kg: 395776.13763031655
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 133025.1189074303
+          insercao:
+            propelente_kg: 81310.7339732895
+            inerte_kg: 25677.073886301947
+          retorno:
+            propelente_kg: 16310.367198916063
+            inerte_kg: 5150.642273341914
+          eletrico:
+            xenonio_kg: 485.04450158822874
+            tanque_e_residuo_kg: 64.78705432912815
+            seco_kg: 2871.3587977612005
+          massa_antes_descida_kg: 26037.311047838844
+          massa_antes_subida_kg: 24469.182951874776
+          massa_final_kg: 9151.999347333662
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 133025.1189074303
+        orbitador_leo_kg: 403808.8061361101
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 414786.22811235767
+        tempo_descida_dias: 81.27489217030414
+        tempo_subida_dias: 76.38919969340705
+        tempo_empuxo_dias: 119.69828787350592
+        tempo_total_dias: 179.66409186371118
+        menor_folga_dias: 234.33590813628882
+        xenonio_por_propulsor_kg: 53.893833509803194
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 40.5
+      empuxo_total_n: 1.485
+    - n_ativos: 10
+      viavel: true
+      minimo_kg: 425660.33992548083
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 143364.41890012298
+          insercao:
+            propelente_kg: 87630.56347677519
+            inerte_kg: 27672.809518981638
+          retorno:
+            propelente_kg: 17578.158401282504
+            inerte_kg: 5550.997389878686
+          eletrico:
+            xenonio_kg: 522.744303346848
+            tanque_e_residuo_kg: 69.82259044331035
+            seco_kg: 3184.2119975124456
+          massa_antes_descida_kg: 28061.045904366165
+          massa_antes_subida_kg: 26371.035964248847
+          massa_final_kg: 9870.24319973586
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 143364.41890012298
+        orbitador_leo_kg: 435194.61069630715
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 446172.0326725547
+        tempo_descida_dias: 78.83274230145017
+        tempo_subida_dias: 74.09385522685028
+        tempo_empuxo_dias: 116.10159090810377
+        tempo_total_dias: 174.92659752830045
+        menor_folga_dias: 239.07340247169955
+        xenonio_por_propulsor_kg: 52.2744303346848
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 45.0
+      empuxo_total_n: 1.6500000000000001
+    - n_ativos: 11
+      viavel: true
+      minimo_kg: 455544.5422503725
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 153703.7188928157
+          insercao:
+            propelente_kg: 93950.39298026088
+            inerte_kg: 29668.54515166133
+          retorno:
+            propelente_kg: 18845.949603648933
+            inerte_kg: 5951.352506415452
+          eletrico:
+            xenonio_kg: 560.4441051054673
+            tanque_e_residuo_kg: 74.85812655749254
+            seco_kg: 3497.0651972636897
+          massa_antes_descida_kg: 30084.780760893478
+          massa_antes_subida_kg: 28272.888976622915
+          massa_final_kg: 10588.487052138053
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 153703.7188928157
+        orbitador_leo_kg: 466580.4152971996
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 477557.8372734472
+        tempo_descida_dias: 76.83461968147884
+        tempo_subida_dias: 72.21584611784921
+        tempo_empuxo_dias: 113.15883884550202
+        tempo_total_dias: 171.05046579932804
+        menor_folga_dias: 242.94953420067196
+        xenonio_por_propulsor_kg: 50.94946410049703
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 49.5
+      empuxo_total_n: 1.8150000000000002
+    - n_ativos: 12
+      viavel: true
+      minimo_kg: 485428.7445559116
+      escolha:
+        encontro_alt_km: 1092.254755518998
+        captura_alt_km: 2131.2170922771356
+        dv_km_s:
+          correcoes_ida: 0.07150000000000001
+          captura: 2.800756163952104
+          descida: 0.3359519622328035
+          encontro: 0.15950000000000003
+          subida: 0.3359519622328035
+          saida: 2.825636436390614
+          correcoes_volta: 0.07150000000000001
+          desvio: 0.033862255981244954
+        massas:
+          injetada_kg: 164043.01888551336
+          insercao:
+            propelente_kg: 100270.22248374962
+            inerte_kg: 31664.280784341983
+          retorno:
+            propelente_kg: 20113.740806016445
+            inerte_kg: 6351.707622952561
+          eletrico:
+            xenonio_kg: 598.1439068641157
+            tanque_e_residuo_kg: 79.89366267167863
+            seco_kg: 3809.9183970149343
+          massa_antes_descida_kg: 32108.515617421774
+          massa_antes_subida_kg: 30174.741988997903
+          massa_final_kg: 11306.730904540593
+        plataforma_orbitador_kg: 445.2112219014184
+        orbitador_injetado_kg: 164043.01888551336
+        orbitador_leo_kg: 497966.21987775934
+        lander_injetado_kg: 3616.248188593734
+        lander_leo_kg: 10977.421976247544
+        mav_kg: 216.07059055707865
+        dv_subida_mav_km_s: 4.464120892806017
+        total_regra_iii_kg: 508943.6418540069
+        tempo_descida_dias: 75.16951749817161
+        tempo_subida_dias: 70.65083852701719
+        tempo_empuxo_dias: 110.70654546000394
+        tempo_total_dias: 167.8203560251888
+        menor_folga_dias: 246.1796439748112
+        xenonio_por_propulsor_kg: 49.84532557200964
+        vida_kg: null
+        viavel: true
+      potencia_eletrica_kw: 54.0
+      empuxo_total_n: 1.98
+    n_minimo: 1
+    conferencia_descida:
+      dv_quase_circular_km_s: 0.20803646035900014
+      dv_numerico_km_s: 0.20803646048660893
+      diferenca_relativa: 6.133962500132218e-10
+      tempo_empuxo_quase_circular_dias: 142.51197922344383
+      tempo_empuxo_numerico_dias: 142.51197931082675
+      voltas: 1218.3
+      excentricidade_final: 0.0
+hibrido_c1:
+  meio_arco_graus: 30.0
+  encontro_alt_km: 300.0
+  apoapse_inicial_alt_km: 33793.0
+  massa_inicial_kg: 3271.2276042199937
+  casos:
+  - propulsor: NSTAR
+    n_ativos: 1
+    dv_km_s: 1.2053140789006493
+    tempo_empuxo_dias: 481.27772215453746
+    tempo_total_dias: 10963.602706345173
+    voltas: 42520
+    rp_final_alt_km: 223.2
+    ra_final_alt_km: 303.0
+  - propulsor: NSTAR
+    n_ativos: 4
+    dv_km_s: 1.2053137353588146
+    tempo_empuxo_dias: 120.31939690741788
+    tempo_total_dias: 2740.495498040037
+    voltas: 10630
+    rp_final_alt_km: 223.2
+    ra_final_alt_km: 303.0
+  - propulsor: NSTAR
+    n_ativos: 12
+    dv_km_s: 1.205315966955128
+    tempo_empuxo_dias: 40.10653845678019
+    tempo_total_dias: 913.1814913166445
+    voltas: 3544
+    rp_final_alt_km: 223.2
+    ra_final_alt_km: 303.0
+  - propulsor: XIPS-25
+    n_ativos: 1
+    dv_km_s: 1.2053142294351609
+    tempo_empuxo_dias: 271.8422735041464
+    tempo_total_dias: 6186.648383910324
+    voltas: 24015
+    rp_final_alt_km: 223.2
+    ra_final_alt_km: 303.0
+  - propulsor: XIPS-25
+    n_ativos: 4
+    dv_km_s: 1.2053138260593024
+    tempo_empuxo_dias: 67.9605460234747
+    tempo_total_dias: 1546.27286700646
+    voltas: 6004
+    rp_final_alt_km: 223.2
+    ra_final_alt_km: 303.0
+  - propulsor: XIPS-25
+    n_ativos: 12
+    dv_km_s: 1.2053174005018
+    tempo_empuxo_dias: 22.65358136548181
+    tempo_total_dias: 515.1073631830272
+    voltas: 2002
+    rp_final_alt_km: 223.2
+    ra_final_alt_km: 303.0
+eletrico:
+  dv_heliocentrico_km_s: 5.655399301641232
+  ida_referencia_dias: 300.0
+  volta_referencia_dias: 319.0
+  casos:
+  - propulsor: NSTAR
+    n_ativos: 1
+    massa_inicial_kg: 7205.286348006781
+    tempo_empuxo_ida_dias: 4635.447176242741
+  - propulsor: NSTAR
+    n_ativos: 4
+    massa_inicial_kg: 7205.286348006781
+    tempo_empuxo_ida_dias: 1158.8617940606853
+  - propulsor: NSTAR
+    n_ativos: 12
+    massa_inicial_kg: 7205.286348006781
+    tempo_empuxo_ida_dias: 386.287264686895
+  - propulsor: XIPS-25
+    n_ativos: 1
+    massa_inicial_kg: 7205.286348006781
+    tempo_empuxo_ida_dias: 2638.269356690328
+  - propulsor: XIPS-25
+    n_ativos: 4
+    massa_inicial_kg: 7205.286348006781
+    tempo_empuxo_ida_dias: 659.567339172582
+  - propulsor: XIPS-25
+    n_ativos: 12
+    massa_inicial_kg: 7205.286348006781
+    tempo_empuxo_ida_dias: 219.85577972419395
+tempo_encontro_dias: 22.0
+janelas:
+  2028-conjuncao: 414.0
+  2031-conjuncao: 480.0
+  2033-conjuncao: 550.0
+  2035-conjuncao: 542.0

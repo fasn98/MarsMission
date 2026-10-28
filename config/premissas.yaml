@@ -526,4 +526,36 @@ premissas:
       A órbita da Terra é tomada como circular de raio 1 UA (aproximação). O arredondamento só protege campos que
       dependem do instante exato de chegada ao alvo contra o ruído entre CPUs (P-039).
     status: NÃO VALIDADA
+  - id: P-047
+    nome: operacao_propulsao_eletrica
+    valor: {reservas: 1, desligado_no_eclipse: true, alimentacao_xips_kg: 11.4}
+    unidade: propulsores; kg
+    uso: config/eletrica.yaml (orbital.hibrido, tools/orbitador_eletrico.py, Etapa 3.3)
+    justificativa: >
+      Um propulsor (com PPU) de reserva além dos ativos. O propulsor só funciona fora do eclipse (o painel dedicado não
+      carrega bateria para ele), com o eclipse no pior caso geométrico (Sol no plano da órbita, sombra cilíndrica, como em
+      orbital.plataforma). Alimentação de xenônio do XIPS-25 igual à do NSTAR por propulsor [F118], por falta de número
+      publicado. Sem fonte para nenhum dos três.
+    status: NÃO VALIDADA
+  - id: P-048
+    nome: perdas_quimicas_do_hibrido
+    valor: {captura_marte: Etapa 3.1, saida_marte: Etapa 3.1}
+    unidade: km/s
+    uso: tools/orbitador_eletrico.py (Etapa 3.3)
+    justificativa: >
+      A captura química e a saída química do orbitador híbrido usam as perdas de queima finita calculadas na Etapa 3.1
+      (results/etapa3.1/perdas_calculadas.yaml), que são das órbitas do orbitador químico. Para órbitas circulares de
+      captura o Δv é maior e a queima, mais longa, e a perda tende a ser maior. A recalcular depois da escolha.
+    status: NÃO VALIDADA
+  - id: P-049
+    nome: varredura_orbitador_eletrico
+    valor: {encontro_alt_km: [300, 20000, 40], captura_alt_km: [1000, 40000, 40], n_ativos_max: 12, c1_meio_arco_graus: 30, c1_n_ativos: [1, 4, 12], c1_folga_apoapse: 0.01}
+    unidade: km; propulsores
+    uso: config/eletrica.yaml (tools/orbitador_eletrico.py, Etapa 3.3)
+    justificativa: >
+      Faixas da varredura (pontos geométricos) da órbita circular de encontro e da órbita circular de captura, e o número
+      máximo de propulsores ativos. O mínimo de 300 km é o periapse mínimo do contêiner do MSR [F32] (ADR 0005); o resto é
+      escolha de faixa, sem fonte. Na variante c1, o meio-arco de empuxo em torno do periapse (30°), os números de propulsores
+      calculados e a parada a 1 % acima da altitude do encontro são escolhas do método, sem fonte.
+    status: NÃO VALIDADA
 
