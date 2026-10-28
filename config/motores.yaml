@@ -155,4 +155,7 @@ antes_etapa_3_1:
   - arquivo: config/mav_propulsao.yaml
     procura: '^    isp_s: \[310, 310\]$'
     troca: '    isp_s: [343, 343]'
+  - arquivo: config/mav_propulsao.yaml
+    procura: '^      valor: 0\.230$'
+    troca: '      valor: 0.238'
 

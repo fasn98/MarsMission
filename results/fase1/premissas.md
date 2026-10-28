@@ -46,5 +46,6 @@
 | P-042 | divisao_captura_saida_varias_queimas | numero_de_queimas: 1, 2, 3, 4; fracao_raio_hill: 0.1; sensibilidade: 0,05 e 1/3 | adimensional | NÃO VALIDADA | config/queima_finita.yaml (orbital.queima_multipla, Etapa 3.1) |
 | P-043 | hipoteses_conferencia_ero | massa_na_captura: 6500 kg [F22] ou 7200 kg [F29]; propelente_da_captura: todo o do OIM, 1900 kg [F22]; motor: 2 x 400 N [F29] como 2 x S400-15; periapse: o da órbita de 1 sol; orbita_alvo: 1 sol ou órbita alta (P-042); vinf_km_s: 2,0 a 2,75 e o da missão de referência | kg; km/s | NÃO VALIDADA | config/queima_finita.yaml (verificacao_ero; tools/queima_finita.py) |
 | P-044 | ponto_fixo_perdas_e_massas | tolerancia_km_s: 1e-06; max_iteracoes: 10 | km/s; adimensional | NÃO VALIDADA | config/queima_finita.yaml (tools/redimensiona.py, Etapa 3.1) |
+| P-045 | mav_fracao_estrutural_ilustracao_de_risco | 0.3 | adimensional (por estágio, MAV de dois estágios) | NÃO VALIDADA | config/mav_propulsao.yaml (O4, sensibilidade) e tools/arquitetura.py (Etapa 2.5) |
 
-Total: 44 premissas, 44 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 45 premissas, 45 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

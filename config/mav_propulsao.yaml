@@ -13,12 +13,20 @@ opcoes:
     # da variante do Orion. Antes: 343 s do motor com turbobomba de Bowles et al. [F46] (histórico em config/motores.yaml).
     isp_s: [310, 310]
     isp_fonte: "[F107] p. 6 (Tab. 3): R-4D-11 do Orion, \"Specific Impulse 310 seconds\" (ADR 0011)"
+    # Desde 2026-10-28 (decisão do Fabio, ADR 0007, nota): ε do MAV PRESSURIZADO de Bowles, coerente com os motores
+    # pressurizados (R-4D-11). Antes: 0,238 do MAV com turbobomba (histórico em config/motores.yaml, antes_etapa_3_1).
     fracao_estrutural:
-      valor: 0.238
+      valor: 0.230
       fonte: >
-        [F46] Tab. 5, p. 30: MAV hipergólico com turbobomba, 20 kg de carga, 54,0 kg secos, 312,5 kg na decolagem.
-        Os 15,7 kg que não são carga, seco nem propelente útil (71,3 %) entram como inertes: ε = 69,7/292,5
-        (calculado aqui). Mesmo tipo de motor do Isp de 343 s.
+        [F46] Tab. 5, p. 30, coluna "Pressure Feed": MAV hipergólico pressurizado, 20 kg de carga, "Dry Mass 65.5 kg",
+        "Propellant Fraction 73.1%", "GLOW 394.1 kg". Mesmo método do 0,238: o que não é carga, seco nem propelente útil
+        entra como inerte, ε = (394,1 − 20 − 0,731 × 394,1)/(394,1 − 20) = 0,230 (calculado aqui). A massa seca inclui a
+        reserva de crescimento: p. 5, "A weight growth allowance of 30% was used for all dry mass elements" (os "% Dry"
+        da Tab. 5 somam sobre 65,5/1,3 = 50,4 kg).
+      sensibilidade:
+        pessimista: {valor: 0.238, fonte: "[F46] Tab. 5, p. 30, coluna \"Pump Feed\": 54,0 kg secos, 71,3 %, 312,5 kg; ε = 69,7/292,5 (calculado aqui)"}
+        otimista: {valor: 0.176, fonte: "[F46] Tab. 11, p. 40, coluna \"Inert\": \"Dry Mass, kg\" 64.72, \"Propellants, kg\" 303.88; ε = seco/(seco + propelente) = 64,72/368,60 (calculado aqui; reserva, partida, resíduos e pressurante fora do inerte)"}
+        ilustracao_risco: {valor: 0.30, premissa: P-045}
     criogenico: false
   O2:
     nome: LOX/CH4, tudo da Terra

@@ -40,6 +40,25 @@ def test_motores_escolhidos_no_config():
     assert ler("config/mav_propulsao.yaml")["opcoes"]["O4"]["isp_s"] == [310, 310]
 
 
+def test_eps_do_mav_pressurizado_e_sensibilidade():
+    """ε do MAV pressurizado de Bowles (0,230) na base; o caso pessimista (0,238) pesa mais e o otimista (0,176) menos,
+    e o override do config pelo argumento mcfg não muda o orbitador."""
+    import copy
+    mcfg = ler("config/mav_propulsao.yaml")
+    fe = mcfg["opcoes"]["O4"]["fracao_estrutural"]
+    assert v(fe) == 0.230
+    assert [v(fe["sensibilidade"][k]) for k in ("pessimista", "otimista", "ilustracao_risco")] == [0.238, 0.176, 0.30]
+    base = ve.veiculos()[0]
+    massas = {}
+    for k in ("pessimista", "otimista"):
+        m2 = copy.deepcopy(mcfg)
+        m2["opcoes"]["O4"]["fracao_estrutural"]["valor"] = v(fe["sensibilidade"][k])
+        r = ve.veiculos(mcfg=m2)[0]
+        assert r["orbitador_regra_iii"]["injetada_kg"] == base["orbitador_regra_iii"]["injetada_kg"]
+        massas[k] = r["lander"]["injetada_kg"]
+    assert massas["otimista"] < base["lander"]["injetada_kg"] < massas["pessimista"]
+
+
 def test_historico_antes_da_etapa_3_1_volta_os_valores_antigos(tmp_path):
     for a in ARQUIVOS_3_1 + ("config/motores.yaml",):
         (tmp_path / a).parent.mkdir(parents=True, exist_ok=True)
@@ -53,5 +72,6 @@ def test_historico_antes_da_etapa_3_1_volta_os_valores_antigos(tmp_path):
     assert v(s["lancamento"]["cruzeiro_lander"]["isp_s"]) == 321
     m = yaml.safe_load((tmp_path / "config/mav_propulsao.yaml").read_text(encoding="utf-8"))
     assert m["opcoes"]["O4"]["isp_s"] == [343, 343]
+    assert m["opcoes"]["O4"]["fracao_estrutural"]["valor"] == 0.238
     with pytest.raises(RuntimeError):   # aplicar duas vezes: as linhas novas não existem mais
         aplicar_antes_etapa_3_1(tmp_path)

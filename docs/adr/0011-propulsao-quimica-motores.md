@@ -44,3 +44,7 @@ primária e calculou a queima finita com o empuxo real, em uma e em várias quei
 - **Limitação a decidir:** a fração estrutural do MAV (0,238) vem do MAV com turbobomba de Bowles et al. [F46]. Com
   motores pressurizados, os tanques tendem a pesar mais, e isso não foi refeito.
 - **Fora desta ADR:** a propulsão nuclear térmica (ADR à parte).
+
+## Nota (2026-10-28): fração estrutural do MAV decidida
+A "limitação a decidir" acima foi decidida pelo Fabio: ε = 0,230, do MAV pressurizado de Bowles et al. [F46], com 0,238 e
+0,176 como limites. Ver a nota de 2026-10-28 no ADR 0007.

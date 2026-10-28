@@ -86,3 +86,16 @@ Valores de `results/etapa2.5/arquitetura.md`: pior margem nas quatro janelas do 
 - O Vulcan VC4 deixa de servir o orbitador (regra iii): pela injeção direta (forma a), a margem vai de +2,8 % para
   −10,0 %; pela órbita baixa com estágio próprio (forma b), de +7,8 % para −5,6 %
   (`results/etapa2.4/lancamento.md`). Ele não era um dos escolhidos.
+
+## Nota (2026-10-28): ε do MAV pressurizado (ADR 0007)
+Só o lander muda, de 4.066 para 3.996 kg (`results/etapa2.5/arquitetura.md`). Margens do lander, pior janela, forma (a):
+
+| Lançador | 2026-10-27 | Agora |
+| :- | -: | -: |
+| Falcon Heavy (recuperação) | +15 % | +17 % |
+| Falcon Heavy (descartável) | +176 % | +181 % |
+| Vulcan VC2 | +6 % | +8 % |
+| Vulcan VC4 | +60 % | +62 % |
+| Vulcan VC6 | +104 % | +108 % |
+
+O orbitador não muda (Falcon Heavy descartável +56 %, Vulcan VC6 +15 %).

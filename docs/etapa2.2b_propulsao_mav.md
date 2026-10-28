@@ -94,3 +94,7 @@ da escolha do MSR.
 - Todas as opções usam a mesma divisão de Δv e dois estágios. O MSR usa dois estágios só no sólido; os
   MAVs de Bowles são de um estágio.
 - Sem estudo de volume e encaixe no lander.
+
+## Nota (2026-10-28): ε do O4
+Desde o ADR 0007 (nota de 2026-10-28), o O4 usa ε = 0,230, do MAV pressurizado de Bowles et al. [F46]. A tabela acima
+(0,238, turbobomba) fica como registro da época.

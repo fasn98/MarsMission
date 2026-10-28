@@ -503,4 +503,14 @@ premissas:
       de encontro. O ponto fixo para quando nenhuma perda muda mais que a tolerância entre duas iterações. 1e-6 km/s
       (1 mm/s) muda o propelente em gramas, muito abaixo da precisão relevante do estudo. Sem valor publicado.
     status: NÃO VALIDADA
+  - id: P-045
+    nome: mav_fracao_estrutural_ilustracao_de_risco
+    valor: 0.30
+    unidade: adimensional (por estágio, MAV de dois estágios)
+    uso: config/mav_propulsao.yaml (O4, sensibilidade) e tools/arquitetura.py (Etapa 2.5)
+    justificativa: >
+      Caso de sensibilidade sem fonte, só para mostrar o risco de projeto do MAV: com Isp de 310 s e Δv de subida acima
+      de 5 km/s, o MAV está perto da assíntota da equação do foguete, e um ε um pouco acima do de Bowles et al. [F46]
+      faz a massa crescer muito (ADR 0007, nota de 2026-10-28). Não é estimativa do ε do MAV.
+    status: NÃO VALIDADA
 
