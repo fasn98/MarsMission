@@ -240,3 +240,35 @@ def apoapse_por_arcos(mu, rp, ra, ra_alvo, empuxo_n, isp_s, m0_kg, meio_arco_gra
         raise RuntimeError("apoapse_por_arcos não chegou ao alvo")
     rp_f, ra_f, *_ = _elementos_planos(mu, *s[:4])
     return Arcos(c * math.log(m0_kg / s[4]), t_emp, t_tot, voltas, s[4], rp_f, ra_f)
+
+
+def tangencial_de_eliptica(mu, raio_planeta, rp, ra, r_alvo, empuxo_n, isp_s, m0_kg, t_max_s=3.0e8):
+    """Empuxo tangencial contra a velocidade a partir do periapse da órbita (rp × ra), até a energia da circular de raio
+    r_alvo ou até o raio cair abaixo do planeta. Devolve (chegou ao alvo?, tempo [s], menor periapse osculador [km],
+    excentricidade no fim)."""
+    a0 = (rp + ra) / 2
+    s0 = [rp, 0.0, 0.0, math.sqrt(mu * (2 / rp - 1 / a0)), m0_kg]
+    mdot = empuxo_n / (isp_s * G0 * 1e3)
+    a_n = empuxo_n * 1e-3
+
+    def f(t, s):
+        x, y, vx, vy, m = s
+        r3 = (x * x + y * y) ** 1.5
+        k = -a_n / m / math.hypot(vx, vy)
+        return [vx, vy, -mu * x / r3 + k * vx, -mu * y / r3 + k * vy, -mdot]
+
+    def alvo(t, s):
+        return 0.5 * (s[2] ** 2 + s[3] ** 2) - mu / math.hypot(s[0], s[1]) + mu / (2 * r_alvo)
+    alvo.terminal = True
+
+    def impacto(t, s):
+        return math.hypot(s[0], s[1]) - raio_planeta
+    impacto.terminal = True
+
+    sol = solve_ivp(f, (0.0, t_max_s), s0, method="DOP853", rtol=RTOL, atol=[ATOL * rp] * 2 + [ATOL * 10] * 2 + [ATOL * m0_kg],
+                    events=(alvo, impacto), dense_output=True)
+    tt = np.linspace(0.0, sol.t[-1], 4001)
+    rps = [_elementos_planos(mu, *sol.sol(t)[:4])[0] for t in tt]
+    e_fim = _elementos_planos(mu, *sol.y[:4, -1])[2]
+    return bool(sol.t_events[0].size), float(sol.t[-1]), float(min(rps)), float(e_fim)
+

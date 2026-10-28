@@ -549,13 +549,15 @@ premissas:
     status: NÃO VALIDADA
   - id: P-049
     nome: varredura_orbitador_eletrico
-    valor: {encontro_alt_km: [300, 20000, 40], captura_alt_km: [1000, 40000, 40], n_ativos_max: 12, c1_meio_arco_graus: 30, c1_n_ativos: [1, 4, 12], c1_folga_apoapse: 0.01}
+    valor: {encontro_alt_km: [300, 20000, 40], captura_alt_km: [1000, 40000, 40], n_ativos_max: 12, c1_meio_arco_graus: 30, n_ativos_ordem_de_grandeza: [1, 4, 12], c1_folga_apoapse: 0.01, demonstracao_tangencial_empuxo_n: 1.0, convergencia_massas_kg: 1.0e-9, arredondamento: {voltas: 0.1, excentricidade: 1.0e-4, altitude_km: 0.1}}
     unidade: km; propulsores
     uso: config/eletrica.yaml (tools/orbitador_eletrico.py, Etapa 3.3)
     justificativa: >
       Faixas da varredura (pontos geométricos) da órbita circular de encontro e da órbita circular de captura, e o número
       máximo de propulsores ativos. O mínimo de 300 km é o periapse mínimo do contêiner do MSR [F32] (ADR 0005); o resto é
-      escolha de faixa, sem fonte. Na variante c1, o meio-arco de empuxo em torno do periapse (30°), os números de propulsores
-      calculados e a parada a 1 % acima da altitude do encontro são escolhas do método, sem fonte.
+      escolha de faixa, sem fonte. Na variante c1 e na ordem de grandeza da opção (b): o meio-arco de empuxo em torno do
+      periapse (30°), os números de propulsores calculados e a parada a 1 % acima da altitude do encontro. Também: o empuxo
+      da demonstração da descida tangencial a partir da elipse, a convergência do ponto fixo das massas do híbrido e o
+      arredondamento dos campos sensíveis ao ruído entre CPUs (P-039). Escolhas do método, sem fonte.
     status: NÃO VALIDADA
 

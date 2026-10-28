@@ -39,7 +39,8 @@ class SistemaEletrico:
     massa_alimentacao_kg: float   # alimentação de xenônio, por propulsor instalado
     inerte_por_kg_xenonio: float  # tanque + resíduo inutilizável, por kg de xenônio usado
     w_kg_painel: float       # potência específica do painel no afélio, já com as perdas (W/kg)
-    mga_eletronica: float    # margem de crescimento de propulsores, PPU e alimentação
+    mga_propulsao: float     # margem de crescimento do propulsor e da alimentação
+    mga_ppu: float           # margem de crescimento da PPU (eletrônica)
     mga_painel: float
 
     @property
@@ -56,7 +57,8 @@ class SistemaEletrico:
 
     def massa_seca_kg(self):
         """Propulsores, PPU, alimentação e painel dedicado, com as margens de crescimento (sem tanque)."""
-        el = self.n_instalados * (self.massa_propulsor_kg + self.massa_ppu_kg + self.massa_alimentacao_kg) * (1 + self.mga_eletronica)
+        el = self.n_instalados * ((self.massa_propulsor_kg + self.massa_alimentacao_kg) * (1 + self.mga_propulsao)
+                                  + self.massa_ppu_kg * (1 + self.mga_ppu))
         painel = self.potencia_total_w / self.w_kg_painel * (1 + self.mga_painel)
         return el + painel
 
@@ -70,8 +72,11 @@ def fracao_eclipse_circular(raio_planeta, r):
     return math.asin(min(1.0, raio_planeta / r)) / math.pi
 
 
-def tempos_espiral(mu, raio_planeta, r_ini, r_fim, m0_kg, se):
-    """(tempo com o motor ligado [s], tempo decorrido com o motor desligado no eclipse [s], Δv [km/s], massa final)."""
+def tempos_espiral(mu, raio_planeta, r_ini, r_fim, m0_kg, se, fator_dv=1.0):
+    """(tempo com o motor ligado [s], tempo decorrido com o motor desligado no eclipse [s], Δv [km/s], massa final).
+
+    `fator_dv` (1 + margem de Δv) aumenta o Δv entregue, como no dimensionamento do xenônio; o tempo decorrido a mais é
+    o da mesma fração média em eclipse da espiral sem margem."""
     dv = dv_circular(mu, r_ini, r_fim)
     c = se.isp_s * G0
     mdot = se.vazao_kg_s
@@ -84,6 +89,9 @@ def tempos_espiral(mu, raio_planeta, r_ini, r_fim, m0_kg, se):
         return mu / vc ** 2
 
     t_dec, _ = quad(lambda t: 1.0 / (1.0 - fracao_eclipse_circular(raio_planeta, r_de(t))), 0.0, t_on, limit=200)
+    if fator_dv != 1.0:
+        t_on_m = m0_kg / mdot * (1 - math.exp(-fator_dv * dv / c))
+        t_dec, t_on, dv = t_dec * t_on_m / t_on, t_on_m, fator_dv * dv
     return t_on, t_dec, dv, m0_kg - mdot * t_on
 
 
@@ -92,7 +100,7 @@ def dv_hiperbole_circular(mu, vinf, r):
     return math.sqrt(vinf ** 2 + 2 * mu / r) - math.sqrt(mu / r)
 
 
-def massas(dv, se, isp_quimico, eps_ins, eps_ret, carga_final_kg, descartado_kg, capsula_kg, n_iter=60):
+def massas(dv, se, isp_quimico, eps_ins, eps_ret, carga_final_kg, descartado_kg, capsula_kg, tol_kg=1e-9, n_iter=200):
     """Massas do orbitador híbrido. `dv` (km/s, já com a margem): correcoes_ida, captura, descida, encontro, subida,
     saida, correcoes_volta, desvio. Devolve o detalhe; 'injetada_kg' é a massa no início da inserção."""
     c, cx = isp_quimico * G0, se.isp_s * G0
@@ -111,9 +119,11 @@ def massas(dv, se, isp_quimico, eps_ins, eps_ret, carga_final_kg, descartado_kg,
         b1 = a1 * math.exp(dv["descida"] / cx)
         novo_r = (b6 - m6) + (b5 - a5) + (b4 - b5) + (b2 - b3)
         novo_x = (b3 - b4) + (b1 - a1)
-        if abs(novo_r - p_r) < 1e-9 and abs(novo_x - p_x) < 1e-9:
+        if abs(novo_r - p_r) < tol_kg and abs(novo_x - p_x) < tol_kg:
             break
         p_r, p_x = novo_r, novo_x
+    else:
+        raise RuntimeError("massas do orbitador híbrido não convergiram")
     x = math.exp((dv["correcoes_ida"] + dv["captura"]) / c) - 1
     p_i = b1 * x / (1 - k_i * x)
     m_ins = b1 + k_i * p_i + p_i

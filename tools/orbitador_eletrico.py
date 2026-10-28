@@ -52,9 +52,11 @@ def sistema(nome, n, ecfg, pcfg):
     w = v(e["painel_w_kg_1ua"]) * v(e["fator_perdas_painel"]) / d_af ** 2
     t = v(ecfg["tanque"]["massa_seca_kg"]) / v(ecfg["tanque"]["xenonio_kg"])
     r = v(ecfg["residual_inutilizavel"])
+    m_ppu = v(c["massa_ppu_kg"])
+    cat_ppu = "eletronica_acima_15kg" if m_ppu > 15 else "eletronica_5_15kg" if m_ppu > 5 else "eletronica_0_5kg"
     return hb.SistemaEletrico(n, n + int(v(ecfg["operacao"]["reservas"])), v(c["empuxo_n"]), v(c["isp_s"]), v(c["potencia_w"]),
-                              v(c["massa_propulsor_kg"]), v(c["massa_ppu_kg"]), v(c["massa_alimentacao_kg"]), (t + r) / (1 - r), w,
-                              mga("propulsao_fluidos", pcfg, "e1_medio"), mga("painel_solar", pcfg, "e1_medio"))
+                              v(c["massa_propulsor_kg"]), m_ppu, v(c["massa_alimentacao_kg"]), (t + r) / (1 - r), w,
+                              mga("propulsao_fluidos", pcfg, "e1_medio"), mga(cat_ppu, pcfg, "e1_medio"), mga("painel_solar", pcfg, "e1_medio"))
 
 
 def main():
@@ -75,7 +77,12 @@ def main():
     st = est["saida_terra"]
     dv_terra = f * dm.orcamento(a_caso, dcfg, p)["saida_terra"]
     t_enc = v(ecfg["operacao"]["tempo_encontro_dias"]) * DIA
+    op = ecfg["operacao"]
+    if op["desligado_no_eclipse"]["valor"] is not True or op["perdas_quimicas_da_etapa_3_1"]["valor"] is not True:
+        raise NotImplementedError("só o motor desligado no eclipse e as perdas da Etapa 3.1 estão implementados (P-047, P-048)")
     vz = ecfg["varredura"]
+    arr = vz["arredondamento"]["valor"]
+    tol_m = v(vz["convergencia_massas_kg"])
     alts_e, alts_c = grade(vz["encontro_alt_km"]["valor"]), grade(vz["captura_alt_km"]["valor"])
 
     def leo(m_inj):
@@ -94,9 +101,10 @@ def main():
               "saida": f * (max(hb.dv_hiperbole_circular(mu, math.sqrt(w["c3l_partida_marte_km2_s2"]), r_c) for w in janelas) + perdas["saida_marte"]),
               "correcoes_volta": f * orc_ret["correcoes_volta"], "desvio": f * orc_ret["desvio_orbitador"]}
         carga_final = ate_marte - descartado - capsula + plats[h_e]
-        m = hb.massas(dv, se, isp_q, eps_i, eps_r, carga_final, descartado, capsula)
-        t_on_d, t_d, _, _ = hb.tempos_espiral(mu, R, r_c, r_e, m["massa_antes_descida_kg"], se)
-        t_on_s, t_s, _, _ = hb.tempos_espiral(mu, R, r_e, r_c, m["massa_antes_subida_kg"], se)
+        m = hb.massas(dv, se, isp_q, eps_i, eps_r, carga_final, descartado, capsula, tol_kg=tol_m)
+        # tempo com o mesmo Δv (com margem) usado no xenônio
+        t_on_d, t_d, _, _ = hb.tempos_espiral(mu, R, r_c, r_e, m["massa_antes_descida_kg"], se, fator_dv=f)
+        t_on_s, t_s, _, _ = hb.tempos_espiral(mu, R, r_e, r_c, m["massa_antes_subida_kg"], se, fator_dv=f)
         total_t = t_d + t_enc + t_s
         folgas = {w["id"]: w["em_marte_dias"] - total_t / DIA for w in janelas}
         vida = v(ecfg["propulsores"][se_nome[0]]["throughput_kg"]) if ecfg["propulsores"][se_nome[0]]["throughput_kg"] else None
@@ -145,11 +153,12 @@ def main():
         t_on, _, dv_a, _ = hb.tempos_espiral(mu, R, R + esc["captura_alt_km"], R + esc["encontro_alt_km"], m0, se)
         r["conferencia_descida"] = {"dv_quase_circular_km_s": dv_a, "dv_numerico_km_s": num.dv, "diferenca_relativa": (num.dv - dv_a) / dv_a,
                                     "tempo_empuxo_quase_circular_dias": t_on / DIA, "tempo_empuxo_numerico_dias": num.duracao / DIA,
-                                    "voltas": round(num.revolucoes, 1), "excentricidade_final": round(num.excentricidade_final, 4)}
+                                    "voltas": round(num.revolucoes / arr["voltas"]) * arr["voltas"],
+                                    "excentricidade_final": round(num.excentricidade_final / arr["excentricidade"]) * arr["excentricidade"]}
         for veic, m in (("orbitador", esc["orbitador_injetado_kg"]), ("lander", esc["lander_injetado_kg"])):
             esc.setdefault("margens", {})[veic] = {nm: lc.pior_margem_a(nm, m, janelas, lcfg)[0] for nm in lcfg["lancadores"]}
 
-    # (c1) captura química na elipse de 1 sol (periapse no encontro) e descida em arcos em torno do periapse
+    # (c1) captura química numa elipse com o apoapse da órbita de 1 sol e o periapse no encontro; descida em arcos
     um = p.orbitas_marte["eliptica_alta"]
     h_c1 = float(alts_e[0])
     vei_q = ve.veiculos(detalhe=True)[0]["orbitador_regra_iii"]
@@ -157,13 +166,22 @@ def main():
     c1 = {"meio_arco_graus": float(vz["c1_meio_arco_graus"]["valor"]), "encontro_alt_km": h_c1, "apoapse_inicial_alt_km": um.ra - R,
           "massa_inicial_kg": m_pos_captura, "casos": []}
     for nome in ecfg["propulsores"]:
-        for n in vz["c1_n_ativos"]["valor"]:
+        for n in vz["n_ativos_ordem_de_grandeza"]["valor"]:
             se = sistema(nome, n, ecfg, pcfg)
             a = be.apoapse_por_arcos(mu, R + h_c1, um.ra, R + h_c1 * (1 + float(vz["c1_folga_apoapse"]["valor"])), se.empuxo_total_n,
                                      se.isp_s, m_pos_captura, c1["meio_arco_graus"])
             c1["casos"].append({"propulsor": nome, "n_ativos": n, "dv_km_s": a.dv_km_s, "tempo_empuxo_dias": a.tempo_empuxo_s / DIA,
                                 "tempo_total_dias": a.tempo_total_s / DIA, "voltas": a.voltas,
-                                "rp_final_alt_km": round(a.rp_final_km - R, 1), "ra_final_alt_km": round(a.ra_final_km - R, 1)})
+                                "rp_final_alt_km": round((a.rp_final_km - R) / arr["altitude_km"]) * arr["altitude_km"],
+                                "ra_final_alt_km": round((a.ra_final_km - R) / arr["altitude_km"]) * arr["altitude_km"]})
+    # o achado que motiva c1 e c2: empuxo tangencial puro contra a velocidade a partir da mesma elipse
+    se1 = sistema(next(iter(ecfg["propulsores"])), 1, ecfg, pcfg)
+    chegou, t_dem, rp_min, e_fim = be.tangencial_de_eliptica(mu, R, R + h_c1, um.ra, R + h_c1, v(vz["demonstracao_tangencial_empuxo_n"]),
+                                                             se1.isp_s, m_pos_captura)
+    c1["demonstracao_tangencial"] = {"empuxo_n": v(vz["demonstracao_tangencial_empuxo_n"]), "isp_s": se1.isp_s, "chegou_ao_alvo": chegou,
+                                     "tempo_dias": round(t_dem / DIA / arr["voltas"]) * arr["voltas"],
+                                     "menor_periapse_alt_km": round((rp_min - R) / arr["altitude_km"]) * arr["altitude_km"],
+                                     "excentricidade_no_fim": round(e_fim / arr["excentricidade"]) * arr["excentricidade"]}
 
     # (a) químico atual
     arq, pl = ler("results/etapa2.5/arquitetura.yaml"), ler("results/etapa2.3/plataformas.yaml")
@@ -179,7 +197,7 @@ def main():
     eletrico = {"dv_heliocentrico_km_s": dv_h, "ida_referencia_dias": ref["ida_dias"], "volta_referencia_dias": ref["volta_dias"], "casos": []}
     m0 = arq["orbitador"]["injetado_kg"]   # o orbitador químico atual, só como ordem de grandeza
     for nome in ecfg["propulsores"]:
-        for n in vz["c1_n_ativos"]["valor"]:
+        for n in vz["n_ativos_ordem_de_grandeza"]["valor"]:
             se = sistema(nome, n, ecfg, pcfg)
             t_on = m0 / se.vazao_kg_s * (1 - math.exp(-dv_h / (se.isp_s * fg.G0)))
             eletrico["casos"].append({"propulsor": nome, "n_ativos": n, "massa_inicial_kg": m0, "tempo_empuxo_ida_dias": t_on / DIA})
@@ -204,16 +222,19 @@ def escreve_md(out):
           f"total (iii) {br(q['total_regra_iii_kg'])} kg.", "",
           "## (c) Híbrido c2: captura química em órbita circular, espiral elétrica até a órbita circular de encontro", ""]
     for nome, r in out["hibrido_c2"].items():
-        md += [f"### {nome}", "", "| Ativos | Potência (kW) | Empuxo (N) | Viável | Encontro (km) | Captura (km) | Orbitador (kg) | Xenônio (kg) | Lander (kg) | MAV (kg) | Total (iii) (kg) | Tempo em Marte (d) | Menor folga (d) |",
-               "| -: | -: | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
+        md += [f"### {nome}", "", "Δv com a margem de Δv; tempos com o motor desligado no eclipse; folga = menor estada − (descida + encontro + subida).", "",
+               "| Ativos | Potência (kW) | Empuxo (N) | Encontro (km) | Captura (km) | Δv captura química (km/s) | Δv saída química (km/s) | Δv elétrico, cada sentido (km/s) | "
+               "Descida (d) | Subida (d) | Orbitador (kg) | Xenônio (kg) | Lander (kg) | MAV (kg) | Total (iii) (kg) | Menor folga (d) |",
+               "| -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
         for x in r["por_n"]:
             if not x["viavel"]:
-                md.append(f"| {x['n_ativos']} | | | não | | | | | | | | | |")
+                md.append(f"| {x['n_ativos']} | inviável |" + " |" * 14)
                 continue
             e = x["escolha"]
-            md.append(f"| {x['n_ativos']} | {br(x['potencia_eletrica_kw'], 1)} | {br(x['empuxo_total_n'], 2)} | sim | {br(e['encontro_alt_km'])} | {br(e['captura_alt_km'])} | "
-                      f"{br(e['orbitador_injetado_kg'])} | {br(e['massas']['eletrico']['xenonio_kg'])} | {br(e['lander_injetado_kg'])} | {br(e['mav_kg'])} | "
-                      f"{br(e['total_regra_iii_kg'])} | {br(e['tempo_total_dias'])} | {br(e['menor_folga_dias'])} |")
+            md.append(f"| {x['n_ativos']} | {br(x['potencia_eletrica_kw'], 1)} | {br(x['empuxo_total_n'], 2)} | {br(e['encontro_alt_km'])} | {br(e['captura_alt_km'])} | "
+                      f"{br(e['dv_km_s']['captura'], 3)} | {br(e['dv_km_s']['saida'], 3)} | {br(e['dv_km_s']['descida'], 3)} | {br(e['tempo_descida_dias'])} | "
+                      f"{br(e['tempo_subida_dias'])} | {br(e['orbitador_injetado_kg'])} | {br(e['massas']['eletrico']['xenonio_kg'])} | {br(e['lander_injetado_kg'])} | "
+                      f"{br(e['mav_kg'])} | {br(e['total_regra_iii_kg'])} | {br(e['menor_folga_dias'])} |")
         md.append("")
         if r["n_minimo"] is not None:
             c = r["conferencia_descida"]
@@ -224,14 +245,17 @@ def escreve_md(out):
                    "Margens dos lançadores (injeção direta, pior janela): " + "; ".join(
                        f"{v_}: " + ", ".join(f"{k} {pc(m)}" for k, m in d.items()) for v_, d in e["margens"].items()), ""]
     c1 = out["hibrido_c1"]
-    md += ["## (c) Híbrido c1: captura química na elipse de 1 sol, descida em arcos em torno do periapse", "",
+    md += ["## (c) Híbrido c1: captura química numa elipse com o apoapse da órbita de 1 sol e o periapse no encontro, descida em arcos em torno do periapse", "",
            f"Só a descida, da elipse {br(c1['encontro_alt_km'])} × {br(c1['apoapse_inicial_alt_km'])} km até a circular, com empuxo contra a velocidade "
            f"em |ν| ≤ {br(c1['meio_arco_graus'])}° e voo livre no resto; massa inicial {br(c1['massa_inicial_kg'])} kg (a do orbitador químico depois "
            "da captura, só ordem de grandeza). Sem eclipse.", "",
            "| Propulsor | Ativos | Δv (km/s) | Tempo de empuxo (d) | Tempo decorrido (d) | Voltas | Periapse final (km) |", "| :- | -: | -: | -: | -: | -: | -: |"]
     md += [f"| {c['propulsor']} | {c['n_ativos']} | {br(c['dv_km_s'], 3)} | {br(c['tempo_empuxo_dias'])} | {br(c['tempo_total_dias'])} | {br(c['voltas'])} | "
            f"{br(c['rp_final_alt_km'])} |" for c in c1["casos"]]
-    md.append("")
+    d = c1["demonstracao_tangencial"]
+    md += ["", f"Demonstração: empuxo tangencial contra a velocidade o tempo todo, a partir da mesma elipse, com {br(d['empuxo_n'], 1)} N e Isp de "
+           f"{br(d['isp_s'])} s: {'chega' if d['chegou_ao_alvo'] else 'NÃO chega'} à energia da circular do encontro; o periapse cai até "
+           f"{br(d['menor_periapse_alt_km'])} km de altitude em {br(d['tempo_dias'])} d (excentricidade no fim {br(d['excentricidade_no_fim'], 3)}).", ""]
     el = out["eletrico"]
     md += ["## (b) Elétrico: trecho heliocêntrico (calculado, NÃO verificado)", "",
            "Massa inicial: a do orbitador químico atual (só ordem de grandeza; o elétrico leva outro sistema). "

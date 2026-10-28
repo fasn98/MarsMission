@@ -10,47 +10,51 @@ Estada em Marte por janela (dias): 2028-conjuncao 414, 2031-conjuncao 480, 2033-
 
 ### NSTAR
 
-| Ativos | Potência (kW) | Empuxo (N) | Viável | Encontro (km) | Captura (km) | Orbitador (kg) | Xenônio (kg) | Lander (kg) | MAV (kg) | Total (iii) (kg) | Tempo em Marte (d) | Menor folga (d) |
-| -: | -: | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
-| 1 | 2,3 | 0,09 | sim | 1 092 | 1 460 | 45 392 | 72 | 3 616 | 216 | 148 769 | 363 | 51 |
-| 2 | 4,6 | 0,19 | sim | 1 092 | 1 764 | 50 980 | 142 | 3 616 | 216 | 165 732 | 353 | 61 |
-| 3 | 6,9 | 0,28 | sim | 1 092 | 1 939 | 56 661 | 194 | 3 616 | 216 | 182 977 | 322 | 92 |
-| 4 | 9,2 | 0,37 | sim | 1 092 | 1 939 | 62 347 | 213 | 3 616 | 216 | 200 238 | 270 | 144 |
-| 5 | 11,5 | 0,46 | sim | 1 092 | 1 939 | 68 033 | 233 | 3 616 | 216 | 217 499 | 238 | 176 |
-| 6 | 13,8 | 0,56 | sim | 1 092 | 1 939 | 73 720 | 252 | 3 616 | 216 | 234 760 | 217 | 197 |
-| 7 | 16,1 | 0,65 | sim | 1 092 | 1 939 | 79 406 | 272 | 3 616 | 216 | 252 021 | 202 | 212 |
-| 8 | 18,4 | 0,74 | sim | 1 216 | 1 939 | 84 594 | 242 | 3 630 | 223 | 267 810 | 162 | 252 |
-| 9 | 20,7 | 0,84 | sim | 1 216 | 1 939 | 90 248 | 259 | 3 630 | 223 | 284 975 | 155 | 259 |
-| 10 | 23,0 | 0,93 | sim | 1 216 | 1 939 | 95 903 | 275 | 3 630 | 223 | 302 139 | 149 | 265 |
-| 11 | 25,3 | 1,02 | sim | 1 216 | 1 939 | 101 557 | 291 | 3 630 | 223 | 319 303 | 144 | 270 |
-| 12 | 27,6 | 1,12 | sim | 1 216 | 1 939 | 107 211 | 307 | 3 630 | 223 | 336 467 | 140 | 274 |
+Δv com a margem de Δv; tempos com o motor desligado no eclipse; folga = menor estada − (descida + encontro + subida).
 
-Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1192 km/s, numérico 0,1192 km/s (-2.0e−09); tempo de empuxo 129,9 × 129,9 d; 1 160 voltas; excentricidade final 0,0000.
+| Ativos | Potência (kW) | Empuxo (N) | Encontro (km) | Captura (km) | Δv captura química (km/s) | Δv saída química (km/s) | Δv elétrico, cada sentido (km/s) | Descida (d) | Subida (d) | Orbitador (kg) | Xenônio (kg) | Lander (kg) | MAV (kg) | Total (iii) (kg) | Menor folga (d) |
+| -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
+| 1 | 2,6 | 0,09 | 1 092 | 1 460 | 2,816 | 2,839 | 0,131 | 195 | 184 | 45 878 | 73 | 3 616 | 216 | 150 244 | 13 |
+| 2 | 5,1 | 0,19 | 1 092 | 1 764 | 2,808 | 2,832 | 0,229 | 191 | 180 | 51 949 | 144 | 3 616 | 216 | 168 674 | 21 |
+| 3 | 7,7 | 0,28 | 1 092 | 1 939 | 2,804 | 2,829 | 0,281 | 175 | 164 | 58 115 | 199 | 3 616 | 216 | 187 390 | 53 |
+| 4 | 10,2 | 0,37 | 1 092 | 1 939 | 2,804 | 2,829 | 0,281 | 145 | 136 | 64 286 | 220 | 3 616 | 216 | 206 122 | 111 |
+| 5 | 12,8 | 0,46 | 1 092 | 1 939 | 2,804 | 2,829 | 0,281 | 127 | 119 | 70 456 | 241 | 3 616 | 216 | 224 854 | 146 |
+| 6 | 15,3 | 0,56 | 1 092 | 1 939 | 2,804 | 2,829 | 0,281 | 115 | 108 | 76 627 | 262 | 3 616 | 216 | 243 586 | 169 |
+| 7 | 17,9 | 0,65 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 88 | 83 | 82 313 | 236 | 3 630 | 223 | 260 886 | 221 |
+| 8 | 20,4 | 0,74 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 83 | 78 | 88 449 | 253 | 3 630 | 223 | 279 513 | 231 |
+| 9 | 23,0 | 0,84 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 79 | 74 | 94 585 | 271 | 3 630 | 223 | 298 140 | 239 |
+| 10 | 25,6 | 0,93 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 76 | 71 | 100 721 | 289 | 3 630 | 223 | 316 767 | 245 |
+| 11 | 28,1 | 1,02 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 73 | 69 | 106 858 | 306 | 3 630 | 223 | 335 394 | 251 |
+| 12 | 30,7 | 1,12 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 71 | 66 | 112 994 | 324 | 3 630 | 223 | 354 021 | 255 |
 
-Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) −90 %, Falcon Heavy (descartável) −75 %, Vulcan VC2 −90 %, Vulcan VC4 −86 %, Vulcan VC6 −82 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn −90 %, SLS Block 1 (5 m + iCPS) −61 %; lander: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) +29 %, Falcon Heavy (descartável) +210 %, Vulcan VC2 +20 %, Vulcan VC4 +79 %, Vulcan VC6 +129 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn +26 %, SLS Block 1 (5 m + iCPS) +391 %
+Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1192 km/s, numérico 0,1192 km/s (-4.8e−09); tempo de empuxo 131,3 × 131,3 d; 1 172 voltas; excentricidade final 0,0000.
+
+Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) −90 %, Falcon Heavy (descartável) −76 %, Vulcan VC2 −91 %, Vulcan VC4 −86 %, Vulcan VC6 −82 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn −90 %, SLS Block 1 (5 m + iCPS) −61 %; lander: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) +29 %, Falcon Heavy (descartável) +210 %, Vulcan VC2 +20 %, Vulcan VC4 +79 %, Vulcan VC6 +129 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn +26 %, SLS Block 1 (5 m + iCPS) +391 %
 
 ### XIPS-25
 
-| Ativos | Potência (kW) | Empuxo (N) | Viável | Encontro (km) | Captura (km) | Orbitador (kg) | Xenônio (kg) | Lander (kg) | MAV (kg) | Total (iii) (kg) | Tempo em Marte (d) | Menor folga (d) |
-| -: | -: | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
-| 1 | 4,5 | 0,17 | sim | 1 092 | 1 764 | 50 353 | 125 | 3 616 | 216 | 163 829 | 391 | 23 |
-| 2 | 9,0 | 0,33 | sim | 1 092 | 2 131 | 60 650 | 221 | 3 616 | 216 | 195 086 | 345 | 69 |
-| 3 | 13,5 | 0,49 | sim | 1 092 | 2 131 | 70 989 | 259 | 3 616 | 216 | 226 471 | 274 | 140 |
-| 4 | 18,0 | 0,66 | sim | 1 092 | 2 131 | 81 329 | 297 | 3 616 | 216 | 257 857 | 239 | 175 |
-| 5 | 22,5 | 0,83 | sim | 1 092 | 2 131 | 91 668 | 334 | 3 616 | 216 | 289 243 | 218 | 196 |
-| 6 | 27,0 | 0,99 | sim | 1 092 | 2 131 | 102 007 | 372 | 3 616 | 216 | 320 629 | 203 | 211 |
-| 7 | 31,5 | 1,16 | sim | 1 092 | 2 131 | 112 347 | 410 | 3 616 | 216 | 352 015 | 193 | 221 |
-| 8 | 36,0 | 1,32 | sim | 1 092 | 2 131 | 122 686 | 447 | 3 616 | 216 | 383 400 | 186 | 228 |
-| 9 | 40,5 | 1,49 | sim | 1 092 | 2 131 | 133 025 | 485 | 3 616 | 216 | 414 786 | 180 | 234 |
-| 10 | 45,0 | 1,65 | sim | 1 092 | 2 131 | 143 364 | 523 | 3 616 | 216 | 446 172 | 175 | 239 |
-| 11 | 49,5 | 1,82 | sim | 1 092 | 2 131 | 153 704 | 560 | 3 616 | 216 | 477 558 | 171 | 243 |
-| 12 | 54,0 | 1,98 | sim | 1 092 | 2 131 | 164 043 | 598 | 3 616 | 216 | 508 944 | 168 | 246 |
+Δv com a margem de Δv; tempos com o motor desligado no eclipse; folga = menor estada − (descida + encontro + subida).
 
-Conferência da descida no ponto de 1 ativos: Δv quase circular 0,2080 km/s, numérico 0,2080 km/s (+6.1e−10); tempo de empuxo 142,5 × 142,5 d; 1 218 voltas; excentricidade final 0,0000.
+| Ativos | Potência (kW) | Empuxo (N) | Encontro (km) | Captura (km) | Δv captura química (km/s) | Δv saída química (km/s) | Δv elétrico, cada sentido (km/s) | Descida (d) | Subida (d) | Orbitador (kg) | Xenônio (kg) | Lander (kg) | MAV (kg) | Total (iii) (kg) | Menor folga (d) |
+| -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
+| 1 | 4,5 | 0,17 | 1 092 | 1 605 | 2,812 | 2,836 | 0,179 | 164 | 155 | 50 357 | 97 | 3 616 | 216 | 163 840 | 73 |
+| 2 | 9,0 | 0,33 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 183 | 172 | 60 544 | 221 | 3 616 | 216 | 194 765 | 37 |
+| 3 | 13,5 | 0,49 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 143 | 134 | 70 849 | 258 | 3 616 | 216 | 226 044 | 115 |
+| 4 | 18,0 | 0,66 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 123 | 115 | 81 153 | 296 | 3 616 | 216 | 257 323 | 154 |
+| 5 | 22,5 | 0,83 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 111 | 104 | 91 457 | 333 | 3 616 | 216 | 288 602 | 177 |
+| 6 | 27,0 | 0,99 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 103 | 96 | 101 761 | 371 | 3 616 | 216 | 319 881 | 193 |
+| 7 | 31,5 | 1,16 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 97 | 91 | 112 065 | 409 | 3 616 | 216 | 351 160 | 204 |
+| 8 | 36,0 | 1,32 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 92 | 87 | 122 369 | 446 | 3 616 | 216 | 382 439 | 213 |
+| 9 | 40,5 | 1,49 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 89 | 84 | 132 673 | 484 | 3 616 | 216 | 413 718 | 219 |
+| 10 | 45,0 | 1,65 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 86 | 81 | 142 977 | 521 | 3 616 | 216 | 444 997 | 224 |
+| 11 | 49,5 | 1,82 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 84 | 79 | 153 281 | 559 | 3 616 | 216 | 476 276 | 229 |
+| 12 | 54,0 | 1,98 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 82 | 77 | 163 585 | 596 | 3 616 | 216 | 507 555 | 232 |
+
+Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1625 km/s, numérico 0,1625 km/s (-9.6e−10); tempo de empuxo 111,1 × 111,1 d; 971 voltas; excentricidade final 0,0000.
 
 Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) −91 %, Falcon Heavy (descartável) −78 %, Vulcan VC2 −91 %, Vulcan VC4 −87 %, Vulcan VC6 −84 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn −91 %, SLS Block 1 (5 m + iCPS) −65 %; lander: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) +29 %, Falcon Heavy (descartável) +210 %, Vulcan VC2 +20 %, Vulcan VC4 +79 %, Vulcan VC6 +129 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn +26 %, SLS Block 1 (5 m + iCPS) +391 %
 
-## (c) Híbrido c1: captura química na elipse de 1 sol, descida em arcos em torno do periapse
+## (c) Híbrido c1: captura química numa elipse com o apoapse da órbita de 1 sol e o periapse no encontro, descida em arcos em torno do periapse
 
 Só a descida, da elipse 300 × 33 793 km até a circular, com empuxo contra a velocidade em |ν| ≤ 30° e voo livre no resto; massa inicial 3 271 kg (a do orbitador químico depois da captura, só ordem de grandeza). Sem eclipse.
 
@@ -62,6 +66,8 @@ Só a descida, da elipse 300 × 33 793 km até a circular, com empuxo contra a v
 | XIPS-25 | 1 | 1,205 | 272 | 6 187 | 24 015 | 223 |
 | XIPS-25 | 4 | 1,205 | 68 | 1 546 | 6 004 | 223 |
 | XIPS-25 | 12 | 1,205 | 23 | 515 | 2 002 | 223 |
+
+Demonstração: empuxo tangencial contra a velocidade o tempo todo, a partir da mesma elipse, com 1,0 N e Isp de 3 160 s: NÃO chega à energia da circular do encontro; o periapse cai até −170 km de altitude em 2 d (excentricidade no fim 0,833).
 
 ## (b) Elétrico: trecho heliocêntrico (calculado, NÃO verificado)
 
