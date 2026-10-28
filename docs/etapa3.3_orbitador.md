@@ -149,3 +149,14 @@ Outros pontos:
   - Com os 24 d, o c2 com 1 e com 2 NSTAR (folgas de 13 e 21 d) deixa de caber.
 - **Tempo da espiral com margem:** usa o Δv com a margem (como o xenônio), com a mesma fração média de eclipse da
   espiral sem margem.
+
+## Nota (2026-10-28): decisões do portão (ADR 0013)
+- **Propulsão do orbitador:** (A), química.
+- **Conclusão registrada:** "Na missão de referência (414 dias em Marte) e com as leis de guiagem verificadas, nenhuma
+  opção elétrica fecha massa e tempo. Uma missão de estada longa, como a do ERO, poderia mudar isso, mas exigiria outra
+  missão de referência e uma guiagem otimizada, não estudadas."
+- **Estudo futuro:** (B).
+- **Catálogo:** só NSTAR e XIPS-25.
+- **Premissas:** P-047 a P-049 aprovadas, NÃO VALIDADAS.
+- **Limitação do RAAN:** registrada como está; só piora o elétrico.
+- **Risco do MAV:** atualizado no ADR 0007.

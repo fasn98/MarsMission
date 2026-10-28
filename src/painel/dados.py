@@ -369,3 +369,61 @@ def ler_texto(caminho: str) -> str:
 
 def existe(caminho: str) -> bool:
     return Path(RAIZ / caminho).exists()
+
+
+# ---------------------------------------------------------------- propulsão (Fase 3)
+
+def propulsao() -> dict:
+    """Comparação de propulsão da Fase 3, lida de results/ (Etapas 3.1 a 3.3). Tudo "calculado", menos a verificação da
+    espiral, que é contra dado publicado e traz o resultado do critério declarado (ADR 0012)."""
+    pc_ = ler("results/etapa3.1/perdas_calculadas.yaml")
+    be_ = ler("results/etapa3.2/baixo_empuxo.yaml")["verificacao_schwenzfeger"]
+    oe = ler("results/etapa3.3/orbitador_eletrico.yaml")
+    o31, o32, o33 = "results/etapa3.1/perdas_calculadas.yaml", "results/etapa3.2/baixo_empuxo.yaml", "results/etapa3.3/orbitador_eletrico.yaml"
+    perdas = [{"manobra": m, "combinacao": f"{pc_[m]['combinacao']}: {pc_[m]['motores']}", "queimas": pc_[m]["n"],
+               "perda": Valor(1e3 * float(pc_["perda_km_s"][k]), "m/s", CALCULADO, o31),
+               "p015": Valor(1e3 * float(pc_["p015_km_s"][k]), "m/s", rotulo_premissa("P-015"), "config/premissas.yaml (P-015)")}
+              for m, k in (("captura", "captura_marte"), ("saida", "saida_marte"))]
+    fora = sorted({k for q in be_["pontos"] for k in q["fora_da_tolerancia"]})
+    comp = "comparado com dado publicado [F113]"
+    r_u = f"{comp}; fora do critério P-046" if "u" in fora else f"{comp}; dentro do critério P-046"
+    r_vet = f"{comp}; métrica adicional, não é o critério (ADR 0012)"
+    verif = {"verificado": bool(be_["verificado"]), "fora_da_tolerancia": fora, "tolerancia": float(be_["tolerancia_relativa"]),
+             "maior_erro_posicao": Valor(max(q["erro_relativo_vetor_posicao"] for q in be_["pontos"]), "", r_vet, o32),
+             "maior_erro_velocidade": Valor(max(q["erro_relativo_vetor_velocidade"] for q in be_["pontos"]), "", r_vet, o32),
+             "maior_dif_u": Valor(max(abs(q["diferenca_relativa"]["u"]) for q in be_["pontos"]), "", r_u, o32)}
+    # situação calculada aqui, com orbital.lancamento: algum lançador leva o orbitador? (injeção direta, pior janela)
+    _, janelas, _ = veiculos()
+    lcfg = ler("config/lancadores.yaml")
+
+    def algum_lancador(m):
+        margens = (pior_margem_a(n, m, janelas, lcfg)[0] for n in lcfg["lancadores"])
+        return any(x is not None and x >= 0 for x in margens)
+
+    estada_min = min(float(x) for x in oe["janelas"].values())
+    rp_min = float(ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]["periapse_alt_km"])
+    q = oe["quimico"]
+    opcoes = [{"opcao": "(a) químico", "orbitador": Valor(float(q["orbitador_injetado_kg"]), "kg", CALCULADO, o33),
+               "total": Valor(float(q["total_regra_iii_kg"]), "kg", CALCULADO, o33), "tempo": None,
+               "situacao": "adotada (ADR 0013)" if algum_lancador(float(q["orbitador_injetado_kg"])) else "sem lançador"}]
+    for nome, r in oe["hibrido_c2"].items():
+        for x in r["por_n"]:
+            if not x["viavel"]:
+                continue
+            e = x["escolha"]
+            m = float(e["orbitador_injetado_kg"])
+            opcoes.append({"opcao": f"(c2) {nome} × {x['n_ativos']}", "orbitador": Valor(m, "kg", CALCULADO, o33),
+                           "total": Valor(float(e["total_regra_iii_kg"]), "kg", CALCULADO, o33),
+                           "tempo": Valor(float(e["tempo_total_dias"]), "d", CALCULADO, o33),
+                           "situacao": "cabe no tempo; " + ("algum lançador leva o orbitador" if algum_lancador(m) else "nenhum lançador leva o orbitador")
+                           + " (injeção direta, pior janela)"})
+    c1 = [{"opcao": f"(c1) {c['propulsor']} × {c['n_ativos']}", "descida": Valor(float(c["tempo_total_dias"]), "d", CALCULADO, o33),
+           "periapse": Valor(float(c["rp_final_alt_km"]), "km", CALCULADO, o33),
+           "situacao": ("só a descida passa da menor estada" if float(c["tempo_total_dias"]) > estada_min else "descida cabe na menor estada")
+           + ("; periapse abaixo do mínimo do encontro" if float(c["rp_final_alt_km"]) < rp_min else "")}
+          for c in oe["hibrido_c1"]["casos"]]
+    b = [{"opcao": f"(b) {c['propulsor']} × {c['n_ativos']}", "ida": Valor(float(c["tempo_empuxo_ida_dias"]), "d", "calculado, não verificado", o33)}
+         for c in oe["eletrico"]["casos"]]
+    return {"perdas": perdas, "verificacao": verif, "opcoes": opcoes, "c1": c1, "b": b,
+            "estada_dias": {k: float(x) for k, x in oe["janelas"].items()}, "periapse_minimo_km": rp_min,
+            "ida_referencia_dias": float(oe["eletrico"]["ida_referencia_dias"])}
