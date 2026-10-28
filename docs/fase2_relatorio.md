@@ -266,3 +266,38 @@ VC2 / VC4 / VC6)
 - A P-015 fica restrita à saída da Terra e às etapas anteriores.
 - `results/fase1/premissas.md` e `results/fase2/premissas_nao_validadas.md` foram regenerados: 44 premissas, todas NÃO
   VALIDADAS.
+
+## Errata (2026-10-28): fração estrutural do MAV pressurizado (ADR 0007)
+**O que muda.** O ε do MAV O4 passa de 0,238 (MAV com turbobomba) para **0,230** (MAV pressurizado), ambos de Bowles et
+al. [F46], Tab. 5. Os principais números da errata de 2026-10-27 que mudam estão abaixo. Mudam também, entre outros, toda a coluna do
+lander na sensibilidade, a coleta, as margens por janela, o empuxo/peso do MAV e a queima do cruzeiro. **Os vigentes são
+todos os de `results/`** (`results/etapa2.5/arquitetura.md`, `results/etapa2.3/plataformas.md`, `results/etapa2.5/coleta.md`,
+`results/etapa2.4/lancamento.md`, `results/etapa3.1/queima_finita.md`).
+
+| Item | Errata de 2026-10-27 | Agora |
+| :- | -: | -: |
+| Lander injetado | 4.066 | **3.996** |
+| Cruzeiro do lander: propelente / inerte | 100 / 32 | 99 / 31 |
+| Entrada, descida e pouso (P-018) | 1.932 | 1.898 |
+| MAV + energia do aquecimento | 438 | 403 |
+| Massa de entrada / pousada | 3.934 / 2.003 | 3.866 / 1.968 |
+| Total na órbita baixa (regra iii), modelo | 34.216 | 34.003 |
+
+O orbitador (7.205 kg) e a órbita de encontro (300 × 24.992 km) não mudam. A referência L2 passa de 2.440 para 2.309 kg.
+
+**Margens do lander** (pior janela): Falcon Heavy com recuperação +17 %, Vulcan VC2 +8 % (antes +15 % e +6 %). Ver a nota
+de 2026-10-28 no ADR 0008.
+
+**Sensibilidade** (`results/etapa2.5/arquitetura.md`): os mesmos casos perdem lançador.
+- Margem de Δv de 20 %: o orbitador perde o VC6 (−6 %), e o lander perde o VC2 (−3 %, antes −7 %).
+- GSFC: o lander perde o VC2 (−3 %, antes −5 %).
+- ESA: o lander perde o Falcon Heavy com recuperação (−12 %) e o VC2 (−18 %).
+- Casos novos de ε do MAV: 0,238 e 0,176 não derrubam nenhum lançador. O caso 0,300 (P-045) derruba os dois do lander.
+
+**RISCO de projeto (MAV perto da assíntota da equação do foguete).**
+- Com Isp de 310 s e Δv de subida de 5,764 km/s (com margem), o MAV fica perto da assíntota da equação do foguete.
+- Um ε só um pouco acima do de Bowles faz a massa crescer muito. Com ε = 0,300 (P-045, sem fonte, só ilustração), o
+  lander vai a 5.368 kg e perde os dois lançadores escolhidos: Falcon Heavy com recuperação −13 % e Vulcan VC2 −19 %.
+- Ligado à **Etapa 3.3**: uma órbita de encontro mais baixa, com orbitador elétrico, reduz o Δv do MAV.
+
+**Premissas:** P-045 nova; total de 45, todas NÃO VALIDADAS (`results/fase2/premissas_nao_validadas.md`).

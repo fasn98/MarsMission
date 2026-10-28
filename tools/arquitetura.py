@@ -39,6 +39,9 @@ def main():
     pcfg = _ler("config/plataformas.yaml")
     vei, janelas, ref = lc.veiculos()
     base_m = margens(vei, janelas, lcfg)
+    mav = lc.veiculos(detalhe=True)[0]["lander"]
+    op_mav = mav["mav_opcao"]
+    mav_est = [{k: e[k] for k in ("nome", "isp_s", "dv_km_s", "massa_inicial_kg", "propelente_kg")} for e in mav["mav_estagios"]]
 
     # Composição dos veículos
     o = vei["orbitador_regra_iii"]
@@ -83,15 +86,19 @@ def main():
     lb = pl["lander"]["base_L3_braco_helicopteros"]["prevista_kg"]
     casos = []
 
-    def caso(nome, premissa, plat_o=None, plat_l=None, margem_dv=None, razao=None, lcfg2=None):
-        d2, s2 = copy.deepcopy(dcfg), copy.deepcopy(scfg)
+    mcfg = _ler("config/mav_propulsao.yaml")
+
+    def caso(nome, premissa, plat_o=None, plat_l=None, margem_dv=None, razao=None, lcfg2=None, eps_mav=None):
+        d2, s2, m2 = copy.deepcopy(dcfg), copy.deepcopy(scfg), copy.deepcopy(mcfg)
         if plat_o is not None:
             d2["plataforma_orbitador_kg"]["valor"] = plat_o
         if margem_dv is not None:
             d2["margem_dv"]["valor"] = margem_dv
         if razao is not None:
             s2["lander"]["razao_pousada_entrada"]["entrada_direta"]["valor"] = razao
-        v = lc.veiculos(plat_l, d2, s2)[0]
+        if eps_mav is not None:
+            m2["opcoes"][op_mav]["fracao_estrutural"]["valor"] = eps_mav
+        v = lc.veiculos(plat_l, d2, s2, mcfg=m2)[0]
         m = margens(v, janelas, lcfg2 or lcfg)
         casos.append({"caso": nome, "premissa": premissa, "orbitador_injetado_kg": v["orbitador_regra_iii"]["injetada_kg"],
                       "lander_injetado_kg": v["lander"]["injetada_kg"], "margens": m})
@@ -109,13 +116,21 @@ def main():
     l2 = copy.deepcopy(lcfg)
     l2["dla"]["multiplicador_nordeste"]["fator"] = [1.0] * len(l2["dla"]["multiplicador_nordeste"]["fator"])
     caso("Sem penalidade de DLA (multiplicador 1)", "P-036", lcfg2=l2)
+    fe = mcfg["opcoes"][op_mav]["fracao_estrutural"]
+    for k, rot in (("pessimista", "MAV com turbobomba, Bowles Tab. 5 [F46]"), ("otimista", "só a massa seca, Bowles Tab. 11 [F46]"),
+                   ("ilustracao_risco", "sem fonte, ilustração do risco")):
+        x = fe["sensibilidade"][k]
+        n3 = lambda y: f"{y:.3f}".replace(".", ",")  # noqa: E731
+        caso(f"ε do MAV {n3(_v(x))} ({rot}) em vez de {n3(_v(fe))}", x.get("premissa", "—"), eps_mav=_v(x))
 
     out = {"gerado_por": "tools/arquitetura.py", "missao_referencia": ref,
            "orbita_encontro_km": [pl["orbita_encontro"]["periapse_alt_km"], pl["orbita_encontro"]["apoapse_regra_5pct_km"]],
            "envelope_dv_km_s": ms["envelope_dimensionamento"]["dv_total_km_s"],
            "orbitador": {"composicao": orbitador, "injetado_kg": o["injetada_kg"], "soma_kg": soma_o},
            "lander": {"composicao": lander, "injetado_kg": la_["injetada_kg"], "soma_kg": soma_l,
-                      "massa_entrada_kg": la_["massa_entrada_kg"], "massa_pousada_kg": la_["massa_pousada_kg"]},
+                      "massa_entrada_kg": la_["massa_entrada_kg"], "massa_pousada_kg": la_["massa_pousada_kg"],
+                      "mav": {"opcao": op_mav, "fracao_estrutural": _v(mcfg["opcoes"][op_mav]["fracao_estrutural"]),
+                              "dv_com_margem_km_s": sum(e["dv_km_s"] for e in mav_est), "estagios": mav_est}},
            "lancadores": {"orbitador": lcfg["escolha"]["orbitador"], "lander": lcfg["escolha"]["lander"], "margens_base": base_m},
            "lancamentos": 2, "cronograma": crono, "sensibilidade": casos}
     SAIDA.mkdir(parents=True, exist_ok=True)
@@ -134,6 +149,10 @@ def main():
         md.append(f"| {x['item']} | {br(x.get('propelente_kg'))} | {br(x.get('inerte_kg', x.get('massa_kg')))} |")
     md += [f"| **Massa injetada** | | **{br(la_['injetada_kg'])}** |", "",
            f"Massa de entrada {br(la_['massa_entrada_kg'])} kg; massa pousada {br(la_['massa_pousada_kg'])} kg.", "",
+           f"MAV {op_mav}: ε {br(out['lander']['mav']['fracao_estrutural'], 3)}, Δv de subida com margem "
+           f"{br(out['lander']['mav']['dv_com_margem_km_s'], 3)} km/s; "
+           + "; ".join(f"{e['nome']}: Isp {br(e['isp_s'])} s, Δv {br(e['dv_km_s'], 3)} km/s, massa inicial {br(e['massa_inicial_kg'], 1)} kg, "
+                       f"propelente {br(e['propelente_kg'], 1)} kg" for e in mav_est) + ".", "",
            "## Lançadores (forma a): pior margem nas quatro janelas", "", "| Veículo | Lançador | Pior margem |", "| :- | :- | -: |"]
     for v, d in base_m.items():
         for n, mg in d.items():

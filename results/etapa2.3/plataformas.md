@@ -43,27 +43,27 @@ Energia: pior eclipse 3,24 h num período de 17,14 h; carga 510 W; painel 658 W 
 
 | Subsistema | Básica | Categoria E1 | MGA (médio) | Prevista |
 | :- | -: | :- | -: | -: |
-| nucleo | 1 830,8 | estrutura_primaria | 21,5 % | 2 224,4 |
+| nucleo | 1 723,4 | estrutura_primaria | 21,5 % | 2 093,9 |
 | uhf | 6,5 | eletronica_0_5kg | 27,5 % | 8,3 |
 | banda_x_cruzeiro | 14,7 | eletronica_0_5kg | 27,5 % | 18,7 |
 | radar | 5,0 | eletronica_0_5kg | 27,5 % | 6,4 |
 | amostras | 59,0 | instrumentacao | 50,0 % | 88,5 |
 | painel_solar | 17,3 | painel_solar | 27,5 % | 22,1 |
 | bateria | 58,3 | baterias | 22,5 % | 71,5 |
-| **Total** | **1 991,7** | | | **2 439,9** |
+| **Total** | **1 884,3** | | | **2 309,4** |
 
 ## Massa total na órbita baixa da Terra
 
 | Caso | Orbitador | Lander | Total (iii) em 26 950 km | Total (A) em 26 950 km | Apoapse pela regra dos 5 % | Total (iii) nele | Total (A) nele |
 | :- | -: | -: | -: | -: | -: | -: | -: |
-| Antes (P-016 = P-017 = 850 kg) | 850 | 850 | 35 630 | 23 799 | 26 950 | 35 630 | 23 799 |
-| **Base: orbitador E1 médio + L3 + braço + helicópteros** | 497 | 1 565 | 33 766 | 24 618 | 24 992 | 34 216 | 24 817 |
-| GSFC: E1 médio + 15 % nos dois | 556 | 1 795 | 36 244 | 26 643 | 24 992 | 36 719 | 26 853 |
-| ESA: 20 % × 20 % nos dois | 574 | 2 209 | 39 101 | 29 369 | 24 992 | 39 584 | 29 583 |
-| Orbitador E1 mínimo + lander de base | 473 | 1 565 | 33 353 | 24 382 | 24 992 | 33 794 | 24 576 |
-| Orbitador E1 máximo + lander de base | 520 | 1 565 | 34 179 | 24 855 | 24 992 | 34 639 | 25 058 |
-| Limite inferior do lander: L1 (E1 médio) | 497 | 529 | 27 379 | 18 232 | 26 950 | 27 379 | 18 232 |
-| Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada) | 497 | 2 500 | 39 530 | 30 382 | 24 067 | 40 221 | 30 687 |
-| Referência: L2 (E1 médio), antigo limite superior | 497 | 2 440 | 39 159 | 30 012 | 24 067 | 39 850 | 30 316 |
+| Antes (P-016 = P-017 = 850 kg) | 850 | 850 | 35 412 | 23 580 | 26 950 | 35 412 | 23 580 |
+| **Base: orbitador E1 médio + L3 + braço + helicópteros** | 497 | 1 565 | 33 547 | 24 400 | 24 992 | 34 003 | 24 603 |
+| GSFC: E1 médio + 15 % nos dois | 556 | 1 795 | 36 025 | 26 424 | 24 992 | 36 505 | 26 640 |
+| ESA: 20 % × 20 % nos dois | 574 | 2 209 | 38 882 | 29 151 | 24 992 | 39 370 | 29 370 |
+| Orbitador E1 mínimo + lander de base | 473 | 1 565 | 33 134 | 24 163 | 24 992 | 33 580 | 24 362 |
+| Orbitador E1 máximo + lander de base | 520 | 1 565 | 33 960 | 24 636 | 25 952 | 34 188 | 24 738 |
+| Limite inferior do lander: L1 (E1 médio) | 497 | 529 | 27 160 | 18 013 | 26 950 | 27 160 | 18 013 |
+| Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada) | 497 | 2 500 | 39 311 | 30 164 | 24 067 | 40 010 | 30 476 |
+| Referência: L2 (E1 médio), antigo limite superior | 497 | 2 309 | 38 136 | 28 989 | 24 992 | 38 592 | 29 192 |
 
 Nos casos de sensibilidade, a plataforma do orbitador é a calculada no apoapse do caso de base.

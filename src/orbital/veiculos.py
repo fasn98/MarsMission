@@ -54,17 +54,19 @@ def dv_extra_orbitador(mu, um_sol, rp, ra, c3l, descer):
     return descer + min(tei_alvo, voltar) - tei_1sol
 
 
-def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None, detalhe=False):
+def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None, detalhe=False, mcfg=None):
     """Massas injetadas (sem estágio de saída) do orbitador (iii e A) e do lander, no caso de base da Etapa 2.3.
 
     `plataforma_lander_kg` substitui a plataforma do lander do config (opções de coleta, Etapa 2.5); `dcfg` e `scfg`
-    substituem config/dimensionamento.yaml e config/superficie.yaml (sensibilidade da Etapa 2.5). Cada veículo traz
+    substituem config/dimensionamento.yaml e config/superficie.yaml (sensibilidade da Etapa 2.5); `mcfg`, o
+    config/mav_propulsao.yaml. Cada veículo traz
     também o detalhe por estágio ("estagios") e, no lander, as massas de chegada, pouso e MAV. Com `detalhe=True`
     (Etapa 3.1), cada estágio traz as queimas (massa antes e propelente) e o lander traz os estágios do MAV."""
     dcfg = ler("config/dimensionamento.yaml") if dcfg is None else dcfg
     scfg = ler("config/superficie.yaml") if scfg is None else scfg
     cu = ler("config/carga_util.yaml")
-    mcfg, icfg, po = ler("config/mav_propulsao.yaml"), ler("config/isru.yaml"), ler("config/parametros_orbitais.yaml")
+    mcfg = ler("config/mav_propulsao.yaml") if mcfg is None else mcfg
+    icfg, po = ler("config/isru.yaml"), ler("config/parametros_orbitais.yaml")
     p = parametros()
     a_caso, jan, piores = dm.casos(dcfg, p)
     vs = dm.variantes(a_caso, jan, piores)

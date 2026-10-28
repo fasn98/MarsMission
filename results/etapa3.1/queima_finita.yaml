@@ -318,9 +318,9 @@ cruzeiro:
   empuxo_n: 40.0
   isp_s: 292.0
   massa_motores_kg: 1.4
-  m0_kg: 4066.2704354503408
+  m0_kg: 3995.874249296971
   dv_total_km_s: 0.07149999999999986
-  duracao_total_s: 7178.465617359213
+  duracao_total_s: 7054.190409913692
   queima_unica_max_s: 28800.0
   excede_queima_unica: false
 - combinacao: Z2
@@ -328,9 +328,9 @@ cruzeiro:
   empuxo_n: 80.0
   isp_s: 292.0
   massa_motores_kg: 2.8
-  m0_kg: 4066.2704354503408
+  m0_kg: 3995.874249296971
   dv_total_km_s: 0.07149999999999986
-  duracao_total_s: 3589.2328086796065
+  duracao_total_s: 3527.095204956846
   queima_unica_max_s: 28800.0
   excede_queima_unica: false
 mav:
@@ -341,11 +341,11 @@ mav:
   isp_s: 305.0
   isp_dimensionamento_s: 310
   massa_motores_kg: 13.1541796
-  m0_kg: 417.67315030823806
+  m0_kg: 384.0074214301045
   dv_km_s: 2.772264449497674
-  duracao_s: 424.22402710920426
-  empuxo_peso_marte: 1.1472610837612822
-  aceleracao_inicial_m_s2: 4.260002824426001
+  duracao_s: 390.03027759547894
+  empuxo_peso_marte: 1.2478408602002413
+  aceleracao_inicial_m_s2: 4.633475033825249
   queima_unica_max_s: 3940.0
   excede_queima_unica: false
   nota: ''
@@ -356,11 +356,11 @@ mav:
   isp_s: 310.0
   isp_dimensionamento_s: 310
   massa_motores_kg: 17.2365112
-  m0_kg: 417.67315030823806
+  m0_kg: 384.0074214301045
   dv_km_s: 2.772264449497674
-  duracao_s: 388.11304340999277
-  empuxo_peso_marte: 1.2619871921374106
-  aceleracao_inicial_m_s2: 4.686003106868602
+  duracao_s: 356.82994923966976
+  empuxo_peso_marte: 1.3726249462202655
+  aceleracao_inicial_m_s2: 5.096822537207774
   queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: ''
@@ -371,11 +371,11 @@ mav:
   isp_s: 296.0
   isp_dimensionamento_s: 310
   massa_motores_kg: 15.875734
-  m0_kg: 417.67315030823806
+  m0_kg: 384.0074214301045
   dv_km_s: 2.772264449497674
-  duracao_s: 186.3112259589843
-  empuxo_peso_marte: 2.581337438462885
-  aceleracao_inicial_m_s2: 9.585006354958503
+  duracao_s: 171.29397331667548
+  empuxo_peso_marte: 2.807641935450543
+  aceleracao_inicial_m_s2: 10.42531882610681
   queima_unica_max_s: 500.0
   excede_queima_unica: false
   nota: fora de produção [F106]
@@ -386,11 +386,11 @@ mav:
   isp_s: 321.0
   isp_dimensionamento_s: 310
   massa_motores_kg: 4.3
-  m0_kg: 89.75909822731131
+  m0_kg: 85.65653412699649
   dv_km_s: 2.9912791045515443
-  duracao_s: 407.77786320946393
-  empuxo_peso_marte: 1.2751545485302147
-  aceleracao_inicial_m_s2: 4.734896053920958
+  duracao_s: 389.1398102928716
+  empuxo_peso_marte: 1.3362287365821968
+  aceleracao_inicial_m_s2: 4.961676354659465
   queima_unica_max_s: 6660.0
   excede_queima_unica: false
   nota: ''
@@ -401,11 +401,11 @@ mav:
   isp_s: 310.0
   isp_dimensionamento_s: 310
   massa_motores_kg: 4.3091278
-  m0_kg: 89.75909822731131
+  m0_kg: 85.65653412699649
   dv_km_s: 2.9912791045515443
-  duracao_s: 349.1996504634521
-  empuxo_peso_marte: 1.468091192421032
-  aceleracao_inicial_m_s2: 5.451307217468432
+  duracao_s: 333.2389960214277
+  empuxo_peso_marte: 1.5384061810369052
+  aceleracao_inicial_m_s2: 5.712400402222033
   queima_unica_max_s: 2000.0
   excede_queima_unica: false
   nota: ''
