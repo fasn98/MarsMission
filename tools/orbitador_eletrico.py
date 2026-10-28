@@ -241,7 +241,7 @@ def escreve_md(out):
             e = next(x for x in r["por_n"] if x["n_ativos"] == r["n_minimo"])["escolha"]
             md += [f"Conferência da descida no ponto de {r['n_minimo']} ativos: Δv quase circular {br(c['dv_quase_circular_km_s'], 4)} km/s, numérico "
                    f"{br(c['dv_numerico_km_s'], 4)} km/s ({c['diferenca_relativa']:+.1e}); tempo de empuxo {br(c['tempo_empuxo_quase_circular_dias'], 1)} × "
-                   f"{br(c['tempo_empuxo_numerico_dias'], 1)} d; {br(c['voltas'])} voltas; excentricidade final {br(c['excentricidade_final'], 4)}.".replace("e-", "e−"), "",
+                   f"{br(c['tempo_empuxo_numerico_dias'], 1)} d; {br(c['voltas'])} voltas; excentricidade final {br(c['excentricidade_final'], 4)}.", "",
                    "Margens dos lançadores (injeção direta, pior janela): " + "; ".join(
                        f"{v_}: " + ", ".join(f"{k} {pc(m)}" for k, m in d.items()) for v_, d in e["margens"].items()), ""]
     c1 = out["hibrido_c1"]

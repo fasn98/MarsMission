@@ -27,7 +27,7 @@ Estada em Marte por janela (dias): 2028-conjuncao 414, 2031-conjuncao 480, 2033-
 | 11 | 28,1 | 1,02 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 73 | 69 | 106 858 | 306 | 3 630 | 223 | 335 394 | 251 |
 | 12 | 30,7 | 1,12 | 1 216 | 1 939 | 2,804 | 2,829 | 0,235 | 71 | 66 | 112 994 | 324 | 3 630 | 223 | 354 021 | 255 |
 
-Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1192 km/s, numérico 0,1192 km/s (-4.8e−09); tempo de empuxo 131,3 × 131,3 d; 1 172 voltas; excentricidade final 0,0000.
+Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1192 km/s, numérico 0,1192 km/s (-4.8e-09); tempo de empuxo 131,3 × 131,3 d; 1 172 voltas; excentricidade final 0,0000.
 
 Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) −90 %, Falcon Heavy (descartável) −76 %, Vulcan VC2 −91 %, Vulcan VC4 −86 %, Vulcan VC6 −82 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn −90 %, SLS Block 1 (5 m + iCPS) −61 %; lander: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) +29 %, Falcon Heavy (descartável) +210 %, Vulcan VC2 +20 %, Vulcan VC4 +79 %, Vulcan VC6 +129 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn +26 %, SLS Block 1 (5 m + iCPS) +391 %
 
@@ -50,7 +50,7 @@ Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (AS
 | 11 | 49,5 | 1,82 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 84 | 79 | 153 281 | 559 | 3 616 | 216 | 476 276 | 229 |
 | 12 | 54,0 | 1,98 | 1 092 | 2 131 | 2,801 | 2,826 | 0,336 | 82 | 77 | 163 585 | 596 | 3 616 | 216 | 507 555 | 232 |
 
-Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1625 km/s, numérico 0,1625 km/s (-9.6e−10); tempo de empuxo 111,1 × 111,1 d; 971 voltas; excentricidade final 0,0000.
+Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1625 km/s, numérico 0,1625 km/s (-9.6e-10); tempo de empuxo 111,1 × 111,1 d; 971 voltas; excentricidade final 0,0000.
 
 Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) −91 %, Falcon Heavy (descartável) −78 %, Vulcan VC2 −91 %, Vulcan VC4 −87 %, Vulcan VC6 −84 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn −91 %, SLS Block 1 (5 m + iCPS) −65 %; lander: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) +29 %, Falcon Heavy (descartável) +210 %, Vulcan VC2 +20 %, Vulcan VC4 +79 %, Vulcan VC6 +129 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn +26 %, SLS Block 1 (5 m + iCPS) +391 %
 

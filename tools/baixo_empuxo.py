@@ -93,8 +93,10 @@ def main():
     (SAIDA / "baixo_empuxo.yaml").write_text(yaml.safe_dump(nativo(out), sort_keys=False, allow_unicode=True), encoding="utf-8")
 
     br = lambda x, n=0: f"{x:,.{n}f}".replace(",", " ").replace(".", ",")  # noqa: E731
-    ex = lambda x: f"{x:+.1e}".replace(".", ",").replace("-", "−")  # noqa: E731
-    ab = lambda x: f"{x:.1e}".replace(".", ",").replace("-", "−")  # noqa: E731
+    # sinal tipográfico só na mantissa; o expoente fica com o hífen, para que tools/confere_regeneracao.py leia o número inteiro
+    cient = lambda s: s.split("e")[0].replace(".", ",").replace("-", "−") + "e" + s.split("e")[1]  # noqa: E731
+    ex = lambda x: cient(f"{x:+.1e}")  # noqa: E731
+    ab = lambda x: cient(f"{x:.1e}")  # noqa: E731
     md = ["# Modelo de baixo empuxo (gerado por tools/baixo_empuxo.py)", "",
           "## 1. Verificação contra Schwenzfeger, NASA TM X-64836 (1973), p. 31 [F113]", "",
           f"Subida com aceleração tangencial constante ε = {br(verif['eps'], 2)} a partir de órbita circular, adimensional "
