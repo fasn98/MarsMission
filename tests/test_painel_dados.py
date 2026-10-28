@@ -241,3 +241,12 @@ def test_estagios_do_orcamento_tem_os_nomes_de_results():
     assert set(d.NOMES_ESTAGIO.values()) <= itens
     nomes = {e["nome"] for x in d.orcamento()["veiculos"].values() for e in x["estagios"]}
     assert nomes <= set(d.NOMES_ESTAGIO.values())   # nenhum estágio fica com a chave interna
+
+
+def test_propulsao_le_os_resultados_da_fase_3():
+    p = d.propulsao()
+    oe = yaml.safe_load((RAIZ / "results/etapa3.3/orbitador_eletrico.yaml").read_text(encoding="utf-8"))
+    assert p["opcoes"][0]["total"].valor == oe["quimico"]["total_regra_iii_kg"]
+    assert p["verificacao"]["verificado"] is False and p["verificacao"]["fora_da_tolerancia"] == ["u"]   # ADR 0012
+    assert {x["manobra"] for x in p["perdas"]} == {"captura", "saida"}
+    assert all(x["ida"].rotulo == "calculado, não verificado" for x in p["b"])

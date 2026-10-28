@@ -81,3 +81,17 @@ por critérios operacionais (`docs/etapa2.2b_propulsao_mav.md`).
 - Um ε só um pouco acima do de Bowles faz a massa crescer muito. Com ε = 0,300 (P-045, sem fonte, só ilustração), o
   lander vai a 5.368 kg e perde os dois lançadores escolhidos: Falcon Heavy com recuperação −13 % e Vulcan VC2 −19 %.
 - Ligado à **Etapa 3.3**: uma órbita de encontro mais baixa, com orbitador elétrico, reduz o Δv do MAV.
+
+## Nota (2026-10-28): risco do MAV depois da Etapa 3.3 (ADR 0013)
+- **A mitigação prevista não se confirmou.** Ela era uma órbita de encontro mais baixa, com orbitador elétrico, para
+  reduzir o Δv do MAV (nota anterior; Etapa 3.3). Na missão de referência, nenhuma opção elétrica fechou massa e tempo
+  (ADR 0013), e o encontro continua em 300 × 24.992 km.
+- **O risco continua aberto:** Isp de 310 s e Δv de subida de 5,764 km/s com margem (`results/etapa2.5/arquitetura.md`),
+  perto da assíntota da equação do foguete.
+- **Mitigações a avaliar nas próximas fases:**
+  1. **Margem de lançador:** manter margem para o crescimento do lander. Hoje: Falcon Heavy com recuperação +17 % e
+     Vulcan VC2 +8 % (`results/etapa2.5/arquitetura.md`).
+  2. **Lançador maior para o lander:** por exemplo, os que já servem com folga na tabela do ADR 0008 (Falcon Heavy
+     descartável, Vulcan VC4 e VC6).
+  3. **MAV com Isp maior, se houver motor com voo comprovado:** o R-4D-11 tem 310 s [F107]. Um motor com voo e Isp
+     maior reduziria a sensibilidade ao ε.

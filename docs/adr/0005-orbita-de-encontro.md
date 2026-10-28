@@ -77,3 +77,8 @@ Os valores de 26.950 km acima ficam como histórico.
 - Com os motores escolhidos e as perdas de queima finita calculadas, a regra dos 5 % foi reaplicada
   (`results/etapa2.3/plataformas.md`). O apoapse continua **24.992 km**: a órbita de encontro segue em 300 × 24.992 km.
 - As massas mudaram (ver a errata em `docs/fase2_relatorio.md`).
+
+## Nota (2026-10-28): orbitador elétrico avaliado na Fase 3 (ADR 0013)
+O item 1 deixou o encontro em órbita baixa com orbitador elétrico para a Fase 3. A Etapa 3.3 avaliou a opção e ela não
+foi adotada (ADR 0013): na missão de referência, nenhuma opção elétrica fecha massa e tempo. A família S2 e a órbita de
+encontro de 300 × 24.992 km continuam.

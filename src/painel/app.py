@@ -256,11 +256,49 @@ def pagina_premissas():
             st.markdown(a["texto"])
 
 
+def pagina_propulsao():
+    st.title("Propulsão (Fase 3)")
+    p = d.propulsao()
+    st.markdown("Comparação de propulsão da Fase 3 (`docs/fase3_relatorio.md`; ADRs 0011, 0012 e 0013). Números de "
+                "`results/etapa3.1` a `results/etapa3.3`.")
+    st.header("Motores químicos e perdas de queima finita (Etapa 3.1)")
+    tabela([{"Manobra": x["manobra"], "Motores": x["combinacao"], "Queimas": x["queimas"],
+             "Perda calculada": f"{br(x['perda'].valor, 1)} m/s", "DRA (P-015)": f"{br(x['p015'].valor, 1)} m/s",
+             "Rótulo": x["perda"].rotulo, "Origem": x["perda"].origem} for x in p["perdas"]])
+    st.header("Modelo de baixo empuxo (Etapa 3.2)")
+    v_ = p["verificacao"]
+    st.markdown(f"Verificação contra Schwenzfeger, NASA TM X-64836, p. 31 [F113]: critério declarado de "
+                f"{br(100 * v_['tolerancia'], 2)} % por componente. **{'Passa' if v_['verificado'] else 'Não passa'}**"
+                + ("" if v_["verificado"] else f" em {', '.join(v_['fora_da_tolerancia'])}") +
+                " (ADR 0012: atribuído provavelmente à integração publicada, não confirmado).")
+    c = st.columns(3)
+    with c[0]:
+        metrica("Maior diferença em u", d.Valor(100 * v_["maior_dif_u"].valor, "%", v_["maior_dif_u"].rotulo, v_["maior_dif_u"].origem), 3)
+    with c[1]:
+        metrica("Erro do vetor posição", d.Valor(100 * v_["maior_erro_posicao"].valor, "%", v_["maior_erro_posicao"].rotulo, v_["maior_erro_posicao"].origem), 4)
+    with c[2]:
+        metrica("Erro do vetor velocidade", d.Valor(100 * v_["maior_erro_velocidade"].valor, "%", v_["maior_erro_velocidade"].rotulo, v_["maior_erro_velocidade"].origem), 4)
+    st.header("Orbitador químico × elétrico × híbrido (Etapa 3.3)")
+    st.markdown("Estada em Marte por janela: " + ", ".join(f"{k} {br(x, 0)} d" for k, x in p["estada_dias"].items())
+                + ". Decisão: **orbitador químico** (ADR 0013).")
+    tabela([{"Opção": x["opcao"], "Orbitador injetado": f"{br(x['orbitador'].valor, 0)} kg", "Total (iii)": f"{br(x['total'].valor, 0)} kg",
+             "Tempo em Marte": "—" if x["tempo"] is None else f"{br(x['tempo'].valor, 0)} d", "Situação": x["situacao"],
+             "Rótulo": x["total"].rotulo, "Origem": x["total"].origem} for x in p["opcoes"]])
+    st.subheader("(c1) Descida em arcos em torno do periapse (só a descida)")
+    tabela([{"Opção": x["opcao"], "Tempo decorrido": f"{br(x['descida'].valor, 0)} d", "Periapse final": f"{br(x['periapse'].valor, 0)} km",
+             "Rótulo": x["descida"].rotulo, "Origem": x["descida"].origem} for x in p["c1"]], estreita=True)
+    st.subheader("(b) Elétrico: empuxo da ida no trecho heliocêntrico (calculado, não verificado)")
+    st.markdown(f"Ida da missão de referência: {br(p['ida_referencia_dias'], 0)} d.")
+    tabela([{"Opção": x["opcao"], "Empuxo da ida": f"{br(x['ida'].valor, 0)} d", "Rótulo": x["ida"].rotulo, "Origem": x["ida"].origem}
+            for x in p["b"]], estreita=True)
+
+
 # A página padrão fica na raiz "/"; a cópia oculta faz o endereço /visao-geral (links salvos) abrir a mesma página.
 pg = st.navigation([st.Page(visao_geral, title="Visão geral", default=True),
                     st.Page(visao_geral, title="Visão geral", url_path="visao-geral", visibility="hidden"),
                     st.Page(pagina_trajetoria, title="Trajetória", url_path="trajetoria"),
                     st.Page(pagina_porkchops, title="Porkchops", url_path="porkchops"),
                     st.Page(pagina_orcamento, title="Orçamento de massa", url_path="orcamento"),
+                    st.Page(pagina_propulsao, title="Propulsão", url_path="propulsao"),
                     st.Page(pagina_premissas, title="Premissas e decisões", url_path="premissas")])
 pg.run()

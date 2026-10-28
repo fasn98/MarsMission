@@ -7,7 +7,7 @@ import pytest
 pytest.importorskip("streamlit")
 from streamlit.testing.v1 import AppTest  # noqa: E402
 
-PAGINAS = ["visao_geral", "pagina_trajetoria", "pagina_porkchops", "pagina_orcamento", "pagina_premissas"]
+PAGINAS = ["visao_geral", "pagina_trajetoria", "pagina_porkchops", "pagina_orcamento", "pagina_propulsao", "pagina_premissas"]
 
 
 def _pagina(nome):

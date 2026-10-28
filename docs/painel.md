@@ -13,6 +13,7 @@ com branch, hook, revisão independente e PR; o Replit Agent e commits diretos n
 | Trajetória | Órbitas de Terra e Marte nas datas reais (DE440) e arcos de Lambert de ida e volta, em 2D | `orbital.porkchop`, `orbital.lambert`, `orbital.kepler` (calculado na hora; precisa dos kernels) |
 | Porkchops | Contornos de C3 e v∞ das janelas de ida e de volta de `config/janelas.yaml`, com valores no cursor (inclusive DLA na ida), mínimos e missão de referência | `results/painel/porkchop_*.npz` (gerado por `tools/exporta_painel.py`), `results/etapa1.2/minimos_*.yaml` |
 | Orçamento de massa | Controles para a plataforma do lander (P-017), a margem de Δv (P-014) e o Isp e a fração estrutural dos estágios MMH/MON; recalcula os veículos e mostra que lançadores continuam servindo | `orbital.veiculos`, `orbital.lancamento` |
+| Propulsão | Fase 3: motores químicos e perdas de queima finita, verificação do modelo de baixo empuxo (com o resultado do critério declarado) e a comparação químico × elétrico × híbrido | `results/etapa3.1` a `results/etapa3.3` |
 | Premissas e decisões | Todas as premissas de `config/premissas.yaml`, com status, e os ADRs (texto e link) | `config/premissas.yaml`, `docs/adr/` |
 
 **Endereços.** A Visão geral é a página padrão, na raiz `/`. Ela também abre em `/visao-geral` (página oculta com o
