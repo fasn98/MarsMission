@@ -74,7 +74,8 @@ lancamento:
   separados: true
   cruzeiro_lander:
     # Estágio de cruzeiro armazenável para as correções da ida, descartado antes da entrada (como o do MSL).
-    isp_s: {valor: 321, fonte: "[F28]"}
+    # Motores escolhidos na Etapa 3.1 (ADR 0011): 4 × 10N ArianeGroup (Z1). Antes: 321 s [F28], do motor de 400 N.
+    isp_s: {valor: 292, fonte: "[F28] p. 4: 10N, \"Specific Impulse at Nominal Point 292 s\" (ADR 0011)"}
     fracao_estrutural: {valor: 0.24, fonte: "[F22]"}
 
 varreduras_encontro:

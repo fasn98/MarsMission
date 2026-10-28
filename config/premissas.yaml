@@ -153,6 +153,9 @@ premissas:
       Diferenças entre o Δv com perdas e o ideal do DRA 5.0 (Addendum, p. 211 [F18]) para um veículo
       tripulado com outra relação empuxo/peso. Usadas como ordem de grandeza; o valor real depende do
       empuxo deste veículo, que não foi definido.
+      Desde o redimensionamento da Etapa 3.1 (ADR 0011), captura e saída de Marte usam a perda de queima finita
+      calculada com os motores escolhidos (results/etapa3.1/perdas_calculadas.yaml); esta premissa fica para a saída
+      da Terra e para as etapas anteriores, regeneradas como registro da época.
     status: NÃO VALIDADA
   - id: P-016
     nome: plataforma_orbitador_kg
@@ -490,3 +493,14 @@ premissas:
       como S400-15 (Isp 321 s), o periapse da órbita de 1 sol e uma faixa de v∞ (a propulsão elétrica no cruzeiro também
       pode baixar o v∞ de chegada). É conferência de coerência, não verificação.
     status: NÃO VALIDADA
+  - id: P-044
+    nome: ponto_fixo_perdas_e_massas
+    valor: {tolerancia_km_s: 1.0e-6, max_iteracoes: 10}
+    unidade: km/s; adimensional
+    uso: config/queima_finita.yaml (tools/redimensiona.py, Etapa 3.1)
+    justificativa: >
+      As perdas de queima finita da captura e da saída dependem das massas, e as massas dependem das perdas e da órbita
+      de encontro. O ponto fixo para quando nenhuma perda muda mais que a tolerância entre duas iterações. 1e-6 km/s
+      (1 mm/s) muda o propelente em gramas, muito abaixo da precisão relevante do estudo. Sem valor publicado.
+    status: NÃO VALIDADA
+

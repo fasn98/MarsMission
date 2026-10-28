@@ -21,7 +21,13 @@ def ler(caminho, raiz=None):
 
 
 def v(item):
-    """Valor numérico de um item {valor: ..., fonte: ...} do config."""
+    """Valor numérico de um item do config: {valor: ..., fonte: ...}, ou {resultado: <arquivo de results/>, chave: a.b.c}
+    para um valor calculado por uma ferramenta (ex.: as perdas de queima finita da Etapa 3.1, ADR 0011)."""
+    if "resultado" in item:
+        x = ler(item["resultado"])
+        for k in item["chave"].split("."):
+            x = x[k]
+        return float(x)
     return float(item["valor"])
 
 

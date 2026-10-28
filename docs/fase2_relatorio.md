@@ -206,3 +206,63 @@ da Fase 2, as 38 premissas (P-001 a P-038) estão com status NÃO VALIDADA. Só 
 - `results/fase1/premissas.md` e `results/fase2/premissas_nao_validadas.md` foram regenerados e agora mostram 43 premissas
   (P-001 a P-043), todas NÃO VALIDADAS.
 - Nenhum número desta fase muda.
+
+## Errata (2026-10-27): redimensionamento da Etapa 3.1 (ADR 0011)
+**O que muda.** A arquitetura das Etapas 2.3 a 2.5 foi redimensionada com os motores escolhidos na Etapa 3.1:
+- Isp de 310 s do R-4D-11 na inserção, no retorno e no MAV (antes 321 s e 343 s);
+- Isp de 292 s do 10N no cruzeiro do lander (antes 321 s);
+- perdas de queima finita calculadas na captura e na saída de Marte, no lugar da P-015: **72,6** e **56,4 m/s**, antes 18 e
+  11 m/s (`results/etapa3.1/perdas_calculadas.md`).
+
+As §1, §3 e §4 deste relatório ficam como registro; **os números vigentes são os abaixo**, de
+`results/etapa2.5/arquitetura.md`. As Etapas 1.4, 2.1 e 2.2 continuam como registro da época.
+
+**Massas (kg)**
+
+| Item | Antes | Agora |
+| :- | -: | -: |
+| Orbitador injetado (regra iii) | 6.310 | **7.205** |
+| Estágio de inserção: propelente / inerte | 2.478 / 782 | 2.990 / 944 |
+| Estágio de retorno: propelente / inerte | 1.401 / 443 | 1.569 / 496 |
+| Lander injetado | 3.740 | **4.066** |
+| Cruzeiro do lander: propelente / inerte | 84 / 27 | 100 / 32 |
+| Entrada, descida e pouso (P-018) | 1.782 | 1.932 |
+| MAV + energia do aquecimento | 282 | 438 |
+| Massa de entrada / pousada | 3.629 / 1.847 | 3.934 / 2.003 |
+| Total na órbita baixa (regra iii), modelo (`results/etapa2.3/plataformas.md`) | 30.509 | 34.216 |
+
+A órbita de encontro não muda: 300 × 24.992 km (a regra dos 5 % foi reaplicada).
+
+A referência L2 (só referência, fora da faixa) também cresce, porque o núcleo dela escala com o MAV: plataforma de
+1.857 para 2.440 kg e total (iii) no apoapse dela de 32.307 para 39.850 kg (`results/etapa2.3/plataformas.md`).
+
+**Margens dos lançadores escolhidos** (pior das quatro janelas): ver a nota de 2026-10-27 no ADR 0008. Todos continuam
+servindo, com margens menores:
+- orbitador: Falcon Heavy descartável +56 %, Vulcan VC6 +15 %;
+- lander: Vulcan VC2 +6 %.
+
+**Sensibilidade** (antes → agora; margens do orbitador: FH descartável / VC6; do lander: FH recuperação / FH descartável /
+VC2 / VC4 / VC6)
+
+| Caso | Orbitador injetado (kg) | Margens do orbitador | Lander injetado (kg) | Margens do lander |
+| :- | -: | :- | -: | :- |
+| Base | 6.310 → 7.205 | +78 % / +31 % → +56 % / +15 % | 3.740 → 4.066 | +25 % / +200 % / +16 % / +73 % / +122 % → +15 % / +176 % / +6 % / +60 % / +104 % |
+| Margem de massa GSFC (+15 % da básica) nas duas plataformas | 6.623 → 7.563 | +69 % / +25 % → +48 % / +10 % | 4.206 → 4.533 | +11 % / +167 % / +3 % / +54 % / +97 % → +3 % / +148 % / −5 % / +43 % / +83 % |
+| Margem de massa ESA (20 % × 20 %) nas duas plataformas | 6.714 → 7.666 | +67 % / +24 % → +46 % / +8 % | 5.044 → 5.374 | −7 % / +123 % / −14 % / +29 % / +64 % → −13 % / +109 % / −20 % / +21 % / +54 % |
+| Plataforma do lander no limite inferior (L1; sem os helicópteros, como definido na Etapa 2.3) | 6.310 → 7.205 | +78 % / +31 % → +56 % / +15 % | 1.642 → 1.962 | +185 % / +584 % / +163 % / +295 % / +405 % → +138 % / +472 % / +120 % / +231 % / +323 % |
+| Plataforma do lander no limite superior (SRL 2024 − MAV) | 6.310 → 7.205 | +78 % / +31 % → +56 % / +15 % | 5.633 → 5.965 | −17 % / +99 % / −23 % / +15 % / +47 % → −22 % / +88 % / −27 % / +9 % / +39 % |
+| Razão pousada/entrada 0,624 (Viking, a partir de órbita) em vez de 0,509 | 6.310 → 7.205 | +78 % / +31 % → +56 % / +15 % | 3.051 → 3.317 | +53 % / +268 % / +42 % / +113 % / +172 % → +41 % / +238 % / +30 % / +96 % / +150 % |
+| Margem de Δv 5 % (base 10 %) | 5.785 → 6.549 | +94 % / +43 % → +71 % / +27 % | 3.645 → 3.889 | +28 % / +208 % / +19 % / +78 % / +128 % → +20 % / +189 % / +11 % / +67 % / +113 % |
+| Margem de Δv 20 % (base 10 %) | 7.548 → 8.778 | +49 % / +10 % → +28 % / −6 % | 4.007 → 4.627 | +17 % / +180 % / +8 % / +62 % / +107 % → +1 % / +143 % / −7 % / +40 % / +79 % |
+| Sem penalidade de DLA (multiplicador 1) | 6.310 → 7.205 | +93 % / +43 % → +69 % / +25 % | 3.740 → 4.066 | +35 % / +226 % / +25 % / +88 % / +141 % → +24 % / +200 % / +15 % / +73 % / +122 % |
+
+**Leitura nova:**
+- Com margem de Δv de 20 % (P-014), o orbitador perde o Vulcan VC6 (−6 %).
+- Com a margem de massa GSFC, o lander perde o Vulcan VC2 (−5 %).
+- O Vulcan VC4, que não era escolhido, deixa de servir o orbitador no caso de base.
+
+**Premissas:**
+- **Nova:** P-044 (ponto fixo entre perdas e massas).
+- A P-015 fica restrita à saída da Terra e às etapas anteriores.
+- `results/fase1/premissas.md` e `results/fase2/premissas_nao_validadas.md` foram regenerados: 44 premissas, todas NÃO
+  VALIDADAS.

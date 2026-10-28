@@ -9,8 +9,10 @@ opcoes:
     criogenico: false
   O4:
     nome: Hipergólico armazenável (MMH/NTO)
-    isp_s: [343, 343]
-    isp_fonte: "[F46] Bowles et al. 2013, p. 32: \"the hypergolic engine has an engine specific impulse of 343 seconds\""
+    # Motores escolhidos na Etapa 3.1 (ADR 0011): estágio 1 = 4 × R-4D-11 (M2), estágio 2 = 1 × R-4D-11 (N2), Isp de voo
+    # da variante do Orion. Antes: 343 s do motor com turbobomba de Bowles et al. [F46] (histórico em config/motores.yaml).
+    isp_s: [310, 310]
+    isp_fonte: "[F107] p. 6 (Tab. 3): R-4D-11 do Orion, \"Specific Impulse 310 seconds\" (ADR 0011)"
     fracao_estrutural:
       valor: 0.238
       fonte: >

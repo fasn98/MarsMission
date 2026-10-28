@@ -273,3 +273,9 @@ O braço (P-034) deixa de ser provisório: vira a coleta de reserva.
 
 O apoapse não muda (24.992 km). Fonte: `results/etapa2.3/plataformas.yaml`.
 
+## Nota (2026-10-27): redimensionamento da Etapa 3.1 (ADR 0011)
+- Desde o ADR 0011, `results/etapa2.3/plataformas.md` sai com os motores da Etapa 3.1 (Isp de 310 s e 292 s, perdas
+  calculadas).
+- A linha "Antes (P-016 = P-017 = 850 kg)" usa as plataformas de 850 kg com essa propulsão nova (35.630 / 23.799 kg).
+  Ela não reproduz mais os 31.233 / 21.298 kg da Etapa 2.2; a frase da §6 sobre isso vale para a propulsão da época.
+- Os números vigentes estão na errata de 2026-10-27 de `docs/fase2_relatorio.md`.

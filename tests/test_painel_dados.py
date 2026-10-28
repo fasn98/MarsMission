@@ -85,8 +85,10 @@ def test_isp_e_fracao_estrutural_mudam_a_massa_no_sentido_fisico():
     for v in ("orbitador", "lander"):
         assert isp_hi[v]["injetado"].valor < base[v]["injetado"].valor < eps_hi[v]["injetado"].valor
     # valor igual ao de base não muda nada (o override é o mesmo número do config)
-    igual = d.orcamento(isp_armazenavel_s=c["isp_armazenavel_s"]["base"].valor)["veiculos"]
-    assert igual["orbitador"]["injetado"].valor == base["orbitador"]["injetado"].valor
+    for k in ("isp_armazenavel_s", "fracao_estrutural_armazenavel"):
+        igual = d.orcamento(**{k: c[k]["base"].valor})["veiculos"]
+        for v in ("orbitador", "lander"):   # o cruzeiro tem Isp de base próprio (ADR 0011) e também não pode mudar
+            assert igual[v]["injetado"].valor == pytest.approx(base[v]["injetado"].valor, rel=1e-12)
 
 
 def test_orcamento_inviavel_e_informado():

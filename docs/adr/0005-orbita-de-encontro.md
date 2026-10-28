@@ -72,3 +72,8 @@ Os valores de 26.950 km acima ficam como histórico.
 - O MAV cresce de ~340 kg (encontro em órbita baixa) para ~1,4 t. Esse é o ponto de partida da Etapa
   2.2 (ISRU).
 - Se a Fase 3 adotar propulsão elétrica no orbitador, esta decisão deve ser revista.
+
+## Nota (2026-10-27): redimensionamento da Etapa 3.1 (ADR 0011)
+- Com os motores escolhidos e as perdas de queima finita calculadas, a regra dos 5 % foi reaplicada
+  (`results/etapa2.3/plataformas.md`). O apoapse continua **24.992 km**: a órbita de encontro segue em 300 × 24.992 km.
+- As massas mudaram (ver a errata em `docs/fase2_relatorio.md`).

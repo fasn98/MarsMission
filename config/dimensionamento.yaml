@@ -18,7 +18,9 @@ estagios:
         se o propelente é carregado ou utilizável.
   insercao_marte: &armazenavel
     propelente: MMH/MON
-    isp_s: {valor: 321, fonte: "[F28] ArianeGroup, brochura da família de propulsores bipropelentes, motor de 400 N: \"Specific Impulse at Nominal Point 321 s\""}
+    # Motores escolhidos na Etapa 3.1 (ADR 0011): captura 8 × R-4D-11, retorno 4 × R-4D-11, variante do Orion.
+    # Antes: 321 s do motor de 400 N [F28] (histórico em config/motores.yaml, antes_etapa_3_1).
+    isp_s: {valor: 310, fonte: "[F107] p. 6 (Tab. 3): R-4D-11 do Orion, \"Specific Impulse 310 seconds\" (ADR 0011)"}
     fracao_estrutural:
       valor: 0.24
       fonte: >
@@ -31,10 +33,13 @@ dv:
   # Perdas gravitacionais: diferença entre o Δv com perdas e o Δv ideal da missão de conjunção do DRA
   # 5.0 (Addendum, p. 211 [F18]): TMI 4,140 − 3,992; MOI 1,789 − 1,771; TEI 1,573 − 1,562 km/s.
   # São de outro veículo (empuxo/peso diferente); aplicá-las aqui é a premissa P-015 (NÃO VALIDADA).
+  # Desde a Etapa 3.1 (ADR 0011), captura e saída de Marte usam a perda de queima finita calculada com os motores
+  # escolhidos, em várias queimas (tools/redimensiona.py, ponto fixo com as massas); a P-015 fica para a saída da Terra
+  # e para o histórico (config/motores.yaml, antes_etapa_3_1).
   perda_gravitacional:
     saida_terra: {valor: 0.148, premissa: P-015}
-    captura_marte: {valor: 0.018, premissa: P-015}
-    saida_marte: {valor: 0.011, premissa: P-015}
+    captura_marte: {resultado: results/etapa3.1/perdas_calculadas.yaml, chave: perda_km_s.captura_marte}
+    saida_marte: {resultado: results/etapa3.1/perdas_calculadas.yaml, chave: perda_km_s.saida_marte}
   correcao_trajetoria_por_trecho: {valor: 0.050, fonte: "[F18] DRA 5.0 Addendum, Tabela 5-15, p. 211: \"Mid-course corrections (m/s per leg) 50\""}
   atitude_cruzeiro_por_trecho: {valor: 0.015, fonte: "[F18] p. 211: \"Earth/Mars coast A/C (m/s) 15\" e \"Mars/Earth coast attitude control (m/s) 15\""}
   encontro_orbita_marte: {valor: 0.045, fonte: "[F18] p. 211: \"Mars orbit rendezvous with lander (m/s) 45\""}

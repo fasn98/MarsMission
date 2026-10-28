@@ -2,7 +2,8 @@
 
 Exporta o commit atual (git archive) para um diretório temporário, copia os kernels, volta as plataformas
 para os valores com que as Etapas 2.1 e 2.2 foram geradas (P-016 = P-017 = 850 kg, histórico em
-config/plataformas.yaml) e roda de novo as ferramentas dessas etapas. Compara cada arquivo gerado, byte a byte
+config/plataformas.yaml) e a propulsão de antes da Etapa 3.1 (config/motores.yaml, antes_etapa_3_1) e roda de novo
+as ferramentas dessas etapas. Compara cada arquivo gerado, byte a byte
 (SHA-256), com o que está em results/. Isola o efeito da trajetória de 2033 (e da errata das datas, que não
 aparece nesses arquivos).
 Saída: results/etapa2.5/conferencia_2033.yaml e .md
@@ -23,6 +24,8 @@ from pathlib import Path
 import yaml
 
 RAIZ = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(RAIZ / "src"))
+from orbital.historico import aplicar_antes_etapa_3_1  # noqa: E402
 SAIDA = RAIZ / "results" / "etapa2.5"
 FERRAMENTAS = ["tools/superficie.py", "tools/varredura_encontro.py", "tools/isru.py", "tools/mav_propulsao.py"]
 PASTAS = ["results/etapa2.1", "results/etapa2.2"]
@@ -48,6 +51,7 @@ def main():
             txt, n = re.subn(chave, lambda m: re.sub(r"[\d.]+,$", f"{valor},", m.group(0)), p.read_text(encoding="utf-8"), flags=re.M)
             assert n == 1, arq_cfg
             p.write_text(txt, encoding="utf-8")
+        aplicar_antes_etapa_3_1(d)   # propulsão de antes da Etapa 3.1 (ADR 0011), com que as Etapas 2.1 e 2.2 foram geradas
         for f in FERRAMENTAS:
             subprocess.run([sys.executable, f], cwd=d, check=True, capture_output=True)
         linhas = []

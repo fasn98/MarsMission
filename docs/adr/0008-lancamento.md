@@ -68,3 +68,21 @@ anterior ("O lander não muda") deixa de valer.
 
 Fonte: `results/etapa2.4/lancamento.md`.
 
+
+## Nota (2026-10-27): margens depois do redimensionamento (ADR 0011)
+Valores de `results/etapa2.5/arquitetura.md`: pior margem nas quatro janelas do envelope.
+
+| Veículo | Lançador | Antes | Agora |
+| :- | :- | -: | -: |
+| Orbitador | Falcon Heavy (descartável) | +78 % | +56 % |
+| Orbitador | Vulcan VC6 | +31 % | +15 % |
+| Lander | Falcon Heavy (recuperação) | +25 % | +15 % |
+| Lander | Falcon Heavy (descartável) | +200 % | +176 % |
+| Lander | Vulcan VC2 | +16 % | +6 % |
+| Lander | Vulcan VC4 | +73 % | +60 % |
+| Lander | Vulcan VC6 | +122 % | +104 % |
+
+- Os lançadores escolhidos continuam servindo.
+- O Vulcan VC4 deixa de servir o orbitador (regra iii): pela injeção direta (forma a), a margem vai de +2,8 % para
+  −10,0 %; pela órbita baixa com estágio próprio (forma b), de +7,8 % para −5,6 %
+  (`results/etapa2.4/lancamento.md`). Ele não era um dos escolhidos.
