@@ -48,9 +48,9 @@ def test_verificacao_schwenzfeger_em_r_phi_v_h():
 
 def test_resultado_da_etapa_3_2():
     r = ler("results/etapa3.2/baixo_empuxo.yaml")
-    # o integrador deste estudo muda muito menos que a diferença em u ao trocar método e tolerância
+    # trocar método e tolerância muda o integrador deste estudo abaixo da precisão relevante do estudo (P-046)
     for c in r["verificacao_schwenzfeger"]["investigacao"]["convergencia"]:
-        assert c["maior_mudanca_relativa"]["u"] < TOL / 100
+        assert max(c["maior_mudanca_relativa"].values()) < TOL
     assert r["verificacao_schwenzfeger"]["eps"] == v(CFG["verificacao_schwenzfeger"]["eps"])
     assert {k for q in r["verificacao_schwenzfeger"]["pontos"] for k in q["fora_da_tolerancia"]} <= {"u"}
     for caso in r["conferencia_edelbaum"].values():

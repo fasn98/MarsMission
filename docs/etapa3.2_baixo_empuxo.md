@@ -105,7 +105,7 @@ As células dos ε dão a diferença relativa do Δv numérico contra o analíti
 3. **Trecho heliocêntrico.** Opções:
    - aceitar o rótulo "calculado, não verificado";
    - procurar o NASA TR R-53 de Moeckel (1960), citado na ref. 5 de [F115] (p. 29) como "Trajectories with Constant Tangential
-     Thrust in Central Gravitational Fields": é exatamente o modelo tangencial deste estudo. Não está na NTRS pela busca
+     Thrust in Central Gravitational Fields": pelo título, parece ser o modelo tangencial deste estudo. Não está na NTRS pela busca
      feita, e o conteúdo não foi conferido;
    - implementar o controle ótimo para comparar com Strack [F114]. É bem mais trabalho.
 
@@ -116,4 +116,6 @@ As células dos ε dão a diferença relativa do Δv numérico contra o analíti
   - faixa de ε da conferência;
   - órbita da Terra circular de 1 UA;
   - arredondamento dos campos sensíveis ao ruído entre CPUs.
+- **Para aprovar no portão:** a P-046 é nova, e todos os seus valores (inclusive os métodos e as tolerâncias da
+  conferência de convergência) são propostos aqui.
 - **Total:** 46 premissas, todas NÃO VALIDADAS (`results/fase2/premissas_nao_validadas.md`).
