@@ -145,3 +145,130 @@ def trajetoria_em_s(eps, valores_s):
     sol = solve_ivp(f, (0.0, float(valores_s.max())), [1.0, 0.0, 0.0, 1.0, -0.5, 0.0], method="DOP853", rtol=RTOL,
                     atol=ATOL, t_eval=valores_s)
     return [dict(zip(("r", "phi", "u", "v", "h", "t"), map(float, y))) for y in sol.y.T]
+
+
+@dataclass(frozen=True)
+class Arcos:
+    dv_km_s: float          # Isp · g0 · ln(m0/mf)
+    tempo_empuxo_s: float   # soma dos arcos com o motor ligado
+    tempo_total_s: float    # do início até o apoapse-alvo (arcos + trechos sem empuxo)
+    voltas: int
+    massa_final_kg: float
+    rp_final_km: float
+    ra_final_km: float
+
+
+def _elementos_planos(mu, x, y, vx, vy):
+    """(rp, ra, e, ν, período) da órbita osculadora plana (prograde)."""
+    r = math.hypot(x, y)
+    v2 = vx * vx + vy * vy
+    ex = ((v2 - mu / r) * x - (x * vx + y * vy) * vx) / mu
+    ey = ((v2 - mu / r) * y - (x * vx + y * vy) * vy) / mu
+    e = math.hypot(ex, ey)
+    a = 1 / (2 / r - v2 / mu)
+    nu = math.atan2(ex * y - ey * x, ex * x + ey * y) if e > 1e-12 else 0.0
+    return a * (1 - e), a * (1 + e), e, nu, 2 * math.pi * math.sqrt(a ** 3 / mu)
+
+
+def _anomalia_media(e, nu):
+    E = 2 * math.atan2(math.sqrt(1 - e) * math.sin(nu / 2), math.sqrt(1 + e) * math.cos(nu / 2))
+    return E - e * math.sin(E)
+
+
+def apoapse_por_arcos(mu, rp, ra, ra_alvo, empuxo_n, isp_s, m0_kg, meio_arco_graus, max_voltas=200000):
+    """Muda o apoapse de uma órbita (rp × ra) até ra_alvo com empuxo tangencial só nos arcos |ν| ≤ meio_arco em torno do
+    periapse (contra a velocidade para baixar o apoapse, a favor para subir); fora dos arcos, voo kepleriano (exato).
+    O periapse também deriva um pouco; o valor final é devolvido. Cada arco é integrado com o mesmo modelo de
+    `espiral` (dois corpos, empuxo constante, massa variável)."""
+    sentido = 1.0 if ra_alvo > ra else -1.0
+    c = isp_s * G0
+    mdot = empuxo_n / (c * 1e3)
+    a_n = empuxo_n * 1e-3
+    th = math.radians(meio_arco_graus)
+    a0 = (rp + ra) / 2
+    # começa no início do arco (ν = −θ)
+    p = a0 * (1 - ((ra - rp) / (ra + rp)) ** 2)
+    e = (ra - rp) / (ra + rp)
+
+    def estado(nu, p, e, w=0.0):
+        r = p / (1 + e * math.cos(nu))
+        h = math.sqrt(mu * p)
+        ang = nu + w
+        vr, vt = mu / h * e * math.sin(nu), mu / h * (1 + e * math.cos(nu))
+        return [r * math.cos(ang), r * math.sin(ang), vr * math.cos(ang) - vt * math.sin(ang),
+                vr * math.sin(ang) + vt * math.cos(ang)]
+
+    s = estado(-th, p, e) + [m0_kg]
+    t_emp = t_tot = 0.0
+    voltas = 0
+
+    def f(t, s):
+        x, y, vx, vy, m = s
+        r3 = (x * x + y * y) ** 1.5
+        vel = math.hypot(vx, vy)
+        a = sentido * a_n / m / vel
+        return [vx, vy, -mu * x / r3 + a * vx, -mu * y / r3 + a * vy, -mdot]
+
+    def fim_do_arco(t, s):
+        return _elementos_planos(mu, *s[:4])[3] - th
+    fim_do_arco.terminal, fim_do_arco.direction = True, 1
+
+    def chegou(t, s):
+        return _elementos_planos(mu, *s[:4])[1] - ra_alvo
+    chegou.terminal = True
+
+    while voltas < max_voltas:
+        rp_c, ra_c, e_c, nu_c, per = _elementos_planos(mu, *s[:4])
+        dur = per * (2 * th / (2 * math.pi)) * 3 + 10.0   # folga: o evento fecha o arco
+        sol = solve_ivp(f, (0.0, dur), s, method="DOP853", rtol=RTOL, atol=[ATOL * rp] * 2 + [ATOL * 10] * 2 + [ATOL * m0_kg],
+                        events=(fim_do_arco, chegou))
+        s = list(sol.y[:, -1])
+        t_emp += sol.t[-1]
+        t_tot += sol.t[-1]
+        voltas += 1
+        if sol.t_events[1].size:
+            break
+        # voo livre de ν = +θ a ν = −θ (próxima volta), pela equação de Kepler
+        rp_c, ra_c, e_c, nu_c, per = _elementos_planos(mu, *s[:4])
+        w = math.atan2(s[1], s[0]) - nu_c
+        p_c = (rp_c + ra_c) / 2 * (1 - e_c ** 2)
+        m1, m2 = _anomalia_media(e_c, nu_c), _anomalia_media(e_c, -th)
+        dm_ = (m2 - m1) % (2 * math.pi)
+        t_tot += dm_ / (2 * math.pi) * per
+        s = estado(-th, p_c, e_c, w) + [s[4]]
+    else:
+        raise RuntimeError("apoapse_por_arcos não chegou ao alvo")
+    rp_f, ra_f, *_ = _elementos_planos(mu, *s[:4])
+    return Arcos(c * math.log(m0_kg / s[4]), t_emp, t_tot, voltas, s[4], rp_f, ra_f)
+
+
+def tangencial_de_eliptica(mu, raio_planeta, rp, ra, r_alvo, empuxo_n, isp_s, m0_kg, t_max_s=3.0e8):
+    """Empuxo tangencial contra a velocidade a partir do periapse da órbita (rp × ra), até a energia da circular de raio
+    r_alvo ou até o raio cair abaixo do planeta. Devolve (chegou ao alvo?, tempo [s], menor periapse osculador [km],
+    excentricidade no fim)."""
+    a0 = (rp + ra) / 2
+    s0 = [rp, 0.0, 0.0, math.sqrt(mu * (2 / rp - 1 / a0)), m0_kg]
+    mdot = empuxo_n / (isp_s * G0 * 1e3)
+    a_n = empuxo_n * 1e-3
+
+    def f(t, s):
+        x, y, vx, vy, m = s
+        r3 = (x * x + y * y) ** 1.5
+        k = -a_n / m / math.hypot(vx, vy)
+        return [vx, vy, -mu * x / r3 + k * vx, -mu * y / r3 + k * vy, -mdot]
+
+    def alvo(t, s):
+        return 0.5 * (s[2] ** 2 + s[3] ** 2) - mu / math.hypot(s[0], s[1]) + mu / (2 * r_alvo)
+    alvo.terminal = True
+
+    def impacto(t, s):
+        return math.hypot(s[0], s[1]) - raio_planeta
+    impacto.terminal = True
+
+    sol = solve_ivp(f, (0.0, t_max_s), s0, method="DOP853", rtol=RTOL, atol=[ATOL * rp] * 2 + [ATOL * 10] * 2 + [ATOL * m0_kg],
+                    events=(alvo, impacto), dense_output=True)
+    tt = np.linspace(0.0, sol.t[-1], 4001)
+    rps = [_elementos_planos(mu, *sol.sol(t)[:4])[0] for t in tt]
+    e_fim = _elementos_planos(mu, *sol.y[:4, -1])[2]
+    return bool(sol.t_events[0].size), float(sol.t[-1]), float(min(rps)), float(e_fim)
+

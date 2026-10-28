@@ -1,0 +1,55 @@
+# Etapa 3.3: propulsão elétrica do orbitador (orbital.hibrido, tools/orbitador_eletrico.py).
+# Só entram no dimensionamento os propulsores com voo e com empuxo, Isp, potência, massa do propulsor e massa da PPU em
+# fonte primária. Os outros ficam listados em docs/etapa3.3_orbitador.md com as lacunas.
+propulsores:
+  NSTAR:
+    voo: "[F122] p. 2 do PDF: o NSTAR fez a propulsão primária do Deep Space 1, \"launched on October 24, 1998\""
+    empuxo_n: {valor: 0.093, fonte: "[F116] p. 9 do PDF: \"At the nominal 2.3 kW input power level, the thrust was about 93 mN, and the specific impulse was 3160 s\""}
+    isp_s: {valor: 3160, fonte: "[F116] p. 9 do PDF (mesma citação)"}
+    # Potência que o painel fornece = entrada da PPU: 2300 W de saída / 0,90 de eficiência (calculado aqui), como a do
+    # XIPS-25, que é a entrada da fonte.
+    potencia_w: {valor: 2555.6, fonte: "[F116] p. 9 do PDF: \"nominal 2.3 kW input power level\" do propulsor; p. 19, Tab. 10: \"Output power, W 0.5 to 2.3\", \"Efficiency 0.90 at 2.3 kW output\"; 2300 / 0,90 (calculado aqui)"}
+    massa_propulsor_kg: {valor: 8.2, fonte: "[F116] p. 10 do PDF: \"The thruster mass is specified at less than 8.2 kg\" (o limite da especificação)"}
+    massa_ppu_kg: {valor: 13.7, fonte: "[F116] p. 19 do PDF, Tab. 10: \"Mass, kg 12 ( 13.7 with micrometeroid protection)\""}
+    massa_alimentacao_kg: {valor: 11.4, fonte: "[F118] p. 2: \"PMS Single String Mass (kg) 11.4\" (NSTAR), por propulsor"}
+    # O teste de vida em solo processou 235 kg ([F117] p. 6 do PDF); usa-se o valor menor, da tabela da NASA.
+    throughput_kg: {valor: 135, fonte: "[F118] p. 2: \"Propellant Throughput (kg) 135\" (NSTAR)"}
+  XIPS-25:
+    # Ficha da Stellant "XENON ION Propulsion System (XIPS®) Thrusters and Power Processing Units" [F119], colunas
+    # "25 cm" de maior potência (propulsor a 4250 W; fonte de alimentação a 4500 W, que é o que o painel fornece).
+    voo: "[F119] p. 1: \"Stellant currently has more than 152 25 cm ion thrusters in orbit\""
+    empuxo_n: {valor: 0.165, fonte: "[F119] p. 1, tabela do propulsor, coluna 25 cm: \"Thrust (mN) ... 165\""}
+    isp_s: {valor: 3550, fonte: "[F119] p. 1, mesma coluna: \"Specific Impulse (s) ... 3550\""}
+    potencia_w: {valor: 4500, fonte: "[F119] p. 2, tabela da fonte, coluna 25 cm: \"Input Power to Power Supply (W) ... 4500\""}
+    massa_propulsor_kg: {valor: 13.7, fonte: "[F119] p. 1, tabela do propulsor: \"Weight (Kg) ... 13.7\""}
+    massa_ppu_kg: {valor: 21.3, fonte: "[F119] p. 2, tabela da fonte: \"Weight (Kg) ... 21.3\""}
+    massa_alimentacao_kg: {valor: 11.4, premissa: P-047}   # sem número publicado para o XIPS; análogo do NSTAR [F118]
+    throughput_kg: null   # vida qualificada não encontrada em fonte primária
+tanque:
+  # Tanque S-XTA-60 (MT Aerospace), herança SGEO e AMOS 6: massa seca do modelo voado; capacidade de xenônio da
+  # família S-XTA para o mesmo volume e a mesma MEOP (187 bar). Razão calculada aqui: 11,7 / 110.
+  massa_seca_kg: {valor: 11.7, fonte: "[F120] p. 8: S-XTA-60, \"TOTAL VOLUME 60 l\", \"TANK DRY MASS 11,7 kg\", \"HERITAGE SGEO, AMOS 6\""}
+  xenonio_kg: {valor: 110, fonte: "[F120] p. 12: família S-XTA, V = 60 l, \"MXe_max=... 110 kg\" (em desenvolvimento; extensão do S-XTA-60)"}
+residual_inutilizavel: {valor: 0.024, fonte: "[F118] p. 2: \"PMS Unusable Propellant Residual 2.40%\" (NSTAR)"}
+operacao:
+  reservas: {valor: 1, premissa: P-047}               # propulsores (com PPU) instalados além dos ativos
+  desligado_no_eclipse: {valor: true, premissa: P-047}   # o painel dedicado não carrega bateria para o propulsor (só true implementado)
+  tempo_encontro_dias:
+    # Da detecção do contêiner à captura e selagem, na arquitetura química do ERO de 2018 (órbita de 343 km).
+    valor: 22
+    fonte: "[F121] p. 13, Tab. 2: \"Forced translation, OS capture and bio-sealing 2 days T0 + 22 d\""
+  perdas_quimicas_da_etapa_3_1: {valor: true, premissa: P-048}     # captura e saída química com as perdas da Etapa 3.1 (só true implementado)
+varredura:
+  # Altitude da órbita circular de encontro e da órbita circular de captura (km). Premissa P-049 (NÃO VALIDADA).
+  encontro_alt_km: {valor: {min: 300, max: 20000, pontos: 40}, premissa: P-049}
+  captura_alt_km: {valor: {min: 1000, max: 40000, pontos: 40}, premissa: P-049}
+  n_ativos_max: {valor: 12, premissa: P-049}
+  # Variante c1 (descida em arcos em torno do periapse, orbital.baixo_empuxo.apoapse_por_arcos) e opção (b) (ordem de
+  # grandeza do trecho heliocêntrico): números de propulsores calculados. P-049.
+  c1_meio_arco_graus: {valor: 30, premissa: P-049}
+  n_ativos_ordem_de_grandeza: {valor: [1, 4, 12], premissa: P-049}
+  c1_folga_apoapse: {valor: 0.01, premissa: P-049}   # para quando a altitude do apoapse chega a 1,01 × a do encontro
+  # Descida tangencial pura a partir da elipse (o achado que motiva c1 e c2): empuxo total usado na demonstração.
+  demonstracao_tangencial_empuxo_n: {valor: 1.0, premissa: P-049}
+  convergencia_massas_kg: {valor: 1.0e-9, premissa: P-049}   # ponto fixo de orbital.hibrido.massas
+  arredondamento: {valor: {voltas: 0.1, excentricidade: 1.0e-4, altitude_km: 0.1}, premissa: P-049}

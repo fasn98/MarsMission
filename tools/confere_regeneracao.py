@@ -6,7 +6,7 @@ de física não altera nenhum resultado. A ordem e as plataformas seguem a hist�
   2. Etapas 1.4, 2.1 e 2.2 com as plataformas da época (P-016 = P-017 = 850 kg, histórico em config/plataformas.yaml,
      "antes_etapa_2_3") e a propulsão da época (Isp de 321 e 343 s, P-015, ε do MAV 0,238; config/motores.yaml, "antes_etapa_3_1"),
      como em tools/confere_2033.py;
-  3. Etapas 2.3 a 2.5, 3.1 e 3.2 com o config atual.
+  3. Etapas 2.3 a 2.5 e 3.1 a 3.3 com o config atual.
 "Idêntico" significa dentro das tolerâncias declaradas (decisão do Fabio, 2026-10-27; premissas NÃO VALIDADAS):
   - números (YAML, Markdown, NPZ): a (versionado) e b (regenerado) passam se |a − b| ≤ max(relativa · |b|, piso
     absoluto), P-039. O limite vem da precisão relevante do estudo (~1e-4 relativo), com folga para o ruído entre CPUs
@@ -61,7 +61,8 @@ FASE_1 = [["tools/baricentro_marte.py"], ["tools/porkchop.py", "terra_marte"], [
 FASE_850 = [["tools/dimensionamento.py"], ["tools/compara_msr.py"], ["tools/superficie.py"],
             ["tools/varredura_encontro.py"], ["tools/isru.py"], ["tools/mav_propulsao.py"]]
 FASE_ATUAL = [["tools/redimensiona.py"], ["tools/plataformas.py"], ["tools/lancamento.py"], ["tools/coleta.py"], ["tools/arquitetura.py"],
-              ["tools/confere_2033.py"], ["tools/exporta_painel.py"], ["tools/queima_finita.py"], ["tools/baixo_empuxo.py"]]
+              ["tools/confere_2033.py"], ["tools/exporta_painel.py"], ["tools/queima_finita.py"], ["tools/baixo_empuxo.py"],
+              ["tools/geometria_marte.py"], ["tools/orbitador_eletrico.py"]]
 _SO_NA_RAIZ = {".git", "data", "results", "hanatrial", ".venv", ".pythonlibs", ".cache", ".claude"}
 
 

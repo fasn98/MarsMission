@@ -119,3 +119,13 @@ As células dos ε dão a diferença relativa do Δv numérico contra o analíti
 - **Para aprovar no portão:** a P-046 é nova, e todos os seus valores (inclusive os métodos e as tolerâncias da
   conferência de convergência) são propostos aqui.
 - **Total:** 46 premissas, todas NÃO VALIDADAS (`results/fase2/premissas_nao_validadas.md`).
+
+## Nota (2026-10-28): decisões do portão (ADR 0012)
+- **Critério (B):** mantido o critério por componente (1e-4, P-046), com este registro:
+  - concorda em r, φ, v e h e nos vetores (até 3,1e-5);
+  - u fica fora, com até 3,2e-4;
+  - a diferença é atribuída, provavelmente, à precisão da integração publicada. Isso não foi confirmado.
+- **Erro vetorial:** é métrica adicional e não substitui o critério.
+- **Hipótese:** u = r·ṙ amplifica, em termos relativos, erros de r e da velocidade.
+- **Trecho heliocêntrico:** fica como "calculado, não verificado".
+- **P-046:** aprovada, NÃO VALIDADA.

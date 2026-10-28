@@ -1,0 +1,43 @@
+gerado_por: tools/geometria_marte.py
+inclinacao_encontro_graus: 27.3
+latitude_sitio_graus: 18.85
+velocidade_apoapse_1sol_km_s: 0.45349632985328864
+missoes:
+- missao: 2028-conjuncao
+  referencia: true
+  vinf_chegada_km_s: 2.970722746244366
+  vinf_chegada_etapa1_3_km_s: 2.9707
+  declinacao_chegada_graus: -27.349915017293423
+  declinacao_partida_graus: -23.3743158501097
+  excesso_chegada_graus: 0.04991501729342218
+  excesso_partida_graus: 0.0
+  dv_plano_no_apoapse_1sol_m_s: 0.3950775541177537
+- missao: 2031-conjuncao
+  referencia: false
+  vinf_chegada_km_s: 3.484317243968239
+  vinf_chegada_etapa1_3_km_s: 3.4843
+  declinacao_chegada_graus: -18.900805483587014
+  declinacao_partida_graus: -5.37662028970544
+  excesso_chegada_graus: 0.0
+  excesso_partida_graus: 0.0
+  dv_plano_no_apoapse_1sol_m_s: 0.0
+- missao: 2033-conjuncao
+  referencia: false
+  vinf_chegada_km_s: 3.3199654188261403
+  vinf_chegada_etapa1_3_km_s: 3.32
+  declinacao_chegada_graus: 26.380786038996
+  declinacao_partida_graus: -25.84351565943219
+  excesso_chegada_graus: 0.0
+  excesso_partida_graus: 0.0
+  dv_plano_no_apoapse_1sol_m_s: 0.0
+- missao: 2035-conjuncao
+  referencia: false
+  vinf_chegada_km_s: 2.624544207123554
+  vinf_chegada_etapa1_3_km_s: 2.6245
+  declinacao_chegada_graus: 10.352331078227575
+  declinacao_partida_graus: 20.496670496629854
+  excesso_chegada_graus: 0.0
+  excesso_partida_graus: 0.0
+  dv_plano_no_apoapse_1sol_m_s: 0.0
+todas_coplanares: false
+maior_excesso_graus: 0.04991501729342218
