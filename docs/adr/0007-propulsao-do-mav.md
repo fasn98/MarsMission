@@ -51,8 +51,8 @@ por critérios operacionais (`docs/etapa2.2b_propulsao_mav.md`).
 - **A contingência está incluída:**
   - p. 5: "A weight growth allowance of 30% was used for all dry mass elements";
   - cada "% Dry" da Tab. 5 é a massa do item dividida por 65,5/1,3 = 50,4 kg (calculado aqui);
-  - a p. 38 (§9.1) diz que a coluna "Inert" da Tab. 11 é o projeto final do MAV pressurizado de 20 kg ("the
-    pressure-feed 20kg inert payload mass MAV design"; 392,6 kg, contra 394,1 kg na Tab. 5), com "Contingency 14.93
+  - a p. 38 (§9.0 e §9.1) diz que a coluna "Inert" da Tab. 11 é o projeto final do MAV pressurizado de 20 kg ("the
+    pressure-feed 20kg inert payload mass MAV design"; 392,6 kg, contra 394,1 kg na Tab. 5), com (Tab. 11, p. 40) "Contingency 14.93
     (30%)" dentro dos 64,72 kg secos.
 - **O 0,176 é o mesmo veículo, contado de outro jeito:** p. 38, "Total propellant mass fraction is 77.4%, which includes
   ascent propellant, reserves and engine start-up". Contar a reserva (5 %, p. 4) e a partida como propelente equivale a
