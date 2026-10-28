@@ -282,11 +282,12 @@ def pagina_propulsao():
     st.markdown("Estada em Marte por janela: " + ", ".join(f"{k} {br(x, 0)} d" for k, x in p["estada_dias"].items())
                 + ". Decisão: **orbitador químico** (ADR 0013).")
     tabela([{"Opção": x["opcao"], "Orbitador injetado": f"{br(x['orbitador'].valor, 0)} kg", "Total (iii)": f"{br(x['total'].valor, 0)} kg",
-             "Tempo em Marte": "—" if x["tempo"] is None else f"{br(x['tempo'].valor, 0)} d", "Situação": x["situacao"],
+             "Descida + encontro + subida": "—" if x["tempo"] is None else f"{br(x['tempo'].valor, 0)} d", "Situação": x["situacao"],
              "Rótulo": x["total"].rotulo, "Origem": x["total"].origem} for x in p["opcoes"]])
     st.subheader("(c1) Descida em arcos em torno do periapse (só a descida)")
+    st.markdown(f"Periapse mínimo do encontro: {br(p['periapse_minimo_km'], 0)} km (ADR 0005).")
     tabela([{"Opção": x["opcao"], "Tempo decorrido": f"{br(x['descida'].valor, 0)} d", "Periapse final": f"{br(x['periapse'].valor, 0)} km",
-             "Rótulo": x["descida"].rotulo, "Origem": x["descida"].origem} for x in p["c1"]], estreita=True)
+             "Situação": x["situacao"], "Rótulo": x["descida"].rotulo, "Origem": x["descida"].origem} for x in p["c1"]], estreita=True)
     st.subheader("(b) Elétrico: empuxo da ida no trecho heliocêntrico (calculado, não verificado)")
     st.markdown(f"Ida da missão de referência: {br(p['ida_referencia_dias'], 0)} d.")
     tabela([{"Opção": x["opcao"], "Empuxo da ida": f"{br(x['ida'].valor, 0)} d", "Rótulo": x["ida"].rotulo, "Origem": x["ida"].origem}

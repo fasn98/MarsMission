@@ -19,7 +19,8 @@ há comparação com dado publicado.
 - **Propulsão do orbitador** (Etapa 3.3, ADR 0013): **química**. "Na missão de referência (414 dias em Marte) e com as
   leis de guiagem verificadas, nenhuma opção elétrica fecha massa e tempo. Uma missão de estada longa, como a do ERO,
   poderia mudar isso, mas exigiria outra missão de referência e uma guiagem otimizada, não estudadas."
-- **Arquitetura vigente** (`results/etapa2.5/arquitetura.md`, `results/etapa2.3/plataformas.md`):
+- **Arquitetura vigente** (`results/etapa2.5/arquitetura.md`, `results/etapa2.3/plataformas.md`). A Etapa 3.3 não a
+  muda (ADR 0013). As massas mudaram na Fase 3 pelos motores e perdas da 3.1 (ADR 0011) e pelo ε do MAV (ADR 0007):
 
 | Item | Fim da Fase 2 (errata de 2026-10-27 do relatório da Fase 2, "Antes") | Fim da Fase 3 |
 | :- | -: | -: |
@@ -83,18 +84,21 @@ há comparação com dado publicado.
   - a mitigação pela órbita mais baixa não se confirmou.
 - **ADR 0012:** critério B da verificação; espirais coplanares se a geometria permitir; rótulo do trecho heliocêntrico.
 - **ADR 0013:** orbitador químico; (B) estudo de estada longa fica para o futuro; catálogo NSTAR e XIPS-25.
-- **ADR da propulsão nuclear térmica:** em PR à parte (fora do escopo, pelo prompt da Fase 3).
+- **ADR da propulsão nuclear térmica:** em PR à parte. O prompt da Fase 3 a deixa fora do escopo ("Nuclear térmica: não
+  modelar"), e o Fabio pediu o ADR em PR separado no portão da 3.3.
 
 ## 5. Limitações
 - **Perdas de queima finita:** empuxo tangencial, que não é o direcionamento ótimo; Marte como massa pontual; sem J2.
 - **MAV:** ε de um MAV de um estágio [F46] aplicado aos dois estágios. É hipótese, sem fonte, que seja otimista para o
   2º estágio.
-- **Edelbaum:** a forma com mudança de plano não foi implementada (artigo pago). A Etapa 3.3 mostrou que ela não é
-  necessária: o maior excesso de declinação é de 0,05° (`results/etapa3.3/geometria_planos.md`).
+- **Edelbaum:** a forma com mudança de plano não foi implementada (artigo pago). Na missão de referência, o efeito é pequeno:
+  o maior excesso de declinação é de 0,05°, que custa 0,40 m/s no apoapse de 1 sol
+  (`results/etapa3.3/geometria_planos.md`). A orientação do nodo na partida não foi tratada.
 - **Híbrido:**
   - só duas concepções foram avaliadas, e não há guiagem otimizada;
   - perdas químicas iguais às da 3.1 (P-048);
-  - fase de RAAN de 24 d [F121] não incluída, o que só piora o elétrico;
+  - fase de RAAN de 24 d [F121] não incluída, o que só piora o elétrico (as folgas do c2 com 1 e 2 NSTAR são de 13 e
+    21 d, menores que os 24 d);
   - orientação do nodo na partida não tratada.
 - **Opção (b):** só ordem de grandeza, sem dimensionamento.
 
@@ -103,7 +107,9 @@ há comparação com dado publicado.
   Com ε = 0,300 (P-045), o lander perde os dois lançadores escolhidos.
   - A mitigação por orbitador elétrico não se confirmou (ADR 0013).
   - Mitigações a avaliar: margem de lançador; lançador maior para o lander; MAV com Isp maior, se houver motor com voo.
-- **Margens da sensibilidade** (`results/etapa2.5/arquitetura.md`):
+- **Margens da sensibilidade** (`results/etapa2.5/arquitetura.md`). O lander perde os **dois** lançadores escolhidos
+  com a margem de massa ESA (Falcon Heavy com recuperação −12 %, VC2 −18 %) e com a plataforma no limite superior, SRL
+  2024 − MAV (−21 % e −27 %). Outros casos:
   - com margem de Δv de 20 %, o orbitador perde o VC6 (−6 %) e o lander perde o VC2 (−3 %);
   - com o MGA do GSFC, o lander perde o VC2 (−3 %).
 

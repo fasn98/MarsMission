@@ -26,7 +26,8 @@ A opção (b) foi estimada só em ordem de grandeza, com o rótulo "calculado, n
 4. **Catálogo de propulsores elétricos:** só NSTAR e XIPS-25 (`config/eletrica.yaml`).
 5. **Premissas P-047 a P-049:** aprovadas, NÃO VALIDADAS.
 6. **Limitação registrada como está:** o tempo de encontro (22 d [F121]) não inclui a fase de RAAN de 24 d da mesma
-   fonte. Ela só piora o elétrico: com os 24 d, o c2 com 1 e com 2 NSTAR deixa de caber.
+   fonte. Ela só piora o elétrico: as folgas do c2 com 1 e com 2 NSTAR (13 e 21 d, `results/etapa3.3/orbitador_eletrico.md`)
+   são menores que os 24 d.
 
 ## Consequências
 - A arquitetura não muda:
