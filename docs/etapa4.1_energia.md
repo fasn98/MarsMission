@@ -54,6 +54,9 @@ Picos por sol, colocados na bateria das duas opções pelo mesmo critério (P-05
 - recarga dos helicópteros: 17,5 Wh;
 - transmissões UHF: 34,5 Wh.
 
+O aquecimento, que o pedido também lista entre os picos, entra como carga contínua (MAV 48,0 W e o aquecimento da
+plataforma, já na P-032). Ele está na demanda média, não na bateria de picos.
+
 | Fonte | Cenário | Área (m²) | Massa (kg) |
 | :- | :- | -: | -: |
 | Solar | Céu claro em Jezero, τ = 0,4 [F133] | 18,0 | 193 |
@@ -142,7 +145,8 @@ Outros pontos:
    - **P-054:** cargas de pico e margem do MMRTG;
    - **P-050:** modelo solar (albedo 0,1, data de calibração, painel horizontal, τ constante);
    - **P-051:** sem limpeza;
-   - **P-052:** helicópteros com energia própria;
+   - **P-052:** helicópteros com energia própria. Ressalva: a recarga deles entra nos picos da P-054, de forma
+     conservadora;
    - **P-053:** carga do orbitador por modo.
 
 ## 6. Limitações

@@ -239,6 +239,7 @@ def main():
                       "demanda": {"plataforma_wh_sol": plat_wh, "aquecimento_mav_w": mav_w, "aquecimento_mav_wh_sol": mav_wh, "total_wh_sol": demanda},
                       "picos_wh": picos, "pico_total_wh": e_pico,
                       "solar": solar, "solar_com_sobrevivencia": solar_c, "fator_recarga": fator_recarga,
+                      # razão de energia por m² entre τ máximo e céu claro = razão inversa das áreas (mesma demanda)
                       "fracao_energia_tau_max_sobre_claro": solar[0]["area_m2"] / solar[2]["area_m2"],
                       "pu238_estado": lc["pu238"]["estado"],
                       "braco_potencia_media_w": v(lc["braco"]["potencia_media_w"]), "mmrtg": rtg,

@@ -46,3 +46,17 @@ def test_resultado_da_etapa_4_1():
     s = {(x["cenario"], x["carga"]): x["area_m2"] for x in r["lander"]["solar"]}
     assert s[("claro_jezero", "operação normal")] < s[("regional_jezero", "operação normal")] < s[("global_2018", "operação normal")]
     assert r["orbitador"]["proposta"]["carga_w"] >= r["orbitador"]["atual"]["carga_w"]
+
+
+def test_bases_iguais_mmrtg_e_solar():
+    """Picos pela soma das cargas do config; o MMRTG leva a margem da geração e a bateria dos picos (P-054)."""
+    r = ler("results/etapa4.1/energia.yaml")["lander"]
+    pk = C["lander"]["picos"]
+    esperado = (pk["braco"]["potencia_w"] * v(pk["braco"]["horas_por_sol"])
+                + v(pk["recarga_helicopteros"]["energia_por_voo_wh"]) * v(pk["recarga_helicopteros"]["voos_por_sol"])
+                + v(pk["transmissoes_uhf"]["potencia_w"]) * v(pk["transmissoes_uhf"]["passes_por_sol"]) * v(pk["transmissoes_uhf"]["minutos_por_passe"]) / 60)
+    assert r["pico_total_wh"] == pytest.approx(esperado, rel=1e-12)
+    m = r["mmrtg"]
+    assert m["margem_crescimento"] > 0 and m["bateria_kg"] > 0
+    assert m["massa_kg"] == pytest.approx(m["massa_sem_margem_kg"] * (1 + m["margem_crescimento"]) + m["bateria_kg"], rel=1e-12)
+
