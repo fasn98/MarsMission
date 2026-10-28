@@ -9,9 +9,9 @@ Modelo numérico:
 
 Solução analítica (quase circular, coplanar): com a órbita sempre quase circular, h = −v_c²/2 e dh/dt = a_T · v ≈
 a_T · v_c (energia por massa; a equação h' = ε|v| de [F113] p. 3, eq. (1), em tempo físico). Então dv_c = −a_T dt, e o Δv
-entregue é Δv = |v_c0 − v_c1| = |√(μ/r0) − √(μ/r1)|, que não depende do perfil de aceleração (derivado aqui). É a
-fórmula de Edelbaum (1961) sem mudança de plano. O artigo original não foi consultado (acesso pago), e por isso a forma
-com mudança de plano não foi implementada.
+entregue é Δv = |v_c0 − v_c1| = |√(μ/r0) − √(μ/r1)|, que não depende do perfil de aceleração (derivado aqui). A
+atribuição a Edelbaum (1961), como a fórmula dele sem mudança de plano, não foi conferida: o artigo original não foi
+consultado (acesso pago), e por isso a forma com mudança de plano não foi implementada.
 
 Unidades: as funções aceitam qualquer sistema coerente (km e s, ou adimensional com μ = 1 e r0 = 1); empuxo em N com
 massa em kg só em `espiral` com `empuxo_n`, em km/s².
@@ -108,16 +108,19 @@ def espiral(mu, r0, r1, aceleracao=None, empuxo_n=None, isp_s=None, m0_kg=None, 
     return Espiral(dv, te, voltas, r, float(np.hypot(*ev)), mf)
 
 
-def trajetoria_aceleracao_constante(eps, tempos):
+def trajetoria_aceleracao_constante(eps, tempos, rtol=None, metodo="DOP853"):
     """Subida adimensional (μ = 1, r0 = 1, v0 = 1) com aceleração tangencial constante eps, como em [F113] eq. (1)
-    a (5). Devolve, em cada tempo, (r, φ, u, v, h) nas variáveis de [F113]: u = r · ṙ, v = r · v_θ, h = energia."""
+    a (5). Devolve, em cada tempo, (r, φ, u, v, h) nas variáveis de [F113]: u = r · ṙ, v = r · v_θ, h = energia
+    (leitura deduzida das eq. (1), com t' = r; a lista de símbolos da fonte os chama de componentes da velocidade).
+    `rtol` e `metodo` só para a conferência de convergência."""
+    rtol = RTOL if rtol is None else rtol
     def f(t, s):
         x, y, vx, vy = s
         r3 = (x * x + y * y) ** 1.5
         a = eps / math.hypot(vx, vy)
         return [vx, vy, -x / r3 + a * vx, -y / r3 + a * vy]
     tempos = np.asarray(tempos, dtype=float)
-    sol = solve_ivp(f, (0.0, float(tempos.max())), [1.0, 0.0, 0.0, 1.0], method="DOP853", rtol=RTOL, atol=ATOL,
+    sol = solve_ivp(f, (0.0, float(tempos.max())), [1.0, 0.0, 0.0, 1.0], method=metodo, rtol=rtol, atol=rtol * ATOL / RTOL,
                     dense_output=True)
     tt = np.unique(np.concatenate([np.linspace(0.0, tempos.max(), int(tempos.max() * 20) + 2), tempos]))
     x, y, vx, vy = sol.sol(tt)
@@ -129,3 +132,16 @@ def trajetoria_aceleracao_constante(eps, tempos):
         vr, vt = (x[i] * vx[i] + y[i] * vy[i]) / r, (x[i] * vy[i] - y[i] * vx[i]) / r
         out.append({"r": r, "phi": float(fi[i]), "u": r * vr, "v": r * vt, "h": 0.5 * (vr ** 2 + vt ** 2) - 1 / r})
     return out
+
+
+def trajetoria_em_s(eps, valores_s):
+    """O sistema de [F113] eq. (1) integrado na variável independente da fonte, s (t' = r), a partir de (5). Devolve,
+    em cada s, (r, φ, u, v, h, t). Serve para comparar a listagem da fonte nos valores de s que ela imprime."""
+    def f(s, y):
+        r, _, u, vv, h, _ = y
+        V = math.hypot(u, vv)
+        return [u, vv / r, 1 + 2 * h * r + eps * r * r * u / V, eps * r * r * vv / V, eps * V, r]
+    valores_s = np.asarray(valores_s, dtype=float)
+    sol = solve_ivp(f, (0.0, float(valores_s.max())), [1.0, 0.0, 0.0, 1.0, -0.5, 0.0], method="DOP853", rtol=RTOL,
+                    atol=ATOL, t_eval=valores_s)
+    return [dict(zip(("r", "phi", "u", "v", "h", "t"), map(float, y))) for y in sol.y.T]

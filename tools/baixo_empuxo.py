@@ -1,4 +1,4 @@
-"""Etapa 3.2: modelo de baixo empuxo, verificado.
+"""Etapa 3.2: modelo de baixo empuxo e sua verificação contra caso publicado.
 
   1. Verificação: a espiral numérica com aceleração tangencial constante (orbital.baixo_empuxo) contra a integração
      numérica publicada por Schwenzfeger (NASA TM X-64836, 1973) [F113], ε = 0,01, nos pontos da listagem da p. 31.
@@ -43,13 +43,24 @@ def main():
         dif = {k: (c[k] - p[k]) / abs(p[k]) for k in VARS}
         # informativo (não é o critério declarado): erro dos vetores posição e velocidade relativo ao módulo de cada um
         e_pos = math.hypot(c["r"] - p["r"], p["r"] * (c["phi"] - p["phi"])) / p["r"]
-        e_vel = math.hypot(c["u"] - p["u"], c["v"] - p["v"]) / math.hypot(p["u"], p["v"])
+        vc, vp = (c["u"] / c["r"], c["v"] / c["r"]), (p["u"] / p["r"], p["v"] / p["r"])   # (ṙ, v_θ)
+        e_vel = math.hypot(vc[0] - vp[0], vc[1] - vp[1]) / math.hypot(*vp)
         pontos.append({"t": p["t"], "publicado": {k: p[k] for k in VARS}, "calculado": c, "diferenca_relativa": dif,
                        "erro_relativo_vetor_posicao": e_pos, "erro_relativo_vetor_velocidade": e_vel,
                        "dentro_da_tolerancia": all(abs(d) <= tol for d in dif.values()),
                        "fora_da_tolerancia": [k for k in VARS if abs(dif[k]) > tol]})
+    # Investigação da diferença: (a) convergência do integrador deste estudo; (b) a listagem comparada na variável s
+    conv = []
+    for c in vs["convergencia"]["valor"]:
+        alt = be.trajetoria_aceleracao_constante(v(vs["eps"]), [p["t"] for p in vs["pontos"]], rtol=c["rtol"], metodo=c["metodo"])
+        conv.append({"metodo": c["metodo"], "rtol": c["rtol"],
+                     "maior_mudanca_relativa": {k: max(abs(a[k] - b[k]) / abs(b[k]) for a, b in zip(alt, calc)) for k in VARS}})
+    em_s = be.trajetoria_em_s(v(vs["eps"]), [p["s"] for p in vs["pontos"]])
+    comp_s = [{"s": p["s"], "diferenca_relativa": {k: (c[k] - p[k]) / abs(p[k]) for k in VARS + ("t",)}}
+              for p, c in zip(vs["pontos"], em_s)]
     verif = {"fonte": "[F113] p. 31", "eps": v(vs["eps"]), "tolerancia_relativa": tol, "pontos": pontos,
-             "verificado": all(p["dentro_da_tolerancia"] for p in pontos)}
+             "verificado": all(p["dentro_da_tolerancia"] for p in pontos),
+             "investigacao": {"convergencia": conv, "comparacao_na_variavel_s": comp_s}}
 
     # 2. Conferência Edelbaum × numérico
     p = parametros()
@@ -91,13 +102,25 @@ def main():
           f"|publicado|, por componente; tolerância {br(tol * 100, 2)} % (P-046). **Verificado: {'sim' if verif['verificado'] else 'NÃO'}"
           + ("" if verif["verificado"] else f" (fora da tolerância: {', '.join(sorted({k for q in pontos for k in q['fora_da_tolerancia']}))})") + ".**",
           "As duas últimas colunas (informativas, não são o critério declarado) dão o erro dos vetores posição e velocidade "
-          "relativo ao módulo de cada um.", "",
+          "(ṙ, v_θ) relativo ao módulo de cada um.", "",
           "| t | r publicado | r calculado | Dif. r | Dif. φ | Dif. u | Dif. v | Dif. h | Vetor posição | Vetor velocidade |",
           "| -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for q in pontos:
         d = q["diferenca_relativa"]
         md.append(f"| {br(q['t'], 4)} | {br(q['publicado']['r'], 7)} | {br(q['calculado']['r'], 7)} | "
                   + " | ".join(ex(d[k]) for k in VARS) + f" | {ab(q['erro_relativo_vetor_posicao'])} | {ab(q['erro_relativo_vetor_velocidade'])} |")
+    inv = verif["investigacao"]
+    md += ["", "### Investigação da diferença", "",
+           "Convergência do integrador deste estudo: maior mudança relativa, nos pontos publicados, contra o integrador de "
+           "base (DOP853, rtol da P-046).", "", "| Método | rtol | " + " | ".join(f"Mudança {k}" for k in VARS) + " |",
+           "| :- | -: |" + " -: |" * len(VARS)]
+    for c in inv["convergencia"]:
+        md.append(f"| {c['metodo']} | {c['rtol']:.0e} | " + " | ".join(ab(c["maior_mudanca_relativa"][k]) for k in VARS) + " |")
+    md += ["", "A listagem comparada nos valores de s que a fonte imprime, integrando o sistema da fonte na variável s "
+           "(t' = r): diferença relativa (calculado − publicado) / |publicado|.", "",
+           "| s | " + " | ".join(f"Dif. {k}" for k in VARS + ("t",)) + " |", "| -: |" + " -: |" * (len(VARS) + 1)]
+    for q in inv["comparacao_na_variavel_s"]:
+        md.append(f"| {br(q['s'], 6)} | " + " | ".join(ex(q["diferenca_relativa"][k]) for k in VARS + ("t",)) + " |")
     md += ["", "## 2. Conferência: espiral numérica × solução analítica quase circular (Edelbaum, coplanar)", "",
            "Não é verificação: as duas soluções são deste estudo. ε = aceleração / (μ/r0²); tempo em unidades de "
            "√(r0³/μ). A espiral para quando a energia chega à da órbita circular de raio r1.", ""]

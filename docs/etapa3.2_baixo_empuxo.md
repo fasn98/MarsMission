@@ -1,4 +1,4 @@
-# Etapa 3.2: modelo de baixo empuxo, verificado
+# Etapa 3.2: modelo de baixo empuxo (verificação contra caso publicado: não passa em u pelo critério declarado)
 
 Fase 3, propulsão. Os números deste documento vêm de `results/etapa3.2/baixo_empuxo.md` e `.yaml`, gerados por
 `tools/baixo_empuxo.py` a partir de `config/baixo_empuxo.yaml` e do módulo `src/orbital/baixo_empuxo.py`.
@@ -16,8 +16,8 @@ a subida de volta são espirais de baixo empuxo. Antes disso, é preciso um mode
   T / (Isp · g0)). A espiral para quando a energia osculadora chega à da órbita circular-alvo. Integrador DOP853, com
   tolerâncias na P-046.
 - **Analítico (quase circular, coplanar):** Δv = |√(μ/r0) − √(μ/r1)|. É derivado no módulo da taxa de energia
-  dh/dt = a_T · v, que é a eq. (1) de Schwenzfeger [F113, p. 3], h' = ε|v|, em tempo físico. Coincide com a fórmula de
-  Edelbaum sem mudança de plano.
+  dh/dt = a_T · v, que é a eq. (1) de Schwenzfeger [F113, p. 3], h' = ε|v|, em tempo físico. A atribuição a Edelbaum,
+  como a fórmula dele sem mudança de plano, **não foi conferida** no artigo original.
 - **Limitações:**
   - A fórmula de Edelbaum com mudança de plano não foi implementada. O artigo original (Edelbaum 1961, ARS Journal) é
     pago e não pôde ser citado literalmente (regra 1).
@@ -31,32 +31,40 @@ a subida de volta são espirais de baixo empuxo. Antes disso, é preciso um mode
 - **Caso:** subida com aceleração tangencial constante ε = 0,01 (adimensional com a órbita inicial) a partir de órbita
   circular. A fonte integrou numericamente com Runge-Kutta-Fehlberg de 7ª ordem (p. 25) e listou o estado (r, φ, u, v,
   h, t) em sete pontos até o escape (p. 31; imagem conferida e transcrita em `config/baixo_empuxo.yaml`).
+- **Ressalvas da fonte:**
+  - o texto da p. 25 atribui a listagem ao exemplo ε = 0,001, mas a listagem imprime "EPS .10000000E-01" (0,01), e é
+    com 0,01 que os primeiros pontos fecham em cerca de 1e-8;
+  - u = r·ṙ e v = r·v_θ é leitura deduzida das eq. (1), com t' = r; a lista de símbolos chama u e v de componentes da
+    velocidade.
 - **Critério declarado** (P-046): diferença relativa ≤ 1e-4 em cada componente, que é a precisão relevante do estudo.
 
 | t | Dif. r | Dif. φ | Dif. u | Dif. v | Dif. h | Vetor posição | Vetor velocidade |
 | -: | -: | -: | -: | -: | -: | -: | -: |
-| 0,1500 | +4,6e−08 | −2,6e−08 | +5,5e−09 | +8,4e−09 | −1,0e−08 | 4,6e−08 | 8,4e−09 |
-| 2,5789 | −3,5e−08 | +3,9e−08 | +1,3e−06 | −2,2e−08 | −8,9e−09 | 1,1e−07 | 5,3e−08 |
+| 0,1500 | +4,6e−08 | −2,6e−08 | +5,5e−09 | +8,4e−09 | −1,0e−08 | 4,6e−08 | 3,7e−08 |
+| 2,5789 | −3,5e−08 | +3,9e−08 | +1,3e−06 | −2,2e−08 | −8,9e−09 | 1,1e−07 | 5,1e−08 |
 | 9,8502 | +5,6e−08 | −3,1e−06 | **−3,2e−04** | +2,2e−07 | −4,3e−07 | 2,7e−05 | 1,3e−05 |
-| 18,5400 | +1,1e−05 | −2,0e−06 | **−3,1e−04** | +3,0e−07 | −7,0e−07 | 3,0e−05 | 1,3e−05 |
+| 18,5400 | +1,1e−05 | −2,0e−06 | **−3,1e−04** | +3,0e−07 | −7,0e−07 | 3,0e−05 | 1,7e−05 |
 | 35,0757 | +3,6e−06 | −1,5e−06 | **−1,4e−04** | +7,2e−07 | −1,8e−06 | 3,1e−05 | 1,5e−05 |
-| 70,1725 | +9,5e−06 | +5,9e−08 | +1,5e−05 | −3,5e−07 | +3,8e−06 | 9,6e−06 | 8,0e−06 |
-| 85,6922 | +6,9e−06 | −3,1e−07 | +5,4e−06 | +1,7e−07 | −3,7e−06 | 1,1e−05 | 4,2e−06 |
+| 70,1725 | +9,5e−06 | +5,9e−08 | +1,5e−05 | −3,5e−07 | +3,8e−06 | 9,6e−06 | 8,7e−06 |
+| 85,6922 | +6,9e−06 | −3,1e−07 | +5,4e−06 | +1,7e−07 | −3,7e−06 | 1,1e−05 | 4,3e−06 |
+
+As duas últimas colunas são informativas, não o critério declarado: erro dos vetores posição e velocidade (ṙ, v_θ)
+relativo ao módulo de cada um.
 
 **Resultado: pelo critério declarado, NÃO verificado.** r, φ, v e h ficam dentro de 1e-4 em todos os pontos. A
 componente u = r·ṙ fica fora em três pontos, com até 3,2e-4.
 
-**Investigação da diferença em u:**
-- **O integrador deste estudo está convergido.** DOP853 e Radau, com tolerâncias de 1e-9 a 1e-13, dão o mesmo u em 9
-  dígitos (conferência feita na sessão, não gravada em `results/`).
-- **A diferença não vem de comparar pelo tempo.** Integrando o sistema da fonte na variável dela (s, com dt/ds = r) e
-  comparando nos valores redondos de s, a diferença em u é a mesma.
-- **A diferença absoluta em u é pequena.** É de cerca de 1,4e-5, num estado em que |v| é cerca de 1,1. u é a parte
-  radial, pequena e oscilante, da velocidade, e um erro absoluto pequeno vira um erro relativo grande. O erro do vetor
-  velocidade fica abaixo de 1,5e-5, e o do vetor posição abaixo de 3,1e-5.
+**Investigação da diferença em u** (`results/etapa3.2/baixo_empuxo.md`, "Investigação da diferença"):
+- **O integrador deste estudo está convergido.** Trocar o método e a tolerância (DOP853 com rtol 1e-9 e 1e-13, Radau
+  com 1e-11) muda u em no máximo 2,6e-7 relativo, três ordens abaixo da diferença.
+- **A diferença não vem de comparar pelo tempo.** Integrando o sistema da fonte na variável dela (s, com t' = r) e
+  comparando nos valores de s impressos, a diferença em u é a mesma: −3,1e-4, −3,0e-4 e −1,3e-4.
+- **A diferença absoluta em u é pequena.** u é a parte radial, pequena e oscilante, da velocidade, e um erro absoluto
+  pequeno vira um erro relativo grande. O erro do vetor velocidade fica em até 1,7e-5, e o do vetor posição em até 3,1e-5.
 - **Conclusão provável:** a diferença está na integração publicada de 1973, cuja precisão a fonte não declara.
-- **Ressalva na listagem da fonte:** o s impresso na última linha (34,488779) não fecha com o t e o estado impressos.
-  Por isso a comparação é feita pelo t, e por ele a última linha fecha em 1e-5.
+- **Ressalva na última linha da listagem:** o s impresso (34,488779) não fecha com o t e o estado impressos. Na variável
+  s, a diferença em t é −5,2 %; pelo t impresso, o estado fecha em até 6,9e-6. Por isso a comparação principal é feita
+  pelo t.
 
 **Decisão do Fabio no portão:** ver a seção 6, item 1.
 
@@ -86,7 +94,8 @@ As células dos ε dão a diferença relativa do Δv numérico contra o analíti
 1. **Critério da verificação contra [F113].** Pelo critério declarado (1e-4 por componente), a verificação **não passa**
    em u, que chega a 3,2e-4. Opções:
    - **(A)** Medir o erro pelo vetor velocidade e pelo vetor posição, relativo ao módulo de cada um. Passa, com até
-     3,1e-5. É a medida usual de erro de estado e não exagera o erro da componente pequena.
+     3,1e-5 (posição) e 1,7e-5 (velocidade). É a medida usual de erro de estado e não exagera o erro da componente
+     pequena.
    - **(B)** Manter 1e-4 por componente e registrar a etapa como "verificado em r, φ, v e h; u fora (até 3,2e-4),
      atribuído à integração publicada".
    - **(C)** Procurar um segundo caso publicado com listagem numérica (outro ε, ou uma missão real de espiral) antes de
@@ -95,6 +104,9 @@ As células dos ε dão a diferença relativa do Δv numérico contra o analíti
    original [Edelbaum 1961], de acesso pago. Sem ele, a 3.3 fica restrita a espirais coplanares.
 3. **Trecho heliocêntrico.** Opções:
    - aceitar o rótulo "calculado, não verificado";
+   - procurar o NASA TR R-53 de Moeckel (1960), citado na ref. 5 de [F115] (p. 29) como "Trajectories with Constant Tangential
+     Thrust in Central Gravitational Fields": é exatamente o modelo tangencial deste estudo. Não está na NTRS pela busca
+     feita, e o conteúdo não foi conferido;
    - implementar o controle ótimo para comparar com Strack [F114]. É bem mais trabalho.
 
 ## 7. Premissas

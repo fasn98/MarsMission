@@ -9,16 +9,21 @@ verificacao_schwenzfeger:
   # (Runge-Kutta-Fehlberg de 7ª ordem, [F113] p. 25). Variáveis de [F113] p. 2–3, eq. (1) a (5): adimensionais com a
   # órbita inicial (r0 = 1, v0 = 1, μ = 1); u = r·ṙ, v = r·v_θ, h = energia por massa, t = tempo.
   # Linhas "X" (numéricas) da listagem da p. 31 (imagem conferida); a linha "Y" é a aproximação analítica do artigo.
+  # A leitura u = r·ṙ e v = r·v_θ é deduzida das eq. (1) com t' = r (a lista de símbolos chama u e v de componentes da
+  # velocidade). O texto da p. 25 diz que a listagem é do exemplo ε = 0,001, mas ela imprime "EPS .10000000E-01" (0,01),
+  # e é com 0,01 que os primeiros pontos fecham em ~1e-8.
   eps: {valor: 0.01, fonte: "[F113] p. 31: \"EPS .10000000E-01\""}
   tolerancia_relativa: {valor: 1.0e-4, premissa: P-046}
+  # Conferência de convergência do integrador deste estudo nos pontos publicados (investigação da diferença em u).
+  convergencia: {valor: [{metodo: DOP853, rtol: 1.0e-9}, {metodo: DOP853, rtol: 1.0e-13}, {metodo: Radau, rtol: 1.0e-11}], premissa: P-046}
   pontos:
-    - {t: 0.15000042, r: 1.0000112, phi: 0.15011208, u: 2.2480403e-4, v: 1.0015000, h: -0.49849887, fonte: "[F113] p. 31, s = .15000000E 00"}
-    - {t: 2.5788933, r: 1.0408298, phi: 2.5540374, u: 0.038283352, v: 1.0260796, h: -0.47416661, fonte: "[F113] p. 31, s = .25500000E 01"}
-    - {t: 9.8501518, r: 1.2116137, phi: 8.5609302, u: 0.044862962, v: 1.1087753, h: -0.40593528, fonte: "[F113] p. 31, s = .89500000E 01"}
-    - {t: 18.540023, r: 1.4787448, phi: 14.056588, u: 0.051308854, v: 1.2270431, h: -0.33137416, fonte: "[F113] p. 31, s = .15350000E 02"}
-    - {t: 35.075743, r: 2.3098730, phi: 20.708252, u: 0.16282922, v: 1.5362626, h: -0.20927044, fonte: "[F113] p. 31, s = .24310000E 02"}
-    - {t: 70.172518, r: 7.5562739, phi: 25.519123, u: 1.9754687, v: 2.9744417, h: -0.020690730, fonte: "[F113] p. 31, s = .33270000E 02"}
-    - {t: 85.692185, r: 12.704590, phi: 26.092464, u: 5.1485160, v: 4.0872541, h: 0.055151462, fonte: "[F113] p. 31, s = .34488779E 02"}
+    - {s: 0.15, t: 0.15000042, r: 1.0000112, phi: 0.15011208, u: 2.2480403e-4, v: 1.0015000, h: -0.49849887, fonte: "[F113] p. 31, s = .15000000E 00"}
+    - {s: 2.55, t: 2.5788933, r: 1.0408298, phi: 2.5540374, u: 0.038283352, v: 1.0260796, h: -0.47416661, fonte: "[F113] p. 31, s = .25500000E 01"}
+    - {s: 8.95, t: 9.8501518, r: 1.2116137, phi: 8.5609302, u: 0.044862962, v: 1.1087753, h: -0.40593528, fonte: "[F113] p. 31, s = .89500000E 01"}
+    - {s: 15.35, t: 18.540023, r: 1.4787448, phi: 14.056588, u: 0.051308854, v: 1.2270431, h: -0.33137416, fonte: "[F113] p. 31, s = .15350000E 02"}
+    - {s: 24.31, t: 35.075743, r: 2.3098730, phi: 20.708252, u: 0.16282922, v: 1.5362626, h: -0.20927044, fonte: "[F113] p. 31, s = .24310000E 02"}
+    - {s: 33.27, t: 70.172518, r: 7.5562739, phi: 25.519123, u: 1.9754687, v: 2.9744417, h: -0.020690730, fonte: "[F113] p. 31, s = .33270000E 02"}
+    - {s: 34.488779, t: 85.692185, r: 12.704590, phi: 26.092464, u: 5.1485160, v: 4.0872541, h: 0.055151462, fonte: "[F113] p. 31, s = .34488779E 02"}
 
 conferencia_edelbaum:
   # Espiral numérica contra a solução analítica quase circular (não é verificação: as duas são deste estudo).

@@ -515,7 +515,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-046
     nome: espiral_baixo_empuxo_parametros
-    valor: {rtol: 1.0e-11, atol_relativo: 1.0e-12, tolerancia_verificacao_relativa: 1.0e-4, eps_conferencia: [1.0e-2, 1.0e-3, 1.0e-4], raio_terra_ua: 1.0, arredondamento: {raio_e_excentricidade: 1.0e-6, voltas: 1.0e-3}}
+    valor: {rtol: 1.0e-11, atol_relativo: 1.0e-12, tolerancia_verificacao_relativa: 1.0e-4, convergencia: [DOP853 1e-9, DOP853 1e-13, Radau 1e-11], eps_conferencia: [1.0e-2, 1.0e-3, 1.0e-4], raio_terra_ua: 1.0, arredondamento: {raio_e_excentricidade: 1.0e-6, voltas: 1.0e-3}}
     unidade: adimensional; UA
     uso: config/baixo_empuxo.yaml (orbital.baixo_empuxo, tools/baixo_empuxo.py, Etapa 3.2)
     justificativa: >

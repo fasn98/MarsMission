@@ -3,17 +3,39 @@
 ## 1. Verificação contra Schwenzfeger, NASA TM X-64836 (1973), p. 31 [F113]
 
 Subida com aceleração tangencial constante ε = 0,01 a partir de órbita circular, adimensional (r0 = v0 = μ = 1). u = r·ṙ, v = r·v_θ, h = energia por massa. Diferença relativa = (calculado − publicado) / |publicado|, por componente; tolerância 0,01 % (P-046). **Verificado: NÃO (fora da tolerância: u).**
-As duas últimas colunas (informativas, não são o critério declarado) dão o erro dos vetores posição e velocidade relativo ao módulo de cada um.
+As duas últimas colunas (informativas, não são o critério declarado) dão o erro dos vetores posição e velocidade (ṙ, v_θ) relativo ao módulo de cada um.
 
 | t | r publicado | r calculado | Dif. r | Dif. φ | Dif. u | Dif. v | Dif. h | Vetor posição | Vetor velocidade |
 | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
-| 0,1500 | 1,0000112 | 1,0000112 | +4,6e−08 | −2,6e−08 | +5,5e−09 | +8,4e−09 | −1,0e−08 | 4,6e−08 | 8,4e−09 |
-| 2,5789 | 1,0408298 | 1,0408298 | −3,5e−08 | +3,9e−08 | +1,3e−06 | −2,2e−08 | −8,9e−09 | 1,1e−07 | 5,3e−08 |
+| 0,1500 | 1,0000112 | 1,0000112 | +4,6e−08 | −2,6e−08 | +5,5e−09 | +8,4e−09 | −1,0e−08 | 4,6e−08 | 3,7e−08 |
+| 2,5789 | 1,0408298 | 1,0408298 | −3,5e−08 | +3,9e−08 | +1,3e−06 | −2,2e−08 | −8,9e−09 | 1,1e−07 | 5,1e−08 |
 | 9,8502 | 1,2116137 | 1,2116138 | +5,6e−08 | −3,1e−06 | −3,2e−04 | +2,2e−07 | −4,3e−07 | 2,7e−05 | 1,3e−05 |
-| 18,5400 | 1,4787448 | 1,4787615 | +1,1e−05 | −2,0e−06 | −3,1e−04 | +3,0e−07 | −7,0e−07 | 3,0e−05 | 1,3e−05 |
+| 18,5400 | 1,4787448 | 1,4787615 | +1,1e−05 | −2,0e−06 | −3,1e−04 | +3,0e−07 | −7,0e−07 | 3,0e−05 | 1,7e−05 |
 | 35,0757 | 2,3098730 | 2,3098814 | +3,6e−06 | −1,5e−06 | −1,4e−04 | +7,2e−07 | −1,8e−06 | 3,1e−05 | 1,5e−05 |
-| 70,1725 | 7,5562739 | 7,5563457 | +9,5e−06 | +5,9e−08 | +1,5e−05 | −3,5e−07 | +3,8e−06 | 9,6e−06 | 8,0e−06 |
-| 85,6922 | 12,7045900 | 12,7046775 | +6,9e−06 | −3,1e−07 | +5,4e−06 | +1,7e−07 | −3,7e−06 | 1,1e−05 | 4,2e−06 |
+| 70,1725 | 7,5562739 | 7,5563457 | +9,5e−06 | +5,9e−08 | +1,5e−05 | −3,5e−07 | +3,8e−06 | 9,6e−06 | 8,7e−06 |
+| 85,6922 | 12,7045900 | 12,7046775 | +6,9e−06 | −3,1e−07 | +5,4e−06 | +1,7e−07 | −3,7e−06 | 1,1e−05 | 4,3e−06 |
+
+### Investigação da diferença
+
+Convergência do integrador deste estudo: maior mudança relativa, nos pontos publicados, contra o integrador de base (DOP853, rtol da P-046).
+
+| Método | rtol | Mudança r | Mudança phi | Mudança u | Mudança v | Mudança h |
+| :- | -: | -: | -: | -: | -: | -: |
+| DOP853 | 1e-09 | 3,5e−09 | 1,8e−09 | 2,6e−07 | 1,8e−09 | 1,8e−08 |
+| DOP853 | 1e-13 | 3,9e−11 | 2,0e−11 | 1,1e−08 | 2,0e−11 | 1,9e−10 |
+| Radau | 1e-11 | 3,9e−11 | 2,0e−11 | 1,1e−08 | 2,1e−11 | 2,0e−10 |
+
+A listagem comparada nos valores de s que a fonte imprime, integrando o sistema da fonte na variável s (t' = r): diferença relativa (calculado − publicado) / |publicado|.
+
+| s | Dif. r | Dif. phi | Dif. u | Dif. v | Dif. h | Dif. t |
+| -: | -: | -: | -: | -: | -: | -: |
+| 0,150000 | +4,6e−08 | −1,4e−08 | +1,9e−08 | +8,4e−09 | −1,0e−08 | +1,2e−08 |
+| 2,550000 | −3,6e−08 | +2,7e−08 | +1,3e−06 | −2,2e−08 | −9,6e−09 | −1,3e−08 |
+| 8,950000 | +5,8e−07 | −1,6e−06 | −3,1e−04 | +4,1e−07 | −4,6e−08 | +1,7e−06 |
+| 15,350000 | +1,2e−05 | −1,0e−06 | −3,0e−04 | +5,9e−07 | −8,9e−08 | +1,3e−06 |
+| 24,310000 | +5,2e−06 | −8,1e−07 | −1,3e−04 | +1,5e−06 | −1,8e−07 | +1,4e−06 |
+| 33,270000 | +8,6e−06 | +7,0e−09 | +1,3e−05 | −8,9e−07 | −1,9e−06 | −3,6e−07 |
+| 34,488779 | −1,3e−01 | −4,8e−03 | −2,3e−01 | −8,4e−02 | −4,1e−01 | −5,2e−02 |
 
 ## 2. Conferência: espiral numérica × solução analítica quase circular (Edelbaum, coplanar)
 

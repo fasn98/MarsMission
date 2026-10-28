@@ -24,7 +24,7 @@ verificacao_schwenzfeger:
       v: 8.407196501071426e-09
       h: -1.0027768777827071e-08
     erro_relativo_vetor_posicao: 4.5975142567329975e-08
-    erro_relativo_vetor_velocidade: 8.407196380508584e-09
+    erro_relativo_vetor_velocidade: 3.7404236289482064e-08
     dentro_da_tolerancia: true
     fora_da_tolerancia: []
   - t: 2.5788933
@@ -47,7 +47,7 @@ verificacao_schwenzfeger:
       v: -2.1909517677048897e-08
       h: -8.877251606573258e-09
     erro_relativo_vetor_posicao: 1.0593780909151572e-07
-    erro_relativo_vetor_velocidade: 5.2933838260022205e-08
+    erro_relativo_vetor_velocidade: 5.116897449442058e-08
     dentro_da_tolerancia: true
     fora_da_tolerancia: []
   - t: 9.8501518
@@ -70,7 +70,7 @@ verificacao_schwenzfeger:
       v: 2.199984423404458e-07
       h: -4.3424512847974545e-07
     erro_relativo_vetor_posicao: 2.652085613817994e-05
-    erro_relativo_vetor_velocidade: 1.2940933298952197e-05
+    erro_relativo_vetor_velocidade: 1.2942365953168511e-05
     dentro_da_tolerancia: false
     fora_da_tolerancia:
     - u
@@ -94,7 +94,7 @@ verificacao_schwenzfeger:
       v: 3.028881902772045e-07
       h: -6.957319490010037e-07
     erro_relativo_vetor_posicao: 2.9882473766906605e-05
-    erro_relativo_vetor_velocidade: 1.284304268172879e-05
+    erro_relativo_vetor_velocidade: 1.723476801691497e-05
     dentro_da_tolerancia: false
     fora_da_tolerancia:
     - u
@@ -118,7 +118,7 @@ verificacao_schwenzfeger:
       v: 7.15481124526005e-07
       h: -1.7805397157487645e-06
     erro_relativo_vetor_posicao: 3.145380549797581e-05
-    erro_relativo_vetor_velocidade: 1.4624685392643115e-05
+    erro_relativo_vetor_velocidade: 1.5268953134132984e-05
     dentro_da_tolerancia: false
     fora_da_tolerancia:
     - u
@@ -142,7 +142,7 @@ verificacao_schwenzfeger:
       v: -3.530689462041854e-07
       h: 3.845868771526735e-06
     erro_relativo_vetor_posicao: 9.622307250400566e-06
-    erro_relativo_vetor_velocidade: 8.032424772521214e-06
+    erro_relativo_vetor_velocidade: 8.666141813825834e-06
     dentro_da_tolerancia: true
     fora_da_tolerancia: []
   - t: 85.692185
@@ -165,10 +165,93 @@ verificacao_schwenzfeger:
       v: 1.7391703842435042e-07
       h: -3.6602468941761365e-06
     erro_relativo_vetor_posicao: 1.0571375770415534e-05
-    erro_relativo_vetor_velocidade: 4.240564827153351e-06
+    erro_relativo_vetor_velocidade: 4.331654525984581e-06
     dentro_da_tolerancia: true
     fora_da_tolerancia: []
   verificado: false
+  investigacao:
+    convergencia:
+    - metodo: DOP853
+      rtol: 1.0e-09
+      maior_mudanca_relativa:
+        r: 3.5285667101023652e-09
+        phi: 1.8165827364107388e-09
+        u: 2.565532229644354e-07
+        v: 1.8360989514738995e-09
+        h: 1.826583089871759e-08
+    - metodo: DOP853
+      rtol: 1.0e-13
+      maior_mudanca_relativa:
+        r: 3.86230622708829e-11
+        phi: 2.0007288737409953e-11
+        u: 1.0825221173299111e-08
+        v: 1.9809655487646428e-11
+        h: 1.9206013082076334e-10
+    - metodo: Radau
+      rtol: 1.0e-11
+      maior_mudanca_relativa:
+        r: 3.917197749672466e-11
+        phi: 2.0290498737163683e-11
+        u: 1.0894485402389884e-08
+        v: 2.0873281191916738e-11
+        h: 2.0110220797076616e-10
+    comparacao_na_variavel_s:
+    - s: 0.15
+      diferenca_relativa:
+        r: 4.580212358860539e-08
+        phi: -1.3740819610348161e-08
+        u: 1.8901221631351376e-08
+        v: 8.416078506980464e-09
+        h: -1.0009840361362993e-08
+        t: 1.2080919448224883e-08
+    - s: 2.55
+      diferenca_relativa:
+        r: -3.6086856425958e-08
+        phi: 2.670853613603537e-08
+        u: 1.281239261629905e-06
+        v: -2.2246030899478857e-08
+        h: -9.56834842963245e-09
+        t: -1.3025711593596058e-08
+    - s: 8.95
+      diferenca_relativa:
+        r: 5.816289381622628e-07
+        phi: -1.579860099172548e-06
+        u: -0.00031469143506431365
+        v: 4.078639449068412e-07
+        h: -4.60423780976491e-08
+        t: 1.7467907586207907e-06
+    - s: 15.35
+      diferenca_relativa:
+        r: 1.1829615838143808e-05
+        phi: -1.002794538281238e-06
+        u: -0.00030066531336386934
+        v: 5.943583964175791e-07
+        h: -8.90553884200321e-08
+        t: 1.305646540488003e-06
+    - s: 24.31
+      diferenca_relativa:
+        r: 5.162038173790446e-06
+        phi: -8.128142536872678e-07
+        u: -0.00013342103193350068
+        v: 1.4638128347889682e-06
+        h: -1.810236654580149e-07
+        t: 1.4269068612015151e-06
+    - s: 33.27
+      diferenca_relativa:
+        r: 8.630117720261292e-06
+        phi: 7.006209406810338e-09
+        u: 1.2808962808395268e-05
+        v: -8.883676301956312e-07
+        h: -1.9312197661918417e-06
+        t: -3.6046096655758887e-07
+    - s: 34.488779
+      diferenca_relativa:
+        r: -0.13461792681351314
+        phi: -0.004791233736308568
+        u: -0.2267516332844025
+        v: -0.08423408593595741
+        h: -0.4097173046497843
+        t: -0.05203269332118083
 conferencia_edelbaum:
   marte:
     nome: Marte, descida da circular de mesma energia que a órbita de encontro até
