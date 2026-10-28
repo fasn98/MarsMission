@@ -563,7 +563,7 @@ premissas:
 
   - id: P-050
     nome: modelo_energia_solar_lander
-    valor: {albedo: 0.1, data_primeiro_sol_insight: "2018-11-27T12:00:00", painel: horizontal, tau_constante_na_estada: true}
+    valor: {albedo: 0.1, data_primeiro_sol_insight: "2018-11-27T12:00:00", painel: horizontal, tau_constante_na_estada: true, mmrtg_anos_antes_do_lancamento_sensibilidade: 1.0, tolerancia_teste_fluxo: 0.007, tolerancia_teste_vl1: 0.07}
     unidade: adimensional; data TDB
     uso: config/energia.yaml (orbital.energia, tools/energia.py, Etapa 4.1)
     justificativa: >
@@ -571,6 +571,9 @@ premissas:
       (a média de Marte é 0,27 [F130]; albedo maior aumenta a insolação). O 1º sol do InSight é tomado como 27/11/2018,
       o dia seguinte ao pouso [F132]. O painel do lander é horizontal, como o do InSight usado na calibração. Cada cenário
       de τ é constante durante a estada inteira, como envoltória; as tempestades reais duram semanas a meses [F134].
+      O MMRTG degrada a partir do lançamento; a sensibilidade soma um ano entre abastecimento e lançamento (sem fonte).
+      Testes: f contra a Tab. III com o erro médio do ajuste (0,7 %) e a insolação diária contra o VL1 com o erro máximo
+      (7 %), os dois declarados pela fonte [F130] p. 14; usá-los como limite por ponto é escolha deste estudo.
     status: NÃO VALIDADA
   - id: P-051
     nome: sem_limpeza_dos_paineis

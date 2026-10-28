@@ -53,7 +53,7 @@ def datas(ini, fim, passo_dias):
 
 
 def data_com_ls(ls_alvo, ano_ini=2029):
-    """Uma data (TDB) em que Ls ≈ ls_alvo (busca diária de dois anos, depois refino linear)."""
+    """Uma data (TDB) em que Ls ≈ ls_alvo (busca diária de dois anos; resolução de um dia, ~0,5° de Ls)."""
     ds = datas(f"{ano_ini}-01-01", f"{ano_ini + 2}-01-01", 1)
     ls = [en.geometria_marte(d)[0] for d in ds]
     for i in range(len(ds) - 1):
@@ -113,11 +113,13 @@ def main():
     e = pcfg["orbitador"]["energia"]
     dod, wh_kg = v(e["profundidade_descarga"]), v(e["energia_especifica_bateria_wh_kg"])
     noite = v(pcfg["lander"]["energia"]["noite_fracao_sol"])
+    efr = v(e["eficiencia_recarga"])   # P-029: a energia da noite passa pela bateria
+    fator_recarga = (1 - noite) + noite / efr
 
     def dimensiona(tau, carga_wh, perda_por_sol=perda):
         prod = [en.energia_painel(1.0, hh(lat, g[1], g[2], tau), eta, perda_por_sol, n) for n, g in enumerate(geo)]
         i = int(np.argmin([p / carga_wh for p in prod]))
-        area = carga_wh / prod[i]
+        area = carga_wh * fator_recarga / prod[i]
         bat = en.bateria_kg(noite * carga_wh, dod, wh_kg)
         return {"tau": tau, "tau_usado": min(tau, tau_max), "demanda_wh_sol": carga_wh, "area_m2": area, "painel_kg": area * kg_m2 * (1 + m_painel),
                 "bateria_kg": bat * (1 + m_bat), "total_kg": area * kg_m2 * (1 + m_painel) + bat * (1 + m_bat),
@@ -127,6 +129,14 @@ def main():
     solar = [dict(dimensiona(t, demanda), cenario=k, carga="operação normal") for k, t in cen.items()]
     solar.append(dict(dimensiona(cen["global_2018"], mav_wh), cenario="global_2018", carga="só o aquecimento do MAV (sobrevivência)"))
     solar.append(dict(dimensiona(cen["claro_jezero"], demanda, 0.0), cenario="claro_jezero", carga="operação normal, sem poeira acumulada (sensibilidade)"))
+    # opção "solar com sobrevivência": o painel e a bateria têm de servir aos dois casos (operação normal com céu claro e
+    # só o MAV na tempestade global): a maior área e a maior bateria dos dois
+    norm, sob = solar[0], solar[3]
+    area_c = max(norm["area_m2"], sob["area_m2"])
+    bat_c = max(norm["bateria_kg"], sob["bateria_kg"])
+    solar_c = {"cenario": "claro_jezero + global_2018", "carga": "operação normal com céu claro; só o MAV na tempestade global",
+               "area_m2": area_c, "painel_kg": area_c * kg_m2 * (1 + m_painel), "bateria_kg": bat_c,
+               "total_kg": area_c * kg_m2 * (1 + m_painel) + bat_c}
 
     # verificação contra a tabela do VL1 [F56] (Whr em horas de Marte: × 24,65/24 para horas terrestres, nota da tabela)
     vl = lc["conferencia_vl1"]
@@ -135,7 +145,7 @@ def main():
         d = data_com_ls(p["ls"])
         _, dec, r = en.geometria_marte(d)
         calc = hh(v(vl["latitude_graus"]), dec, r, p["tau"])
-        pub = p["hh"] * 24.65 / 24
+        pub = p["hh"] * v(vl["horas_marte_para_terrestres"])
         conf.append({"ls": p["ls"], "tau": p["tau"], "hh_publicado_wh": pub, "hh_calculado_wh": calc, "diferenca_relativa": (calc - pub) / pub})
     rz = [abs(c["diferenca_relativa"]) for c in conf]
 
@@ -144,10 +154,13 @@ def main():
     anos = (dt.datetime.fromisoformat(ref["partida_marte"][:10]) - dt.datetime.fromisoformat(ref["partida_terra"][:10])).days / 365.25
     p_fim = en.potencia_mmrtg(v(mm["potencia_inicio_w"]), v(mm["degradacao_anual"]), anos)
     n_rtg = math.ceil(demanda / hsol / p_fim)
+    anos_s = anos + v(lc["mmrtg_anos_antes_do_lancamento"])
+    p_fim_s = en.potencia_mmrtg(v(mm["potencia_inicio_w"]), v(mm["degradacao_anual"]), anos_s)
     rtg = {"potencia_inicio_w": v(mm["potencia_inicio_w"]), "anos_do_lancamento_ao_fim": anos, "potencia_fim_w": p_fim,
            "demanda_media_w": demanda / hsol, "unidades": n_rtg, "massa_kg": n_rtg * v(mm["massa_kg"]),
            "potencia_termica_total_w": n_rtg * v(lc["mmrtg"]["potencia_termica_w"]),
-           "energia_por_sol_fim_wh": n_rtg * p_fim * hsol}
+           "energia_por_sol_fim_wh": n_rtg * p_fim * hsol, "margem_crescimento": 0.0, "bateria_kg": None,
+           "sensibilidade_abastecimento": {"anos": anos_s, "potencia_fim_w": p_fim_s, "unidades": math.ceil(demanda / hsol / p_fim_s)}}
 
     # ---------------- orbitador: distância por fase, eclipses, carga por modo
     janelas = [cand[w["missao"]] for w in ms["envelope_dimensionamento"]["minimo_admissivel_por_janela"].values()]
@@ -211,7 +224,8 @@ def main():
                       "insolacao_topo_min_wh": min(q_topo), "insolacao_topo_max_wh": max(q_topo), "fator_poeira_fim": (1 - perda) ** (len(geo) - 1),
                       "albedo": al, "tau_max_modelo": tau_max,
                       "demanda": {"plataforma_wh_sol": plat_wh, "aquecimento_mav_w": mav_w, "aquecimento_mav_wh_sol": mav_wh, "total_wh_sol": demanda},
-                      "solar": solar, "mmrtg": rtg,
+                      "solar": solar, "solar_com_sobrevivencia": solar_c, "fator_recarga": fator_recarga,
+                      "braco_potencia_media_w": v(lc["braco"]["potencia_media_w"]), "mmrtg": rtg,
                       "verificacao_vl1": {"pontos": conf, "maior_diferenca_relativa": max(rz)}},
            "orbitador": orbit}
     SAIDA.mkdir(parents=True, exist_ok=True)
@@ -232,17 +246,25 @@ def escreve_md(o):
           f"Demanda: plataforma {br(d['plataforma_wh_sol'])} Wh/sol (P-032) + aquecimento do MAV {br(d['aquecimento_mav_w'], 1)} W "
           f"({br(d['aquecimento_mav_wh_sol'])} Wh/sol) = {br(d['total_wh_sol'])} Wh/sol.", "",
           "### Solar (τ constante na estada, como envoltória; bateria para a noite; com margens de crescimento)", "",
+          f"A energia da noite passa pela bateria (eficiência de recarga da P-029): a produção necessária é {br(la['fator_recarga'], 3)} × a demanda.", "",
           f"O modelo de insolação vale até τ = {br(la['tau_max_modelo'], 0)}; acima disso usa-se esse limite, e o resultado fica otimista.", "",
           "| Cenário | τ | τ usado | Carga | Demanda (Wh/sol) | Área (m²) | Painel (kg) | Bateria (kg) | Total (kg) | Pior sol (Ls) |",
           "| :- | -: | -: | :- | -: | -: | -: | -: | -: | -: |"]
     for s in la["solar"]:
         md.append(f"| {s['cenario']} | {br(s['tau'], 1)} | {br(s['tau_usado'], 1)} | {s['carga']} | {br(s['demanda_wh_sol'])} | {br(s['area_m2'], 1)} | {br(s['painel_kg'])} | "
                   f"{br(s['bateria_kg'])} | {br(s['total_kg'])} | {br(s['pior_sol_ls'])}° |")
+    sc = la["solar_com_sobrevivencia"]
+    md += ["", f"Solar com sobrevivência (operação normal com céu claro e só o MAV na tempestade global; a maior área e a maior bateria): "
+           f"{br(sc['area_m2'], 1)} m², painel {br(sc['painel_kg'])} kg, bateria {br(sc['bateria_kg'])} kg, total {br(sc['total_kg'])} kg."]
     r = la["mmrtg"]
+    s_ = r["sensibilidade_abastecimento"]
     md += ["", "### MMRTG", "",
            f"{r['unidades']} unidade(s): {br(r['potencia_fim_w'], 1)} W cada no fim da estada ({br(r['anos_do_lancamento_ao_fim'], 2)} anos depois do lançamento), "
-           f"para {br(r['demanda_media_w'], 1)} W médios; {br(r['massa_kg'])} kg; {br(r['potencia_termica_total_w'])} W térmicos.", "",
+           f"para {br(r['demanda_media_w'], 1)} W médios; {br(r['massa_kg'])} kg (massa da unidade voada, sem margem de crescimento e sem bateria de pico); "
+           f"{br(r['potencia_termica_total_w'])} W térmicos. Sensibilidade com o abastecimento {br(s_['anos'] - r['anos_do_lancamento_ao_fim'], 0)} ano antes "
+           f"do lançamento: {br(s_['potencia_fim_w'], 1)} W cada, {s_['unidades']} unidade(s).", "",
            "### Verificação da insolação diária contra a tabela do VL1 (22,3° N) [F56]", "",
+           "A tabela é cálculo publicado (modelo de Appelbaum & Flood), não medida: a comparação verifica a implementação.", "",
            "| Ls | τ | Publicado (Wh/m², horas terrestres) | Calculado (Wh/m²) | Diferença |", "| -: | -: | -: | -: | -: |"]
     md += [f"| {c['ls']} | {br(c['tau'], 2)} | {br(c['hh_publicado_wh'])} | {br(c['hh_calculado_wh'])} | {br(100 * c['diferenca_relativa'], 1)} % |"
            for c in la["verificacao_vl1"]["pontos"]]
@@ -252,7 +274,7 @@ def escreve_md(o):
            + ", ".join(f"{k} {br(x, 3)} UA" for k, x in ob["distancia_max_ua_por_fase"].items())
            + f"; afélio de Marte {br(ob['afelio_marte_ua'], 3)} UA. Eclipse máximo: "
            + ", ".join(f"{k} {br(x, 2)} h" for k, x in ob["eclipse_max_h"].items()) + ".", "",
-           "| Modo (proposta P-053) | Carga (W) | Distância (UA) | Eclipse (h) | Painel a 1 UA equivalente (W) | Painel sem margem (kg) | Energia no eclipse (Wh) |",
+           "| Modo (proposta P-053) | Carga (W) | Distância (UA) | Eclipse (h) | Potência do painel na distância (W) | Painel sem margem (kg) | Energia no eclipse (Wh) |",
            "| :- | -: | -: | -: | -: | -: | -: |"]
     md += [f"| {m['modo']} | {br(m['carga_w'])} | {br(m['distancia_max_ua'], 3)} | {br(m['eclipse_h'], 2)} | {br(m['painel_w'])} | "
            f"{br(m['painel_kg_sem_margem'], 1)} | {br(m['bateria_wh'])} |" for m in ob["modos"]]

@@ -23,10 +23,10 @@ lander:
   - tau: 0.4
     tau_usado: 0.4
     demanda_wh_sol: 4684.603280869083
-    area_m2: 16.00268836416553
-    painel_kg: 84.16413911528308
+    area_m2: 18.00302440968622
+    painel_kg: 94.68465650469345
     bateria_kg: 95.64398365107712
-    total_kg: 179.8081227663602
+    total_kg: 190.3286401557706
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 292.73851832041004
@@ -35,10 +35,10 @@ lander:
   - tau: 2.0
     tau_usado: 2.0
     demanda_wh_sol: 4684.603280869083
-    area_m2: 25.51677099885796
-    painel_kg: 134.2022674721186
+    area_m2: 28.706367373715203
+    painel_kg: 150.9775509061334
     bateria_kg: 95.64398365107712
-    total_kg: 229.8462511231957
+    total_kg: 246.6215345572105
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 183.5891885018974
@@ -47,10 +47,10 @@ lander:
   - tau: 8.5
     tau_usado: 6.0
     demanda_wh_sol: 4684.603280869083
-    area_m2: 68.15826215299045
-    painel_kg: 358.46986001088413
+    area_m2: 76.67804492211424
+    painel_kg: 403.27859251224453
     bateria_kg: 95.64398365107712
-    total_kg: 454.11384366196125
+    total_kg: 498.92257616332165
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -59,10 +59,10 @@ lander:
   - tau: 8.5
     tau_usado: 6.0
     demanda_wh_sol: 1184.6032808690836
-    area_m2: 17.235291042572268
-    painel_kg: 90.64685882702851
+    area_m2: 19.3897024228938
+    painel_kg: 101.97771618040709
     bateria_kg: 24.185650317743796
-    total_kg: 114.8325091447723
+    total_kg: 126.16336649815088
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -71,15 +71,24 @@ lander:
   - tau: 0.4
     tau_usado: 0.4
     demanda_wh_sol: 4684.603280869083
-    area_m2: 6.3378712463963875
-    painel_kg: 33.333241586515996
+    area_m2: 7.130105152195935
+    painel_kg: 37.4998967848305
     bateria_kg: 95.64398365107712
-    total_kg: 128.97722523759313
+    total_kg: 133.14388043590762
     pior_sol: 137
     pior_sol_ls: 276.48234792718114
     energia_por_m2_no_pior_sol_wh: 739.1445958345515
     cenario: claro_jezero
     carga: operação normal, sem poeira acumulada (sensibilidade)
+  solar_com_sobrevivencia:
+    cenario: claro_jezero + global_2018
+    carga: operação normal com céu claro; só o MAV na tempestade global
+    area_m2: 19.3897024228938
+    painel_kg: 101.97771618040709
+    bateria_kg: 95.64398365107712
+    total_kg: 197.6216998314842
+  fator_recarga: 1.125
+  braco_potencia_media_w: 10.0
   mmrtg:
     potencia_inicio_w: 110.0
     anos_do_lancamento_ao_fim: 1.9548254620123204
@@ -89,6 +98,12 @@ lander:
     massa_kg: 90.0
     potencia_termica_total_w: 3950.0
     energia_por_sol_fim_wh: 4927.758689260396
+    margem_crescimento: 0.0
+    bateria_kg: null
+    sensibilidade_abastecimento:
+      anos: 2.9548254620123204
+      potencia_fim_w: 95.11928920822022
+      unidades: 2
   verificacao_vl1:
     pontos:
     - ls: 69
@@ -103,9 +118,9 @@ lander:
       diferenca_relativa: -0.001227563257834528
     - ls: 153
       tau: 0.5
-      hh_publicado_wh: 3987.1374999999994
+      hh_publicado_wh: 3987.1375000000003
       hh_calculado_wh: 3976.126096028991
-      diferenca_relativa: -0.0027617316862055424
+      diferenca_relativa: -0.0027617316862057696
     - ls: 249
       tau: 1.4
       hh_publicado_wh: 1951.4583333333333

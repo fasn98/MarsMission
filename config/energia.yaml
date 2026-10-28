@@ -13,11 +13,11 @@ lander:
     latitude_graus: {valor: 4.5, fonte: "[F132] p. 13 e p. 54: \"about 4.5 degrees north latitude\""}
     data_tdb: {valor: "2018-11-27T12:00:00", premissa: P-050}   # 1º sol depois do pouso de 26/11/2018 19:47 UTC [F132]
   # Irradiância global horizontal: Appelbaum & Landis [F130], Eq. (19) G_h = G_ob cos z f(z,τ,al)/(1 − al), com f pela
-  # Eq. (20), p. 14: f = [Σ_i Σ_j Σ_k p(i,j,k) τ^i (z/100)^j al^k] (1 − al), z em graus; ajuste às Tabs. III e IV,
+  # Eq. (19) na p. 13 e Eq. (20) na p. 14: f = [Σ_i Σ_j Σ_k p(i,j,k) τ^i (z/100)^j al^k] (1 − al), z em graus; ajuste às Tabs. III e IV,
   # "The mean error is about 0.7 percent ... The maximum error is about 7 percent". Coeficientes da Tab. V, p. 29
   # (imagem conferida). Linhas: j = 0..5; colunas: i = 0..5.
   fluxo_liquido:
-    fonte: "[F130] p. 14, Eq. (19) e (20); p. 29, Tab. V (imagem conferida)"
+    fonte: "[F130] p. 13, Eq. (19); p. 14, Eq. (20); p. 29, Tab. V (imagem conferida)"
     k0:
       - [1.002800, -0.228681, 0.019613, 0.000231, -0.000130, 0.000003]
       - [-0.450073, 1.335955, -1.131691, 0.402126, -0.063967, 0.003758]
@@ -43,6 +43,8 @@ lander:
     global_2018: {valor: 8.5, fonte: "[F134] Guzewich et al. 2019, p. 77: \"increased from prestorm values near 0.6 to a peak of 8.5 over just 12 sols\" (Gale)"}
   conferencia_vl1:
     # Insolação diária global numa superfície horizontal no VL1 (22,3° N), Whr/m²-dia em horas de Marte [F56, Tab. IV].
+    # É cálculo publicado (modelo de Appelbaum & Flood), não medida: confere a implementação, não a física contra Marte.
+    horas_marte_para_terrestres: {valor: 1.0270833333333334, fonte: "[F56] p. 18, nota da Tab. IV: \"Multiply by 24.65/24 to obtain actual (terrestrial) Whr/m2 or hours\" (24,65/24)"}
     latitude_graus: {valor: 22.3, fonte: "[F56] Tab. IV, VL1"}
     pontos:
       - {ls: 69, tau: 0.65, hh: 3340, fonte: "[F56] p. 18, Tab. IV"}
@@ -55,6 +57,9 @@ lander:
     w_m2: {valor: 330, fonte: "[F55] p. 26: \"Areal power density is typically ~330 W/m2\""}
     w_kg: {valor: 80, fonte: "[F55] p. 26: \"~80 W/kg\""}
   helicopteros_energia_propria: {valor: true, premissa: P-052}
+  braco:   # referência; o braço do análogo (Phoenix) já está na P-032
+    potencia_media_w: {valor: 10, fonte: "[F93] p. 123: braço do MarsFAST, \"average power of 10 watt\" (config/coleta.yaml)"}
+  mmrtg_anos_antes_do_lancamento: {valor: 1.0, premissa: P-050}   # sensibilidade: abastecimento antes do lançamento
   ingenuity_voo:   # referência, fora da conta do lander (P-052)
     potencia_w: {valor: 350, fonte: "[F136] p. 28: \"Power expended by the helicopter during an up-to-90-second flight is about 350 watts\""}
     duracao_s: {valor: 90, fonte: "[F136] p. 28 (mesma citação)"}
@@ -77,6 +82,6 @@ orbitador:
     plataforma: "[F68] Mars Express, potência média típica da plataforma: observação 270 W, manobra 310 W, comunicação 445 W"
     ccrs: "[F23] Sarli et al. 2024, §4.1.2: \"with the payload typically consuming 300 W to 500 W\""
     electra: "[F69] 65 W, full duplex, fim de vida"
-    nac: "[F138] Kanani et al. 2023, Tab. 2: \"Power consumption <5W (standby), <12W (imaging, TgC)\""
+    nac: "[F138] Kanani et al. 2023, p. 5 do PDF, Tab. 2: \"Power consumption <5W (standby), <12W (imaging, TgC)\""
   # outros_w no encontro = Electra 65 W [F69] + NAC 12 W [F138]; o lidar não tem potência em fonte de agência.
   profundidade_descarga_mro: {valor: 0.40, fonte: "[F139] JPL, MRO Electrical Power: \"only about 40 percent of the battery capacity is ever planned to be used\""}

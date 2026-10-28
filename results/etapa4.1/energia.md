@@ -8,21 +8,27 @@ Demanda: plataforma 3 500 Wh/sol (P-032) + aquecimento do MAV 48,0 W (1 185 Wh/s
 
 ### Solar (τ constante na estada, como envoltória; bateria para a noite; com margens de crescimento)
 
+A energia da noite passa pela bateria (eficiência de recarga da P-029): a produção necessária é 1,125 × a demanda.
+
 O modelo de insolação vale até τ = 6; acima disso usa-se esse limite, e o resultado fica otimista.
 
 | Cenário | τ | τ usado | Carga | Demanda (Wh/sol) | Área (m²) | Painel (kg) | Bateria (kg) | Total (kg) | Pior sol (Ls) |
 | :- | -: | -: | :- | -: | -: | -: | -: | -: | -: |
-| claro_jezero | 0,4 | 0,4 | operação normal | 4 685 | 16,0 | 84 | 96 | 180 | 58° |
-| regional_jezero | 2,0 | 2,0 | operação normal | 4 685 | 25,5 | 134 | 96 | 230 | 58° |
-| global_2018 | 8,5 | 6,0 | operação normal | 4 685 | 68,2 | 358 | 96 | 454 | 58° |
-| global_2018 | 8,5 | 6,0 | só o aquecimento do MAV (sobrevivência) | 1 185 | 17,2 | 91 | 24 | 115 | 58° |
-| claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 4 685 | 6,3 | 33 | 96 | 129 | 276° |
+| claro_jezero | 0,4 | 0,4 | operação normal | 4 685 | 18,0 | 95 | 96 | 190 | 58° |
+| regional_jezero | 2,0 | 2,0 | operação normal | 4 685 | 28,7 | 151 | 96 | 247 | 58° |
+| global_2018 | 8,5 | 6,0 | operação normal | 4 685 | 76,7 | 403 | 96 | 499 | 58° |
+| global_2018 | 8,5 | 6,0 | só o aquecimento do MAV (sobrevivência) | 1 185 | 19,4 | 102 | 24 | 126 | 58° |
+| claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 4 685 | 7,1 | 37 | 96 | 133 | 276° |
+
+Solar com sobrevivência (operação normal com céu claro e só o MAV na tempestade global; a maior área e a maior bateria): 19,4 m², painel 102 kg, bateria 96 kg, total 198 kg.
 
 ### MMRTG
 
-2 unidade(s): 99,9 W cada no fim da estada (1,95 anos depois do lançamento), para 190,0 W médios; 90 kg; 3 950 W térmicos.
+2 unidade(s): 99,9 W cada no fim da estada (1,95 anos depois do lançamento), para 190,0 W médios; 90 kg (massa da unidade voada, sem margem de crescimento e sem bateria de pico); 3 950 W térmicos. Sensibilidade com o abastecimento 1 ano antes do lançamento: 95,1 W cada, 2 unidade(s).
 
 ### Verificação da insolação diária contra a tabela do VL1 (22,3° N) [F56]
+
+A tabela é cálculo publicado (modelo de Appelbaum & Flood), não medida: a comparação verifica a implementação.
 
 | Ls | τ | Publicado (Wh/m², horas terrestres) | Calculado (Wh/m²) | Diferença |
 | -: | -: | -: | -: | -: |
@@ -38,7 +44,7 @@ Maior diferença: 1,8 %.
 
 Distância máxima ao Sol por fase (janelas do envelope e referência): ida 1,507 UA, marte 1,666 UA, volta 1,665 UA; afélio de Marte 1,666 UA. Eclipse máximo: encontro 3,24 h, captura_1sol 4,19 h.
 
-| Modo (proposta P-053) | Carga (W) | Distância (UA) | Eclipse (h) | Painel a 1 UA equivalente (W) | Painel sem margem (kg) | Energia no eclipse (Wh) |
+| Modo (proposta P-053) | Carga (W) | Distância (UA) | Eclipse (h) | Potência do painel na distância (W) | Painel sem margem (kg) | Energia no eclipse (Wh) |
 | :- | -: | -: | -: | -: | -: | -: |
 | cruzeiro | 745 | 1,507 | 0,00 | 745 | 27,3 | 0 |
 | captura | 310 | 1,666 | 4,19 | 390 | 17,5 | 1 300 |
