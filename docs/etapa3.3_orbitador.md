@@ -82,7 +82,7 @@ Daí as duas concepções do híbrido:
 - **Por que a massa explode:** a captura e a saída químicas partem de órbita circular (cerca de 2,8 km/s cada, com a
   margem), e não de uma elipse.
 - **Lado do lander:** o MAV cai para 216 a 223 kg, contra 403 kg no químico.
-- **Saldo:** o total fica 4 a 15 vezes o do químico.
+- **Saldo:** o total (iii) vai de 150.244 a 507.555 kg nas linhas acima, contra 34.003 kg do químico.
 - **Lançadores:** nenhum leva o orbitador; as margens vão de −61 a −91 %.
 - **Conferência:** a espiral quase circular confere com a numérica no ponto escolhido (diferença de ~1e-9 relativo).
 
@@ -146,6 +146,6 @@ Outros pontos:
 - **Tempo de encontro e nodo:**
   - O tempo de encontro (22 d) não inclui a fase de RAAN de 24 d da mesma tabela [F121].
   - A orientação do nodo na partida não foi tratada.
-  - Com os 24 d, o c2 com 1 NSTAR (folga de 13 d) deixa de caber.
+  - Com os 24 d, o c2 com 1 e com 2 NSTAR (folgas de 13 e 21 d) deixa de caber.
 - **Tempo da espiral com margem:** usa o Δv com a margem (como o xenônio), com a mesma fração média de eclipse da
   espiral sem margem.

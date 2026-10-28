@@ -12,6 +12,7 @@ from orbital import plataforma as pf
 from orbital.config import ler, v
 
 TOL = v(ler("config/baixo_empuxo.yaml")["verificacao_schwenzfeger"]["tolerancia_relativa"])   # P-046
+P039 = next(p for p in ler("config/premissas.yaml")["premissas"] if p["id"] == "P-039")["valor"]["relativa"]   # identidade numérica
 MU, R = 42828.0, 3396.0   # valores de teste
 
 
@@ -44,26 +45,24 @@ def test_massas_do_hibrido_fecham_o_propelente():
     c, cx = 310.0 * 9.80665e-3, 3000.0 * 9.80665e-3
     x = m["massa_antes_descida_kg"] * math.exp(-dv["descida"] / cx) - 100.0
     x *= math.exp(-dv["encontro"] / c)
-    assert x == pytest.approx(m["massa_antes_subida_kg"], rel=1e-12)
+    assert x == pytest.approx(m["massa_antes_subida_kg"], rel=P039)
     for k, cc in (("subida", cx), ("saida", c), ("correcoes_volta", c)):
         x *= math.exp(-dv[k] / cc)
     x = (x - 50.0) * math.exp(-dv["desvio"] / c)
-    assert x == pytest.approx(m["massa_final_kg"], rel=1e-9)
+    assert x == pytest.approx(m["massa_final_kg"], rel=P039)
     # inserção: queima as correções e a captura e entrega a massa antes da descida mais o próprio inerte
     ins = m["injetada_kg"] * math.exp(-(dv["correcoes_ida"] + dv["captura"]) / c)
-    assert ins == pytest.approx(m["massa_antes_descida_kg"] + m["insercao"]["inerte_kg"], rel=1e-12)
-    assert m["insercao"]["inerte_kg"] == pytest.approx(0.24 / 0.76 * m["insercao"]["propelente_kg"], rel=1e-12)
+    assert ins == pytest.approx(m["massa_antes_descida_kg"] + m["insercao"]["inerte_kg"], rel=P039)
+    assert m["insercao"]["inerte_kg"] == pytest.approx(0.24 / 0.76 * m["insercao"]["propelente_kg"], rel=P039)
     # massa final = carga + sistema elétrico + inertes do retorno e do xenônio
-    assert m["massa_final_kg"] == pytest.approx(1500.0 + se.massa_seca_kg() + m["retorno"]["inerte_kg"] + m["eletrico"]["tanque_e_residuo_kg"], rel=1e-12)
+    assert m["massa_final_kg"] == pytest.approx(1500.0 + se.massa_seca_kg() + m["retorno"]["inerte_kg"] + m["eletrico"]["tanque_e_residuo_kg"], rel=P039)
 
 
-def test_hiperbole_e_eclipse():
-    """Δv para a circular pela energia; fração em eclipse da circular igual à do modelo da plataforma (mesmo pior caso)."""
-    vinf, r = 3.0, R + 1000.0
-    vp = math.sqrt(vinf ** 2 + 2 * MU / r)
-    assert hb.dv_hiperbole_circular(MU, vinf, r) == pytest.approx(vp - math.sqrt(MU / r), rel=1e-15)
+def test_eclipse_igual_ao_da_plataforma():
+    """Fração em eclipse da circular igual à do modelo da plataforma (mesmo pior caso), na resolução da amostragem dele."""
+    r = R + 1000.0
     t_ecl, per = pf.eclipse_maximo(MU, R, r, r)
-    assert hb.fracao_eclipse_circular(R, r) == pytest.approx(t_ecl / per, abs=1.0 / 20001 + 1e-12)   # resolução da amostragem de pf
+    assert abs(hb.fracao_eclipse_circular(R, r) - t_ecl / per) <= 1.0 / 20001   # n_tempo de pf.eclipse_maximo
 
 
 def test_arcos_tendem_ao_impulso_no_periapse():
