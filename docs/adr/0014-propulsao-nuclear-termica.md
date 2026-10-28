@@ -1,6 +1,6 @@
 # ADR 0014 — Propulsão nuclear térmica: fora desta missão robótica
 
-Status: Proposto (para decisão do Fabio)
+Status: Aceito (Fabio, 2026-10-28). Antes: Proposto (para decisão do Fabio)
 Data: 2026-10-28
 
 ## Contexto
@@ -49,3 +49,6 @@ A NTP fica **fora** desta missão robótica, sem modelagem.
 ## Consequências
 - A propulsão do orbitador continua química (ADR 0013, no PR da Etapa 3.4).
 - Reavaliar se surgir um motor NTP com voo ou com demonstração em voo programada.
+
+## Nota (2026-10-28): aceito
+O Fabio aceitou este ADR como está, ao aprovar a Fase 3. A decisão proposta acima passa a valer.
