@@ -418,9 +418,9 @@ cruzeiro:
   empuxo_n: 40.0
   isp_s: 292.0
   massa_motores_kg: 1.4
-  m0_kg: 4001.6845585440788
+  m0_kg: 4011.7840871689064
   dv_total_km_s: 0.07149999999999986
-  duracao_total_s: 7064.447746659659
+  duracao_total_s: 7082.2771360560955
   queima_unica_max_s: 28800.0
   excede_queima_unica: false
 - combinacao: Z2
@@ -428,9 +428,9 @@ cruzeiro:
   empuxo_n: 80.0
   isp_s: 292.0
   massa_motores_kg: 2.8
-  m0_kg: 4001.6845585440788
+  m0_kg: 4011.7840871689064
   dv_total_km_s: 0.07149999999999986
-  duracao_total_s: 3532.2238733298295
+  duracao_total_s: 3541.1385680280478
   queima_unica_max_s: 28800.0
   excede_queima_unica: false
 mav:

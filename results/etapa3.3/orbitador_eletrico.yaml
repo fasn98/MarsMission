@@ -1,29 +1,29 @@
 gerado_por: tools/orbitador_eletrico.py
 quimico:
   orbitador_injetado_kg: 7796.395336836866
-  lander_injetado_kg: 4001.6845585440788
-  total_regra_iii_kg: 35814.5
+  lander_injetado_kg: 4011.7840871689064
+  total_regra_iii_kg: 35845.2
   orbita_encontro_km:
   - 300
   - 25952.4
-  mav_kg: 405.8919655579633
+  mav_kg: 410.8658252138979
   dv_subida_mav_km_s: 5.2475945824387225
   margens:
     orbitador:
       Falcon Heavy (descartável): 0.43967248514669066
       Vulcan VC6: 0.06364270969286756
     lander:
-      Falcon Heavy (recuperação): 0.16911293441183584
-      Falcon Heavy (descartável): 1.804882715156761
-      Vulcan VC2: 0.08076736832638098
-      Vulcan VC4: 0.6211341522256926
-      Vulcan VC6: 1.072272049580806
+      Falcon Heavy (recuperação): 0.16616973276135005
+      Falcon Heavy (descartável): 1.7978215192759528
+      Vulcan VC2: 0.07804657360362843
+      Vulcan VC4: 0.6170530026873975
+      Vulcan VC6: 1.0670551758836124
 hibrido_c2:
   NSTAR:
     por_n:
     - n_ativos: 1
       viavel: true
-      minimo_kg: 148087.9882010713
+      minimo_kg: 148115.10140326622
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1459.8688613286934
@@ -54,11 +54,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 47447.3710277748
         orbitador_leo_kg: 144030.43880614772
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 155049.23574900007
+        total_regra_iii_kg: 155069.1665200756
         tempo_descida_dias: 131.96325263994893
         tempo_subida_dias: 124.87596880782607
         tempo_empuxo_dias: 191.3717272822158
@@ -82,21 +82,21 @@ hibrido_c2:
             SLS Block 1 (5 m + iCPS): -0.6259687622331834
           lander:
             Falcon 9 (ASDS): null
-            Falcon Heavy (recuperação): 0.28886451475250263
-            Falcon Heavy (descartável): 2.092185274151392
-            Vulcan VC2: 0.1914697620201251
-            Vulcan VC4: 0.7871860116817846
-            Vulcan VC6: 1.2845337101345304
+            Falcon Heavy (recuperação): 0.2865374292172278
+            Falcon Heavy (descartável): 2.0866022361039445
+            Vulcan VC2: 0.18931852578297348
+            Vulcan VC4: 0.7839591909655443
+            Vulcan VC6: 1.2804089124611902
             Atlas V 541: null
             Atlas V 551: null
             Ariane 64: null
-            New Glenn: 0.25316188285254526
-            SLS Block 1 (5 m + iCPS): 3.8890893971602454
+            New Glenn: 0.25089925954531256
+            SLS Block 1 (5 m + iCPS): 3.8802619920400243
       potencia_eletrica_kw: 2.5556
       empuxo_total_n: 0.093
     - n_ativos: 2
       viavel: true
-      minimo_kg: 165800.82610766118
+      minimo_kg: 165827.9393098561
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1763.887034292977
@@ -127,11 +127,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 53461.913353403244
         orbitador_leo_kg: 162288.08199298117
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 173306.87893583352
+        total_regra_iii_kg: 173326.80970690906
         tempo_descida_dias: 158.58674138206848
         tempo_subida_dias: 149.60198888610375
         tempo_empuxo_dias: 232.46495260088062
@@ -144,7 +144,7 @@ hibrido_c2:
       empuxo_total_n: 0.186
     - n_ativos: 3
       viavel: true
-      minimo_kg: 183513.6640142511
+      minimo_kg: 183540.777216446
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -175,11 +175,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 59572.54772356656
         orbitador_leo_kg: 180837.42056862847
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 191856.21751148082
+        total_regra_iii_kg: 191876.14828255636
         tempo_descida_dias: 150.9953409639236
         tempo_subida_dias: 142.20357662962314
         tempo_empuxo_dias: 222.5367522016004
@@ -192,7 +192,7 @@ hibrido_c2:
       empuxo_total_n: 0.279
     - n_ativos: 4
       viavel: true
-      minimo_kg: 201226.50192084096
+      minimo_kg: 201253.61512303588
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -223,11 +223,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 65687.30875562166
         orbitador_leo_kg: 199399.28596947607
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 210418.08291232842
+        total_regra_iii_kg: 210438.01368340396
         tempo_descida_dias: 124.87057329554911
         tempo_subida_dias: 117.5999340447277
         tempo_empuxo_dias: 184.03410098184867
@@ -240,7 +240,7 @@ hibrido_c2:
       empuxo_total_n: 0.372
     - n_ativos: 5
       viavel: true
-      minimo_kg: 218939.3398274309
+      minimo_kg: 218966.45302962582
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -271,11 +271,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 71802.06978768148
         orbitador_leo_kg: 217961.15137033782
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 228979.94831319017
+        total_regra_iii_kg: 228999.8790842657
         tempo_descida_dias: 109.19571269453157
         tempo_subida_dias: 102.83774849379719
         tempo_empuxo_dias: 160.93251025000816
@@ -288,7 +288,7 @@ hibrido_c2:
       empuxo_total_n: 0.46499999999999997
     - n_ativos: 6
       viavel: true
-      minimo_kg: 236652.17773402075
+      minimo_kg: 236679.29093621566
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -319,11 +319,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 77916.83081973699
         orbitador_leo_kg: 236523.01677118667
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 247541.81371403902
+        total_regra_iii_kg: 247561.74448511456
         tempo_descida_dias: 98.74580562718099
         tempo_subida_dias: 92.99629145983837
         tempo_empuxo_dias: 145.53144976210643
@@ -336,7 +336,7 @@ hibrido_c2:
       empuxo_total_n: 0.558
     - n_ativos: 7
       viavel: true
-      minimo_kg: 254365.01564062433
+      minimo_kg: 254392.12884281925
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -367,11 +367,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 84031.59185179253
         orbitador_leo_kg: 255084.88217203558
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 266103.67911488796
+        total_regra_iii_kg: 266123.6098859635
         tempo_descida_dias: 91.28158629335925
         tempo_subida_dias: 85.96667929272493
         tempo_empuxo_dias: 134.53069227074812
@@ -384,7 +384,7 @@ hibrido_c2:
       empuxo_total_n: 0.651
     - n_ativos: 8
       viavel: true
-      minimo_kg: 272077.85354721517
+      minimo_kg: 272104.9667494101
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -415,11 +415,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 90146.35288384803
         orbitador_leo_kg: 273646.74757288425
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 284665.54451573663
+        total_regra_iii_kg: 284685.4752868122
         tempo_descida_dias: 85.68342179299296
         tempo_subida_dias: 80.69447016738985
         tempo_empuxo_dias: 126.28012415222936
@@ -432,7 +432,7 @@ hibrido_c2:
       empuxo_total_n: 0.744
     - n_ativos: 9
       viavel: true
-      minimo_kg: 289790.6914538062
+      minimo_kg: 289817.8046560011
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -463,11 +463,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 96261.11391590355
         orbitador_leo_kg: 292208.6129737331
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 303227.4099165855
+        total_regra_iii_kg: 303247.340687661
         tempo_descida_dias: 81.32929384826356
         tempo_subida_dias: 76.59386306990704
         tempo_empuxo_dias: 119.86301561560366
@@ -480,7 +480,7 @@ hibrido_c2:
       empuxo_total_n: 0.837
     - n_ativos: 10
       viavel: true
-      minimo_kg: 307503.5293603972
+      minimo_kg: 307530.6425625921
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -511,11 +511,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 102375.87494795906
         orbitador_leo_kg: 310770.4783745819
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 321789.2753174343
+        total_regra_iii_kg: 321809.2060885098
         tempo_descida_dias: 77.84599149248005
         tempo_subida_dias: 73.31337739192077
         tempo_empuxo_dias: 114.72932878630309
@@ -528,7 +528,7 @@ hibrido_c2:
       empuxo_total_n: 0.9299999999999999
     - n_ativos: 11
       viavel: true
-      minimo_kg: 325216.36726698803
+      minimo_kg: 325243.48046918295
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -559,11 +559,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 108490.63598001457
         orbitador_leo_kg: 329332.3437754306
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 340351.14071828296
+        total_regra_iii_kg: 340371.0714893585
         tempo_descida_dias: 74.99601683774813
         tempo_subida_dias: 70.62934365538653
         tempo_empuxo_dias: 110.52903956232988
@@ -576,7 +576,7 @@ hibrido_c2:
       empuxo_total_n: 1.023
     - n_ativos: 12
       viavel: true
-      minimo_kg: 342929.2051735788
+      minimo_kg: 342956.3183757737
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1938.872403313642
@@ -607,11 +607,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 114605.39701207005
         orbitador_leo_kg: 347894.20917627943
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 358913.0061191318
+        total_regra_iii_kg: 358932.93689020735
         tempo_descida_dias: 72.62103795880479
         tempo_subida_dias: 68.39264887494129
         tempo_empuxo_dias: 107.02879854235218
@@ -635,7 +635,7 @@ hibrido_c2:
     por_n:
     - n_ativos: 1
       viavel: true
-      minimo_kg: 161388.81838865514
+      minimo_kg: 161415.93159085006
       escolha:
         encontro_alt_km: 1216.4403991146803
         captura_alt_km: 1763.887034292977
@@ -666,11 +666,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 505.61737072205744
         orbitador_injetado_kg: 51835.9673721315
         orbitador_leo_kg: 157352.3878104611
-        lander_injetado_kg: 3629.8781782570727
-        lander_leo_kg: 11018.796942852357
-        mav_kg: 222.78314697584472
+        lander_injetado_kg: 3636.4438924070073
+        lander_leo_kg: 11038.727713927896
+        mav_kg: 226.01665835403665
         dv_subida_mav_km_s: 4.505422589476876
-        total_regra_iii_kg: 168371.18475331346
+        total_regra_iii_kg: 168391.115524389
         tempo_descida_dias: 173.39004034281814
         tempo_subida_dias: 163.67189047263957
         tempo_empuxo_dias: 254.24382026698078
@@ -694,21 +694,21 @@ hibrido_c2:
             SLS Block 1 (5 m + iCPS): -0.6576354254779242
           lander:
             Falcon 9 (ASDS): null
-            Falcon Heavy (recuperação): 0.28886451475250263
-            Falcon Heavy (descartável): 2.092185274151392
-            Vulcan VC2: 0.1914697620201251
-            Vulcan VC4: 0.7871860116817846
-            Vulcan VC6: 1.2845337101345304
+            Falcon Heavy (recuperação): 0.2865374292172278
+            Falcon Heavy (descartável): 2.0866022361039445
+            Vulcan VC2: 0.18931852578297348
+            Vulcan VC4: 0.7839591909655443
+            Vulcan VC6: 1.2804089124611902
             Atlas V 541: null
             Atlas V 551: null
             Ariane 64: null
-            New Glenn: 0.25316188285254526
-            SLS Block 1 (5 m + iCPS): 3.8890893971602454
+            New Glenn: 0.25089925954531256
+            SLS Block 1 (5 m + iCPS): 3.8802619920400243
       potencia_eletrica_kw: 4.5
       empuxo_total_n: 0.165
     - n_ativos: 2
       viavel: true
-      minimo_kg: 191064.44921245385
+      minimo_kg: 191091.56241464877
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -739,11 +739,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 62366.813173249655
         orbitador_leo_kg: 189319.64561378685
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 200297.06759002662
+        total_regra_iii_kg: 200316.5558312094
         tempo_descida_dias: 160.7511132956669
         tempo_subida_dias: 151.32038869208546
         tempo_empuxo_dias: 235.42491156627906
@@ -756,7 +756,7 @@ hibrido_c2:
       empuxo_total_n: 0.33
     - n_ativos: 3
       viavel: true
-      minimo_kg: 220740.0800362528
+      minimo_kg: 220767.1932384477
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -787,11 +787,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 72635.29945608918
         orbitador_leo_kg: 220490.48929080582
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 231467.9112670456
+        total_regra_iii_kg: 231487.39950822838
         tempo_descida_dias: 124.81216273036094
         tempo_subida_dias: 117.4898549108036
         tempo_empuxo_dias: 182.7912216019677
@@ -804,7 +804,7 @@ hibrido_c2:
       empuxo_total_n: 0.495
     - n_ativos: 4
       viavel: true
-      minimo_kg: 250415.7108600649
+      minimo_kg: 250442.8240622598
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -835,11 +835,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 82903.78573892455
         orbitador_leo_kg: 251661.33296781217
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 262638.75494405197
+        total_regra_iii_kg: 262658.2431852347
         tempo_descida_dias: 106.8426874477026
         tempo_subida_dias: 100.57458802015756
         tempo_empuxo_dias: 156.47437661980416
@@ -852,7 +852,7 @@ hibrido_c2:
       empuxo_total_n: 0.66
     - n_ativos: 5
       viavel: true
-      minimo_kg: 280091.3416838655
+      minimo_kg: 280118.45488606044
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -883,11 +883,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 93172.27202175991
         orbitador_leo_kg: 282832.1766448185
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 293809.5986210583
+        total_regra_iii_kg: 293829.0868622411
         tempo_descida_dias: 96.0610022781076
         tempo_subida_dias: 90.42542788576992
         tempo_empuxo_dias: 140.684269630506
@@ -900,7 +900,7 @@ hibrido_c2:
       empuxo_total_n: 0.8250000000000001
     - n_ativos: 6
       viavel: true
-      minimo_kg: 309766.97250766587
+      minimo_kg: 309794.0857098608
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -931,11 +931,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 103440.75830459523
         orbitador_leo_kg: 314003.02032182465
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 324980.4422980644
+        total_regra_iii_kg: 324999.93053924723
         tempo_descida_dias: 88.87321216504424
         tempo_subida_dias: 83.65932112951151
         tempo_empuxo_dias: 130.15753163764055
@@ -948,7 +948,7 @@ hibrido_c2:
       empuxo_total_n: 0.99
     - n_ativos: 7
       viavel: true
-      minimo_kg: 339442.60333146644
+      minimo_kg: 339469.71653366135
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -979,11 +979,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 113709.24458743058
         orbitador_leo_kg: 345173.86399883084
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 356151.2859750706
+        total_regra_iii_kg: 356170.7742162534
         tempo_descida_dias: 83.73907636999901
         tempo_subida_dias: 78.82638773218407
         tempo_empuxo_dias: 122.6384330713081
@@ -996,7 +996,7 @@ hibrido_c2:
       empuxo_total_n: 1.155
     - n_ativos: 8
       viavel: true
-      minimo_kg: 369118.23415526655
+      minimo_kg: 369145.34735746146
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -1027,11 +1027,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 123977.73087027068
         orbitador_leo_kg: 376344.70767585165
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 387322.1296520914
+        total_regra_iii_kg: 387341.61789327423
         tempo_descida_dias: 79.88847452371813
         tempo_subida_dias: 75.20168768419137
         tempo_empuxo_dias: 116.99910914656324
@@ -1044,7 +1044,7 @@ hibrido_c2:
       empuxo_total_n: 1.32
     - n_ativos: 9
       viavel: true
-      minimo_kg: 398793.86497906724
+      minimo_kg: 398820.97818126215
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -1075,11 +1075,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 134246.2171531064
         orbitador_leo_kg: 407515.55135285895
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 418492.9733290987
+        total_regra_iii_kg: 418512.46157028154
         tempo_descida_dias: 76.89356197660828
         tempo_subida_dias: 72.38247653575027
         tempo_empuxo_dias: 112.6129683162025
@@ -1092,7 +1092,7 @@ hibrido_c2:
       empuxo_total_n: 1.485
     - n_ativos: 10
       viavel: true
-      minimo_kg: 428469.4958028679
+      minimo_kg: 428496.60900506284
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -1123,11 +1123,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 144514.7034359421
         orbitador_leo_kg: 438686.39502986614
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 449663.8170061059
+        total_regra_iii_kg: 449683.3052472887
         tempo_descida_dias: 74.4976319389204
         tempo_subida_dias: 70.12710761699728
         tempo_empuxo_dias: 109.1040556519138
@@ -1140,7 +1140,7 @@ hibrido_c2:
       empuxo_total_n: 1.6500000000000001
     - n_ativos: 11
       viavel: true
-      minimo_kg: 458145.12662668247
+      minimo_kg: 458172.2398288774
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -1171,11 +1171,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 154783.18971877787
         orbitador_leo_kg: 469857.23870687373
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 480834.6606831135
+        total_regra_iii_kg: 480854.1489242963
         tempo_descida_dias: 72.53732554444854
         tempo_subida_dias: 68.28180577438133
         tempo_empuxo_dias: 106.23312710840497
@@ -1188,7 +1188,7 @@ hibrido_c2:
       empuxo_total_n: 1.8150000000000002
     - n_ativos: 12
       viavel: true
-      minimo_kg: 487820.7574504837
+      minimo_kg: 487847.8706526786
       escolha:
         encontro_alt_km: 1092.254755518998
         captura_alt_km: 1938.872403313642
@@ -1219,11 +1219,11 @@ hibrido_c2:
         plataforma_orbitador_kg: 506.89978316633045
         orbitador_injetado_kg: 165051.67600161367
         orbitador_leo_kg: 501028.08238388144
-        lander_injetado_kg: 3616.248188593767
-        lander_leo_kg: 10977.42197623977
-        mav_kg: 216.07059055707708
+        lander_injetado_kg: 3622.6681218921954
+        lander_leo_kg: 10996.910217422563
+        mav_kg: 219.2323071493093
         dv_subida_mav_km_s: 4.464120892806017
-        total_regra_iii_kg: 512005.5043601212
+        total_regra_iii_kg: 512024.992601304
         tempo_descida_dias: 70.90373688238864
         tempo_subida_dias: 66.74405423886802
         tempo_empuxo_dias: 103.84068665548097

@@ -100,3 +100,12 @@ por critérios operacionais (`docs/etapa2.2b_propulsao_mav.md`).
 A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
 números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
 errata de 2026-10-31 de `docs/fase3_relatorio.md`.**
+
+## Nota (Etapa 4.2, 2026-10-31): alvo do MAV de 15 °C (P-027)
+O alvo de temperatura do MAV passou de −1 °C para 15 °C (decisão do Fabio no portão da Etapa 4.2). O aquecimento do MAV, a
+energia do lander e as massas mudaram:
+- a linha de base C + RHU vai de 27,7 m² e 245 kg para 32,8 m² e 278 kg;
+- o aquecimento do O4 na Etapa 2.2 vai de 36 para 45 W (`results/etapa2.2/mav_propulsao.md`);
+- o lander injetado vai de 4.002 para 4.012 kg.
+
+**Números vigentes:** `results/` e a nota de 2026-10-31 em `docs/etapa4.2_termico.md`.

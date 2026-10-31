@@ -98,3 +98,13 @@ da escolha do MSR.
 ## Nota (2026-10-28): ε do O4
 Desde o ADR 0007 (nota de 2026-10-28), o O4 usa ε = 0,230, do MAV pressurizado de Bowles et al. [F46]. A tabela acima
 (0,238, turbobomba) fica como registro da época.
+
+## Nota (Etapa 4.2, 2026-10-31): alvo do MAV de 15 °C (P-027)
+O alvo de temperatura do MAV passou de −1 °C para 15 °C (decisão do Fabio no portão da Etapa 4.2). O aquecimento do MAV, a
+energia do lander e as massas mudaram:
+- a linha de base C + RHU vai de 27,7 m² e 245 kg para 32,8 m² e 278 kg;
+- o aquecimento do O4 na Etapa 2.2 vai de 36 para 45 W, e o total (iii) da varredura com O4 de 31.233 para 31.257 kg
+  (`results/etapa2.2/mav_propulsao.md`);
+- o lander injetado vai de 4.002 para 4.012 kg.
+
+**Números vigentes:** `results/` e a nota de 2026-10-31 em `docs/etapa4.2_termico.md`.

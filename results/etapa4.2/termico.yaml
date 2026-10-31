@@ -1,0 +1,200 @@
+gerado_por: tools/termico.py
+mav_opcao: O4
+ambiente_mav_c: -62.5
+jezero_noite_solo_c: -93.14999999999998
+faixas:
+- item: MMH (orbitador e MAV)
+  tipo: ponto de fusão
+  min_c: -52.37
+  max_c: null
+  fonte: '[F157] p. 113 do PDF, 2.4.1 Property Summary Sheet (MMH): "MELTING POINT
+    220.78 °K / -52.37 °C"'
+- item: NTO / MON-3 (orbitador e MAV)
+  tipo: ponto de fusão
+  min_c: -11.2
+  max_c: null
+  fonte: '[F158] p. 89 do PDF (2.3-1), "Common Name: NTO, MON-1, MON-3*": "Melting
+    Point 261.95 °K / -11.2 °C"; p. 90: "the listed properties for N2O4 are applicable
+    for MON-1 and MON-3"'
+- item: Sistemas MMH/NTO em operação (nominal)
+  tipo: faixa nominal
+  min_c: 15
+  max_c: 27
+  fonte: '[F159] p. 2: "Such systems have been operated with nominal propellant temperature
+    between ~15oC [60oF] and ~27oC [80oF]"'
+- item: Tanques de propelente (cruzeiro do MER)
+  tipo: AFT
+  min_c: 17
+  max_c: 28
+  fonte: '[F160] p. 3: "The allowable flight temperature (AFT) range for the propellant
+    tanks was 17°C to 28°C"'
+- item: Linhas de propelente (cruzeiro do MER)
+  tipo: AFT
+  min_c: 17
+  max_c: 50
+  fonte: '[F160] p. 3: "The allowable flight temperature range for the propellant
+    lines was 17°C to 50°C"'
+- item: Linhas de propelente à base de hidrazina (típico)
+  tipo: AFT
+  min_c: 15
+  max_c: 50
+  fonte: '[F161] p. 1: "The typical allowable temperature range for hydrazine-based
+    lines is +15/+50⁰C"'
+- item: Propulsão líquida (hidrazina) do MAV do SRL
+  tipo: AFT
+  min_c: 14
+  max_c: 50
+  fonte: '[F164] p. 3, Tab. 1, "Key Thermal Requirements of SRL": "MAV (Hydrazine)
+    +14 to +50 °C +14 to +50 °C"'
+- item: Bateria Li-ion do Perseverance (operação)
+  tipo: operação
+  min_c: -20
+  max_c: 30
+  fonte: '[F162] p. 5: "Operating temperature range of -20°C to +30°C, with both charge
+    and discharge permitted at these temperatures"'
+- item: Bateria Li-ion do Phoenix e do MSL (operação)
+  tipo: operação
+  min_c: -20
+  max_c: 30
+  fonte: '[F163] p. 12 (Phoenix) e p. 13 (MSL): "Operating Temperature Range: -20o
+    to +30oC"'
+- item: Bateria Li-ion do SRL (cruzeiro, interface do HRS)
+  tipo: AFT
+  min_c: 0
+  max_c: 30
+  fonte: '[F165] p. 2: "(2) 0 oC to +30 oC for the battery"'
+- item: Amostras (RSTA), fora de transientes
+  tipo: AFT
+  min_c: null
+  max_c: -20
+  fonte: '[F167] p. 6: "shall be maintained below an Allowable Flight Temperature
+    (AFT) of -20 °C except for periods of unavoidable operational transients for which
+    the AFT is +30 °C"'
+- item: Amostras (RSTA), transientes operacionais inevitáveis
+  tipo: AFT
+  min_c: null
+  max_c: 30
+  fonte: '[F167] p. 6 (mesma citação)'
+- item: MAV O4 do estudo (aquecido)
+  tipo: alvo do aquecimento (P-027)
+  min_c: 15.0
+  max_c: null
+  fonte: config/mav_propulsao.yaml, aquecimento.t_minima_c
+aquecimento_mav:
+- alvo: atual (P-027)
+  t_c: 15.0
+  fonte: config/mav_propulsao.yaml
+  potencia_w: 60.83871896068917
+  energia_wh_sol: 1500.2645579549069
+  carga_sobrevivencia_wh_sol: 2003.5639628908116
+  area_sobrevivencia_m2: 32.79453100719549
+  demanda_operacao_wh_sol: 5000.264557954907
+  area_operacao_m2: 19.21611703159006
+  bateria_operacao_kg: 105.02873472491271
+  area_opcao_m2: 32.79453100719549
+  bateria_opcao_kg: 105.02873472491271
+  total_opcao_kg: 277.5074712408815
+- alvo: anterior_p027
+  t_c: -1.0
+  fonte: valor-base anterior da P-027 (NTO congela a −11 °C [F61] + 10 K)
+  potencia_w: 48.27846730428883
+  energia_wh_sol: 1190.5325201835713
+  carga_sobrevivencia_wh_sol: 1693.831925119476
+  area_sobrevivencia_m2: 27.724806703530987
+  demanda_operacao_wh_sol: 4690.532520183571
+  area_operacao_m2: 18.025810595347984
+  bateria_operacao_kg: 98.70503895374794
+  area_opcao_m2: 27.724806703530987
+  bateria_opcao_kg: 98.70503895374794
+  total_opcao_kg: 244.52019421013125
+- alvo: aft_tanques_mer
+  t_c: 17.0
+  fonte: '[F160] p. 3 (limite inferior da AFT dos tanques)'
+  potencia_w: 62.40875041773922
+  energia_wh_sol: 1538.981062676324
+  carga_sobrevivencia_wh_sol: 2042.2804676122287
+  area_sobrevivencia_m2: 33.42824654515355
+  demanda_operacao_wh_sol: 5038.981062676324
+  area_operacao_m2: 19.364905336120316
+  bateria_operacao_kg: 105.81919669630831
+  area_opcao_m2: 33.42824654515355
+  bateria_opcao_kg: 105.81919669630831
+  total_opcao_kg: 281.6308808697253
+area_base_dimensionada_pela_sobrevivencia: true
+amostras:
+  aft_c: -20
+  mav_c: 15.0
+  excesso_k: 35.0
+  excesso_com_alvos_k:
+    anterior_p027: 19.0
+    aft_tanques_mer: 37.0
+  decisao: transferência tardia para o MAV, tratada como transiente (+30 °C)
+  periodos_pior_caso:
+  - fase: Antes da coleta
+    duracao: éons
+    max_c:
+    - -20
+    - 10
+    fonte: '[F167] p. 5, Tab. 1: "Pre-collection Eons -20 to +10"'
+  - fase: No Perseverance (cache do rover)
+    duracao: anos
+    max_c:
+    - -65
+    - 10
+    fonte: '[F167] p. 5, Tab. 1: "Cached in M2020 Years -65 to +10"'
+  - fase: No depósito na superfície
+    duracao: anos
+    max_c:
+    - 5
+    - 53
+    fonte: '[F167] p. 5, Tab. 1: "Cached on Surface Years +5 to +53"'
+  - fase: Transferência para o contêiner (OS)
+    duracao: meses
+    max_c:
+    - 30
+    - 53
+    fonte: '[F167] p. 5, Tab. 1: "Transfer to Orbiting Sample (OS) Months +30 to +53"'
+  - fase: Lançamento do MAV
+    duracao: minutos
+    max_c:
+    - 30
+    - 30
+    fonte: '[F167] p. 5, Tab. 1: "Mars Ascent Vehicle (MAV) launch Minutes +30"'
+  deposito_desde: '2023-02-15'
+  chegada_marte: '2029-09-20'
+  anos_no_deposito_ate_a_chegada: 6.595482546201232
+  aquecimento_tubos_k: 300.0
+  isolamento_conteiner: 'não avaliado: sem análogo com massa publicada (busca de 2026-10-31;
+    só o limite de massa de todo o contêiner e as massas do veículo de entrada na
+    Terra)'
+comparacao_srl:
+  lamp_e_bateria_aquecedores_wh_sol: 1540.0
+  lamp_frio_total_wh_sol: 2300.0
+  mav_sobrevivencia_w: 30.0
+  mav_operacao_w:
+  - 60
+  - 70
+  nosso_aquecedores_lander_wh_sol: 363.2994049359048
+  nosso_rhu_w: 34.59994332722903
+  nosso_rhu_wh_sol: 853.2242224664697
+  nosso_total_wh_sol: 1216.5236274023746
+  nosso_mav_w: 60.83871896068918
+  razao_nosso_srl: 0.7899504074041394
+cruzeiro:
+  rhu_quantidade: 35
+  rhu_w: 35.0
+  srl_dissipacao_max_lamp_w: 322.0
+  srl_perda_passiva_max_w: 200.0
+  fracao_do_srl_passivo: 0.175
+  mer_dissipacao_w: 125.0
+  fracao_do_mer: 0.28
+  msl_parasita_w: 400.0
+  fracao_do_msl_parasita: 0.0875
+orbitador:
+  mro_aquecedores_w: 300.0
+  plataforma_w_por_modo:
+    cruzeiro: 745
+    captura: 310
+    encontro: 1022
+    retorno: 945
+  carga_adotada_w: 1022.0
