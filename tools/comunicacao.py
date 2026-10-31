@@ -53,15 +53,20 @@ def janelas(dias, limite):
     return out
 
 
-def taxa_uhf(r_km, rr):
+def perda_espaco_livre_db(r_km, f_mhz, c_km_s):
+    """Perda de espaço livre (Friis): 20 log10(4π R f / c)."""
+    return 20 * math.log10(4 * math.pi * r_km * f_mhz * 1e6 / c_km_s)
+
+
+def taxa_uhf(r_km, rr, c_km_s):
     """Maior taxa da tabela de limiares do Electra que fecha o enlace com margem (kbps; 0 se nenhuma)."""
-    p_rx = 10 * math.log10(v(rr["potencia_tx_w"]) * 1e3) + v(rr["ganhos_antenas_dbi"]) - (rr["perda_uhf_db"]["constante"]
-                                                                                       + rr["perda_uhf_db"]["por_decada"] * math.log10(r_km))
+    p_rx = (10 * math.log10(v(rr["potencia_tx_w"]) * 1e3) + v(rr["ganhos_antenas_dbi"])
+            - perda_espaco_livre_db(r_km, v(rr["frequencia_mhz"]), c_km_s))
     ok = [int(k) for k, lim in rr["limiares_dbm"]["tabela"].items() if p_rx >= lim + v(rr["margem_db"])]
     return max(ok) if ok else 0
 
 
-def simula_rele(rr, mu, r_marte, rp, ra, arg_peri_graus, rot_graus_s, sol_s):
+def simula_rele(rr, mu, r_marte, rp, ra, arg_peri_graus, rot_graus_s, sol_s, c_km_s):
     """Passes do orbitador sobre o sítio: órbita kepleriana fixa no espaço (sem J2), Marte girando; volume por passe e por sol."""
     a, e = (rp + ra) / 2, (ra - rp) / (ra + rp)
     i, w = math.radians(v(rr["inclinacao_graus"])), math.radians(arg_peri_graus)
@@ -85,10 +90,11 @@ def simula_rele(rr, mu, r_marte, rp, ra, arg_peri_graus, rot_graus_s, sol_s):
         rng = float(np.linalg.norm(d))
         el = math.degrees(math.asin(d @ nh / rng))
         if el >= v(rr["elevacao_min_graus"]):
-            tx = taxa_uhf(rng, rr)
+            tx = taxa_uhf(rng, rr, c_km_s)
             if atual is None:
-                atual = {"inicio_s": t, "duracao_s": 0.0, "mbit": 0.0, "alcance_min_km": rng, "alcance_max_km": rng}
+                atual = {"inicio_s": t, "duracao_s": 0.0, "fechado_s": 0.0, "mbit": 0.0, "alcance_min_km": rng, "alcance_max_km": rng}
             atual["duracao_s"] += dt_s
+            atual["fechado_s"] += dt_s if tx > 0 else 0.0
             atual["mbit"] += tx * dt_s / 1e3
             atual["alcance_min_km"], atual["alcance_max_km"] = min(atual["alcance_min_km"], rng), max(atual["alcance_max_km"], rng)
         elif atual is not None:
@@ -97,9 +103,11 @@ def simula_rele(rr, mu, r_marte, rp, ra, arg_peri_graus, rot_graus_s, sol_s):
     if atual is not None:
         passes.append(atual)
     sois = v(rr["sois_simulados"])
-    vol = [x["mbit"] for x in passes]
+    uteis = [x for x in passes if x["mbit"] > 0]   # passes em que o enlace fecha em algum momento
+    vol = [x["mbit"] for x in uteis]
     dur = [x["duracao_s"] for x in passes]
     return {"argumento_periapse_graus": arg_peri_graus, "passes": len(passes), "passes_por_sol": len(passes) / sois,
+            "passes_uteis_por_sol": len(uteis) / sois, "tempo_com_enlace_por_sol_h": sum(x["fechado_s"] for x in passes) / sois / 3600,
             "mbit_por_sol_medio": sum(vol) / sois, "mbit_por_passe_medio": (sum(vol) / len(vol)) if vol else 0.0,
             "mbit_por_passe_max": max(vol) if vol else 0.0, "duracao_media_min": (sum(dur) / len(dur) / 60) if dur else 0.0,
             "tempo_visivel_por_sol_h": sum(dur) / sois / 3600, "alcance_min_km": min(x["alcance_min_km"] for x in passes) if passes else None,
@@ -208,14 +216,26 @@ def main():
     sol_s = v(ler("config/plataformas.yaml")["lander"]["energia"]["duracao_sol_h"]) * 3600
     i_r, lat_r = math.radians(v(rr["inclinacao_graus"])), math.radians(rr["sitio"]["latitude_graus"])
     w_lat = math.degrees(math.asin(math.sin(lat_r) / math.sin(i_r)))   # periapse na latitude do sítio
-    casos = [simula_rele(rr, p.mu_marte, R, R + pl["periapse_alt_km"], R + pl["apoapse_regra_5pct_km"], w, rot, sol_s)
+    casos = [simula_rele(rr, p.mu_marte, R, R + pl["periapse_alt_km"], R + pl["apoapse_regra_5pct_km"], w, rot, sol_s, c_km_s)
              for w in (w_lat, w_lat + 180.0)]
     for x in casos:
         x["cobertura_demanda_lander"] = x["mbit_por_sol_medio"] / demanda
         x["cobertura_demanda_total"] = x["mbit_por_sol_medio"] / demanda_total
-        x["energia_transmitindo_wh_sol"] = x["tempo_visivel_por_sol_h"] * v(rr["consumo_transmitindo_w"])
+        x["energia_transmitindo_wh_sol"] = x["tempo_com_enlace_por_sol_h"] * v(rr["consumo_transmitindo_w"])
     # conferência do modelo de enlace: órbita baixa circular de referência (a do MRO, ~250 km [F177] p. 25)
-    conf_baixa = taxa_uhf(250.0, rr)
+    conf_baixa = taxa_uhf(250.0, rr, c_km_s)
+    cb = rr["conferencia_orbita_baixa"]
+    rr_b = dict(rr, inclinacao_graus=cb["inclinacao_graus"])
+    hb = R + v(cb["altitude_km"])
+    sim_b = simula_rele(rr_b, p.mu_marte, R, hb, hb, 0.0, rot, sol_s, c_km_s)
+    conf_mro = {"mbit_por_passe_medio": sim_b["mbit_por_passe_medio"], "mbit_por_passe_max": sim_b["mbit_por_passe_max"],
+                "mbit_por_sol_medio": sim_b["mbit_por_sol_medio"],
+                "publicado_mbit_por_passe": [cb["publicado_mbit_por_passe"]["min"], cb["publicado_mbit_por_passe"]["max"]],
+                "publicado_mbit_por_sol": [cb["publicado_mbit_por_sol"]["min"], cb["publicado_mbit_por_sol"]["max"]]}
+    conf_mro["dentro_da_faixa_publicada"] = (conf_mro["publicado_mbit_por_passe"][0] <= conf_mro["mbit_por_passe_medio"] <= conf_mro["publicado_mbit_por_passe"][1]
+                                             and conf_mro["publicado_mbit_por_sol"][0] <= conf_mro["mbit_por_sol_medio"] <= conf_mro["publicado_mbit_por_sol"][1])
+    alcance_1024 = next(r for r in (x * 10.0 for x in range(1, 10000)) if taxa_uhf(r, rr, c_km_s) < 1024)   # km
+    alcance_32 = next(r for r in (x * 10.0 for x in range(1, 100000)) if taxa_uhf(r, rr, c_km_s) < 32)
     # (b) DTE maior: ganho ∝ D², taxa ∝ P_RF (P-069); diâmetro para fechar a demanda num passe (P-065)
     dm = cc["dte_maior"]
     taxa_nec = demanda_total * 1e6 / (dte["horas_por_passe"] * 3600)
@@ -236,6 +256,8 @@ def main():
                  "area_da_linha_de_base_m2": en_["variante_rhu"]["opcao"]["area_m2"]}
     comparacao = {"demanda_lander_mbit_sol": demanda, "helicopteros": heli, "demanda_total_mbit_sol": demanda_total,
                   "rele_proprio": casos, "conferencia_taxa_orbita_baixa_kbps": conf_baixa,
+                  "alcance_max_1024_kbps_km": alcance_1024, "alcance_max_32_kbps_km": alcance_32,
+                  "frequencia_mhz": v(rr["frequencia_mhz"]), "conferencia_orbita_baixa": conf_mro, "referencia_maven": rr["referencia_maven"],
                   "conferencia_tgo": rr["conferencia_tgo"], "dte_maior": dte_maior}
 
     out = {"gerado_por": "tools/comunicacao.py", "estada": [str(d0), str(d1)], "criterios_graus": crit,
@@ -298,21 +320,30 @@ def escreve_md(o):
            "### (a) Orbitadores de relé existentes", "", "| Orbitador | Estado | Fonte |", "| :- | :- | :- |"]
     md += [f"| {x['orbitador']} | {x['estado']} | {x['fonte'].split(']')[0]}] |" for x in o["orbitadores_existentes"]]
     md += ["", "### (c) Relé pelo nosso orbitador na órbita de encontro (simulação dos passes, P-066 e P-067)", "",
-           "| Caso | Passes por sol | Duração média (min) | Mbit por passe (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo (Wh/sol) |",
+           "| Caso | Passes por sol (com enlace) | Duração média (min) | Mbit por passe com enlace (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo (Wh/sol) |",
            "| :- | -: | -: | -: | -: | -: | -: |"]
     for x, nome in zip(cp["rele_proprio"], ("periapse na latitude do sítio", "apoapse na latitude do sítio")):
-        md.append(f"| {nome} | {br(x['passes_por_sol'], 2)} | {br(x['duracao_media_min'])} | {br(x['mbit_por_passe_medio'])} / {br(x['mbit_por_passe_max'])} | "
+        md.append(f"| {nome} | {br(x['passes_por_sol'], 2)} ({br(x['passes_uteis_por_sol'], 2)}) | {br(x['duracao_media_min'])} | {br(x['mbit_por_passe_medio'])} / {br(x['mbit_por_passe_max'])} | "
                   f"{br(x['mbit_por_sol_medio'])} | {br(100 * x['cobertura_demanda_total'])} % | {br(x['energia_transmitindo_wh_sol'])} |")
-    md += ["", f"Conferência do modelo de enlace: numa órbita baixa de 250 km ele dá {br(cp['conferencia_taxa_orbita_baixa_kbps'])} kbps "
-           f"(o topo da tabela do Electra); referência publicada: {cp['conferencia_tgo']}. A energia supõe transmissão em todo o "
-           "tempo visível (envoltória).", "", "### (b) Enlace direto maior (P-069)", ""]
+    md += ["", f"Perda de espaço livre por Friis a {br(cp['frequencia_mhz'], 1)} MHz. Com P-066, o enlace fecha a 1 024 kbps até "
+           f"{br(cp['alcance_max_1024_kbps_km'])} km e a 32 kbps até {br(cp['alcance_max_32_kbps_km'])} km. Conferência: numa órbita baixa de 250 km "
+           f"dá {br(cp['conferencia_taxa_orbita_baixa_kbps'])} kbps (o topo da tabela do Electra); referência publicada: {cp['conferencia_tgo']}. "
+           "A energia conta o tempo em que o enlace fecha (envoltória). Órbita sem J2: o periapse migra ao longo dos 60 sóis, e os dois casos "
+           "são extremos, não médias.", "",
+           f"Comparação com dado publicado: o mesmo modelo numa órbita circular de 250 km [F177] dá {br(cp['conferencia_orbita_baixa']['mbit_por_passe_medio'])} Mbit "
+           f"por passe em média (máximo {br(cp['conferencia_orbita_baixa']['mbit_por_passe_max'])}) e {br(cp['conferencia_orbita_baixa']['mbit_por_sol_medio'])} Mbit por sol, "
+           f"contra {br(cp['conferencia_orbita_baixa']['publicado_mbit_por_passe'][0])} a {br(cp['conferencia_orbita_baixa']['publicado_mbit_por_passe'][1])} Mbit por passe e "
+           f"{br(cp['conferencia_orbita_baixa']['publicado_mbit_por_sol'][0])} a {br(cp['conferencia_orbita_baixa']['publicado_mbit_por_sol'][1])} por sol do MRO com o MSL [F137]: "
+           + ("dentro da faixa publicada." if cp["conferencia_orbita_baixa"]["dentro_da_faixa_publicada"] else "fora da faixa publicada."), "",
+           f"Referência: {cp['referencia_maven']}.", "", "### (b) Enlace direto maior (P-069)", ""]
     dm = cp["dte_maior"]
     md += [f"Taxa necessária para a demanda total num passe de 8 h: {br(dm['taxa_necessaria_bps'])} bps, {br(dm['fator_sobre_msl'])} vezes o análogo "
            f"do MSL ({br(dm['fator_db'], 1)} dB). HGA de {br(dm['diametro_com_15w_m'], 2)} m com 15 W, ou de {br(dm['diametro_com_100w_m'], 2)} m com "
            f"o TWTA de 100 W do MRO; massa do conjunto com 100 W de cerca de {br(dm['massa_com_100w_kg'], 1)} kg, contra {br(dm['massa_msl_kg'], 1)} kg "
            f"do MSL; {br(dm['energia_por_passe_wh'])} Wh por passe. Área de operação com esse consumo: {br(dm['area_operacao_com_dte_m2'], 1)} m², "
            f"abaixo dos {br(dm['area_da_linha_de_base_m2'], 1)} m² da linha de base (a área continua dada pela sobrevivência). "
-           "Na conjunção, o enlace direto também para."]
+           "A escala vale com o mesmo erro de apontamento do MSL (5°); uma HGA desse tamanho tem feixe mais estreito e pede "
+           "apontamento melhor. Na conjunção, o enlace direto também para."]
     (SAIDA / "comunicacao.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

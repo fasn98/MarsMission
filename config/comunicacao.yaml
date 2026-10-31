@@ -36,7 +36,10 @@ uhf:   # relé de proximidade (Electra / Electra-Lite) [F137]
 
 # ---------------- portão da 4.3: comparação das saídas para a comunicação do lander (pedido do Fabio)
 rele_proprio:   # (c) relé pelo nosso orbitador na órbita de encontro: simulação de passes
-  perda_uhf_db: {constante: 62, por_decada: 20, fonte: "[F177] p. 25: \"PL(400 MHz) = 62 + 20 * log10(R(km)) (dB)\""}
+  # Perda de espaço livre por Friis: 20 log10(4π R f / c), com c [F31] e a frequência do canal 0 do retorno [F137].
+  # A fórmula de [F177] p. 25, "PL(400 MHz) = 62 + 20 * log10(R(km)) (dB)" (e "89" a 8 GHz), fica ~22,5 dB abaixo de
+  # Friis nas duas frequências e não é usada (física acima de fonte: CLAUDE.md, regra 1).
+  frequencia_mhz: {valor: 401.585625, fonte: "[F137] p. 81: \"Channel 0: 401.585625 MHz\""}
   limiares_dbm:   # receptor Electra do MRO, dados codificados, no conector da antena [F178] pPDF 21, Tab. 5.2-3
     fonte: "[F178] pPDF 21: \"Bit rate, kbps Threshold Power, dBm (coded) (at Antenna Connector) 1 -130.8 2 -127.8 4 -124.8 8 -121.8 16 -118.8 32 -115.8 64 -112.8 128 -109.7 256 -106.7 512 -103.3 1024 -99.6\""
     tabela: {1: -130.8, 2: -127.8, 4: -124.8, 8: -121.8, 16: -118.8, 32: -115.8, 64: -112.8, 128: -109.7, 256: -106.7, 512: -103.3, 1024: -99.6}
@@ -49,6 +52,12 @@ rele_proprio:   # (c) relé pelo nosso orbitador na órbita de encontro: simula�
   sois_simulados: {valor: 60, premissa: P-067}
   passo_s: {valor: 30, premissa: P-067}
   sitio: {latitude_graus: 18.4663, longitude_graus: 77.4298, fonte: "[F172]: \"Perseverance landed on Jezero crater [18.4663° N,77.4298° E]\""}
+  conferencia_orbita_baixa:   # o mesmo modelo numa órbita circular baixa, contra o desempenho publicado do MRO com o MSL
+    altitude_km: {valor: 250, fonte: "[F177] p. 25: \"MRO, which is in a circular orbit with an altitude of about 250 km\""}
+    inclinacao_graus: {valor: 90, premissa: P-067}
+    publicado_mbit_por_passe: {min: 30, max: 600, fonte: "[F137] p. 112: \"provides anywhere from 30 to 600 Mbits per pass (100 to 1150 Mbits per sol)\""}
+    publicado_mbit_por_sol: {min: 100, max: 1150, fonte: "[F137] p. 112 (mesma citação)"}
+  referencia_maven: "[F178] pPDF 26: \"passes supported from near MAVEN apoapsis can have geometric contact durations of over 2 hrs, with slant ranges exceeding 8000 km. Such passes will be required to use much lower instantaneous data rates\""
   conferencia_tgo: "[F177] p. 26: \"a 15-minute relay session at 256 kbps will return approximately 230 Mbit of data. In comparison, TGO supports adaptive data rates up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight\""
 
 helicopteros:   # volume de dados da operação (P-068)
@@ -67,9 +76,9 @@ dte_maior:   # (b) enlace direto maior: escala do ganho com D² e da taxa com a 
 orbitadores_existentes:   # (a) estado e planos (consulta de 2026-10-31); só fatos com fonte
   - {orbitador: MAVEN, estado: "perdido; missão encerrada em 03/06/2026",
      fonte: "[F181]: \"The spacecraft was heard last on Dec. 6\"; \"is not recoverable, and it is no longer capable of performing its science and data relay mission\""}
-  - {orbitador: MRO, estado: "operando; propelente além de três anos (2025); TWTA de banda X perto do fim da vida, ponto único de falha; linha de orçamento até o FY2031",
-     fonte: "[F182] p. 12: \"There are propellant reserves that will sustain spacecraft operations well beyond another three years\"; pPDF 74: \"The X-Band TWTA is nearing its end of life and is a single-string failure point for the communication system\"; [F146] p. PS-48: \"Mars Reconnaissance Orbiter 2005 (MRO) -- -- 26.0 26.0 26.0 24.0 24.0\""}
-  - {orbitador: Odyssey, estado: "propelente baixo; financiamento eliminado no pedido do FY2026; fora da tabela do FY2027",
+  - {orbitador: MRO, estado: "operando; propelente além de três anos (2025); TWTA de banda X perto do fim da vida, ponto único de falha; valores na tabela do FY2027 até o FY2031 (anos nocionais)",
+     fonte: "[F182] pPDF 14 (impr. 12): \"There are propellant reserves that will sustain spacecraft operations well beyond another three years\"; pPDF 74: \"The X-Band TWTA is nearing its end of life and is a single-string failure point for the communication system\"; [F146] p. PS-48: \"Mars Reconnaissance Orbiter 2005 (MRO) -- -- 26.0 26.0 26.0 24.0 24.0\""}
+  - {orbitador: Odyssey, estado: "propelente baixo; financiamento eliminado no pedido do FY2026; não aparece na tabela da PS-48 do FY2027 (observação)",
      fonte: "[F182] pPDF 64: \"The low mass of usable propellant (3.2 kg) with its high uncertainty\"; [F126] p. PS-45: \"has eliminated funding for several missions operating well past the end of prime mission including Mars Odyssey and Mars Express\""}
   - {orbitador: TGO, estado: "saúde nominal \"well into the 2030s\"; extensão da ESA até 2030 não conferida; até 2048 kbps; pelo menos dois passes bons por sol",
      fonte: "[F183]: \"The TGO spacecraft health is nominal and appears consistent with operation well into the 2030s\"; [F177] p. 26: \"TGO supports adaptive data rates up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight\"; [F184]: \"TGO provides at least two good communications opportunities per sol\""}
@@ -77,5 +86,3 @@ orbitadores_existentes:   # (a) estado e planos (consulta de 2026-10-31); só fa
      fonte: "[F183]: \"Mars Express operations are currently funded until end of 2026, with extension requested until end of 2029\""}
   - {orbitador: "Mars Telecommunications Orbiter (comercial)", estado: "US$ 700 milhões na PL 119-21, entrega até 31/12/2028; contrato e vencedor não conferidos",
      fonte: "[F185] 139 STAT. 133: \"$700,000,000, to be obligated not later than fiscal year 2026, for the procurement, using a competitively bid, firm fixed-price contract with a United States commercial provider\"; \"which shall be delivered to the Administration not later than December 31, 2028\""}
-  - {orbitador: "MAVEN (desempenho no apoapse, referência)", estado: "passes longos a taxas baixas",
-     fonte: "[F178] pPDF 26: \"passes supported from near MAVEN apoapsis can have geometric contact durations of over 2 hrs, with slant ranges exceeding 8000 km. Such passes will be required to use much lower instantaneous data rates\""}

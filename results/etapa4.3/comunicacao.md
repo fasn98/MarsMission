@@ -41,22 +41,25 @@ Demanda: lander 250 Mbit/sol (P-063) + helicópteros 983 Mbit/sol (492 Mbit por 
 | Orbitador | Estado | Fonte |
 | :- | :- | :- |
 | MAVEN | perdido; missão encerrada em 03/06/2026 | [F181] |
-| MRO | operando; propelente além de três anos (2025); TWTA de banda X perto do fim da vida, ponto único de falha; linha de orçamento até o FY2031 | [F182] |
-| Odyssey | propelente baixo; financiamento eliminado no pedido do FY2026; fora da tabela do FY2027 | [F182] |
+| MRO | operando; propelente além de três anos (2025); TWTA de banda X perto do fim da vida, ponto único de falha; valores na tabela do FY2027 até o FY2031 (anos nocionais) | [F182] |
+| Odyssey | propelente baixo; financiamento eliminado no pedido do FY2026; não aparece na tabela da PS-48 do FY2027 (observação) | [F182] |
 | TGO | saúde nominal "well into the 2030s"; extensão da ESA até 2030 não conferida; até 2048 kbps; pelo menos dois passes bons por sol | [F183] |
 | Mars Express | financiado até o fim de 2026; extensão pedida até o fim de 2029; capacidade de relé não quantificada | [F183] |
 | Mars Telecommunications Orbiter (comercial) | US$ 700 milhões na PL 119-21, entrega até 31/12/2028; contrato e vencedor não conferidos | [F185] |
-| MAVEN (desempenho no apoapse, referência) | passes longos a taxas baixas | [F178] |
 
 ### (c) Relé pelo nosso orbitador na órbita de encontro (simulação dos passes, P-066 e P-067)
 
-| Caso | Passes por sol | Duração média (min) | Mbit por passe (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo (Wh/sol) |
+| Caso | Passes por sol (com enlace) | Duração média (min) | Mbit por passe com enlace (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo (Wh/sol) |
 | :- | -: | -: | -: | -: | -: | -: |
-| periapse na latitude do sítio | 1,52 | 325 | 1 559 / 3 564 | 2 365 | 192 % | 568 |
-| apoapse na latitude do sítio | 1,00 | 582 | 2 336 / 4 842 | 2 336 | 189 % | 669 |
+| periapse na latitude do sítio | 1,52 (1,18) | 325 | 29 / 115 | 34 | 3 % | 62 |
+| apoapse na latitude do sítio | 1,00 (0,92) | 582 | 12 / 36 | 11 | 1 % | 68 |
 
-Conferência do modelo de enlace: numa órbita baixa de 250 km ele dá 1 024 kbps (o topo da tabela do Electra); referência publicada: [F177] p. 26: "a 15-minute relay session at 256 kbps will return approximately 230 Mbit of data. In comparison, TGO supports adaptive data rates up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight". A energia supõe transmissão em todo o tempo visível (envoltória).
+Perda de espaço livre por Friis a 401,6 MHz. Com P-066, o enlace fecha a 1 024 kbps até 290 km e a 32 kbps até 1 840 km. Conferência: numa órbita baixa de 250 km dá 1 024 kbps (o topo da tabela do Electra); referência publicada: [F177] p. 26: "a 15-minute relay session at 256 kbps will return approximately 230 Mbit of data. In comparison, TGO supports adaptive data rates up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight". A energia conta o tempo em que o enlace fecha (envoltória). Órbita sem J2: o periapse migra ao longo dos 60 sóis, e os dois casos são extremos, não médias.
+
+Comparação com dado publicado: o mesmo modelo numa órbita circular de 250 km [F177] dá 99 Mbit por passe em média (máximo 211) e 207 Mbit por sol, contra 30 a 600 Mbit por passe e 100 a 1 150 por sol do MRO com o MSL [F137]: dentro da faixa publicada.
+
+Referência: [F178] pPDF 26: "passes supported from near MAVEN apoapsis can have geometric contact durations of over 2 hrs, with slant ranges exceeding 8000 km. Such passes will be required to use much lower instantaneous data rates".
 
 ### (b) Enlace direto maior (P-069)
 
-Taxa necessária para a demanda total num passe de 8 h: 42 814 bps, 301 vezes o análogo do MSL (24,8 dB). HGA de 4,86 m com 15 W, ou de 1,86 m com o TWTA de 100 W do MRO; massa do conjunto com 100 W de cerca de 29,6 kg, contra 9,4 kg do MSL; 1 376 Wh por passe. Área de operação com esse consumo: 24,5 m², abaixo dos 32,8 m² da linha de base (a área continua dada pela sobrevivência). Na conjunção, o enlace direto também para.
+Taxa necessária para a demanda total num passe de 8 h: 42 814 bps, 301 vezes o análogo do MSL (24,8 dB). HGA de 4,86 m com 15 W, ou de 1,86 m com o TWTA de 100 W do MRO; massa do conjunto com 100 W de cerca de 29,6 kg, contra 9,4 kg do MSL; 1 376 Wh por passe. Área de operação com esse consumo: 24,5 m², abaixo dos 32,8 m² da linha de base (a área continua dada pela sobrevivência). A escala vale com o mesmo erro de apontamento do MSL (5°); uma HGA desse tamanho tem feixe mais estreito e pede apontamento melhor. Na conjunção, o enlace direto também para.

@@ -112,30 +112,51 @@ comparacao:
   - argumento_periapse_graus: 39.308349944889486
     passes: 91
     passes_por_sol: 1.5166666666666666
-    mbit_por_sol_medio: 2364.664000000013
-    mbit_por_passe_medio: 1559.1191208791295
-    mbit_por_passe_max: 3564.480000000042
+    passes_uteis_por_sol: 1.1833333333333333
+    tempo_com_enlace_por_sol_h: 0.9051388888888889
+    mbit_por_sol_medio: 34.466
+    mbit_por_passe_medio: 29.126197183098594
+    mbit_por_passe_max: 115.20000000000002
     duracao_media_min: 325.4560439560439
     tempo_visivel_por_sol_h: 8.226805555555556
     alcance_min_km: 391.53403169916794
     alcance_max_km: 28554.979693820667
-    cobertura_demanda_lander: 9.458656000000051
-    cobertura_demanda_total: 1.9177512489457058
-    energia_transmitindo_wh_sol: 567.6495833333333
+    cobertura_demanda_lander: 0.13786400000000001
+    cobertura_demanda_total: 0.027952053461363785
+    energia_transmitindo_wh_sol: 62.45458333333334
   - argumento_periapse_graus: 219.30834994488947
     passes: 60
     passes_por_sol: 1.0
-    mbit_por_sol_medio: 2336.2000000000166
-    mbit_por_passe_medio: 2336.2000000000166
-    mbit_por_passe_max: 4841.760000000064
+    passes_uteis_por_sol: 0.9166666666666666
+    tempo_com_enlace_por_sol_h: 0.9920833333333333
+    mbit_por_sol_medio: 11.201000000000004
+    mbit_por_passe_medio: 12.219272727272733
+    mbit_por_passe_max: 36.33
     duracao_media_min: 582.0166666666667
     tempo_visivel_por_sol_h: 9.700277777777778
     alcance_min_km: 1320.995246926761
     alcance_max_km: 28567.534115607574
-    cobertura_demanda_lander: 9.344800000000067
-    cobertura_demanda_total: 1.8946668396808024
-    energia_transmitindo_wh_sol: 669.3191666666667
+    cobertura_demanda_lander: 0.04480400000000002
+    cobertura_demanda_total: 0.009084052423279053
+    energia_transmitindo_wh_sol: 68.45375
   conferencia_taxa_orbita_baixa_kbps: 1024
+  alcance_max_1024_kbps_km: 290.0
+  alcance_max_32_kbps_km: 1840.0
+  frequencia_mhz: 401.585625
+  conferencia_orbita_baixa:
+    mbit_por_passe_medio: 99.19487999999996
+    mbit_por_passe_max: 211.20000000000005
+    mbit_por_sol_medio: 206.65599999999992
+    publicado_mbit_por_passe:
+    - 30
+    - 600
+    publicado_mbit_por_sol:
+    - 100
+    - 1150
+    dentro_da_faixa_publicada: true
+  referencia_maven: '[F178] pPDF 26: "passes supported from near MAVEN apoapsis can
+    have geometric contact durations of over 2 hrs, with slant ranges exceeding 8000
+    km. Such passes will be required to use much lower instantaneous data rates"'
   conferencia_tgo: '[F177] p. 26: "a 15-minute relay session at 256 kbps will return
     approximately 230 Mbit of data. In comparison, TGO supports adaptive data rates
     up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight"'
@@ -157,15 +178,16 @@ orbitadores_existentes:
     and it is no longer capable of performing its science and data relay mission"'
 - orbitador: MRO
   estado: operando; propelente além de três anos (2025); TWTA de banda X perto do
-    fim da vida, ponto único de falha; linha de orçamento até o FY2031
-  fonte: '[F182] p. 12: "There are propellant reserves that will sustain spacecraft
-    operations well beyond another three years"; pPDF 74: "The X-Band TWTA is nearing
-    its end of life and is a single-string failure point for the communication system";
-    [F146] p. PS-48: "Mars Reconnaissance Orbiter 2005 (MRO) -- -- 26.0 26.0 26.0
-    24.0 24.0"'
+    fim da vida, ponto único de falha; valores na tabela do FY2027 até o FY2031 (anos
+    nocionais)
+  fonte: '[F182] pPDF 14 (impr. 12): "There are propellant reserves that will sustain
+    spacecraft operations well beyond another three years"; pPDF 74: "The X-Band TWTA
+    is nearing its end of life and is a single-string failure point for the communication
+    system"; [F146] p. PS-48: "Mars Reconnaissance Orbiter 2005 (MRO) -- -- 26.0 26.0
+    26.0 24.0 24.0"'
 - orbitador: Odyssey
-  estado: propelente baixo; financiamento eliminado no pedido do FY2026; fora da tabela
-    do FY2027
+  estado: propelente baixo; financiamento eliminado no pedido do FY2026; não aparece
+    na tabela da PS-48 do FY2027 (observação)
   fonte: '[F182] pPDF 64: "The low mass of usable propellant (3.2 kg) with its high
     uncertainty"; [F126] p. PS-45: "has eliminated funding for several missions operating
     well past the end of prime mission including Mars Odyssey and Mars Express"'
@@ -188,8 +210,3 @@ orbitadores_existentes:
     year 2026, for the procurement, using a competitively bid, firm fixed-price contract
     with a United States commercial provider"; "which shall be delivered to the Administration
     not later than December 31, 2028"'
-- orbitador: MAVEN (desempenho no apoapse, referência)
-  estado: passes longos a taxas baixas
-  fonte: '[F178] pPDF 26: "passes supported from near MAVEN apoapsis can have geometric
-    contact durations of over 2 hrs, with slant ranges exceeding 8000 km. Such passes
-    will be required to use much lower instantaneous data rates"'

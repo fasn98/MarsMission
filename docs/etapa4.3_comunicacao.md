@@ -36,8 +36,8 @@ referência (`results/etapa1.3/missoes.yaml`).
 ## 3. Requisito proposto: lançamento do MAV antes da conjunção
 **Requisito proposto (pedido do Fabio no portão da 4.3):** o MAV é lançado antes do início do período de conjunção
 (SEP ≤ 5°, a partir de 2030-05-06), com folga.
-- O tamanho da folga fica para a Etapa 4.4, junto com a mitigação da tempestade (ADR 0015): o lander só precisa
-  sobreviver até o lançamento do MAV.
+- O tamanho da folga fica para a Etapa 4.4, junto com a mitigação da tempestade. Pela decisão do Fabio no 2º portão da
+  4.1, o lander só precisa sobreviver até o lançamento do MAV.
 - Da chegada ao início da janela há 228 dias.
 - Se o lançamento for antes da conjunção, o encontro também pode ficar todo antes dela. As fases do encontro do ERO,
   da subida do MAV à selagem (T0 + 22 d) mais a fase de RAAN (T0 + 46 d) [F121], somam 46 dias.
@@ -75,7 +75,8 @@ referência (`results/etapa1.3/missoes.yaml`).
 | Mars Express | financiado até o fim de 2026; extensão pedida até o fim de 2029; capacidade de relé não quantificada | [F183] |
 | Orbitador comercial (PL 119-21) | US$ 700 milhões; entrega até 31/12/2028; contrato não conferido | [F185] |
 
-- **Prós:** sem massa nem energia novas no nosso orbitador. Um passe do TGO já passa da demanda total.
+- **Prós:** sem massa nem energia novas no nosso orbitador. O TGO retorna "over 1 Gbit during a 15-minute overflight"
+  [F177], e a demanda total é de 1.233 Mbit por sol.
 - **Contras:**
   - nenhuma fonte confirma relé até 2030–2031;
   - o MRO tem o TWTA em fim de vida;
@@ -92,6 +93,9 @@ referência (`results/etapa1.3/missoes.yaml`).
   - A energia por sol e a bateria crescem.
 - **Contras:**
   - uma antena de quase 2 m apontada da superfície (vento, poeira, gimbal) não tem análogo no estudo;
+  - a escala supõe o mesmo erro de apontamento do MSL (5°). Uma HGA desse tamanho tem feixe mais estreito e pede
+    apontamento melhor;
+  - a massa e a potência do TWTA foram lidas da linha "X-band TWTAs (2)" da Tab. 2-1 do MRO [F173], e podem ser do par;
   - na conjunção, o enlace direto também para.
 
 ### (c) Relé pelo nosso orbitador na órbita de encontro (P-066, P-067)
@@ -100,31 +104,33 @@ A simulação considera:
 - Marte girando à taxa do pck00011;
 - o sítio em Jezero [F172];
 - elevação mínima de 10° [F137];
-- perda de percurso de 62 + 20·log10(R) dB [F177];
+- perda de espaço livre por Friis a 401,6 MHz [F137, F31];
 - limiares do Electra [F178];
 - 5 W, 0 dBi e 3 dB de margem;
 - 60 sóis.
 
-| Caso | Passes por sol | Duração média | Mbit por passe (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo |
-| :- | -: | -: | -: | -: | -: | -: |
-| Periapse na latitude do sítio | 1,52 | 325 min | 1.559 / 3.564 | 2.365 | 192 % | 568 Wh/sol |
-| Apoapse na latitude do sítio | 1,00 | 582 min | 2.336 / 4.842 | 2.336 | 189 % | 669 Wh/sol |
+A fórmula de perda de percurso do [F177] (62 + 20·log10 R) fica uns 22,5 dB abaixo de Friis e não é usada.
 
-- **Os passes são longos, de 5 a 10 h, porque o orbitador passa horas perto do apoapse.** A taxa nesse trecho é baixa,
-  mas o volume acumulado cobre a demanda total nos dois casos.
-  - Isso confere com a descrição do MAVEN no apoapse: "geometric contact durations of over 2 hrs, with slant ranges
-    exceeding 8000 km ... much lower instantaneous data rates" [F178].
-  - A frase da primeira versão deste documento ("o relé pelo nosso orbitador só funciona perto do periapse") estava
-    errada.
-- **Conferência do modelo de enlace:** numa órbita baixa de 250 km, ele dá 1.024 kbps, o topo da tabela do Electra.
-  O TGO chega a 2.048 kbps [F177].
-- **Prós:** independente de orbitadores de terceiros; cobre a demanda total.
+| Caso | Passes por sol (com enlace) | Duração média | Mbit por passe com enlace (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo |
+| :- | -: | -: | -: | -: | -: | -: |
+| Periapse na latitude do sítio | 1,52 (1,18) | 325 min | 29 / 115 | 34 | 3 % | 62 Wh/sol |
+| Apoapse na latitude do sítio | 1,00 (0,92) | 582 min | 12 / 36 | 11 | 1 % | 68 Wh/sol |
+
+- **Alcance do enlace:** com P-066 ele fecha a 1.024 kbps até 290 km e a 32 kbps até 1.840 km. Na órbita de encontro, o
+  orbitador passa quase todo o tempo além disso.
+  - Isso concorda com a descrição do MAVEN no apoapse: "slant ranges exceeding 8000 km ... much lower instantaneous data
+    rates" [F178].
+- **Comparação com dado publicado:** o mesmo modelo numa órbita circular de 250 km [F177] dá 99 Mbit por passe em média
+  (máximo de 211) e 207 Mbit por sol. A faixa publicada do MRO com o MSL é de 30 a 600 Mbit por passe e de 100 a
+  1.150 Mbit por sol [F137].
+  - O resultado fica dentro da faixa.
+  - O resultado baixo da opção (c) vem da órbita de encontro, e não de um modelo de enlace pessimista.
+- **Prós:** independente de orbitadores de terceiros.
 - **Contras:**
-  - o lander gasta até 568 a 669 Wh por sol transmitindo, se usar todo o tempo visível (envoltória). Isso entra na energia
-    de operação;
-  - a orientação da órbita não está definida (P-067);
-  - sem antenas com ganho e com 5 W, o resultado depende da margem (P-066);
-  - o relé do orbitador precisa estar ativo durante a estada na órbita de encontro.
+  - cobre 1 % a 3 % da demanda total, ou de 4 % a 14 % só da demanda do lander;
+  - sem J2, o periapse migra ao longo da simulação, e os dois casos são extremos, não médias;
+  - a orientação da órbita não está definida (P-067).
+- **Variante não avaliada:** usar como relé uma órbita mais baixa durante a superfície exigiria Δv do orbitador.
 
 ## 7. Para decidir (Fabio)
 1. **Requisito proposto:** lançamento do MAV antes do início do período de conjunção (2030-05-06), com folga a definir na
@@ -133,7 +139,7 @@ A simulação considera:
    - (a) orbitadores existentes;
    - (b) enlace direto maior;
    - (c) relé pelo nosso orbitador;
-   - ou uma combinação, por exemplo (c) como base e (a) como reserva.
+   - ou uma combinação delas.
 3. **Premissas novas** (NÃO VALIDADAS):
    - P-063: demanda do lander;
    - P-064: escala 1/d²;

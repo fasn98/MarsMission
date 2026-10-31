@@ -44,9 +44,12 @@ def test_resultado_da_etapa_4_3():
 
 def test_taxa_uhf_e_comparacao():
     c = ler("config/comunicacao.yaml")["rele_proprio"]
-    assert tc.taxa_uhf(250.0, c) == 1024           # órbita baixa: topo da tabela do Electra
-    taxas = [tc.taxa_uhf(r_km, c) for r_km in (300.0, 3000.0, 30000.0)]
-    assert taxas[0] >= taxas[1] >= taxas[2] > 0       # cai com a distância e ainda fecha no apoapse
+    luz = v(ler("config/comunicacao.yaml")["luz_km_s"])
+    assert tc.taxa_uhf(250.0, c, luz) == 1024           # órbita baixa: topo da tabela do Electra
+    taxas = [tc.taxa_uhf(r_km, c, luz) for r_km in (300.0, 3000.0, 30000.0)]
+    assert taxas[0] >= taxas[1] >= taxas[2]             # cai com a distância
+    # Friis: 4π·1 km·f/c a 400 MHz dá 84,5 dB (conta independente)
+    assert tc.perda_espaco_livre_db(1.0, 400.0, 299792.458) == pytest.approx(84.48, abs=0.01)
     r = ler("results/etapa4.3/comunicacao.yaml")["comparacao"]
     h = ler("config/comunicacao.yaml")["helicopteros"]
     assert r["helicopteros"]["mbit_por_voo_max"] == pytest.approx(v(h["imagens_por_voo_max"]) * h["navcam_px"]["valor"][0] * h["navcam_px"]["valor"][1] * v(h["bits_por_pixel"]) / 1e6)
@@ -55,3 +58,9 @@ def test_taxa_uhf_e_comparacao():
         assert x["mbit_por_passe_medio"] <= x["mbit_por_passe_max"] and x["passes_por_sol"] > 0
     d = r["dte_maior"]
     assert d["diametro_com_100w_m"] < d["diametro_com_15w_m"]
+
+
+def test_modelo_de_rele_na_orbita_baixa_dentro_do_publicado():
+    """O modelo de enlace (Friis + limiares do Electra, P-066) numa órbita de 250 km fica na faixa publicada do MRO [F137]."""
+    r = ler("results/etapa4.3/comunicacao.yaml")["comparacao"]["conferencia_orbita_baixa"]
+    assert r["dentro_da_faixa_publicada"]

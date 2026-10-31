@@ -750,7 +750,8 @@ premissas:
     justificativa: >
       Potência no limite inferior dos rádios UHF de proximidade [F177]; soma dos ganhos das antenas igual a 0 dBi, porque
       os padrões só aparecem em figuras; margem de 3 dB sobre os limiares do Electra do MRO [F178]. A taxa é a maior da
-      tabela de limiares que fecha o enlace. A conferência numa órbita baixa de 250 km dá 1024 kbps, o topo da tabela.
+      tabela de limiares que fecha o enlace, com a perda de espaço livre por Friis. O mesmo modelo numa órbita circular de
+      250 km fica dentro da faixa publicada do MRO com o MSL (30 a 600 Mbit por passe [F137]; results/etapa4.3).
     status: NÃO VALIDADA
   - id: P-067
     nome: geometria_dos_passes_de_rele
@@ -760,7 +761,8 @@ premissas:
     justificativa: >
       A orientação da órbita de encontro não está definida no estudo. Usa-se inclinação de 30° (acima da latitude do sítio)
       e dois casos: periapse na latitude do sítio e apoapse nela. Órbita kepleriana fixa no espaço, sem J2, com Marte
-      girando à taxa do pck00011; 60 sóis com passo de 30 s.
+      girando à taxa do pck00011; 60 sóis com passo de 30 s. Na conferência com a órbita baixa do MRO, inclinação de 90°
+      (o MRO é quase polar; o valor não foi conferido em fonte).
     status: NÃO VALIDADA
   - id: P-068
     nome: volume_de_dados_dos_helicopteros
