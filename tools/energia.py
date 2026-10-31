@@ -6,7 +6,7 @@ Lander:
   - Área e massa do painel, e a bateria da noite, para cada cenário de profundidade óptica (constante na estada, como
     envoltória), contra a demanda: plataforma (P-032) + aquecimento do MAV (orbital.mav, modelo atual).
   - Tempestade global: operação normal, ou sobrevivência (MAV + aquecedores e eletrônica do lander, P-056).
-  - Opção C (linha de base desde o portão da 4.1): a maior área e a maior bateria entre céu claro e sobrevivência;
+  - Opção C (sem RHU, alternativa) e C + RHU (linha de base desde o 2º portão da 4.1, ADR 0015): a maior área e a maior bateria entre céu claro e sobrevivência;
     acima de τ = 6, a razão de energia medida pelo Opportunity em 2018 (P-057) e comparação do modelo com ela.
   - Verificação da insolação diária calculada contra a tabela publicada do VL1 [F56].
   - MMRTG (alternativa A, condicionada ao Pu-238): quantos para a demanda média no fim da estada, a massa, a
@@ -469,7 +469,7 @@ def escreve_md(o):
            "| Opção | Massa (kg) | Área (m²) | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |",
            "| :- | -: | -: | :- | :- | :- |",
            f"| **C + RHU (linha de base)** | {br(la['variante_rhu']['opcao']['total_kg'])} | {br(la['variante_rhu']['opcao']['area_m2'], 1)} | "
-           f"{br(la['variante_rhu']['pu238_g'], 1)} g em {la['variante_rhu']['rhu_quantidade']} RHUs; Tier I pelo critério de quantidade | "
+           f"{br(la['variante_rhu']['pu238_g'], 1)} g em {la['variante_rhu']['rhu_quantidade']} RHUs; {la['variante_rhu']['nspm20']['enquadramento'].split(' (')[0]} | "
            f"sobrevive até τ = {br(la['tau_max_modelo'], 0)}; com τ = {br(a6['tau'], 1)}, {br(100 * la['variante_rhu']['acima_do_modelo']['cobertura'])} % da energia de sobrevivência (P-057) | "
            f"poeira: fator {br(la['fator_poeira_fim'], 3)} no fim, sem limpeza |",
            f"| C. Solar com sobrevivência, sem RHU | {br(sc['total_kg'])} | {br(sc['area_m2'], 1)} | — | sobrevive (MAV + lander, P-056) até τ = {br(la['tau_max_modelo'], 0)}; "
