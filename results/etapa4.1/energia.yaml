@@ -179,7 +179,8 @@ lander:
       multiplo_a2: 39056.34885187289
       limite_tier_i_a2: 100000.0
       vezes_o_limite_tier_i: 0.3905634885187289
-      enquadramento: Tier I
+      enquadramento: Tier I pelo critério de quantidade (análise de segurança não
+        avaliada; com probabilidade ≥ 1e-6 de 5 a 25 rem, passaria ao Tier II)
     sobrevivencia:
       expoente: 0.6667
       com_rhu: true
@@ -230,6 +231,8 @@ lander:
       Heating Units (LWRHU)" (AO do New Frontiers)'
     - '[F144] p. PS-103: "NASA will support DoE Pu-238 constant rate production (CRP)
       efforts, as well as production of LWRHUs to enable the Rosalind Franklin mission"'
+    - '[F153] p. 7 do PDF (2024): Rosalind Franklin, "Up to 40 LWRHU, and potential
+      to include one Am-241 RHU from UKSA"'
     - '[F156] (08/10/2026): Dragonfly "will rely on a Multi‑Mission Radioisotope Thermoelectric
       Generator and 24 Light Weight Radioisotope Heater Units"; Rosalind Franklin
       "by providing 24 similar heater units"'
@@ -296,7 +299,7 @@ lander:
     - 185
     - 315
     probabilidade_por_ano_marciano: 0.25
-    fracao_da_estacao_dentro_da_estada: 0.9616858237547893
+    fracao_da_estacao_dentro_da_estada: 0.9635321018841532
     inicios_catalogo: 10
     inicios_dentro_da_estada: 8
     inicios_antes_da_chegada_na_estacao:

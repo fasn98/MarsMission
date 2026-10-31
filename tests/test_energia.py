@@ -97,7 +97,7 @@ def test_variante_rhu_e_potencia_especifica():
     r = ler("results/etapa4.1/energia.yaml")["lander"]
     vr = r["variante_rhu"]
     tol = next(p for p in ler("config/premissas.yaml")["premissas"] if p["id"] == "P-060")["valor"]
-    assert abs(vr["diferenca_relativa_potencia_especifica"]) <= tol   # P-060: a energia do alfa [F148] tem 2 algarismos
+    assert abs(vr["diferenca_relativa_potencia_especifica"]) <= tol   # P-060: arredondamentos da ficha da MMRTG e da meia-vida
     assert vr["pu238_g"] == pytest.approx(vr["rhu_quantidade"] * vr["rhu_w_cada"] / vr["potencia_especifica_w_g"], rel=1e-12)
     assert vr["rhu_quantidade"] >= vr["sobrevivencia"]["rhu_lander_w"] / vr["rhu_w_cada"]
     assert vr["sobrevivencia"]["total_wh_sol"] < r["sobrevivencia"]["base"]["total_wh_sol"]

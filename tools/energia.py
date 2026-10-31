@@ -203,7 +203,7 @@ def main():
     pu = lc["pu238"]
     rh = lc["rhu"]
     sob_rhu = carga_sobrevivencia(v(sv["expoente_escala"]), com_rhu=True)
-    n_rhu = math.ceil(sob_rhu["rhu_lander_w"] / v(sv["rhu_w"]) - 1e-9)
+    n_rhu = math.ceil(sob_rhu["rhu_lander_w"] / v(sv["rhu_w"]))
     # potência específica do Pu-238 pela física (λ N_A / M × energia do alfa) e, como conferência, pela MMRTG [F135]
     lam = math.log(2) / (v(pu["meia_vida_anos"]) * v(pu["dias_por_ano"]) * 86400.0)
     w_g = lam * v(pu["avogadro_mol"]) / v(pu["massa_molar_g_mol"]) * v(rh["energia_alfa_mev"]) * 1e6 * v(rh["carga_elementar_c"])
@@ -220,7 +220,7 @@ def main():
                     "acima_do_modelo": sobrevive_acima(c_rhu, sob_rhu), "disponibilidade": rh["disponibilidade"],
                     "potencia_por_unidade": {}}
     for nome_p, x in rh["potencia_variantes_w"].items():   # o Pu-238 segue o calor; o número de unidades, a potência de cada
-        n_p = math.ceil(sob_rhu["rhu_lander_w"] / v(x) - 1e-9)
+        n_p = math.ceil(sob_rhu["rhu_lander_w"] / v(x))
         variante_rhu["potencia_por_unidade"][nome_p] = {"w": v(x), "rhu_quantidade": n_p, "pu238_g": n_p * v(x) / w_g,
                                                         "multiplo_a2": nspm20(n_p * v(x) / w_g, pu)["multiplo_a2"]}
 
@@ -229,11 +229,12 @@ def main():
     ls_ini, ls_fim = geo[0][0], geo[-1][0]
     na_estada = (lambda ls: ls >= ls_ini or ls <= ls_fim) if ls_ini > ls_fim else (lambda ls: ls_ini <= ls <= ls_fim)
     j0, j1 = tg["estacao_inicio_ls"]["valor"]
-    passo = 0.5
-    grade = [j0 + passo * k for k in range(int((j1 - j0) / passo) + 1)]
+    # estada como trechos de Ls em [0, 360) (a estada tem menos de um ano marciano: Ls não dá a volta duas vezes)
+    trechos = [(ls_ini, 360.0), (0.0, ls_fim)] if ls_ini > ls_fim else [(ls_ini, ls_fim)]
+    coberto = sum(max(0.0, min(j1, b) - max(j0, a)) for a, b in trechos)
     inicios = tg["inicios"]
     tempestade = {"estada_ls": [ls_ini, ls_fim], "estacao_inicio_ls": [j0, j1], "probabilidade_por_ano_marciano": v(tg["probabilidade_por_ano_marciano"]),
-                  "fracao_da_estacao_dentro_da_estada": sum(na_estada(x) for x in grade) / len(grade),
+                  "fracao_da_estacao_dentro_da_estada": coberto / (j1 - j0),
                   "inicios_catalogo": len(inicios), "inicios_dentro_da_estada": sum(na_estada(x["ls"]) for x in inicios),
                   "inicios_antes_da_chegada_na_estacao": [x["ano"] for x in inicios if not na_estada(x["ls"]) and j0 <= x["ls"] < ls_ini],
                   "duracao": tg["duracao"]}
@@ -371,7 +372,7 @@ def nspm20(massa_g, pu):
     multiplo = atividade_tbq / v(pu["a2_tbq"])
     return {"atividade_tbq": atividade_tbq, "multiplo_a2": multiplo, "limite_tier_i_a2": v(pu["tier_i_max_a2"]),
             "vezes_o_limite_tier_i": multiplo / v(pu["tier_i_max_a2"]),
-            "enquadramento": "Tier I" if multiplo <= v(pu["tier_i_max_a2"]) else "acima do Tier I: Tier II, ou Tier III se a análise de segurança der probabilidade ≥ 1e-6 de exposição acima de 25 rem (não avaliada)"}
+            "enquadramento": "Tier I pelo critério de quantidade (análise de segurança não avaliada; com probabilidade ≥ 1e-6 de 5 a 25 rem, passaria ao Tier II)" if multiplo <= v(pu["tier_i_max_a2"]) else "acima do Tier I: Tier II, ou Tier III se a análise de segurança der probabilidade ≥ 1e-6 de exposição acima de 25 rem (não avaliada)"}
 
 
 def escreve_md(o):

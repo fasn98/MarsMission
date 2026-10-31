@@ -40,7 +40,7 @@ Desfecho do dado de voo usado acima de τ = 6: [F140] sóis 5292–5299 (13–20
 
 ### Variante C + RHU
 
-RHUs no lander no lugar dos aquecedores que repõem o calor das RHUs do MER: 35 RHUs de 1,0 W (34,6 W, mesma escala da P-056). Potência específica do Pu-238: 0,568 W/g pela física; 0,568 W/g pela MMRTG (potência térmica / massa de Pu-238 [F135]), diferença 0,0 %. Pu-238: 61,6 g; atividade 39,1 TBq = 39 056 A2 (0,391 do limite do Tier I): Tier I.
+RHUs no lander no lugar dos aquecedores que repõem o calor das RHUs do MER: 35 RHUs de 1,0 W (34,6 W, mesma escala da P-056). Potência específica do Pu-238: 0,568 W/g pela física; 0,568 W/g pela MMRTG (potência térmica / massa de Pu-238 [F135]), diferença 0,0 %. Pu-238: 61,6 g; atividade 39,1 TBq = 39 056 A2 (0,391 do limite do Tier I): Tier I pelo critério de quantidade (análise de segurança não avaliada; com probabilidade ≥ 1e-6 de 5 a 25 rem, passaria ao Tier II).
 
 Sobrevivência: 1 694 Wh/sol (redução de 853 Wh/sol). Opção C + RHU: 27,7 m², total 245 kg (área da sobrevivência); redução de 14,0 m² e 73 kg. Com τ = 10,8 (P-057): 13 % da sobrevivência, 208 m² necessários.
 
@@ -69,6 +69,7 @@ Disponibilidade de RHUs:
 - [F155] p. 1: "As of September 2014, the average thermal power of the RHUs in the DOE's inventory was approximately 0.90 watts each; this thermal power will continue to decrease by about one-hundreth of a watt per year"
 - [F144] p. PS-102: "offering up to two MMRTGs and up to 20 Light Weight Radioisotope Heating Units (LWRHU)" (AO do New Frontiers)
 - [F144] p. PS-103: "NASA will support DoE Pu-238 constant rate production (CRP) efforts, as well as production of LWRHUs to enable the Rosalind Franklin mission"
+- [F153] p. 7 do PDF (2024): Rosalind Franklin, "Up to 40 LWRHU, and potential to include one Am-241 RHU from UKSA"
 - [F156] (08/10/2026): Dragonfly "will rely on a Multi‑Mission Radioisotope Thermoelectric Generator and 24 Light Weight Radioisotope Heater Units"; Rosalind Franklin "by providing 24 similar heater units"
 
 ### Tempestade global na estada

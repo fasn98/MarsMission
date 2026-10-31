@@ -262,8 +262,9 @@ decidir com a variante abaixo. Números de `results/etapa4.1/energia.md`.
   - 61,6 g, pela potência específica do Pu-238 calculada pela física (meia-vida [F148], Q do alfa [F154], N_A e e [F31]);
   - essa potência específica coincide com a da MMRTG publicada [F135], a 0,0 %, o que **verifica** a conta contra dado
     publicado.
-- **Atividade:** 39,1 TBq, ou 39.056 A2: 0,391 do limite do Tier I, logo **Tier I** do NSPM-20, em que o chefe da
-  agência é a autoridade de lançamento [F128].
+- **Atividade:** 39,1 TBq, ou 39.056 A2: 0,391 do limite do Tier I, logo **Tier I do NSPM-20 pelo critério de
+  quantidade**. Nele, o chefe da agência é a autoridade de lançamento [F128]. A análise de segurança não foi feita: com
+  probabilidade de 1 em 1.000.000 ou mais de exposição de 5 a 25 rem, o lançamento passaria ao Tier II [F128].
 - **Sua estimativa:** ~20 g e ~12 TBq. O enquadramento em Tier I se confirma, mas a quantidade calculada é maior (61,6 g e
   39,1 TBq), porque o calor do MER escalado pede 35 RHUs.
 - **Potência por unidade:**
@@ -282,17 +283,23 @@ decidir com a variante abaixo. Números de `results/etapa4.1/energia.md`.
   - existem LWRHUs da era Cassini, com cerca de 0,8 W, e o DOE reconstitui a produção, com campanha dedicada prevista para
     2027 [F153];
   - a potência do inventário cai cerca de 0,01 W por ano [F155];
-  - alocações recentes: até 20 LWRHUs no AO do New Frontiers [F144]; 24 no Dragonfly e 24 no Rosalind Franklin [F156].
-  - **Os 35 a 44 da variante ficam acima de cada uma dessas alocações.** A disponibilidade para esta missão não foi
-    confirmada.
+  - alocações recentes:
+    - até 20 LWRHUs no AO do New Frontiers [F144];
+    - 24 no Dragonfly [F156];
+    - no Rosalind Franklin, "Up to 40" em 2024 [F153] e 24 em 2026 [F156].
+  - A variante pede 32 RHUs (1,1 W), 35 (1 W) ou 44 (0,8 W). As três passam de 20 e de 24; as de 32 e 35 ficam dentro
+    do "up to 40" de 2024. A disponibilidade para esta missão não foi confirmada.
+  - A quantidade usa a potência nominal: não se desconta o decaimento até a estada (cerca de 0,01 W por ano no
+    inventário [F155]).
 
 ### Tempestade global na estada
 - **Estação:** as tempestades globais observadas começaram entre Ls 185° e 315° [F149]. A estada vai de Ls 190° a 58° e
   contém 96 % dessa estação.
 - **Catálogo:** 8 dos 10 inícios caem dentro da estada [F150, F151]. Os de 2001 e 2018 começaram em Ls 185°, pouco
   antes da chegada, e estariam em curso ("persist for weeks to months" [F134]).
-- **Probabilidade:** cerca de 25 % por ano marciano [F149]. Como a estada atravessa uma estação inteira, é cerca de 25 %
-  na missão (P-061).
+- **Probabilidade:** cerca de 25 % por ano marciano [F149]. A estada atravessa uma única estação; o trecho de antes da
+  chegada conta como exposição, porque tempestades que começam ali ainda estariam em curso. Por isso a probabilidade na
+  missão é cerca de 25 % (P-061).
 - **Limitações:** a estatística vem de 11 tempestades registradas, com observação incompleta antes de 1997. A fração com
   τ acima de 6 no sítio não foi avaliada: a de 2018 chegou a 8,5 em Gale [F134] e a 10,8 no Opportunity [F140].
 

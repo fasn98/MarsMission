@@ -92,10 +92,11 @@ O Fabio decidiu, depois do merge do PR #30:
 Números (`results/etapa4.1/energia.md`, `results/etapa2.5/arquitetura.md`):
 - **Variante C + RHU:**
   - 35 RHUs de 1 W, no lugar dos aquecedores que repõem o calor das RHUs do MER;
-  - 61,6 g de Pu-238 e 39,1 TBq, ou 0,391 do limite do Tier I: **Tier I**;
+  - 61,6 g de Pu-238 e 39,1 TBq, ou 0,391 do limite do Tier I: **Tier I pelo critério de quantidade** (análise de
+    segurança não feita);
   - sobrevivência de 1.694 Wh/sol, 853 Wh/sol a menos;
   - 27,7 m² e 245 kg: 14,0 m² e 73 kg a menos que a C.
-  - Com RHUs de 0,8 W (o inventário atual [F153]) seriam 44 unidades.
+  - Com RHUs de 0,8 W (o inventário atual [F153]) seriam 44 unidades; com 1,1 W (produção nova [F152]), 32.
 - **Tempestade global na estada:**
   - a estada (Ls 190° a 58°) contém 96 % da estação de início das tempestades globais observadas (Ls 185° a 315° [F149]);
   - 8 dos 10 inícios do catálogo caem dentro da estada; os outros 2 (2001 e 2018) começaram pouco antes da chegada e
