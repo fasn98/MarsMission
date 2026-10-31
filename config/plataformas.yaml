@@ -103,9 +103,10 @@ orbitador:
     - "Instrumentos do Odyssey, 44,5 kg [F33] — a carga útil aqui é a CU-2."
   energia:
     carga_w:
-      # 445 W: barramento do Mars Express no modo de comunicação, sem carga útil [F68]; + 65 W: Electra (relé UHF)
-      # em full duplex, pior caso no fim de vida [F69]. Mesma carga no sol e no eclipse.
-      valor: 510
+      # Desde a Etapa 4.1 (decisão do Fabio no portão, ADR 0015): a carga do modo de encontro da P-053 (plataforma do
+      # Mars Express em comunicação 445 W [F68] + CCRS 500 W [F23] + Electra 65 W [F69] + NAC 12 W [F138]). Antes: 510 W
+      # (445 + 65). Mesma carga no sol e no eclipse.
+      valor: 1022
       premissa: P-028
     eficiencia_recarga: {valor: 0.8, premissa: P-029}
     profundidade_descarga: {valor: 0.30, fonte: "[F73] JPL D-101146, p. 35: ciclo de vida longo \"only possible at shallow depths of discharge of <30%\""}

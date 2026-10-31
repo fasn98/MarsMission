@@ -112,6 +112,10 @@ combinacoes:
     C1: {motores: [{motor: S400-15, quantidade: 2}], nota: "arranjo do módulo de inserção do ERO [F29]"}
     C2: {motores: [{motor: R-4D-11, quantidade: 8}], nota: "arranjo dos motores auxiliares do Orion ESM [F107]"}
     C3: {motores: [{motor: OMS-E, quantidade: 1}], nota: "motor principal do Orion ESM e do Shuttle [F107]"}
+    # Variantes da C2 com mais R-4D-11 em arranjo simétrico (portão da Etapa 4.1: a 1ª queima da captura com a carga de
+    # 1022 W passa dos 2000 s; o Fabio pediu mais motores, sem relaxar o limite). Arranjo e montagem: P-055.
+    C4: {motores: [{motor: R-4D-11, quantidade: 10}], nota: "variante da C2, arranjo simétrico (P-055)"}
+    C5: {motores: [{motor: R-4D-11, quantidade: 12}], nota: "variante da C2, arranjo simétrico (P-055)"}
   retorno:          # estágio de retorno: injeção trans-Terra
     R1: {motores: [{motor: S400-15, quantidade: 1}]}
     R2: {motores: [{motor: S400-15, quantidade: 2}]}
@@ -130,7 +134,9 @@ combinacoes:
 # Escolha do portão da Etapa 3.1 (decisão do Fabio, 2026-10-27; ADR 0011). Captura e retorno em várias queimas
 # (orbital.queima_multipla), com o melhor N de config/queima_finita.yaml que respeita os limites do motor.
 escolha:
-  captura: C2
+  # Captura: C4 (10 × R-4D-11) PROPOSTA no portão da Etapa 4.1, pendente da decisão do Fabio. Com a carga de 1022 W
+  # (P-028), a 1ª queima da C2 passa do limite de 2000 s (requisito do Artemis I, ADR 0011). Antes: C2.
+  captura: C4
   retorno: R3
   cruzeiro: Z1
   mav_1: M2

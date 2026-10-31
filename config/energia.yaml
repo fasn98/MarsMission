@@ -1,0 +1,139 @@
+# Etapa 4.1: energia do orbitador e do lander (orbital.energia, tools/energia.py).
+geometria:
+  constante_solar_1ua_w_m2: {valor: 1371, fonte: "[F130] Appelbaum & Landis, NASA TM-105216, p. 11: \"S is the solar constant at the mean Sun-Earth distance of 1 AU, i.e., S = 1371 W/m2\""}
+  # Duração do sol: config/plataformas.yaml (lander.energia.duracao_sol_h, [F47]).
+
+lander:
+  # Latitude do sítio: config/superficie.yaml (sitio_e_encontro.latitude_sitio_graus, Jezero, [F34]).
+  calibracao_insight:
+    # 1º sol do InSight, painel limpo (Lorenz et al. 2020 [F131]).
+    energia_wh: {valor: 4600, fonte: "[F131] seção 4: \"The energy output of the first InSight sol, some 4.6 kWh\""}
+    area_m2: {valor: 5.14, fonte: "[F131] \"with an active area of some 5.14 m2\""}
+    tau: {valor: 0.7, fonte: "[F131] seção 3: \"The initial value was around 0.7\""}
+    latitude_graus: {valor: 4.5, fonte: "[F132] p. 13 e p. 54: \"about 4.5 degrees north latitude\""}
+    data_tdb: {valor: "2018-11-27T12:00:00", premissa: P-050}   # 1º sol depois do pouso de 26/11/2018 19:47 UTC [F132]
+  # Irradiância global horizontal: Appelbaum & Landis [F130], Eq. (19) G_h = G_ob cos z f(z,τ,al)/(1 − al), com f pela
+  # Eq. (19) na p. 13 e Eq. (20) na p. 14: f = [Σ_i Σ_j Σ_k p(i,j,k) τ^i (z/100)^j al^k] (1 − al), z em graus; ajuste às Tabs. III e IV,
+  # "The mean error is about 0.7 percent ... The maximum error is about 7 percent". Coeficientes da Tab. V, p. 29
+  # (imagem conferida). Linhas: j = 0..5; colunas: i = 0..5.
+  fluxo_liquido:
+    fonte: "[F130] p. 13, Eq. (19); p. 14, Eq. (20); p. 29, Tab. V (imagem conferida)"
+    k0:
+      - [1.002800, -0.228681, 0.019613, 0.000231, -0.000130, 0.000003]
+      - [-0.450073, 1.335955, -1.131691, 0.402126, -0.063967, 0.003758]
+      - [5.566705, -16.912405, 13.739701, -4.756079, 0.743740, -0.043159]
+      - [-22.471579, 64.909973, -52.509470, 17.997548, -2.786548, 0.160340]
+      - [36.334497, -101.800319, 79.895539, -26.762885, 4.074117, -0.231476]
+      - [-20.420490, 53.207148, -39.949537, 12.977108, -1.931169, 0.107837]
+    k1:
+      - [0.009814, 0.226139, -0.117733, 0.030579, -0.004090, 0.000218]
+      - [-0.156701, 0.396821, -0.313648, 0.099227, -0.013508, 0.000651]
+      - [1.361122, -3.758111, 3.007907, -0.987457, 0.141693, -0.007320]
+      - [-4.365924, 12.539251, -10.394165, 3.486452, -0.513123, 0.027401]
+      - [5.991693, -17.498138, 14.291370, -4.765323, 0.703675, -0.037960]
+      - [-2.915099, 8.275686, -6.593125, 2.173999, -0.320308, 0.017335]
+    tau_max: {valor: 6.0, fonte: "[F130] Tabs. III e IV: τ de 0,10 a 6,00 (limite do ajuste)"}
+    z_max_graus: {valor: 85, fonte: "[F130] Tabs. III(b) e IV(b): z até 85°"}
+    albedo: {valor: 0.1, premissa: P-050}   # o das tabelas de [F56] e [F130]; a média de Marte é 0,27 ([F130] p. 14)
+  perda_poeira_por_sol: {valor: 0.0028, fonte: "[F131] seção 3: \"a drop in peak output of 0.28%/sol, as observed on the Sojourner solar arrays (Landis, 1996)\""}
+  limpeza: {valor: false, premissa: P-051}   # sem eventos de limpeza (o InSight não teve; o Spirit teve) [F131]
+  cenarios_tau:
+    claro_jezero: {valor: 0.4, fonte: "[F133] Lemmon et al. 2022, seção Optical Depth: \"In the next sols, visible optical depths were near 0.4\" (Jezero)"}
+    regional_jezero: {valor: 2.0, fonte: "[F133] resumo: \"Peak visible optical depth was ∼2\" (Jezero, jan./2022)"}
+    global_2018: {valor: 8.5, fonte: "[F134] Guzewich et al. 2019, p. 77: \"increased from prestorm values near 0.6 to a peak of 8.5 over just 12 sols\" (Gale)"}
+  conferencia_vl1:
+    # Insolação diária global numa superfície horizontal no VL1 (22,3° N), Whr/m²-dia em horas de Marte [F56, Tab. IV].
+    # É cálculo publicado (modelo de Appelbaum & Flood), não medida: confere a implementação, não a física contra Marte.
+    horas_marte_para_terrestres: {valor: 1.0270833333333334, fonte: "[F56] p. 18, nota da Tab. IV: \"Multiply by 24.65/24 to obtain actual (terrestrial) Whr/m2 or hours\" (24,65/24)"}
+    latitude_graus: {valor: 22.3, fonte: "[F56] Tab. IV, VL1"}
+    pontos:
+      - {ls: 69, tau: 0.65, hh: 3340, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 120, tau: 0.40, hh: 3860, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 153, tau: 0.50, hh: 3882, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 249, tau: 1.40, hh: 1900, fonte: "[F56] p. 18, Tab. IV"}
+      - {ls: 299, tau: 3.25, hh: 1024, fonte: "[F56] p. 18, Tab. IV"}
+  painel_kg_m2:
+    # 330 W/m² ÷ 80 W/kg (calculado aqui): as duas densidades do mesmo documento [F55], para painel de espaçonave.
+    w_m2: {valor: 330, fonte: "[F55] p. 26: \"Areal power density is typically ~330 W/m2\""}
+    w_kg: {valor: 80, fonte: "[F55] p. 26: \"~80 W/kg\""}
+  helicopteros_energia_propria: {valor: true, premissa: P-052}
+  braco:   # referência; o braço do análogo (Phoenix) já está na P-032
+    potencia_media_w: {valor: 10, fonte: "[F93] p. 123: braço do MarsFAST, \"average power of 10 watt\" (config/coleta.yaml)"}
+  mmrtg_anos_antes_do_lancamento: {valor: 1.0, premissa: P-050}   # sensibilidade: abastecimento antes do lançamento
+  # Cargas de pico (decisão do Fabio no portão da 4.1: bateria das duas opções para os picos, mesmo critério).
+  # O aquecimento (MAV e plataforma) é contínuo e já está na demanda média.
+  picos:
+    braco: {potencia_w: 10, horas_por_sol: {valor: 2.0, premissa: P-054}, fonte: "[F93] p. 123: \"average power of 10 watt\""}
+    recarga_helicopteros:
+      energia_por_voo_wh: {valor: 8.75, fonte: "[F136] p. 28: \"about 350 watts\" por \"up-to-90-second flight\" (350 × 90 / 3600, calculado aqui)"}
+      voos_por_sol: {valor: 2, premissa: P-054}   # um voo por helicóptero por sol; conservador diante da P-052
+    transmissoes_uhf:
+      potencia_w: {valor: 69, fonte: "[F137] p. 87: \"about 69 W when transmitting\""}
+      passes_por_sol: {valor: 2, fonte: "[F137] p. 120: \"~ 03:00 and ~ 15:00 LMST 15-minute-long passes per sol\""}
+      minutos_por_passe: {valor: 15, fonte: "[F137] p. 120 (mesma citação)"}
+  mmrtg_margem_categoria: {valor: painel_solar, premissa: P-054}   # mesma margem de geração das opções solares
+  pu238:
+    por_unidade_g: {valor: 3478, fonte: "[F135] p. 3: \"238Pu 3,478 g\""}
+    estado: "[F53] p. 27 do PDF (2016): \"First new US Pu-238 production since the late 1980s\", \"~ 50 gm total Pu-238 was produced\"; disponibilidade para a missão não avaliada"
+    # Fatos de disponibilidade (decisão do Fabio no portão da 4.1: a opção A fica condicionada ao Pu-238).
+    disponibilidade:
+      - "[F143] p. 27 do PDF: \"although DOE planned to produce a total of 1.5 kg from 2018 through 2021, they produced only 0.77 kg\""
+      - "[F143] p. 28 do PDF: \"the Dragonfly rotorcraft is being designed with one MMRTG requiring 32 fueled clads\"; \"DOE can only produce about 187 fueled clads over that time period—101 fewer than needed\""
+      - "[F143] p. 13 do PDF: \"a fueled clad containing 150 grams of Pu-238\""
+      - "[F144] p. PS-104: \"DoE continues to increase annual production, producing approximately 700 grams per year\""
+      - "[F145] p. 32 do PDF: \"In July 2025, DOE informed NASA that DOE did not have sufficient thermal inventory to provide an in-spec multi-mission radioisotope thermoelectric generator for a baselined mission\""
+      - "[F146] p. PS-56: \"The budget assumes a pause in the development of additional units after completion of the MMRTG for the Dragonfly mission\""
+    # Atividade e enquadramento no NSPM-20 [F128]: Tier I até 100.000 × A2 (SSR-6, Tab. 2).
+    meia_vida_anos: {valor: 87.7, fonte: "[F148] p. 3 do PDF: \"87.7-year half-life\""}
+    massa_molar_g_mol: {valor: 238, premissa: P-058}   # número de massa como massa molar
+    dias_por_ano: {valor: 365.25, premissa: P-058}
+    a2_tbq: {valor: 1.0e-3, fonte: "[F147] p. 55 do PDF, Tab. 2, linha Pu-238: \"1 × 10−3\" (A2, TBq)"}
+    tier_i_max_a2: {valor: 1.0e5, fonte: "[F128] p. 2: \"Tier I shall apply to launches of spacecraft containing radioactive sources of total quantities up to and including 100,000 times the A2 value listed in Table 2\""}
+    avogadro_mol: {valor: 6.02214076e23, fonte: "[F31] p. 20 do PDF: \"the Avogadro constant NA is 6.022 140 76 × 1023 mol−1\""}
+  # Sobrevivência do lander na tempestade (opção C, decisão do Fabio no portão da 4.1): aquecimento do MAV (modelo atual)
+  # + aquecedores e eletrônica mínima do próprio lander, pelo análogo do Spirit no inverno de 2008 [F141].
+  sobrevivencia:
+    aquecedores_mer_wh_sol: {valor: 84, fonte: "[F141] sóis 1574–1579 (jun./2008): \"Together, the two heaters account for 84 watt-hours or about 37 percent of Spirit's total energy usage\""}
+    eletronica_mer_wh_sol: {valor: 140, fonte: "[F141] mesma entrada: \"Everything else, including on-board computers and memories, radios, cameras, sensors and actuators, gets by on about 140 watt-hours\""}
+    # O calor da caixa eletrônica do MER também vinha de RHUs; sem material nuclear, o lander o repõe com aquecedores
+    rhu_mer_quantidade: {valor: 8, fonte: "[F142] p. 45: \"Heat inside the warm electronics box comes from a combination of electrical heaters, eight radioisotope heater units and heat given off by electronics components\""}
+    rhu_w: {valor: 1.0, fonte: "[F142] p. 45: \"Each radioisotope heater unit produces about one watt of heat\""}
+    massa_mer_kg: {valor: 174, fonte: "[F142] p. 44: \"Each Mars Exploration Rover is 1.6 meter (5.2 feet) long and weighs 174 kilograms\""}
+    expoente_escala: {valor: 0.6667, premissa: P-056}   # aquecedores ∝ massa^(2/3) (área); a eletrônica não escala
+    expoente_sensibilidade: {valor: 1.0, premissa: P-056}
+  # Opportunity na tempestade global de 2018 [F140]: a mesma posição e quase a mesma poeira, 11 sóis.
+  tempestade_2018_opportunity:
+    latitude_graus: {valor: -1.98, fonte: "[F142] p. 28: \"1.98 degrees south latitude\" (centro da elipse-alvo)"}
+    sol_data_conhecida: {sol: 5106, data: "2018-06-04", fonte: "[F140] \"On Sol 5106 (June 4, 2018)\""}
+    pontos:
+      - {sol: 5100, tau: 0.640, wh: 652, fonte: "[F140] \"As of Sol 5100 (May , 2018), the solar array energy production was 652 watt-hours with an atmospheric opacity (Tau) of 0.640 and a solar array dust factor of 0.772\""}
+      - {sol: 5106, data: "2018-06-04", tau: 2.1, wh: 345, fonte: "[F140] \"On Sol 5106 (June 4, 2018), energy was down to 345 watt-hours with a tau of 2.1\""}
+      - {sol: 5111, data: "2018-06-10", tau: 10.8, wh: 22, fonte: "[F140] \"The atmospheric opacity (tau) over the rover has increased to a record 10.8 on Sol 5111 (June 10, 2018). Power levels on the rover have dropped to a record low of ~22 watt hours. As expected, Opportunity has tripped a low-power fault and gone silent\""}
+    referencia_sol: 5100
+    desfecho: "[F140] sóis 5292–5299 (13–20/12/2018): \"No signal from Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely experienced a low-power fault, a mission clock fault and an up-loss timer fault\""
+  ingenuity_voo:   # referência, fora da conta do lander (P-052)
+    potencia_w: {valor: 350, fonte: "[F136] p. 28: \"Power expended by the helicopter during an up-to-90-second flight is about 350 watts\""}
+    duracao_s: {valor: 90, fonte: "[F136] p. 28 (mesma citação)"}
+  uhf_electra_lite:   # referência; o consumo de comunicação já está no análogo da P-032 (Phoenix)
+    transmitindo_w: {valor: 69, fonte: "[F137] p. 87: \"The ELTs each draw about 21 watts in standby mode and about 69 W when transmitting\""}
+    espera_w: {valor: 21, fonte: "[F137] p. 87 (mesma citação)"}
+  mmrtg:
+    # Potência e massa: config/isru.yaml (energia.mmrtg, [F52], [F53]).
+    potencia_termica_w: {valor: 1975, fonte: "[F135] p. 3, \"MMRTG Properties\": \"Thermal Power 1,975 W\""}
+    massa_alternativa_kg: {valor: 43.6, fonte: "[F135] p. 3: \"MMRTG Mass 43.6 kg\" (a [F52] dá 45 kg; usa-se 45)"}
+
+orbitador:
+  # Carga por modo (P-053); o modo dominante é o valor-base da P-028 desde o portão da 4.1 (ADR 0015).
+  carga_anterior_w: {valor: 510, premissa: P-028}   # valor-base anterior da P-028, só para a comparação
+  modos:
+    cruzeiro: {plataforma_w: 445, ccrs_w: 300, outros_w: 0}
+    captura: {plataforma_w: 310, ccrs_w: 0, outros_w: 0}
+    encontro: {plataforma_w: 445, ccrs_w: 500, outros_w: 77}
+    retorno: {plataforma_w: 445, ccrs_w: 500, outros_w: 0}
+  fontes_modos:
+    plataforma: "[F68] Mars Express, potência média típica da plataforma: observação 270 W, manobra 310 W, comunicação 445 W"
+    ccrs: "[F23] Sarli et al. 2024, §4.1.2: \"with the payload typically consuming 300 W to 500 W\""
+    electra: "[F69] 65 W, full duplex, fim de vida"
+    nac: "[F138] Kanani et al. 2023, p. 5 do PDF, Tab. 2: \"Power consumption <5W (standby), <12W (imaging, TgC)\""
+  # outros_w no encontro = Electra 65 W [F69] + NAC 12 W [F138]; o lidar não tem potência em fonte de agência.
+  profundidade_descarga_mro: {valor: 0.40, fonte: "[F139] JPL, MRO Electrical Power: \"only about 40 percent of the battery capacity is ever planned to be used\""}

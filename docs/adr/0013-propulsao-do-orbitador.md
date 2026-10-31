@@ -37,3 +37,8 @@ A opção (b) foi estimada só em ordem de grandeza, com o rótulo "calculado, n
   - Fonte: `results/etapa2.5/arquitetura.md`.
 - A mitigação do risco do MAV por órbita de encontro mais baixa com orbitador elétrico **não se confirmou**. Ver a nota de
   2026-10-28 no ADR 0007.
+
+## Nota (Etapa 4.1, 2026-10-31): carga do orbitador de 1.022 W e captura C4
+A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
+números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
+errata de 2026-10-31 de `docs/fase3_relatorio.md`.**

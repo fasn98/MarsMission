@@ -12,23 +12,27 @@ Perdas do DRA usadas até o redimensionamento do ADR 0011 (P-015, NÃO VALIDADA)
 
 | Combinação | Empuxo (N) | Isp (s) | Caso | v∞ (km/s) | m0 (kg) | Queima (s) | Propelente (kg) | Δv impulsivo (m/s) | Perda (m/s) | Perda (% do Δv) | Perda / P-015 | Periapse de chegada (km) | Altitude mínima durante a queima (km) | Propelente dimensionado (kg) | Cabe? | Queima única máx. (s) | Excede? |
 | :- | -: | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | -: | :- |
-| C1: 2 × S400-15 | 850 | 321,0 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 038 | 11 510 | 3 108 | 1 344 | 490,3 | 36,5 | 27,2× | 1 639 | 470 | 2 822 | **não** | 6 660 | **sim** |
-| C1: 2 × S400-15 | 850 | 321,0 | referência (2028-conjuncao) | 2,971 | 7 038 | 9 516 | 2 569 | 1 059 | 370,6 | 35,0 | 20,6× | 1 365 | 467 | 2 822 | sim | 6 660 | **sim** |
-| C2: 8 × R-4D-11 | 3 914 | 310,0 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 038 | 2 059 | 2 651 | 1 344 | 93,1 | 6,9 | 5,2× | 450 | 311 | 2 822 | sim | 2 000 | **sim** |
-| C2: 8 × R-4D-11 | 3 914 | 310,0 | referência (2028-conjuncao) | 2,971 | 7 038 | 1 676 | 2 158 | 1 059 | 53,6 | 5,1 | 3,0× | 373 | 294 | 2 822 | sim | 2 000 | não |
-| C3: 1 × OMS-E | 26 700 | 315,1 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 038 | 288 | 2 486 | 1 344 | 2,8 | 0,2 | 0,2× | 256 | 252 | 2 822 | sim | 1 030 | não |
-| C3: 1 × OMS-E | 26 700 | 315,1 | referência (2028-conjuncao) | 2,971 | 7 038 | 237 | 2 045 | 1 059 | 1,4 | 0,1 | 0,1× | 253 | 251 | 2 822 | sim | 1 030 | não |
+| C1: 2 × S400-15 | 850 | 321,0 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 615 | 12 594 | 3 401 | 1 344 | 518,4 | 38,6 | 28,8× | 1 747 | 479 | 3 029 | **não** | 6 660 | **sim** |
+| C1: 2 × S400-15 | 850 | 321,0 | referência (2028-conjuncao) | 2,971 | 7 615 | 10 440 | 2 819 | 1 059 | 395,9 | 37,4 | 22,0× | 1 466 | 478 | 3 029 | sim | 6 660 | **sim** |
+| C2: 8 × R-4D-11 | 3 914 | 310,0 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 615 | 2 242 | 2 886 | 1 344 | 104,6 | 7,8 | 5,8× | 477 | 318 | 3 029 | sim | 2 000 | **sim** |
+| C2: 8 × R-4D-11 | 3 914 | 310,0 | referência (2028-conjuncao) | 2,971 | 7 615 | 1 823 | 2 348 | 1 059 | 61,1 | 5,8 | 3,4× | 391 | 299 | 3 029 | sim | 2 000 | não |
+| C3: 1 × OMS-E | 26 700 | 315,1 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 615 | 311 | 2 691 | 1 344 | 3,2 | 0,2 | 0,2× | 256 | 252 | 3 029 | sim | 1 030 | não |
+| C3: 1 × OMS-E | 26 700 | 315,1 | referência (2028-conjuncao) | 2,971 | 7 615 | 256 | 2 213 | 1 059 | 1,6 | 0,2 | 0,1× | 254 | 251 | 3 029 | sim | 1 030 | não |
+| C4: 10 × R-4D-11 | 4 893 | 310,0 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 615 | 1 764 | 2 839 | 1 344 | 74,4 | 5,5 | 4,1× | 408 | 301 | 3 029 | sim | 2 000 | não |
+| C4: 10 × R-4D-11 | 4 893 | 310,0 | referência (2028-conjuncao) | 2,971 | 7 615 | 1 438 | 2 314 | 1 059 | 41,9 | 4,0 | 2,3× | 345 | 285 | 3 029 | sim | 2 000 | não |
+| C5: 12 × R-4D-11 | 5 872 | 310,0 | projeto (pior janela) (2031-conjuncao) | 3,484 | 7 615 | 1 454 | 2 809 | 1 344 | 55,3 | 4,1 | 3,1× | 365 | 289 | 3 029 | sim | 2 000 | não |
+| C5: 12 × R-4D-11 | 5 872 | 310,0 | referência (2028-conjuncao) | 2,971 | 7 615 | 1 188 | 2 294 | 1 059 | 30,3 | 2,9 | 1,7× | 318 | 276 | 3 029 | sim | 2 000 | não |
 
 ## Saída de Marte (injeção trans-Terra)
 
 | Combinação | Empuxo (N) | Isp (s) | Caso | v∞ (km/s) | Órbita inicial | m0 (kg) | Queima (s) | Propelente (kg) | Δv impulsivo (m/s) | Perda (m/s) | Perda (% do Δv) | Perda / P-015 | Propelente dimensionado (kg) | Cabe? | Queima única máx. (s) | Excede? |
 | :- | -: | -: | :- | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | :- | -: | :- |
-| R1: 1 × S400-15 | 425 | 321,0 | projeto (pior janela) (2035-conjuncao) | 3,543 | órbita de 1 sol | 2 959 | 9 927 | 1 340 | 1 378 | 520,7 | 37,8 | 47,3× | 1 198 | **não** | 6 660 | **sim** |
-| R1: 1 × S400-15 | 425 | 321,0 | referência (2028-conjuncao) | 2,330 | órbita de 1 sol | 2 959 | 5 672 | 766 | 753 | 190,2 | 25,3 | 17,3× | 1 198 | sim | 6 660 | não |
-| R2: 2 × S400-15 | 850 | 321,0 | projeto (pior janela) (2035-conjuncao) | 3,543 | órbita de 1 sol | 2 959 | 4 451 | 1 202 | 1 378 | 262,2 | 19,0 | 23,8× | 1 198 | **não** | 6 660 | não |
-| R2: 2 × S400-15 | 850 | 321,0 | referência (2028-conjuncao) | 2,330 | órbita de 1 sol | 2 959 | 2 521 | 681 | 753 | 70,5 | 9,4 | 6,4× | 1 198 | sim | 6 660 | não |
-| R3: 4 × R-4D-11 | 1 957 | 310,0 | projeto (pior janela) (2035-conjuncao) | 3,543 | órbita de 1 sol | 2 959 | 1 750 | 1 127 | 1 378 | 79,3 | 5,8 | 7,2× | 1 198 | sim | 2 000 | não |
-| R3: 4 × R-4D-11 | 1 957 | 310,0 | referência (2028-conjuncao) | 2,330 | órbita de 1 sol | 2 959 | 1 027 | 661 | 753 | 15,9 | 2,1 | 1,4× | 1 198 | sim | 2 000 | não |
+| R1: 1 × S400-15 | 425 | 321,0 | projeto (pior janela) (2035-conjuncao) | 3,543 | órbita de 1 sol | 3 252 | 11 078 | 1 496 | 1 378 | 561,5 | 40,7 | 51,0× | 1 323 | **não** | 6 660 | **sim** |
+| R1: 1 × S400-15 | 425 | 321,0 | referência (2028-conjuncao) | 2,330 | órbita de 1 sol | 3 252 | 6 364 | 859 | 753 | 213,3 | 28,3 | 19,4× | 1 323 | sim | 6 660 | não |
+| R2: 2 × S400-15 | 850 | 321,0 | projeto (pior janela) (2035-conjuncao) | 3,543 | órbita de 1 sol | 3 252 | 4 958 | 1 339 | 1 378 | 292,2 | 21,2 | 26,6× | 1 323 | **não** | 6 660 | não |
+| R2: 2 × S400-15 | 850 | 321,0 | referência (2028-conjuncao) | 2,330 | órbita de 1 sol | 3 252 | 2 804 | 757 | 753 | 81,8 | 10,9 | 7,4× | 1 323 | sim | 6 660 | não |
+| R3: 4 × R-4D-11 | 1 957 | 310,0 | projeto (pior janela) (2035-conjuncao) | 3,543 | órbita de 1 sol | 3 252 | 1 937 | 1 247 | 1 378 | 92,4 | 6,7 | 8,4× | 1 323 | sim | 2 000 | não |
+| R3: 4 × R-4D-11 | 1 957 | 310,0 | referência (2028-conjuncao) | 2,330 | órbita de 1 sol | 3 252 | 1 132 | 729 | 753 | 19,0 | 2,5 | 1,7× | 1 323 | sim | 2 000 | não |
 
 ## Várias queimas no periapse (P-042)
 
@@ -38,59 +42,75 @@ A 1ª queima da captura (a última da saída) leva o excesso hiperbólico numa �
 
 | Combinação | Caso | N | Perda (m/s) | Propelente (kg) | Cabe? | Maior queima (s) | Queima única máx. (s) | Queima única | Vida | Partidas | Sequência (d) | Tempo |
 | :- | :- | -: | -: | -: | :- | -: | -: | :- | :- | :- | -: | :- |
-| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 1 | 490,3 | 3 108 | **não** | 11 510 | 6 660 | **não** | sim | sim | 0,0 | sim |
-| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 2 | 411,7 | 3 008 | **não** | 10 447 | 6 660 | **não** | sim | sim | 4,7 | sim |
-| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 3 | 410,7 | 3 007 | **não** | 10 447 | 6 660 | **não** | sim | sim | 6,5 | sim |
-| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 4 | 410,5 | 3 007 | **não** | 10 447 | 6 660 | **não** | sim | sim | 8,4 | sim |
-| C1: 2 × S400-15 | referência (2028-conjuncao) | 1 | 370,6 | 2 569 | sim | 9 516 | 6 660 | **não** | sim | sim | 0,0 | sim |
-| C1: 2 × S400-15 | referência (2028-conjuncao) | 2 | 290,2 | 2 454 | sim | 8 295 | 6 660 | **não** | sim | sim | 4,7 | sim |
-| C1: 2 × S400-15 | referência (2028-conjuncao) | 3 | 288,9 | 2 452 | sim | 8 295 | 6 660 | **não** | sim | sim | 6,5 | sim |
-| C1: 2 × S400-15 | referência (2028-conjuncao) | 4 | 288,7 | 2 452 | sim | 8 295 | 6 660 | **não** | sim | sim | 8,4 | sim |
-| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 1 | 93,1 | 2 651 | sim | 2 059 | 2 000 | **não** | — | sim | 0,0 | sim |
-| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 2 | 72,7 | 2 621 | sim | 1 872 | 2 000 | sim | — | sim | 4,7 | sim |
-| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 3 | 72,6 | 2 621 | sim | 1 872 | 2 000 | sim | — | sim | 6,5 | sim |
-| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 4 | 72,6 | 2 621 | sim | 1 872 | 2 000 | sim | — | sim | 8,4 | sim |
-| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 1 | 53,6 | 2 158 | sim | 1 676 | 2 000 | sim | — | sim | 0,0 | sim |
-| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 2 | 37,8 | 2 132 | sim | 1 474 | 2 000 | sim | — | sim | 4,7 | sim |
-| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 3 | 37,7 | 2 132 | sim | 1 474 | 2 000 | sim | — | sim | 6,5 | sim |
-| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 4 | 37,7 | 2 132 | sim | 1 474 | 2 000 | sim | — | sim | 8,4 | sim |
-| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 1 | 2,8 | 2 486 | sim | 288 | 1 030 | sim | sim | sim | 0,0 | sim |
-| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 2 | 2,1 | 2 485 | sim | 263 | 1 030 | sim | sim | sim | 4,7 | sim |
-| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 3 | 2,1 | 2 485 | sim | 263 | 1 030 | sim | sim | sim | 6,5 | sim |
-| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 4 | 2,1 | 2 485 | sim | 263 | 1 030 | sim | sim | sim | 8,4 | sim |
-| C3: 1 × OMS-E | referência (2028-conjuncao) | 1 | 1,4 | 2 045 | sim | 237 | 1 030 | sim | sim | sim | 0,0 | sim |
-| C3: 1 × OMS-E | referência (2028-conjuncao) | 2 | 0,9 | 2 044 | sim | 209 | 1 030 | sim | sim | sim | 4,7 | sim |
-| C3: 1 × OMS-E | referência (2028-conjuncao) | 3 | 0,9 | 2 044 | sim | 209 | 1 030 | sim | sim | sim | 6,5 | sim |
-| C3: 1 × OMS-E | referência (2028-conjuncao) | 4 | 0,9 | 2 044 | sim | 209 | 1 030 | sim | sim | sim | 8,4 | sim |
+| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 1 | 518,4 | 3 401 | **não** | 12 594 | 6 660 | **não** | sim | sim | 0,0 | sim |
+| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 2 | 436,1 | 3 289 | **não** | 11 433 | 6 660 | **não** | sim | sim | 4,7 | sim |
+| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 3 | 435,0 | 3 287 | **não** | 11 433 | 6 660 | **não** | sim | sim | 6,5 | sim |
+| C1: 2 × S400-15 | projeto (pior janela) (2031-conjuncao) | 4 | 434,8 | 3 287 | **não** | 11 433 | 6 660 | **não** | sim | sim | 8,4 | sim |
+| C1: 2 × S400-15 | referência (2028-conjuncao) | 1 | 395,9 | 2 819 | sim | 10 440 | 6 660 | **não** | sim | sim | 0,0 | sim |
+| C1: 2 × S400-15 | referência (2028-conjuncao) | 2 | 311,4 | 2 688 | sim | 9 103 | 6 660 | **não** | sim | sim | 4,7 | sim |
+| C1: 2 × S400-15 | referência (2028-conjuncao) | 3 | 309,9 | 2 686 | sim | 9 103 | 6 660 | **não** | sim | sim | 6,5 | sim |
+| C1: 2 × S400-15 | referência (2028-conjuncao) | 4 | 309,6 | 2 686 | sim | 9 103 | 6 660 | **não** | sim | sim | 8,4 | sim |
+| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 1 | 104,6 | 2 886 | sim | 2 242 | 2 000 | **não** | — | sim | 0,0 | sim |
+| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 2 | 82,1 | 2 851 | sim | 2 037 | 2 000 | **não** | — | sim | 4,7 | sim |
+| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 3 | 82,0 | 2 851 | sim | 2 037 | 2 000 | **não** | — | sim | 6,5 | sim |
+| C2: 8 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 4 | 82,0 | 2 851 | sim | 2 037 | 2 000 | **não** | — | sim | 8,4 | sim |
+| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 1 | 61,1 | 2 348 | sim | 1 823 | 2 000 | sim | — | sim | 0,0 | sim |
+| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 2 | 43,3 | 2 317 | sim | 1 602 | 2 000 | sim | — | sim | 4,7 | sim |
+| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 3 | 43,2 | 2 317 | sim | 1 602 | 2 000 | sim | — | sim | 6,5 | sim |
+| C2: 8 × R-4D-11 | referência (2028-conjuncao) | 4 | 43,2 | 2 316 | sim | 1 602 | 2 000 | sim | — | sim | 8,4 | sim |
+| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 1 | 3,2 | 2 691 | sim | 311 | 1 030 | sim | sim | sim | 0,0 | sim |
+| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 2 | 2,4 | 2 689 | sim | 284 | 1 030 | sim | sim | sim | 4,7 | sim |
+| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 3 | 2,4 | 2 689 | sim | 284 | 1 030 | sim | sim | sim | 6,5 | sim |
+| C3: 1 × OMS-E | projeto (pior janela) (2031-conjuncao) | 4 | 2,4 | 2 689 | sim | 284 | 1 030 | sim | sim | sim | 8,4 | sim |
+| C3: 1 × OMS-E | referência (2028-conjuncao) | 1 | 1,6 | 2 213 | sim | 256 | 1 030 | sim | sim | sim | 0,0 | sim |
+| C3: 1 × OMS-E | referência (2028-conjuncao) | 2 | 1,1 | 2 212 | sim | 227 | 1 030 | sim | sim | sim | 4,7 | sim |
+| C3: 1 × OMS-E | referência (2028-conjuncao) | 3 | 1,1 | 2 212 | sim | 227 | 1 030 | sim | sim | sim | 6,5 | sim |
+| C3: 1 × OMS-E | referência (2028-conjuncao) | 4 | 1,1 | 2 212 | sim | 227 | 1 030 | sim | sim | sim | 8,4 | sim |
+| C4: 10 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 1 | 74,4 | 2 839 | sim | 1 764 | 2 000 | sim | — | sim | 0,0 | sim |
+| C4: 10 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 2 | 57,7 | 2 813 | sim | 1 605 | 2 000 | sim | — | sim | 4,7 | sim |
+| C4: 10 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 3 | 57,6 | 2 813 | sim | 1 605 | 2 000 | sim | — | sim | 6,5 | sim |
+| C4: 10 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 4 | 57,6 | 2 813 | sim | 1 605 | 2 000 | sim | — | sim | 8,4 | sim |
+| C4: 10 × R-4D-11 | referência (2028-conjuncao) | 1 | 41,9 | 2 314 | sim | 1 438 | 2 000 | sim | — | sim | 0,0 | sim |
+| C4: 10 × R-4D-11 | referência (2028-conjuncao) | 2 | 29,3 | 2 292 | sim | 1 266 | 2 000 | sim | — | sim | 4,7 | sim |
+| C4: 10 × R-4D-11 | referência (2028-conjuncao) | 3 | 29,3 | 2 292 | sim | 1 266 | 2 000 | sim | — | sim | 6,5 | sim |
+| C4: 10 × R-4D-11 | referência (2028-conjuncao) | 4 | 29,3 | 2 292 | sim | 1 266 | 2 000 | sim | — | sim | 8,4 | sim |
+| C5: 12 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 1 | 55,3 | 2 809 | sim | 1 454 | 2 000 | sim | — | sim | 0,0 | sim |
+| C5: 12 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 2 | 42,5 | 2 789 | sim | 1 324 | 2 000 | sim | — | sim | 4,7 | sim |
+| C5: 12 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 3 | 42,4 | 2 789 | sim | 1 324 | 2 000 | sim | — | sim | 6,5 | sim |
+| C5: 12 × R-4D-11 | projeto (pior janela) (2031-conjuncao) | 4 | 42,4 | 2 789 | sim | 1 324 | 2 000 | sim | — | sim | 8,4 | sim |
+| C5: 12 × R-4D-11 | referência (2028-conjuncao) | 1 | 30,3 | 2 294 | sim | 1 188 | 2 000 | sim | — | sim | 0,0 | sim |
+| C5: 12 × R-4D-11 | referência (2028-conjuncao) | 2 | 21,1 | 2 278 | sim | 1 047 | 2 000 | sim | — | sim | 4,7 | sim |
+| C5: 12 × R-4D-11 | referência (2028-conjuncao) | 3 | 21,0 | 2 278 | sim | 1 047 | 2 000 | sim | — | sim | 6,5 | sim |
+| C5: 12 × R-4D-11 | referência (2028-conjuncao) | 4 | 21,0 | 2 278 | sim | 1 047 | 2 000 | sim | — | sim | 8,4 | sim |
 
 ### Saída de Marte
 
 | Combinação | Caso | N | Perda (m/s) | Propelente (kg) | Cabe? | Maior queima (s) | Queima única máx. (s) | Queima única | Vida | Partidas | Sequência (d) | Tempo |
 | :- | :- | -: | -: | -: | :- | -: | -: | :- | :- | :- | -: | :- |
-| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 1 | 520,7 | 1 340 | **não** | 9 927 | 6 660 | **não** | sim | sim | 0,0 | sim |
-| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 2 | 410,3 | 1 283 | **não** | 8 518 | 6 660 | **não** | sim | sim | 4,7 | sim |
-| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 3 | 408,5 | 1 282 | **não** | 8 522 | 6 660 | **não** | sim | sim | 6,5 | sim |
-| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 4 | 408,2 | 1 281 | **não** | 8 523 | 6 660 | **não** | sim | sim | 8,4 | sim |
-| R1: 1 × S400-15 | referência (2028-conjuncao) | 1 | 190,2 | 766 | sim | 5 672 | 6 660 | sim | sim | sim | 0,0 | sim |
-| R1: 1 × S400-15 | referência (2028-conjuncao) | 2 | 114,8 | 713 | sim | 4 297 | 6 660 | sim | sim | sim | 4,7 | sim |
-| R1: 1 × S400-15 | referência (2028-conjuncao) | 3 | 113,0 | 711 | sim | 4 299 | 6 660 | sim | sim | sim | 6,5 | sim |
-| R1: 1 × S400-15 | referência (2028-conjuncao) | 4 | 112,6 | 711 | sim | 4 299 | 6 660 | sim | sim | sim | 8,4 | sim |
-| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 1 | 262,2 | 1 202 | **não** | 4 451 | 6 660 | sim | sim | sim | 0,0 | sim |
-| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 2 | 198,2 | 1 166 | sim | 3 832 | 6 660 | sim | sim | sim | 4,7 | sim |
-| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 3 | 197,7 | 1 165 | sim | 3 832 | 6 660 | sim | sim | sim | 6,5 | sim |
-| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 4 | 197,6 | 1 165 | sim | 3 832 | 6 660 | sim | sim | sim | 8,4 | sim |
-| R2: 2 × S400-15 | referência (2028-conjuncao) | 1 | 70,5 | 681 | sim | 2 521 | 6 660 | sim | sim | sim | 0,0 | sim |
-| R2: 2 × S400-15 | referência (2028-conjuncao) | 2 | 39,2 | 658 | sim | 1 952 | 6 660 | sim | sim | sim | 4,7 | sim |
-| R2: 2 × S400-15 | referência (2028-conjuncao) | 3 | 38,7 | 658 | sim | 1 952 | 6 660 | sim | sim | sim | 6,5 | sim |
-| R2: 2 × S400-15 | referência (2028-conjuncao) | 4 | 38,6 | 658 | sim | 1 952 | 6 660 | sim | sim | sim | 8,4 | sim |
-| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 1 | 79,3 | 1 127 | sim | 1 750 | 2 000 | sim | — | sim | 0,0 | sim |
-| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 2 | 56,5 | 1 113 | sim | 1 519 | 2 000 | sim | — | sim | 4,7 | sim |
-| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 3 | 56,4 | 1 113 | sim | 1 519 | 2 000 | sim | — | sim | 6,5 | sim |
-| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 4 | 56,4 | 1 113 | sim | 1 519 | 2 000 | sim | — | sim | 8,4 | sim |
-| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 1 | 15,9 | 661 | sim | 1 027 | 2 000 | sim | — | sim | 0,0 | sim |
-| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 2 | 8,4 | 655 | sim | 808 | 2 000 | sim | — | sim | 4,7 | sim |
-| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 3 | 8,3 | 655 | sim | 808 | 2 000 | sim | — | sim | 6,5 | sim |
-| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 4 | 8,3 | 655 | sim | 808 | 2 000 | sim | — | sim | 8,4 | sim |
+| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 1 | 561,5 | 1 496 | **não** | 11 078 | 6 660 | **não** | sim | sim | 0,0 | sim |
+| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 2 | 444,4 | 1 429 | **não** | 9 503 | 6 660 | **não** | sim | sim | 4,7 | sim |
+| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 3 | 442,3 | 1 428 | **não** | 9 509 | 6 660 | **não** | sim | sim | 6,5 | sim |
+| R1: 1 × S400-15 | projeto (pior janela) (2035-conjuncao) | 4 | 441,9 | 1 428 | **não** | 9 511 | 6 660 | **não** | sim | sim | 8,4 | sim |
+| R1: 1 × S400-15 | referência (2028-conjuncao) | 1 | 213,3 | 859 | sim | 6 364 | 6 660 | sim | sim | sim | 0,0 | sim |
+| R1: 1 × S400-15 | referência (2028-conjuncao) | 2 | 130,3 | 795 | sim | 4 808 | 6 660 | sim | sim | sim | 4,7 | sim |
+| R1: 1 × S400-15 | referência (2028-conjuncao) | 3 | 128,1 | 794 | sim | 4 811 | 6 660 | sim | sim | sim | 6,5 | sim |
+| R1: 1 × S400-15 | referência (2028-conjuncao) | 4 | 127,7 | 793 | sim | 4 811 | 6 660 | sim | sim | sim | 8,4 | sim |
+| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 1 | 292,2 | 1 339 | **não** | 4 958 | 6 660 | sim | sim | sim | 0,0 | sim |
+| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 2 | 222,4 | 1 296 | sim | 4 266 | 6 660 | sim | sim | sim | 4,7 | sim |
+| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 3 | 221,8 | 1 296 | sim | 4 267 | 6 660 | sim | sim | sim | 6,5 | sim |
+| R2: 2 × S400-15 | projeto (pior janela) (2035-conjuncao) | 4 | 221,6 | 1 296 | sim | 4 267 | 6 660 | sim | sim | sim | 8,4 | sim |
+| R2: 2 × S400-15 | referência (2028-conjuncao) | 1 | 81,8 | 757 | sim | 2 804 | 6 660 | sim | sim | sim | 0,0 | sim |
+| R2: 2 × S400-15 | referência (2028-conjuncao) | 2 | 46,0 | 729 | sim | 2 165 | 6 660 | sim | sim | sim | 4,7 | sim |
+| R2: 2 × S400-15 | referência (2028-conjuncao) | 3 | 45,4 | 728 | sim | 2 165 | 6 660 | sim | sim | sim | 6,5 | sim |
+| R2: 2 × S400-15 | referência (2028-conjuncao) | 4 | 45,3 | 728 | sim | 2 165 | 6 660 | sim | sim | sim | 8,4 | sim |
+| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 1 | 92,4 | 1 247 | sim | 1 937 | 2 000 | sim | — | sim | 0,0 | sim |
+| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 2 | 66,3 | 1 230 | sim | 1 679 | 2 000 | sim | — | sim | 4,7 | sim |
+| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 3 | 66,1 | 1 230 | sim | 1 679 | 2 000 | sim | — | sim | 6,5 | sim |
+| R3: 4 × R-4D-11 | projeto (pior janela) (2035-conjuncao) | 4 | 66,1 | 1 230 | sim | 1 679 | 2 000 | sim | — | sim | 8,4 | sim |
+| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 1 | 19,0 | 729 | sim | 1 132 | 2 000 | sim | — | sim | 0,0 | sim |
+| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 2 | 10,0 | 721 | sim | 890 | 2 000 | sim | — | sim | 4,7 | sim |
+| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 3 | 9,9 | 721 | sim | 890 | 2 000 | sim | — | sim | 6,5 | sim |
+| R3: 4 × R-4D-11 | referência (2028-conjuncao) | 4 | 9,9 | 721 | sim | 890 | 2 000 | sim | — | sim | 8,4 | sim |
 
 Natureza dos limites: S400-15, queima única qualificada de 1,85 h; vida acumulada e partidas "planned" [F105]. R-4D-11, 2000 s e 40 queimas são requisitos da missão Artemis I, não vida qualificada do motor [F107]. OMS-E, 1030 s e 10 partidas são requisitos do Orion; 15 h acumuladas, do Shuttle [F107, F108]. Captura e retorno usam estágios e motores diferentes: as vidas não se somam.
 
@@ -100,15 +120,15 @@ Com 1/3, a perturbação solar (não modelada) muda o periapse em centenas a mil
 
 | Fração | Combinação | Perda (m/s) | Propelente (kg) | Maior queima (s) |
 | -: | :- | -: | -: | -: |
-| 0,100 | C1 (captura) | 410,5 | 3 007 | 10 447 |
-| 0,100 | C2 (captura) | 72,6 | 2 621 | 1 872 |
-| 0,100 | R3 (saída) | 56,4 | 1 113 | 1 519 |
-| 0,050 | C1 (captura) | 452,6 | 3 061 | 11 021 |
-| 0,050 | C2 (captura) | 83,3 | 2 637 | 1 972 |
-| 0,050 | R3 (saída) | 67,9 | 1 120 | 1 641 |
-| 0,333 | C1 (captura) | 380,6 | 2 968 | 10 017 |
-| 0,333 | C2 (captura) | 65,3 | 2 611 | 1 797 |
-| 0,333 | R3 (saída) | 48,9 | 1 109 | 1 433 |
+| 0,100 | C1 (captura) | 434,8 | 3 287 | 11 433 |
+| 0,100 | C2 (captura) | 82,0 | 2 851 | 2 037 |
+| 0,100 | R3 (saída) | 66,1 | 1 230 | 1 679 |
+| 0,050 | C1 (captura) | 478,9 | 3 347 | 12 061 |
+| 0,050 | C2 (captura) | 93,8 | 2 870 | 2 147 |
+| 0,050 | R3 (saída) | 79,4 | 1 238 | 1 815 |
+| 0,333 | C1 (captura) | 403,4 | 3 244 | 10 964 |
+| 0,333 | C2 (captura) | 73,8 | 2 838 | 1 956 |
+| 0,333 | R3 (saída) | 57,4 | 1 224 | 1 584 |
 
 ## Conferência de coerência com o ERO da ESA (P-043; não é verificação)
 
@@ -143,8 +163,8 @@ Perda de queima finita não calculada: Δv pequeno, longe de qualquer planeta.
 
 | Combinação | Empuxo (N) | Isp (s) | m0 (kg) | Δv total (m/s) | Tempo total de queima (s) | Queima única máx. (s) |
 | :- | -: | -: | -: | -: | -: | -: |
-| Z1: 4 × 10N | 40 | 292 | 3 996 | 71,5 | 7 054 | 28 800 |
-| Z2: 8 × 10N | 80 | 292 | 3 996 | 71,5 | 3 527 | 28 800 |
+| Z1: 4 × 10N | 40 | 292 | 4 002 | 71,5 | 7 064 | 28 800 |
+| Z2: 8 × 10N | 80 | 292 | 4 002 | 71,5 | 3 532 | 28 800 |
 
 ## MAV (dois estágios)
 
@@ -152,8 +172,8 @@ Empuxo/peso na superfície de Marte, g = 3,713 m/s². Perda de subida já inclu�
 
 | Estágio | Combinação | Empuxo (N) | Isp (s) | m0 (kg) | Δv (m/s) | Queima (s) | Empuxo/peso em Marte | Aceleração inicial (m/s²) | Queima única máx. (s) | Excede? |
 | :- | :- | -: | -: | -: | -: | -: | -: | -: | -: | :- |
-| mav_1 | M1: 2 × R-42 | 1 779 | 305 | 384,0 | 2 772 | 390 | 1,25 | 4,63 | 3 940 | não |
-| mav_1 | M2: 4 × R-4D-11 | 1 957 | 310 | 384,0 | 2 772 | 357 | 1,37 | 5,10 | 2 000 | não |
-| mav_1 | M3: 1 × R-40B | 4 003 | 296 | 384,0 | 2 772 | 171 | 2,81 | 10,43 | 500 | não |
-| mav_2 | N1: 1 × S400-15 | 425 | 321 | 85,7 | 2 991 | 389 | 1,34 | 4,96 | 6 660 | não |
-| mav_2 | N2: 1 × R-4D-11 | 489 | 310 | 85,7 | 2 991 | 333 | 1,54 | 5,71 | 2 000 | não |
+| mav_1 | M1: 2 × R-42 | 1 779 | 305 | 386,8 | 2 777 | 393 | 1,24 | 4,60 | 3 940 | não |
+| mav_1 | M2: 4 × R-4D-11 | 1 957 | 310 | 386,8 | 2 777 | 360 | 1,36 | 5,06 | 2 000 | não |
+| mav_1 | M3: 1 × R-40B | 4 003 | 296 | 386,8 | 2 777 | 173 | 2,79 | 10,35 | 500 | não |
+| mav_2 | N1: 1 × S400-15 | 425 | 321 | 86,0 | 2 996 | 391 | 1,33 | 4,94 | 6 660 | não |
+| mav_2 | N2: 1 × R-4D-11 | 489 | 310 | 86,0 | 2 996 | 335 | 1,53 | 5,69 | 2 000 | não |

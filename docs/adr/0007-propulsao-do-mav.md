@@ -95,3 +95,8 @@ por critérios operacionais (`docs/etapa2.2b_propulsao_mav.md`).
      descartável, Vulcan VC4 e VC6).
   3. **MAV com Isp maior, se houver motor com voo comprovado:** o R-4D-11 tem 310 s [F107]. Um motor com voo e Isp
      maior reduziria a sensibilidade ao ε.
+
+## Nota (Etapa 4.1, 2026-10-31): carga do orbitador de 1.022 W e captura C4
+A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
+números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
+errata de 2026-10-31 de `docs/fase3_relatorio.md`.**

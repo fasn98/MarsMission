@@ -19,7 +19,7 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-013 | desvio_orbitador_parametros | periapse_seguro_alt_km: 300; antecedencia_dias: 1 | km; dias | config/dimensionamento.yaml — Δv de desvio do orbitador após soltar a cápsula (plano B) |  |
 | P-014 | margem_dv | 0.1 | fração, aplicada a todos os trechos | config/dimensionamento.yaml |  |
 | P-015 | perdas_gravitacionais_do_dra | saida_terra: 0.148; captura_marte: 0.018; saida_marte: 0.011 | km/s | config/dimensionamento.yaml |  |
-| P-016 | plataforma_orbitador_kg | 496.5 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | config/dimensionamento.yaml |  |
+| P-016 | plataforma_orbitador_kg | 614.0 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | config/dimensionamento.yaml |  |
 | P-017 | plataforma_superficie_kg | 1564.875 | kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV) | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |  |
 | P-018 | razao_massa_pousada_entrada | entrada_direta: 0.509; a_partir_de_orbita: 0.624 | adimensional (massa pousada / massa de entrada) | config/superficie.yaml — massa do sistema de entrada, descida e pouso |  |
 | P-019 | mav_estagios | fracao_estrutural: 0.286; fracao_dv_estagio_1: 0.481 | adimensional | config/superficie.yaml — dimensionamento do MAV sólido de dois estágios |  |
@@ -31,7 +31,7 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-025 | escala_energia_solar | 1.0 | adimensional | config/isru.yaml — massa de painéis solares |  |
 | P-026 | armazenamento_cruzeiro | referencia_kg: 6567; expoente: 0.6667 | kg; adimensional | config/mav_propulsao.yaml — armazenamento sem evaporação de LOX e CH4 no cruzeiro (O2) |  |
 | P-027 | aquecimento_mav_superficie | expoente_area: 0.6667; margem_congelamento_k: 10 | adimensional; K | config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada |  |
-| P-028 | carga_eletrica_orbitador_w | 510 | W (mesma carga no sol e no eclipse) | config/plataformas.yaml — painel e bateria do orbitador |  |
+| P-028 | carga_eletrica_orbitador_w | 1022 | W (mesma carga no sol e no eclipse) | config/plataformas.yaml — painel e bateria do orbitador |  |
 | P-029 | eficiencia_recarga_bateria | 0.8 | adimensional (energia devolvida / energia de recarga) | config/plataformas.yaml — potência do painel do orbitador |  |
 | P-030 | fator_perdas_painel_orbitador | 0.774 | adimensional (multiplica a potência específica a 1 UA escalada por 1/d²) | config/plataformas.yaml — massa do painel do orbitador |  |
 | P-031 | base_do_cabeamento_orbitador | plataforma | — | config/plataformas.yaml — cabeamento = 5 % da massa seca nominal [F71] |  |
@@ -53,5 +53,14 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-047 | operacao_propulsao_eletrica | reservas: 1; desligado_no_eclipse: True; alimentacao_xips_kg: 11.4 | propulsores; kg | config/eletrica.yaml (orbital.hibrido, tools/orbitador_eletrico.py, Etapa 3.3) | sim |
 | P-048 | perdas_quimicas_do_hibrido | captura_marte: Etapa 3.1; saida_marte: Etapa 3.1 | km/s | tools/orbitador_eletrico.py (Etapa 3.3) | sim |
 | P-049 | varredura_orbitador_eletrico | encontro_alt_km: [300, 20000, 40]; captura_alt_km: [1000, 40000, 40]; n_ativos_max: 12; c1_meio_arco_graus: 30; n_ativos_ordem_de_grandeza: [1, 4, 12]; c1_folga_apoapse: 0.01; demonstracao_tangencial_empuxo_n: 1.0; convergencia_massas_kg: 1e-09; arredondamento: {'voltas': 0.1, 'excentricidade': 0.0001, 'altitude_km': 0.1} | km; propulsores | config/eletrica.yaml (tools/orbitador_eletrico.py, Etapa 3.3) | sim |
+| P-050 | modelo_energia_solar_lander | albedo: 0.1; data_primeiro_sol_insight: 2018-11-27T12:00:00; painel: horizontal; tau_constante_na_estada: True; mmrtg_anos_antes_do_lancamento_sensibilidade: 1.0; tolerancia_teste_fluxo: 0.007; tolerancia_teste_vl1: 0.07 | adimensional; data TDB | config/energia.yaml (orbital.energia, tools/energia.py, Etapa 4.1) | sim |
+| P-051 | sem_limpeza_dos_paineis | False | — | config/energia.yaml (lander.limpeza) | sim |
+| P-052 | helicopteros_com_energia_propria | True | — | config/energia.yaml (lander.helicopteros_energia_propria) | sim |
+| P-053 | carga_do_orbitador_por_modo | cruzeiro: [445, 300, 0]; captura: [310, 0, 0]; encontro: [445, 500, 77]; retorno: [445, 500, 0] | W (plataforma, CCRS, outros) | config/energia.yaml (orbitador.modos) — PROPOSTA lado a lado com a P-028, que continua o valor-base | sim |
+| P-054 | cargas_de_pico_e_base_do_mmrtg | braco_horas_por_sol: 2.0; voos_de_helicoptero_por_sol: 2; margem_do_mmrtg: painel_solar | h/sol; voos/sol; categoria E1 | config/energia.yaml (lander.picos, lander.mmrtg_margem_categoria) | sim |
+| P-055 | arranjo_simetrico_de_mais_r4d11 | C4: 10; C5: 12 | motores R-4D-11 | config/motores.yaml (combinações de captura C4 e C5) | sim |
+| P-056 | sobrevivencia_do_lander_pelo_spirit | expoente_escala: 0.6667; expoente_sensibilidade: 1.0 | adimensional | tools/energia.py (opção C, carga de sobrevivência na tempestade) | sim |
+| P-057 | razao_de_energia_do_opportunity_em_2018 | tau_alto: 10.8; tau_referencia: 0.64 | adimensional | tools/energia.py (sobrevivência da opção C acima de τ = 6) | sim |
+| P-058 | atividade_do_pu238 | massa_molar_g_mol: 238; dias_por_ano: 365.25 | g/mol; dias | tools/energia.py (atividade e enquadramento no NSPM-20 da alternativa A) | sim |
 
-Total: 49 de 49 premissas com status NÃO VALIDADA; 9 criadas na Fase 3.
+Total: 58 de 58 premissas com status NÃO VALIDADA; 18 criadas na Fase 3.

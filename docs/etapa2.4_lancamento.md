@@ -298,3 +298,8 @@ O lander injetado passa de 3.727 para **3.740 kg**. Pior margem na forma (a), em
 | Falcon Heavy, recuperação / descartável | +25 % / +200 % |
 | Vulcan VC2 / VC4 / VC6 | +16 % / +73 % / +122 % |
 
+
+## Nota (Etapa 4.1, 2026-10-31): carga do orbitador de 1.022 W e captura C4
+A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
+números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
+errata de 2026-10-31 de `docs/fase3_relatorio.md`.**

@@ -128,3 +128,35 @@ VALIDADAS, 9 criadas na Fase 3:
 | P-047 | Operação do sistema elétrico |
 | P-048 | Perdas químicas do híbrido |
 | P-049 | Varredura e parâmetros do orbitador elétrico |
+
+## Errata (Etapa 4.1, 2026-10-31): carga do orbitador de 1.022 W e captura com 10 × R-4D-11
+No portão da Etapa 4.1 o Fabio adotou 1.022 W como valor-base da P-028 (ADR 0015). Com a nova carga, a 1ª queima da
+captura com a C2 passou de 2.000 s. A captura proposta passou a ser a C4, 10 × R-4D-11 (P-055), pendente de decisão no
+mesmo portão. Os resultados das Fases 2 e 3 foram regenerados no ponto fixo. O texto acima fica como estava.
+
+**Números vigentes** (`results/etapa2.5/arquitetura.md`, `results/etapa2.3/plataformas.md`,
+`results/etapa3.1/perdas_calculadas.md`):
+
+| Item | Fim da Fase 3 (acima) | Vigente |
+| :- | -: | -: |
+| Plataforma do orbitador (P-016) | 496,5 kg | **614,0 kg** |
+| Orbitador injetado (regra iii) | 7.205 kg | **7.796 kg** |
+| Lander injetado | 3.996 kg | **4.002 kg** |
+| MAV + energia do aquecimento | 403 kg | **406 kg** |
+| Total na órbita baixa da Terra, regra (iii) | 34.003 kg | **35.814 kg** |
+| Órbita de encontro | 300 × 24.992 km | **300 × 25.952 km** |
+| Perda de captura / de saída de Marte | 72,6 / 56,4 m/s | **57,6 / 66,1 m/s** |
+| Captura | C2 (8 × R-4D-11) | **C4 (10 × R-4D-11), proposta** |
+
+- **Margens dos lançadores escolhidos** (pior janela, injeção direta):
+  - orbitador: Falcon Heavy descartável **+44 %**, Vulcan VC6 **+6 %**;
+  - lander: Falcon Heavy com recuperação +17 %, Vulcan VC2 +8 % (sem mudança no arredondamento).
+- **Riscos da seção 6, números vigentes:**
+  - **Margem de massa ESA:** o orbitador perde o VC6 (**−1 %**).
+  - **Margem de massa do GSFC:** o VC6 do orbitador fica em +1 %.
+  - **Margem de Δv de 20 %:** o orbitador fica em **−13 %** no VC6 (antes, −6 %) e o lander em −4 % no VC2 (antes,
+    −3 %).
+  - O lander perde os dois lançadores nos mesmos casos de antes.
+  - **O MAV:** Δv de subida com margem de 5,772 km/s.
+- **A conclusão do ADR 0013 se mantém:** no resultado regenerado da Etapa 3.3, as margens do orbitador elétrico
+  continuam negativas (`results/etapa3.3/orbitador_eletrico.md`).

@@ -1,6 +1,6 @@
 # Plataformas por subsistema (gerado por tools/plataformas.py)
 
-Órbita de encontro 300 × 24 992 km (regra dos 5 % do ADR 0005 reaplicada; antes 26 950 km); MAV O4 com energia solar. Massas em kg.
+Órbita de encontro 300 × 25 952 km (regra dos 5 % do ADR 0005 reaplicada; antes 26 950 km); MAV O4 com energia solar. Massas em kg.
 
 ## Orbitador (base: E1 médio)
 
@@ -14,13 +14,13 @@
 | mecanismos | 24,2 | mecanismos | 21,5 % | 29,4 |
 | rss_nac | 29,0 | eletronica_5_15kg | 20,0 % | 34,8 |
 | rss_lidar | 13,0 | eletronica_5_15kg | 20,0 % | 15,6 |
-| painel_solar | 29,5 | painel_solar | 27,5 % | 37,6 |
-| bateria | 55,0 | baterias | 22,5 % | 67,4 |
+| painel_solar | 58,9 | painel_solar | 27,5 % | 75,1 |
+| bateria | 113,7 | baterias | 22,5 % | 139,2 |
 | energia_restante | 67,2 | eletronica_acima_15kg | 15,0 % | 77,3 |
-| cabeamento | 19,9 | cabeamento | 75,0 % | 34,8 |
-| **Total** | **398,3** | | | **496,5** |
+| cabeamento | 24,5 | cabeamento | 75,0 % | 43,0 |
+| **Total** | **491,0** | | | **614,0** |
 
-Energia: pior eclipse 3,24 h num período de 17,14 h; carga 510 W; painel 658 W no afélio (1,666 UA, 22,3 W/kg); bateria 5 500 Wh nominais para 1 650 Wh no eclipse.
+Energia: pior eclipse 3,34 h num período de 17,91 h; carga 1 022 W; painel 1 314 W no afélio (1,666 UA, 22,3 W/kg); bateria 11 367 Wh nominais para 3 410 Wh no eclipse.
 
 ## Lander
 
@@ -56,14 +56,14 @@ Energia: pior eclipse 3,24 h num período de 17,14 h; carga 510 W; painel 658 W 
 
 | Caso | Orbitador | Lander | Total (iii) em 26 950 km | Total (A) em 26 950 km | Apoapse pela regra dos 5 % | Total (iii) nele | Total (A) nele |
 | :- | -: | -: | -: | -: | -: | -: | -: |
-| Antes (P-016 = P-017 = 850 kg) | 850 | 850 | 35 412 | 23 580 | 26 950 | 35 412 | 23 580 |
-| **Base: orbitador E1 médio + L3 + braço + helicópteros** | 497 | 1 565 | 33 547 | 24 400 | 24 992 | 34 003 | 24 603 |
-| GSFC: E1 médio + 15 % nos dois | 556 | 1 795 | 36 025 | 26 424 | 24 992 | 36 505 | 26 640 |
-| ESA: 20 % × 20 % nos dois | 574 | 2 209 | 38 882 | 29 151 | 24 992 | 39 370 | 29 370 |
-| Orbitador E1 mínimo + lander de base | 473 | 1 565 | 33 134 | 24 163 | 24 992 | 33 580 | 24 362 |
-| Orbitador E1 máximo + lander de base | 520 | 1 565 | 33 960 | 24 636 | 25 952 | 34 188 | 24 738 |
-| Limite inferior do lander: L1 (E1 médio) | 497 | 529 | 27 160 | 18 013 | 26 950 | 27 160 | 18 013 |
-| Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada) | 497 | 2 500 | 39 311 | 30 164 | 24 067 | 40 010 | 30 476 |
-| Referência: L2 (E1 médio), antigo limite superior | 497 | 2 309 | 38 136 | 28 989 | 24 992 | 38 592 | 29 192 |
+| Antes (P-016 = P-017 = 850 kg) | 850 | 850 | 35 337 | 23 531 | 26 950 | 35 337 | 23 531 |
+| **Base: orbitador E1 médio + L3 + braço + helicópteros** | 614 | 1 565 | 35 568 | 25 550 | 25 952 | 35 814 | 25 662 |
+| GSFC: E1 médio + 15 % nos dois | 688 | 1 795 | 38 289 | 27 714 | 25 952 | 38 551 | 27 832 |
+| ESA: 20 % × 20 % nos dois | 707 | 2 209 | 41 183 | 30 461 | 24 992 | 41 725 | 30 706 |
+| Orbitador E1 mínimo + lander de base | 586 | 1 565 | 35 070 | 25 266 | 25 952 | 35 311 | 25 374 |
+| Orbitador E1 máximo + lander de base | 642 | 1 565 | 36 065 | 25 835 | 25 952 | 36 318 | 25 949 |
+| Limite inferior do lander: L1 (E1 médio) | 614 | 529 | 29 181 | 19 164 | 26 950 | 29 181 | 19 164 |
+| Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada) | 614 | 2 500 | 41 332 | 31 314 | 24 992 | 41 836 | 31 541 |
+| Referência: L2 (E1 médio), antigo limite superior | 614 | 2 309 | 40 157 | 30 140 | 24 992 | 40 661 | 30 366 |
 
 Nos casos de sensibilidade, a plataforma do orbitador é a calculada no apoapse do caso de base.
