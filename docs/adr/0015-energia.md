@@ -106,3 +106,22 @@ Números (`results/etapa4.1/energia.md`, `results/etapa2.5/arquitetura.md`):
   a 34,9 m² e 282 kg.
 - **Dependência de lançador:** dos escolhidos para o orbitador, só o Falcon Heavy descartável tem margem ≥ 0 em todos os
   casos da sensibilidade. O Vulcan VC6 fica negativo com a margem de massa ESA e com a margem de Δv de 20 %.
+
+## Nota (2026-10-31): decisões do 2º portão da Etapa 4.1
+O Fabio decidiu, depois do merge do PR #31:
+1. **Energia do lander: C + RHU** é a nova linha de base (`results/etapa4.1/energia.md`). São 35 RHUs de 1 W, 61,6 g de
+   Pu-238, Tier I do NSPM-20 pelo critério de quantidade; 27,7 m² e 245 kg. A opção C sem RHU fica como alternativa.
+2. **P-059 a P-061:** aprovadas, NÃO VALIDADAS.
+3. **RISCO de disponibilidade de RHUs:**
+   - as 35 RHUs da linha de base ficam acima das alocações recentes de 20 (AO do New Frontiers [F144]) e de 24 (Dragonfly
+     e Rosalind Franklin, 2026 [F156]);
+   - só a de até 40 (Rosalind Franklin, 2024 [F153]) comporta essa quantidade;
+   - o inventário atual tem cerca de 0,8 W por unidade [F153], o que pediria 44 RHUs.
+4. **Para a Etapa 4.2:** o calor das RHUs no cruzeiro, dentro do aeroshell.
+5. **Para a Etapa 4.4** (escolha aprovada pelo Fabio):
+   - **Mitigação operacional da tempestade:** o lander só precisa sobreviver até o lançamento do MAV. Estimar a linha do
+     tempo mínima da superfície: pouso, busca dos tubos pelos helicópteros (alcance e ritmo do Ingenuity como
+     referência), transferência e lançamento do MAV, com fonte ou premissa.
+   - Com essa linha do tempo, calcular a probabilidade acumulada de início de tempestade global até o lançamento do MAV,
+     pela distribuição de Ls dos inícios do catálogo, e comparar com os 25 % da estada inteira.
+   - **Chegada em Ls ~190°**, no início da estação de tempestades: avaliar o efeito na entrada, descida e pouso.
