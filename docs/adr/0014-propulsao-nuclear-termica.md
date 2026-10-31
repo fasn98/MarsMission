@@ -52,3 +52,7 @@ A NTP fica **fora** desta missão robótica, sem modelagem.
 
 ## Nota (2026-10-28): aceito
 O Fabio aceitou este ADR como está, ao aprovar a Fase 3. A decisão proposta acima passa a valer.
+
+## Errata (2026-10-28): nota de aceite
+O trecho "ao aprovar a Fase 3" da nota acima não foi dito pelo Fabio. O aceite foi dado assim: "ADR 0014 aprovado como
+está". A nota vale sem esse trecho.
