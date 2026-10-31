@@ -1,0 +1,88 @@
+# Etapa 4.3: comunicação (tools/comunicacao.py). Ângulos em graus.
+luz_km_s: {valor: 299792.458, fonte: "[F31] p. 19 do PDF: \"the speed of light in vacuum c is 299 792 458 m/s\""}
+
+conjuncao:   # critérios de ângulo Sol–Terra–Marte (SEP)
+  periodo_conjuncao_graus: {valor: 5, fonte: "[F173] PDF p. 17 (impr. 4): \"Defined as the time period when the Sun–Earth–Mars angle is 5 deg or less\""}
+  sem_telemetria_graus: {valor: 3, fonte: "[F174] PDF p. 121 (impr. 105): \"MER did not expect to depend on telemetry within a 3° SEP angle\""}
+  sem_comando_graus: {valor: 2, fonte: "[F174] PDF p. 121 (impr. 105): \"and did not intend to command within 2°\""}
+  degradacao_banda_x_graus: {valor: 2, fonte: "[F173] PDF p. 64 (impr. 51): \"An X-band link using BPSK begins to degrade near a 2-deg SEP angle\""}
+  retorno_bpsk_ok_graus: {valor: 2.3, fonte: "[F175] p. 16: \"Standard downlink BPSK link design and coding strategies can be used to achieve successful X-band data return at SEP angles down to at least 2.3 degrees\""}
+  moratoria_2021: "[F176]: \"most missions will stop sending commands between Oct. 2 and Oct. 16\"; \"Engineers will spend about a week downloading the information before normal spacecraft operations resume\""
+  dias_de_recuperacao: {valor: 7, fonte: "[F176]: \"about a week downloading the information\""}
+  proximidade_nao_afetada: "[F173] PDF p. 18 (impr. 5): \"Proximity communications with surface vehicles would not be directly affected\""
+
+encontro:   # duração das fases do encontro do ERO (arquitetura química) [F121]
+  # T0 = subida do MAV. Da subida à captura e selagem do contêiner: T0 + 22 d; com a fase absoluta de RAAN: T0 + 46 d.
+  ate_selagem_dias: {valor: 22, fonte: "[F121] p. 13, Tab. 2: \"Forced translation, OS capture and bio-sealing 2 days T0 + 22 d\""}
+  fase_raan_dias: {valor: 24, fonte: "[F121] p. 13, Tab. 2: \"Absolute RAAN phasing (assuming 200 deg) 24 days T0 + 46 d\""}
+
+orbitador_x:   # análogo do MRO: HGA de 3 m e TWTA de 100 W [F173]
+  hga_m: {valor: 3, fonte: "[F173] PDF p. 25 (impr. 12): \"a 3-meter-diameter (10-foot) high-gain antenna and a 100-watt X-band traveling-wave tube amplifier\""}
+  taxa_ref_kbps: {valor: 500, fonte: "[F173] PDF p. 25 (impr. 12): \"At a maximum distance from Earth (400 million km [250 million miles]), the orbiter is designed to send data at a rate of at least 500 kbps\""}
+  distancia_ref_km: {valor: 4.0e+8, fonte: "[F173] PDF p. 25 (mesma citação)"}
+  taxa_perto_mbps: {min: 3, max: 4, distancia_km: 1.0e+8, fonte: "[F173] PDF p. 25: \"at its closest ranges (about 100 milliom km [60 million miles]), for several months the orbiter will be able to send data to Earth at 3 to 4 megabits per second\" (\"milliom\" no original)"}
+  horas_dsn_por_dia: {valor: 8, fonte: "[F173] PDF p. 17 (impr. 4): \"The DSN will support one 8-hr pass per day to a 34-m antenna during this period\" (na conjunção); fora dela o MRO tinha \"two 34-m Deep Space Stations (DSSs) daily for an average of 16 hours per day\" (PDF p. 25)"}
+
+lander_x:   # enlace direto à Terra do lander, análogo do MSL [F137]
+  distancia_ref_ua: {valor: 2.4, fonte: "[F137] p. 29: \"The Mars-Earth range (blue curve, left axis) varies between 0.6 and 2.4 astronomical units (AU)\""}
+  horas_por_passe: {valor: 8, premissa: P-065}
+  taxa_max_distancia_bps: {valor: 160, fonte: "[F137] p. 104: \"Data return from the HGA (160 bps at max range, 34-m BWG station, 5-deg HGA pointing error)\""}
+
+uhf:   # relé de proximidade (Electra / Electra-Lite) [F137]
+  taxa_max_kbps: {valor: 2048, fonte: "[F137] p. 81: \"Downlink rates from 2 kbps to 2048 kbps are available\""}
+  volume_msl_por_sol_mbit: {min: 100, max: 1150, fonte: "[F137] p. 112: \"provides anywhere from 30 to 600 Mbits per pass (100 to 1150 Mbits per sol)\" (MRO, órbita baixa)"}
+  requisito_msl_por_sol_mbit: {valor: 250, premissa: P-063, fonte: "[F137] p. 112: \"the 250 Mbits requirement total for the two passes\" (requisito do MSL, usado como demanda do lander)"}
+  frequencias_mhz: "[F137] p. 81: \"Channel 0: 401.585625 MHz; Channel 1: 404.4 MHz; or Channel 2: 397.5 MHz\" (retorno); p. 82: \"0: 437.1 MHz, 1: 435.6 MHz\" (ida)"
+
+# ---------------- portão da 4.3: comparação das saídas para a comunicação do lander (pedido do Fabio)
+rele_proprio:   # (c) relé pelo nosso orbitador na órbita de encontro: simulação de passes
+  # Perda de espaço livre por Friis: 20 log10(4π R f / c), com c [F31] e a frequência do canal 0 do retorno [F137].
+  # A fórmula de [F177] p. 25, "PL(400 MHz) = 62 + 20 * log10(R(km)) (dB)" (e "89" a 8 GHz), fica cerca de 22 dB abaixo de
+  # Friis nas duas frequências e não é usada (física acima de fonte: CLAUDE.md, regra 1).
+  frequencia_mhz: {valor: 401.585625, fonte: "[F137] p. 81: \"Channel 0: 401.585625 MHz\""}
+  limiares_dbm:   # receptor Electra do MRO, dados codificados, no conector da antena [F178] pPDF 21, Tab. 5.2-3
+    fonte: "[F178] pPDF 21: \"Bit rate, kbps Threshold Power, dBm (coded) (at Antenna Connector) 1 -130.8 2 -127.8 4 -124.8 8 -121.8 16 -118.8 32 -115.8 64 -112.8 128 -109.7 256 -106.7 512 -103.3 1024 -99.6\""
+    tabela: {1: -130.8, 2: -127.8, 4: -124.8, 8: -121.8, 16: -118.8, 32: -115.8, 64: -112.8, 128: -109.7, 256: -106.7, 512: -103.3, 1024: -99.6}
+  potencia_tx_w: {valor: 5, premissa: P-066, fonte: "[F177] p. 24: \"UHF proximity radios typically utilize solid state power amplifiers (SSPAs) that generate between 5-10 watts\" (limite inferior)"}
+  ganhos_antenas_dbi: {valor: 0, premissa: P-066}   # soma dos ganhos das duas antenas; os ganhos só aparecem em figuras
+  margem_db: {valor: 3, premissa: P-066}
+  elevacao_min_graus: {valor: 10, fonte: "[F137] p. 33: \"Both figures have the required 10-deg minimum elevation angle to MRO\""}
+  consumo_transmitindo_w: {valor: 69, fonte: "[F137] p. 87: \"about 69 W when transmitting\""}
+  inclinacao_graus: {valor: 30, premissa: P-067}
+  sois_simulados: {valor: 60, premissa: P-067}
+  passo_s: {valor: 30, premissa: P-067}
+  sitio: {latitude_graus: 18.4663, longitude_graus: 77.4298, fonte: "[F172]: \"Perseverance landed on Jezero crater [18.4663° N,77.4298° E]\""}
+  conferencia_orbita_baixa:   # o mesmo modelo numa órbita circular baixa, contra o desempenho publicado do MRO com o MSL
+    altitude_km: {valor: 250, fonte: "[F177] p. 25: \"MRO, which is in a circular orbit with an altitude of about 250 km\""}
+    inclinacao_graus: {valor: 90, premissa: P-067}
+    publicado_mbit_por_passe: {min: 30, max: 600, fonte: "[F137] p. 112: \"provides anywhere from 30 to 600 Mbits per pass (100 to 1150 Mbits per sol)\""}
+    publicado_mbit_por_sol: {min: 100, max: 1150, fonte: "[F137] p. 112 (mesma citação)"}
+  referencia_maven: "[F178] pPDF 26: \"passes supported from near MAVEN apoapsis can have geometric contact durations of over 2 hrs, with slant ranges exceeding 8000 km. Such passes will be required to use much lower instantaneous data rates\""
+  conferencia_tgo: "[F177] p. 26: \"a 15-minute relay session at 256 kbps will return approximately 230 Mbit of data. In comparison, TGO supports adaptive data rates up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight\""
+
+helicopteros:   # volume de dados da operação (P-068)
+  imagens_por_voo_max: {valor: 200, fonte: "[F179]: \"a maximum of 200 images per flight were saved in memory for post-flight downlink\""}
+  navcam_px: {valor: [640, 480], fonte: "[F180] p. 13: \"grayscale 640 by 480 pixel sensor (Omnivision OV7251)\""}
+  bits_por_pixel: {valor: 8, fonte: "[F179] Tab. 1: \"8-bit grayscale\" (Navcam)"}
+  voos_por_sol: {valor: 2, premissa: P-054}
+  enlace_kbps: {valor: 250, fonte: "[F180] p. 15: \"The link is designed to relay data at over-the-air rates of 20 kbps or 250 kbps over distances of up to 1000 m\" (o press kit diz \"250 kilobytes per second\" [F136] p. 29: divergência de unidade)"}
+
+dte_maior:   # (b) enlace direto maior: escala do ganho com D² e da taxa com a potência de RF (P-069)
+  msl: {hga_m: 0.28, rf_w: 15, hga_kg: 1.4, gimbal_kg: 6.6, sspa_kg: 1.4, sspa_dc_w: 62.9,
+        fonte: "[F137] p. 46: \"is 0.28 m in diameter\", \"The SSPA transmits 15 W\"; Tab. 2-11 (p. 86): \"SSPA 1 1.4\", \"HGA 1 1.4\", \"HGA gimbal 1 6.6\"; Tab. 2-12 (p. 87): SSPA \"exciter ON 62.9\" W"}
+  mro: {hga_m: 3, rf_w: 102, refletor_kg: 19.1, gimbal_kg: 45.0, twta_kg: 1.9, epc_kg: 3.0, twta_dc_w: 172,
+        fonte: "[F173] PDF p. 27, Tab. 2-1: \"X-band TWTAs (2) 1.9 ... 172 ... 102\"; \"X-band electronic power converters 3.0\"; \"HGA prime reflector 19.1\"; \"HGA gimbals and drive motors 45.0\""}
+
+orbitadores_existentes:   # (a) estado e planos (consulta de 2026-10-31); só fatos com fonte
+  - {orbitador: MAVEN, estado: "perdido; missão encerrada em 03/06/2026",
+     fonte: "[F181]: \"The spacecraft was heard last on Dec. 6\"; \"is not recoverable, and it is no longer capable of performing its science and data relay mission\""}
+  - {orbitador: MRO, estado: "operando; propelente além de três anos (2025); TWTA de banda X perto do fim da vida, ponto único de falha; valores na tabela do FY2027 até o FY2031 (anos nocionais)",
+     fonte: "[F182] pPDF 14 (impr. 12): \"There are propellant reserves that will sustain spacecraft operations well beyond another three years\"; pPDF 74: \"The X-Band TWTA is nearing its end of life and is a single-string failure point for the communication system\"; [F146] p. PS-48: \"Mars Reconnaissance Orbiter 2005 (MRO) -- -- 26.0 26.0 26.0 24.0 24.0\""}
+  - {orbitador: Odyssey, estado: "propelente baixo; financiamento eliminado no pedido do FY2026; não aparece na tabela da PS-48 do FY2027 (observação)",
+     fonte: "[F182] pPDF 64: \"The low mass of usable propellant (3.2 kg) with its high uncertainty\"; [F126] p. PS-45: \"has eliminated funding for several missions operating well past the end of prime mission including Mars Odyssey and Mars Express\""}
+  - {orbitador: TGO, estado: "saúde nominal \"well into the 2030s\"; extensão da ESA até 2030 não conferida; até 2048 kbps; pelo menos dois passes bons por sol",
+     fonte: "[F183]: \"The TGO spacecraft health is nominal and appears consistent with operation well into the 2030s\"; [F177] p. 26: \"TGO supports adaptive data rates up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight\"; [F184]: \"TGO provides at least two good communications opportunities per sol\""}
+  - {orbitador: Mars Express, estado: "financiado até o fim de 2026; extensão pedida até o fim de 2029; capacidade de relé não quantificada",
+     fonte: "[F183]: \"Mars Express operations are currently funded until end of 2026, with extension requested until end of 2029\""}
+  - {orbitador: "Mars Telecommunications Orbiter (comercial)", estado: "US$ 700 milhões na PL 119-21, entrega até 31/12/2028; contrato e vencedor não conferidos",
+     fonte: "[F185] 139 STAT. 133: \"$700,000,000, to be obligated not later than fiscal year 2026, for the procurement, using a competitively bid, firm fixed-price contract with a United States commercial provider\"; \"which shall be delivered to the Administration not later than December 31, 2028\""}

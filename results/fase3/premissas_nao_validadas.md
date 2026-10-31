@@ -66,5 +66,12 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) | sim |
 | P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | tools/energia.py (probabilidade do risco acima de τ = 6) | sim |
 | P-062 | data_do_deposito_de_three_forks | 2023-02-15 | data | config/termico.yaml (tempo das amostras no depósito até a chegada) | sim |
+| P-063 | demanda_de_dados_do_lander | 250 | Mbit por sol | config/comunicacao.yaml (demanda do lander contra o enlace direto e o relé) | sim |
+| P-064 | escala_da_taxa_do_orbitador_com_a_distancia | expoente: 2 | adimensional | tools/comunicacao.py (taxa em banda X do orbitador) | sim |
+| P-065 | passe_dte_do_lander | 8 | horas por sol | config/comunicacao.yaml (volume do enlace direto do lander) | sim |
+| P-066 | enlace_uhf_do_rele_proprio | potencia_tx_w: 5; ganhos_antenas_dbi: 0; margem_db: 3 | W; dBi; dB | config/comunicacao.yaml (taxa do relé UHF lander–orbitador) | sim |
+| P-067 | geometria_dos_passes_de_rele | inclinacao_graus: 30; sois_simulados: 60; passo_s: 30 | graus; sóis; s | tools/comunicacao.py (simulação dos passes do orbitador sobre Jezero) | sim |
+| P-068 | volume_de_dados_dos_helicopteros | imagens_por_voo: 200; compressao: nenhuma | imagens; — | tools/comunicacao.py (demanda de dados dos helicópteros) | sim |
+| P-069 | escala_do_enlace_direto_maior | ganho: ∝ D²; taxa: ∝ potência de RF; massa_refletor: densidade de área do MRO; gimbal: ∝ D² a partir do MRO | — | tools/comunicacao.py (opção (b), enlace direto maior) | sim |
 
-Total: 62 de 62 premissas com status NÃO VALIDADA; 22 criadas na Fase 3.
+Total: 69 de 69 premissas com status NÃO VALIDADA; 29 criadas na Fase 3.
