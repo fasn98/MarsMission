@@ -79,3 +79,30 @@ relaxar esse limite e pediu a avaliação de mais motores em arranjo simétrico.
   - A comparação não separa a poeira depositada durante a tempestade, a inclinação do painel nem a latitude.
 - **Não há arranjo voado com 10 R-4D-11.** Montagem, desalinhamento e plumas não foram estudados (P-055).
 - **Resultados das Fases 2 e 3 regenerados**, com errata em `docs/fase3_relatorio.md`.
+
+## Nota (2026-10-31): decisões do portão da Etapa 4.1
+O Fabio decidiu, depois do merge do PR #30:
+1. **Captura: C4 (10 × R-4D-11).** O item 5 deixa de ser proposta.
+2. **RHUs:** antes de decidir, pediu a variante C + RHU calculada (ver abaixo). A decisão fica para o próximo portão.
+3. **P-055 a P-058:** aprovadas, NÃO VALIDADAS.
+4. **Risco acima de τ = 6:** aceito como registrado, com a probabilidade de tempestade e a sensibilidade ao fator do
+   Opportunity acrescentadas.
+5. **Lançador do orbitador:** fica registrado que o orbitador depende, na prática, do Falcon Heavy descartável.
+
+Números (`results/etapa4.1/energia.md`, `results/etapa2.5/arquitetura.md`):
+- **Variante C + RHU:**
+  - 35 RHUs de 1 W, no lugar dos aquecedores que repõem o calor das RHUs do MER;
+  - 61,6 g de Pu-238 e 39,1 TBq, ou 0,391 do limite do Tier I: **Tier I pelo critério de quantidade** (análise de
+    segurança não feita);
+  - sobrevivência de 1.694 Wh/sol, 853 Wh/sol a menos;
+  - 27,7 m² e 245 kg: 14,0 m² e 73 kg a menos que a C.
+  - Com RHUs de 0,8 W (o inventário atual [F153]) seriam 44 unidades; com 1,1 W (produção nova [F152]), 32.
+- **Tempestade global na estada:**
+  - a estada (Ls 190° a 58°) contém 96 % da estação de início das tempestades globais observadas (Ls 185° a 315° [F149]);
+  - 8 dos 10 inícios do catálogo caem dentro da estada; os outros 2 (2001 e 2018) começaram pouco antes da chegada e
+    estariam em curso;
+  - probabilidade de cerca de 25 % por ano marciano [F149] (P-061).
+- **Sensibilidade (P-059):** com a energia da tempestade dividida por 1,258, a opção C vai a 52,5 m² e 375 kg, e a C + RHU
+  a 34,9 m² e 282 kg.
+- **Dependência de lançador:** dos escolhidos para o orbitador, só o Falcon Heavy descartável tem margem ≥ 0 em todos os
+  casos da sensibilidade. O Vulcan VC6 fica negativo com a margem de massa ESA e com a margem de Δv de 20 %.

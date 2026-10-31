@@ -104,3 +104,13 @@ O orbitador não muda (Falcon Heavy descartável +56 %, Vulcan VC6 +15 %).
 A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
 números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
 errata de 2026-10-31 de `docs/fase3_relatorio.md`.**
+
+## Nota (Etapa 4.1, 2026-10-31): o orbitador depende, na prática, do Falcon Heavy descartável
+Decisão do Fabio no portão da Etapa 4.1: registrar a dependência. Com 1.022 W (P-028) e a captura C4:
+- o Vulcan VC6 tem margem de +6 % na pior janela;
+- dos dois lançadores escolhidos para o orbitador, só o Falcon Heavy descartável tem margem ≥ 0 em todos os casos da
+  sensibilidade;
+- o VC6 fica negativo com a margem de massa ESA e com a margem de Δv de 20 % (`results/etapa2.5/arquitetura.md`, seção
+  "Dependência de lançador").
+
+A reavaliação fica para a Etapa 4.5.

@@ -261,3 +261,27 @@ sensibilidade:
       Vulcan VC2: -0.19866239803744046
       Vulcan VC4: 0.2019938722019552
       Vulcan VC6: 0.5364911668240151
+dependencia_de_lancador:
+  orbitador:
+    positivos_em_todos_os_casos:
+    - Falcon Heavy (descartável)
+    casos_com_margem_negativa:
+      Vulcan VC6:
+      - Margem de massa ESA (20 % × 20 %) nas duas plataformas
+      - Margem de Δv 20 % (base 10 %)
+  lander:
+    positivos_em_todos_os_casos:
+    - Falcon Heavy (descartável)
+    - Vulcan VC4
+    - Vulcan VC6
+    casos_com_margem_negativa:
+      Falcon Heavy (recuperação):
+      - Margem de massa ESA (20 % × 20 %) nas duas plataformas
+      - Plataforma do lander no limite superior (SRL 2024 − MAV)
+      - ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230
+      Vulcan VC2:
+      - Margem de massa GSFC (+15 % da básica) nas duas plataformas
+      - Margem de massa ESA (20 % × 20 %) nas duas plataformas
+      - Plataforma do lander no limite superior (SRL 2024 − MAV)
+      - Margem de Δv 20 % (base 10 %)
+      - ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230

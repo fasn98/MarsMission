@@ -668,3 +668,35 @@ premissas:
       [F148]. O erro na atividade é muito menor que a distância ao limite do Tier I. Só a massa de Pu-238 [F135] entra
       na conta; os outros isótopos do combustível não, o que subestima um pouco a atividade.
     status: NÃO VALIDADA
+  - id: P-059
+    nome: fator_do_opportunity_nas_tempestades
+    valor: {aplicado_a: "cenários de tempestade (τ ≥ 2) e sobrevivência", tau_da_comparacao: 2.1}
+    unidade: adimensional
+    uso: tools/energia.py (sensibilidade das áreas de painel)
+    justificativa: >
+      Em τ = 2,1 o modelo de insolação dá razão de energia maior que a medida pelo Opportunity em 2018 [F140]
+      (results/etapa4.1/energia.md). Na sensibilidade pedida pelo Fabio no portão da Etapa 4.1, a energia por m² dos
+      cenários de tempestade é dividida por esse fator (razão do modelo / razão medida), igual para todo τ. O fator vem de um
+      único ponto e não separa a poeira depositada na tempestade, a inclinação do painel e a geometria.
+    status: NÃO VALIDADA
+  - id: P-060
+    nome: tolerancia_potencia_especifica_pu238
+    valor: 0.01
+    unidade: fração
+    uso: tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135])
+    justificativa: >
+      A conta pela física usa o Q do alfa da IAEA [F154] e a meia-vida de três algarismos [F148]; a da MMRTG [F135] usa
+      potência e massa arredondadas da ficha. A tolerância de 1 % cobre esses arredondamentos.
+    status: NÃO VALIDADA
+  - id: P-061
+    nome: probabilidade_de_tempestade_global_na_estada
+    valor: {probabilidade_por_ano_marciano: 0.25}
+    unidade: fração
+    uso: tools/energia.py (probabilidade do risco acima de τ = 6)
+    justificativa: >
+      A probabilidade de cerca de 25 % por ano marciano [F149] vem de 11 tempestades registradas, com observação
+      incompleta antes de 1997. Supõe-se que ela valha para a única estação de início (Ls 185° a 315° [F149]) que a estada
+      atravessa, sem dependência do ano. Tempestades que começam pouco antes da chegada (Ls 185°, como as de 2001 e 2018)
+      ainda estariam em curso na chegada ([F134]: "persist for weeks to months") e contam como exposição. Pedida pelo Fabio
+      no portão da Etapa 4.1.
+    status: NÃO VALIDADA

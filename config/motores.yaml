@@ -134,8 +134,8 @@ combinacoes:
 # Escolha do portão da Etapa 3.1 (decisão do Fabio, 2026-10-27; ADR 0011). Captura e retorno em várias queimas
 # (orbital.queima_multipla), com o melhor N de config/queima_finita.yaml que respeita os limites do motor.
 escolha:
-  # Captura: C4 (10 × R-4D-11) PROPOSTA no portão da Etapa 4.1, pendente da decisão do Fabio. Com a carga de 1022 W
-  # (P-028), a 1ª queima da C2 passa do limite de 2000 s (requisito do Artemis I, ADR 0011). Antes: C2.
+  # Captura: C4 (10 × R-4D-11), decisão do Fabio no portão da Etapa 4.1 (ADR 0015). Com a carga de 1022 W (P-028), a 1ª
+  # queima da C2 passa do limite de 2000 s (requisito do Artemis I, ADR 0011). Antes: C2.
   captura: C4
   retorno: R3
   cruzeiro: Z1

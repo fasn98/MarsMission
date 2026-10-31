@@ -62,5 +62,8 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-056 | sobrevivencia_do_lander_pelo_spirit | expoente_escala: 0.6667; expoente_sensibilidade: 1.0 | adimensional | tools/energia.py (opção C, carga de sobrevivência na tempestade) | sim |
 | P-057 | razao_de_energia_do_opportunity_em_2018 | tau_alto: 10.8; tau_referencia: 0.64 | adimensional | tools/energia.py (sobrevivência da opção C acima de τ = 6) | sim |
 | P-058 | atividade_do_pu238 | massa_molar_g_mol: 238; dias_por_ano: 365.25 | g/mol; dias | tools/energia.py (atividade e enquadramento no NSPM-20 da alternativa A) | sim |
+| P-059 | fator_do_opportunity_nas_tempestades | aplicado_a: cenários de tempestade (τ ≥ 2) e sobrevivência; tau_da_comparacao: 2.1 | adimensional | tools/energia.py (sensibilidade das áreas de painel) | sim |
+| P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) | sim |
+| P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | tools/energia.py (probabilidade do risco acima de τ = 6) | sim |
 
-Total: 58 de 58 premissas com status NÃO VALIDADA; 18 criadas na Fase 3.
+Total: 61 de 61 premissas com status NÃO VALIDADA; 21 criadas na Fase 3.
