@@ -71,6 +71,8 @@
 | P-067 | geometria_dos_passes_de_rele | inclinacao_graus: 30; sois_simulados: 60; passo_s: 30 | graus; sóis; s | NÃO VALIDADA | tools/comunicacao.py (simulação dos passes do orbitador sobre Jezero) |
 | P-068 | volume_de_dados_dos_helicopteros | imagens_por_voo: 200; compressao: nenhuma | imagens; — | NÃO VALIDADA | tools/comunicacao.py (demanda de dados dos helicópteros) |
 | P-069 | escala_do_enlace_direto_maior | ganho: ∝ D²; taxa: ∝ potência de RF; massa_refletor: densidade de área do MRO; gimbal: ∝ D² a partir do MRO | — | NÃO VALIDADA | tools/comunicacao.py (opção (b), enlace direto maior) |
-| P-070 | enlace_direto_minimo_critico | horas_por_sol: 1; categoria_mga: eletronica_0_5kg | h; — | NÃO VALIDADA | config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3) |
+| P-070 | enlace_direto_minimo_critico | horas_por_sol: 1; categoria_mga: eletronica_0_5kg; receptor: ligado o sol inteiro | h; — | NÃO VALIDADA | config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3) |
+| P-071 | capacidade_do_tgo_por_passe | mbit_por_passe_min: 30; mbit_por_passe_max: 1000; passes_por_sol: 2 | Mbit; passes por sol | NÃO VALIDADA | config/comunicacao.yaml (capacidade do caminho primário) |
+| P-072 | media_de_imagens_do_ingenuity_por_voo | navcam_por_voo: 13959/72; rte_por_voo: 602/72; compressao: nenhuma | imagens por voo | NÃO VALIDADA | tools/comunicacao.py (volume dos helicópteros pela média do Ingenuity) |
 
-Total: 70 premissas, 70 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 72 premissas, 72 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

@@ -73,4 +73,7 @@ def test_decisao_caminhos_e_dte_minimo():
     assert d["lander_injetado_kg"][1] > d["lander_injetado_kg"][0]
     assert all(b <= a for a, b in d["margens_lander"].values())
     c = ler("config/comunicacao.yaml")["helicopteros_ingenuity"]
-    assert r["helicopteros_media_ingenuity"]["imagens_por_voo_media"] == pytest.approx(v(c["imagens_retornadas"]) / v(c["voos"]))
+    assert r["helicopteros_media_ingenuity"]["navcam_por_voo"] == pytest.approx(v(c["imagens_navcam"]) / v(c["voos"]))
+    assert d["massa_basica_kg"] == pytest.approx(sum(d["itens_kg"].values()), rel=1e-12)
+    tgo = r["caminhos_mbit_sol"]["TGO"]
+    assert tgo[0] < tgo[1]   # faixa (P-071), não um mínimo

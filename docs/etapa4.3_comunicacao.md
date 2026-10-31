@@ -162,20 +162,22 @@ A fórmula de perda de percurso do [F177] (62 + 20·log10 R) fica cerca de 22 dB
 
 ## Nota (2026-10-31): decisões do portão da Etapa 4.3 (ADR 0017)
 Decisões do Fabio:
-- requisito aprovado: o MAV é lançado antes do início da conjunção;
-- a comunicação do lander é uma combinação: o primário é o relé pelos orbitadores existentes (TGO principal; MRO
-  enquanto disponível), e a reserva própria é o relé pelo nosso orbitador mais um enlace direto para o mínimo crítico;
-- P-063 a P-069 aprovadas, NÃO VALIDADAS.
+- **Requisito aprovado:** o MAV é lançado antes do início da conjunção (SEP ≤ 5°, 06/05/2030), com folga a definir na
+  Etapa 4.4.
+- **Comunicação do lander:** é uma combinação.
+  - Primário: o relé pelos orbitadores existentes, com o TGO como principal e o MRO enquanto disponível.
+  - Reserva própria: o relé pelo nosso orbitador mais um enlace direto para o mínimo crítico.
+- **Premissas:** P-063 a P-069 aprovadas, NÃO VALIDADAS.
 
 **Números vigentes:** `results/etapa4.3/comunicacao.md`, seção "Decisão do portão da 4.3".
-- **Volume dos helicópteros**, pela média real do Ingenuity (14.561 imagens em 72 voos [F179, F186]): 202 imagens e
-  497 Mbit por voo, sem compressão, ou 994 Mbit por sol com 2 voos.
+- **Volume dos helicópteros** (média do Ingenuity por câmera em 72 voos [F179, F186], P-072):
+  - 476 Mbit por voo da Navcam e 878 da RTE, sem compressão;
+  - com 2 voos por sol, 953 Mbit por sol só com a Navcam e 2.709 com a RTE.
 - **Capacidade por sol:**
-  - TGO: 2.000 Mbit no mínimo;
+  - TGO: de 60 a 2.000 Mbit (P-071);
   - MRO: de 100 a 1.150 Mbit;
   - reserva própria: de 12 a 35 Mbit.
 - **Enlace direto mínimo (P-070):**
-  - HGA de 0,297 m e 15 W, 16,0 kg com margem, 62,9 Wh por sol e 0,58 Mbit por sol;
-  - lander injetado de 4.012 para 4.044 kg;
-  - margens do lander de 1 a 2 pontos menores, como sensibilidade (a P-017 não muda).
+  - HGA de 0,297 m e 15 W, 22,4 kg com margem, 345 Wh por sol e 0,58 Mbit por sol;
+  - lander injetado de 4.012 para 4.057 kg, como sensibilidade (a P-017 não muda).
 - **Riscos e oportunidade:** estão no ADR 0017.

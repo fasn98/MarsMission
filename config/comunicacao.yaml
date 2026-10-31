@@ -90,16 +90,29 @@ orbitadores_existentes:   # (a) estado e planos (consulta de 2026-10-31); só fa
 # ---------------- decisão do portão da 4.3 (Fabio): combinação de caminhos para a comunicação do lander
 caminhos:
   tgo:   # primário
-    passes_por_sol_min: {valor: 2, fonte: "[F184]: \"TGO provides at least two good communications opportunities per sol\""}
-    mbit_por_passe_min: {valor: 1000, fonte: "[F177] p. 26: \"can therefore return over 1 Gbit during a 15-minute overflight\""}
+    passes_por_sol: {valor: 2, fonte: "[F184]: \"TGO provides at least two good communications opportunities per sol\" (página do Rosalind Franklin, outro sítio)"}
+    # Por passe: de 30 Mbit (o menor por passe do MRO com o MSL [F137] p. 112) a 1000 Mbit (na taxa máxima de 2048 kbps:
+    # [F177] p. 26, "TGO supports adaptive data rates up to 2048 kbps, and can therefore return over 1 Gbit during a
+    # 15-minute overflight"). Faixa como premissa; o TGO é compartilhado com outros usuários.
+    mbit_por_passe: {min: 30, max: 1000, premissa: P-071}
   mro:   # primário enquanto disponível
     mbit_por_sol: {min: 100, max: 1150, fonte: "[F137] p. 112: \"(100 to 1150 Mbits per sol)\" (MRO com o MSL)"}
-helicopteros_ingenuity:   # média real do Ingenuity, ao lado da envoltória da P-068
-  imagens_retornadas: {valor: 14561, fonte: "[F179]: \"A total of 14,561 images have been returned from Ingenuity\""}
+helicopteros_ingenuity:   # média do Ingenuity por voo, por câmera (P-072), ao lado da envoltória da P-068
+  imagens_navcam: {valor: 13959, fonte: "[F179]: \"Of these images, 13,959 were from the Navcam, and 602 images were from the RTE camera\""}
+  imagens_rte: {valor: 602, fonte: "[F179] (mesma citação)"}
   voos: {valor: 72, fonte: "[F186]: \"performed 72 flights\""}
+  rte_px: {valor: [4208, 3120], fonte: "[F180] p. 14: \"high-resolution 4208 by 3120 pixel sensor (Sony IMX 214)\""}
+  rte_bits_por_pixel: {valor: 8, fonte: "[F179] Tab. 1: \"RGB color (8 bit Bayer)\""}
 dte_minimo:   # reserva: enlace direto para o mínimo crítico (estado, comandos de segurança, confirmação do lançamento do MAV)
   taxa_requisito_bps: {valor: 160, fonte: "[F137] p. 104: requisito de superfície do MSL, \"Data return from the HGA (160 bps at max range, 34-m BWG station, 5-deg HGA pointing error)\""}
   uplink_emergencia_bps: {valor: 7.8125, fonte: "[F137] p. 104: \"Emergency command capability via the RLGA (7.8125 bps uplink rate via a 70-m, assuming the Earth is 70 deg off the RLGA boresight)\""}
   horas_por_sol: {valor: 1, premissa: P-070}
-  sdst_kg: {valor: 3.0, fonte: "[F137] p. 86, Tab. 2-11: \"SDST 1 3.0\""}
+  # Rover X-band do MSL, Tab. 2-11 (p. 86): além de HGA, gimbal e SSPA (dte_maior.msl)
+  sdst_kg: {valor: 3.0, fonte: "[F137] p. 86, Tab. 2-11, Rover X-band: \"SDST 1 3.0\""}
+  wts_kg: {valor: 0.9, fonte: "[F137] p. 86, Tab. 2-11, Rover X-band: \"WTS 2 0.45 0.9\""}
+  rlga_kg: {valor: 0.4, fonte: "[F137] p. 86, Tab. 2-11, Rover X-band: \"RLGA 1 0.4\""}
+  microondas_kg: {valor: 3.7, fonte: "[F137] p. 86, Tab. 2-11, Rover X-band: \"Microwave components 3.7\""}
+  sdst_rx_w: {valor: 11.3, fonte: "[F137] p. 87, Tab. 2-12, RSDST: \"RX 11.3\""}
+  sdst_rx_tx_w: {valor: 14.8, fonte: "[F137] p. 87, Tab. 2-12, RSDST: \"RX + Non-Coherent TX (TLM Only: SAFE_MODE) 14.8\""}
+  receptor_horas_por_sol: {valor: 24.6597, premissa: P-070}   # receptor ligado o sol inteiro (comando de emergência)
   categoria_mga: {valor: eletronica_0_5kg, premissa: P-070}

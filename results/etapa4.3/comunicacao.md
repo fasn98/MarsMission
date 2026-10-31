@@ -66,16 +66,16 @@ Taxa necessária para a demanda total num passe de 8 h: 42 814 bps, 301 vezes o 
 
 ## Decisão do portão da 4.3: caminhos de comunicação do lander
 
-Helicópteros: envoltória de 983 Mbit/sol (P-068); com a média real do Ingenuity (202 imagens por voo [F179, F186], Navcam sem compressão) 497 Mbit por voo, 994 Mbit/sol com 2 voos (P-054). Lander: 250 Mbit/sol (P-063).
+Helicópteros (média do Ingenuity por voo, P-072; contagens com imagens em solo, sem compressão): Navcam 194 imagens, 476 Mbit; RTE 8,4 imagens, 878 Mbit [F179, F180, F186]. Com 2 voos por sol (P-054): 953 Mbit/sol só com a Navcam e 2 709 Mbit/sol com a RTE. Envoltória da P-068: 983 Mbit/sol. Lander: 250 Mbit/sol (P-063).
 
-| Caminho | Capacidade (Mbit/sol) | Cobre os helicópteros (média real)? | Cobre lander + helicópteros? |
-| :- | :- | :- | :- |
-| TGO (mínimo) | 2 000 | sim | sim |
-| MRO | 100 a 1 150 | depende | não |
-| reserva própria (relé + DTE mínimo) | 12 a 35 | não | não |
+| Caminho | Capacidade (Mbit/sol) | Helicópteros, só Navcam | Helicópteros com RTE | Lander + helicópteros (só Navcam) |
+| :- | :- | :- | :- | :- |
+| TGO | 60 a 2 000 | depende | não | depende |
+| MRO | 100 a 1 150 | depende | não | não |
+| reserva própria (relé + DTE mínimo) | 12 a 35 | não | não | não |
 
-TGO: pelo menos 2 passes por sol [F184] × mais de 1 Gbit por passe [F177] (limite inferior). MRO: faixa do MRO com o MSL [F137].
+TGO: 2 passes por sol [F184] de 30 a 1 000 Mbit (P-071; o máximo é o da taxa de 2048 kbps [F177]); compartilhado com outros usuários. MRO: faixa do MRO com o MSL [F137].
 
 ### Enlace direto mínimo (reserva para o mínimo crítico, P-070)
 
-Requisito: 160 bps na distância máxima (requisito de superfície do MSL [F137]); o análogo dá 142 bps, e a HGA passa a 0,297 m com o SSPA de 15 W. Comando de emergência pela RLGA a 7,8125 bps [F137]. Massa: 12,6 kg básica (HGA, gimbal, SSPA, transponder) + 27,5 % = 16,0 kg. 0,58 Mbit/sol em 1 h; 62,9 Wh/sol; área de operação 19,5 m², abaixo dos 32,8 m² da linha de base. Lander injetado 4 012 → 4 044 kg; margens dos lançadores do lander: Falcon Heavy (recuperação) +17 % → +16 %; Falcon Heavy (descartável) +180 % → +178 %; Vulcan VC2 +8 % → +7 %; Vulcan VC4 +62 % → +60 %; Vulcan VC6 +107 % → +105 % (sensibilidade; a P-017 não muda).
+Requisito: 160 bps na distância máxima (requisito de superfície do MSL [F137]); o análogo dá 142 bps, e a HGA passa a 0,297 m com o SSPA de 15 W. Comando de emergência pela RLGA a 7,8125 bps [F137]. Massa básica (Rover X-band do MSL [F137]): HGA 1,57, gimbal 6,60, SSPA 1,40, SDST 3,00, WTS 0,90, RLGA 0,40, micro-ondas 3,70 = 17,6 kg; + 27,5 % = 22,4 kg. 0,58 Mbit/sol num passe de 1 h; energia 345 Wh/sol (SSPA e transponder no passe, receptor ligado 24,7 h); área de operação 20,5 m², abaixo dos 32,8 m² da linha de base. Lander injetado 4 012 → 4 057 kg; margens dos lançadores do lander: Falcon Heavy (recuperação) +17 % → +15 %; Falcon Heavy (descartável) +180 % → +177 %; Vulcan VC2 +8 % → +7 %; Vulcan VC4 +62 % → +60 %; Vulcan VC6 +107 % → +104 % (sensibilidade; a P-017 não muda).

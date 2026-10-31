@@ -214,13 +214,21 @@ decisao_caminhos:
   demanda_lander_mbit_sol: 250.0
   helicopteros_envoltoria_mbit_sol: 983.04
   helicopteros_media_ingenuity:
-    imagens_por_voo_media: 202.23611111111111
-    mbit_por_voo: 497.01546666666667
+    navcam_por_voo: 193.875
+    rte_por_voo: 8.36111111111111
     voos_por_sol: 2.0
-    mbit_por_sol: 994.0309333333333
+    mbit_por_voo_navcam: 476.4672
+    mbit_por_voo_rte: 878.1815466666666
+    mbit_por_sol_navcam: 952.9344
+    mbit_por_sol_com_rte: 2709.297493333333
+  tgo:
+    passes_por_sol: 2.0
+    mbit_por_passe:
+    - 30
+    - 1000
   caminhos_mbit_sol:
-    TGO (mínimo):
-    - 2000.0
+    TGO:
+    - 60.0
     - 2000.0
     MRO:
     - 100
@@ -232,30 +240,41 @@ decisao_caminhos:
     taxa_requisito_bps: 160.0
     taxa_atual_bps: 142.33713865694904
     diametro_m: 0.2968649379629937
-    massa_basica_kg: 12.573728417710216
+    rf_w: 15
+    itens_kg:
+      HGA: 1.5737284177102155
+      gimbal: 6.6
+      SSPA: 1.4
+      SDST: 3.0
+      WTS: 0.9
+      RLGA: 0.4
+      micro-ondas: 3.7
+    massa_basica_kg: 17.573728417710218
     margem_crescimento: 0.275
-    massa_prevista_kg: 16.031503732580525
+    massa_prevista_kg: 22.406503732580525
+    horas_passe: 1.0
+    horas_receptor: 24.6597
     mbit_por_sol: 0.576
     uplink_emergencia_bps: 7.8125
-    energia_wh_sol: 62.9
-    area_operacao_m2: 19.457842993742222
+    energia_wh_sol: 345.05461
+    area_operacao_m2: 20.542168821690055
     area_linha_de_base_m2: 32.79453100719549
     lander_injetado_kg:
     - 4011.7840871689064
-    - 4044.336399064771
+    - 4057.280973185688
     margens_lander:
       Falcon Heavy (recuperação):
       - 0.16616973276135005
-      - 0.1567833916861756
+      - 0.1530927258302761
       Falcon Heavy (descartável):
       - 1.7978215192759528
-      - 1.775302235581972
+      - 1.7664477574884252
       Vulcan VC2:
       - 0.07804657360362843
-      - 0.06936952381362382
+      - 0.06595774800732901
       Vulcan VC4:
       - 0.6170530026873975
-      - 0.604037563687863
+      - 0.5989199533293206
       Vulcan VC6:
       - 1.0670551758836124
-      - 1.0504177307870854
+      - 1.043875964399589

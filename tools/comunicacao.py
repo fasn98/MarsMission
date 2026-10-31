@@ -262,40 +262,49 @@ def main():
 
     # ---------------- decisão do portão da 4.3: caminhos (primário TGO/MRO; reserva própria = relé próprio + DTE mínimo)
     cm, hi, dmn = cc["caminhos"], cc["helicopteros_ingenuity"], cc["dte_minimo"]
-    img_media = v(hi["imagens_retornadas"]) / v(hi["voos"])
-    bits_img = hc["navcam_px"]["valor"][0] * hc["navcam_px"]["valor"][1] * v(hc["bits_por_pixel"])
-    heli_real = {"imagens_por_voo_media": img_media, "mbit_por_voo": img_media * bits_img / 1e6, "voos_por_sol": v(hc["voos_por_sol"]),
-                 "mbit_por_sol": img_media * bits_img / 1e6 * v(hc["voos_por_sol"])}
-    # DTE mínimo: diâmetro que dá a taxa do requisito do MSL na distância máxima da estada (P-069), massa e energia
+    nvoos, nsol = v(hi["voos"]), v(hc["voos_por_sol"])
+    bits_nav = hc["navcam_px"]["valor"][0] * hc["navcam_px"]["valor"][1] * v(hc["bits_por_pixel"])
+    bits_rte = hi["rte_px"]["valor"][0] * hi["rte_px"]["valor"][1] * v(hi["rte_bits_por_pixel"])
+    nav_v, rte_v = v(hi["imagens_navcam"]) / nvoos, v(hi["imagens_rte"]) / nvoos   # P-072
+    heli_real = {"navcam_por_voo": nav_v, "rte_por_voo": rte_v, "voos_por_sol": nsol,
+                 "mbit_por_voo_navcam": nav_v * bits_nav / 1e6, "mbit_por_voo_rte": rte_v * bits_rte / 1e6}
+    heli_real["mbit_por_sol_navcam"] = heli_real["mbit_por_voo_navcam"] * nsol
+    heli_real["mbit_por_sol_com_rte"] = (heli_real["mbit_por_voo_navcam"] + heli_real["mbit_por_voo_rte"]) * nsol
+    # DTE mínimo: diâmetro que dá a taxa do requisito do MSL na distância máxima da estada (P-069), massa e energia (P-070)
     razao = v(dmn["taxa_requisito_bps"]) / dte["taxa_bps"]
     d_min = msl["hga_m"] * math.sqrt(max(razao, 1.0))
     hga_kg = msl["hga_kg"] * (d_min / msl["hga_m"]) ** 2
     from orbital.massa_plataformas import mga
     pcfg = ler("config/plataformas.yaml")
-    m_basica = hga_kg + msl["gimbal_kg"] + msl["sspa_kg"] + v(dmn["sdst_kg"])
+    itens = {"HGA": hga_kg, "gimbal": msl["gimbal_kg"], "SSPA": msl["sspa_kg"], "SDST": v(dmn["sdst_kg"]),
+             "WTS": v(dmn["wts_kg"]), "RLGA": v(dmn["rlga_kg"]), "micro-ondas": v(dmn["microondas_kg"])}
+    m_basica = sum(itens.values())
     margem = mga(dmn["categoria_mga"]["valor"], pcfg, "e1_medio")
     m_prev = m_basica * (1 + margem)
-    h_min = v(dmn["horas_por_sol"])
-    e_min = msl["sspa_dc_w"] * h_min
+    h_min, h_rx = v(dmn["horas_por_sol"]), v(dmn["receptor_horas_por_sol"])
+    e_min = (msl["sspa_dc_w"] + v(dmn["sdst_rx_tx_w"])) * h_min + v(dmn["sdst_rx_w"]) * max(h_rx - h_min, 0.0)
     area_op_min = claro["area_m2"] * (claro["demanda_wh_sol"] + e_min) / claro["demanda_wh_sol"]
     import arquitetura as arq
     import lancamento as lcm
     lcfg = ler("config/lancadores.yaml")
-    plat_l = ler("results/etapa2.3/plataformas.yaml")["escolha"]["plataforma_lander_kg"]
+    plat_l = v(ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"])   # P-017 (não muda)
     v0, jan_l, _ = lcm.veiculos()
     v1 = lcm.veiculos(plat_l + m_prev)[0]
     mg0, mg1 = arq.margens(v0, jan_l, lcfg), arq.margens(v1, jan_l, lcfg)
     dte_min = {"taxa_requisito_bps": v(dmn["taxa_requisito_bps"]), "taxa_atual_bps": dte["taxa_bps"], "diametro_m": d_min,
-               "massa_basica_kg": m_basica, "margem_crescimento": margem, "massa_prevista_kg": m_prev,
+               "rf_w": msl["rf_w"], "itens_kg": itens, "massa_basica_kg": m_basica, "margem_crescimento": margem, "massa_prevista_kg": m_prev,
+               "horas_passe": h_min, "horas_receptor": h_rx,
                "mbit_por_sol": v(dmn["taxa_requisito_bps"]) * h_min * 3600 / 1e6, "uplink_emergencia_bps": v(dmn["uplink_emergencia_bps"]),
                "energia_wh_sol": e_min, "area_operacao_m2": area_op_min, "area_linha_de_base_m2": en_["variante_rhu"]["opcao"]["area_m2"],
                "lander_injetado_kg": [v0["lander"]["injetada_kg"], v1["lander"]["injetada_kg"]],
                "margens_lander": {k: [mg0["lander"][k], mg1["lander"][k]] for k in mg0["lander"]}}
-    tgo_min = v(cm["tgo"]["passes_por_sol_min"]) * v(cm["tgo"]["mbit_por_passe_min"])
+    npass = v(cm["tgo"]["passes_por_sol"])
     reserva = [x["mbit_por_sol_medio"] for x in casos]
     cam = {"demanda_lander_mbit_sol": demanda, "helicopteros_envoltoria_mbit_sol": heli["mbit_por_sol"],
            "helicopteros_media_ingenuity": heli_real,
-           "caminhos_mbit_sol": {"TGO (mínimo)": [tgo_min, tgo_min], "MRO": [cm["mro"]["mbit_por_sol"]["min"], cm["mro"]["mbit_por_sol"]["max"]],
+           "tgo": {"passes_por_sol": npass, "mbit_por_passe": [cm["tgo"]["mbit_por_passe"]["min"], cm["tgo"]["mbit_por_passe"]["max"]]},
+           "caminhos_mbit_sol": {"TGO": [npass * cm["tgo"]["mbit_por_passe"]["min"], npass * cm["tgo"]["mbit_por_passe"]["max"]],
+                                 "MRO": [cm["mro"]["mbit_por_sol"]["min"], cm["mro"]["mbit_por_sol"]["max"]],
                                  "reserva própria (relé + DTE mínimo)": [min(reserva) + dte_min["mbit_por_sol"], max(reserva) + dte_min["mbit_por_sol"]]},
            "dte_minimo": dte_min}
 
@@ -385,24 +394,30 @@ def escreve_md(o):
            "A escala vale com o mesmo erro de apontamento do MSL (5°); uma HGA desse tamanho tem feixe mais estreito e pede "
            "apontamento melhor. Na conjunção, o enlace direto também para."]
     dc, dm2 = o["decisao_caminhos"], o["decisao_caminhos"]["dte_minimo"]
-    hr = dc["helicopteros_media_ingenuity"]
+    hr, tg = dc["helicopteros_media_ingenuity"], dc["tgo"]
     md += ["", "## Decisão do portão da 4.3: caminhos de comunicação do lander", "",
-           f"Helicópteros: envoltória de {br(dc['helicopteros_envoltoria_mbit_sol'])} Mbit/sol (P-068); com a média real do Ingenuity "
-           f"({br(hr['imagens_por_voo_media'])} imagens por voo [F179, F186], Navcam sem compressão) {br(hr['mbit_por_voo'])} Mbit por voo, "
-           f"{br(hr['mbit_por_sol'])} Mbit/sol com {br(hr['voos_por_sol'])} voos (P-054). Lander: {br(dc['demanda_lander_mbit_sol'])} Mbit/sol (P-063).", "",
-           "| Caminho | Capacidade (Mbit/sol) | Cobre os helicópteros (média real)? | Cobre lander + helicópteros? |", "| :- | :- | :- | :- |"]
-    tot = dc["demanda_lander_mbit_sol"] + hr["mbit_por_sol"]
+           f"Helicópteros (média do Ingenuity por voo, P-072; contagens com imagens em solo, sem compressão): Navcam {br(hr['navcam_por_voo'])} "
+           f"imagens, {br(hr['mbit_por_voo_navcam'])} Mbit; RTE {br(hr['rte_por_voo'], 1)} imagens, {br(hr['mbit_por_voo_rte'])} Mbit [F179, F180, F186]. "
+           f"Com {br(hr['voos_por_sol'])} voos por sol (P-054): {br(hr['mbit_por_sol_navcam'])} Mbit/sol só com a Navcam e "
+           f"{br(hr['mbit_por_sol_com_rte'])} Mbit/sol com a RTE. Envoltória da P-068: {br(dc['helicopteros_envoltoria_mbit_sol'])} Mbit/sol. "
+           f"Lander: {br(dc['demanda_lander_mbit_sol'])} Mbit/sol (P-063).", "",
+           "| Caminho | Capacidade (Mbit/sol) | Helicópteros, só Navcam | Helicópteros com RTE | Lander + helicópteros (só Navcam) |",
+           "| :- | :- | :- | :- | :- |"]
+    tot = dc["demanda_lander_mbit_sol"] + hr["mbit_por_sol_navcam"]
     for k, (a, b) in dc["caminhos_mbit_sol"].items():
         faixa = br(a) if a == b else f"{br(a)} a {br(b)}"
         sim = lambda x: "sim" if a >= x else ("depende" if b >= x else "não")  # noqa: E731
-        md.append(f"| {k} | {faixa} | {sim(hr['mbit_por_sol'])} | {sim(tot)} |")
-    md += ["", f"TGO: pelo menos 2 passes por sol [F184] × mais de 1 Gbit por passe [F177] (limite inferior). MRO: faixa do MRO com o MSL [F137].", "",
+        md.append(f"| {k} | {faixa} | {sim(hr['mbit_por_sol_navcam'])} | {sim(hr['mbit_por_sol_com_rte'])} | {sim(tot)} |")
+    md += ["", f"TGO: {br(tg['passes_por_sol'])} passes por sol [F184] de {br(tg['mbit_por_passe'][0])} a {br(tg['mbit_por_passe'][1])} Mbit "
+           "(P-071; o máximo é o da taxa de 2048 kbps [F177]); compartilhado com outros usuários. MRO: faixa do MRO com o MSL [F137].", "",
            "### Enlace direto mínimo (reserva para o mínimo crítico, P-070)", "",
            f"Requisito: {br(dm2['taxa_requisito_bps'])} bps na distância máxima (requisito de superfície do MSL [F137]); o análogo dá "
-           f"{br(dm2['taxa_atual_bps'])} bps, e a HGA passa a {br(dm2['diametro_m'], 3)} m com o SSPA de 15 W. Comando de emergência pela RLGA a "
-           f"{br(dm2['uplink_emergencia_bps'], 4)} bps [F137]. Massa: {br(dm2['massa_basica_kg'], 1)} kg básica (HGA, gimbal, SSPA, transponder) "
-           f"+ {br(100 * dm2['margem_crescimento'], 1)} % = {br(dm2['massa_prevista_kg'], 1)} kg. {br(dm2['mbit_por_sol'], 2)} Mbit/sol em 1 h; "
-           f"{br(dm2['energia_wh_sol'], 1)} Wh/sol; área de operação {br(dm2['area_operacao_m2'], 1)} m², abaixo dos "
+           f"{br(dm2['taxa_atual_bps'])} bps, e a HGA passa a {br(dm2['diametro_m'], 3)} m com o SSPA de {br(dm2['rf_w'])} W. Comando de emergência pela RLGA a "
+           f"{br(dm2['uplink_emergencia_bps'], 4)} bps [F137]. Massa básica (Rover X-band do MSL [F137]): "
+           + ", ".join(f"{k} {br(x, 2)}" for k, x in dm2["itens_kg"].items())
+           + f" = {br(dm2['massa_basica_kg'], 1)} kg; + {br(100 * dm2['margem_crescimento'], 1)} % = {br(dm2['massa_prevista_kg'], 1)} kg. "
+           f"{br(dm2['mbit_por_sol'], 2)} Mbit/sol num passe de {br(dm2['horas_passe'])} h; energia {br(dm2['energia_wh_sol'])} Wh/sol (SSPA e transponder "
+           f"no passe, receptor ligado {br(dm2['horas_receptor'], 1)} h); área de operação {br(dm2['area_operacao_m2'], 1)} m², abaixo dos "
            f"{br(dm2['area_linha_de_base_m2'], 1)} m² da linha de base. Lander injetado {br(dm2['lander_injetado_kg'][0])} → "
            f"{br(dm2['lander_injetado_kg'][1])} kg; margens dos lançadores do lander: "
            + "; ".join(f"{k} {pc_(a)} → {pc_(b)}" for k, (a, b) in dm2["margens_lander"].items()) + " (sensibilidade; a P-017 não muda)."]
