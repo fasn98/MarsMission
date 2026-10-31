@@ -6,7 +6,7 @@ Lander:
   - Área e massa do painel, e a bateria da noite, para cada cenário de profundidade óptica (constante na estada, como
     envoltória), contra a demanda: plataforma (P-032) + aquecimento do MAV (orbital.mav, modelo atual).
   - Tempestade global: operação normal, ou sobrevivência (MAV + aquecedores e eletrônica do lander, P-056).
-  - Opção C (linha de base desde o portão da 4.1): a maior área e a maior bateria entre céu claro e sobrevivência;
+  - Opção C (sem RHU, alternativa) e C + RHU (linha de base desde o 2º portão da 4.1, ADR 0015): a maior área e a maior bateria entre céu claro e sobrevivência;
     acima de τ = 6, a razão de energia medida pelo Opportunity em 2018 (P-057) e comparação do modelo com ela.
   - Verificação da insolação diária calculada contra a tabela publicada do VL1 [F56].
   - MMRTG (alternativa A, condicionada ao Pu-238): quantos para a demanda média no fim da estada, a massa, a
@@ -397,7 +397,7 @@ def escreve_md(o):
                   f"{br(s['bateria_kg'])} | {br(s['total_kg'])} | {br(s['pior_sol_ls'])}° |")
     sc, scs, sv, a6 = la["solar_com_sobrevivencia"], la["solar_com_sobrevivencia_sensibilidade"], la["sobrevivencia"], la["acima_do_modelo"]
     sb = sv["base"]
-    md += ["", "### Opção C: solar com sobrevivência (linha de base)", "",
+    md += ["", "### Opção C: solar com sobrevivência, sem RHU (alternativa; a linha de base é a C + RHU, abaixo)", "",
            f"Carga de sobrevivência na tempestade global (P-056): MAV {br(sb['mav_wh_sol'])} Wh/sol + aquecedores do lander "
            f"{br(sb['aquecedores_lander_wh_sol'])} Wh/sol ((84 Wh/sol de aquecedores do Spirit + {br(sb['rhu_mer_wh_sol'])} Wh/sol das 8 RHUs) × "
            f"({br(sv['plataforma_lander_kg'])} kg / 174 kg)^{br(sb['expoente'], 2)}) "
@@ -420,7 +420,7 @@ def escreve_md(o):
            f"A duração da fase com τ > {br(la['tau_max_modelo'], 0)} e a ponte pela bateria não foram avaliadas.", "",
            f"Desfecho do dado de voo usado acima de τ = {br(la['tau_max_modelo'], 0)}: {a6['desfecho_opportunity']}."]
     vr, s26 = la["variante_rhu"], la["sensibilidade_fator_opportunity"]
-    md += ["", "### Variante C + RHU", "",
+    md += ["", "### Opção C + RHU (linha de base, ADR 0015)", "",
            f"RHUs no lander no lugar dos aquecedores que repõem o calor das RHUs do MER: {vr['rhu_quantidade']} RHUs de "
            f"{br(vr['rhu_w_cada'], 1)} W ({br(vr['sobrevivencia']['rhu_lander_w'], 1)} W, mesma escala da P-056). "
            f"Potência específica do Pu-238: {br(vr['potencia_especifica_w_g'], 3)} W/g pela física; {br(vr['potencia_especifica_mmrtg_w_g'], 3)} W/g "
@@ -468,7 +468,11 @@ def escreve_md(o):
            "### Comparação com bases iguais (margens de crescimento e bateria dos picos nas duas fontes)", "",
            "| Opção | Massa (kg) | Área (m²) | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |",
            "| :- | -: | -: | :- | :- | :- |",
-           f"| **C. Solar com sobrevivência (linha de base)** | {br(sc['total_kg'])} | {br(sc['area_m2'], 1)} | — | sobrevive (MAV + lander, P-056) até τ = {br(la['tau_max_modelo'], 0)}; "
+           f"| **C + RHU (linha de base)** | {br(la['variante_rhu']['opcao']['total_kg'])} | {br(la['variante_rhu']['opcao']['area_m2'], 1)} | "
+           f"{br(la['variante_rhu']['pu238_g'], 1)} g em {la['variante_rhu']['rhu_quantidade']} RHUs; {la['variante_rhu']['nspm20']['enquadramento'].split(' (')[0]} | "
+           f"sobrevive até τ = {br(la['tau_max_modelo'], 0)}; com τ = {br(a6['tau'], 1)}, {br(100 * la['variante_rhu']['acima_do_modelo']['cobertura'])} % da energia de sobrevivência (P-057) | "
+           f"poeira: fator {br(la['fator_poeira_fim'], 3)} no fim, sem limpeza |",
+           f"| C. Solar com sobrevivência, sem RHU | {br(sc['total_kg'])} | {br(sc['area_m2'], 1)} | — | sobrevive (MAV + lander, P-056) até τ = {br(la['tau_max_modelo'], 0)}; "
            f"com τ = {br(a6['tau'], 1)}, {br(100 * ab['cobertura'])} % da energia de sobrevivência (P-057) | poeira: fator {br(la['fator_poeira_fim'], 3)} no fim, sem limpeza |",
            f"| A. MMRTG × {r['unidades']} (alternativa condicionada) | {br(r['massa_kg'])} | — | {br(r['pu238_g'])} g; condicionada à disponibilidade "
            f"(fatos acima); acima do Tier I do NSPM-20 | não depende de τ | potência no fim {br(100 * r['fracao_potencia_fim'], 1)} % da inicial |",

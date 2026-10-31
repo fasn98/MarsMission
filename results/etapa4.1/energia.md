@@ -21,7 +21,7 @@ O modelo de insolação vale até τ = 6; acima disso usa-se esse limite, e o re
 | claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 4 691 | 7,1 | 38 | 99 | 136 | 276° |
 | global_2018 | 8,5 | 6,0 | sobrevivência, aquecedores com escala linear na massa (sensibilidade da P-056) | 3 860 | 63,2 | 332 | 79 | 411 | 58° |
 
-### Opção C: solar com sobrevivência (linha de base)
+### Opção C: solar com sobrevivência, sem RHU (alternativa; a linha de base é a C + RHU, abaixo)
 
 Carga de sobrevivência na tempestade global (P-056): MAV 1 191 Wh/sol + aquecedores do lander 1 217 Wh/sol ((84 Wh/sol de aquecedores do Spirit + 197 Wh/sol das 8 RHUs) × (1 565 kg / 174 kg)^0,67) + eletrônica mínima 140 Wh/sol = 2 547 Wh/sol. Com escala linear na massa (sensibilidade): 3 860 Wh/sol.
 
@@ -38,7 +38,7 @@ Acima de τ = 6 (P-057): com τ = 10,8 o Opportunity produziu 3,4 % da energia d
 
 Desfecho do dado de voo usado acima de τ = 6: [F140] sóis 5292–5299 (13–20/12/2018): "No signal from Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely experienced a low-power fault, a mission clock fault and an up-loss timer fault".
 
-### Variante C + RHU
+### Opção C + RHU (linha de base, ADR 0015)
 
 RHUs no lander no lugar dos aquecedores que repõem o calor das RHUs do MER: 35 RHUs de 1,0 W (34,6 W, mesma escala da P-056). Potência específica do Pu-238: 0,568 W/g pela física; 0,568 W/g pela MMRTG (potência térmica / massa de Pu-238 [F135]), diferença 0,0 %. Pu-238: 61,6 g; atividade 39,1 TBq = 39 056 A2 (0,391 do limite do Tier I): Tier I pelo critério de quantidade (análise de segurança não avaliada; com probabilidade ≥ 1e-6 de 5 a 25 rem, passaria ao Tier II).
 
@@ -97,7 +97,8 @@ Disponibilidade de Pu-238:
 
 | Opção | Massa (kg) | Área (m²) | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |
 | :- | -: | -: | :- | :- | :- |
-| **C. Solar com sobrevivência (linha de base)** | 318 | 41,7 | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
+| **C + RHU (linha de base)** | 245 | 27,7 | 61,6 g em 35 RHUs; Tier I pelo critério de quantidade | sobrevive até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
+| C. Solar com sobrevivência, sem RHU | 318 | 41,7 | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
 | A. MMRTG × 2 (alternativa condicionada) | 118 | — | 6 956 g; condicionada à disponibilidade (fatos acima); acima do Tier I do NSPM-20 | não depende de τ | potência no fim 90,8 % da inicial |
 | B. Solar, céu claro | 194 | 18,0 | — | não atravessa: com τ = 6 a energia cai a 23,5 % da de céu claro | poeira: fator 0,324 |
 | D. Solar operando na tempestade | 502 | 76,8 | — | opera até τ = 6; acima, ver a razão do Opportunity | poeira: fator 0,324 |
