@@ -50,7 +50,9 @@ O relatório GAO-17-673 não pôde ser baixado (o endereço devolveu HTML, não 
   - No Tier II e no Tier III, o chefe da agência pede ao administrador da NASA a revisão do INSRB [F128].
 
 ## Consequências
-- A linha de base fica sem material nuclear (ADR 0015), nem mesmo em RHUs: o calor que o análogo do MER tirava das
-  8 RHUs [F142] entra como aquecimento elétrico (P-056). O preço é a sobrevivência acima de τ = 6, que não está coberta
-  (P-057).
+- A linha de base fica sem as MMRTG (ADR 0015).
+  - A conta da sobrevivência supõe também um lander sem RHU: o calor que o análogo do MER tirava das 8 RHUs [F142] entra
+    como aquecimento elétrico (P-056). É o caso conservador.
+  - Usar RHUs como as do MER, com cerca de 2,7 g de PuO2 cada [F142], é opção ainda não decidida (Fabio).
+- O preço é a sobrevivência acima de τ = 6, que não está coberta (P-057).
 - Se a alternativa A for retomada, os 3.950 W térmicos das duas MMRTG podem aquecer o MAV. Isso não foi modelado.

@@ -20,8 +20,8 @@ relaxar esse limite e pediu a avaliação de mais motores em arranjo simétrico.
    - O painel e a bateria servem a dois casos: operação normal com céu claro e sobrevivência na tempestade global. Fica
      a maior área e a maior bateria dos dois.
    - Na sobrevivência entram o aquecimento do MAV, os aquecedores do próprio lander e uma eletrônica mínima (P-056,
-     análogo do Spirit no inverno de 2008 [F141]). O calor das 8 RHUs do MER [F142] entra como aquecimento elétrico,
-     porque a linha de base não leva material nuclear.
+     análogo do Spirit no inverno de 2008 [F141]). O calor das 8 RHUs do MER [F142] entra como aquecimento elétrico:
+     a conta supõe um lander sem RHU (caso conservador). Usar RHUs é opção não decidida (Fabio).
 2. **Alternativa A (2 × MMRTG): condicionada à disponibilidade de Pu-238** (ADR 0016).
 3. **Carga do orbitador: 1.022 W por modo (P-053) é o novo valor-base da P-028**, no lugar de 510 W.
    - Com o Vulcan VC6 a poucos pontos percentuais de margem, o orbitador depende na prática do Falcon Heavy
