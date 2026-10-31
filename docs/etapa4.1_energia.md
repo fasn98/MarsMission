@@ -265,7 +265,7 @@ decidir com a variante abaixo. Números de `results/etapa4.1/energia.md`.
 - **Atividade:** 39,1 TBq, ou 39.056 A2: 0,391 do limite do Tier I, logo **Tier I do NSPM-20 pelo critério de
   quantidade**. Nele, o chefe da agência é a autoridade de lançamento [F128]. A análise de segurança não foi feita: com
   probabilidade de 1 em 1.000.000 ou mais de exposição de 5 a 25 rem, o lançamento passaria ao Tier II [F128].
-- **Sua estimativa:** ~20 g e ~12 TBq. O enquadramento em Tier I se confirma, mas a quantidade calculada é maior (61,6 g e
+- **Sua estimativa:** ~20 g e ~12 TBq. O enquadramento em Tier I, pelo critério de quantidade, se confirma, mas a quantidade calculada é maior (61,6 g e
   39,1 TBq), porque o calor do MER escalado pede 35 RHUs.
 - **Potência por unidade:**
 
