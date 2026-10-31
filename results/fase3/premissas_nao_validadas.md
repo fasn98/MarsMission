@@ -66,5 +66,7 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) | sim |
 | P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | tools/energia.py (probabilidade do risco acima de τ = 6) | sim |
 | P-062 | data_do_deposito_de_three_forks | 2023-02-15 | data | config/termico.yaml (tempo das amostras no depósito até a chegada) | sim |
+| P-063 | demanda_de_dados_do_lander | 250 | Mbit por sol | config/comunicacao.yaml (demanda do lander contra o enlace direto e o relé) | sim |
+| P-064 | escala_da_taxa_do_orbitador_com_a_distancia | expoente: 2 | adimensional | tools/comunicacao.py (taxa em banda X do orbitador) | sim |
 
-Total: 62 de 62 premissas com status NÃO VALIDADA; 22 criadas na Fase 3.
+Total: 64 de 64 premissas com status NÃO VALIDADA; 24 criadas na Fase 3.

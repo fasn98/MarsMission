@@ -714,3 +714,22 @@ premissas:
       depósito completo até 15/02/2023. O tempo no depósito é contado até a chegada da missão de referência; chamá-lo de
       "mínimo" é inferência desta premissa (a coleta é depois da chegada), não da fonte.
     status: NÃO VALIDADA
+  - id: P-063
+    nome: demanda_de_dados_do_lander
+    valor: 250
+    unidade: Mbit por sol
+    uso: config/comunicacao.yaml (demanda do lander contra o enlace direto e o relé)
+    justificativa: >
+      Requisito do MSL para os dois passes de relé por sol [F137]. O lander deste estudo tem outra carga útil (braço,
+      helicópteros, câmeras de coleta); sem estimativa própria, usa-se o análogo.
+    status: NÃO VALIDADA
+  - id: P-064
+    nome: escala_da_taxa_do_orbitador_com_a_distancia
+    valor: {expoente: 2}
+    unidade: adimensional
+    uso: tools/comunicacao.py (taxa em banda X do orbitador)
+    justificativa: >
+      Taxa do análogo (MRO, HGA de 3 m e TWTA de 100 W [F173]) escalada com o inverso do quadrado da distância a partir de
+      500 kbps a 400 milhões de km. Perto da Terra a escala superestima: a 100 milhões de km dá mais que os 3 a 4 Mbps
+      publicados (results/etapa4.3/comunicacao.md), porque outros limites dominam. Supõe-se um orbitador com o enlace do MRO.
+    status: NÃO VALIDADA

@@ -1,0 +1,32 @@
+# Etapa 4.3: comunicação (tools/comunicacao.py). Ângulos em graus.
+luz_km_s: {valor: 299792.458, fonte: "[F31] p. 19 do PDF: \"the speed of light in vacuum c is 299 792 458 m/s\""}
+
+conjuncao:   # critérios de ângulo Sol–Terra–Marte (SEP)
+  periodo_conjuncao_graus: {valor: 5, fonte: "[F173] PDF p. 17 (impr. 4): \"Defined as the time period when the Sun–Earth–Mars angle is 5 deg or less\""}
+  sem_telemetria_graus: {valor: 3, fonte: "[F174] PDF p. 121 (impr. 105): \"MER did not expect to depend on telemetry within a 3° SEP angle\""}
+  sem_comando_graus: {valor: 2, fonte: "[F174] PDF p. 121 (impr. 105): \"and did not intend to command within 2°\""}
+  degradacao_banda_x_graus: {valor: 2, fonte: "[F173] PDF p. 64 (impr. 51): \"An X-band link using BPSK begins to degrade near a 2-deg SEP angle\""}
+  retorno_bpsk_ok_graus: {valor: 2.3, fonte: "[F175] p. 16: \"Standard downlink BPSK link design and coding strategies can be used to achieve successful X-band data return at SEP angles down to at least 2.3 degrees\""}
+  moratoria_2021: "[F176]: \"most missions will stop sending commands between Oct. 2 and Oct. 16\"; \"Engineers will spend about a week downloading the information before normal spacecraft operations resume\""
+  dias_de_recuperacao: {valor: 7, fonte: "[F176]: \"about a week downloading the information\""}
+  proximidade_nao_afetada: "[F173] PDF p. 18 (impr. 5): \"Proximity communications with surface vehicles would not be directly affected\""
+
+encontro:   # duração das fases do encontro do ERO (arquitetura química) [F121]
+  captura_dias: {valor: 22, fonte: "[F121] p. 13, Tab. 2: \"Forced translation, OS capture and bio-sealing 2 days T0 + 22 d\""}
+  fase_raan_dias: {valor: 24, fonte: "[F121] p. 13, Tab. 2: \"Absolute RAAN phasing (assuming 200 deg) 24 days T0 + 46 d\""}
+
+orbitador_x:   # análogo do MRO: HGA de 3 m e TWTA de 100 W [F173]
+  hga_m: {valor: 3, fonte: "[F173] PDF p. 25 (impr. 12): \"a 3-meter-diameter (10-foot) high-gain antenna and a 100-watt X-band traveling-wave tube amplifier\""}
+  taxa_ref_kbps: {valor: 500, fonte: "[F173] PDF p. 25 (impr. 12): \"At a maximum distance from Earth (400 million km [250 million miles]), the orbiter is designed to send data at a rate of at least 500 kbps\""}
+  distancia_ref_km: {valor: 4.0e+8, fonte: "[F173] PDF p. 25 (mesma citação)"}
+  taxa_perto_mbps: {min: 3, max: 4, distancia_km: 1.0e+8, fonte: "[F173] PDF p. 25: \"at its closest ranges (about 100 milliom km [60 million miles]), for several months the orbiter will be able to send data to Earth at 3 to 4 megabits per second\" (\"milliom\" no original)"}
+  horas_dsn_por_dia: {valor: 8, fonte: "[F173] PDF p. 17 (impr. 4): \"The DSN will support one 8-hr pass per day to a 34-m antenna during this period\" (na conjunção); fora dela o MRO tinha \"two 34-m Deep Space Stations (DSSs) daily for an average of 16 hours per day\" (PDF p. 25)"}
+
+lander_x:   # enlace direto à Terra do lander, análogo do MSL [F137]
+  taxa_max_distancia_bps: {valor: 160, fonte: "[F137] p. 104: \"Data return from the HGA (160 bps at max range, 34-m BWG station, 5-deg HGA pointing error)\""}
+
+uhf:   # relé de proximidade (Electra / Electra-Lite) [F137]
+  taxa_max_kbps: {valor: 2048, fonte: "[F137] p. 81: \"Downlink rates from 2 kbps to 2048 kbps are available\""}
+  volume_msl_por_sol_mbit: {min: 100, max: 1150, fonte: "[F137] p. 112: \"provides anywhere from 30 to 600 Mbits per pass (100 to 1150 Mbits per sol)\" (MRO, órbita baixa)"}
+  requisito_msl_por_sol_mbit: {valor: 250, premissa: P-063, fonte: "[F137] p. 112: \"the 250 Mbits requirement total for the two passes\" (requisito do MSL, usado como demanda do lander)"}
+  frequencias_mhz: "[F137] p. 81: \"Channel 0: 401.585625 MHz; Channel 1: 404.4 MHz; or Channel 2: 397.5 MHz\" (retorno); p. 82: \"0: 437.1 MHz, 1: 435.6 MHz\" (ida)"

@@ -1,0 +1,99 @@
+gerado_por: tools/comunicacao.py
+estada:
+- '2029-09-20'
+- '2030-11-08'
+criterios_graus:
+  periodo_conjuncao_graus: 5.0
+  sem_telemetria_graus: 3.0
+  sem_comando_graus: 2.0
+  degradacao_banda_x_graus: 2.0
+  retorno_bpsk_ok_graus: 2.3
+sep_minimo:
+  data: '2030-05-25'
+  graus: 0.2974604071649664
+  distancia_km: 376495674.8952821
+  dias_desde_chegada: 247
+janelas:
+  periodo_conjuncao_graus:
+  - inicio: '2030-05-06'
+    fim: '2030-06-13'
+    dias: 39
+    dias_desde_chegada: 228
+    dias_ate_partida: 148
+  sem_telemetria_graus:
+  - inicio: '2030-05-14'
+    fim: '2030-06-06'
+    dias: 24
+    dias_desde_chegada: 236
+    dias_ate_partida: 155
+  sem_comando_graus:
+  - inicio: '2030-05-18'
+    fim: '2030-06-02'
+    dias: 16
+    dias_desde_chegada: 240
+    dias_ate_partida: 159
+  degradacao_banda_x_graus:
+  - inicio: '2030-05-18'
+    fim: '2030-06-02'
+    dias: 16
+    dias_desde_chegada: 240
+    dias_ate_partida: 159
+  retorno_bpsk_ok_graus:
+  - inicio: '2030-05-17'
+    fim: '2030-06-03'
+    dias: 18
+    dias_desde_chegada: 239
+    dias_ate_partida: 158
+sep_min_cruzeiro_graus:
+  ida: 60.64426935336188
+  volta: 44.23812463753714
+distancias:
+  estada_max_km: 380660250.8978695
+  estada_min_km: 246769699.24625123
+  ida_max_km: 246769699.24625236
+  volta_max_km: 306462165.02634424
+  missao_max_km: 380660250.8978695
+  missao_max_ua: 2.5445566111113744
+  tempo_luz_max_min: 21.162432028108235
+  tempo_luz_min_estada_min: 13.718918575232651
+  referencia_mro_km: 400000000.0
+folgas:
+  janela:
+    inicio: '2030-05-06'
+    fim: '2030-06-13'
+    dias: 39
+    dias_desde_chegada: 228
+    dias_ate_partida: 148
+  dias_recuperacao_depois: 7
+  dias_uteis_antes: 228
+  dias_uteis_depois: 141
+  encontro_dias: 46
+  encontro_cabe_depois: true
+  folga_encontro_depois_dias: 95
+moratoria_2021: '[F176]: "most missions will stop sending commands between Oct. 2
+  and Oct. 16"; "Engineers will spend about a week downloading the information before
+  normal spacecraft operations resume"'
+proximidade: '[F173] PDF p. 18 (impr. 5): "Proximity communications with surface vehicles
+  would not be directly affected"'
+orbitador_x:
+  taxa_na_distancia_max_kbps: 552.0964161117691
+  taxa_na_distancia_min_estada_kbps: 1313.730623009977
+  volume_por_dia_na_distancia_max_mbit: 15900.37678401895
+  comparacao_perto:
+    taxa_escalada_kbps: 8000.0
+    publicada_mbps:
+    - 3
+    - 4
+lander_dte:
+  taxa_bps: 160.0
+  volume_por_passe_mbit: 4.608
+  fracao_da_demanda: 0.018431999999999997
+rele_uhf:
+  periapse_alt_km: 300
+  apoapse_alt_km: 25952.4
+  perda_extra_no_apoapse_db: 38.74112543142375
+  demanda_por_sol_mbit: 250.0
+  msl_por_sol_mbit:
+  - 100
+  - 1150
+  taxa_max_kbps: 2048.0

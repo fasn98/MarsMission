@@ -64,5 +64,7 @@
 | P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | NÃO VALIDADA | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) |
 | P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | NÃO VALIDADA | tools/energia.py (probabilidade do risco acima de τ = 6) |
 | P-062 | data_do_deposito_de_three_forks | 2023-02-15 | data | NÃO VALIDADA | config/termico.yaml (tempo das amostras no depósito até a chegada) |
+| P-063 | demanda_de_dados_do_lander | 250 | Mbit por sol | NÃO VALIDADA | config/comunicacao.yaml (demanda do lander contra o enlace direto e o relé) |
+| P-064 | escala_da_taxa_do_orbitador_com_a_distancia | expoente: 2 | adimensional | NÃO VALIDADA | tools/comunicacao.py (taxa em banda X do orbitador) |
 
-Total: 62 premissas, 62 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 64 premissas, 64 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
