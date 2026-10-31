@@ -52,6 +52,12 @@ faixas:
   max_c: 30
   fonte: '[F162] p. 5: "Operating temperature range of -20°C to +30°C, with both charge
     and discharge permitted at these temperatures"'
+- item: Bateria Li-ion do Phoenix e do MSL (operação)
+  tipo: operação
+  min_c: -20
+  max_c: 30
+  fonte: '[F163] p. 12 (Phoenix) e p. 13 (MSL): "Operating Temperature Range: -20o
+    to +30oC"'
 - item: Bateria Li-ion do SRL (cruzeiro, interface do HRS)
   tipo: AFT
   min_c: 0
@@ -82,8 +88,12 @@ aquecimento_mav:
   energia_wh_sol: 1190.5325201835713
   carga_sobrevivencia_wh_sol: 1693.8319251194762
   area_sobrevivencia_m2: 27.724806703530994
-  area_opcao_m2: 27.724806703530994
   demanda_operacao_wh_sol: 4690.532520183571
+  area_operacao_m2: 18.025810595347988
+  bateria_operacao_kg: 98.70503895374793
+  area_opcao_m2: 27.724806703530994
+  bateria_opcao_kg: 98.70503895374793
+  total_opcao_kg: 244.52019421013122
 - alvo: nominal_mmh_nto
   t_c: 15.0
   fonte: '[F159] p. 2 (limite inferior da faixa nominal)'
@@ -91,8 +101,12 @@ aquecimento_mav:
   energia_wh_sol: 1500.2645579549066
   carga_sobrevivencia_wh_sol: 2003.5639628908116
   area_sobrevivencia_m2: 32.794531007195495
-  area_opcao_m2: 32.794531007195495
   demanda_operacao_wh_sol: 5000.264557954906
+  area_operacao_m2: 19.21611703159006
+  bateria_operacao_kg: 105.0287347249127
+  area_opcao_m2: 32.794531007195495
+  bateria_opcao_kg: 105.0287347249127
+  total_opcao_kg: 277.50747124088144
 - alvo: aft_tanques_mer
   t_c: 17.0
   fonte: '[F160] p. 3 (limite inferior da AFT dos tanques)'
@@ -100,8 +114,12 @@ aquecimento_mav:
   energia_wh_sol: 1538.9810626763237
   carga_sobrevivencia_wh_sol: 2042.2804676122287
   area_sobrevivencia_m2: 33.42824654515356
-  area_opcao_m2: 33.42824654515356
   demanda_operacao_wh_sol: 5038.981062676324
+  area_operacao_m2: 19.36490533612032
+  bateria_operacao_kg: 105.8191966963083
+  area_opcao_m2: 33.42824654515356
+  bateria_opcao_kg: 105.8191966963083
+  total_opcao_kg: 281.6308808697253
 area_base_dimensionada_pela_sobrevivencia: true
 amostras:
   aft_c: -20
@@ -126,6 +144,7 @@ comparacao_srl:
 cruzeiro:
   rhu_quantidade: 35
   rhu_w: 35.0
+  srl_dissipacao_max_lamp_w: 322.0
   srl_perda_passiva_max_w: 200.0
   fracao_do_srl_passivo: 0.175
   mer_dissipacao_w: 125.0

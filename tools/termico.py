@@ -46,14 +46,26 @@ def main():
     base_area_por_sobrevivencia = c["dimensiona_area"] == "sobrevivência"
     alvos = [{"alvo": "atual (P-027)", "t_c": t_mav, "fonte": "config/mav_propulsao.yaml"}]
     alvos += [{"alvo": k, "t_c": v(x), "fonte": x["fonte"]} for k, x in tc["mav"]["alvos_alternativos_c"].items()]
+    # operação normal com céu claro: área linear na demanda; bateria ∝ (noite × demanda + picos) (tools/energia.py)
+    claro = next(x for x in la["solar"] if x["cenario"] == "claro_jezero" and x["carga"] == "operação normal")
+    noite = v(ler("config/plataformas.yaml")["lander"]["energia"]["noite_fracao_sol"])
+    pico = la["pico_total_wh"]
+    kg_por_m2_painel = claro["painel_kg"] / claro["area_m2"]
     for a in alvos:
         p = p_mav * (a["t_c"] - t_amb) / (t_mav - t_amb)
         carga = sob["total_wh_sol"] - sob["mav_wh_sol"] + p * hsol
         a.update({"potencia_w": p, "energia_wh_sol": p * hsol, "carga_sobrevivencia_wh_sol": carga,
                   # a área da sobrevivência é linear na carga (mesmo cenário e mesmo pior sol, tools/energia.py)
                   "area_sobrevivencia_m2": vr["dimensionamento_sobrevivencia"]["area_m2"] * carga / sob["total_wh_sol"]})
-        a["area_opcao_m2"] = max(a["area_sobrevivencia_m2"], la["solar"][0]["area_m2"])
         a["demanda_operacao_wh_sol"] = la["demanda"]["total_wh_sol"] - la["demanda"]["aquecimento_mav_wh_sol"] + p * hsol
+        esc = a["demanda_operacao_wh_sol"] / claro["demanda_wh_sol"]
+        a["area_operacao_m2"] = claro["area_m2"] * esc
+        a["bateria_operacao_kg"] = claro["bateria_kg"] * (noite * a["demanda_operacao_wh_sol"] + pico) / (noite * claro["demanda_wh_sol"] + pico)
+        a["area_opcao_m2"] = max(a["area_sobrevivencia_m2"], a["area_operacao_m2"])
+        # bateria da opção: a maior entre a de operação e a de sobrevivência (esta escala com a carga, sem picos)
+        bat_s = vr["dimensionamento_sobrevivencia"]["bateria_kg"] * carga / sob["total_wh_sol"]
+        a["bateria_opcao_kg"] = max(a["bateria_operacao_kg"], bat_s)
+        a["total_opcao_kg"] = a["area_opcao_m2"] * kg_por_m2_painel + a["bateria_opcao_kg"]
 
     # amostras: AFT fora de transientes [F167] contra o alvo do MAV
     aft_amostras = next(x["max_c"] for x in tc["faixas"] if x["item"].startswith("Amostras (RSTA), fora"))
@@ -74,7 +86,7 @@ def main():
     cz = tc["cruzeiro"]
     rhu_w = vr["rhu_quantidade"] * vr["rhu_w_cada"]
     msl_par = v(cz["msl_mmrtg_termica_w"]) * v(cz["msl_fracao_parasita"])
-    cruzeiro = {"rhu_quantidade": vr["rhu_quantidade"], "rhu_w": rhu_w,
+    cruzeiro = {"rhu_quantidade": vr["rhu_quantidade"], "rhu_w": rhu_w, "srl_dissipacao_max_lamp_w": v(cz["srl_dissipacao_max_lamp_w"]),
                 "srl_perda_passiva_max_w": v(cz["srl_perda_passiva_max_w"]), "fracao_do_srl_passivo": rhu_w / v(cz["srl_perda_passiva_max_w"]),
                 "mer_dissipacao_w": v(cz["mer_dissipacao_w"]), "fracao_do_mer": rhu_w / v(cz["mer_dissipacao_w"]),
                 "msl_parasita_w": msl_par, "fracao_do_msl_parasita": rhu_w / msl_par}
@@ -102,10 +114,10 @@ def escreve_md(o):
            "## Aquecimento do MAV e efeito no orçamento de energia do lander (C + RHU)", "",
            "O aquecimento escala com (T − T_ambiente) no modelo atual (P-027). A área da sobrevivência é linear na carga "
            "(mesmo cenário, tools/energia.py); a da opção é a maior entre ela e a de operação com céu claro.", "",
-           "| Alvo do MAV | T (°C) | Potência (W) | Wh/sol | Sobrevivência (Wh/sol) | Área da opção (m²) | Demanda em operação (Wh/sol) |",
-           "| :- | -: | -: | -: | -: | -: | -: |"]
+           "| Alvo do MAV | T (°C) | Potência (W) | Wh/sol | Sobrevivência (Wh/sol) | Demanda em operação (Wh/sol) | Área da opção (m²) | Massa da opção (kg) |",
+           "| :- | -: | -: | -: | -: | -: | -: | -: |"]
     md += [f"| {a['alvo']} | {br(a['t_c'])} | {br(a['potencia_w'], 1)} | {br(a['energia_wh_sol'])} | {br(a['carga_sobrevivencia_wh_sol'])} | "
-           f"{br(a['area_opcao_m2'], 1)} | {br(a['demanda_operacao_wh_sol'])} |" for a in o["aquecimento_mav"]]
+           f"{br(a['demanda_operacao_wh_sol'])} | {br(a['area_opcao_m2'], 1)} | {br(a['total_opcao_kg'])} |" for a in o["aquecimento_mav"]]
     am, s, cz, ob = o["amostras"], o["comparacao_srl"], o["cruzeiro"], o["orbitador"]
     md += ["", "## Amostras", "",
            f"AFT das amostras fora de transientes: {br(am['aft_c'])} °C [F167]. O MAV do estudo é aquecido a {br(am['mav_c'])} °C: "
@@ -116,14 +128,15 @@ def escreve_md(o):
            f"energia total do LAMP no caso frio: {br(s['lamp_frio_total_wh_sol'])} Wh/sol [F166]. Aqui: aquecedores do lander "
            f"{br(s['nosso_aquecedores_lander_wh_sol'])} Wh/sol mais {br(s['nosso_rhu_w'], 1)} W de RHUs ({br(s['nosso_rhu_wh_sol'])} Wh/sol), "
            f"total {br(s['nosso_total_wh_sol'])} Wh/sol, {br(100 * s['razao_nosso_srl'])} % do SRL (P-056, ADR 0015). "
-           "O SRL é outro veículo, no pior caso frio (Ls 72°), e a comparação não é verificação.",
-           f"- MAV: sobrevivência do MAV sólido do SRL de cerca de {br(s['mav_sobrevivencia_w'])} W a −40 °C [F164]; operação a −20 °C "
+           "O SRL é outro veículo, no pior caso frio (Ls 72°), não na tempestade; a comparação não é verificação.",
+           f"- MAV: sobrevivência da MAS do SRL (estágios sólidos e RCS líquido a +14 °C) de cerca de {br(s['mav_sobrevivencia_w'])} W [F164]; operação de um MAV sólido a −20 °C "
            f"de {br(s['mav_operacao_w'][0])} a {br(s['mav_operacao_w'][1])} W [F170]. Aqui: {br(s['nosso_mav_w'], 1)} W (MAV líquido).", "",
            "## Cruzeiro: calor das RHUs dentro do aeroshell", "",
            f"{cz['rhu_quantidade']} RHUs, {br(cz['rhu_w'], 1)} W: {br(100 * cz['fracao_do_srl_passivo'])} % da perda passiva máxima do LAMP do SRL "
            f"({br(cz['srl_perda_passiva_max_w'])} W [F165]); {br(100 * cz['fracao_do_mer'])} % dos {br(cz['mer_dissipacao_w'])} W que o MER rejeitou "
-           f"por HRS ativo [F168]; {br(100 * cz['fracao_do_msl_parasita'])} % dos {br(cz['msl_parasita_w'])} W da MMRTG que o MSL dissipou "
-           f"parasitamente no backshell e no escudo [F169]. A dissipação das aviônicas do lander no cruzeiro não está no estudo.", "",
+           f"por HRS ativo [F168]; {br(100 * cz['fracao_do_msl_parasita'])} % dos {br(cz['msl_parasita_w'])} W da MMRTG que o projeto do MSL dissipava "
+           f"parasitamente no backshell e no escudo [F169]. No SRL, a dissipação máxima do LAMP no cruzeiro era de {br(cz['srl_dissipacao_max_lamp_w'])} W, "
+           f"acima dos {br(cz['srl_perda_passiva_max_w'])} W da perda passiva [F165]. A dissipação das aviônicas do lander no cruzeiro não está no estudo.", "",
            "## Orbitador", "",
            f"Os aquecedores estão dentro da potência da plataforma por modo (P-053): "
            + ", ".join(f"{k} {br(x)} W" for k, x in ob["plataforma_w_por_modo"].items())

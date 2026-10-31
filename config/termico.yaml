@@ -16,6 +16,8 @@ faixas:
      fonte: "[F164] p. 3, Tab. 1, \"Key Thermal Requirements of SRL\": \"MAV (Hydrazine) +14 to +50 °C +14 to +50 °C\""}
   - {item: "Bateria Li-ion do Perseverance (operação)", tipo: operação, min_c: -20, max_c: 30,
      fonte: "[F162] p. 5: \"Operating temperature range of -20°C to +30°C, with both charge and discharge permitted at these temperatures\""}
+  - {item: "Bateria Li-ion do Phoenix e do MSL (operação)", tipo: operação, min_c: -20, max_c: 30,
+     fonte: "[F163] p. 12 (Phoenix) e p. 13 (MSL): \"Operating Temperature Range: -20o to +30oC\""}
   - {item: "Bateria Li-ion do SRL (cruzeiro, interface do HRS)", tipo: AFT, min_c: 0, max_c: 30,
      fonte: "[F165] p. 2: \"(2) 0 oC to +30 oC for the battery\""}
   - {item: "Amostras (RSTA), fora de transientes", tipo: AFT, min_c: null, max_c: -20,
@@ -34,10 +36,11 @@ comparacao_srl:   # projeto publicado do Sample Retrieval Lander (análise, não
   lamp_frio_wh_sol: {valor: 2300, fonte: "[F166] p. 11: \"the total energy on the LAMP in the cold case is 2300 W*h; this corresponds to an average power of 93W over a 24.6-hour Sol\""}
   lamp_sobrevivencia_wh_sol: {valor: 800, fonte: "[F166] p. 10: \"it will take 800 W*h of LAMP survival heater energy and 740 W*h of battery heater energy\""}
   bateria_aquecedor_wh_sol: {valor: 740, fonte: "[F166] p. 10 (mesma citação)"}
-  mav_sobrevivencia_w: {valor: 30, fonte: "[F164] p. 11: \"The predicted MAS survival power for the WCP conditions is of the order of 30 W\" (MAV sólido, sobrevivência a −40 °C)"}
+  mav_sobrevivencia_w: {valor: 30, fonte: "[F164] p. 11: \"The predicted MAS survival power for the WCP conditions is of the order of 30 W\" (toda a MAS no WCP; p. 10: \"most of the MAS survival heater power is dissipated to maintain the RCS's higher AFT requirements (+14 °C)\")"}
   mav_operacao_w: {min: 60, max: 70, fonte: "[F170] p. 7: \"~60-70 W for operation at -20 C\" (conceito anterior, MAV sólido)"}
 
 cruzeiro:   # calor que precisa sair do aeroshell (pendência do 2º portão da 4.1)
+  srl_dissipacao_max_lamp_w: {valor: 322, fonte: "[F165] p. 3: \"maximum LAMP dissipation of 322 W\""}
   srl_perda_passiva_max_w: {valor: 200, fonte: "[F165] p. 3: \"the maximum surface area of the avionics bay cover was 2.5 m2. The latter would have supported a maximum heat loss from the LAMP ... of 200 W\""}
   mer_dissipacao_w: {valor: 125, fonte: "[F168] p. 2: \"there is no easy way to dissipate the 125W generated during the cruise phase. Thus, the active Heat Rejection System (HRS)\""}
   msl_mmrtg_termica_w: {valor: 2000, fonte: "[F169] p. 6: \"The rest of the heat from the MMRTG (20% of 2000 W) is dissipated parasitically ... to the colder back-shell and the heat-shield\""}

@@ -29,6 +29,7 @@ def test_aquecimento_do_mav_escala_com_a_diferenca_de_temperatura():
     en = ler("results/etapa4.1/energia.yaml")["lander"]["variante_rhu"]
     assert base["carga_sobrevivencia_wh_sol"] == pytest.approx(en["sobrevivencia"]["total_wh_sol"], rel=1e-12)
     assert base["area_opcao_m2"] == pytest.approx(en["opcao"]["area_m2"], rel=1e-9)   # reproduz a linha de base da 4.1
+    assert base["total_opcao_kg"] == pytest.approx(en["opcao"]["total_kg"], rel=1e-9)
 
 
 def test_cruzeiro_e_amostras():

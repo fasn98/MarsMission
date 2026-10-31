@@ -12,6 +12,7 @@
 | Linhas de propelente à base de hidrazina (típico) | AFT | 15,0 | 50,0 | [F161] |
 | Propulsão líquida (hidrazina) do MAV do SRL | AFT | 14,0 | 50,0 | [F164] |
 | Bateria Li-ion do Perseverance (operação) | operação | −20,0 | 30,0 | [F162] |
+| Bateria Li-ion do Phoenix e do MSL (operação) | operação | −20,0 | 30,0 | [F163] |
 | Bateria Li-ion do SRL (cruzeiro, interface do HRS) | AFT | 0,0 | 30,0 | [F165] |
 | Amostras (RSTA), fora de transientes | AFT | — | −20,0 | [F167] |
 | Amostras (RSTA), transientes operacionais inevitáveis | AFT | — | 30,0 | [F167] |
@@ -23,11 +24,11 @@ Ambiente do modelo de aquecimento do MAV: −62,5 °C (igloo do SRL [F57]); mín
 
 O aquecimento escala com (T − T_ambiente) no modelo atual (P-027). A área da sobrevivência é linear na carga (mesmo cenário, tools/energia.py); a da opção é a maior entre ela e a de operação com céu claro.
 
-| Alvo do MAV | T (°C) | Potência (W) | Wh/sol | Sobrevivência (Wh/sol) | Área da opção (m²) | Demanda em operação (Wh/sol) |
-| :- | -: | -: | -: | -: | -: | -: |
-| atual (P-027) | −1 | 48,3 | 1 191 | 1 694 | 27,7 | 4 691 |
-| nominal_mmh_nto | 15 | 60,8 | 1 500 | 2 004 | 32,8 | 5 000 |
-| aft_tanques_mer | 17 | 62,4 | 1 539 | 2 042 | 33,4 | 5 039 |
+| Alvo do MAV | T (°C) | Potência (W) | Wh/sol | Sobrevivência (Wh/sol) | Demanda em operação (Wh/sol) | Área da opção (m²) | Massa da opção (kg) |
+| :- | -: | -: | -: | -: | -: | -: | -: |
+| atual (P-027) | −1 | 48,3 | 1 191 | 1 694 | 4 691 | 27,7 | 245 |
+| nominal_mmh_nto | 15 | 60,8 | 1 500 | 2 004 | 5 000 | 32,8 | 278 |
+| aft_tanques_mer | 17 | 62,4 | 1 539 | 2 042 | 5 039 | 33,4 | 282 |
 
 ## Amostras
 
@@ -35,12 +36,12 @@ AFT das amostras fora de transientes: −20 °C [F167]. O MAV do estudo é aquec
 
 ## Comparação com o projeto publicado do SRL (análise, não medida)
 
-- Aquecedores de sobrevivência do LAMP e da bateria no caso frio: 1 540 Wh/sol; energia total do LAMP no caso frio: 2 300 Wh/sol [F166]. Aqui: aquecedores do lander 363 Wh/sol mais 34,6 W de RHUs (853 Wh/sol), total 1 217 Wh/sol, 79 % do SRL (P-056, ADR 0015). O SRL é outro veículo, no pior caso frio (Ls 72°), e a comparação não é verificação.
-- MAV: sobrevivência do MAV sólido do SRL de cerca de 30 W a −40 °C [F164]; operação a −20 °C de 60 a 70 W [F170]. Aqui: 48,3 W (MAV líquido).
+- Aquecedores de sobrevivência do LAMP e da bateria no caso frio: 1 540 Wh/sol; energia total do LAMP no caso frio: 2 300 Wh/sol [F166]. Aqui: aquecedores do lander 363 Wh/sol mais 34,6 W de RHUs (853 Wh/sol), total 1 217 Wh/sol, 79 % do SRL (P-056, ADR 0015). O SRL é outro veículo, no pior caso frio (Ls 72°), não na tempestade; a comparação não é verificação.
+- MAV: sobrevivência da MAS do SRL (estágios sólidos e RCS líquido a +14 °C) de cerca de 30 W [F164]; operação de um MAV sólido a −20 °C de 60 a 70 W [F170]. Aqui: 48,3 W (MAV líquido).
 
 ## Cruzeiro: calor das RHUs dentro do aeroshell
 
-35 RHUs, 35,0 W: 18 % da perda passiva máxima do LAMP do SRL (200 W [F165]); 28 % dos 125 W que o MER rejeitou por HRS ativo [F168]; 9 % dos 400 W da MMRTG que o MSL dissipou parasitamente no backshell e no escudo [F169]. A dissipação das aviônicas do lander no cruzeiro não está no estudo.
+35 RHUs, 35,0 W: 18 % da perda passiva máxima do LAMP do SRL (200 W [F165]); 28 % dos 125 W que o MER rejeitou por HRS ativo [F168]; 9 % dos 400 W da MMRTG que o projeto do MSL dissipava parasitamente no backshell e no escudo [F169]. No SRL, a dissipação máxima do LAMP no cruzeiro era de 322 W, acima dos 200 W da perda passiva [F165]. A dissipação das aviônicas do lander no cruzeiro não está no estudo.
 
 ## Orbitador
 
