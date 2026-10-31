@@ -71,5 +71,6 @@
 | P-067 | geometria_dos_passes_de_rele | inclinacao_graus: 30; sois_simulados: 60; passo_s: 30 | graus; sóis; s | NÃO VALIDADA | tools/comunicacao.py (simulação dos passes do orbitador sobre Jezero) |
 | P-068 | volume_de_dados_dos_helicopteros | imagens_por_voo: 200; compressao: nenhuma | imagens; — | NÃO VALIDADA | tools/comunicacao.py (demanda de dados dos helicópteros) |
 | P-069 | escala_do_enlace_direto_maior | ganho: ∝ D²; taxa: ∝ potência de RF; massa_refletor: densidade de área do MRO; gimbal: ∝ D² a partir do MRO | — | NÃO VALIDADA | tools/comunicacao.py (opção (b), enlace direto maior) |
+| P-070 | enlace_direto_minimo_critico | horas_por_sol: 1; categoria_mga: eletronica_0_5kg | h; — | NÃO VALIDADA | config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3) |
 
-Total: 69 premissas, 69 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 70 premissas, 70 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

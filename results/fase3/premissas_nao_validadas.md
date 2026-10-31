@@ -73,5 +73,6 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-067 | geometria_dos_passes_de_rele | inclinacao_graus: 30; sois_simulados: 60; passo_s: 30 | graus; sóis; s | tools/comunicacao.py (simulação dos passes do orbitador sobre Jezero) | sim |
 | P-068 | volume_de_dados_dos_helicopteros | imagens_por_voo: 200; compressao: nenhuma | imagens; — | tools/comunicacao.py (demanda de dados dos helicópteros) | sim |
 | P-069 | escala_do_enlace_direto_maior | ganho: ∝ D²; taxa: ∝ potência de RF; massa_refletor: densidade de área do MRO; gimbal: ∝ D² a partir do MRO | — | tools/comunicacao.py (opção (b), enlace direto maior) | sim |
+| P-070 | enlace_direto_minimo_critico | horas_por_sol: 1; categoria_mga: eletronica_0_5kg | h; — | config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3) | sim |
 
-Total: 69 de 69 premissas com status NÃO VALIDADA; 29 criadas na Fase 3.
+Total: 70 de 70 premissas com status NÃO VALIDADA; 30 criadas na Fase 3.

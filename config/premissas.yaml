@@ -785,3 +785,14 @@ premissas:
       gimbal escalado com D² a partir do MRO; TWTA e conversor do MRO [F173]. Não considera o apontamento de uma antena
       grande a partir da superfície (vento, poeira, gimbal).
     status: NÃO VALIDADA
+  - id: P-070
+    nome: enlace_direto_minimo_critico
+    valor: {horas_por_sol: 1, categoria_mga: eletronica_0_5kg}
+    unidade: h; —
+    uso: config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3)
+    justificativa: >
+      O mínimo crítico (estado, comandos de segurança, confirmação do lançamento do MAV) é atendido pelo requisito de
+      superfície em banda X do MSL: 160 bps na distância máxima com antena de 34 m e comando de emergência pela RLGA
+      [F137]. Uma hora de passe por sol. O conjunto (HGA, gimbal, SSPA, transponder) entra como adição à plataforma do
+      lander, porque o análogo da P-032 não o detalha; margem de crescimento da categoria de eletrônica. Sem fonte própria.
+    status: NÃO VALIDADA

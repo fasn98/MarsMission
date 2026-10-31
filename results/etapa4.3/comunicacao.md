@@ -63,3 +63,19 @@ Referência: [F178] pPDF 26: "passes supported from near MAVEN apoapsis can have
 ### (b) Enlace direto maior (P-069)
 
 Taxa necessária para a demanda total num passe de 8 h: 42 814 bps, 301 vezes o análogo do MSL (24,8 dB). HGA de 4,86 m com 15 W, ou de 1,86 m com o TWTA de 100 W do MRO; massa do conjunto com 100 W de cerca de 29,6 kg, contra 9,4 kg do MSL; 1 376 Wh por passe. Área de operação com esse consumo: 24,5 m², abaixo dos 32,8 m² da linha de base (a área continua dada pela sobrevivência). A escala vale com o mesmo erro de apontamento do MSL (5°); uma HGA desse tamanho tem feixe mais estreito e pede apontamento melhor. Na conjunção, o enlace direto também para.
+
+## Decisão do portão da 4.3: caminhos de comunicação do lander
+
+Helicópteros: envoltória de 983 Mbit/sol (P-068); com a média real do Ingenuity (202 imagens por voo [F179, F186], Navcam sem compressão) 497 Mbit por voo, 994 Mbit/sol com 2 voos (P-054). Lander: 250 Mbit/sol (P-063).
+
+| Caminho | Capacidade (Mbit/sol) | Cobre os helicópteros (média real)? | Cobre lander + helicópteros? |
+| :- | :- | :- | :- |
+| TGO (mínimo) | 2 000 | sim | sim |
+| MRO | 100 a 1 150 | depende | não |
+| reserva própria (relé + DTE mínimo) | 12 a 35 | não | não |
+
+TGO: pelo menos 2 passes por sol [F184] × mais de 1 Gbit por passe [F177] (limite inferior). MRO: faixa do MRO com o MSL [F137].
+
+### Enlace direto mínimo (reserva para o mínimo crítico, P-070)
+
+Requisito: 160 bps na distância máxima (requisito de superfície do MSL [F137]); o análogo dá 142 bps, e a HGA passa a 0,297 m com o SSPA de 15 W. Comando de emergência pela RLGA a 7,8125 bps [F137]. Massa: 12,6 kg básica (HGA, gimbal, SSPA, transponder) + 27,5 % = 16,0 kg. 0,58 Mbit/sol em 1 h; 62,9 Wh/sol; área de operação 19,5 m², abaixo dos 32,8 m² da linha de base. Lander injetado 4 012 → 4 044 kg; margens dos lançadores do lander: Falcon Heavy (recuperação) +17 % → +16 %; Falcon Heavy (descartável) +180 % → +178 %; Vulcan VC2 +8 % → +7 %; Vulcan VC4 +62 % → +60 %; Vulcan VC6 +107 % → +105 % (sensibilidade; a P-017 não muda).

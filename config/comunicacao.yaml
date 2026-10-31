@@ -86,3 +86,20 @@ orbitadores_existentes:   # (a) estado e planos (consulta de 2026-10-31); só fa
      fonte: "[F183]: \"Mars Express operations are currently funded until end of 2026, with extension requested until end of 2029\""}
   - {orbitador: "Mars Telecommunications Orbiter (comercial)", estado: "US$ 700 milhões na PL 119-21, entrega até 31/12/2028; contrato e vencedor não conferidos",
      fonte: "[F185] 139 STAT. 133: \"$700,000,000, to be obligated not later than fiscal year 2026, for the procurement, using a competitively bid, firm fixed-price contract with a United States commercial provider\"; \"which shall be delivered to the Administration not later than December 31, 2028\""}
+
+# ---------------- decisão do portão da 4.3 (Fabio): combinação de caminhos para a comunicação do lander
+caminhos:
+  tgo:   # primário
+    passes_por_sol_min: {valor: 2, fonte: "[F184]: \"TGO provides at least two good communications opportunities per sol\""}
+    mbit_por_passe_min: {valor: 1000, fonte: "[F177] p. 26: \"can therefore return over 1 Gbit during a 15-minute overflight\""}
+  mro:   # primário enquanto disponível
+    mbit_por_sol: {min: 100, max: 1150, fonte: "[F137] p. 112: \"(100 to 1150 Mbits per sol)\" (MRO com o MSL)"}
+helicopteros_ingenuity:   # média real do Ingenuity, ao lado da envoltória da P-068
+  imagens_retornadas: {valor: 14561, fonte: "[F179]: \"A total of 14,561 images have been returned from Ingenuity\""}
+  voos: {valor: 72, fonte: "[F186]: \"performed 72 flights\""}
+dte_minimo:   # reserva: enlace direto para o mínimo crítico (estado, comandos de segurança, confirmação do lançamento do MAV)
+  taxa_requisito_bps: {valor: 160, fonte: "[F137] p. 104: requisito de superfície do MSL, \"Data return from the HGA (160 bps at max range, 34-m BWG station, 5-deg HGA pointing error)\""}
+  uplink_emergencia_bps: {valor: 7.8125, fonte: "[F137] p. 104: \"Emergency command capability via the RLGA (7.8125 bps uplink rate via a 70-m, assuming the Earth is 70 deg off the RLGA boresight)\""}
+  horas_por_sol: {valor: 1, premissa: P-070}
+  sdst_kg: {valor: 3.0, fonte: "[F137] p. 86, Tab. 2-11: \"SDST 1 3.0\""}
+  categoria_mga: {valor: eletronica_0_5kg, premissa: P-070}
