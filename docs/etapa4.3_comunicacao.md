@@ -109,9 +109,9 @@ A simulação considera:
 - 5 W, 0 dBi e 3 dB de margem;
 - 60 sóis.
 
-A fórmula de perda de percurso do [F177] (62 + 20·log10 R) fica uns 22,5 dB abaixo de Friis e não é usada.
+A fórmula de perda de percurso do [F177] (62 + 20·log10 R) fica cerca de 22 dB abaixo de Friis e não é usada.
 
-| Caso | Passes por sol (com enlace) | Duração média | Mbit por passe com enlace (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo |
+| Caso | Passes por sol (com enlace) | Duração média (todos os passes visíveis) | Mbit por passe com enlace (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo |
 | :- | -: | -: | -: | -: | -: | -: |
 | Periapse na latitude do sítio | 1,52 (1,18) | 325 min | 29 / 115 | 34 | 3 % | 62 Wh/sol |
 | Apoapse na latitude do sítio | 1,00 (0,92) | 582 min | 12 / 36 | 11 | 1 % | 68 Wh/sol |
@@ -124,7 +124,7 @@ A fórmula de perda de percurso do [F177] (62 + 20·log10 R) fica uns 22,5 dB ab
   (máximo de 211) e 207 Mbit por sol. A faixa publicada do MRO com o MSL é de 30 a 600 Mbit por passe e de 100 a
   1.150 Mbit por sol [F137].
   - O resultado fica dentro da faixa.
-  - O resultado baixo da opção (c) vem da órbita de encontro, e não de um modelo de enlace pessimista.
+  - O resultado fica no terço inferior da faixa. A queda na órbita de encontro vem sobretudo do alcance.
 - **Prós:** independente de orbitadores de terceiros.
 - **Contras:**
   - cobre 1 % a 3 % da demanda total, ou de 4 % a 14 % só da demanda do lander;

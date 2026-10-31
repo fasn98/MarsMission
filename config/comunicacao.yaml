@@ -37,7 +37,7 @@ uhf:   # relé de proximidade (Electra / Electra-Lite) [F137]
 # ---------------- portão da 4.3: comparação das saídas para a comunicação do lander (pedido do Fabio)
 rele_proprio:   # (c) relé pelo nosso orbitador na órbita de encontro: simulação de passes
   # Perda de espaço livre por Friis: 20 log10(4π R f / c), com c [F31] e a frequência do canal 0 do retorno [F137].
-  # A fórmula de [F177] p. 25, "PL(400 MHz) = 62 + 20 * log10(R(km)) (dB)" (e "89" a 8 GHz), fica ~22,5 dB abaixo de
+  # A fórmula de [F177] p. 25, "PL(400 MHz) = 62 + 20 * log10(R(km)) (dB)" (e "89" a 8 GHz), fica cerca de 22 dB abaixo de
   # Friis nas duas frequências e não é usada (física acima de fonte: CLAUDE.md, regra 1).
   frequencia_mhz: {valor: 401.585625, fonte: "[F137] p. 81: \"Channel 0: 401.585625 MHz\""}
   limiares_dbm:   # receptor Electra do MRO, dados codificados, no conector da antena [F178] pPDF 21, Tab. 5.2-3
