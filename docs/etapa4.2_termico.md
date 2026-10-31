@@ -70,8 +70,8 @@ sobrevivência.
   - essas excursões são "very transient", e a média diária fica poucos graus acima da superfície. A origem é uma comunicação
     pessoal (D. Beaty) [F167, p. 5, Tab. 1];
   - os tubos no depósito podem ser aquecidos repetidamente a até 300 K por anos [F172].
-- **O MAV do SRL não era todo frio:** os estágios sólidos ficavam entre −40 e −20 °C, mas o RCS líquido ficava a +14 °C
-  ou mais, e era ali que ia a maior parte da potência de sobrevivência [F164]. A posição do contêiner em relação a partes
+- **O MAV do SRL não era todo frio:** os estágios sólidos eram mantidos a −40 °C na sobrevivência (AFT de operação de −25 a
+  0 °C, Tab. 1), mas o RCS líquido ficava a +14 °C ou mais, e era ali que ia a maior parte da potência de sobrevivência [F164]. A posição do contêiner em relação a partes
   aquecidas não foi estudada aqui.
 - **É uma escolha de arquitetura, do Fabio** (seção 7). Os prós e contras de cada opção estão lá.
 
@@ -102,8 +102,8 @@ decisão entre rejeição passiva e HRS depende da dissipação das aviônicas**
 ## 7. Para decidir (Fabio)
 1. **Alvo de temperatura do MAV (P-027, mudança de valor-base):**
    - (a) manter −1 °C;
-   - (b) 15 °C, a faixa nominal de sistemas MMH/NTO [F159]: sobrevivência de 2.004 Wh/sol, área de 32,8 m²;
-   - (c) 17 °C, a AFT dos tanques do MER [F160]: 2.042 Wh/sol, 33,4 m².
+   - (b) 15 °C, a faixa nominal de sistemas MMH/NTO [F159]: sobrevivência de 2.004 Wh/sol, 32,8 m² e 278 kg;
+   - (c) 17 °C, a AFT dos tanques do MER [F160]: 2.042 Wh/sol, 33,4 m² e 282 kg.
 2. **Amostras contra o MAV aquecido** (opções sem avaliação de massa; contexto na seção 4):
    - (a) isolar termicamente o contêiner das amostras dentro do MAV, longe das partes aquecidas.
      - Pró: mantém o MAV líquido.
@@ -112,7 +112,7 @@ decisão entre rejeição passiva e HRS depende da dissipação das aviônicas**
      - Pró: usa a exceção do próprio requisito.
      - Contra: exige que a transferência fique no fim da estada, e a fonte estima de +30 a +53 °C nessa fase.
    - (c) rever a escolha do MAV líquido (ADR 0007).
-     - Contra: o MAV do SRL também tinha uma parte líquida a +14 °C [F164], e a troca refaz a Fase 2.
+     - Contra: o MAV do SRL também tinha uma parte líquida a +14 °C [F164], e a troca refaria a Fase 2 (avaliação do agente, sem fonte).
    - (d) registrar o desvio e levá-lo à análise prevista pela fonte para exceções.
      - Pró: as amostras já passam por estimativas de pior caso acima de −20 °C [F167, F172].
      - Contra: o requisito vigente não é atendido.
