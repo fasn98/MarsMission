@@ -639,7 +639,8 @@ premissas:
     uso: tools/energia.py (opção C, carga de sobrevivência na tempestade)
     justificativa: >
       Carga de sobrevivência do lander na tempestade global = aquecimento do MAV (modelo atual) + aquecedores do
-      Spirit no inverno de 2008 (84 Wh/sol [F141]) escalados por (massa da plataforma do lander / 174 kg [F142])^(2/3),
+      Spirit no inverno de 2008 (84 Wh/sol [F141]) mais o calor das 8 RHUs de 1 W da caixa eletrônica do MER [F142],
+      que o lander, sem material nuclear, repõe com aquecedores elétricos, escalados por (massa da plataforma do lander / 174 kg [F142])^(2/3),
       como perda térmica proporcional à área, + a eletrônica mínima do Spirit (140 Wh/sol [F141]) sem escala.
       Pedida pelo Fabio no portão da Etapa 4.1. O Spirit estava em Gusev, no inverno, com aquecedores de instrumento e de
       bateria; o lander é outro veículo, em outra latitude e estação, e a tempestade aquece as noites. Sensibilidade com
@@ -664,5 +665,6 @@ premissas:
     uso: tools/energia.py (atividade e enquadramento no NSPM-20 da alternativa A)
     justificativa: >
       Massa molar do Pu-238 tomada como o número de massa e ano de 365,25 dias para converter a meia-vida de 87,7 anos
-      [F148]. O erro na atividade é muito menor que a distância ao limite do Tier I.
+      [F148]. O erro na atividade é muito menor que a distância ao limite do Tier I. Só a massa de Pu-238 [F135] entra
+      na conta; os outros isótopos do combustível não, o que subestima um pouco a atividade.
     status: NÃO VALIDADA

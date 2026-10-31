@@ -95,6 +95,9 @@ lander:
   sobrevivencia:
     aquecedores_mer_wh_sol: {valor: 84, fonte: "[F141] sóis 1574–1579 (jun./2008): \"Together, the two heaters account for 84 watt-hours or about 37 percent of Spirit's total energy usage\""}
     eletronica_mer_wh_sol: {valor: 140, fonte: "[F141] mesma entrada: \"Everything else, including on-board computers and memories, radios, cameras, sensors and actuators, gets by on about 140 watt-hours\""}
+    # O calor da caixa eletrônica do MER também vinha de RHUs; sem material nuclear, o lander o repõe com aquecedores
+    rhu_mer_quantidade: {valor: 8, fonte: "[F142] p. 45: \"Heat inside the warm electronics box comes from a combination of electrical heaters, eight radioisotope heater units and heat given off by electronics components\""}
+    rhu_w: {valor: 1.0, fonte: "[F142] p. 45: \"Each radioisotope heater unit produces about one watt of heat\""}
     massa_mer_kg: {valor: 174, fonte: "[F142] p. 44: \"Each Mars Exploration Rover is 1.6 meter (5.2 feet) long and weighs 174 kilograms\""}
     expoente_escala: {valor: 0.6667, premissa: P-056}   # aquecedores ∝ massa^(2/3) (área); a eletrônica não escala
     expoente_sensibilidade: {valor: 1.0, premissa: P-056}

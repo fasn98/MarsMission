@@ -139,8 +139,9 @@ def main():
     m_lander = ler("results/etapa2.3/plataformas.yaml")["escolha"]["plataforma_lander_kg"]
 
     def carga_sobrevivencia(expoente):
-        aq = v(sv["aquecedores_mer_wh_sol"]) * (m_lander / v(sv["massa_mer_kg"])) ** expoente
-        return {"expoente": expoente, "aquecedores_lander_wh_sol": aq, "eletronica_wh_sol": v(sv["eletronica_mer_wh_sol"]),
+        rhu = v(sv["rhu_mer_quantidade"]) * v(sv["rhu_w"]) * hsol   # calor das RHUs do MER, reposto por aquecedores
+        aq = (v(sv["aquecedores_mer_wh_sol"]) + rhu) * (m_lander / v(sv["massa_mer_kg"])) ** expoente
+        return {"expoente": expoente, "rhu_mer_wh_sol": rhu, "aquecedores_lander_wh_sol": aq, "eletronica_wh_sol": v(sv["eletronica_mer_wh_sol"]),
                 "mav_wh_sol": mav_wh, "total_wh_sol": mav_wh + aq + v(sv["eletronica_mer_wh_sol"])}
     sob_base, sob_sens = carga_sobrevivencia(v(sv["expoente_escala"])), carga_sobrevivencia(v(sv["expoente_sensibilidade"]))
 
@@ -339,7 +340,8 @@ def escreve_md(o):
     sb = sv["base"]
     md += ["", "### Opção C: solar com sobrevivência (linha de base)", "",
            f"Carga de sobrevivência na tempestade global (P-056): MAV {br(sb['mav_wh_sol'])} Wh/sol + aquecedores do lander "
-           f"{br(sb['aquecedores_lander_wh_sol'])} Wh/sol (84 Wh/sol do Spirit × ({br(sv['plataforma_lander_kg'])} kg / 174 kg)^{br(sb['expoente'], 2)}) "
+           f"{br(sb['aquecedores_lander_wh_sol'])} Wh/sol ((84 Wh/sol de aquecedores do Spirit + {br(sb['rhu_mer_wh_sol'])} Wh/sol das 8 RHUs) × "
+           f"({br(sv['plataforma_lander_kg'])} kg / 174 kg)^{br(sb['expoente'], 2)}) "
            f"+ eletrônica mínima {br(sb['eletronica_wh_sol'])} Wh/sol = {br(sb['total_wh_sol'])} Wh/sol. "
            f"Com escala linear na massa (sensibilidade): {br(sv['sensibilidade']['total_wh_sol'])} Wh/sol.", "",
            f"Painel e bateria para os dois casos (a maior área e a maior bateria; a área sai da {sc['dimensiona_area']}): "
@@ -357,7 +359,7 @@ def escreve_md(o):
            f"contra {br(ab['necessaria_wh_sol'])} Wh/sol necessários ({br(100 * ab['cobertura'])} %); a sobrevivência nessa condição exigiria "
            f"{br(ab['area_necessaria_m2'])} m². Sensibilidade (escala linear): {br(100 * as_['cobertura'])} %, {br(as_['area_necessaria_m2'])} m². "
            f"A duração da fase com τ > {br(la['tau_max_modelo'], 0)} e a ponte pela bateria não foram avaliadas.", "",
-           f"Desfecho do único dado de voo acima de τ = {br(la['tau_max_modelo'], 0)}: {a6['desfecho_opportunity']}."]
+           f"Desfecho do dado de voo usado acima de τ = {br(la['tau_max_modelo'], 0)}: {a6['desfecho_opportunity']}."]
     r = la["mmrtg"]
     s_ = r["sensibilidade_abastecimento"]
     md += ["", "Picos por sol (na bateria das duas opções): " + ", ".join(f"{k} {br(x, 1)} Wh" for k, x in la["picos_wh"].items())

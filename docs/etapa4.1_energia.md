@@ -179,39 +179,44 @@ Com 1.022 W, a 1ª queima da C2 (8 × R-4D-11) passa de 2.000 s. O Fabio pediu a
 simétrico (P-055). Os números abaixo são da pior janela (2031), com 4 queimas e as massas do ponto fixo convergido
 (`results/etapa3.1/queima_finita.md` e `perdas_calculadas.md`):
 
-| Combinação | Motores (kg) | 1ª queima (s) | Propelente da captura (kg) | Perda (m/s) |
+| Combinação | Motores (kg) | 1ª queima (s) | Propelente da captura (kg) | Perda (m/s), 1.022 W |
 | :- | -: | -: | -: | -: |
 | C2: 8 × R-4D-11 | 34,5 | **2.037** (acima de 2.000) | 2.851 | 82 |
 | **C4: 10 × R-4D-11 (proposta)** | 43,1 | **1.605** | 2.813 | 58 |
 | C5: 12 × R-4D-11 | 51,7 | 1.324 | 2.789 | 42 |
 
-A C4 fecha com 395 s de folga e 8,6 kg a mais de motores. A opção (a), aceitar a queima acima de 2.000 s, não foi
-preciso avaliar.
+- As três foram calculadas nas massas do ponto fixo com a C4. A perda de 72,6 m/s do fim da Fase 3 era com a C2 e 510 W.
+- A C4 e a C5 ficam abaixo de 2.000 s.
+- **C5:** a soma de motores e propelente é a menor das três, mas usa 12 motores.
+- **Nenhuma das duas** tem arranjo voado (P-055). A escolha é do Fabio (ADR 0015).
+- A opção (a), aceitar a queima acima de 2.000 s, não foi preciso avaliar.
 
 ### Opção C: sobrevivência do próprio lander e tempestade acima de τ = 6
 - **Aquecedores do lander (P-056):** o análogo é o Spirit no inverno de 2008, com 84 Wh/sol de aquecedores e 140 Wh/sol
   para o resto [F141], num rover de 174 kg [F142].
+  - O calor do MER também vinha de 8 RHUs de cerca de 1 W [F142], 197 Wh/sol. Sem material nuclear, o lander repõe esse
+    calor com aquecedores elétricos.
   - Os aquecedores escalam com a massa da plataforma do lander elevada a 2/3.
-  - Na sobrevivência, o total fica em 1.694 Wh/sol: MAV 1.191, aquecedores 363 e eletrônica 140.
-  - Com escala linear (sensibilidade), 2.086 Wh/sol.
-- **Opção C:** 27,7 m² e 245 kg. A área agora sai da sobrevivência, não da operação normal. Na sensibilidade com escala
-  linear, 34,1 m² e 278 kg.
+  - Na sobrevivência, o total fica em 2.547 Wh/sol: MAV 1.191, aquecedores 1.217 e eletrônica 140.
+  - Com escala linear (sensibilidade), 3.860 Wh/sol.
+- **Opção C:** 41,7 m² e 318 kg. A área agora sai da sobrevivência, não da operação normal. Na sensibilidade com escala
+  linear, 63,2 m² e 431 kg.
 - **Dados de voo na tempestade global de 2018 (Opportunity, [F140]):**
   - 652 Wh com τ = 0,64 (sol 5100);
   - 345 Wh com τ = 2,1 (sol 5106);
-  - cerca de 22 Wh com τ = 10,8 (sol 5111), quando o rover entrou em falha de baixa energia.
-  - Até 20/12/2018 não houve mais sinal.
+  - cerca de 22 Wh com τ = 10,8 (sol 5111): "tripped a low-power fault and gone silent".
+  - Até 20/12/2018, nenhum sinal desde o sol 5111.
 - **Modelo contra o voo:** em τ = 2,1, a razão de energia do modelo é 0,666, contra 0,529 medida (+26 %).
   - O modelo é otimista nesse ponto.
   - A comparação não separa a poeira depositada durante a tempestade, a inclinação do painel nem a geometria.
   - **Não é uma verificação:** fica como comparação com dado publicado, com essas ressalvas.
 - **Acima de τ = 6 (P-057):** a razão medida entre τ = 10,8 e τ = 0,64 é 3,4 %. Aplicada ao painel da opção C, no pior
   sol da estada:
-  - o painel dá 254 Wh/sol contra 1.906 Wh/sol necessários, ou 13 %;
-  - a sobrevivência exigiria 208 m²;
-  - na sensibilidade, 13 % e 256 m².
+  - o painel dá 382 Wh/sol contra 2.865 Wh/sol necessários, ou 13 %;
+  - a sobrevivência exigiria 313 m²;
+  - na sensibilidade, 13 % e 474 m².
 - **Limite declarado:** os dados publicados não bastam para afirmar a sobrevivência da opção C acima de τ = 6.
-  - O único dado de voo nessa condição termina em perda do veículo.
+  - O dado de voo usado, o único que a pesquisa achou acima de τ = 6, termina com o rover sem sinal até 20/12/2018.
   - A duração da fase com τ > 6 e a ponte pela bateria não foram avaliadas.
   - É limitação e RISCO (ADR 0015).
 
@@ -219,7 +224,7 @@ Tabela completa, com bases iguais (`results/etapa4.1/energia.md`):
 
 | Opção | Massa | Área | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |
 | :- | -: | -: | :- | :- | :- |
-| **C. Solar com sobrevivência (linha de base)** | 245 kg | 27,7 m² | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
+| **C. Solar com sobrevivência (linha de base)** | 318 kg | 41,7 m² | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
 | A. 2 × MMRTG (alternativa condicionada) | 118 kg | — | 6.956 g; condicionada à disponibilidade (ADR 0016); acima do Tier I do NSPM-20 | não depende de τ | potência no fim: 90,8 % da inicial |
 | B. Solar, céu claro | 194 kg | 18,0 m² | — | não atravessa: com τ = 6, a energia cai a 23,5 % da de céu claro | poeira: fator 0,324 |
 | D. Solar operando na tempestade | 502 kg | 76,8 m² | — | opera até τ = 6; acima disso, ver a razão do Opportunity | poeira: fator 0,324 |

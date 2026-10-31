@@ -17,15 +17,15 @@ O modelo de insolação vale até τ = 6; acima disso usa-se esse limite, e o re
 | claro_jezero | 0,4 | 0,4 | operação normal | 4 691 | 18,0 | 95 | 99 | 194 | 58° |
 | regional_jezero | 2,0 | 2,0 | operação normal | 4 691 | 28,7 | 151 | 99 | 250 | 58° |
 | global_2018 | 8,5 | 6,0 | operação normal | 4 691 | 76,8 | 404 | 99 | 502 | 58° |
-| global_2018 | 8,5 | 6,0 | sobrevivência: MAV + aquecedores e eletrônica do lander (P-056) | 1 694 | 27,7 | 146 | 35 | 180 | 58° |
+| global_2018 | 8,5 | 6,0 | sobrevivência: MAV + aquecedores e eletrônica do lander (P-056) | 2 547 | 41,7 | 219 | 52 | 271 | 58° |
 | claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 4 691 | 7,1 | 38 | 99 | 136 | 276° |
-| global_2018 | 8,5 | 6,0 | sobrevivência, aquecedores com escala linear na massa (sensibilidade da P-056) | 2 086 | 34,1 | 180 | 43 | 222 | 58° |
+| global_2018 | 8,5 | 6,0 | sobrevivência, aquecedores com escala linear na massa (sensibilidade da P-056) | 3 860 | 63,2 | 332 | 79 | 411 | 58° |
 
 ### Opção C: solar com sobrevivência (linha de base)
 
-Carga de sobrevivência na tempestade global (P-056): MAV 1 191 Wh/sol + aquecedores do lander 363 Wh/sol (84 Wh/sol do Spirit × (1 565 kg / 174 kg)^0,67) + eletrônica mínima 140 Wh/sol = 1 694 Wh/sol. Com escala linear na massa (sensibilidade): 2 086 Wh/sol.
+Carga de sobrevivência na tempestade global (P-056): MAV 1 191 Wh/sol + aquecedores do lander 1 217 Wh/sol ((84 Wh/sol de aquecedores do Spirit + 197 Wh/sol das 8 RHUs) × (1 565 kg / 174 kg)^0,67) + eletrônica mínima 140 Wh/sol = 2 547 Wh/sol. Com escala linear na massa (sensibilidade): 3 860 Wh/sol.
 
-Painel e bateria para os dois casos (a maior área e a maior bateria; a área sai da sobrevivência): 27,7 m², painel 146 kg, bateria 99 kg, total 245 kg. Sensibilidade com escala linear: 34,1 m², total 278 kg (área da sobrevivência).
+Painel e bateria para os dois casos (a maior área e a maior bateria; a área sai da sobrevivência): 41,7 m², painel 219 kg, bateria 99 kg, total 318 kg. Sensibilidade com escala linear: 63,2 m², total 431 kg (área da sobrevivência).
 
 Comparação do modelo com o Opportunity na tempestade de 2018 [F140] (razão de energia contra o sol de τ = 0,64; latitude do sítio, painel horizontal, poeira constante):
 
@@ -34,9 +34,9 @@ Comparação do modelo com o Opportunity na tempestade de 2018 [F140] (razão de
 | 5106 | 2018-06-04 | 2,1 | 0,529 | 0,666 | 25,8 % |
 | 5111 | 2018-06-10 | 10,8 | 0,034 | fora do modelo (τ > 6) | — |
 
-Acima de τ = 6 (P-057): com τ = 10,8 o Opportunity produziu 3,4 % da energia de τ = 0,64. Aplicada ao painel da opção C no pior sol da estada: 254 Wh/sol contra 1 906 Wh/sol necessários (13 %); a sobrevivência nessa condição exigiria 208 m². Sensibilidade (escala linear): 13 %, 256 m². A duração da fase com τ > 6 e a ponte pela bateria não foram avaliadas.
+Acima de τ = 6 (P-057): com τ = 10,8 o Opportunity produziu 3,4 % da energia de τ = 0,64. Aplicada ao painel da opção C no pior sol da estada: 382 Wh/sol contra 2 865 Wh/sol necessários (13 %); a sobrevivência nessa condição exigiria 313 m². Sensibilidade (escala linear): 13 %, 474 m². A duração da fase com τ > 6 e a ponte pela bateria não foram avaliadas.
 
-Desfecho do único dado de voo acima de τ = 6: [F140] sóis 5292–5299 (13–20/12/2018): "No signal from Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely experienced a low-power fault, a mission clock fault and an up-loss timer fault".
+Desfecho do dado de voo usado acima de τ = 6: [F140] sóis 5292–5299 (13–20/12/2018): "No signal from Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely experienced a low-power fault, a mission clock fault and an up-loss timer fault".
 
 Picos por sol (na bateria das duas opções): braco 20,0 Wh, recarga_helicopteros 17,5 Wh, transmissoes_uhf 34,5 Wh; total 72,0 Wh.
 
@@ -59,7 +59,7 @@ Disponibilidade de Pu-238:
 
 | Opção | Massa (kg) | Área (m²) | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |
 | :- | -: | -: | :- | :- | :- |
-| **C. Solar com sobrevivência (linha de base)** | 245 | 27,7 | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
+| **C. Solar com sobrevivência (linha de base)** | 318 | 41,7 | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
 | A. MMRTG × 2 (alternativa condicionada) | 118 | — | 6 956 g; condicionada à disponibilidade (fatos acima); acima do Tier I do NSPM-20 | não depende de τ | potência no fim 90,8 % da inicial |
 | B. Solar, céu claro | 194 | 18,0 | — | não atravessa: com τ = 6 a energia cai a 23,5 % da de céu claro | poeira: fator 0,324 |
 | D. Solar operando na tempestade | 502 | 76,8 | — | opera até τ = 6; acima, ver a razão do Opportunity | poeira: fator 0,324 |

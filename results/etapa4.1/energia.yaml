@@ -63,11 +63,11 @@ lander:
     carga: operação normal
   - tau: 8.5
     tau_usado: 6.0
-    demanda_wh_sol: 1693.8319251194762
-    area_m2: 27.724806703530994
-    painel_kg: 145.81515525638332
-    bateria_kg: 34.58240180452264
-    total_kg: 180.39755706090597
+    demanda_wh_sol: 2547.056147585946
+    area_m2: 41.69046427075676
+    painel_kg: 219.26578552401133
+    bateria_kg: 52.0023963465464
+    total_kg: 271.2681818705577
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -87,11 +87,11 @@ lander:
     carga: operação normal, sem poeira acumulada (sensibilidade)
   - tau: 8.5
     tau_usado: 6.0
-    demanda_wh_sol: 2085.9894167352954
-    area_m2: 34.143678901623055
-    painel_kg: 179.57441122322376
-    bateria_kg: 42.58895059167896
-    total_kg: 222.16336181490271
+    demanda_wh_sol: 3860.2123150111574
+    area_m2: 63.18433292059082
+    painel_kg: 332.3101009542323
+    bateria_kg: 78.81266809814447
+    total_kg: 411.1227690523768
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -101,33 +101,35 @@ lander:
   solar_com_sobrevivencia:
     cenario: claro_jezero + global_2018
     carga: operação normal com céu claro; sobrevivência na tempestade global
-    area_m2: 27.724806703530994
-    painel_kg: 145.81515525638332
+    area_m2: 41.69046427075676
+    painel_kg: 219.26578552401133
     bateria_kg: 98.70503895374793
-    total_kg: 244.52019421013125
+    total_kg: 317.97082447775927
     dimensiona_area: sobrevivência
   solar_com_sobrevivencia_sensibilidade:
     cenario: claro_jezero + global_2018
     carga: operação normal com céu claro; sobrevivência na tempestade global
-    area_m2: 34.143678901623055
-    painel_kg: 179.57441122322376
+    area_m2: 63.18433292059082
+    painel_kg: 332.3101009542323
     bateria_kg: 98.70503895374793
-    total_kg: 278.2794501769717
+    total_kg: 431.01513990798026
     dimensiona_area: sobrevivência
   sobrevivencia:
     plataforma_lander_kg: 1564.875
     base:
       expoente: 0.6667
-      aquecedores_lander_wh_sol: 363.2994049359048
+      rhu_mer_wh_sol: 197.2776
+      aquecedores_lander_wh_sol: 1216.5236274023744
       eletronica_wh_sol: 140.0
       mav_wh_sol: 1190.5325201835713
-      total_wh_sol: 1693.8319251194762
+      total_wh_sol: 2547.056147585946
     sensibilidade:
       expoente: 1.0
-      aquecedores_lander_wh_sol: 755.4568965517242
+      rhu_mer_wh_sol: 197.2776
+      aquecedores_lander_wh_sol: 2529.679794827586
       eletronica_wh_sol: 140.0
       mav_wh_sol: 1190.5325201835713
-      total_wh_sol: 2085.9894167352954
+      total_wh_sol: 3860.2123150111574
   comparacao_opportunity_2018:
   - sol: 5106
     data: '2018-06-04'
@@ -147,15 +149,15 @@ lander:
     razao_medida: 0.03374233128834356
     energia_por_m2_referencia_wh: 271.5109781014671
     base:
-      energia_disponivel_wh_sol: 253.99841485658874
-      necessaria_wh_sol: 1905.5609157594108
-      cobertura: 0.1332932538424595
-      area_necessaria_m2: 207.99857385355142
+      energia_disponivel_wh_sol: 381.9435768350669
+      necessaria_wh_sol: 2865.438166034189
+      cobertura: 0.13329325384245955
+      area_necessaria_m2: 312.7725002499458
     sensibilidade:
-      energia_disponivel_wh_sol: 312.80435644227947
-      necessaria_wh_sol: 2346.738093827207
-      cobertura: 0.1332932538424595
-      area_necessaria_m2: 256.15459085407105
+      energia_disponivel_wh_sol: 578.857792489392
+      necessaria_wh_sol: 4342.738854387552
+      cobertura: 0.13329325384245955
+      area_necessaria_m2: 474.0249870054859
     opportunity_wh_sol: 22
     desfecho_opportunity: '[F140] sóis 5292–5299 (13–20/12/2018): "No signal from
       Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely

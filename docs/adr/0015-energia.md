@@ -20,7 +20,8 @@ relaxar esse limite e pediu a avaliação de mais motores em arranjo simétrico.
    - O painel e a bateria servem a dois casos: operação normal com céu claro e sobrevivência na tempestade global. Fica
      a maior área e a maior bateria dos dois.
    - Na sobrevivência entram o aquecimento do MAV, os aquecedores do próprio lander e uma eletrônica mínima (P-056,
-     análogo do Spirit no inverno de 2008 [F141]).
+     análogo do Spirit no inverno de 2008 [F141]). O calor das 8 RHUs do MER [F142] entra como aquecimento elétrico,
+     porque a linha de base não leva material nuclear.
 2. **Alternativa A (2 × MMRTG): condicionada à disponibilidade de Pu-238** (ADR 0016).
 3. **Carga do orbitador: 1.022 W por modo (P-053) é o novo valor-base da P-028**, no lugar de 510 W.
    - Com o Vulcan VC6 a poucos pontos percentuais de margem, o orbitador depende na prática do Falcon Heavy
@@ -29,37 +30,48 @@ relaxar esse limite e pediu a avaliação de mais motores em arranjo simétrico.
 4. **Premissas P-050 a P-054:** aprovadas, NÃO VALIDADAS. **P-056 a P-058:** novas, NÃO VALIDADAS.
 5. **Proposta, pendente:** captura com **C4, 10 × R-4D-11** em arranjo simétrico (P-055), no lugar da C2.
 
-## Números (de `results/`)
-- **Captura** (`results/etapa3.1/queima_finita.md` e `perdas_calculadas.md`): pior janela (2031), 4 queimas, massas
-  do ponto fixo convergido.
-  - 1ª queima: C2, 2.037 s, acima de 2.000 s; C4, 1.605 s; C5 (12 × R-4D-11), 1.324 s.
-  - Massa dos motores: C2, 34,5 kg; C4, 43,1 kg; C5, 51,7 kg.
-  - Propelente da captura: C2, 2.851 kg; C4, 2.813 kg.
-  - Perda de captura do ponto fixo: 72,6 m/s com a C2 e 510 W; 57,6 m/s com a C4 e 1.022 W.
-- **Orbitador** (`results/etapa2.3/plataformas.md`, `results/etapa2.4/lancamento.md`):
-  - plataforma: 496,5 kg passa a 614,0 kg (P-016);
+## Números
+- **Captura** (`results/etapa3.1/queima_finita.md`): pior janela (2031), 4 queimas. As três combinações foram calculadas
+  nas massas do ponto fixo convergido com a C4.
+
+| Combinação | Motores (kg) | 1ª queima (s) | Propelente da captura (kg) |
+| :- | -: | -: | -: |
+| C2: 8 × R-4D-11 | 34,5 | 2.037 (acima do limite de 2.000) | 2.851 |
+| C4: 10 × R-4D-11 | 43,1 | 1.605 | 2.813 |
+| C5: 12 × R-4D-11 | 51,7 | 1.324 | 2.789 |
+
+- **Antes e depois** (antes: fim da Fase 3, `docs/fase3_relatorio.md`, com 510 W e C2; depois: `results/` atuais, com
+  1.022 W e C4):
+  - perda de captura do ponto fixo: 72,6 m/s passa a 57,6 m/s (`results/etapa3.1/perdas_calculadas.md`);
+  - plataforma do orbitador: 496,5 kg passa a 614,0 kg (P-016, `results/etapa2.3/plataformas.md`);
   - apoapse de encontro: 24.992 km passa a 25.952 km;
-  - orbitador injetado: 7.205 kg passa a 7.796 kg;
+  - orbitador injetado: 7.205 kg passa a 7.796 kg (`results/etapa2.4/lancamento.md`);
   - margens na pior janela: Falcon Heavy descartável +56 % passa a +44 %; Vulcan VC6 +15 % passa a +6 %.
+  - A linha "Anterior (510 W)" de `results/etapa4.1/energia.md` é outra base: é uma sensibilidade com 510 W, mas com as
+    perdas e o apoapse atuais.
 - **Lander, opção C** (`results/etapa4.1/energia.md`):
-  - massa: 245 kg;
-  - área: 27,7 m², dimensionada pela sobrevivência;
-  - carga de sobrevivência: 1.694 Wh/sol;
-  - sensibilidade com a escala linear da P-056: 278 kg.
+  - massa: 318 kg;
+  - área: 41,7 m², dimensionada pela sobrevivência;
+  - carga de sobrevivência: 2.547 Wh/sol;
+  - sensibilidade com a escala linear da P-056: 431 kg.
 
 ## Motivos
 - **Solar como base:** a disponibilidade de Pu-238 para duas MMRTG não está garantida pelas fontes oficiais (ADR 0016).
-- **C4 em vez de relaxar o limite:** mudar a regra no momento em que ela é violada não é aceitável (Fabio). A C4 traz
-  a 1ª queima abaixo de 2.000 s, com 395 s de folga, por 8,6 kg a mais de motores. Parte disso volta em propelente,
-  porque a perda é menor.
-- **C4 em vez de C5:** a C4 já fecha com folga; a C5 custa mais 8,6 kg.
+- **Mais motores em vez de relaxar o limite:** mudar a regra no momento em que ela é violada não é aceitável (Fabio).
+- **C4 e C5, lado a lado (decisão do Fabio):**
+  - **C4:** menos motores (10) e uma 1ª queima de 1.605 s, abaixo de 2.000 s.
+  - **C5:** a 1ª queima é mais curta (1.324 s). Pela tabela, a soma de motores e propelente da captura é a menor das
+    três, porque a redução do propelente supera o acréscimo de motores.
+  - **Contra a C5:** 12 motores, mais distante dos 8 do arranjo voado do Orion ESM [F107].
+  - **As duas:** sem arranjo voado (P-055).
+  - O config e os `results/` estão com a C4. Se a escolha for a C5, tudo é regenerado.
 
 ## Consequências
 - **Tempestade acima de τ = 6:** a opção C não cobre a sobrevivência (P-057). Com a razão medida pelo Opportunity em
   τ = 10,8 [F140], o painel da opção C produz 13 % da energia de sobrevivência no pior sol da estada.
-  - A sobrevivência nessa condição exigiria 208 m².
-  - O único dado de voo nessa condição é o próprio Opportunity: ele entrou em falha de baixa energia e não foi mais
-    ouvido [F140].
+  - A sobrevivência nessa condição exigiria 313 m².
+  - O dado de voo usado é o do próprio Opportunity: ele "tripped a low-power fault and gone silent", e até 20/12/2018
+    não houve sinal [F140]. A pesquisa não achou outro dado publicado de energia acima de τ = 6.
   - A duração da fase com τ > 6 e a ponte pela bateria não foram avaliadas.
   - **Isso fica registrado como limitação e como RISCO.**
 - **Modelo de insolação contra o Opportunity em τ = 2,1:** o modelo dá uma razão de energia 26 % maior que a medida.

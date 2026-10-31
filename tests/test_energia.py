@@ -81,7 +81,7 @@ def test_sobrevivencia_da_opcao_c():
     """Carga de sobrevivência = MAV + aquecedores escalados (P-056) + eletrônica; a opção C cobre os dois casos."""
     r = ler("results/etapa4.1/energia.yaml")["lander"]
     sv, sb = C["lander"]["sobrevivencia"], r["sobrevivencia"]["base"]
-    aq = v(sv["aquecedores_mer_wh_sol"]) * (r["sobrevivencia"]["plataforma_lander_kg"] / v(sv["massa_mer_kg"])) ** v(sv["expoente_escala"])
+    aq = (v(sv["aquecedores_mer_wh_sol"]) + v(sv["rhu_mer_quantidade"]) * v(sv["rhu_w"]) * v(ler("config/plataformas.yaml")["lander"]["energia"]["duracao_sol_h"])) * (r["sobrevivencia"]["plataforma_lander_kg"] / v(sv["massa_mer_kg"])) ** v(sv["expoente_escala"])
     assert sb["aquecedores_lander_wh_sol"] == pytest.approx(aq, rel=1e-12)
     assert sb["total_wh_sol"] == pytest.approx(sb["mav_wh_sol"] + aq + v(sv["eletronica_mer_wh_sol"]), rel=1e-12)
     c = r["solar_com_sobrevivencia"]
