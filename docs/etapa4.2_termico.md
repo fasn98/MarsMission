@@ -148,7 +148,8 @@ Decisões do Fabio. **Números vigentes:** `results/etapa4.2/termico.md` e `resu
 2. **Amostras:** (b) transferência tardia para o MAV, tratada como transiente (+30 °C [F167]), alinhada à operação curta
    de superfície da Etapa 4.4.
    - **Registro (d), faixas de temperatura máxima estimadas no pior caso** [F167, p. 5, Tab. 1]. Os dois primeiros
-     períodos ficam na maior parte abaixo de −20 °C, mas passam dele no topo da faixa:
+     períodos vêm antes da missão; os valores são máximas de pior caso, e a legenda diz que "the daily mean is expected to
+     be only a few °C above the temperature of the martian surface":
      - antes da coleta, éons, de −20 a +10 °C;
      - no Perseverance, anos, de −65 a +10 °C;
      - no depósito, anos, de +5 a +53 °C;
