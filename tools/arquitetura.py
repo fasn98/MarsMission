@@ -123,6 +123,13 @@ def main():
         n3 = lambda y: f"{y:.3f}".replace(".", ",")  # noqa: E731
         caso(f"ε do MAV {n3(_v(x))} ({rot}) em vez de {n3(_v(fe))}", x.get("premissa", "—"), eps_mav=_v(x))
 
+    # dependência de lançador: os escolhidos com margem ≥ 0 na base e em todos os casos da sensibilidade
+    dependencia = {}
+    for veic in ("orbitador", "lander"):
+        nomes = lcfg["escolha"][veic]
+        robustos = [n for n in nomes if all(c["margens"][veic][n] is not None and c["margens"][veic][n] >= 0 for c in casos)]
+        perde = {n: [c["caso"] for c in casos if c["margens"][veic][n] is None or c["margens"][veic][n] < 0] for n in nomes if n not in robustos}
+        dependencia[veic] = {"positivos_em_todos_os_casos": robustos, "casos_com_margem_negativa": perde}
     out = {"gerado_por": "tools/arquitetura.py", "missao_referencia": ref,
            "orbita_encontro_km": [pl["orbita_encontro"]["periapse_alt_km"], pl["orbita_encontro"]["apoapse_regra_5pct_km"]],
            "envelope_dv_km_s": ms["envelope_dimensionamento"]["dv_total_km_s"],
@@ -132,7 +139,7 @@ def main():
                       "mav": {"opcao": op_mav, "fracao_estrutural": _v(mcfg["opcoes"][op_mav]["fracao_estrutural"]),
                               "dv_com_margem_km_s": sum(e["dv_km_s"] for e in mav_est), "estagios": mav_est}},
            "lancadores": {"orbitador": lcfg["escolha"]["orbitador"], "lander": lcfg["escolha"]["lander"], "margens_base": base_m},
-           "lancamentos": 2, "cronograma": crono, "sensibilidade": casos}
+           "lancamentos": 2, "cronograma": crono, "sensibilidade": casos, "dependencia_de_lancador": dependencia}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "arquitetura.yaml").write_text(yaml.safe_dump(dm._nativo(out), sort_keys=False, allow_unicode=True), encoding="utf-8")
 
@@ -167,6 +174,10 @@ def main():
         md.append(f"| {c['caso']} | {c['premissa']} | {br(c['orbitador_injetado_kg'])} | {br(c['lander_injetado_kg'])} | "
                   + " | ".join(pc(c["margens"]["orbitador"][n]) for n in lcfg["escolha"]["orbitador"]) + " | "
                   + " | ".join(pc(c["margens"]["lander"][n]) for n in lcfg["escolha"]["lander"]) + " |")
+    md += ["", "## Dependência de lançador (escolhidos com margem ≥ 0 na base e em todos os casos da sensibilidade)", ""]
+    for veic, d in dependencia.items():
+        md.append(f"- **{veic}:** " + (", ".join(d["positivos_em_todos_os_casos"]) or "nenhum") + "."
+                  + "".join(f" {n} fica negativo em: {'; '.join(cs)}." for n, cs in d["casos_com_margem_negativa"].items()))
     (SAIDA / "arquitetura.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

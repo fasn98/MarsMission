@@ -90,3 +90,33 @@ def test_sobrevivencia_da_opcao_c():
     pts = {x["sol"]: x["wh"] for x in C["lander"]["tempestade_2018_opportunity"]["pontos"]}
     assert a6["razao_medida"] == pytest.approx(pts[5111] / pts[5100], rel=1e-12)   # [F140]: τ = 10,8 sobre τ = 0,64
     assert a6["base"]["cobertura"] == pytest.approx(a6["base"]["energia_disponivel_wh_sol"] / a6["base"]["necessaria_wh_sol"], rel=1e-12)
+
+
+def test_variante_rhu_e_potencia_especifica():
+    """Potência específica do Pu-238 pela física confere com a da MMRTG publicada [F135]; RHUs em Tier I (NSPM-20)."""
+    r = ler("results/etapa4.1/energia.yaml")["lander"]
+    vr = r["variante_rhu"]
+    tol = next(p for p in ler("config/premissas.yaml")["premissas"] if p["id"] == "P-060")["valor"]
+    assert abs(vr["diferenca_relativa_potencia_especifica"]) <= tol   # P-060: a energia do alfa [F148] tem 2 algarismos
+    assert vr["pu238_g"] == pytest.approx(vr["rhu_quantidade"] * vr["rhu_w_cada"] / vr["potencia_especifica_w_g"], rel=1e-12)
+    assert vr["rhu_quantidade"] >= vr["sobrevivencia"]["rhu_lander_w"] / vr["rhu_w_cada"]
+    assert vr["sobrevivencia"]["total_wh_sol"] < r["sobrevivencia"]["base"]["total_wh_sol"]
+    assert vr["nspm20"]["multiplo_a2"] <= v(C["lander"]["pu238"]["tier_i_max_a2"])
+
+
+def test_sensibilidade_do_fator_do_opportunity():
+    r = ler("results/etapa4.1/energia.yaml")["lander"]
+    s = r["sensibilidade_fator_opportunity"]
+    c = next(x for x in r["comparacao_opportunity_2018"] if x["razao_modelo"] is not None)
+    assert s["fator"] == pytest.approx(c["razao_modelo"] / c["razao_medida"], rel=1e-12) and s["fator"] > 1
+    for x in s["cenarios"]:
+        assert x["area_com_fator_m2"] == pytest.approx(x["area_m2"] * s["fator"], rel=1e-9)
+
+
+def test_tempestade_global_na_estada():
+    r = ler("results/etapa4.1/energia.yaml")["lander"]["tempestade_global_na_estada"]
+    tg = C["lander"]["tempestades_globais"]
+    assert r["inicios_catalogo"] == len(tg["inicios"])
+    assert r["inicios_dentro_da_estada"] + len(r["inicios_antes_da_chegada_na_estacao"]) <= r["inicios_catalogo"]
+    assert 0 < r["fracao_da_estacao_dentro_da_estada"] <= 1
+    assert r["probabilidade_por_ano_marciano"] == v(tg["probabilidade_por_ano_marciano"])

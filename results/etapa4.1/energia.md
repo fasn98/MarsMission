@@ -38,6 +38,43 @@ Acima de τ = 6 (P-057): com τ = 10,8 o Opportunity produziu 3,4 % da energia d
 
 Desfecho do dado de voo usado acima de τ = 6: [F140] sóis 5292–5299 (13–20/12/2018): "No signal from Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely experienced a low-power fault, a mission clock fault and an up-loss timer fault".
 
+### Variante C + RHU
+
+RHUs no lander no lugar dos aquecedores que repõem o calor das RHUs do MER: 35 RHUs de 1,0 W (34,6 W, mesma escala da P-056). Potência específica do Pu-238: 0,568 W/g pela física; 0,568 W/g pela MMRTG (potência térmica / massa de Pu-238 [F135]), diferença 0,0 %. Pu-238: 61,6 g; atividade 39,1 TBq = 39 056 A2 (0,391 do limite do Tier I): Tier I.
+
+Sobrevivência: 1 694 Wh/sol (redução de 853 Wh/sol). Opção C + RHU: 27,7 m², total 245 kg (área da sobrevivência); redução de 14,0 m² e 73 kg. Com τ = 10,8 (P-057): 13 % da sobrevivência, 208 m² necessários.
+
+### Sensibilidade ao modelo otimista (P-059): energia na tempestade ÷ 1,258 (razão do modelo / razão medida pelo Opportunity em τ = 2,1)
+
+| Cenário | τ | Área (m²) | Área com o fator (m²) | Total (kg) | Total com o fator (kg) |
+| :- | -: | -: | -: | -: | -: |
+| regional_jezero | 2,0 | 28,7 | 36,2 | 250 | 289 |
+| global_2018 | 8,5 | 76,8 | 96,6 | 502 | 607 |
+| sobrevivência (C) | 8,5 | 41,7 | 52,5 | 271 | 328 |
+| sobrevivência com RHUs | 8,5 | 27,7 | 34,9 | 180 | 218 |
+
+Opção C com o fator: 52,5 m², 375 kg; C + RHU com o fator: 34,9 m², 282 kg.
+
+Potência por RHU (o Pu-238 segue o calor; o número de unidades, a potência de cada):
+
+| Potência por unidade | RHUs | Pu-238 (g) | Múltiplo do A2 |
+| :- | -: | -: | -: |
+| 1,0 W (MER, base) | 35 | 61,6 | 39 056 |
+| 0,8 W (inventario) | 44 | 62,0 | 39 280 |
+| 1,1 W (producao_nova) | 32 | 62,0 | 39 280 |
+
+Disponibilidade de RHUs:
+
+- [F153] p. 9 do PDF: "Current Cassini-era LWRHUs available (~.8 Wth) • DOE reconstituting approximately 1 Wth LWRHU production capability • Capability completed at ORNL • Capability at INL and LANL to be completed by 2026 • Dedicated run is planned for 2027"
+- [F155] p. 1: "As of September 2014, the average thermal power of the RHUs in the DOE's inventory was approximately 0.90 watts each; this thermal power will continue to decrease by about one-hundreth of a watt per year"
+- [F144] p. PS-102: "offering up to two MMRTGs and up to 20 Light Weight Radioisotope Heating Units (LWRHU)" (AO do New Frontiers)
+- [F144] p. PS-103: "NASA will support DoE Pu-238 constant rate production (CRP) efforts, as well as production of LWRHUs to enable the Rosalind Franklin mission"
+- [F156] (08/10/2026): Dragonfly "will rely on a Multi‑Mission Radioisotope Thermoelectric Generator and 24 Light Weight Radioisotope Heater Units"; Rosalind Franklin "by providing 24 similar heater units"
+
+### Tempestade global na estada
+
+Estada de Ls 190° a 58°; estação de início das tempestades globais observadas: Ls 185° a 315° [F149]; 96 % dessa estação fica dentro da estada. Inícios do catálogo dentro da estada: 8 de 10; antes da chegada, ainda na estação (a tempestade estaria em curso na chegada): 2001, 2018. Probabilidade de tempestade global por ano marciano: 25 % [F149] (P-061). [F134] p. 71: "Global dust storms typically occur every few Mars years (MY) and persist for weeks to months".
+
 Picos por sol (na bateria das duas opções): braco 20,0 Wh, recarga_helicopteros 17,5 Wh, transmissoes_uhf 34,5 Wh; total 72,0 Wh.
 
 ### Alternativa A: MMRTG (condicionada à disponibilidade de Pu-238)

@@ -101,6 +101,36 @@ lander:
     massa_mer_kg: {valor: 174, fonte: "[F142] p. 44: \"Each Mars Exploration Rover is 1.6 meter (5.2 feet) long and weighs 174 kilograms\""}
     expoente_escala: {valor: 0.6667, premissa: P-056}   # aquecedores ∝ massa^(2/3) (área); a eletrônica não escala
     expoente_sensibilidade: {valor: 1.0, premissa: P-056}
+  # Variante C + RHU (portão da 4.1): Pu-238 das RHUs pela potência térmica e pela potência específica do Pu-238
+  rhu:
+    # Q do decaimento alfa (inclui o recuo do U-234; tudo vira calor na pastilha). O [F148] dá "5.6 MeV".
+    energia_alfa_mev: {valor: 5.5932729, fonte: "[F154] IAEA LiveChart (ENSDF), Pu-238, ground_states: \"qa\" 5593.2729 keV, incerteza 0.1927"}
+    potencia_variantes_w:   # sensibilidade da potência por unidade; a base é a do MER (rhu_w)
+      inventario: {valor: 0.8, fonte: "[F153] p. 9 do PDF: \"Current Cassini-era LWRHUs available (~.8 Wth)\""}
+      producao_nova: {valor: 1.1, fonte: "[F152] p. 5 do PDF, Tab. 1: \"Thermal output (BOM) 1.1 ± 0.03 watts\""}
+    disponibilidade:
+      - "[F153] p. 9 do PDF: \"Current Cassini-era LWRHUs available (~.8 Wth) • DOE reconstituting approximately 1 Wth LWRHU production capability • Capability completed at ORNL • Capability at INL and LANL to be completed by 2026 • Dedicated run is planned for 2027\""
+      - "[F155] p. 1: \"As of September 2014, the average thermal power of the RHUs in the DOE's inventory was approximately 0.90 watts each; this thermal power will continue to decrease by about one-hundreth of a watt per year\""
+      - "[F144] p. PS-102: \"offering up to two MMRTGs and up to 20 Light Weight Radioisotope Heating Units (LWRHU)\" (AO do New Frontiers)"
+      - "[F144] p. PS-103: \"NASA will support DoE Pu-238 constant rate production (CRP) efforts, as well as production of LWRHUs to enable the Rosalind Franklin mission\""
+      - "[F156] (08/10/2026): Dragonfly \"will rely on a Multi‑Mission Radioisotope Thermoelectric Generator and 24 Light Weight Radioisotope Heater Units\"; Rosalind Franklin \"by providing 24 similar heater units\""
+    carga_elementar_c: {valor: 1.602176634e-19, fonte: "[F31] p. 19 do PDF: \"the elementary charge e is 1.602 176 634 × 10−19 C\""}
+  # Frequência e estação das tempestades globais (decisão do Fabio no portão da 4.1: a probabilidade do risco acima de τ = 6)
+  tempestades_globais:
+    probabilidade_por_ano_marciano: {valor: 0.25, fonte: "[F149] p. 3: \"the occurrence of global storms is stochastic with the probability for a global storm being roughly 25% for any given Mars Year\""}
+    estacao_inicio_ls: {valor: [185, 315], fonte: "[F149] p. 3: \"every observed global storm has occurred during the perihelion season within the range of seasonal dates Ls=185° to 315°\""}
+    duracao: "[F134] p. 71: \"Global dust storms typically occur every few Mars years (MY) and persist for weeks to months\""
+    inicios:   # Ls de início; [F150] Tab. 1 (preprint), p. 8 do PDF; 2018 por [F151]
+      - {ano: 1924, my: -16, ls: 310.0, fonte: "[F150]"}
+      - {ano: 1956, my: 1, ls: 249.0, fonte: "[F150]"}
+      - {ano: 1971, my: 9, ls: 260.0, fonte: "[F150]"}
+      - {ano: 1973, my: 10, ls: 300.0, fonte: "[F150]"}
+      - {ano: 1977, my: 12, ls: 204.0, fonte: "[F150] (só a 1ª de 1977; a 2ª não tem Ls nesta fonte)"}
+      - {ano: 1982, my: 15, ls: 208.0, fonte: "[F150]"}
+      - {ano: 1994, my: 21, ls: 254.0, fonte: "[F150]"}
+      - {ano: 2001, my: 25, ls: 185.0, fonte: "[F150]"}
+      - {ano: 2007, my: 28, ls: 262.0, fonte: "[F150]"}
+      - {ano: 2018, my: 34, ls: 185.0, fonte: "[F151] p. 2 do PDF: \"starting at Ls = 185°\""}
   # Opportunity na tempestade global de 2018 [F140]: a mesma posição e quase a mesma poeira, 11 sóis.
   tempestade_2018_opportunity:
     latitude_graus: {valor: -1.98, fonte: "[F142] p. 28: \"1.98 degrees south latitude\" (centro da elipse-alvo)"}

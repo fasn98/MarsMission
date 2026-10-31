@@ -118,14 +118,18 @@ lander:
     plataforma_lander_kg: 1564.875
     base:
       expoente: 0.6667
+      com_rhu: false
       rhu_mer_wh_sol: 197.2776
+      rhu_lander_w: 34.59994332722903
       aquecedores_lander_wh_sol: 1216.5236274023744
       eletronica_wh_sol: 140.0
       mav_wh_sol: 1190.5325201835713
       total_wh_sol: 2547.056147585946
     sensibilidade:
       expoente: 1.0
+      com_rhu: false
       rhu_mer_wh_sol: 197.2776
+      rhu_lander_w: 71.94827586206897
       aquecedores_lander_wh_sol: 2529.679794827586
       eletronica_wh_sol: 140.0
       mav_wh_sol: 1190.5325201835713
@@ -163,6 +167,143 @@ lander:
       Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely
       experienced a low-power fault, a mission clock fault and an up-loss timer fault"'
   fator_recarga: 1.125
+  variante_rhu:
+    rhu_quantidade: 35
+    rhu_w_cada: 1.0
+    potencia_especifica_w_g: 0.5679004973920802
+    potencia_especifica_mmrtg_w_g: 0.5678550891316849
+    diferenca_relativa_potencia_especifica: 7.996452134410619e-05
+    pu238_g: 61.630514783359835
+    nspm20:
+      atividade_tbq: 39.05634885187289
+      multiplo_a2: 39056.34885187289
+      limite_tier_i_a2: 100000.0
+      vezes_o_limite_tier_i: 0.3905634885187289
+      enquadramento: Tier I
+    sobrevivencia:
+      expoente: 0.6667
+      com_rhu: true
+      rhu_mer_wh_sol: 197.2776
+      rhu_lander_w: 34.59994332722903
+      aquecedores_lander_wh_sol: 363.2994049359048
+      eletronica_wh_sol: 140.0
+      mav_wh_sol: 1190.5325201835713
+      total_wh_sol: 1693.8319251194762
+    dimensionamento_sobrevivencia:
+      tau: 8.5
+      tau_usado: 6.0
+      demanda_wh_sol: 1693.8319251194762
+      area_m2: 27.724806703530994
+      painel_kg: 145.81515525638332
+      bateria_kg: 34.58240180452264
+      total_kg: 180.39755706090597
+      pior_sol: 402
+      pior_sol_ls: 57.90768368119582
+      energia_por_m2_no_pior_sol_wh: 68.73126064091625
+      cenario: global_2018
+      carga: sobrevivência com RHUs no lander (variante)
+    opcao:
+      cenario: claro_jezero + global_2018
+      carga: operação normal com céu claro; sobrevivência na tempestade global
+      area_m2: 27.724806703530994
+      painel_kg: 145.81515525638332
+      bateria_kg: 98.70503895374793
+      total_kg: 244.52019421013125
+      dimensiona_area: sobrevivência
+    reducao_carga_sobrevivencia_wh_sol: 853.2242224664697
+    reducao_area_m2: 13.965657567225769
+    reducao_massa_kg: 73.45063026762801
+    acima_do_modelo:
+      energia_disponivel_wh_sol: 253.99841485658874
+      necessaria_wh_sol: 1905.5609157594108
+      cobertura: 0.1332932538424595
+      area_necessaria_m2: 207.99857385355142
+    disponibilidade:
+    - '[F153] p. 9 do PDF: "Current Cassini-era LWRHUs available (~.8 Wth) • DOE reconstituting
+      approximately 1 Wth LWRHU production capability • Capability completed at ORNL
+      • Capability at INL and LANL to be completed by 2026 • Dedicated run is planned
+      for 2027"'
+    - '[F155] p. 1: "As of September 2014, the average thermal power of the RHUs in
+      the DOE''s inventory was approximately 0.90 watts each; this thermal power will
+      continue to decrease by about one-hundreth of a watt per year"'
+    - '[F144] p. PS-102: "offering up to two MMRTGs and up to 20 Light Weight Radioisotope
+      Heating Units (LWRHU)" (AO do New Frontiers)'
+    - '[F144] p. PS-103: "NASA will support DoE Pu-238 constant rate production (CRP)
+      efforts, as well as production of LWRHUs to enable the Rosalind Franklin mission"'
+    - '[F156] (08/10/2026): Dragonfly "will rely on a Multi‑Mission Radioisotope Thermoelectric
+      Generator and 24 Light Weight Radioisotope Heater Units"; Rosalind Franklin
+      "by providing 24 similar heater units"'
+    potencia_por_unidade:
+      inventario:
+        w: 0.8
+        rhu_quantidade: 44
+        pu238_g: 61.98268915355047
+        multiplo_a2: 39279.52798816931
+      producao_nova:
+        w: 1.1
+        rhu_quantidade: 32
+        pu238_g: 61.98268915355047
+        multiplo_a2: 39279.52798816931
+  sensibilidade_fator_opportunity:
+    fator: 1.2581311717881376
+    tau_comparado: 2.1
+    cenarios:
+    - cenario: regional_jezero
+      tau: 2.0
+      area_m2: 28.7427006364919
+      area_com_fator_m2: 36.1620876321452
+      total_kg: 249.87368011379752
+      total_com_fator_kg: 288.8950185940616
+    - cenario: global_2018
+      tau: 8.5
+      area_m2: 76.77509529143089
+      area_com_fator_m2: 96.59314060315387
+      total_kg: 502.4940557521172
+      total_com_fator_kg: 606.7245878134603
+    - cenario: sobrevivência (C)
+      tau: 8.5
+      area_m2: 41.69046427075676
+      area_com_fator_m2: 52.452072665358685
+      total_kg: 271.2681818705577
+      total_com_fator_kg: 327.8675160209172
+    - cenario: sobrevivência com RHUs
+      tau: 8.5
+      area_m2: 27.724806703530994
+      area_com_fator_m2: 34.881443545513065
+      total_kg: 180.39755706090597
+      total_com_fator_kg: 218.03699395170543
+    opcao_c:
+      cenario: claro_jezero + global_2018
+      carga: operação normal com céu claro; sobrevivência na tempestade global
+      area_m2: 52.452072665358685
+      painel_kg: 275.8651196743708
+      bateria_kg: 98.70503895374793
+      total_kg: 374.57015862811875
+      dimensiona_area: sobrevivência
+    opcao_c_rhu:
+      cenario: claro_jezero + global_2018
+      carga: operação normal com céu claro; sobrevivência na tempestade global
+      area_m2: 34.881443545513065
+      painel_kg: 183.45459214718278
+      bateria_kg: 98.70503895374793
+      total_kg: 282.1596311009307
+      dimensiona_area: sobrevivência
+  tempestade_global_na_estada:
+    estada_ls:
+    - 189.74082675506008
+    - 57.90768368119582
+    estacao_inicio_ls:
+    - 185
+    - 315
+    probabilidade_por_ano_marciano: 0.25
+    fracao_da_estacao_dentro_da_estada: 0.9616858237547893
+    inicios_catalogo: 10
+    inicios_dentro_da_estada: 8
+    inicios_antes_da_chegada_na_estacao:
+    - 2001
+    - 2018
+    duracao: '[F134] p. 71: "Global dust storms typically occur every few Mars years
+      (MY) and persist for weeks to months"'
   fracao_energia_tau_max_sobre_claro: 0.234787212271424
   pu238_estado: '[F53] p. 27 do PDF (2016): "First new US Pu-238 production since
     the late 1980s", "~ 50 gm total Pu-238 was produced"; disponibilidade para a missão

@@ -250,3 +250,63 @@ Estes números substituem a linha "Proposta (P-053)" da seção 4, que foi calcu
 - **P-056:** sobrevivência do lander pelo Spirit.
 - **P-057:** razão de energia do Opportunity acima de τ = 6.
 - **P-058:** atividade do Pu-238.
+
+## Nota (2026-10-31): variante C + RHU, probabilidade de tempestade e sensibilidade ao fator do Opportunity
+Decisões do Fabio no segundo portão (ADR 0015, nota): captura C4; P-055 a P-058 aprovadas; risco acima de τ = 6 aceito,
+com a probabilidade acrescentada; dependência do Falcon Heavy descartável registrada (ADR 0008). As RHUs ficam para
+decidir com a variante abaixo. Números de `results/etapa4.1/energia.md`.
+
+### Variante C + RHU
+- **Quantidade:** 35 RHUs de 1 W no lugar dos aquecedores que repõem o calor das RHUs do MER (34,6 W, mesma escala da P-056).
+- **Pu-238:**
+  - 61,6 g, pela potência específica do Pu-238 calculada pela física (meia-vida [F148], Q do alfa [F154], N_A e e [F31]);
+  - essa potência específica coincide com a da MMRTG publicada [F135], a 0,0 %, o que **verifica** a conta contra dado
+    publicado.
+- **Atividade:** 39,1 TBq, ou 39.056 A2: 0,391 do limite do Tier I, logo **Tier I** do NSPM-20, em que o chefe da
+  agência é a autoridade de lançamento [F128].
+- **Sua estimativa:** ~20 g e ~12 TBq. O enquadramento em Tier I se confirma, mas a quantidade calculada é maior (61,6 g e
+  39,1 TBq), porque o calor do MER escalado pede 35 RHUs.
+- **Potência por unidade:**
+
+| Potência por RHU | RHUs | Pu-238 |
+| :- | -: | -: |
+| 1,0 W (MER, base) | 35 | 61,6 g |
+| 0,8 W (inventário atual [F153]) | 44 | 62,0 g |
+| 1,1 W (produção nova [F152]) | 32 | 62,0 g |
+
+- **Ganho:**
+  - sobrevivência de 1.694 Wh/sol, 853 Wh/sol a menos;
+  - opção C + RHU: 27,7 m² e 245 kg, ou 14,0 m² e 73 kg a menos que a C;
+  - acima de τ = 6 continua sem cobertura: 13 % da sobrevivência, 208 m² necessários.
+- **Disponibilidade, com fonte:**
+  - existem LWRHUs da era Cassini, com cerca de 0,8 W, e o DOE reconstitui a produção, com campanha dedicada prevista para
+    2027 [F153];
+  - a potência do inventário cai cerca de 0,01 W por ano [F155];
+  - alocações recentes: até 20 LWRHUs no AO do New Frontiers [F144]; 24 no Dragonfly e 24 no Rosalind Franklin [F156].
+  - **Os 35 a 44 da variante ficam acima de cada uma dessas alocações.** A disponibilidade para esta missão não foi
+    confirmada.
+
+### Tempestade global na estada
+- **Estação:** as tempestades globais observadas começaram entre Ls 185° e 315° [F149]. A estada vai de Ls 190° a 58° e
+  contém 96 % dessa estação.
+- **Catálogo:** 8 dos 10 inícios caem dentro da estada [F150, F151]. Os de 2001 e 2018 começaram em Ls 185°, pouco
+  antes da chegada, e estariam em curso ("persist for weeks to months" [F134]).
+- **Probabilidade:** cerca de 25 % por ano marciano [F149]. Como a estada atravessa uma estação inteira, é cerca de 25 %
+  na missão (P-061).
+- **Limitações:** a estatística vem de 11 tempestades registradas, com observação incompleta antes de 1997. A fração com
+  τ acima de 6 no sítio não foi avaliada: a de 2018 chegou a 8,5 em Gale [F134] e a 10,8 no Opportunity [F140].
+
+### Sensibilidade ao fator do Opportunity (P-059)
+A energia dos cenários de tempestade é dividida por 1,258, a razão do modelo sobre a razão medida em τ = 2,1:
+
+| Cenário | Área | Área com o fator | Massa | Massa com o fator |
+| :- | -: | -: | -: | -: |
+| Tempestade regional, τ = 2 | 28,7 m² | 36,2 m² | 250 kg | 289 kg |
+| Tempestade global, operação normal | 76,8 m² | 96,6 m² | 502 kg | 607 kg |
+| **Opção C** | 41,7 m² | **52,5 m²** | 318 kg | **375 kg** |
+| **Opção C + RHU** | 27,7 m² | **34,9 m²** | 245 kg | **282 kg** |
+
+### Premissas novas (NÃO VALIDADAS)
+- **P-059:** fator do Opportunity nas tempestades.
+- **P-060:** tolerância do teste da potência específica.
+- **P-061:** probabilidade de tempestade global na estada.

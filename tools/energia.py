@@ -125,8 +125,9 @@ def main():
     e_pico = sum(picos.values())
     fator_recarga = (1 - noite) + noite / efr
 
-    def dimensiona(tau, carga_wh, perda_por_sol=perda, pico_wh=e_pico):
-        prod = [en.energia_painel(1.0, hh(lat, g[1], g[2], tau), eta, perda_por_sol, n) for n, g in enumerate(geo)]
+    def dimensiona(tau, carga_wh, perda_por_sol=perda, pico_wh=e_pico, fator=1.0):
+        # fator > 1 divide a energia por m² (sensibilidade da P-059: o modelo otimista contra o Opportunity)
+        prod = [en.energia_painel(1.0, hh(lat, g[1], g[2], tau), eta, perda_por_sol, n) / fator for n, g in enumerate(geo)]
         i = int(np.argmin([p / carga_wh for p in prod]))
         area = carga_wh * fator_recarga / prod[i]
         bat = en.bateria_kg(noite * carga_wh + pico_wh, dod, wh_kg)   # noite + picos (mesmo critério do MMRTG)
@@ -138,10 +139,13 @@ def main():
     sv = lc["sobrevivencia"]
     m_lander = ler("results/etapa2.3/plataformas.yaml")["escolha"]["plataforma_lander_kg"]
 
-    def carga_sobrevivencia(expoente):
-        rhu = v(sv["rhu_mer_quantidade"]) * v(sv["rhu_w"]) * hsol   # calor das RHUs do MER, reposto por aquecedores
-        aq = (v(sv["aquecedores_mer_wh_sol"]) + rhu) * (m_lander / v(sv["massa_mer_kg"])) ** expoente
-        return {"expoente": expoente, "rhu_mer_wh_sol": rhu, "aquecedores_lander_wh_sol": aq, "eletronica_wh_sol": v(sv["eletronica_mer_wh_sol"]),
+    def carga_sobrevivencia(expoente, com_rhu=False):
+        escala = (m_lander / v(sv["massa_mer_kg"])) ** expoente
+        rhu = v(sv["rhu_mer_quantidade"]) * v(sv["rhu_w"]) * hsol   # calor das RHUs do MER
+        # sem RHU, o lander repõe esse calor com aquecedores; com RHU (variante), as RHUs dão o calor escalado
+        aq = (v(sv["aquecedores_mer_wh_sol"]) + (0.0 if com_rhu else rhu)) * escala
+        return {"expoente": expoente, "com_rhu": com_rhu, "rhu_mer_wh_sol": rhu, "rhu_lander_w": v(sv["rhu_mer_quantidade"]) * v(sv["rhu_w"]) * escala,
+                "aquecedores_lander_wh_sol": aq, "eletronica_wh_sol": v(sv["eletronica_mer_wh_sol"]),
                 "mav_wh_sol": mav_wh, "total_wh_sol": mav_wh + aq + v(sv["eletronica_mer_wh_sol"])}
     sob_base, sob_sens = carga_sobrevivencia(v(sv["expoente_escala"])), carga_sobrevivencia(v(sv["expoente_sensibilidade"]))
 
@@ -194,6 +198,59 @@ def main():
     acima6 = {"tau": tau_alto["tau"], "tau_referencia": ref_o["tau"], "razao_medida": razao_alta, "energia_por_m2_referencia_wh": prod_ref,
               "base": sobrevive_acima(solar_c, sob_base), "sensibilidade": sobrevive_acima(solar_c_sens, sob_sens),
               "opportunity_wh_sol": tau_alto["wh"], "desfecho_opportunity": to["desfecho"]}
+
+    # variante C + RHU (pedido do Fabio no portão da 4.1): as RHUs dão o calor que o lander repõe com aquecedores na C
+    pu = lc["pu238"]
+    rh = lc["rhu"]
+    sob_rhu = carga_sobrevivencia(v(sv["expoente_escala"]), com_rhu=True)
+    n_rhu = math.ceil(sob_rhu["rhu_lander_w"] / v(sv["rhu_w"]) - 1e-9)
+    # potência específica do Pu-238 pela física (λ N_A / M × energia do alfa) e, como conferência, pela MMRTG [F135]
+    lam = math.log(2) / (v(pu["meia_vida_anos"]) * v(pu["dias_por_ano"]) * 86400.0)
+    w_g = lam * v(pu["avogadro_mol"]) / v(pu["massa_molar_g_mol"]) * v(rh["energia_alfa_mev"]) * 1e6 * v(rh["carga_elementar_c"])
+    w_g_mmrtg = v(lc["mmrtg"]["potencia_termica_w"]) / v(pu["por_unidade_g"])
+    pu_rhu_g = n_rhu * v(sv["rhu_w"]) / w_g
+    sob_rhu_dim = dict(dimensiona(cen["global_2018"], sob_rhu["total_wh_sol"], pico_wh=0.0), cenario="global_2018",
+                       carga="sobrevivência com RHUs no lander (variante)")
+    c_rhu = opcao_c(solar[0], sob_rhu_dim)
+    variante_rhu = {"rhu_quantidade": n_rhu, "rhu_w_cada": v(sv["rhu_w"]), "potencia_especifica_w_g": w_g,
+                    "potencia_especifica_mmrtg_w_g": w_g_mmrtg, "diferenca_relativa_potencia_especifica": (w_g - w_g_mmrtg) / w_g_mmrtg,
+                    "pu238_g": pu_rhu_g, "nspm20": nspm20(pu_rhu_g, pu), "sobrevivencia": sob_rhu, "dimensionamento_sobrevivencia": sob_rhu_dim,
+                    "opcao": c_rhu, "reducao_carga_sobrevivencia_wh_sol": sob_base["total_wh_sol"] - sob_rhu["total_wh_sol"],
+                    "reducao_area_m2": solar_c["area_m2"] - c_rhu["area_m2"], "reducao_massa_kg": solar_c["total_kg"] - c_rhu["total_kg"],
+                    "acima_do_modelo": sobrevive_acima(c_rhu, sob_rhu), "disponibilidade": rh["disponibilidade"],
+                    "potencia_por_unidade": {}}
+    for nome_p, x in rh["potencia_variantes_w"].items():   # o Pu-238 segue o calor; o número de unidades, a potência de cada
+        n_p = math.ceil(sob_rhu["rhu_lander_w"] / v(x) - 1e-9)
+        variante_rhu["potencia_por_unidade"][nome_p] = {"w": v(x), "rhu_quantidade": n_p, "pu238_g": n_p * v(x) / w_g,
+                                                        "multiplo_a2": nspm20(n_p * v(x) / w_g, pu)["multiplo_a2"]}
+
+    # probabilidade da tempestade global na estada (P-061): a estação de início [F149] contra o Ls da estada
+    tg = lc["tempestades_globais"]
+    ls_ini, ls_fim = geo[0][0], geo[-1][0]
+    na_estada = (lambda ls: ls >= ls_ini or ls <= ls_fim) if ls_ini > ls_fim else (lambda ls: ls_ini <= ls <= ls_fim)
+    j0, j1 = tg["estacao_inicio_ls"]["valor"]
+    passo = 0.5
+    grade = [j0 + passo * k for k in range(int((j1 - j0) / passo) + 1)]
+    inicios = tg["inicios"]
+    tempestade = {"estada_ls": [ls_ini, ls_fim], "estacao_inicio_ls": [j0, j1], "probabilidade_por_ano_marciano": v(tg["probabilidade_por_ano_marciano"]),
+                  "fracao_da_estacao_dentro_da_estada": sum(na_estada(x) for x in grade) / len(grade),
+                  "inicios_catalogo": len(inicios), "inicios_dentro_da_estada": sum(na_estada(x["ls"]) for x in inicios),
+                  "inicios_antes_da_chegada_na_estacao": [x["ano"] for x in inicios if not na_estada(x["ls"]) and j0 <= x["ls"] < ls_ini],
+                  "duracao": tg["duracao"]}
+
+    # sensibilidade (P-059): energia na tempestade dividida pelo excesso do modelo contra o Opportunity em τ = 2,1
+    comparaveis = [c for c in comp_opp if c["razao_modelo"] is not None]
+    f26 = comparaveis[0]["razao_modelo"] / comparaveis[0]["razao_medida"]
+    sens26 = {"fator": f26, "tau_comparado": comparaveis[0]["tau"], "cenarios": []}
+    for nome, tau, carga, pico in (("regional_jezero", cen["regional_jezero"], demanda, e_pico), ("global_2018", cen["global_2018"], demanda, e_pico),
+                                   ("sobrevivência (C)", cen["global_2018"], sob_base["total_wh_sol"], 0.0),
+                                   ("sobrevivência com RHUs", cen["global_2018"], sob_rhu["total_wh_sol"], 0.0)):
+        b, f = dimensiona(tau, carga, pico_wh=pico), dimensiona(tau, carga, pico_wh=pico, fator=f26)
+        sens26["cenarios"].append({"cenario": nome, "tau": tau, "area_m2": b["area_m2"], "area_com_fator_m2": f["area_m2"],
+                                   "total_kg": b["total_kg"], "total_com_fator_kg": f["total_kg"], "_dim": f})
+    by = {x["cenario"]: x.pop("_dim") for x in sens26["cenarios"]}
+    sens26["opcao_c"] = opcao_c(solar[0], by["sobrevivência (C)"])
+    sens26["opcao_c_rhu"] = opcao_c(solar[0], by["sobrevivência com RHUs"])
 
     # verificação contra a tabela do VL1 [F56] (Whr em horas de Marte: × 24,65/24 para horas terrestres, nota da tabela)
     vl = lc["conferencia_vl1"]
@@ -295,6 +352,7 @@ def main():
                       "solar": solar, "solar_com_sobrevivencia": solar_c, "solar_com_sobrevivencia_sensibilidade": solar_c_sens,
                       "sobrevivencia": {"plataforma_lander_kg": m_lander, "base": sob_base, "sensibilidade": sob_sens},
                       "comparacao_opportunity_2018": comp_opp, "acima_do_modelo": acima6, "fator_recarga": fator_recarga,
+                      "variante_rhu": variante_rhu, "sensibilidade_fator_opportunity": sens26, "tempestade_global_na_estada": tempestade,
                       # razão de energia por m² entre τ máximo e céu claro = razão inversa das áreas (mesma demanda)
                       "fracao_energia_tau_max_sobre_claro": solar[0]["area_m2"] / solar[2]["area_m2"],
                       "pu238_estado": lc["pu238"]["estado"], "pu238_disponibilidade": lc["pu238"]["disponibilidade"],
@@ -360,6 +418,37 @@ def escreve_md(o):
            f"{br(ab['area_necessaria_m2'])} m². Sensibilidade (escala linear): {br(100 * as_['cobertura'])} %, {br(as_['area_necessaria_m2'])} m². "
            f"A duração da fase com τ > {br(la['tau_max_modelo'], 0)} e a ponte pela bateria não foram avaliadas.", "",
            f"Desfecho do dado de voo usado acima de τ = {br(la['tau_max_modelo'], 0)}: {a6['desfecho_opportunity']}."]
+    vr, s26 = la["variante_rhu"], la["sensibilidade_fator_opportunity"]
+    md += ["", "### Variante C + RHU", "",
+           f"RHUs no lander no lugar dos aquecedores que repõem o calor das RHUs do MER: {vr['rhu_quantidade']} RHUs de "
+           f"{br(vr['rhu_w_cada'], 1)} W ({br(vr['sobrevivencia']['rhu_lander_w'], 1)} W, mesma escala da P-056). "
+           f"Potência específica do Pu-238: {br(vr['potencia_especifica_w_g'], 3)} W/g pela física; {br(vr['potencia_especifica_mmrtg_w_g'], 3)} W/g "
+           f"pela MMRTG (potência térmica / massa de Pu-238 [F135]), diferença {br(100 * vr['diferenca_relativa_potencia_especifica'], 1)} %. "
+           f"Pu-238: {br(vr['pu238_g'], 1)} g; atividade {br(vr['nspm20']['atividade_tbq'], 1)} TBq = {br(vr['nspm20']['multiplo_a2'])} A2 "
+           f"({br(vr['nspm20']['vezes_o_limite_tier_i'], 3)} do limite do Tier I): {vr['nspm20']['enquadramento']}.", "",
+           f"Sobrevivência: {br(vr['sobrevivencia']['total_wh_sol'])} Wh/sol (redução de {br(vr['reducao_carga_sobrevivencia_wh_sol'])} Wh/sol). "
+           f"Opção C + RHU: {br(vr['opcao']['area_m2'], 1)} m², total {br(vr['opcao']['total_kg'])} kg (área da {vr['opcao']['dimensiona_area']}); "
+           f"redução de {br(vr['reducao_area_m2'], 1)} m² e {br(vr['reducao_massa_kg'])} kg. Com τ = {br(a6['tau'], 1)} (P-057): "
+           f"{br(100 * vr['acima_do_modelo']['cobertura'])} % da sobrevivência, {br(vr['acima_do_modelo']['area_necessaria_m2'])} m² necessários.", "",
+           f"### Sensibilidade ao modelo otimista (P-059): energia na tempestade ÷ {br(s26['fator'], 3)} "
+           f"(razão do modelo / razão medida pelo Opportunity em τ = {br(s26['tau_comparado'], 1)})", "",
+           "| Cenário | τ | Área (m²) | Área com o fator (m²) | Total (kg) | Total com o fator (kg) |", "| :- | -: | -: | -: | -: | -: |"]
+    md += [f"| {c['cenario']} | {br(c['tau'], 1)} | {br(c['area_m2'], 1)} | {br(c['area_com_fator_m2'], 1)} | {br(c['total_kg'])} | {br(c['total_com_fator_kg'])} |"
+           for c in s26["cenarios"]]
+    md += ["", f"Opção C com o fator: {br(s26['opcao_c']['area_m2'], 1)} m², {br(s26['opcao_c']['total_kg'])} kg; "
+           f"C + RHU com o fator: {br(s26['opcao_c_rhu']['area_m2'], 1)} m², {br(s26['opcao_c_rhu']['total_kg'])} kg."]
+    md += ["", "Potência por RHU (o Pu-238 segue o calor; o número de unidades, a potência de cada):", "",
+           "| Potência por unidade | RHUs | Pu-238 (g) | Múltiplo do A2 |", "| :- | -: | -: | -: |",
+           f"| {br(vr['rhu_w_cada'], 1)} W (MER, base) | {vr['rhu_quantidade']} | {br(vr['pu238_g'], 1)} | {br(vr['nspm20']['multiplo_a2'])} |"]
+    md += [f"| {br(x['w'], 1)} W ({k}) | {x['rhu_quantidade']} | {br(x['pu238_g'], 1)} | {br(x['multiplo_a2'])} |" for k, x in vr["potencia_por_unidade"].items()]
+    md += ["", "Disponibilidade de RHUs:", ""] + [f"- {x}" for x in vr["disponibilidade"]]
+    tg = la["tempestade_global_na_estada"]
+    md += ["", "### Tempestade global na estada", "",
+           f"Estada de Ls {br(tg['estada_ls'][0])}° a {br(tg['estada_ls'][1])}°; estação de início das tempestades globais observadas: Ls "
+           f"{br(tg['estacao_inicio_ls'][0])}° a {br(tg['estacao_inicio_ls'][1])}° [F149]; {br(100 * tg['fracao_da_estacao_dentro_da_estada'])} % dessa estação "
+           f"fica dentro da estada. Inícios do catálogo dentro da estada: {tg['inicios_dentro_da_estada']} de {tg['inicios_catalogo']}; "
+           f"antes da chegada, ainda na estação (a tempestade estaria em curso na chegada): {', '.join(str(x) for x in tg['inicios_antes_da_chegada_na_estacao']) or 'nenhum'}. "
+           f"Probabilidade de tempestade global por ano marciano: {br(100 * tg['probabilidade_por_ano_marciano'])} % [F149] (P-061). {tg['duracao']}."]
     r = la["mmrtg"]
     s_ = r["sensibilidade_abastecimento"]
     md += ["", "Picos por sol (na bateria das duas opções): " + ", ".join(f"{k} {br(x, 1)} Wh" for k, x in la["picos_wh"].items())

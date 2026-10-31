@@ -68,3 +68,8 @@ MAV O4: ε 0,230, Δv de subida com margem 5,772 km/s; mav_1: Isp 310 s, Δv 2,7
 | ε do MAV 0,238 (MAV com turbobomba, Bowles Tab. 5 [F46]) em vez de 0,230 | — | 7 796 | 4 073 | +44 % | +6 % | +15 % | +176 % | +6 % | +59 % | +104 % |
 | ε do MAV 0,176 (só a massa seca, Bowles Tab. 11 [F46]) em vez de 0,230 | — | 7 796 | 3 703 | +44 % | +6 % | +26 % | +203 % | +17 % | +75 % | +124 % |
 | ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230 | P-045 | 7 796 | 5 397 | +44 % | +6 % | −13 % | +108 % | −20 % | +20 % | +54 % |
+
+## Dependência de lançador (escolhidos com margem ≥ 0 na base e em todos os casos da sensibilidade)
+
+- **orbitador:** Falcon Heavy (descartável). Vulcan VC6 fica negativo em: Margem de massa ESA (20 % × 20 %) nas duas plataformas; Margem de Δv 20 % (base 10 %).
+- **lander:** Falcon Heavy (descartável), Vulcan VC4, Vulcan VC6. Falcon Heavy (recuperação) fica negativo em: Margem de massa ESA (20 % × 20 %) nas duas plataformas; Plataforma do lander no limite superior (SRL 2024 − MAV); ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230. Vulcan VC2 fica negativo em: Margem de massa GSFC (+15 % da básica) nas duas plataformas; Margem de massa ESA (20 % × 20 %) nas duas plataformas; Plataforma do lander no limite superior (SRL 2024 − MAV); Margem de Δv 20 % (base 10 %); ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230.
