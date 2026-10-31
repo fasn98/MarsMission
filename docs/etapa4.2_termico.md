@@ -126,7 +126,8 @@ Decisões do Fabio. **Números vigentes:** `results/etapa4.2/termico.md` e `resu
    - A faixa de temperatura de entrada de propelente do R-4D-11 não foi achada:
      - não está na ficha da L3Harris [F106];
      - não está na Tab. 3 do Orion ESM [F107], que dá empuxo, Isp, duração e partidas;
-     - não está na ficha da Aerojet Rocketdyne do R-4D-11, que só dá pressões de entrada.
+     - não está na ficha da Aerojet Rocketdyne do R-4D-11, que só dá pressões de entrada e a condição de referência do Isp
+       a 70 °F.
    - Pela regra do Fabio, o alvo passa a 15 °C, o limite inferior da faixa nominal de sistemas MMH/NTO [F159].
 
    | | Antes (−1 °C) | Depois (15 °C) |
@@ -135,17 +136,26 @@ Decisões do Fabio. **Números vigentes:** `results/etapa4.2/termico.md` e `resu
    | Sobrevivência (C + RHU) | 1.694 Wh/sol | 2.004 Wh/sol |
    | Demanda em operação | 4.691 Wh/sol | 5.000 Wh/sol |
    | C + RHU (linha de base) | 27,7 m², 245 kg | 32,8 m², 278 kg |
+   | C sem RHU (alternativa) | 41,7 m², 318 kg | 46,8 m², 351 kg |
+   | **Alternativa A (MMRTG)** | **2 unidades**, 118 kg, 6.956 g de Pu-238, 44,1 × o limite do Tier I | **3 unidades**, 175 kg, 10.434 g de Pu-238, 66,1 × o limite do Tier I |
    | Lander injetado | 4.002 kg | 4.012 kg |
    | MAV + energia do aquecimento | 406 kg | 411 kg |
+   | Total na órbita baixa da Terra, regra (iii) | 35.814 kg | 35.845 kg |
+
+   Com a demanda média de 202,8 W, duas MMRTG no fim da estada já não bastam (`results/etapa4.1/energia.md`).
 
    As margens dos lançadores escolhidos para o lander não mudam no arredondamento (`results/etapa2.5/arquitetura.md`).
 2. **Amostras:** (b) transferência tardia para o MAV, tratada como transiente (+30 °C [F167]), alinhada à operação curta
    de superfície da Etapa 4.4.
-   - **Registro (d), períodos acima de −20 °C** (estimativas de pior caso [F167, p. 5, Tab. 1]):
+   - **Registro (d), faixas de temperatura máxima estimadas no pior caso** [F167, p. 5, Tab. 1]. Os dois primeiros
+     períodos ficam na maior parte abaixo de −20 °C, mas passam dele no topo da faixa:
+     - antes da coleta, éons, de −20 a +10 °C;
+     - no Perseverance, anos, de −65 a +10 °C;
      - no depósito, anos, de +5 a +53 °C;
      - na transferência para o contêiner, meses, de +30 a +53 °C;
      - no lançamento do MAV, minutos, +30 °C.
-   - **Tempo no depósito:** de 2023-02-15 (P-062, [F172]) até a chegada em 2029-09-20, 6,6 anos no mínimo. Os tubos podem
+   - **Tempo no depósito:** de 2023-02-15 (P-062; a fonte não dá a data do depósito) até a chegada em 2029-09-20, 6,6 anos
+     no mínimo (inferência da P-062, porque a coleta é depois da chegada). Os tubos podem
      ser aquecidos repetidamente a até 300 K [F172].
    - **Opção (a), isolamento do contêiner:** não avaliada, porque não há análogo com massa publicada.
 3. **Rejeição de calor no cruzeiro:** fica para a Etapa 4.5, com a dissipação das aviônicas.

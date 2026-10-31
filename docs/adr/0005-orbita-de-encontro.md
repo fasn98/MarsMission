@@ -87,3 +87,10 @@ encontro de 300 × 24.992 km continuam.
 A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
 números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
 errata de 2026-10-31 de `docs/fase3_relatorio.md`.**
+
+## Nota (Etapa 4.2, 2026-10-31): alvo do MAV de 15 °C (P-027)
+Com o alvo de temperatura do MAV em 15 °C (decisão do Fabio no portão da Etapa 4.2), a varredura da Etapa 2.2 com O4 vai de
+31.233 para 31.257 kg (iii), e o MAV de 286 para 290 kg (`results/etapa2.2/mav_propulsao.md`). O apoapse escolhido não muda
+(26.950 km).
+
+**Números vigentes da arquitetura:** errata de 2026-10-31 da Etapa 4.2 em `docs/fase3_relatorio.md`.

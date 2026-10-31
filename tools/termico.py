@@ -133,11 +133,12 @@ def escreve_md(o):
            f"AFT das amostras fora de transientes: {br(am['aft_c'])} °C [F167]. O MAV do estudo é aquecido a {br(am['mav_c'])} °C: "
            f"{br(am['excesso_k'])} K acima da AFT das amostras; com os alvos alternativos, "
            + ", ".join(f"{k} {br(x)} K" for k, x in am["excesso_com_alvos_k"].items()) + ".", "",
-           f"Decisão (portão da 4.2): {am['decisao']}. Períodos acima de −20 °C (estimativas de pior caso [F167], registro (d)):", "",
+           f"Decisão (portão da 4.2): {am['decisao']}. Faixas de temperatura máxima estimadas por fase, no pior caso [F167], registro (d):", "",
            "| Fase | Duração | Máxima estimada (°C) |", "| :- | :- | :- |"]
-    md += [f"| {p['fase']} | {p['duracao']} | {br(p['max_c'][0])} a {br(p['max_c'][1])} |" for p in am["periodos_pior_caso"]]
+    md += [f"| {p['fase']} | {p['duracao']} | " + (br(p['max_c'][0]) if p['max_c'][0] == p['max_c'][1] else f"{br(p['max_c'][0])} a {br(p['max_c'][1])}") + " |"
+           for p in am["periodos_pior_caso"]]
     md += ["", f"No depósito desde {am['deposito_desde']} (P-062) até a chegada da missão de referência em {am['chegada_marte']}: "
-           f"{br(am['anos_no_deposito_ate_a_chegada'], 1)} anos, no mínimo; os tubos podem ser aquecidos repetidamente a até "
+           f"{br(am['anos_no_deposito_ate_a_chegada'], 1)} anos, no mínimo (inferência da P-062: a coleta é depois da chegada); os tubos podem ser aquecidos repetidamente a até "
            f"{br(am['aquecimento_tubos_k'])} K [F172]. Isolamento do contêiner (opção a): {am['isolamento_conteiner']}.", "",
            "## Comparação com o projeto publicado do SRL (análise, não medida)", "",
            f"- Aquecedores de sobrevivência do LAMP e da bateria no caso frio: {br(s['lamp_e_bateria_aquecedores_wh_sol'])} Wh/sol; "

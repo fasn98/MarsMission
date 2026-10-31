@@ -34,15 +34,17 @@ O aquecimento escala com (T − T_ambiente) no modelo atual (P-027). A área da 
 
 AFT das amostras fora de transientes: −20 °C [F167]. O MAV do estudo é aquecido a 15 °C: 35 K acima da AFT das amostras; com os alvos alternativos, anterior_p027 19 K, aft_tanques_mer 37 K.
 
-Decisão (portão da 4.2): transferência tardia para o MAV, tratada como transiente (+30 °C). Períodos acima de −20 °C (estimativas de pior caso [F167], registro (d)):
+Decisão (portão da 4.2): transferência tardia para o MAV, tratada como transiente (+30 °C). Faixas de temperatura máxima estimadas por fase, no pior caso [F167], registro (d):
 
 | Fase | Duração | Máxima estimada (°C) |
 | :- | :- | :- |
+| Antes da coleta | éons | −20 a 10 |
+| No Perseverance (cache do rover) | anos | −65 a 10 |
 | No depósito na superfície | anos | 5 a 53 |
 | Transferência para o contêiner (OS) | meses | 30 a 53 |
-| Lançamento do MAV | minutos | 30 a 30 |
+| Lançamento do MAV | minutos | 30 |
 
-No depósito desde 2023-02-15 (P-062) até a chegada da missão de referência em 2029-09-20: 6,6 anos, no mínimo; os tubos podem ser aquecidos repetidamente a até 300 K [F172]. Isolamento do contêiner (opção a): não avaliado: sem análogo com massa publicada (busca de 2026-10-31; só o limite de massa de todo o contêiner e as massas do veículo de entrada na Terra).
+No depósito desde 2023-02-15 (P-062) até a chegada da missão de referência em 2029-09-20: 6,6 anos, no mínimo (inferência da P-062: a coleta é depois da chegada); os tubos podem ser aquecidos repetidamente a até 300 K [F172]. Isolamento do contêiner (opção a): não avaliado: sem análogo com massa publicada (busca de 2026-10-31; só o limite de massa de todo o contêiner e as massas do veículo de entrada na Terra).
 
 ## Comparação com o projeto publicado do SRL (análise, não medida)
 

@@ -130,6 +130,18 @@ amostras:
     aft_tanques_mer: 37.0
   decisao: transferência tardia para o MAV, tratada como transiente (+30 °C)
   periodos_pior_caso:
+  - fase: Antes da coleta
+    duracao: éons
+    max_c:
+    - -20
+    - 10
+    fonte: '[F167] p. 5, Tab. 1: "Pre-collection Eons -20 to +10"'
+  - fase: No Perseverance (cache do rover)
+    duracao: anos
+    max_c:
+    - -65
+    - 10
+    fonte: '[F167] p. 5, Tab. 1: "Cached in M2020 Years -65 to +10"'
   - fase: No depósito na superfície
     duracao: anos
     max_c:

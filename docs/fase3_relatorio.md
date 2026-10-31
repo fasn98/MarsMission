@@ -168,6 +168,7 @@ Os resultados das Fases 2 a 4 foram regenerados. O texto acima e a errata de 202
 **Números vigentes** (`results/etapa2.5/arquitetura.md`):
 - **Lander injetado:** 4.012 kg (era 4.002 kg na errata da 4.1).
 - **MAV + energia do aquecimento:** 411 kg (era 406 kg).
+- **Total na órbita baixa da Terra, regra (iii):** 35.845 kg (era 35.814 kg).
 - **Orbitador:** 7.796 kg, sem mudança.
 - **Margens dos lançadores escolhidos:** sem mudança no arredondamento.
   - orbitador: Falcon Heavy descartável +44 %, Vulcan VC6 +6 %;

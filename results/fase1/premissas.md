@@ -28,7 +28,7 @@
 | P-024 | escala_armazenamento_zbo | 0.6667 | adimensional (expoente sobre a massa armazenada) | NÃO VALIDADA | config/isru.yaml — armazenamento sem evaporação na superfície (O2 e O3) |
 | P-025 | escala_energia_solar | 1.0 | adimensional | NÃO VALIDADA | config/isru.yaml — massa de painéis solares |
 | P-026 | armazenamento_cruzeiro | referencia_kg: 6567; expoente: 0.6667 | kg; adimensional | NÃO VALIDADA | config/mav_propulsao.yaml — armazenamento sem evaporação de LOX e CH4 no cruzeiro (O2) |
-| P-027 | aquecimento_mav_superficie | expoente_area: 0.6667; alvo_o4_c: 15 | adimensional; K | NÃO VALIDADA | config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada |
+| P-027 | aquecimento_mav_superficie | expoente_area: 0.6667; alvo_o4_c: 15 | adimensional; °C | NÃO VALIDADA | config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada |
 | P-028 | carga_eletrica_orbitador_w | 1022 | W (mesma carga no sol e no eclipse) | NÃO VALIDADA | config/plataformas.yaml — painel e bateria do orbitador |
 | P-029 | eficiencia_recarga_bateria | 0.8 | adimensional (energia devolvida / energia de recarga) | NÃO VALIDADA | config/plataformas.yaml — potência do painel do orbitador |
 | P-030 | fator_perdas_painel_orbitador | 0.774 | adimensional (multiplica a potência específica a 1 UA escalada por 1/d²) | NÃO VALIDADA | config/plataformas.yaml — massa do painel do orbitador |

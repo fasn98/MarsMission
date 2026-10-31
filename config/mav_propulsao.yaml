@@ -61,6 +61,6 @@ aquecimento:
   t_minima_c:
     O1: {valor: -40, fonte: "[F57] p. 8: \"AFT greater than -40°C during non-operational phases\""}
     # Antes −1 °C (NTO congela a −11 °C [F61] + 10 K de margem, P-027). Decisão do Fabio no portão da 4.2: a faixa de entrada
-    # do R-4D-11 não foi achada na ficha [F106], na Tab. 3 do Orion ESM [F107] nem na ficha da Aerojet; vale o limite inferior
+    # do R-4D-11 não foi achada na ficha [F106], na Tab. 3 do Orion ESM [F107] nem na ficha da Aerojet (só pressões e o Isp a 70 °F); vale o limite inferior
     # da faixa nominal de sistemas MMH/NTO.
     O4: {valor: 15, premissa: P-027, fonte: "[F159] p. 2: \"Such systems have been operated with nominal propellant temperature between ~15oC [60oF] and ~27oC [80oF]\""}

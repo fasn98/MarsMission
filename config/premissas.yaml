@@ -296,7 +296,7 @@ premissas:
   - id: P-027
     nome: aquecimento_mav_superficie
     valor: {expoente_area: 0.6667, alvo_o4_c: 15}
-    unidade: adimensional; K
+    unidade: adimensional; °C
     uso: config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada
     justificativa: >
       Única referência numérica: aquecedores do 1º motor do MAV do MSR, 36 W para manter −20 °C num ambiente
@@ -709,6 +709,8 @@ premissas:
     unidade: data
     uso: config/termico.yaml (tempo das amostras no depósito até a chegada)
     justificativa: >
-      A fonte [F172] diz que o depósito foi montado na campanha Delta Front, que terminou "around mid-February 2023"; o dia
-      15 é escolhido para a conta. O tempo no depósito é contado até a chegada da missão de referência, como mínimo.
+      A fonte [F172] diz que os tubos foram selados nas campanhas Crater Floor e Delta Front, esta terminada "around
+      mid-February 2023", e que um tubo de cada par foi depositado em Three Forks; não dá a data do depósito. Supõe-se o
+      depósito completo até 15/02/2023. O tempo no depósito é contado até a chegada da missão de referência; chamá-lo de
+      "mínimo" é inferência desta premissa (a coleta é depois da chegada), não da fonte.
     status: NÃO VALIDADA

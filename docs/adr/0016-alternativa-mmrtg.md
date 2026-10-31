@@ -56,3 +56,18 @@ O relatório GAO-17-673 não pôde ser baixado (o endereço devolveu HTML, não 
   - Usar RHUs como as do MER, com cerca de 2,7 g de PuO2 cada [F142], é opção ainda não decidida (Fabio).
 - O preço é a sobrevivência acima de τ = 6, que não está coberta (P-057).
 - Se a alternativa A for retomada, os 3.950 W térmicos das duas MMRTG podem aquecer o MAV. Isso não foi modelado.
+
+## Nota (Etapa 4.2, 2026-10-31): a alternativa A passa a 3 MMRTG
+O alvo de temperatura do MAV passou de −1 para 15 °C (P-027, decisão do Fabio no portão da 4.2). A demanda média do lander
+subiu para 202,8 W. Duas MMRTG no fim da estada já não bastam (`results/etapa4.1/energia.md`):
+
+| | Antes | Depois |
+| :- | -: | -: |
+| MMRTG | 2 | **3** |
+| Massa | 118 kg | 175 kg |
+| Pu-238 | 6.956 g | **10.434 g** |
+| Potência térmica | 3.950 W | 5.925 W |
+| Atividade | 4.408 TBq (44,1 × o limite do Tier I) | 6.612 TBq (66,1 × o limite do Tier I) |
+
+**Os números vigentes são os da tabela; o texto acima fica como estava.** O risco de disponibilidade de Pu-238 cresce na
+mesma proporção. A linha de base continua sendo a C + RHU (ADR 0015).

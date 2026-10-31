@@ -130,6 +130,8 @@ O Fabio decidiu, depois do merge do PR #31:
 O alvo de temperatura do MAV passou de −1 °C para 15 °C (decisão do Fabio no portão da Etapa 4.2). O aquecimento do MAV, a
 energia do lander e as massas mudaram:
 - a linha de base C + RHU vai de 27,7 m² e 245 kg para 32,8 m² e 278 kg;
+- a C sem RHU vai de 41,7 m² e 318 kg para 46,8 m² e 351 kg;
+- a alternativa A passa de 2 para 3 MMRTG: 175 kg, 10.434 g de Pu-238, 66,1 vezes o limite do Tier I (ADR 0016);
 - o lander injetado vai de 4.002 para 4.012 kg.
 
 **Números vigentes:** `results/` e a nota de 2026-10-31 em `docs/etapa4.2_termico.md`.
