@@ -1,0 +1,51 @@
+# Etapa 4.2: controle térmico (tools/termico.py). Temperaturas em °C; null = sem limite publicado nesse lado.
+faixas:
+  - {item: "MMH (orbitador e MAV)", tipo: ponto de fusão, min_c: -52.37, max_c: null,
+     fonte: "[F157] p. 113 do PDF, 2.4.1 Property Summary Sheet (MMH): \"MELTING POINT 220.78 °K / -52.37 °C\""}
+  - {item: "NTO / MON-3 (orbitador e MAV)", tipo: ponto de fusão, min_c: -11.2, max_c: null,
+     fonte: "[F158] p. 89 do PDF (2.3-1), \"Common Name: NTO, MON-1, MON-3*\": \"Melting Point 261.95 °K / -11.2 °C\"; p. 90: \"the listed properties for N2O4 are applicable for MON-1 and MON-3\""}
+  - {item: "Sistemas MMH/NTO em operação (nominal)", tipo: faixa nominal, min_c: 15, max_c: 27,
+     fonte: "[F159] p. 2: \"Such systems have been operated with nominal propellant temperature between ~15oC [60oF] and ~27oC [80oF]\""}
+  - {item: "Tanques de propelente (cruzeiro do MER)", tipo: AFT, min_c: 17, max_c: 28,
+     fonte: "[F160] p. 3: \"The allowable flight temperature (AFT) range for the propellant tanks was 17°C to 28°C\""}
+  - {item: "Linhas de propelente (cruzeiro do MER)", tipo: AFT, min_c: 17, max_c: 50,
+     fonte: "[F160] p. 3: \"The allowable flight temperature range for the propellant lines was 17°C to 50°C\""}
+  - {item: "Linhas de propelente à base de hidrazina (típico)", tipo: AFT, min_c: 15, max_c: 50,
+     fonte: "[F161] p. 1: \"The typical allowable temperature range for hydrazine-based lines is +15/+50⁰C\""}
+  - {item: "Propulsão líquida (hidrazina) do MAV do SRL", tipo: AFT, min_c: 14, max_c: 50,
+     fonte: "[F164] p. 3, Tab. 1, \"Key Thermal Requirements of SRL\": \"MAV (Hydrazine) +14 to +50 °C +14 to +50 °C\""}
+  - {item: "Bateria Li-ion do Perseverance (operação)", tipo: operação, min_c: -20, max_c: 30,
+     fonte: "[F162] p. 5: \"Operating temperature range of -20°C to +30°C, with both charge and discharge permitted at these temperatures\""}
+  - {item: "Bateria Li-ion do SRL (cruzeiro, interface do HRS)", tipo: AFT, min_c: 0, max_c: 30,
+     fonte: "[F165] p. 2: \"(2) 0 oC to +30 oC for the battery\""}
+  - {item: "Amostras (RSTA), fora de transientes", tipo: AFT, min_c: null, max_c: -20,
+     fonte: "[F167] p. 6: \"shall be maintained below an Allowable Flight Temperature (AFT) of -20 °C except for periods of unavoidable operational transients for which the AFT is +30 °C\""}
+  - {item: "Amostras (RSTA), transientes operacionais inevitáveis", tipo: AFT, min_c: null, max_c: 30,
+     fonte: "[F167] p. 6 (mesma citação)"}
+# O MAV do estudo (O4, MMH/NTO) é aquecido a t_minima_c.O4 de config/mav_propulsao.yaml (P-027), lido pela ferramenta.
+
+mav:
+  # Alvos alternativos de temperatura do MAV (sensibilidade): o limite inferior da prática de sistemas MMH/NTO.
+  alvos_alternativos_c:
+    nominal_mmh_nto: {valor: 15, fonte: "[F159] p. 2 (limite inferior da faixa nominal)"}
+    aft_tanques_mer: {valor: 17, fonte: "[F160] p. 3 (limite inferior da AFT dos tanques)"}
+
+comparacao_srl:   # projeto publicado do Sample Retrieval Lander (análise, não medida)
+  lamp_frio_wh_sol: {valor: 2300, fonte: "[F166] p. 11: \"the total energy on the LAMP in the cold case is 2300 W*h; this corresponds to an average power of 93W over a 24.6-hour Sol\""}
+  lamp_sobrevivencia_wh_sol: {valor: 800, fonte: "[F166] p. 10: \"it will take 800 W*h of LAMP survival heater energy and 740 W*h of battery heater energy\""}
+  bateria_aquecedor_wh_sol: {valor: 740, fonte: "[F166] p. 10 (mesma citação)"}
+  mav_sobrevivencia_w: {valor: 30, fonte: "[F164] p. 11: \"The predicted MAS survival power for the WCP conditions is of the order of 30 W\" (MAV sólido, sobrevivência a −40 °C)"}
+  mav_operacao_w: {min: 60, max: 70, fonte: "[F170] p. 7: \"~60-70 W for operation at -20 C\" (conceito anterior, MAV sólido)"}
+
+cruzeiro:   # calor que precisa sair do aeroshell (pendência do 2º portão da 4.1)
+  srl_perda_passiva_max_w: {valor: 200, fonte: "[F165] p. 3: \"the maximum surface area of the avionics bay cover was 2.5 m2. The latter would have supported a maximum heat loss from the LAMP ... of 200 W\""}
+  mer_dissipacao_w: {valor: 125, fonte: "[F168] p. 2: \"there is no easy way to dissipate the 125W generated during the cruise phase. Thus, the active Heat Rejection System (HRS)\""}
+  msl_mmrtg_termica_w: {valor: 2000, fonte: "[F169] p. 6: \"The rest of the heat from the MMRTG (20% of 2000 W) is dissipated parasitically ... to the colder back-shell and the heat-shield\""}
+  msl_fracao_parasita: {valor: 0.20, fonte: "[F169] p. 6 (mesma citação)"}
+
+orbitador:
+  mro_aquecedores_w: {valor: 300, fonte: "[F171] \"As much as 300 watts of power are used to run heaters on different parts of the spacecraft\" (página de divulgação, sem divisão por modo)"}
+
+ambiente:
+  jezero_noite_solo_k: {valor: 180, fonte: "[F172] \"their minimum night-time temperatures will presumably be similar to the surrounding regolith (about 180 K)\""}
+  # O modelo de aquecimento do MAV usa o ambiente de −62,5 °C do igloo do SRL [F57] (config/mav_propulsao.yaml).

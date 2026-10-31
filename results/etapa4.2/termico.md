@@ -1,0 +1,47 @@
+# Controle térmico (gerado por tools/termico.py)
+
+## Faixas de temperatura dos itens críticos (°C)
+
+| Item | Tipo | Mínimo | Máximo | Fonte |
+| :- | :- | -: | -: | :- |
+| MMH (orbitador e MAV) | ponto de fusão | −52,4 | — | [F157] |
+| NTO / MON-3 (orbitador e MAV) | ponto de fusão | −11,2 | — | [F158] |
+| Sistemas MMH/NTO em operação (nominal) | faixa nominal | 15,0 | 27,0 | [F159] |
+| Tanques de propelente (cruzeiro do MER) | AFT | 17,0 | 28,0 | [F160] |
+| Linhas de propelente (cruzeiro do MER) | AFT | 17,0 | 50,0 | [F160] |
+| Linhas de propelente à base de hidrazina (típico) | AFT | 15,0 | 50,0 | [F161] |
+| Propulsão líquida (hidrazina) do MAV do SRL | AFT | 14,0 | 50,0 | [F164] |
+| Bateria Li-ion do Perseverance (operação) | operação | −20,0 | 30,0 | [F162] |
+| Bateria Li-ion do SRL (cruzeiro, interface do HRS) | AFT | 0,0 | 30,0 | [F165] |
+| Amostras (RSTA), fora de transientes | AFT | — | −20,0 | [F167] |
+| Amostras (RSTA), transientes operacionais inevitáveis | AFT | — | 30,0 | [F167] |
+| MAV O4 do estudo (aquecido) | alvo do aquecimento (P-027) | −1,0 | — | config/mav_propulsao.yaml, aquecimento.t_minima_c |
+
+Ambiente do modelo de aquecimento do MAV: −62,5 °C (igloo do SRL [F57]); mínima noturna do solo em Jezero: cerca de −93 °C [F172].
+
+## Aquecimento do MAV e efeito no orçamento de energia do lander (C + RHU)
+
+O aquecimento escala com (T − T_ambiente) no modelo atual (P-027). A área da sobrevivência é linear na carga (mesmo cenário, tools/energia.py); a da opção é a maior entre ela e a de operação com céu claro.
+
+| Alvo do MAV | T (°C) | Potência (W) | Wh/sol | Sobrevivência (Wh/sol) | Área da opção (m²) | Demanda em operação (Wh/sol) |
+| :- | -: | -: | -: | -: | -: | -: |
+| atual (P-027) | −1 | 48,3 | 1 191 | 1 694 | 27,7 | 4 691 |
+| nominal_mmh_nto | 15 | 60,8 | 1 500 | 2 004 | 32,8 | 5 000 |
+| aft_tanques_mer | 17 | 62,4 | 1 539 | 2 042 | 33,4 | 5 039 |
+
+## Amostras
+
+AFT das amostras fora de transientes: −20 °C [F167]. O MAV do estudo é aquecido a −1 °C: 19 K acima da AFT das amostras; com os alvos alternativos, nominal_mmh_nto 35 K, aft_tanques_mer 37 K.
+
+## Comparação com o projeto publicado do SRL (análise, não medida)
+
+- Aquecedores de sobrevivência do LAMP e da bateria no caso frio: 1 540 Wh/sol; energia total do LAMP no caso frio: 2 300 Wh/sol [F166]. Aqui: aquecedores do lander 363 Wh/sol mais 34,6 W de RHUs (853 Wh/sol), total 1 217 Wh/sol, 79 % do SRL (P-056, ADR 0015). O SRL é outro veículo, no pior caso frio (Ls 72°), e a comparação não é verificação.
+- MAV: sobrevivência do MAV sólido do SRL de cerca de 30 W a −40 °C [F164]; operação a −20 °C de 60 a 70 W [F170]. Aqui: 48,3 W (MAV líquido).
+
+## Cruzeiro: calor das RHUs dentro do aeroshell
+
+35 RHUs, 35,0 W: 18 % da perda passiva máxima do LAMP do SRL (200 W [F165]); 28 % dos 125 W que o MER rejeitou por HRS ativo [F168]; 9 % dos 400 W da MMRTG que o MSL dissipou parasitamente no backshell e no escudo [F169]. A dissipação das aviônicas do lander no cruzeiro não está no estudo.
+
+## Orbitador
+
+Os aquecedores estão dentro da potência da plataforma por modo (P-053): cruzeiro 745 W, captura 310 W, encontro 1 022 W, retorno 945 W. Referência: o MRO usa até 300 W em aquecedores [F171], sem divisão por modo.
