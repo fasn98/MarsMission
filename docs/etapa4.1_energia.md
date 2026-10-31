@@ -317,3 +317,13 @@ A energia dos cenários de tempestade é dividida por 1,258, a razão do modelo 
 - **P-059:** fator do Opportunity nas tempestades.
 - **P-060:** tolerância do teste da potência específica.
 - **P-061:** probabilidade de tempestade global na estada.
+
+## Nota (2026-10-31): fechamento da etapa (ADR 0015)
+- **Linha de base do lander: C + RHU**, com 27,7 m² e 245 kg. A C sem RHU fica como alternativa
+  (`results/etapa4.1/energia.md`).
+- **P-059 a P-061:** aprovadas, NÃO VALIDADAS.
+- **Risco registrado:** as 35 RHUs passam das alocações recentes de 20 e de 24. Só a de até 40 comporta.
+- **Pendências** (ADR 0015, nota do 2º portão):
+  - **Etapa 4.2:** o calor das RHUs no cruzeiro, dentro do aeroshell.
+  - **Etapa 4.4:** a linha do tempo mínima da superfície até o lançamento do MAV, a probabilidade acumulada de tempestade
+    até esse lançamento (contra os 25 % da estada) e o efeito da chegada em Ls ~190° na entrada, descida e pouso.
