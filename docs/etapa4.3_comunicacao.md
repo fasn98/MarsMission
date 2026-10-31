@@ -1,91 +1,155 @@
 # Etapa 4.3: comunicação
 
 Fase 4, subsistemas. Os números vêm de `results/etapa4.3/comunicacao.md` e `.yaml`, gerados por `tools/comunicacao.py`.
-As entradas são `config/comunicacao.yaml`, a efeméride DE440 (`config/kernels.yaml`) e a missão de referência
-(`results/etapa1.3/missoes.yaml`).
+As entradas são `config/comunicacao.yaml`, a efeméride DE440 com o pck00011 (`config/kernels.yaml`) e a missão de
+referência (`results/etapa1.3/missoes.yaml`).
 
 ## 1. Pergunta
 - Enlaces com a DSN em banda X ao longo da missão (distância máxima Terra–Marte), volumes de dados, relé UHF
   lander–orbitador e atraso de comunicação.
-- Conjunção solar: as datas em que Marte fica atrás do Sol durante a missão de referência e o impacto nas operações, em
-  especial a busca dos tubos, a transferência, o lançamento do MAV e o encontro.
+- Conjunção solar: as datas em que Marte fica atrás do Sol durante a missão de referência e o impacto nas operações
+  (busca dos tubos, transferência, lançamento do MAV e encontro).
+- Pedido do Fabio para o portão:
+  - registrar como requisito proposto o lançamento do MAV antes da conjunção;
+  - comparar as saídas para a comunicação do lander;
+  - dizer o volume de dados dos helicópteros.
 
 ## 2. Conjunção solar na estada (`results/etapa4.3/comunicacao.md`)
-O ângulo Sol–Terra–Marte (SEP) é calculado dia a dia pela efeméride (baricentro de Marte visto da Terra). O mínimo é de
-**0,30° em 2030-05-25**, 247 dias depois da chegada, a 376,5 milhões de km. A estada vai de 2029-09-20 a 2030-11-08.
+- **Como foi calculado:** o ângulo Sol–Terra–Marte (SEP) é calculado pela efeméride (baricentro de Marte visto da Terra),
+  um ponto por dia à meia-noite TDB. As datas têm resolução de ±1 dia.
+- **Mínimo:** 0,30° em 2030-05-25, 247 dias depois da chegada, a 376,5 milhões de km. Na amostragem diária o mínimo real
+  fica um pouco abaixo disso.
+- **Estada:** de 2029-09-20 a 2030-11-08.
 
-| Critério (fonte) | SEP abaixo de | Janela | Dias |
+| Critério (fonte) | SEP até | Janela | Dias |
 | :- | -: | :- | -: |
-| Período de conjunção (MRO [F173]) | 5° | 2030-05-06 a 2030-06-13 | 39 |
+| Período de conjunção (MRO [F173], "5 deg or less") | 5° | 2030-05-06 a 2030-06-13 | 39 |
 | Sem depender de telemetria (MER [F174]) | 3° | 2030-05-14 a 2030-06-06 | 24 |
-| Retorno BPSK padrão garantido (DSN 810-005 [F175]) | 2,3° | 2030-05-17 a 2030-06-03 | 18 |
+| Abaixo do ângulo em que a DSN 810-005 cobre o retorno BPSK padrão [F175] | 2,3° | 2030-05-17 a 2030-06-03 | 18 |
 | Sem comandos (MER [F174]); a banda X degrada (MRO [F173]) | 2° | 2030-05-18 a 2030-06-02 | 16 |
 
-- A janela de 2° (16 dias) tem a ordem de grandeza da moratória de comandos de 2021, de 2 a 16 de outubro [F176].
-- Depois da conjunção, a NASA reservou "about a week" para baixar os dados guardados [F176].
-- O relé de proximidade (lander–orbitador) não é afetado diretamente pela conjunção [F173].
-- Nos arcos de cruzeiro, o SEP mínimo é de 60,6° na ida e 44,2° na volta: não há conjunção fora da estada.
+- A janela de 2° tem a ordem de grandeza da moratória de 2021, de 2 a 16 de outubro.
+- Depois da moratória de 2021, a NASA reservou "about a week" para baixar os dados [F176].
+- O relé lander–orbitador não é afetado diretamente pela conjunção [F173].
+- Nos arcos de cruzeiro o SEP mínimo é de 60,6° (ida) e 44,2° (volta).
 
-## 3. Impacto nas operações
-| Trecho | Dias |
-| :- | -: |
-| Da chegada ao início do período de conjunção (SEP ≤ 5°) | 228 |
-| Do fim do período de conjunção à partida, menos 7 dias de recuperação | 141 |
-| Fases do encontro do ERO (captura em 22 dias + fase de RAAN em 24 dias [F121]) | 46 |
-
-- **Superfície** (busca dos tubos, transferência, lançamento do MAV):
-  - nenhum evento crítico deve cair dentro da janela, porque não há comando abaixo de 2° nem dependência de telemetria
-    abaixo de 3°;
-  - antes da conjunção há 228 dias, e a linha do tempo mínima da superfície é pendência da Etapa 4.4;
-  - o lançamento do MAV pode ficar antes da conjunção ou depois dela.
-- **Encontro:**
-  - se o lançamento do MAV for depois da conjunção, as fases do encontro (46 dias) cabem antes da partida, com folga de
-    95 dias;
-  - se for antes, o encontro também pode ficar todo antes da conjunção, se a superfície terminar cedo.
-- **A decisão de onde pôr o lançamento do MAV é do Fabio** (seção 6).
+## 3. Requisito proposto: lançamento do MAV antes da conjunção
+**Requisito proposto (pedido do Fabio no portão da 4.3):** o MAV é lançado antes do início do período de conjunção
+(SEP ≤ 5°, a partir de 2030-05-06), com folga.
+- O tamanho da folga fica para a Etapa 4.4, junto com a mitigação da tempestade (ADR 0015): o lander só precisa
+  sobreviver até o lançamento do MAV.
+- Da chegada ao início da janela há 228 dias.
+- Se o lançamento for antes da conjunção, o encontro também pode ficar todo antes dela. As fases do encontro do ERO,
+  da subida do MAV à selagem (T0 + 22 d) mais a fase de RAAN (T0 + 46 d) [F121], somam 46 dias.
+- Se o encontro passar da conjunção, ele cabe depois da janela e dos 7 dias de recuperação, com 95 dias de folga até a
+  partida.
 
 ## 4. Distância e tempo de luz
 - **Distância Terra–espaçonave máxima:** 380,7 milhões de km na estada, 246,8 na ida e 306,5 na volta. O máximo da missão é
   2,545 UA. O análogo (MRO) foi projetado para até 400 milhões de km [F173].
 - **Tempo de luz (uma via):** até 21,2 min; o mínimo na estada é de 13,7 min.
 
-## 5. Enlaces e volumes de dados
-- **Orbitador em banda X** (análogo do MRO: HGA de 3 m e TWTA de 100 W [F173]; taxa escalada com 1/d², P-064):
-  - 552 kbps na distância máxima da estada e 1.314 kbps na mínima;
-  - 15.900 Mbit por passe de 8 h na distância máxima;
-  - perto da Terra a escala superestima: a 100 milhões de km dá 8.000 kbps, contra os 3 a 4 Mbps publicados [F173];
-  - os valores na estada ficam bem abaixo disso, mas são uma estimativa, não um orçamento de enlace.
-- **Lander direto à Terra** (análogo do MSL: HGA de 0,28 m e 15 W [F137]):
-  - 160 bps na distância máxima [F137], ou 4,6 Mbit num passe de 8 h;
-  - isso é **1,8 % da demanda de 250 Mbit por sol** (P-063, o requisito do MSL [F137]);
-  - o enlace direto não sustenta a operação de superfície e serve só como contingência e para comandos.
-- **Relé UHF:**
-  - o Electra chega a 2.048 kbps [F137];
-  - o MSL, com orbitadores em órbita baixa, tinha de 100 a 1.150 Mbit por sol [F137];
-  - a órbita de encontro do nosso orbitador vai de 300 a 25.952 km de altitude; no apoapse, a perda de espaço livre é
-    38,7 dB maior que no periapse, só pela distância;
-  - na prática, o relé pelo nosso orbitador só funciona perto do periapse.
-  - O volume por sol depende da orientação da órbita e da visibilidade do sítio, e **não foi calculado**.
-- **Volumes de dados do orbitador** (câmeras e sensores de encontro): não estimados. A capacidade de 15.900 Mbit por passe
-  na distância máxima fica muito acima da demanda do lander.
+## 5. Volume de dados
+- **Lander:** 250 Mbit por sol (P-063), que é o requisito do MSL [F137].
+- **Helicópteros:** 983 Mbit por sol, que é uma envoltória (P-068).
+  - Não há volume por voo publicado.
+  - O Ingenuity guardava no máximo 200 imagens por voo [F179]. Pela Navcam de 640 × 480 e 8 bits [F179, F180], sem
+    compressão, isso dá 492 Mbit por voo. Com 2 voos por sol (P-054), 983 Mbit por sol.
+  - O enlace helicóptero–base, a 250 kbps [F180], leva 33 min por voo. O press kit diz "250 kilobytes per second" [F136],
+    e essa divergência de unidade fica registrada.
+- **Demanda total:** 1.233 Mbit por sol.
 
-## 6. Para decidir (Fabio)
-1. **Onde fica o lançamento do MAV em relação à conjunção** (SEP ≤ 5° de 2030-05-06 a 2030-06-13):
-   - (a) antes: a superfície tem até 228 dias desde a chegada;
-   - (b) depois do fim da janela e dos 7 dias de recuperação, com o encontro em seguida e 95 dias de folga até a partida;
-   - a escolha depende da linha do tempo mínima da superfície (Etapa 4.4).
-2. **Relé do lander.** O enlace direto cobre só 1,8 % da demanda. Opções:
-   - (a) nosso orbitador, só nos passes perto do periapse da órbita de encontro;
-   - (b) orbitadores existentes (MRO, TGO), sem avaliar a disponibilidade deles em 2029–2030;
-   - (c) uma fase do nosso orbitador em órbita mais baixa durante a superfície, sem avaliar o Δv;
-   - nenhuma das três tem volume por sol calculado: isso exige a geometria dos passes (Etapa 4.4).
+## 6. Comparação das saídas para a comunicação do lander
+**Enlace direto atual** (análogo do MSL, 160 bps a 2,4 UA [F137], escalado com 1/d², P-064):
+- 142 bps na distância máxima da estada;
+- 4,1 Mbit num passe de 8 h (P-065);
+- 1,6 % da demanda do lander, sem os helicópteros.
+
+### (a) Orbitadores de relé existentes (estado em 2026-10-31)
+| Orbitador | Estado | Fonte |
+| :- | :- | :- |
+| MAVEN | perdido; missão encerrada em 03/06/2026 | [F181] |
+| MRO | operando; propelente para "well beyond another three years" (2025); TWTA de banda X perto do fim da vida e ponto único de falha; linha de orçamento até o FY2031 | [F182, F146] |
+| Odyssey | propelente baixo; financiamento eliminado no pedido do FY2026; fora da tabela do FY2027 | [F182, F126] |
+| TGO | saúde nominal "well into the 2030s"; extensão da ESA até 2030 não conferida; até 2.048 kbps, "over 1 Gbit during a 15-minute overflight"; pelo menos dois passes bons por sol | [F183, F177, F184] |
+| Mars Express | financiado até o fim de 2026; extensão pedida até o fim de 2029; capacidade de relé não quantificada | [F183] |
+| Orbitador comercial (PL 119-21) | US$ 700 milhões; entrega até 31/12/2028; contrato não conferido | [F185] |
+
+- **Prós:** sem massa nem energia novas no nosso orbitador. Um passe do TGO já passa da demanda total.
+- **Contras:**
+  - nenhuma fonte confirma relé até 2030–2031;
+  - o MRO tem o TWTA em fim de vida;
+  - o TGO depende de extensão da ESA;
+  - o orbitador comercial ainda não existe.
+- **É um risco de programa, não de engenharia.**
+
+### (b) Enlace direto maior (P-069)
+- **Taxa e antena:** para a demanda total num passe de 8 h, a taxa precisa ser de 42.814 bps, 301 vezes o MSL (24,8 dB).
+  Isso pede uma HGA de 4,86 m com 15 W, ou de 1,86 m com o TWTA de 100 W do MRO.
+- **Massa:** com 100 W, o conjunto (refletor, gimbal, TWTA e conversor) fica em cerca de 29,6 kg, contra 9,4 kg do MSL.
+- **Energia:** 1.376 Wh por passe.
+  - A área de operação vai a 24,5 m², ainda abaixo dos 32,8 m² da linha de base: a área continua dada pela sobrevivência.
+  - A energia por sol e a bateria crescem.
+- **Contras:**
+  - uma antena de quase 2 m apontada da superfície (vento, poeira, gimbal) não tem análogo no estudo;
+  - na conjunção, o enlace direto também para.
+
+### (c) Relé pelo nosso orbitador na órbita de encontro (P-066, P-067)
+A simulação considera:
+- uma órbita kepleriana de 300 × 25.952 km com inclinação de 30° (sem J2);
+- Marte girando à taxa do pck00011;
+- o sítio em Jezero [F172];
+- elevação mínima de 10° [F137];
+- perda de percurso de 62 + 20·log10(R) dB [F177];
+- limiares do Electra [F178];
+- 5 W, 0 dBi e 3 dB de margem;
+- 60 sóis.
+
+| Caso | Passes por sol | Duração média | Mbit por passe (médio / máximo) | Mbit por sol | Cobertura da demanda total | Energia transmitindo |
+| :- | -: | -: | -: | -: | -: | -: |
+| Periapse na latitude do sítio | 1,52 | 325 min | 1.559 / 3.564 | 2.365 | 192 % | 568 Wh/sol |
+| Apoapse na latitude do sítio | 1,00 | 582 min | 2.336 / 4.842 | 2.336 | 189 % | 669 Wh/sol |
+
+- **Os passes são longos, de 5 a 10 h, porque o orbitador passa horas perto do apoapse.** A taxa nesse trecho é baixa,
+  mas o volume acumulado cobre a demanda total nos dois casos.
+  - Isso confere com a descrição do MAVEN no apoapse: "geometric contact durations of over 2 hrs, with slant ranges
+    exceeding 8000 km ... much lower instantaneous data rates" [F178].
+  - A frase da primeira versão deste documento ("o relé pelo nosso orbitador só funciona perto do periapse") estava
+    errada.
+- **Conferência do modelo de enlace:** numa órbita baixa de 250 km, ele dá 1.024 kbps, o topo da tabela do Electra.
+  O TGO chega a 2.048 kbps [F177].
+- **Prós:** independente de orbitadores de terceiros; cobre a demanda total.
+- **Contras:**
+  - o lander gasta até 568 a 669 Wh por sol transmitindo, se usar todo o tempo visível (envoltória). Isso entra na energia
+    de operação;
+  - a orientação da órbita não está definida (P-067);
+  - sem antenas com ganho e com 5 W, o resultado depende da margem (P-066);
+  - o relé do orbitador precisa estar ativo durante a estada na órbita de encontro.
+
+## 7. Para decidir (Fabio)
+1. **Requisito proposto:** lançamento do MAV antes do início do período de conjunção (2030-05-06), com folga a definir na
+   Etapa 4.4.
+2. **Comunicação do lander:**
+   - (a) orbitadores existentes;
+   - (b) enlace direto maior;
+   - (c) relé pelo nosso orbitador;
+   - ou uma combinação, por exemplo (c) como base e (a) como reserva.
 3. **Premissas novas** (NÃO VALIDADAS):
-   - P-063: demanda do lander de 250 Mbit por sol (requisito do MSL);
-   - P-064: taxa do orbitador escalada com 1/d² a partir do MRO.
+   - P-063: demanda do lander;
+   - P-064: escala 1/d²;
+   - P-065: passe direto de 8 h;
+   - P-066: enlace UHF;
+   - P-067: geometria dos passes;
+   - P-068: volume dos helicópteros;
+   - P-069: escala do enlace direto maior.
 
-## 7. Limitações
-- Não há orçamento de enlace (link budget) próprio: as taxas vêm de análogos. Os parâmetros da DSN (ganho, temperatura de
-  ruído, EIRP: 810-005, módulos 101 e 104) foram levantados e ficam para um orçamento detalhado.
-- O SEP é o de Marte (baricentro), igual para o lander e para o orbitador na escala de graus.
-- A moratória real depende do projeto. O critério de 2° e 3° é o do MER [F174]; a NASA não publica um limite único
-  [F176].
+## 8. Limitações
+- **Taxas por análogo:** não há orçamento de enlace próprio em banda X; as taxas do orbitador e do lander vêm de
+  análogos escalados com 1/d². Os parâmetros da DSN (ganho, temperatura de ruído e EIRP, nos módulos 101 e 104 da
+  810-005) foram levantados e ficam para um orçamento detalhado.
+- **Banda X no cruzeiro:** a taxa nos arcos de cruzeiro não foi calculada; só a distância e o tempo de luz.
+- **Volume do orbitador:** o volume de dados do orbitador (câmeras e sensores de encontro) não foi estimado. Em banda X,
+  ele tem 15.900 Mbit por passe de 8 h na distância máxima.
+- **Moratória:** a moratória real depende do projeto. O critério de 2° e 3° é o do MER [F174], e a NASA não publica um
+  limite único [F176].
+- **Helicópteros:** o volume é uma envoltória sem compressão (P-068).

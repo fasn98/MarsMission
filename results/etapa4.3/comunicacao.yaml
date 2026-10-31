@@ -78,16 +78,19 @@ proximidade: '[F173] PDF p. 18 (impr. 5): "Proximity communications with surface
 orbitador_x:
   taxa_na_distancia_max_kbps: 552.0964161117691
   taxa_na_distancia_min_estada_kbps: 1313.730623009977
-  volume_por_dia_na_distancia_max_mbit: 15900.37678401895
+  volume_por_passe_8h_na_distancia_max_mbit: 15900.37678401895
   comparacao_perto:
     taxa_escalada_kbps: 8000.0
     publicada_mbps:
     - 3
     - 4
 lander_dte:
-  taxa_bps: 160.0
-  volume_por_passe_mbit: 4.608
-  fracao_da_demanda: 0.018431999999999997
+  taxa_ref_bps: 160.0
+  distancia_ref_ua: 2.4
+  taxa_bps: 142.33713865694904
+  horas_por_passe: 8.0
+  volume_por_passe_mbit: 4.0993095933201324
+  fracao_da_demanda: 0.01639723837328053
 rele_uhf:
   periapse_alt_km: 300
   apoapse_alt_km: 25952.4
@@ -97,3 +100,96 @@ rele_uhf:
   - 100
   - 1150
   taxa_max_kbps: 2048.0
+comparacao:
+  demanda_lander_mbit_sol: 250.0
+  helicopteros:
+    mbit_por_voo_max: 491.52
+    voos_por_sol: 2.0
+    mbit_por_sol: 983.04
+    minutos_de_enlace_por_voo: 32.768
+  demanda_total_mbit_sol: 1233.04
+  rele_proprio:
+  - argumento_periapse_graus: 39.308349944889486
+    passes: 91
+    passes_por_sol: 1.5166666666666666
+    mbit_por_sol_medio: 2364.664000000013
+    mbit_por_passe_medio: 1559.1191208791295
+    mbit_por_passe_max: 3564.480000000042
+    duracao_media_min: 325.4560439560439
+    tempo_visivel_por_sol_h: 8.226805555555556
+    alcance_min_km: 391.53403169916794
+    alcance_max_km: 28554.979693820667
+    cobertura_demanda_lander: 9.458656000000051
+    cobertura_demanda_total: 1.9177512489457058
+    energia_transmitindo_wh_sol: 567.6495833333333
+  - argumento_periapse_graus: 219.30834994488947
+    passes: 60
+    passes_por_sol: 1.0
+    mbit_por_sol_medio: 2336.2000000000166
+    mbit_por_passe_medio: 2336.2000000000166
+    mbit_por_passe_max: 4841.760000000064
+    duracao_media_min: 582.0166666666667
+    tempo_visivel_por_sol_h: 9.700277777777778
+    alcance_min_km: 1320.995246926761
+    alcance_max_km: 28567.534115607574
+    cobertura_demanda_lander: 9.344800000000067
+    cobertura_demanda_total: 1.8946668396808024
+    energia_transmitindo_wh_sol: 669.3191666666667
+  conferencia_taxa_orbita_baixa_kbps: 1024
+  conferencia_tgo: '[F177] p. 26: "a 15-minute relay session at 256 kbps will return
+    approximately 230 Mbit of data. In comparison, TGO supports adaptive data rates
+    up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight"'
+  dte_maior:
+    taxa_necessaria_bps: 42813.88888888889
+    fator_sobre_msl: 300.7921143621969
+    fator_db: 24.782664465011372
+    diametro_com_15w_m: 4.85614062461089
+    diametro_com_100w_m: 1.8622449199979767
+    massa_com_100w_kg: 29.599554300659456
+    massa_msl_kg: 9.4
+    energia_por_passe_wh: 1376.0
+    area_operacao_com_dte_m2: 24.504112642422772
+    area_da_linha_de_base_m2: 32.79453100719549
+orbitadores_existentes:
+- orbitador: MAVEN
+  estado: perdido; missão encerrada em 03/06/2026
+  fonte: '[F181]: "The spacecraft was heard last on Dec. 6"; "is not recoverable,
+    and it is no longer capable of performing its science and data relay mission"'
+- orbitador: MRO
+  estado: operando; propelente além de três anos (2025); TWTA de banda X perto do
+    fim da vida, ponto único de falha; linha de orçamento até o FY2031
+  fonte: '[F182] p. 12: "There are propellant reserves that will sustain spacecraft
+    operations well beyond another three years"; pPDF 74: "The X-Band TWTA is nearing
+    its end of life and is a single-string failure point for the communication system";
+    [F146] p. PS-48: "Mars Reconnaissance Orbiter 2005 (MRO) -- -- 26.0 26.0 26.0
+    24.0 24.0"'
+- orbitador: Odyssey
+  estado: propelente baixo; financiamento eliminado no pedido do FY2026; fora da tabela
+    do FY2027
+  fonte: '[F182] pPDF 64: "The low mass of usable propellant (3.2 kg) with its high
+    uncertainty"; [F126] p. PS-45: "has eliminated funding for several missions operating
+    well past the end of prime mission including Mars Odyssey and Mars Express"'
+- orbitador: TGO
+  estado: saúde nominal "well into the 2030s"; extensão da ESA até 2030 não conferida;
+    até 2048 kbps; pelo menos dois passes bons por sol
+  fonte: '[F183]: "The TGO spacecraft health is nominal and appears consistent with
+    operation well into the 2030s"; [F177] p. 26: "TGO supports adaptive data rates
+    up to 2048 kbps, and can therefore return over 1 Gbit during a 15-minute overflight";
+    [F184]: "TGO provides at least two good communications opportunities per sol"'
+- orbitador: Mars Express
+  estado: financiado até o fim de 2026; extensão pedida até o fim de 2029; capacidade
+    de relé não quantificada
+  fonte: '[F183]: "Mars Express operations are currently funded until end of 2026,
+    with extension requested until end of 2029"'
+- orbitador: Mars Telecommunications Orbiter (comercial)
+  estado: US$ 700 milhões na PL 119-21, entrega até 31/12/2028; contrato e vencedor
+    não conferidos
+  fonte: '[F185] 139 STAT. 133: "$700,000,000, to be obligated not later than fiscal
+    year 2026, for the procurement, using a competitively bid, firm fixed-price contract
+    with a United States commercial provider"; "which shall be delivered to the Administration
+    not later than December 31, 2028"'
+- orbitador: MAVEN (desempenho no apoapse, referência)
+  estado: passes longos a taxas baixas
+  fonte: '[F178] pPDF 26: "passes supported from near MAVEN apoapsis can have geometric
+    contact durations of over 2 hrs, with slant ranges exceeding 8000 km. Such passes
+    will be required to use much lower instantaneous data rates"'

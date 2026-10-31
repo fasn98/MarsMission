@@ -40,3 +40,18 @@ def test_resultado_da_etapa_4_3():
     ox = r["orbitador_x"]
     assert ox["taxa_na_distancia_max_kbps"] == pytest.approx(
         v(c["orbitador_x"]["taxa_ref_kbps"]) * (v(c["orbitador_x"]["distancia_ref_km"]) / di["estada_max_km"]) ** 2, rel=1e-12)
+
+
+def test_taxa_uhf_e_comparacao():
+    c = ler("config/comunicacao.yaml")["rele_proprio"]
+    assert tc.taxa_uhf(250.0, c) == 1024           # órbita baixa: topo da tabela do Electra
+    taxas = [tc.taxa_uhf(r_km, c) for r_km in (300.0, 3000.0, 30000.0)]
+    assert taxas[0] >= taxas[1] >= taxas[2] > 0       # cai com a distância e ainda fecha no apoapse
+    r = ler("results/etapa4.3/comunicacao.yaml")["comparacao"]
+    h = ler("config/comunicacao.yaml")["helicopteros"]
+    assert r["helicopteros"]["mbit_por_voo_max"] == pytest.approx(v(h["imagens_por_voo_max"]) * h["navcam_px"]["valor"][0] * h["navcam_px"]["valor"][1] * v(h["bits_por_pixel"]) / 1e6)
+    assert r["demanda_total_mbit_sol"] == pytest.approx(r["demanda_lander_mbit_sol"] + r["helicopteros"]["mbit_por_sol"])
+    for x in r["rele_proprio"]:
+        assert x["mbit_por_passe_medio"] <= x["mbit_por_passe_max"] and x["passes_por_sol"] > 0
+    d = r["dte_maior"]
+    assert d["diametro_com_100w_m"] < d["diametro_com_15w_m"]

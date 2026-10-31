@@ -733,3 +733,53 @@ premissas:
       500 kbps a 400 milhões de km. Perto da Terra a escala superestima: a 100 milhões de km dá mais que os 3 a 4 Mbps
       publicados (results/etapa4.3/comunicacao.md), porque outros limites dominam. Supõe-se um orbitador com o enlace do MRO.
     status: NÃO VALIDADA
+  - id: P-065
+    nome: passe_dte_do_lander
+    valor: 8
+    unidade: horas por sol
+    uso: config/comunicacao.yaml (volume do enlace direto do lander)
+    justificativa: >
+      Um passe diário de 8 h com uma antena de 34 m, como o suporte da DSN ao MRO na conjunção [F173]. Para o lander, a
+      duração real depende da visibilidade da Terra no sítio e da energia; sem fonte própria.
+    status: NÃO VALIDADA
+  - id: P-066
+    nome: enlace_uhf_do_rele_proprio
+    valor: {potencia_tx_w: 5, ganhos_antenas_dbi: 0, margem_db: 3}
+    unidade: W; dBi; dB
+    uso: config/comunicacao.yaml (taxa do relé UHF lander–orbitador)
+    justificativa: >
+      Potência no limite inferior dos rádios UHF de proximidade [F177]; soma dos ganhos das antenas igual a 0 dBi, porque
+      os padrões só aparecem em figuras; margem de 3 dB sobre os limiares do Electra do MRO [F178]. A taxa é a maior da
+      tabela de limiares que fecha o enlace. A conferência numa órbita baixa de 250 km dá 1024 kbps, o topo da tabela.
+    status: NÃO VALIDADA
+  - id: P-067
+    nome: geometria_dos_passes_de_rele
+    valor: {inclinacao_graus: 30, sois_simulados: 60, passo_s: 30}
+    unidade: graus; sóis; s
+    uso: tools/comunicacao.py (simulação dos passes do orbitador sobre Jezero)
+    justificativa: >
+      A orientação da órbita de encontro não está definida no estudo. Usa-se inclinação de 30° (acima da latitude do sítio)
+      e dois casos: periapse na latitude do sítio e apoapse nela. Órbita kepleriana fixa no espaço, sem J2, com Marte
+      girando à taxa do pck00011; 60 sóis com passo de 30 s.
+    status: NÃO VALIDADA
+  - id: P-068
+    nome: volume_de_dados_dos_helicopteros
+    valor: {imagens_por_voo: 200, compressao: nenhuma}
+    unidade: imagens; —
+    uso: tools/comunicacao.py (demanda de dados dos helicópteros)
+    justificativa: >
+      Sem volume por voo publicado: o máximo de 200 imagens guardadas por voo do Ingenuity [F179], todas da Navcam
+      (640 × 480, 8 bits [F179, F180]), sem compressão, e dois voos por sol (P-054). É uma envoltória, não uma estimativa
+      de operação.
+    status: NÃO VALIDADA
+  - id: P-069
+    nome: escala_do_enlace_direto_maior
+    valor: {ganho: "∝ D²", taxa: "∝ potência de RF", massa_refletor: "densidade de área do MRO", gimbal: "∝ D² a partir do MRO"}
+    unidade: —
+    uso: tools/comunicacao.py (opção (b), enlace direto maior)
+    justificativa: >
+      A partir do MSL (0,28 m, 15 W, 142 bps na distância máxima da estada), o diâmetro que fecha a demanda num passe de
+      8 h (P-065) com 15 W ou com 100 W (TWTA do MRO). Massa do refletor pela densidade de área do refletor de 3 m do MRO;
+      gimbal escalado com D² a partir do MRO; TWTA e conversor do MRO [F173]. Não considera o apontamento de uma antena
+      grande a partir da superfície (vento, poeira, gimbal).
+    status: NÃO VALIDADA
