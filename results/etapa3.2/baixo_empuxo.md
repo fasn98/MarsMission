@@ -43,13 +43,13 @@ Não é verificação: as duas soluções são deste estudo. ε = aceleração /
 
 ### Marte, descida da circular de mesma energia que a órbita de encontro até 300 km
 
-r0 = 16 042 km, r1 = 3 696 km (r1/r0 = 0,2304); Δv de Edelbaum = 1,770 km/s; unidade de tempo 9 818 s; aceleração de referência μ/r0² = 0,1664 m/s².
+r0 = 16 522 km, r1 = 3 696 km (r1/r0 = 0,2237); Δv de Edelbaum = 1,794 km/s; unidade de tempo 10 262 s; aceleração de referência μ/r0² = 0,1569 m/s².
 
 | ε | Δv numérico (adim.) | Δv Edelbaum (adim.) | Diferença relativa | Duração (adim.) | Voltas | Raio final / r0 | Excentricidade final |
 | -: | -: | -: | -: | -: | -: | -: | -: |
-| 1e-02 | 1,0836173 | 1,0833105 | +2,8e-04 | 108,4 | 71,0 | 0,2304 | 0,0405 |
-| 1e-03 | 1,0833141 | 1,0833105 | +3,3e-06 | 1 083,3 | 709,7 | 0,2295 | 0,0042 |
-| 1e-04 | 1,0833106 | 1,0833105 | +2,9e-08 | 10 833,1 | 7 097,2 | 0,2305 | 0,0004 |
+| 1e-02 | 1,1146723 | 1,1142644 | +3,7e-04 | 111,5 | 75,5 | 0,2205 | 0,0431 |
+| 1e-03 | 1,1142681 | 1,1142644 | +3,4e-06 | 1 114,3 | 755,3 | 0,2246 | 0,0042 |
+| 1e-04 | 1,1142644 | 1,1142644 | +3,2e-08 | 11 142,6 | 7 552,7 | 0,2236 | 0,0004 |
 
 ### Heliocêntrico, da órbita da Terra à de Marte (calculado, não verificado)
 

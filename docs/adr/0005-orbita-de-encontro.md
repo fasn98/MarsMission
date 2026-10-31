@@ -82,3 +82,8 @@ Os valores de 26.950 km acima ficam como histórico.
 O item 1 deixou o encontro em órbita baixa com orbitador elétrico para a Fase 3. A Etapa 3.3 avaliou a opção e ela não
 foi adotada (ADR 0013): na missão de referência, nenhuma opção elétrica fecha massa e tempo. A família S2 e a órbita de
 encontro de 300 × 24.992 km continuam.
+
+## Nota (Etapa 4.1, 2026-10-31): carga do orbitador de 1.022 W e captura C4
+A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
+números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
+errata de 2026-10-31 de `docs/fase3_relatorio.md`.**

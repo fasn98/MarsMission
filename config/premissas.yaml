@@ -159,7 +159,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-016
     nome: plataforma_orbitador_kg
-    valor: 496.5
+    valor: 614.0
     faixa: [473, 574]
     unidade: kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil)
     uso: config/dimensionamento.yaml
@@ -171,7 +171,8 @@ premissas:
       P-033. Histórico: até a Etapa 2.2 valia 850 kg (média geométrica de Odyssey 331,8 kg [F33] e ERO 2200 kg [F22]).
       Etapa 2.5 (pedido do Fabio): sensores de encontro alocados (2 NAC do ERO, 2 × 14,5 kg [F88]; LIDAR análogo,
       RVS3000-3D, ca. 13 kg [F89]); prevista 442,3 → 496,5 kg (faixa E1 mínimo 473 a ESA 574). Câmera de ângulo
-      largo e potência do RSS: lacuna.
+      largo e potência do RSS: lacuna. Etapa 4.1 (decisão do Fabio no portão, ADR 0015): carga elétrica de 1022 W
+      (P-028); painel e bateria maiores; prevista 496,5 → 614,0 kg, no apoapse que a regra dos 5 % passa a escolher.
     status: NÃO VALIDADA
   - id: P-017
     nome: plataforma_superficie_kg
@@ -305,13 +306,15 @@ premissas:
     status: NÃO VALIDADA
   - id: P-028
     nome: carga_eletrica_orbitador_w
-    valor: 510
+    valor: 1022
     unidade: W (mesma carga no sol e no eclipse)
     uso: config/plataformas.yaml — painel e bateria do orbitador
     justificativa: >
-      Soma de dois análogos: barramento do Mars Express no modo de comunicação, sem carga útil, 445 W [F68],
-      e o relé UHF Electra em full duplex, pior caso no fim de vida, 65 W [F69]. Não inclui a potência do
-      sistema de captura (CU-2), que não tem valor publicado. Usar a carga de pico também no eclipse é conservador.
+      VALOR-BASE MUDADO com aprovação do Fabio no portão da Etapa 4.1 (ADR 0015): de 510 W para 1022 W, a carga do
+      modo de encontro da P-053 (o modo dominante, results/etapa4.1/energia.md). Composição: plataforma do Mars Express
+      no modo de comunicação 445 W [F68], CCRS 500 W [F23], Electra 65 W [F69], NAC 12 W [F138]. Antes, 510 W (445 + 65)
+      não incluíam o CCRS. O lidar fica de fora (sem fonte de agência). Usar a carga de pico também no eclipse é
+      conservador.
     status: NÃO VALIDADA
   - id: P-029
     nome: eficiencia_recarga_bateria
@@ -617,4 +620,49 @@ premissas:
       10 W médios [F93] por 2 h/sol; recarga de dois helicópteros, um voo de 350 W × 90 s cada por sol [F136], embora a
       P-052 os tenha com energia própria (conservador); dois passes UHF de 15 min a 69 W [F137]. Horas do braço e voos por
       sol sem fonte.
+    status: NÃO VALIDADA
+  - id: P-055
+    nome: arranjo_simetrico_de_mais_r4d11
+    valor: {C4: 10, C5: 12}
+    unidade: motores R-4D-11
+    uso: config/motores.yaml (combinações de captura C4 e C5)
+    justificativa: >
+      Variantes da C2 (8 × R-4D-11, arranjo do Orion ESM [F107]) com 10 e 12 motores em arranjo simétrico, pedidas pelo
+      Fabio no portão da Etapa 4.1 para trazer a 1ª queima da captura abaixo de 2000 s sem relaxar o limite. Não há
+      arranjo voado com 10 ou 12 R-4D-11; a montagem, o desalinhamento e a interação das plumas não foram estudados.
+      A massa dos motores entra na soma do conjunto; o resto da propulsão seca continua no ε do estágio.
+    status: NÃO VALIDADA
+  - id: P-056
+    nome: sobrevivencia_do_lander_pelo_spirit
+    valor: {expoente_escala: 0.6667, expoente_sensibilidade: 1.0}
+    unidade: adimensional
+    uso: tools/energia.py (opção C, carga de sobrevivência na tempestade)
+    justificativa: >
+      Carga de sobrevivência do lander na tempestade global = aquecimento do MAV (modelo atual) + aquecedores do
+      Spirit no inverno de 2008 (84 Wh/sol [F141]) escalados por (massa da plataforma do lander / 174 kg [F142])^(2/3),
+      como perda térmica proporcional à área, + a eletrônica mínima do Spirit (140 Wh/sol [F141]) sem escala.
+      Pedida pelo Fabio no portão da Etapa 4.1. O Spirit estava em Gusev, no inverno, com aquecedores de instrumento e de
+      bateria; o lander é outro veículo, em outra latitude e estação, e a tempestade aquece as noites. Sensibilidade com
+      escala linear na massa (expoente 1). Na sobrevivência não há cargas de pico (a comunicação está nos 140 Wh).
+    status: NÃO VALIDADA
+  - id: P-057
+    nome: razao_de_energia_do_opportunity_em_2018
+    valor: {tau_alto: 10.8, tau_referencia: 0.64}
+    unidade: adimensional
+    uso: tools/energia.py (sobrevivência da opção C acima de τ = 6)
+    justificativa: >
+      Acima de τ = 6 o modelo de insolação não vale [F130]. Usa-se a razão medida pelo Opportunity entre a energia do
+      sol 5111 (τ = 10,8, ~22 Wh) e a do sol 5100 (τ = 0,64, 652 Wh) [F140], aplicada à energia por m² do lander em
+      Jezero com τ = 0,64 no pior sol da estada. Supõe-se que a razão não dependa da latitude, da estação, da inclinação
+      do painel e da poeira (o fator de poeira do sol 5111 não foi publicado; o do sol 5100 é 0,772). A data do sol 5100
+      sai do sol 5106 (04/06/2018) menos 6 sóis. A duração da fase com τ > 6 e a ponte pela bateria não são avaliadas.
+    status: NÃO VALIDADA
+  - id: P-058
+    nome: atividade_do_pu238
+    valor: {massa_molar_g_mol: 238, dias_por_ano: 365.25}
+    unidade: g/mol; dias
+    uso: tools/energia.py (atividade e enquadramento no NSPM-20 da alternativa A)
+    justificativa: >
+      Massa molar do Pu-238 tomada como o número de massa e ano de 365,25 dias para converter a meia-vida de 87,7 anos
+      [F148]. O erro na atividade é muito menor que a distância ao limite do Tier I.
     status: NÃO VALIDADA

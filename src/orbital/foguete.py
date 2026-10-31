@@ -80,8 +80,11 @@ def dimensionar_estagio(est: Estagio, carga_final: float):
     def residuo(mp):  # m_inicial − (carga + inerte + propelente + descartes)
         return m_inicial(mp) - (carga_final + k * mp + mp + descartes)
 
-    r0, r1 = residuo(0.0), residuo(1.0)
-    inclinacao = r1 - r0
+    # resíduo linear em mp: inclinação por diferença num passo da escala da carga (com passo de 1 kg, cargas grandes,
+    # como nos pontos quase inviáveis das varreduras, perdem a precisão por cancelamento)
+    passo = max(1.0, carga_final)
+    r0, r1 = residuo(0.0), residuo(passo)
+    inclinacao = (r1 - r0) / passo
     if inclinacao >= 0.0:
         raise ValueError(f"estágio {est.nome} inviável: Δv alto demais para Isp e fração estrutural dados")
     mp = -r0 / inclinacao

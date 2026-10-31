@@ -75,6 +75,39 @@ lander:
   pu238:
     por_unidade_g: {valor: 3478, fonte: "[F135] p. 3: \"238Pu 3,478 g\""}
     estado: "[F53] p. 27 do PDF (2016): \"First new US Pu-238 production since the late 1980s\", \"~ 50 gm total Pu-238 was produced\"; disponibilidade para a missão não avaliada"
+    # Fatos de disponibilidade (decisão do Fabio no portão da 4.1: a opção A fica condicionada ao Pu-238).
+    disponibilidade:
+      - "[F143] p. 27 do PDF: \"although DOE planned to produce a total of 1.5 kg from 2018 through 2021, they produced only 0.77 kg\""
+      - "[F143] p. 28 do PDF: \"the Dragonfly rotorcraft is being designed with one MMRTG requiring 32 fueled clads\"; \"DOE can only produce about 187 fueled clads over that time period—101 fewer than needed\""
+      - "[F143] p. 13 do PDF: \"a fueled clad containing 150 grams of Pu-238\""
+      - "[F144] p. PS-104: \"DoE continues to increase annual production, producing approximately 700 grams per year\""
+      - "[F145] p. 32 do PDF: \"In July 2025, DOE informed NASA that DOE did not have sufficient thermal inventory to provide an in-spec multi-mission radioisotope thermoelectric generator for a baselined mission\""
+      - "[F146] p. PS-56: \"The budget assumes a pause in the development of additional units after completion of the MMRTG for the Dragonfly mission\""
+    # Atividade e enquadramento no NSPM-20 [F128]: Tier I até 100.000 × A2 (SSR-6, Tab. 2).
+    meia_vida_anos: {valor: 87.7, fonte: "[F148] p. 3 do PDF: \"87.7-year half-life\""}
+    massa_molar_g_mol: {valor: 238, premissa: P-058}   # número de massa como massa molar
+    dias_por_ano: {valor: 365.25, premissa: P-058}
+    a2_tbq: {valor: 1.0e-3, fonte: "[F147] p. 55 do PDF, Tab. 2, linha Pu-238: \"1 × 10−3\" (A2, TBq)"}
+    tier_i_max_a2: {valor: 1.0e5, fonte: "[F128] p. 2: \"Tier I shall apply to launches of spacecraft containing radioactive sources of total quantities up to and including 100,000 times the A2 value listed in Table 2\""}
+    avogadro_mol: {valor: 6.02214076e23, fonte: "[F31] p. 20 do PDF: \"the Avogadro constant NA is 6.022 140 76 × 1023 mol−1\""}
+  # Sobrevivência do lander na tempestade (opção C, decisão do Fabio no portão da 4.1): aquecimento do MAV (modelo atual)
+  # + aquecedores e eletrônica mínima do próprio lander, pelo análogo do Spirit no inverno de 2008 [F141].
+  sobrevivencia:
+    aquecedores_mer_wh_sol: {valor: 84, fonte: "[F141] sóis 1574–1579 (jun./2008): \"Together, the two heaters account for 84 watt-hours or about 37 percent of Spirit's total energy usage\""}
+    eletronica_mer_wh_sol: {valor: 140, fonte: "[F141] mesma entrada: \"Everything else, including on-board computers and memories, radios, cameras, sensors and actuators, gets by on about 140 watt-hours\""}
+    massa_mer_kg: {valor: 174, fonte: "[F142] p. 44: \"Each Mars Exploration Rover is 1.6 meter (5.2 feet) long and weighs 174 kilograms\""}
+    expoente_escala: {valor: 0.6667, premissa: P-056}   # aquecedores ∝ massa^(2/3) (área); a eletrônica não escala
+    expoente_sensibilidade: {valor: 1.0, premissa: P-056}
+  # Opportunity na tempestade global de 2018 [F140]: a mesma posição e quase a mesma poeira, 11 sóis.
+  tempestade_2018_opportunity:
+    latitude_graus: {valor: -1.98, fonte: "[F142] p. 28: \"1.98 degrees south latitude\" (centro da elipse-alvo)"}
+    sol_data_conhecida: {sol: 5106, data: "2018-06-04", fonte: "[F140] \"On Sol 5106 (June 4, 2018)\""}
+    pontos:
+      - {sol: 5100, tau: 0.640, wh: 652, fonte: "[F140] \"As of Sol 5100 (May , 2018), the solar array energy production was 652 watt-hours with an atmospheric opacity (Tau) of 0.640 and a solar array dust factor of 0.772\""}
+      - {sol: 5106, data: "2018-06-04", tau: 2.1, wh: 345, fonte: "[F140] \"On Sol 5106 (June 4, 2018), energy was down to 345 watt-hours with a tau of 2.1\""}
+      - {sol: 5111, data: "2018-06-10", tau: 10.8, wh: 22, fonte: "[F140] \"The atmospheric opacity (tau) over the rover has increased to a record 10.8 on Sol 5111 (June 10, 2018). Power levels on the rover have dropped to a record low of ~22 watt hours. As expected, Opportunity has tripped a low-power fault and gone silent\""}
+    referencia_sol: 5100
+    desfecho: "[F140] sóis 5292–5299 (13–20/12/2018): \"No signal from Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely experienced a low-power fault, a mission clock fault and an up-loss timer fault\""
   ingenuity_voo:   # referência, fora da conta do lander (P-052)
     potencia_w: {valor: 350, fonte: "[F136] p. 28: \"Power expended by the helicopter during an up-to-90-second flight is about 350 watts\""}
     duracao_s: {valor: 90, fonte: "[F136] p. 28 (mesma citação)"}
@@ -87,7 +120,8 @@ lander:
     massa_alternativa_kg: {valor: 43.6, fonte: "[F135] p. 3: \"MMRTG Mass 43.6 kg\" (a [F52] dá 45 kg; usa-se 45)"}
 
 orbitador:
-  # Proposta de carga por modo (P-053), lado a lado com a carga atual de 510 W (P-028, inalterada).
+  # Carga por modo (P-053); o modo dominante é o valor-base da P-028 desde o portão da 4.1 (ADR 0015).
+  carga_anterior_w: {valor: 510, premissa: P-028}   # valor-base anterior da P-028, só para a comparação
   modos:
     cruzeiro: {plataforma_w: 445, ccrs_w: 300, outros_w: 0}
     captura: {plataforma_w: 310, ccrs_w: 0, outros_w: 0}

@@ -16,9 +16,9 @@ lander:
   tau_max_modelo: 6.0
   demanda:
     plataforma_wh_sol: 3500.0
-    aquecimento_mav_w: 48.03802482873204
-    aquecimento_mav_wh_sol: 1184.6032808690836
-    total_wh_sol: 4684.603280869083
+    aquecimento_mav_w: 48.27846730428883
+    aquecimento_mav_wh_sol: 1190.5325201835713
+    total_wh_sol: 4690.532520183571
   picos_wh:
     braco: 20.0
     recarga_helicopteros: 17.5
@@ -27,11 +27,11 @@ lander:
   solar:
   - tau: 0.4
     tau_usado: 0.4
-    demanda_wh_sol: 4684.603280869083
-    area_m2: 18.00302440968622
-    painel_kg: 94.68465650469345
-    bateria_kg: 98.58398365107713
-    total_kg: 193.26864015577058
+    demanda_wh_sol: 4690.532520183571
+    area_m2: 18.025810595347988
+    painel_kg: 94.8044975999083
+    bateria_kg: 98.70503895374793
+    total_kg: 193.50953655365623
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 292.73851832041004
@@ -39,11 +39,11 @@ lander:
     carga: operação normal
   - tau: 2.0
     tau_usado: 2.0
-    demanda_wh_sol: 4684.603280869083
-    area_m2: 28.706367373715203
-    painel_kg: 150.9775509061334
-    bateria_kg: 98.58398365107713
-    total_kg: 249.5615345572105
+    demanda_wh_sol: 4690.532520183571
+    area_m2: 28.7427006364919
+    painel_kg: 151.1686411600496
+    bateria_kg: 98.70503895374793
+    total_kg: 249.87368011379752
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 183.5891885018974
@@ -51,11 +51,11 @@ lander:
     carga: operação normal
   - tau: 8.5
     tau_usado: 6.0
-    demanda_wh_sol: 4684.603280869083
-    area_m2: 76.67804492211424
-    painel_kg: 403.27859251224453
-    bateria_kg: 98.58398365107713
-    total_kg: 501.86257616332165
+    demanda_wh_sol: 4690.532520183571
+    area_m2: 76.77509529143089
+    painel_kg: 403.7890167983693
+    bateria_kg: 98.70503895374793
+    total_kg: 502.4940557521172
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -63,54 +63,143 @@ lander:
     carga: operação normal
   - tau: 8.5
     tau_usado: 6.0
-    demanda_wh_sol: 1184.6032808690836
-    area_m2: 19.3897024228938
-    painel_kg: 101.97771618040709
-    bateria_kg: 27.125650317743794
-    total_kg: 129.10336649815088
+    demanda_wh_sol: 1693.8319251194762
+    area_m2: 27.724806703530994
+    painel_kg: 145.81515525638332
+    bateria_kg: 34.58240180452264
+    total_kg: 180.39755706090597
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
     cenario: global_2018
-    carga: só o aquecimento do MAV (sobrevivência)
+    carga: 'sobrevivência: MAV + aquecedores e eletrônica do lander (P-056)'
   - tau: 0.4
     tau_usado: 0.4
-    demanda_wh_sol: 4684.603280869083
-    area_m2: 7.130105152195935
-    painel_kg: 37.4998967848305
-    bateria_kg: 98.58398365107713
-    total_kg: 136.08388043590764
+    demanda_wh_sol: 4690.532520183571
+    area_m2: 7.13912963031076
+    painel_kg: 37.547359899415646
+    bateria_kg: 98.70503895374793
+    total_kg: 136.25239885316358
     pior_sol: 137
     pior_sol_ls: 276.48234792718114
     energia_por_m2_no_pior_sol_wh: 739.1445958345515
     cenario: claro_jezero
     carga: operação normal, sem poeira acumulada (sensibilidade)
+  - tau: 8.5
+    tau_usado: 6.0
+    demanda_wh_sol: 2085.9894167352954
+    area_m2: 34.143678901623055
+    painel_kg: 179.57441122322376
+    bateria_kg: 42.58895059167896
+    total_kg: 222.16336181490271
+    pior_sol: 402
+    pior_sol_ls: 57.90768368119582
+    energia_por_m2_no_pior_sol_wh: 68.73126064091625
+    cenario: global_2018
+    carga: sobrevivência, aquecedores com escala linear na massa (sensibilidade da
+      P-056)
   solar_com_sobrevivencia:
     cenario: claro_jezero + global_2018
-    carga: operação normal com céu claro; só o MAV na tempestade global
-    area_m2: 19.3897024228938
-    painel_kg: 101.97771618040709
-    bateria_kg: 98.58398365107713
-    total_kg: 200.56169983148422
+    carga: operação normal com céu claro; sobrevivência na tempestade global
+    area_m2: 27.724806703530994
+    painel_kg: 145.81515525638332
+    bateria_kg: 98.70503895374793
+    total_kg: 244.52019421013125
+    dimensiona_area: sobrevivência
+  solar_com_sobrevivencia_sensibilidade:
+    cenario: claro_jezero + global_2018
+    carga: operação normal com céu claro; sobrevivência na tempestade global
+    area_m2: 34.143678901623055
+    painel_kg: 179.57441122322376
+    bateria_kg: 98.70503895374793
+    total_kg: 278.2794501769717
+    dimensiona_area: sobrevivência
+  sobrevivencia:
+    plataforma_lander_kg: 1564.875
+    base:
+      expoente: 0.6667
+      aquecedores_lander_wh_sol: 363.2994049359048
+      eletronica_wh_sol: 140.0
+      mav_wh_sol: 1190.5325201835713
+      total_wh_sol: 1693.8319251194762
+    sensibilidade:
+      expoente: 1.0
+      aquecedores_lander_wh_sol: 755.4568965517242
+      eletronica_wh_sol: 140.0
+      mav_wh_sol: 1190.5325201835713
+      total_wh_sol: 2085.9894167352954
+  comparacao_opportunity_2018:
+  - sol: 5106
+    data: '2018-06-04'
+    tau: 2.1
+    razao_medida: 0.5291411042944786
+    razao_modelo: 0.6657289175872815
+    diferenca_relativa: 0.2581311717881376
+  - sol: 5111
+    data: '2018-06-10'
+    tau: 10.8
+    razao_medida: 0.03374233128834356
+    razao_modelo: null
+    diferenca_relativa: null
+  acima_do_modelo:
+    tau: 10.8
+    tau_referencia: 0.64
+    razao_medida: 0.03374233128834356
+    energia_por_m2_referencia_wh: 271.5109781014671
+    base:
+      energia_disponivel_wh_sol: 253.99841485658874
+      necessaria_wh_sol: 1905.5609157594108
+      cobertura: 0.1332932538424595
+      area_necessaria_m2: 207.99857385355142
+    sensibilidade:
+      energia_disponivel_wh_sol: 312.80435644227947
+      necessaria_wh_sol: 2346.738093827207
+      cobertura: 0.1332932538424595
+      area_necessaria_m2: 256.15459085407105
+    opportunity_wh_sol: 22
+    desfecho_opportunity: '[F140] sóis 5292–5299 (13–20/12/2018): "No signal from
+      Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely
+      experienced a low-power fault, a mission clock fault and an up-loss timer fault"'
   fator_recarga: 1.125
-  fracao_energia_tau_max_sobre_claro: 0.23478721227142396
+  fracao_energia_tau_max_sobre_claro: 0.234787212271424
   pu238_estado: '[F53] p. 27 do PDF (2016): "First new US Pu-238 production since
     the late 1980s", "~ 50 gm total Pu-238 was produced"; disponibilidade para a missão
     não avaliada'
+  pu238_disponibilidade:
+  - '[F143] p. 27 do PDF: "although DOE planned to produce a total of 1.5 kg from
+    2018 through 2021, they produced only 0.77 kg"'
+  - '[F143] p. 28 do PDF: "the Dragonfly rotorcraft is being designed with one MMRTG
+    requiring 32 fueled clads"; "DOE can only produce about 187 fueled clads over
+    that time period—101 fewer than needed"'
+  - '[F143] p. 13 do PDF: "a fueled clad containing 150 grams of Pu-238"'
+  - '[F144] p. PS-104: "DoE continues to increase annual production, producing approximately
+    700 grams per year"'
+  - '[F145] p. 32 do PDF: "In July 2025, DOE informed NASA that DOE did not have sufficient
+    thermal inventory to provide an in-spec multi-mission radioisotope thermoelectric
+    generator for a baselined mission"'
+  - '[F146] p. PS-56: "The budget assumes a pause in the development of additional
+    units after completion of the MMRTG for the Dragonfly mission"'
   braco_potencia_media_w: 10.0
   mmrtg:
     potencia_inicio_w: 110.0
     anos_do_lancamento_ao_fim: 1.9548254620123204
     potencia_fim_w: 99.91521975653386
-    demanda_media_w: 189.97000291443462
+    demanda_media_w: 190.2104453899914
     unidades: 2
     massa_sem_margem_kg: 90.0
     margem_crescimento: 0.275
     bateria_kg: 2.94
     massa_kg: 117.68999999999998
-    sobra_por_sol_wh: 243.15540839131268
+    sobra_por_sol_wh: 237.2261690768249
     fracao_potencia_fim: 0.9083201796048532
     pu238_g: 6956.0
+    nspm20:
+      atividade_tbq: 4408.140408507183
+      multiplo_a2: 4408140.408507182
+      limite_tier_i_a2: 100000.0
+      vezes_o_limite_tier_i: 44.081404085071824
+      enquadramento: 'acima do Tier I: Tier II, ou Tier III se a análise de segurança
+        der probabilidade ≥ 1e-6 de exposição acima de 25 rem (não avaliada)'
     potencia_termica_total_w: 3950.0
     energia_por_sol_fim_wh: 4927.758689260396
     sensibilidade_abastecimento:
@@ -152,7 +241,7 @@ orbitador:
     volta: 1.6647324995053354
   afelio_marte_ua: 1.6659692411955
   eclipse_max_h:
-    encontro: 3.23508208906129
+    encontro: 3.336660504812207
     captura_1sol: 4.194924549159836
   modos:
   - modo: cruzeiro
@@ -172,40 +261,40 @@ orbitador:
   - modo: encontro
     carga_w: 1022
     distancia_max_ua: 1.6660668024526228
-    eclipse_h: 3.23508208906129
-    painel_w: 1319.3090909090909
-    painel_kg_sem_margem: 59.142602203609
-    bateria_wh: 3306.2538950206385
+    eclipse_h: 3.336660504812207
+    painel_w: 1314.4709677419355
+    painel_kg_sem_margem: 58.925716565619524
+    bateria_wh: 3410.0670359180754
   - modo: retorno
     carga_w: 945
     distancia_max_ua: 1.6660668024526228
-    eclipse_h: 3.23508208906129
-    painel_w: 1219.909090909091
-    painel_kg_sem_margem: 54.68665272251518
-    bateria_wh: 3057.1525741629193
+    eclipse_h: 3.336660504812207
+    painel_w: 1215.4354838709678
+    painel_kg_sem_margem: 54.48610778327833
+    bateria_wh: 3153.1441770475353
   modo_dominante: encontro
-  atual:
+  anterior:
     carga_w: 510.0
-    plataforma_kg: 496.54291603718724
-    painel_w_afelio: 658.3636363636364
-    bateria_wh: 5499.639551404193
-    orbitador_injetado_kg: 7205.286348006781
-    leo_kg: 21872.24564705795
-  proposta:
-    carga_w: 1022
-    plataforma_kg: 609.7644721991851
-    painel_w_afelio: 1319.3090909090909
-    bateria_wh: 11020.846316735462
-    orbitador_injetado_kg: 7882.499786725008
-    leo_kg: 23927.98333349027
+    plataforma_kg: 498.669391661766
+    painel_w_afelio: 655.9493087557604
+    bateria_wh: 5672.322858180752
+    orbitador_injetado_kg: 7116.545039020556
+    leo_kg: 21602.864027046497
+  adotada:
+    carga_w: 1022.0
+    plataforma_kg: 614.0257625684388
+    painel_w_afelio: 1314.4709677419355
+    bateria_wh: 11366.890119726919
+    orbitador_injetado_kg: 7796.395336836866
+    leo_kg: 23666.606118460862
   margens_escolhidos:
     Falcon Heavy (descartável):
-      atual: 0.5577806776374681
-      proposta: 0.4239462294274814
+      anterior: 0.5772057632216976
+      adotada: 0.43967248514669066
     Vulcan VC6:
-      atual: 0.15090208235846192
-      proposta: 0.0520240134830845
+      anterior: 0.1652535066441878
+      adotada: 0.06364270969286756
   bateria_dod_mro_wh:
     profundidade_descarga: 0.4
-    atual: 4124.729663553145
-    proposta: 8265.634737551596
+    anterior: 4254.2421436355635
+    adotada: 8525.167589795188

@@ -1,52 +1,52 @@
 gerado_por: tools/lancamento.py
 veiculos:
   orbitador_missao_A:
-    injetada_kg: 4108.958566980409
-    leo_modelo_kg: 12473.085286255182
+    injetada_kg: 4451.812622352831
+    leo_modelo_kg: 13513.847271008566
     estagios:
     - nome: saida_terra
-      massa_inicial_kg: 12473.085286255182
-      propelente_kg: 7551.133602161265
-      inerte_kg: 812.9931171135079
+      massa_inicial_kg: 13513.847271008566
+      propelente_kg: 8181.204880806397
+      inerte_kg: 880.8297678493374
     - nome: insercao_marte
-      massa_inicial_kg: 4108.958566980409
-      propelente_kg: 1444.3916913166586
-      inerte_kg: 456.12369199473426
+      massa_inicial_kg: 4451.812622352831
+      propelente_kg: 1549.2103265580351
+      inerte_kg: 489.2243136499058
     - nome: retorno
-      massa_inicial_kg: 2208.4431836690164
-      propelente_kg: 761.5528195884523
-      inerte_kg: 240.49036408056386
+      massa_inicial_kg: 2413.3779821448898
+      propelente_kg: 828.0032664301162
+      inerte_kg: 261.47471571477354
   orbitador_regra_iii:
-    injetada_kg: 7205.286348006781
-    leo_modelo_kg: 21872.24564705795
+    injetada_kg: 7796.395336836866
+    leo_modelo_kg: 23666.606118460862
     estagios:
     - nome: saida_terra
-      massa_inicial_kg: 21872.24564705795
-      propelente_kg: 13241.330855183392
-      inerte_kg: 1425.6284438677733
+      massa_inicial_kg: 23666.606118460862
+      propelente_kg: 14327.626293650144
+      inerte_kg: 1542.5844879738524
     - nome: insercao_marte
-      massa_inicial_kg: 7205.286348006781
-      propelente_kg: 2989.8846452779576
-      inerte_kg: 944.1740985088287
+      massa_inicial_kg: 7796.395336836866
+      propelente_kg: 3210.360283033627
+      inerte_kg: 1013.7979841158822
     - nome: retorno
-      massa_inicial_kg: 3271.2276042199937
-      propelente_kg: 1569.2689792071951
-      inerte_kg: 495.5586250127984
+      massa_inicial_kg: 3572.2370696873563
+      propelente_kg: 1708.736172962391
+      inerte_kg: 539.6008967249655
   lander:
-    injetada_kg: 3995.874249296971
-    leo_modelo_kg: 12129.808439829436
+    injetada_kg: 4001.6845585440788
+    leo_modelo_kg: 12147.446116529758
     estagios:
     - nome: saida_terra_lander
-      massa_inicial_kg: 12129.808439829436
-      propelente_kg: 7343.315787212709
-      inerte_kg: 790.6184033197555
+      massa_inicial_kg: 12147.446116529758
+      propelente_kg: 7353.9935345494705
+      inerte_kg: 791.7680234362078
     - nome: cruzeiro_lander
-      massa_inicial_kg: 3995.874249296971
-      propelente_kg: 98.53797712908774
-      inerte_kg: 31.11725593550139
-    massa_entrada_kg: 3866.219016232382
-    massa_pousada_kg: 1967.9054792622824
-    mav_e_aquecimento_kg: 403.03047926228237
+      massa_inicial_kg: 4001.6845585440788
+      propelente_kg: 98.68125894526361
+      inerte_kg: 31.162502824820084
+    massa_entrada_kg: 3871.840796773995
+    massa_pousada_kg: 1970.7669655579634
+    mav_e_aquecimento_kg: 405.8919655579633
     plataforma_kg: 1564.875
     paineis_cruzeiro_kg: 0.0
 inclinacao_max_coplanar_graus:
@@ -129,7 +129,7 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: C3 fora da faixa publicada
@@ -138,18 +138,18 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22889.171914380073
+          massa_leo_kg: 24766.9592238494
           capacidade_kg: 15520
-          margem: -0.3219501317891892
+          margem: -0.3733586808244518
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4839.128799209793
-        a_margem: -0.3283918826420472
+        a_margem: -0.3793120294521759
         a_nota: ''
         b: null
       - veiculo: orbitador_regra_iii
@@ -158,9 +158,9 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 11835.372178636893
-        a_margem: 0.6425956730936788
+        a_margem: 0.5180569567472333
         a_nota: ''
         b: null
       - veiculo: orbitador_regra_iii
@@ -169,61 +169,61 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4509.303039367835
-        a_margem: -0.3741674068768611
+        a_margem: -0.4216169339102116
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22889.171914380073
+          massa_leo_kg: 24766.9592238494
           capacidade_kg: 16810
-          margem: -0.2655916053721824
+          margem: -0.3212731588053501
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC4
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 6854.775579229548
-        a_margem: -0.04864633435063903
+        a_margem: -0.12077629685584268
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22889.171914380073
+          massa_leo_kg: 24766.9592238494
           capacidade_kg: 22310
-          margem: -0.025303314446959546
+          margem: -0.0992031036851494
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC6
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 8779.601339071507
-        a_margem: 0.21849443797611645
+        a_margem: 0.1261103317310157
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22889.171914380073
+          massa_leo_kg: 24766.9592238494
           capacidade_kg: 26450
-          margem: 0.15556823544948095
+          margem: 0.06795508325987432
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 541
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -232,16 +232,16 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22889.171914380073
+          massa_leo_kg: 24766.9592238494
           capacidade_kg: 17083
-          margem: -0.2536645683862577
+          margem: -0.31025040879665655
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 551
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -250,16 +250,16 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22889.171914380073
+          massa_leo_kg: 24766.9592238494
           capacidade_kg: 18505
-          margem: -0.19153912298704556
+          margem: -0.2528352054546701
       - veiculo: orbitador_regra_iii
         lancador: Ariane 64
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -270,27 +270,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4348.580988429463
-        a_margem: -0.3964735364566845
+        a_margem: -0.4422318519581694
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22889.171914380073
+          massa_leo_kg: 24766.9592238494
           capacidade_kg: 36290
-          margem: 0.5854658323047888
+          margem: 0.46525860005674247
       - veiculo: orbitador_regra_iii
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 18841.789798222035
-        a_margem: 1.6149952809903652
+        a_margem: 1.4167309357950644
         a_nota: ''
         b: null
       - veiculo: lander
@@ -299,7 +299,7 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: C3 fora da faixa publicada
@@ -308,18 +308,18 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12693.77068763342
+          massa_leo_kg: 12712.22840892769
           capacidade_kg: 15520
-          margem: 0.22264694879985192
+          margem: 0.22087170720598714
       - veiculo: lander
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4839.128799209793
-        a_margem: 0.21103130311500262
+        a_margem: 0.20927292704210543
         a_nota: ''
         b: null
       - veiculo: lander
@@ -328,9 +328,9 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 11835.372178636893
-        a_margem: 1.9618980579079017
+        a_margem: 1.9575974831316847
         a_nota: ''
         b: null
       - veiculo: lander
@@ -339,61 +339,61 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4509.303039367835
-        a_margem: 0.1284897266627436
+        a_margem: 0.1268511981385263
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12693.77068763342
+          massa_leo_kg: 12712.22840892769
           capacidade_kg: 16810
-          margem: 0.324271598539015
+          margem: 0.3223488014260725
       - veiculo: lander
         lancador: Vulcan VC4
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 6854.775579229548
-        a_margem: 0.7154632882742917
+        a_margem: 0.7129724941946702
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12693.77068763342
+          massa_leo_kg: 12712.22840892769
           capacidade_kg: 22310
-          margem: 0.7575549888997872
+          margem: 0.7550030791086066
       - veiculo: lander
         lancador: Vulcan VC6
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 8779.601339071507
-        a_margem: 1.1971665751534046
+        a_margem: 1.193976364360354
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12693.77068763342
+          massa_leo_kg: 12712.22840892769
           capacidade_kg: 26450
-          margem: 1.0836992136440777
+          margem: 1.0806737535823685
       - veiculo: lander
         lancador: Atlas V 541
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -402,16 +402,16 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12693.77068763342
+          massa_leo_kg: 12712.22840892769
           capacidade_kg: 17083
-          margem: 0.3457782104605587
+          margem: 0.3438241864819509
       - veiculo: lander
         lancador: Atlas V 551
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -420,16 +420,16 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12693.77068763342
+          massa_leo_kg: 12712.22840892769
           capacidade_kg: 18505
-          margem: 0.4578016615683802
+          margem: 0.45568498336641694
       - veiculo: lander
         lancador: Ariane 64
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -440,27 +440,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4348.580988429463
-        a_margem: 0.08826772744276101
+        a_margem: 0.08668759988708219
         a_nota: ''
         b:
           inclinacao_graus: 28.5
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12693.77068763342
+          massa_leo_kg: 12712.22840892769
           capacidade_kg: 36290
-          margem: 1.858882588398623
+          margem: 1.8547315885634843
       - veiculo: lander
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
         janela: 2033-conjuncao, |DLA| ≤ 28.5°
         c3_km2_s2: 12.194034005926554
         dla_graus: 4.729332543807735
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 18841.789798222035
-        a_margem: 3.715310998972762
+        a_margem: 3.708464528517757
         a_nota: ''
         b: null
       resumo:
@@ -469,56 +469,56 @@ revisao_2033:
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2031-conjuncao
-        b_pior_margem: -0.3219501317891892
+        b_pior_margem: -0.3733586808244518
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
-        a_pior_margem: -0.3283918826420472
+        a_pior_margem: -0.3793120294521759
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (descartável)
         categoria: operacional
-        a_pior_margem: 0.6425956730936788
+        a_pior_margem: 0.5180569567472333
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC2
         categoria: operacional
-        a_pior_margem: -0.3741674068768611
+        a_pior_margem: -0.4216169339102116
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: -0.2655916053721824
+        b_pior_margem: -0.3212731588053501
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC4
         categoria: operacional
-        a_pior_margem: -0.04864633435063903
+        a_pior_margem: -0.12077629685584268
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: -0.025303314446959546
+        b_pior_margem: -0.0992031036851494
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC6
         categoria: operacional
-        a_pior_margem: 0.21849443797611645
+        a_pior_margem: 0.1261103317310157
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: 0.15556823544948095
+        b_pior_margem: 0.06795508325987432
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 541
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.2536645683862577
+        b_pior_margem: -0.31025040879665655
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 551
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.19153912298704556
+        b_pior_margem: -0.2528352054546701
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: orbitador_regra_iii
         lancador: Ariane 64
@@ -530,14 +530,14 @@ revisao_2033:
       - veiculo: orbitador_regra_iii
         lancador: New Glenn
         categoria: anunciado
-        a_pior_margem: -0.3964735364566845
+        a_pior_margem: -0.4422318519581694
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: 0.5854658323047888
+        b_pior_margem: 0.46525860005674247
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: orbitador_regra_iii
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
-        a_pior_margem: 1.6149952809903652
+        a_pior_margem: 1.4167309357950644
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
@@ -546,56 +546,56 @@ revisao_2033:
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2031-conjuncao
-        b_pior_margem: 0.22264694879985192
+        b_pior_margem: 0.22087170720598714
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: lander
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
-        a_pior_margem: 0.21103130311500262
+        a_pior_margem: 0.20927292704210543
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: lander
         lancador: Falcon Heavy (descartável)
         categoria: operacional
-        a_pior_margem: 1.9618980579079017
+        a_pior_margem: 1.9575974831316847
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: lander
         lancador: Vulcan VC2
         categoria: operacional
-        a_pior_margem: 0.1284897266627436
+        a_pior_margem: 0.1268511981385263
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: 0.324271598539015
+        b_pior_margem: 0.3223488014260725
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: lander
         lancador: Vulcan VC4
         categoria: operacional
-        a_pior_margem: 0.7154632882742917
+        a_pior_margem: 0.7129724941946702
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: 0.7575549888997872
+        b_pior_margem: 0.7550030791086066
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: lander
         lancador: Vulcan VC6
         categoria: operacional
-        a_pior_margem: 1.1971665751534046
+        a_pior_margem: 1.193976364360354
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: 1.0836992136440777
+        b_pior_margem: 1.0806737535823685
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: lander
         lancador: Atlas V 541
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: 0.3457782104605587
+        b_pior_margem: 0.3438241864819509
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: lander
         lancador: Atlas V 551
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: 0.4578016615683802
+        b_pior_margem: 0.45568498336641694
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: lander
         lancador: Ariane 64
@@ -607,14 +607,14 @@ revisao_2033:
       - veiculo: lander
         lancador: New Glenn
         categoria: anunciado
-        a_pior_margem: 0.08826772744276101
+        a_pior_margem: 0.08668759988708219
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
-        b_pior_margem: 1.858882588398623
+        b_pior_margem: 1.8547315885634843
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
       - veiculo: lander
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
-        a_pior_margem: 3.715310998972762
+        a_pior_margem: 3.708464528517757
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 28.5°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
@@ -649,7 +649,7 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: C3 fora da faixa publicada
@@ -658,18 +658,18 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 23362.129406335232
+          massa_leo_kg: 25278.717314619935
           capacidade_kg: 14460
-          margem: -0.38104957178780097
+          margem: -0.42797730517611887
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4422.138827099725
-        a_margem: -0.38626466548091676
+        a_margem: -0.43279699963318374
         a_nota: multiplicador de DLA 0,950
         b: null
       - veiculo: orbitador_regra_iii
@@ -678,9 +678,9 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 10942.838967692356
-        a_margem: 0.5187236758077638
+        a_margem: 0.4035767165357802
         a_nota: multiplicador de DLA 0,950
         b: null
       - veiculo: orbitador_regra_iii
@@ -689,61 +689,61 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4144.024755611793
-        a_margem: -0.42486328017231867
+        a_margem: -0.4684691352128
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 23362.129406335232
+          massa_leo_kg: 25278.717314619935
           capacidade_kg: 15660
-          margem: -0.32968439102330305
+          margem: -0.3805065421201951
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC4
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 6342.094755007635
-        a_margem: -0.11979976246716861
+        a_margem: -0.1865349971361593
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 23362.129406335232
+          massa_leo_kg: 25278.717314619935
           capacidade_kg: 20800
-          margem: -0.10967020008203732
+          margem: -0.1771734403639883
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC6
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 8135.993061325601
-        a_margem: 0.12916998275527036
+        a_margem: 0.04355829967782476
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 23362.129406335232
+          massa_leo_kg: 25278.717314619935
           capacidade_kg: 24730
-          margem: 0.05855076692169314
+          margem: -0.021706691355838026
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 541
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -752,16 +752,16 @@ revisao_2033:
           beta_graus: 11.42296300256573
           giro_perigeu_graus: 19.843090670465035
           dv_extra_giro_m_s: 1189.738774079072
-          massa_leo_kg: 35715.58251514625
+          massa_leo_kg: 38645.62593676572
           capacidade_kg: 17083
-          margem: -0.5216933675166728
+          margem: -0.5579577355545431
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 551
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -770,16 +770,16 @@ revisao_2033:
           beta_graus: 11.42296300256573
           giro_perigeu_graus: 19.843090670465035
           dv_extra_giro_m_s: 1189.738774079072
-          massa_leo_kg: 35715.58251514625
+          massa_leo_kg: 38645.62593676572
           capacidade_kg: 18505
-          margem: -0.48187881320002535
+          margem: -0.5211618507543652
       - veiculo: orbitador_regra_iii
         lancador: Ariane 64
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -790,27 +790,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 3781.5079139306235
-        a_margem: -0.475175901235804
+        a_margem: -0.5149671417939091
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 23362.129406335232
+          massa_leo_kg: 25278.717314619935
           capacidade_kg: 34110
-          margem: 0.4600552632308512
+          margem: 0.3493564398646325
       - veiculo: orbitador_regra_iii
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 17508.538917575872
-        a_margem: 1.4299574051514705
+        a_margem: 1.2457223064164666
         a_nota: multiplicador de DLA 0,950
         b: null
       - veiculo: lander
@@ -819,7 +819,7 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: C3 fora da faixa publicada
@@ -828,18 +828,18 @@ revisao_2033:
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12956.0612576368
+          massa_leo_kg: 12974.900369631177
           capacidade_kg: 14460
-          margem: 0.11607993451533893
+          margem: 0.11445942458601222
       - veiculo: lander
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4422.138827099725
-        a_margem: 0.10667617427594234
+        a_margem: 0.10506931828445243
         a_nota: multiplicador de DLA 0,950
         b: null
       - veiculo: lander
@@ -848,9 +848,9 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 10942.838967692356
-        a_margem: 1.738534369448094
+        a_margem: 1.7345581111154993
         a_nota: multiplicador de DLA 0,950
         b: null
       - veiculo: lander
@@ -859,61 +859,61 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4144.024755611793
-        a_margem: 0.037075868025848724
+        a_margem: 0.03557006930089002
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12956.0612576368
+          massa_leo_kg: 12974.900369631177
           capacidade_kg: 15660
-          margem: 0.20870067596889408
+          margem: 0.20694568388775614
       - veiculo: lander
         lancador: Vulcan VC4
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 6342.094755007635
-        a_margem: 0.5871607461429638
+        a_margem: 0.5848562429706006
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12956.0612576368
+          massa_leo_kg: 12974.900369631177
           capacidade_kg: 20800
-          margem: 0.605426185194955
+          margem: 0.6030951612302251
       - veiculo: lander
         lancador: Vulcan VC6
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 8135.993061325601
-        a_margem: 1.0360983739057947
+        a_margem: 1.0331420286374837
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12956.0612576368
+          massa_leo_kg: 12974.900369631177
           capacidade_kg: 24730
-          margem: 0.9087591134553481
+          margem: 0.905987660443436
       - veiculo: lander
         lancador: Atlas V 541
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -922,16 +922,16 @@ revisao_2033:
           beta_graus: 11.42296300256573
           giro_perigeu_graus: 19.843090670465035
           dv_extra_giro_m_s: 1189.738774079072
-          massa_leo_kg: 19806.98192651564
+          massa_leo_kg: 19835.782805386716
           capacidade_kg: 17083
-          margem: -0.13752634988115175
+          margem: -0.13877863215154562
       - veiculo: lander
         lancador: Atlas V 551
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -940,16 +940,16 @@ revisao_2033:
           beta_graus: 11.42296300256573
           giro_perigeu_graus: 19.843090670465035
           dv_extra_giro_m_s: 1189.738774079072
-          massa_leo_kg: 19806.98192651564
+          massa_leo_kg: 19835.782805386716
           capacidade_kg: 18505
-          margem: -0.06573348384655586
+          margem: -0.06709000690536504
       - veiculo: lander
         lancador: Ariane 64
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -960,27 +960,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 3781.5079139306235
-        a_margem: -0.05364691729327131
+        a_margem: -0.055020989633815964
         a_nota: multiplicador de DLA 0,950
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12956.0612576368
+          massa_leo_kg: 12974.900369631177
           capacidade_kg: 34110
-          margem: 1.6327445758173038
+          margem: 1.6289219206520662
       - veiculo: lander
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
         janela: 2033-conjuncao, |DLA| ≤ 40°
         c3_km2_s2: 13.588182205530277
         dla_graus: -39.92296300256573
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 17508.538917575872
-        a_margem: 3.381654132548416
+        a_margem: 3.375292120462876
         a_nota: multiplicador de DLA 0,950
         b: null
       resumo:
@@ -989,56 +989,56 @@ revisao_2033:
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2031-conjuncao
-        b_pior_margem: -0.38104957178780097
+        b_pior_margem: -0.42797730517611887
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
-        a_pior_margem: -0.38626466548091676
+        a_pior_margem: -0.43279699963318374
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (descartável)
         categoria: operacional
-        a_pior_margem: 0.5187236758077638
+        a_pior_margem: 0.4035767165357802
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC2
         categoria: operacional
-        a_pior_margem: -0.42486328017231867
+        a_pior_margem: -0.4684691352128
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: -0.32968439102330305
+        b_pior_margem: -0.3805065421201951
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC4
         categoria: operacional
-        a_pior_margem: -0.11979976246716861
+        a_pior_margem: -0.1865349971361593
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: -0.10967020008203732
+        b_pior_margem: -0.1771734403639883
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC6
         categoria: operacional
-        a_pior_margem: 0.12916998275527036
+        a_pior_margem: 0.04355829967782476
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: 0.05855076692169314
+        b_pior_margem: -0.021706691355838026
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 541
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.5216933675166728
+        b_pior_margem: -0.5579577355545431
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 551
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.48187881320002535
+        b_pior_margem: -0.5211618507543652
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: orbitador_regra_iii
         lancador: Ariane 64
@@ -1050,14 +1050,14 @@ revisao_2033:
       - veiculo: orbitador_regra_iii
         lancador: New Glenn
         categoria: anunciado
-        a_pior_margem: -0.475175901235804
+        a_pior_margem: -0.5149671417939091
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: 0.4600552632308512
+        b_pior_margem: 0.3493564398646325
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: orbitador_regra_iii
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
-        a_pior_margem: 1.4299574051514705
+        a_pior_margem: 1.2457223064164666
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
@@ -1066,56 +1066,56 @@ revisao_2033:
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2031-conjuncao
-        b_pior_margem: 0.11607993451533893
+        b_pior_margem: 0.11445942458601222
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: lander
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
-        a_pior_margem: 0.10667617427594234
+        a_pior_margem: 0.10506931828445243
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: lander
         lancador: Falcon Heavy (descartável)
         categoria: operacional
-        a_pior_margem: 1.738534369448094
+        a_pior_margem: 1.7345581111154993
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: lander
         lancador: Vulcan VC2
         categoria: operacional
-        a_pior_margem: 0.037075868025848724
+        a_pior_margem: 0.03557006930089002
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: 0.20870067596889408
+        b_pior_margem: 0.20694568388775614
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: lander
         lancador: Vulcan VC4
         categoria: operacional
-        a_pior_margem: 0.5871607461429638
+        a_pior_margem: 0.5848562429706006
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: 0.605426185194955
+        b_pior_margem: 0.6030951612302251
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: lander
         lancador: Vulcan VC6
         categoria: operacional
-        a_pior_margem: 1.0360983739057947
+        a_pior_margem: 1.0331420286374837
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: 0.9087591134553481
+        b_pior_margem: 0.905987660443436
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: lander
         lancador: Atlas V 541
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.13752634988115175
+        b_pior_margem: -0.13877863215154562
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: lander
         lancador: Atlas V 551
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.06573348384655586
+        b_pior_margem: -0.06709000690536504
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: lander
         lancador: Ariane 64
@@ -1127,14 +1127,14 @@ revisao_2033:
       - veiculo: lander
         lancador: New Glenn
         categoria: anunciado
-        a_pior_margem: -0.05364691729327131
+        a_pior_margem: -0.055020989633815964
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
-        b_pior_margem: 1.6327445758173038
+        b_pior_margem: 1.6289219206520662
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
       - veiculo: lander
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
-        a_pior_margem: 3.381654132548416
+        a_pior_margem: 3.375292120462876
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 40°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
@@ -1167,27 +1167,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 2039.897120373705
-        a_margem: -0.7168888199789578
+        a_margem: -0.7383538119551891
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22033.60172371741
+          massa_leo_kg: 23841.19956319497
           capacidade_kg: 14460
-          margem: -0.34372962798746753
+          margem: -0.393486893909368
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4678.423284461821
-        a_margem: -0.3506957172137889
+        a_margem: -0.3999248264955303
         a_nota: multiplicador de DLA 0,902
         b: null
       - veiculo: orbitador_regra_iii
@@ -1196,9 +1196,9 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 11224.260095444557
-        a_margem: 0.5577812668818578
+        a_margem: 0.4396730297156066
         a_nota: multiplicador de DLA 0,902
         b: null
       - veiculo: orbitador_regra_iii
@@ -1207,61 +1207,61 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4324.8918713232215
-        a_margem: -0.39976127770138814
+        a_margem: -0.4452703224413571
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22033.60172371741
+          massa_leo_kg: 23841.19956319497
           capacidade_kg: 15660
-          margem: -0.28926735645115786
+          margem: -0.343153856059523
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC4
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 6487.269850056435
-        a_margem: -0.09965134808958331
+        a_margem: -0.16791420011694358
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22033.60172371741
+          massa_leo_kg: 23841.19956319497
           capacidade_kg: 20800
-          margem: -0.05598729337063113
+          margem: -0.1275606772693536
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC6
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 8292.581994392402
-        a_margem: 0.15090248934886574
+        a_margem: 0.06364308582597444
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22033.60172371741
+          massa_leo_kg: 23841.19956319497
           capacidade_kg: 24730
-          margem: 0.12237664591078334
+          margem: 0.037280021688888665
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 541
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -1270,16 +1270,16 @@ revisao_2033:
           beta_graus: 21.154567553122057
           giro_perigeu_graus: 44.92606915115241
           dv_extra_giro_m_s: 4358.714288140978
-          massa_leo_kg: 183926.6597313219
+          massa_leo_kg: 199015.67862841144
           capacidade_kg: 17083
-          margem: -0.9071205880378915
+          margem: -0.914162541776941
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 551
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -1288,16 +1288,16 @@ revisao_2033:
           beta_graus: 21.154567553122057
           giro_perigeu_graus: 44.92606915115241
           dv_extra_giro_m_s: 4358.714288140978
-          massa_leo_kg: 183926.6597313219
+          massa_leo_kg: 199015.67862841144
           capacidade_kg: 18505
-          margem: -0.8993892455447627
+          margem: -0.907017376080448
       - veiculo: orbitador_regra_iii
         lancador: Ariane 64
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: null
         a_margem: null
         a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -1308,27 +1308,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 4548.82827896609
-        a_margem: -0.3686818178677319
+        a_margem: -0.41654725261640857
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 22033.60172371741
+          massa_leo_kg: 23841.19956319497
           capacidade_kg: 34110
-          margem: 0.5480900684196046
+          margem: 0.4307166008818437
       - veiculo: orbitador_regra_iii
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 7205.286348006781
+        massa_injetada_kg: 7796.395336836866
         a_capacidade_kg: 17746.80603591357
-        a_margem: 1.4630257811784149
+        a_margem: 1.2762834963053273
         a_nota: multiplicador de DLA 0,902
         b: null
       - veiculo: lander
@@ -1337,27 +1337,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 2039.897120373705
-        a_margem: -0.4894991701171272
+        a_margem: -0.49024039987902623
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12219.292543677668
+          massa_leo_kg: 12237.06033715738
           capacidade_kg: 14460
-          margem: 0.1833745651242049
+          margem: 0.1816563456905369
       - veiculo: lander
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4678.423284461821
-        a_margem: 0.17081344221103478
+        a_margem: 0.16911346109798275
         a_nota: multiplicador de DLA 0,902
         b: null
       - veiculo: lander
@@ -1366,9 +1366,9 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 11224.260095444557
-        a_margem: 1.808962293400334
+        a_margem: 1.804883776128583
         a_nota: multiplicador de DLA 0,902
         b: null
       - veiculo: lander
@@ -1377,61 +1377,61 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4324.8918713232215
-        a_margem: 0.08233933339722532
+        a_margem: 0.0807678136671357
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12219.292543677668
+          massa_leo_kg: 12237.06033715738
           capacidade_kg: 15660
-          margem: 0.2815799232257987
+          margem: 0.2797191129677601
       - veiculo: lander
         lancador: Vulcan VC4
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 6487.269850056435
-        a_margem: 0.6234919933223115
+        a_margem: 0.6211347384204313
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12219.292543677668
+          massa_leo_kg: 12237.06033715738
           capacidade_kg: 20800
-          margem: 0.702226207094292
+          margem: 0.6997546328051985
       - veiculo: lander
         lancador: Vulcan VC6
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 8292.581994392402
-        a_margem: 1.0752860267941085
+        a_margem: 1.07227278239279
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12219.292543677668
+          massa_leo_kg: 12237.06033715738
           capacidade_kg: 24730
-          margem: 1.0238487548770117
+          margem: 1.0209101956381037
       - veiculo: lander
         lancador: Atlas V 541
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -1440,16 +1440,16 @@ revisao_2033:
           beta_graus: 21.154567553122057
           giro_perigeu_graus: 44.92606915115241
           dv_extra_giro_m_s: 4358.714288140978
-          massa_leo_kg: 102001.19299912248
+          massa_leo_kg: 102149.51059659779
           capacidade_kg: 17083
-          margem: -0.832521566682588
+          margem: -0.8327647396426295
       - veiculo: lander
         lancador: Atlas V 551
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: sem curva de C3 publicada
@@ -1458,16 +1458,16 @@ revisao_2033:
           beta_graus: 21.154567553122057
           giro_perigeu_graus: 44.92606915115241
           dv_extra_giro_m_s: 4358.714288140978
-          massa_leo_kg: 102001.19299912248
+          massa_leo_kg: 102149.51059659779
           capacidade_kg: 18505
-          margem: -0.8185805532670662
+          margem: -0.8188439681020231
       - veiculo: lander
         lancador: Ariane 64
         categoria: operacional
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: null
         a_margem: null
         a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -1478,27 +1478,27 @@ revisao_2033:
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 4548.82827896609
-        a_margem: 0.13838123904084432
+        a_margem: 0.136728348378633
         a_nota: multiplicador de DLA 0,902
         b:
           inclinacao_graus: 51.6
           beta_graus: 0.0
           giro_perigeu_graus: 0.0
           dv_extra_giro_m_s: 0.0
-          massa_leo_kg: 12219.292543677668
+          massa_leo_kg: 12237.06033715738
           capacidade_kg: 34110
-          margem: 1.791487304037803
+          margem: 1.7874341598550636
       - veiculo: lander
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
         janela: 2033-conjuncao, |DLA| ≤ 50°
         c3_km2_s2: 9.597990318099326
         dla_graus: -49.65456755312206
-        massa_injetada_kg: 3995.874249296971
+        massa_injetada_kg: 4001.6845585440788
         a_capacidade_kg: 17746.80603591357
-        a_margem: 3.4412824149898915
+        a_margem: 3.4348338246756613
         a_nota: multiplicador de DLA 0,902
         b: null
       resumo:
@@ -1507,56 +1507,56 @@ revisao_2033:
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2031-conjuncao
-        b_pior_margem: -0.34372962798746753
+        b_pior_margem: -0.393486893909368
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
-        a_pior_margem: -0.3506957172137889
+        a_pior_margem: -0.3999248264955303
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: orbitador_regra_iii
         lancador: Falcon Heavy (descartável)
         categoria: operacional
-        a_pior_margem: 0.5577812668818578
+        a_pior_margem: 0.4396730297156066
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC2
         categoria: operacional
-        a_pior_margem: -0.39976127770138814
+        a_pior_margem: -0.4452703224413571
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: -0.28926735645115786
+        b_pior_margem: -0.343153856059523
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC4
         categoria: operacional
-        a_pior_margem: -0.09965134808958331
+        a_pior_margem: -0.16791420011694358
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: -0.05598729337063113
+        b_pior_margem: -0.1275606772693536
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: orbitador_regra_iii
         lancador: Vulcan VC6
         categoria: operacional
-        a_pior_margem: 0.15090248934886574
+        a_pior_margem: 0.06364308582597444
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: 0.12237664591078334
+        b_pior_margem: 0.037280021688888665
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 541
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.9071205880378915
+        b_pior_margem: -0.914162541776941
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: orbitador_regra_iii
         lancador: Atlas V 551
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.8993892455447627
+        b_pior_margem: -0.907017376080448
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: orbitador_regra_iii
         lancador: Ariane 64
@@ -1568,14 +1568,14 @@ revisao_2033:
       - veiculo: orbitador_regra_iii
         lancador: New Glenn
         categoria: anunciado
-        a_pior_margem: -0.3686818178677319
+        a_pior_margem: -0.41654725261640857
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: 0.5480900684196046
+        b_pior_margem: 0.4307166008818437
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: orbitador_regra_iii
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
-        a_pior_margem: 1.4630257811784149
+        a_pior_margem: 1.2762834963053273
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
@@ -1584,56 +1584,56 @@ revisao_2033:
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2031-conjuncao
-        b_pior_margem: 0.1833745651242049
+        b_pior_margem: 0.1816563456905369
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: lander
         lancador: Falcon Heavy (recuperação)
         categoria: operacional
-        a_pior_margem: 0.17081344221103478
+        a_pior_margem: 0.16911346109798275
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: lander
         lancador: Falcon Heavy (descartável)
         categoria: operacional
-        a_pior_margem: 1.808962293400334
+        a_pior_margem: 1.804883776128583
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
       - veiculo: lander
         lancador: Vulcan VC2
         categoria: operacional
-        a_pior_margem: 0.08233933339722532
+        a_pior_margem: 0.0807678136671357
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: 0.2815799232257987
+        b_pior_margem: 0.2797191129677601
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: lander
         lancador: Vulcan VC4
         categoria: operacional
-        a_pior_margem: 0.6234919933223115
+        a_pior_margem: 0.6211347384204313
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: 0.702226207094292
+        b_pior_margem: 0.6997546328051985
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: lander
         lancador: Vulcan VC6
         categoria: operacional
-        a_pior_margem: 1.0752860267941085
+        a_pior_margem: 1.07227278239279
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: 1.0238487548770117
+        b_pior_margem: 1.0209101956381037
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: lander
         lancador: Atlas V 541
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.832521566682588
+        b_pior_margem: -0.8327647396426295
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: lander
         lancador: Atlas V 551
         categoria: operacional
         a_pior_margem: null
         a_janela_mais_restritiva: 2028-conjuncao
-        b_pior_margem: -0.8185805532670662
+        b_pior_margem: -0.8188439681020231
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: lander
         lancador: Ariane 64
@@ -1645,14 +1645,14 @@ revisao_2033:
       - veiculo: lander
         lancador: New Glenn
         categoria: anunciado
-        a_pior_margem: 0.13838123904084432
+        a_pior_margem: 0.136728348378633
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
-        b_pior_margem: 1.791487304037803
+        b_pior_margem: 1.7874341598550636
         b_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
       - veiculo: lander
         lancador: SLS Block 1 (5 m + iCPS)
         categoria: anunciado
-        a_pior_margem: 3.4412824149898915
+        a_pior_margem: 3.4348338246756613
         a_janela_mais_restritiva: 2033-conjuncao, |DLA| ≤ 50°
         b_pior_margem: null
         b_janela_mais_restritiva: 2028-conjuncao
@@ -1682,25 +1682,25 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 2307.281189947826
-  a_margem: -0.6797793899494229
+  a_margem: -0.704057953674277
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 21929.254387033496
+    massa_leo_kg: 23728.291754956983
     capacidade_kg: 15520
-    margem: -0.292269599044061
+    margem: -0.34592847389623915
 - veiculo: orbitador_regra_iii
   lancador: Falcon 9 (ASDS)
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: C3 fora da faixa publicada
@@ -1709,34 +1709,34 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22393.616316533677
+    massa_leo_kg: 24230.749118437285
     capacidade_kg: 15520
-    margem: -0.30694534636010273
+    margem: -0.35949153184906024
 - veiculo: orbitador_regra_iii
   lancador: Falcon 9 (ASDS)
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 2039.89583667
-  a_margem: -0.7168889981403304
+  a_margem: -0.7383539766086795
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22033.394007275187
+    massa_leo_kg: 23840.974806047358
     capacidade_kg: 14460
-    margem: -0.34372344109920305
+    margem: -0.3934811760997221
 - veiculo: orbitador_regra_iii
   lancador: Falcon 9 (ASDS)
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: C3 fora da faixa publicada
@@ -1745,18 +1745,18 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22307.503048865023
+    massa_leo_kg: 24137.571270151453
     capacidade_kg: 15520
-    margem: -0.3042699594838949
+    margem: -0.3570189881037431
 - veiculo: orbitador_regra_iii
   lancador: Falcon Heavy (recuperação)
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 5243.943403095652
-  a_margem: -0.272208882503844
+  a_margem: -0.3273887256180096
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: orbitador_regra_iii
@@ -1765,9 +1765,9 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 5037.02475
-  a_margem: -0.3009264994175552
+  a_margem: -0.353929023301221
   a_nota: ''
   b: null
 - veiculo: orbitador_regra_iii
@@ -1776,9 +1776,9 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4678.42117683
-  a_margem: -0.35069600972566406
+  a_margem: -0.39992509682966926
   a_nota: multiplicador de DLA 0,902
   b: null
 - veiculo: orbitador_regra_iii
@@ -1787,9 +1787,9 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 5071.6205
-  a_margem: -0.2961250594290431
+  a_margem: -0.3494916200519861
   a_nota: ''
   b: null
 - veiculo: orbitador_regra_iii
@@ -1798,9 +1798,9 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 12534.777641426086
-  a_margem: 0.7396640516436406
+  a_margem: 0.6077657814760924
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: orbitador_regra_iii
@@ -1809,9 +1809,9 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 12181.85475
-  a_margem: 0.6906829460525052
+  a_margem: 0.5624983372049464
   a_nota: ''
   b: null
 - veiculo: orbitador_regra_iii
@@ -1820,9 +1820,9 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 11224.255849770001
-  a_margem: 0.5577806776374681
+  a_margem: 0.43967248514669066
   a_nota: multiplicador de DLA 0,902
   b: null
 - veiculo: orbitador_regra_iii
@@ -1831,9 +1831,9 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 12242.5605
-  a_margem: 0.6991081143342339
+  a_margem: 0.5702847240385094
   a_nota: ''
   b: null
 - veiculo: orbitador_regra_iii
@@ -1842,223 +1842,223 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4838.194417147826
-  a_margem: -0.32852156271537636
+  a_margem: -0.37943187741031525
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 21929.254387033496
+    massa_leo_kg: 23728.291754956983
     capacidade_kg: 16810
-    margem: -0.23344406958316144
+    margem: -0.29156299266725383
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC2
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4672.813
-  a_margem: -0.35147435170391894
+  a_margem: -0.4006444262874127
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22393.616316533677
+    massa_leo_kg: 24230.749118437285
     capacidade_kg: 16810
-    margem: -0.2493396438346216
+    margem: -0.3062533924215659
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC2
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4324.89008921
-  a_margem: -0.3997615250355169
+  a_margem: -0.445270551023047
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22033.394007275187
+    massa_leo_kg: 23840.974806047358
     capacidade_kg: 15660
-    margem: -0.28926065612818264
+    margem: -0.34314766374285255
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC2
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4701.534
-  a_margem: -0.34748825058138066
+  a_margem: -0.39696054434465167
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22307.503048865023
+    massa_leo_kg: 24137.571270151453
     capacidade_kg: 16810
-    margem: -0.24644188266264644
+    margem: -0.30357533440875784
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 7238.541654156522
-  a_margem: 0.004615403822075814
+  a_margem: -0.07155277004034977
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 21929.254387033496
+    massa_leo_kg: 23728.291754956983
     capacidade_kg: 22310
-    margem: 0.01736245137416237
+    margem: -0.05977218122584371
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 7048.7789999999995
-  a_margem: -0.02172118364873543
+  a_margem: -0.09589256374731081
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22393.616316533677
+    massa_leo_kg: 24230.749118437285
     capacidade_kg: 22310
-    margem: -0.003733935392647658
+    margem: -0.0792690770330241
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 6487.26750429
-  a_margem: -0.09965167365144456
+  a_margem: -0.16791450099527683
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22033.394007275187
+    massa_leo_kg: 23840.974806047358
     capacidade_kg: 20800
-    margem: -0.055978393835644846
+    margem: -0.12755245248092806
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 7082.722
-  a_margem: -0.01701033686755371
+  a_margem: -0.09153888508768404
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22307.503048865023
+    massa_leo_kg: 24137.571270151453
     capacidade_kg: 22310
-    margem: 0.00011193324190106324
+    margem: -0.07571479539913073
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 9249.152640104347
-  a_margem: 0.2836620494150057
+  a_margem: 0.18633704943147356
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 21929.254387033496
+    massa_leo_kg: 23728.291754956983
     capacidade_kg: 26450
-    margem: 0.20615135987658406
+    margem: 0.11470308411369046
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 9017.728
-  a_margem: 0.2515433203420985
+  a_margem: 0.15665350593401928
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22393.616316533677
+    massa_leo_kg: 24230.749118437285
     capacidade_kg: 26450
-    margem: 0.181140179689129
+    margem: 0.09158820764126019
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 8292.57906191
-  a_margem: 0.15090208235846192
+  a_margem: 0.06364270969286756
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22033.394007275187
+    massa_leo_kg: 23840.974806047358
     capacidade_kg: 24730
-    margem: 0.12238722694444726
+    margem: 0.03728980048781971
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 9059.504
-  a_margem: 0.25734128561124536
+  a_margem: 0.1620118796689447
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22307.503048865023
+    massa_leo_kg: 24137.571270151453
     capacidade_kg: 26450
-    margem: 0.18569971466823332
+    margem: 0.09580204669175219
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 541
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2067,16 +2067,16 @@ linhas:
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 21929.254387033496
+    massa_leo_kg: 23728.291754956983
     capacidade_kg: 17083
-    margem: -0.22099494590655244
+    margem: -0.2800577396629802
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 541
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2085,16 +2085,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22393.616316533677
+    massa_leo_kg: 24230.749118437285
     capacidade_kg: 17083
-    margem: -0.23714866957922898
+    margem: -0.2949867164031892
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 541
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2103,16 +2103,16 @@ linhas:
     beta_graus: 21.154600000000002
     giro_perigeu_graus: 44.92612988040005
     dv_extra_giro_m_s: 4358.722291305483
-    massa_leo_kg: 183923.14405125935
+    massa_leo_kg: 199011.87452444926
     capacidade_kg: 17083
-    margem: -0.9071188126534039
+    margem: -0.914160900997386
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 541
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2121,16 +2121,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22307.503048865023
+    massa_leo_kg: 24137.571270151453
     capacidade_kg: 17083
-    margem: -0.23420384780047532
+    margem: -0.2922651658360982
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 551
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2139,16 +2139,16 @@ linhas:
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 21929.254387033496
+    massa_leo_kg: 23728.291754956983
     capacidade_kg: 18505
-    margem: -0.15615005994267717
+    margem: -0.22012927895940115
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 551
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2157,16 +2157,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22393.616316533677
+    massa_leo_kg: 24230.749118437285
     capacidade_kg: 18505
-    margem: -0.1736484300511405
+    margem: -0.2363009534063698
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 551
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2175,16 +2175,16 @@ linhas:
     beta_graus: 21.154600000000002
     giro_perigeu_graus: 44.92612988040005
     dv_extra_giro_m_s: 4358.722291305483
-    massa_leo_kg: 183923.14405125935
+    massa_leo_kg: 199011.87452444926
     capacidade_kg: 18505
-    margem: -0.899387322376119
+    margem: -0.9070155987213386
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 551
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2193,16 +2193,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22307.503048865023
+    massa_leo_kg: 24137.571270151453
     capacidade_kg: 18505
-    margem: -0.1704584793975178
+    margem: -0.2333528592048818
 - veiculo: orbitador_regra_iii
   lancador: Ariane 64
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -2213,7 +2213,7 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -2224,7 +2224,7 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -2235,7 +2235,7 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -2246,81 +2246,81 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 5170.402844765217
-  a_margem: -0.2824153551932713
+  a_margem: -0.336821361490509
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 21929.254387033496
+    massa_leo_kg: 23728.291754956983
     capacidade_kg: 36290
-    margem: 0.6548670264620506
+    margem: 0.5293979176743222
 - veiculo: orbitador_regra_iii
   lancador: New Glenn
   categoria: anunciado
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4744.0495
-  a_margem: -0.34158765233357313
+  a_margem: -0.3915073190830849
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22393.616316533677
+    massa_leo_kg: 24230.749118437285
     capacidade_kg: 36290
-    margem: 0.620551119883497
+    margem: 0.49768378280912406
 - veiculo: orbitador_regra_iii
   lancador: New Glenn
   categoria: anunciado
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4548.82497239
-  a_margem: -0.3686822767774727
+  a_margem: -0.41654767673241955
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22033.394007275187
+    massa_leo_kg: 23840.974806047358
     capacidade_kg: 34110
-    margem: 0.5481046628012576
+    margem: 0.43073008874401664
 - veiculo: orbitador_regra_iii
   lancador: New Glenn
   categoria: anunciado
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 4813.241
-  a_margem: -0.3319847723565489
+  a_margem: -0.38263251258461495
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 22307.503048865023
+    massa_leo_kg: 24137.571270151453
     capacidade_kg: 36290
-    margem: 0.6268069053047329
+    margem: 0.5034652655744305
 - veiculo: orbitador_regra_iii
   lancador: SLS Block 1 (5 m + iCPS)
   categoria: anunciado
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 19842.194789217392
-  a_margem: 1.7538384778706813
+  a_margem: 1.5450472855661674
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: orbitador_regra_iii
@@ -2329,9 +2329,9 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 19289.49
-  a_margem: 1.677130244148605
+  a_margem: 1.4741549352762924
   a_nota: ''
   b: null
 - veiculo: orbitador_regra_iii
@@ -2340,9 +2340,9 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 17746.7989143
-  a_margem: 1.4630247927911082
+  a_margem: 1.2762825828558086
   a_nota: multiplicador de DLA 0,902
   b: null
 - veiculo: orbitador_regra_iii
@@ -2351,9 +2351,9 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 7205.286348006781
+  massa_injetada_kg: 7796.395336836866
   a_capacidade_kg: 19367.82
-  a_margem: 1.6880014290282546
+  a_margem: 1.4842018860292767
   a_nota: ''
   b: null
 - veiculo: orbitador_missao_A
@@ -2362,27 +2362,27 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 2307.281189947826
-  a_margem: -0.4384754306141859
+  a_margem: -0.4817209560072626
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12505.59565977838
+    massa_leo_kg: 13549.07033029518
     capacidade_kg: 15520
-    margem: 0.24104444300216876
+    margem: 0.1454660446553222
 - veiculo: orbitador_missao_A
   lancador: Falcon Heavy (recuperação)
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 5243.943403095652
-  a_margem: 0.2762220201576089
+  a_margem: 0.1779344388318329
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: orbitador_missao_A
@@ -2391,9 +2391,9 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 12534.777641426086
-  a_margem: 2.050597234578017
+  a_margem: 1.8156570603372164
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: orbitador_missao_A
@@ -2402,61 +2402,61 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 4838.194417147826
-  a_margem: 0.17747461754118343
+  a_margem: 0.08679201654960678
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12505.59565977838
+    massa_leo_kg: 13549.07033029518
     capacidade_kg: 16810
-    margem: 0.34419826590634384
+    margem: 0.2406755290371112
 - veiculo: orbitador_missao_A
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 7238.541654156522
-  a_margem: 0.7616487331669495
+  a_margem: 0.625976263648508
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12505.59565977838
+    massa_leo_kg: 13549.07033029518
     capacidade_kg: 22310
-    margem: 0.7840013868156177
+    margem: 0.6466074391920256
 - veiculo: orbitador_missao_A
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 9249.152640104347
-  a_margem: 1.2509724761964107
+  a_margem: 1.0776149907261976
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12505.59565977838
+    massa_leo_kg: 13549.07033029518
     capacidade_kg: 26450
-    margem: 1.1150531905545984
+    margem: 0.9521634588359067
 - veiculo: orbitador_missao_A
   lancador: Atlas V 541
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2465,16 +2465,16 @@ linhas:
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12505.59565977838
+    massa_leo_kg: 13549.07033029518
     capacidade_kg: 17083
-    margem: 0.3660284935442042
+    margem: 0.26082451294116415
 - veiculo: orbitador_missao_A
   lancador: Atlas V 551
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2483,16 +2483,16 @@ linhas:
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12505.59565977838
+    massa_leo_kg: 13549.07033029518
     capacidade_kg: 18505
-    margem: 0.479737591350202
+    margem: 0.3657763631666713
 - veiculo: orbitador_missao_A
   lancador: Ariane 64
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -2503,27 +2503,27 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 5170.402844765217
-  a_margem: 0.25832440519468225
+  a_margem: 0.16141519946376448
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12505.59565977838
+    massa_leo_kg: 13549.07033029518
     capacidade_kg: 36290
-    margem: 1.9019009559631899
+    margem: 1.6784125490039719
 - veiculo: orbitador_missao_A
   lancador: SLS Block 1 (5 m + iCPS)
   categoria: anunciado
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 4108.958566980409
+  massa_injetada_kg: 4451.812622352831
   a_capacidade_kg: 19842.194789217392
-  a_margem: 3.829008242786693
+  a_margem: 3.4571046610516545
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: lander
@@ -2532,25 +2532,25 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 2307.281189947826
-  a_margem: -0.4225841340343065
+  a_margem: -0.42342252214220566
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12161.424082157999
+    massa_leo_kg: 12179.1077304405
     capacidade_kg: 15520
-    margem: 0.2761663350568755
+    margem: 0.27431338514308923
 - veiculo: lander
   lancador: Falcon 9 (ASDS)
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: C3 fora da faixa publicada
@@ -2559,34 +2559,34 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12418.947765005982
+    massa_leo_kg: 12437.005872581361
     capacidade_kg: 15520
-    margem: 0.24970329964122562
+    margem: 0.24788877315041002
 - veiculo: lander
   lancador: Falcon 9 (ASDS)
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 2039.89583667
-  a_margem: -0.4894994913744103
+  a_margem: -0.4902407206698547
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12219.177349239602
+    massa_leo_kg: 12236.944975228162
     capacidade_kg: 14460
-    margem: 0.1833857212081338
+    margem: 0.18166748557520496
 - veiculo: lander
   lancador: Falcon 9 (ASDS)
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: C3 fora da faixa publicada
@@ -2595,18 +2595,18 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12371.19146885786
+    massa_leo_kg: 12389.180135099574
     capacidade_kg: 15520
-    margem: 0.25452750764295184
+    margem: 0.25270597656664573
 - veiculo: lander
   lancador: Falcon Heavy (recuperação)
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 5243.943403095652
-  a_margem: 0.31233944712305806
+  a_margem: 0.3104339750866172
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: lander
@@ -2615,9 +2615,9 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 5037.02475
-  a_margem: 0.26055637283535815
+  a_margem: 0.25872608805342856
   a_nota: ''
   b: null
 - veiculo: lander
@@ -2626,9 +2626,9 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4678.42117683
-  a_margem: 0.1708129147590458
+  a_margem: 0.16911293441183584
   a_nota: multiplicador de DLA 0,902
   b: null
 - veiculo: lander
@@ -2637,9 +2637,9 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 5071.6205
-  a_margem: 0.26921424038614195
+  a_margem: 0.2673713846763557
   a_nota: ''
   b: null
 - veiculo: lander
@@ -2648,9 +2648,9 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 12534.777641426086
-  a_margem: 2.1369299581015193
+  a_margem: 2.132375242986813
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: lander
@@ -2659,9 +2659,9 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 12181.85475
-  a_margem: 2.0486081367909064
+  a_margem: 2.0441816619429116
   a_nota: ''
   b: null
 - veiculo: lander
@@ -2670,9 +2670,9 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 11224.255849770001
-  a_margem: 1.8089612308857772
+  a_margem: 1.804882715156761
   a_nota: multiplicador de DLA 0,902
   b: null
 - veiculo: lander
@@ -2681,9 +2681,9 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 12242.5605
-  a_margem: 2.0638002440026586
+  a_margem: 2.0593517107340853
   a_nota: ''
   b: null
 - veiculo: lander
@@ -2692,223 +2692,223 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4838.194417147826
-  a_margem: 0.21079746641152486
+  a_margem: 0.20903942986153123
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12161.424082157999
+    massa_leo_kg: 12179.1077304405
     capacidade_kg: 16810
-    margem: 0.3822394389372472
+    margem: 0.38023247450098774
 - veiculo: lander
   lancador: Vulcan VC2
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4672.813
-  a_margem: 0.16940942293720296
+  a_margem: 0.16771148041216333
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12418.947765005982
+    massa_leo_kg: 12437.005872581361
     capacidade_kg: 16810
-    margem: 0.3535768342119203
+    margem: 0.3516114868980924
 - veiculo: lander
   lancador: Vulcan VC2
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4324.89008921
-  a_margem: 0.08233888740891082
+  a_margem: 0.08076736832638098
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12219.177349239602
+    massa_leo_kg: 12236.944975228162
     capacidade_kg: 15660
-    margem: 0.2815920051258214
+    margem: 0.2797311773241846
 - veiculo: lander
   lancador: Vulcan VC2
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4701.534
-  a_margem: 0.17659708656426854
+  a_margem: 0.17488870779723453
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12371.19146885786
+    massa_leo_kg: 12389.180135099574
     capacidade_kg: 16810
-    margem: 0.3588020234199756
+    margem: 0.3568290893096209
 - veiculo: lander
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 7238.541654156522
-  a_margem: 0.8115038668772077
+  a_margem: 0.8088736251590254
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12161.424082157999
+    massa_leo_kg: 12179.1077304405
     capacidade_kg: 22310
-    margem: 0.8344891066442586
+    margem: 0.8318254911431906
 - veiculo: lander
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 7048.7789999999995
-  a_margem: 0.7640142207278302
+  a_margem: 0.7614529323532029
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12418.947765005982
+    massa_leo_kg: 12437.005872581361
     capacidade_kg: 22310
-    margem: 0.7964484932342619
+    margem: 0.7938401114037144
 - veiculo: lander
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 6487.26750429
-  a_margem: 0.6234914062752004
+  a_margem: 0.6211341522256926
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12219.177349239602
+    massa_leo_kg: 12236.944975228162
     capacidade_kg: 20800
-    margem: 0.7022422545732492
+    margem: 0.6997706569823141
 - veiculo: lander
   lancador: Vulcan VC4
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 7082.722
-  a_margem: 0.7725087322870896
+  a_margem: 0.7699351101719236
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12371.19146885786
+    massa_leo_kg: 12389.180135099574
     capacidade_kg: 22310
-    margem: 0.8033832922367434
+    margem: 0.8007648413145534
 - veiculo: lander
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 9249.152640104347
-  a_margem: 1.3146756036508482
+  a_margem: 1.3113147737635371
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12161.424082157999
+    massa_leo_kg: 12179.1077304405
     capacidade_kg: 26450
-    margem: 1.1749097656091725
+    margem: 1.1717518709429577
 - veiculo: lander
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 9017.728
-  a_margem: 1.2567597069869172
+  a_margem: 1.2534829690026577
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12418.947765005982
+    massa_leo_kg: 12437.005872581361
     capacidade_kg: 26450
-    margem: 1.129810069298352
+    margem: 1.1267176578497646
 - veiculo: lander
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 8292.57906191
-  a_margem: 1.0752852929165595
+  a_margem: 1.072272049580806
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12219.177349239602
+    massa_leo_kg: 12236.944975228162
     capacidade_kg: 24730
-    margem: 1.0238678344036756
+    margem: 1.0209292474602227
 - veiculo: lander
   lancador: Vulcan VC6
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 9059.504
-  a_margem: 1.2672144904444673
+  a_margem: 1.2639225724718526
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12371.19146885786
+    massa_leo_kg: 12389.180135099574
     capacidade_kg: 26450
-    margem: 1.1380317382188192
+    margem: 1.1349273891873568
 - veiculo: lander
   lancador: Atlas V 541
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2917,16 +2917,16 @@ linhas:
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12161.424082157999
+    massa_leo_kg: 12179.1077304405
     capacidade_kg: 17083
-    margem: 0.40468746789797705
+    margem: 0.40264790969068254
 - veiculo: lander
   lancador: Atlas V 541
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2935,16 +2935,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12418.947765005982
+    massa_leo_kg: 12437.005872581361
     capacidade_kg: 17083
-    margem: 0.3755593729233928
+    margem: 0.3735621077144622
 - veiculo: lander
   lancador: Atlas V 541
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2953,16 +2953,16 @@ linhas:
     beta_graus: 21.154600000000002
     giro_perigeu_graus: 44.92612988040005
     dv_extra_giro_m_s: 4358.722291305483
-    massa_leo_kg: 101999.24328718336
+    massa_leo_kg: 102147.5580501415
     capacidade_kg: 17083
-    margem: -0.8325183653382402
+    margem: -0.8327615429473663
 - veiculo: lander
   lancador: Atlas V 541
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2971,16 +2971,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12371.19146885786
+    massa_leo_kg: 12389.180135099574
     capacidade_kg: 17083
-    margem: 0.38086942094488063
+    margem: 0.37886444572732025
 - veiculo: lander
   lancador: Atlas V 551
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -2989,16 +2989,16 @@ linhas:
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12161.424082157999
+    massa_leo_kg: 12179.1077304405
     capacidade_kg: 18505
-    margem: 0.5216145638033172
+    margem: 0.5194052314479938
 - veiculo: lander
   lancador: Atlas V 551
   categoria: operacional
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -3007,16 +3007,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12418.947765005982
+    massa_leo_kg: 12437.005872581361
     capacidade_kg: 18505
-    margem: 0.49006182731062387
+    margem: 0.4878983084502795
 - veiculo: lander
   lancador: Atlas V 551
   categoria: operacional
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -3025,16 +3025,16 @@ linhas:
     beta_graus: 21.154600000000002
     giro_perigeu_graus: 44.92612988040005
     dv_extra_giro_m_s: 4358.722291305483
-    massa_leo_kg: 101999.24328718336
+    massa_leo_kg: 102147.5580501415
     capacidade_kg: 18505
-    margem: -0.8185770854407384
+    margem: -0.8188405053117727
 - veiculo: lander
   lancador: Atlas V 551
   categoria: operacional
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: sem curva de C3 publicada
@@ -3043,16 +3043,16 @@ linhas:
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12371.19146885786
+    massa_leo_kg: 12389.180135099574
     capacidade_kg: 18505
-    margem: 0.4958138871735067
+    margem: 0.49364201651841366
 - veiculo: lander
   lancador: Ariane 64
   categoria: operacional
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -3063,7 +3063,7 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -3074,7 +3074,7 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -3085,7 +3085,7 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: null
   a_margem: null
   a_nota: 'Kourou: só C3 = 6,25 publicado'
@@ -3096,81 +3096,81 @@ linhas:
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 5170.402844765217
-  a_margem: 0.2939353248353327
+  a_margem: 0.29205657495561055
   a_nota: multiplicador de DLA 0,997
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.7340000000000018
     giro_perigeu_graus: 1.4674493483701414
     dv_extra_giro_m_s: 7.876842025724695
-    massa_leo_kg: 12161.424082157999
+    massa_leo_kg: 12179.1077304405
     capacidade_kg: 36290
-    margem: 1.984025534743171
+    margem: 1.9796928316264628
 - veiculo: lander
   lancador: New Glenn
   categoria: anunciado
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4744.0495
-  a_margem: 0.18723693590574375
+  a_margem: 0.18551310844101465
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12418.947765005982
+    massa_leo_kg: 12437.005872581361
     capacidade_kg: 36290
-    margem: 1.9221477283492319
+    margem: 1.9179048696925505
 - veiculo: lander
   lancador: New Glenn
   categoria: anunciado
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4548.82497239
-  a_margem: 0.13838041154330982
+  a_margem: 0.13672752208259653
   a_nota: multiplicador de DLA 0,902
   b:
     inclinacao_graus: 51.6
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12219.177349239602
+    massa_leo_kg: 12236.944975228162
     capacidade_kg: 34110
-    margem: 1.791513620360266
+    margem: 1.787460437964747
 - veiculo: lander
   lancador: New Glenn
   categoria: anunciado
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 4813.241
-  a_margem: 0.2045526710073109
+  a_margem: 0.20280370168686845
   a_nota: ''
   b:
     inclinacao_graus: 28.5
     beta_graus: 0.0
     giro_perigeu_graus: 0.0
     dv_extra_giro_m_s: 0.0
-    massa_leo_kg: 12371.19146885786
+    massa_leo_kg: 12389.180135099574
     capacidade_kg: 36290
-    margem: 1.9334280446110004
+    margem: 1.9291688073198179
 - veiculo: lander
   lancador: SLS Block 1 (5 m + iCPS)
   categoria: anunciado
   janela: 2028-conjuncao
   c3_km2_s2: 9.0984
   dla_graus: 29.234
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 19842.194789217392
-  a_margem: 3.9656704769196383
+  a_margem: 3.9584604930570837
   a_nota: multiplicador de DLA 0,997
   b: null
 - veiculo: lander
@@ -3179,9 +3179,9 @@ linhas:
   janela: 2031-conjuncao
   c3_km2_s2: 10.7017
   dla_graus: 14.7973
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 19289.49
-  a_margem: 3.8273516123270825
+  a_margem: 3.820342462729756
   a_nota: ''
   b: null
 - veiculo: lander
@@ -3190,9 +3190,9 @@ linhas:
   janela: 2033-conjuncao
   c3_km2_s2: 9.598
   dla_graus: -49.6546
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 17746.7989143
-  a_margem: 3.441280632748228
+  a_margem: 3.4348320450217518
   a_nota: multiplicador de DLA 0,902
   b: null
 - veiculo: lander
@@ -3201,9 +3201,9 @@ linhas:
   janela: 2035-conjuncao
   c3_km2_s2: 10.4406
   dla_graus: 8.6767
-  massa_injetada_kg: 3995.874249296971
+  massa_injetada_kg: 4001.6845585440788
   a_capacidade_kg: 19367.82
-  a_margem: 3.8469543313099877
+  a_margem: 3.8399167192344956
   a_nota: ''
   b: null
 resumo:
@@ -3212,56 +3212,56 @@ resumo:
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2031-conjuncao
-  b_pior_margem: -0.34372344109920305
+  b_pior_margem: -0.3934811760997221
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Falcon Heavy (recuperação)
   categoria: operacional
-  a_pior_margem: -0.35069600972566406
+  a_pior_margem: -0.39992509682966926
   a_janela_mais_restritiva: 2033-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Falcon Heavy (descartável)
   categoria: operacional
-  a_pior_margem: 0.5577806776374681
+  a_pior_margem: 0.43967248514669066
   a_janela_mais_restritiva: 2033-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC2
   categoria: operacional
-  a_pior_margem: -0.3997615250355169
+  a_pior_margem: -0.445270551023047
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: -0.28926065612818264
+  b_pior_margem: -0.34314766374285255
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC4
   categoria: operacional
-  a_pior_margem: -0.09965167365144456
+  a_pior_margem: -0.16791450099527683
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: -0.055978393835644846
+  b_pior_margem: -0.12755245248092806
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Vulcan VC6
   categoria: operacional
-  a_pior_margem: 0.15090208235846192
+  a_pior_margem: 0.06364270969286756
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: 0.12238722694444726
+  b_pior_margem: 0.03728980048781971
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 541
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: -0.9071188126534039
+  b_pior_margem: -0.914160900997386
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Atlas V 551
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: -0.899387322376119
+  b_pior_margem: -0.9070155987213386
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: Ariane 64
@@ -3273,72 +3273,72 @@ resumo:
 - veiculo: orbitador_regra_iii
   lancador: New Glenn
   categoria: anunciado
-  a_pior_margem: -0.3686822767774727
+  a_pior_margem: -0.41654767673241955
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: 0.5481046628012576
+  b_pior_margem: 0.43073008874401664
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: orbitador_regra_iii
   lancador: SLS Block 1 (5 m + iCPS)
   categoria: anunciado
-  a_pior_margem: 1.4630247927911082
+  a_pior_margem: 1.2762825828558086
   a_janela_mais_restritiva: 2033-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Falcon 9 (ASDS)
   categoria: operacional
-  a_pior_margem: -0.4384754306141859
+  a_pior_margem: -0.4817209560072626
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: 0.24104444300216876
+  b_pior_margem: 0.1454660446553222
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Falcon Heavy (recuperação)
   categoria: operacional
-  a_pior_margem: 0.2762220201576089
+  a_pior_margem: 0.1779344388318329
   a_janela_mais_restritiva: 2028-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Falcon Heavy (descartável)
   categoria: operacional
-  a_pior_margem: 2.050597234578017
+  a_pior_margem: 1.8156570603372164
   a_janela_mais_restritiva: 2028-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Vulcan VC2
   categoria: operacional
-  a_pior_margem: 0.17747461754118343
+  a_pior_margem: 0.08679201654960678
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: 0.34419826590634384
+  b_pior_margem: 0.2406755290371112
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Vulcan VC4
   categoria: operacional
-  a_pior_margem: 0.7616487331669495
+  a_pior_margem: 0.625976263648508
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: 0.7840013868156177
+  b_pior_margem: 0.6466074391920256
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Vulcan VC6
   categoria: operacional
-  a_pior_margem: 1.2509724761964107
+  a_pior_margem: 1.0776149907261976
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: 1.1150531905545984
+  b_pior_margem: 0.9521634588359067
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Atlas V 541
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: 0.3660284935442042
+  b_pior_margem: 0.26082451294116415
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Atlas V 551
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: 0.479737591350202
+  b_pior_margem: 0.3657763631666713
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: Ariane 64
@@ -3350,14 +3350,14 @@ resumo:
 - veiculo: orbitador_missao_A
   lancador: New Glenn
   categoria: anunciado
-  a_pior_margem: 0.25832440519468225
+  a_pior_margem: 0.16141519946376448
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: 1.9019009559631899
+  b_pior_margem: 1.6784125490039719
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: orbitador_missao_A
   lancador: SLS Block 1 (5 m + iCPS)
   categoria: anunciado
-  a_pior_margem: 3.829008242786693
+  a_pior_margem: 3.4571046610516545
   a_janela_mais_restritiva: 2028-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
@@ -3366,56 +3366,56 @@ resumo:
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2031-conjuncao
-  b_pior_margem: 0.1833857212081338
+  b_pior_margem: 0.18166748557520496
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: lander
   lancador: Falcon Heavy (recuperação)
   categoria: operacional
-  a_pior_margem: 0.1708129147590458
+  a_pior_margem: 0.16911293441183584
   a_janela_mais_restritiva: 2033-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: lander
   lancador: Falcon Heavy (descartável)
   categoria: operacional
-  a_pior_margem: 1.8089612308857772
+  a_pior_margem: 1.804882715156761
   a_janela_mais_restritiva: 2033-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao
 - veiculo: lander
   lancador: Vulcan VC2
   categoria: operacional
-  a_pior_margem: 0.08233888740891082
+  a_pior_margem: 0.08076736832638098
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: 0.2815920051258214
+  b_pior_margem: 0.2797311773241846
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: lander
   lancador: Vulcan VC4
   categoria: operacional
-  a_pior_margem: 0.6234914062752004
+  a_pior_margem: 0.6211341522256926
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: 0.7022422545732492
+  b_pior_margem: 0.6997706569823141
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: lander
   lancador: Vulcan VC6
   categoria: operacional
-  a_pior_margem: 1.0752852929165595
+  a_pior_margem: 1.072272049580806
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: 1.0238678344036756
+  b_pior_margem: 1.0209292474602227
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: lander
   lancador: Atlas V 541
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: -0.8325183653382402
+  b_pior_margem: -0.8327615429473663
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: lander
   lancador: Atlas V 551
   categoria: operacional
   a_pior_margem: null
   a_janela_mais_restritiva: 2028-conjuncao
-  b_pior_margem: -0.8185770854407384
+  b_pior_margem: -0.8188405053117727
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: lander
   lancador: Ariane 64
@@ -3427,14 +3427,14 @@ resumo:
 - veiculo: lander
   lancador: New Glenn
   categoria: anunciado
-  a_pior_margem: 0.13838041154330982
+  a_pior_margem: 0.13672752208259653
   a_janela_mais_restritiva: 2033-conjuncao
-  b_pior_margem: 1.791513620360266
+  b_pior_margem: 1.787460437964747
   b_janela_mais_restritiva: 2033-conjuncao
 - veiculo: lander
   lancador: SLS Block 1 (5 m + iCPS)
   categoria: anunciado
-  a_pior_margem: 3.441280632748228
+  a_pior_margem: 3.4348320450217518
   a_janela_mais_restritiva: 2033-conjuncao
   b_pior_margem: null
   b_janela_mais_restritiva: 2028-conjuncao

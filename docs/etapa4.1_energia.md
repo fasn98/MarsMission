@@ -161,3 +161,87 @@ Outros pontos:
 - **Orbitador:** o eclipse é o pior caso geométrico (Sol no plano da órbita), e a carga do CCRS por fase não é publicada
   (P-053).
 - **Plataforma do lander:** a energia ainda é um análogo (P-032). A lista de baixo para cima fica para a Etapa 4.5.
+
+## Nota (2026-10-31): decisões do portão, opção C completa e captura
+
+O Fabio decidiu no portão (ADR 0015):
+- energia do lander com linha de base C, solar com sobrevivência;
+- A, 2 × MMRTG, como alternativa condicionada ao Pu-238 (ADR 0016);
+- 1.022 W como valor-base da P-028;
+- P-050 a P-054 aprovadas, NÃO VALIDADAS.
+
+O texto acima fica como estava no primeiro portão. **Números vigentes: `results/etapa4.1/energia.md`.** Com o ponto
+fixo refeito, a demanda do lander passou a 4.691 Wh/sol: o aquecimento do MAV foi a 48,3 W, porque o Δv de subida mudou
+com a órbita de encontro.
+
+### Captura (o limite de 2.000 s não foi relaxado)
+Com 1.022 W, a 1ª queima da C2 (8 × R-4D-11) passa de 2.000 s. O Fabio pediu a variante com mais motores em arranjo
+simétrico (P-055). Os números abaixo são da pior janela (2031), com 4 queimas e as massas do ponto fixo convergido
+(`results/etapa3.1/queima_finita.md` e `perdas_calculadas.md`):
+
+| Combinação | Motores (kg) | 1ª queima (s) | Propelente da captura (kg) | Perda (m/s) |
+| :- | -: | -: | -: | -: |
+| C2: 8 × R-4D-11 | 34,5 | **2.037** (acima de 2.000) | 2.851 | 82 |
+| **C4: 10 × R-4D-11 (proposta)** | 43,1 | **1.605** | 2.813 | 58 |
+| C5: 12 × R-4D-11 | 51,7 | 1.324 | 2.789 | 42 |
+
+A C4 fecha com 395 s de folga e 8,6 kg a mais de motores. A opção (a), aceitar a queima acima de 2.000 s, não foi
+preciso avaliar.
+
+### Opção C: sobrevivência do próprio lander e tempestade acima de τ = 6
+- **Aquecedores do lander (P-056):** o análogo é o Spirit no inverno de 2008, com 84 Wh/sol de aquecedores e 140 Wh/sol
+  para o resto [F141], num rover de 174 kg [F142].
+  - Os aquecedores escalam com a massa da plataforma do lander elevada a 2/3.
+  - Na sobrevivência, o total fica em 1.694 Wh/sol: MAV 1.191, aquecedores 363 e eletrônica 140.
+  - Com escala linear (sensibilidade), 2.086 Wh/sol.
+- **Opção C:** 27,7 m² e 245 kg. A área agora sai da sobrevivência, não da operação normal. Na sensibilidade com escala
+  linear, 34,1 m² e 278 kg.
+- **Dados de voo na tempestade global de 2018 (Opportunity, [F140]):**
+  - 652 Wh com τ = 0,64 (sol 5100);
+  - 345 Wh com τ = 2,1 (sol 5106);
+  - cerca de 22 Wh com τ = 10,8 (sol 5111), quando o rover entrou em falha de baixa energia.
+  - Até 20/12/2018 não houve mais sinal.
+- **Modelo contra o voo:** em τ = 2,1, a razão de energia do modelo é 0,666, contra 0,529 medida (+26 %).
+  - O modelo é otimista nesse ponto.
+  - A comparação não separa a poeira depositada durante a tempestade, a inclinação do painel nem a geometria.
+  - **Não é uma verificação:** fica como comparação com dado publicado, com essas ressalvas.
+- **Acima de τ = 6 (P-057):** a razão medida entre τ = 10,8 e τ = 0,64 é 3,4 %. Aplicada ao painel da opção C, no pior
+  sol da estada:
+  - o painel dá 254 Wh/sol contra 1.906 Wh/sol necessários, ou 13 %;
+  - a sobrevivência exigiria 208 m²;
+  - na sensibilidade, 13 % e 256 m².
+- **Limite declarado:** os dados publicados não bastam para afirmar a sobrevivência da opção C acima de τ = 6.
+  - O único dado de voo nessa condição termina em perda do veículo.
+  - A duração da fase com τ > 6 e a ponte pela bateria não foram avaliadas.
+  - É limitação e RISCO (ADR 0015).
+
+Tabela completa, com bases iguais (`results/etapa4.1/energia.md`):
+
+| Opção | Massa | Área | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |
+| :- | -: | -: | :- | :- | :- |
+| **C. Solar com sobrevivência (linha de base)** | 245 kg | 27,7 m² | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
+| A. 2 × MMRTG (alternativa condicionada) | 118 kg | — | 6.956 g; condicionada à disponibilidade (ADR 0016); acima do Tier I do NSPM-20 | não depende de τ | potência no fim: 90,8 % da inicial |
+| B. Solar, céu claro | 194 kg | 18,0 m² | — | não atravessa: com τ = 6, a energia cai a 23,5 % da de céu claro | poeira: fator 0,324 |
+| D. Solar operando na tempestade | 502 kg | 76,8 m² | — | opera até τ = 6; acima disso, ver a razão do Opportunity | poeira: fator 0,324 |
+
+### Alternativa A: atividade e NSPM-20
+- **Atividade:** 4.408 TBq, ou 4,41 × 10⁶ A2. É 44,1 vezes o limite do Tier I.
+- **Enquadramento:** Tier II, ou Tier III, dependendo da análise de segurança, que não foi feita.
+- Os fatos de disponibilidade, com fonte, estão no ADR 0016.
+
+### Orbitador com 1.022 W (vigente)
+Estes números substituem a linha "Proposta (P-053)" da seção 4, que foi calculada antes do ponto fixo com a C4:
+
+| | Plataforma | Orbitador injetado | Falcon Heavy descartável | Vulcan VC6 |
+| :- | -: | -: | -: | -: |
+| Antes (510 W, C2) | 496,5 kg | 7.205 kg | +56 % | +15 % |
+| **Vigente (1.022 W, C4)** | 614,0 kg | 7.796 kg | +44 % | +6 % |
+
+- Com a margem de massa da ESA, o VC6 fica em −1 % (`results/etapa2.5/arquitetura.md`). O orbitador depende na
+  prática do Falcon Heavy descartável. A reavaliação fica para a Etapa 4.5.
+
+### Premissas novas (NÃO VALIDADAS)
+- **P-055:** arranjo simétrico de 10 e 12 R-4D-11.
+- **P-056:** sobrevivência do lander pelo Spirit.
+- **P-057:** razão de energia do Opportunity acima de τ = 6.
+- **P-058:** atividade do Pu-238.

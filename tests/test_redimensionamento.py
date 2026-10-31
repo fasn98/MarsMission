@@ -29,12 +29,13 @@ def test_ponto_fixo_fecha_nas_massas_atuais():
     novo = pd.perdas_projeto(ve.veiculos(detalhe=True)[0])
     for k in ("captura_marte", "saida_marte"):
         assert novo["perda_km_s"][k] == pytest.approx(r["perda_km_s"][k], abs=tol)
-    assert novo["captura"]["combinacao"] == "C2" and novo["saida"]["combinacao"] == "R3"
+    esc = ler("config/motores.yaml")["escolha"]
+    assert novo["captura"]["combinacao"] == esc["captura"] and novo["saida"]["combinacao"] == esc["retorno"]
 
 
 def test_motores_escolhidos_no_config():
     esc = ler("config/motores.yaml")["escolha"]
-    assert esc == {"captura": "C2", "retorno": "R3", "cruzeiro": "Z1", "mav_1": "M2", "mav_2": "N2"}
+    assert esc == {"captura": "C4", "retorno": "R3", "cruzeiro": "Z1", "mav_1": "M2", "mav_2": "N2"}
     assert v(ler("config/dimensionamento.yaml")["estagios"]["insercao_marte"]["isp_s"]) == 310
     assert v(ler("config/superficie.yaml")["lancamento"]["cruzeiro_lander"]["isp_s"]) == 292
     assert ler("config/mav_propulsao.yaml")["opcoes"]["O4"]["isp_s"] == [310, 310]

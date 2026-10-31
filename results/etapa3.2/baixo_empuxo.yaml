@@ -257,38 +257,38 @@ conferencia_edelbaum:
     nome: Marte, descida da circular de mesma energia que a órbita de encontro até
       300 km
     mu_km3_s2: 42828.37362069909
-    r0_km: 16042.140000000001
+    r0_km: 16522.39
     r1_km: 3696.19
-    razao_r1_r0: 0.230405045710859
-    v0_km_s: 1.6339344902767068
-    dv_edelbaum_km_s: 1.770058424644426
-    unidade_de_tempo_s: 9818.104762133557
-    aceleracao_de_referencia_km_s2: 0.00016642055975797502
+    razao_r1_r0: 0.22370795024206547
+    v0_km_s: 1.6100129036072308
+    dv_edelbaum_km_s: 1.793980011313902
+    unidade_de_tempo_s: 10262.27178861835
+    aceleracao_de_referencia_km_s2: 0.0001568865975068853
     linhas:
     - eps: 0.01
-      dv_numerico_adim: 1.0836173294758964
-      dv_edelbaum_adim: 1.083310521430187
-      diferenca_relativa: 0.0002832133904730514
-      duracao_adim: 108.36173294758963
-      voltas: 70.999
-      raio_final_adim: 0.230365
-      excentricidade_final: 0.04048
+      dv_numerico_adim: 1.114672342702113
+      dv_edelbaum_adim: 1.1142643684994655
+      diferenca_relativa: 0.00036613770859144474
+      duracao_adim: 111.4672342702113
+      voltas: 75.543
+      raio_final_adim: 0.220454
+      excentricidade_final: 0.04309
     - eps: 0.001
-      dv_numerico_adim: 1.0833141465099754
-      dv_edelbaum_adim: 1.083310521430187
-      diferenca_relativa: 3.3462979604073837e-06
-      duracao_adim: 1083.3141465099754
-      voltas: 709.721
-      raio_final_adim: 0.22946
-      excentricidade_final: 0.004186
+      dv_numerico_adim: 1.1142681027748875
+      dv_edelbaum_adim: 1.1142643684994655
+      diferenca_relativa: 3.3513370144149896e-06
+      duracao_adim: 1114.2681027748874
+      voltas: 755.269
+      raio_final_adim: 0.224647
+      excentricidade_final: 0.004242
     - eps: 0.0001
-      dv_numerico_adim: 1.0833105525205426
-      dv_edelbaum_adim: 1.083310521430187
-      diferenca_relativa: 2.8699394133340887e-08
-      duracao_adim: 10833.105525205427
-      voltas: 7097.191
-      raio_final_adim: 0.230495
-      excentricidade_final: 0.000413
+      dv_numerico_adim: 1.1142644046383727
+      dv_edelbaum_adim: 1.1142643684994655
+      diferenca_relativa: 3.2432973916933644e-08
+      duracao_adim: 11142.644046383726
+      voltas: 7552.665
+      raio_final_adim: 0.223626
+      excentricidade_final: 0.000428
   heliocentrico:
     nome: Heliocêntrico, da órbita da Terra à de Marte (calculado, não verificado)
     mu_km3_s2: 132712440041.27942

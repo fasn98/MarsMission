@@ -45,7 +45,7 @@ def test_resultado_da_etapa_4_1():
     assert r["lander"]["verificacao_vl1"]["maior_diferenca_relativa"] <= P050["tolerancia_teste_vl1"]
     s = {(x["cenario"], x["carga"]): x["area_m2"] for x in r["lander"]["solar"]}
     assert s[("claro_jezero", "operação normal")] < s[("regional_jezero", "operação normal")] < s[("global_2018", "operação normal")]
-    assert r["orbitador"]["proposta"]["carga_w"] >= r["orbitador"]["atual"]["carga_w"]
+    assert r["orbitador"]["adotada"]["carga_w"] > r["orbitador"]["anterior"]["carga_w"]
 
 
 def test_bases_iguais_mmrtg_e_solar():
@@ -60,3 +60,33 @@ def test_bases_iguais_mmrtg_e_solar():
     assert m["margem_crescimento"] > 0 and m["bateria_kg"] > 0
     assert m["massa_kg"] == pytest.approx(m["massa_sem_margem_kg"] * (1 + m["margem_crescimento"]) + m["bateria_kg"], rel=1e-12)
 
+
+
+def test_atividade_do_pu238_pela_meia_vida():
+    """A = ln2/T½ · m/M · N_A; 1 g de Pu-238 dá ~0,63 TBq (conta independente, sem a ferramenta)."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+    import energia as te
+    pu = C["lander"]["pu238"]
+    r = te.nspm20(1.0, pu)
+    t = v(pu["meia_vida_anos"]) * v(pu["dias_por_ano"]) * 86400.0
+    assert r["atividade_tbq"] == pytest.approx(math.log(2) / t / v(pu["massa_molar_g_mol"]) * v(pu["avogadro_mol"]) / 1e12, rel=1e-12)
+    assert r["multiplo_a2"] == pytest.approx(r["atividade_tbq"] / v(pu["a2_tbq"]), rel=1e-12)
+    m = ler("results/etapa4.1/energia.yaml")["lander"]["mmrtg"]
+    assert m["nspm20"]["multiplo_a2"] > v(pu["tier_i_max_a2"])   # duas MMRTG ficam acima do Tier I
+
+
+def test_sobrevivencia_da_opcao_c():
+    """Carga de sobrevivência = MAV + aquecedores escalados (P-056) + eletrônica; a opção C cobre os dois casos."""
+    r = ler("results/etapa4.1/energia.yaml")["lander"]
+    sv, sb = C["lander"]["sobrevivencia"], r["sobrevivencia"]["base"]
+    aq = v(sv["aquecedores_mer_wh_sol"]) * (r["sobrevivencia"]["plataforma_lander_kg"] / v(sv["massa_mer_kg"])) ** v(sv["expoente_escala"])
+    assert sb["aquecedores_lander_wh_sol"] == pytest.approx(aq, rel=1e-12)
+    assert sb["total_wh_sol"] == pytest.approx(sb["mav_wh_sol"] + aq + v(sv["eletronica_mer_wh_sol"]), rel=1e-12)
+    c = r["solar_com_sobrevivencia"]
+    assert c["area_m2"] >= r["solar"][0]["area_m2"] and c["area_m2"] >= r["solar"][3]["area_m2"]
+    a6 = r["acima_do_modelo"]
+    pts = {x["sol"]: x["wh"] for x in C["lander"]["tempestade_2018_opportunity"]["pontos"]}
+    assert a6["razao_medida"] == pytest.approx(pts[5111] / pts[5100], rel=1e-12)   # [F140]: τ = 10,8 sobre τ = 0,64
+    assert a6["base"]["cobertura"] == pytest.approx(a6["base"]["energia_disponivel_wh_sol"] / a6["base"]["necessaria_wh_sol"], rel=1e-12)
