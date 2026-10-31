@@ -160,3 +160,15 @@ mesmo portão. Os resultados das Fases 2 e 3 foram regenerados no ponto fixo. O 
   - **O MAV:** Δv de subida com margem de 5,772 km/s.
 - **A conclusão do ADR 0013 se mantém:** no resultado regenerado da Etapa 3.3, as margens do orbitador elétrico
   continuam negativas (`results/etapa3.3/orbitador_eletrico.md`).
+
+## Errata (Etapa 4.2, 2026-10-31): alvo de temperatura do MAV de 15 °C (P-027)
+O Fabio mudou o alvo do aquecimento do MAV hipergólico de −1 °C para 15 °C no portão da Etapa 4.2 (`docs/etapa4.2_termico.md`).
+Os resultados das Fases 2 a 4 foram regenerados. O texto acima e a errata de 2026-10-31 da Etapa 4.1 ficam como estavam.
+
+**Números vigentes** (`results/etapa2.5/arquitetura.md`):
+- **Lander injetado:** 4.012 kg (era 4.002 kg na errata da 4.1).
+- **MAV + energia do aquecimento:** 411 kg (era 406 kg).
+- **Orbitador:** 7.796 kg, sem mudança.
+- **Margens dos lançadores escolhidos:** sem mudança no arredondamento.
+  - orbitador: Falcon Heavy descartável +44 %, Vulcan VC6 +6 %;
+  - lander: Falcon Heavy com recuperação +17 %, Vulcan VC2 +8 %.

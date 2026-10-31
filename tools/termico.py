@@ -14,6 +14,7 @@ Uso: python tools/termico.py
 
 from __future__ import annotations
 
+import datetime as dt
 import sys
 from pathlib import Path
 
@@ -69,8 +70,17 @@ def main():
 
     # amostras: AFT fora de transientes [F167] contra o alvo do MAV
     aft_amostras = next(x["max_c"] for x in tc["faixas"] if x["item"].startswith("Amostras (RSTA), fora"))
+    ta = tc["amostras"]
+    ms = ler("results/etapa1.3/missoes.yaml")
+    ref = next(c for c in ms["candidatas"] if c["id"] == ler("config/missao_referencia.yaml")["missao_referencia"]["id"])
+    dep = dt.date.fromisoformat(ta["depositos_ate"]["valor"])
+    chegada = dt.date.fromisoformat(ref["chegada_marte"][:10])
     amostras = {"aft_c": aft_amostras, "mav_c": t_mav, "excesso_k": t_mav - aft_amostras,
-                "excesso_com_alvos_k": {a["alvo"]: a["t_c"] - aft_amostras for a in alvos[1:]}}
+                "excesso_com_alvos_k": {a["alvo"]: a["t_c"] - aft_amostras for a in alvos[1:]},
+                "decisao": "transferência tardia para o MAV, tratada como transiente (+30 °C)",
+                "periodos_pior_caso": ta["periodos_pior_caso"], "deposito_desde": str(dep), "chegada_marte": str(chegada),
+                "anos_no_deposito_ate_a_chegada": (chegada - dep).days / 365.25,
+                "aquecimento_tubos_k": v(ta["aquecimento_tubos_k"]), "isolamento_conteiner": ta["isolamento_contêiner"]}
 
     # comparação com o SRL (projeto publicado): energia de aquecimento por sol, sem o MAV
     cs = tc["comparacao_srl"]
@@ -123,6 +133,12 @@ def escreve_md(o):
            f"AFT das amostras fora de transientes: {br(am['aft_c'])} °C [F167]. O MAV do estudo é aquecido a {br(am['mav_c'])} °C: "
            f"{br(am['excesso_k'])} K acima da AFT das amostras; com os alvos alternativos, "
            + ", ".join(f"{k} {br(x)} K" for k, x in am["excesso_com_alvos_k"].items()) + ".", "",
+           f"Decisão (portão da 4.2): {am['decisao']}. Períodos acima de −20 °C (estimativas de pior caso [F167], registro (d)):", "",
+           "| Fase | Duração | Máxima estimada (°C) |", "| :- | :- | :- |"]
+    md += [f"| {p['fase']} | {p['duracao']} | {br(p['max_c'][0])} a {br(p['max_c'][1])} |" for p in am["periodos_pior_caso"]]
+    md += ["", f"No depósito desde {am['deposito_desde']} (P-062) até a chegada da missão de referência em {am['chegada_marte']}: "
+           f"{br(am['anos_no_deposito_ate_a_chegada'], 1)} anos, no mínimo; os tubos podem ser aquecidos repetidamente a até "
+           f"{br(am['aquecimento_tubos_k'])} K [F172]. Isolamento do contêiner (opção a): {am['isolamento_conteiner']}.", "",
            "## Comparação com o projeto publicado do SRL (análise, não medida)", "",
            f"- Aquecedores de sobrevivência do LAMP e da bateria no caso frio: {br(s['lamp_e_bateria_aquecedores_wh_sol'])} Wh/sol; "
            f"energia total do LAMP no caso frio: {br(s['lamp_frio_total_wh_sol'])} Wh/sol [F166]. Aqui: aquecedores do lander "

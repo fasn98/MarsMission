@@ -16,7 +16,7 @@
 | Bateria Li-ion do SRL (cruzeiro, interface do HRS) | AFT | 0,0 | 30,0 | [F165] |
 | Amostras (RSTA), fora de transientes | AFT | — | −20,0 | [F167] |
 | Amostras (RSTA), transientes operacionais inevitáveis | AFT | — | 30,0 | [F167] |
-| MAV O4 do estudo (aquecido) | alvo do aquecimento (P-027) | −1,0 | — | config/mav_propulsao.yaml, aquecimento.t_minima_c |
+| MAV O4 do estudo (aquecido) | alvo do aquecimento (P-027) | 15,0 | — | config/mav_propulsao.yaml, aquecimento.t_minima_c |
 
 Ambiente do modelo de aquecimento do MAV: −62,5 °C (igloo do SRL [F57]); mínima noturna do solo em Jezero: cerca de −93 °C [F172].
 
@@ -26,18 +26,28 @@ O aquecimento escala com (T − T_ambiente) no modelo atual (P-027). A área da 
 
 | Alvo do MAV | T (°C) | Potência (W) | Wh/sol | Sobrevivência (Wh/sol) | Demanda em operação (Wh/sol) | Área da opção (m²) | Massa da opção (kg) |
 | :- | -: | -: | -: | -: | -: | -: | -: |
-| atual (P-027) | −1 | 48,3 | 1 191 | 1 694 | 4 691 | 27,7 | 245 |
-| nominal_mmh_nto | 15 | 60,8 | 1 500 | 2 004 | 5 000 | 32,8 | 278 |
+| atual (P-027) | 15 | 60,8 | 1 500 | 2 004 | 5 000 | 32,8 | 278 |
+| anterior_p027 | −1 | 48,3 | 1 191 | 1 694 | 4 691 | 27,7 | 245 |
 | aft_tanques_mer | 17 | 62,4 | 1 539 | 2 042 | 5 039 | 33,4 | 282 |
 
 ## Amostras
 
-AFT das amostras fora de transientes: −20 °C [F167]. O MAV do estudo é aquecido a −1 °C: 19 K acima da AFT das amostras; com os alvos alternativos, nominal_mmh_nto 35 K, aft_tanques_mer 37 K.
+AFT das amostras fora de transientes: −20 °C [F167]. O MAV do estudo é aquecido a 15 °C: 35 K acima da AFT das amostras; com os alvos alternativos, anterior_p027 19 K, aft_tanques_mer 37 K.
+
+Decisão (portão da 4.2): transferência tardia para o MAV, tratada como transiente (+30 °C). Períodos acima de −20 °C (estimativas de pior caso [F167], registro (d)):
+
+| Fase | Duração | Máxima estimada (°C) |
+| :- | :- | :- |
+| No depósito na superfície | anos | 5 a 53 |
+| Transferência para o contêiner (OS) | meses | 30 a 53 |
+| Lançamento do MAV | minutos | 30 a 30 |
+
+No depósito desde 2023-02-15 (P-062) até a chegada da missão de referência em 2029-09-20: 6,6 anos, no mínimo; os tubos podem ser aquecidos repetidamente a até 300 K [F172]. Isolamento do contêiner (opção a): não avaliado: sem análogo com massa publicada (busca de 2026-10-31; só o limite de massa de todo o contêiner e as massas do veículo de entrada na Terra).
 
 ## Comparação com o projeto publicado do SRL (análise, não medida)
 
 - Aquecedores de sobrevivência do LAMP e da bateria no caso frio: 1 540 Wh/sol; energia total do LAMP no caso frio: 2 300 Wh/sol [F166]. Aqui: aquecedores do lander 363 Wh/sol mais 34,6 W de RHUs (853 Wh/sol), total 1 217 Wh/sol, 79 % do SRL (P-056, ADR 0015). O SRL é outro veículo, no pior caso frio (Ls 72°), não na tempestade; a comparação não é verificação.
-- MAV: sobrevivência da MAS do SRL (estágios sólidos e RCS líquido a +14 °C) de cerca de 30 W [F164]; operação de um MAV sólido a −20 °C de 60 a 70 W [F170]. Aqui: 48,3 W (MAV líquido).
+- MAV: sobrevivência da MAS do SRL (estágios sólidos e RCS líquido a +14 °C) de cerca de 30 W [F164]; operação de um MAV sólido a −20 °C de 60 a 70 W [F170]. Aqui: 60,8 W (MAV líquido).
 
 ## Cruzeiro: calor das RHUs dentro do aeroshell
 

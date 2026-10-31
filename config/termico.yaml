@@ -25,12 +25,25 @@ faixas:
   - {item: "Amostras (RSTA), transientes operacionais inevitáveis", tipo: AFT, min_c: null, max_c: 30,
      fonte: "[F167] p. 6 (mesma citação)"}
 # O MAV do estudo (O4, MMH/NTO) é aquecido a t_minima_c.O4 de config/mav_propulsao.yaml (P-027), lido pela ferramenta.
+# A faixa de temperatura de entrada do R-4D-11 não aparece na ficha da L3Harris [F106], na Tab. 3 do Orion ESM [F107]
+# nem na ficha da Aerojet Rocketdyne (só pressões de entrada); por isso o alvo é a faixa nominal de MMH/NTO [F159].
 
 mav:
-  # Alvos alternativos de temperatura do MAV (sensibilidade): o limite inferior da prática de sistemas MMH/NTO.
+  # Alvo atual: config/mav_propulsao.yaml (15 °C desde o portão da 4.2). Alvos para comparação:
   alvos_alternativos_c:
-    nominal_mmh_nto: {valor: 15, fonte: "[F159] p. 2 (limite inferior da faixa nominal)"}
+    anterior_p027: {valor: -1, premissa: P-027, fonte: "valor-base anterior da P-027 (NTO congela a −11 °C [F61] + 10 K)"}
     aft_tanques_mer: {valor: 17, fonte: "[F160] p. 3 (limite inferior da AFT dos tanques)"}
+
+amostras:
+  # Decisão do Fabio no portão da 4.2: (b) transferência tardia para o MAV, como transiente (+30 °C [F167]); registro (d)
+  # dos períodos acima de −20 °C. Estimativas de pior caso de [F167] p. 5, Tab. 1 (comunicação pessoal de D. Beaty):
+  periodos_pior_caso:
+    - {fase: "No depósito na superfície", duracao: anos, max_c: [5, 53], fonte: "[F167] p. 5, Tab. 1: \"Cached on Surface Years +5 to +53\""}
+    - {fase: "Transferência para o contêiner (OS)", duracao: meses, max_c: [30, 53], fonte: "[F167] p. 5, Tab. 1: \"Transfer to Orbiting Sample (OS) Months +30 to +53\""}
+    - {fase: "Lançamento do MAV", duracao: minutos, max_c: [30, 30], fonte: "[F167] p. 5, Tab. 1: \"Mars Ascent Vehicle (MAV) launch Minutes +30\""}
+  depositos_ate: {valor: "2023-02-15", premissa: P-062, fonte: "[F172]: depósito de Three Forks montado na \"Delta Front Campaign (which began on sol 415 and ended on sol 707, around mid-February 2023)\""}
+  aquecimento_tubos_k: {valor: 300, fonte: "[F172]: \"the tubes may potentially, repeatedly, be heated ocationally to up to 300 K for years\""}
+  isolamento_contêiner: "não avaliado: sem análogo com massa publicada (busca de 2026-10-31; só o limite de massa de todo o contêiner e as massas do veículo de entrada na Terra)"
 
 comparacao_srl:   # projeto publicado do Sample Retrieval Lander (análise, não medida)
   lamp_frio_wh_sol: {valor: 2300, fonte: "[F166] p. 11: \"the total energy on the LAMP in the cold case is 2300 W*h; this corresponds to an average power of 93W over a 24.6-hour Sol\""}

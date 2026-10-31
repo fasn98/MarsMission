@@ -295,7 +295,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-027
     nome: aquecimento_mav_superficie
-    valor: {expoente_area: 0.6667, margem_congelamento_k: 10}
+    valor: {expoente_area: 0.6667, alvo_o4_c: 15}
     unidade: adimensional; K
     uso: config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada
     justificativa: >
@@ -303,6 +303,9 @@ premissas:
       de −62,5 °C, com 320 kg de propelente [F57]. Escala linear com ΔT (condução) e com a área ~ massa^(2/3).
       Para o hipergólico, mínimo de −1 °C (NTO congela a −11 °C [F61], + 10 K de margem). Aquecimento
       contínuo durante toda a estada, sem uso do calor residual de um MMRTG. Sem fonte para essa escala.
+      VALOR-BASE MUDADO com aprovação do Fabio no portão da Etapa 4.2 (2026-10-31): o alvo do O4 passa de −1 °C
+      (congelamento do NTO + 10 K) a 15 °C, o limite inferior da faixa nominal de sistemas MMH/NTO [F159], porque a faixa
+      de entrada do R-4D-11 não foi achada nas fontes do fabricante (docs/etapa4.2_termico.md).
     status: NÃO VALIDADA
   - id: P-028
     nome: carga_eletrica_orbitador_w
@@ -699,4 +702,13 @@ premissas:
       atravessa, sem dependência do ano. Tempestades que começam pouco antes da chegada (Ls 185°, como as de 2001 e 2018)
       ainda estariam em curso na chegada ([F134]: "persist for weeks to months") e contam como exposição. Pedida pelo Fabio
       no portão da Etapa 4.1.
+    status: NÃO VALIDADA
+  - id: P-062
+    nome: data_do_deposito_de_three_forks
+    valor: "2023-02-15"
+    unidade: data
+    uso: config/termico.yaml (tempo das amostras no depósito até a chegada)
+    justificativa: >
+      A fonte [F172] diz que o depósito foi montado na campanha Delta Front, que terminou "around mid-February 2023"; o dia
+      15 é escolhido para a conta. O tempo no depósito é contado até a chegada da missão de referência, como mínimo.
     status: NÃO VALIDADA

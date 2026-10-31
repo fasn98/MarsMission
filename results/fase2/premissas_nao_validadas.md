@@ -30,7 +30,7 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.
 | P-024 | escala_armazenamento_zbo | 0.6667 | adimensional (expoente sobre a massa armazenada) | config/isru.yaml — armazenamento sem evaporação na superfície (O2 e O3) |
 | P-025 | escala_energia_solar | 1.0 | adimensional | config/isru.yaml — massa de painéis solares |
 | P-026 | armazenamento_cruzeiro | referencia_kg: 6567; expoente: 0.6667 | kg; adimensional | config/mav_propulsao.yaml — armazenamento sem evaporação de LOX e CH4 no cruzeiro (O2) |
-| P-027 | aquecimento_mav_superficie | expoente_area: 0.6667; margem_congelamento_k: 10 | adimensional; K | config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada |
+| P-027 | aquecimento_mav_superficie | expoente_area: 0.6667; alvo_o4_c: 15 | adimensional; K | config/mav_propulsao.yaml — aquecimento do MAV sólido (O1) e hipergólico (O4) durante a estada |
 | P-028 | carga_eletrica_orbitador_w | 1022 | W (mesma carga no sol e no eclipse) | config/plataformas.yaml — painel e bateria do orbitador |
 | P-029 | eficiencia_recarga_bateria | 0.8 | adimensional (energia devolvida / energia de recarga) | config/plataformas.yaml — potência do painel do orbitador |
 | P-030 | fator_perdas_painel_orbitador | 0.774 | adimensional (multiplica a potência específica a 1 UA escalada por 1/d²) | config/plataformas.yaml — massa do painel do orbitador |
@@ -65,5 +65,6 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.
 | P-059 | fator_do_opportunity_nas_tempestades | aplicado_a: cenários de tempestade (τ ≥ 2) e sobrevivência; tau_da_comparacao: 2.1 | adimensional | tools/energia.py (sensibilidade das áreas de painel) |
 | P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) |
 | P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | tools/energia.py (probabilidade do risco acima de τ = 6) |
+| P-062 | data_do_deposito_de_three_forks | 2023-02-15 | data | config/termico.yaml (tempo das amostras no depósito até a chegada) |
 
-Total: 61 de 61 premissas com status NÃO VALIDADA.
+Total: 62 de 62 premissas com status NÃO VALIDADA.

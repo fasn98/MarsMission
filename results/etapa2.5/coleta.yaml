@@ -11,66 +11,66 @@ opcoes:
   nome: Braço no lander, solo/regolito no próprio sítio (análogo Phoenix)
   coleta_prevista_kg: 88.5
   plataforma_lander_kg: 1558.5
-  lander_injetado_kg: 3988.7399844231622
+  lander_injetado_kg: 3998.8395130479907
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.17290703207032365
-    Falcon Heavy (descartável): 1.8139853421388694
-    Vulcan VC2: 0.0842747599742204
-    Vulcan VC4: 0.62639518485138
-    Vulcan VC6: 1.0789971505523552
+    Falcon Heavy (recuperação): 0.1699447206032081
+    Falcon Heavy (descartável): 1.8068782988529244
+    Vulcan VC2: 0.08153629949342167
+    Vulcan VC4: 0.62228753695226
+    Vulcan VC6: 1.0737464043885177
 - opcao: b_rover_proprio
   nome: Rover próprio de busca (análogo do Sample Fetch Rover do MSR)
   coleta_prevista_kg: 178.0
   plataforma_lander_kg: 1648.0
-  lander_injetado_kg: 4170.471652473674
+  lander_injetado_kg: 4180.571181098503
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.12179666154906976
-    Falcon Heavy (descartável): 1.691363659818295
-    Vulcan VC2: 0.03702661224054449
-    Vulcan VC4: 0.555523702083466
-    Vulcan VC6: 0.9884031718549962
+    Falcon Heavy (recuperação): 0.11908659706176317
+    Falcon Heavy (descartável): 1.684861796043064
+    Vulcan VC2: 0.03452133736270335
+    Vulcan VC4: 0.5517658289423937
+    Vulcan VC6: 0.9835995376428468
 - opcao: b_rover_proprio_com_testemunhagem
   nome: Rover próprio de busca (análogo do Sample Fetch Rover do MSR) + ferramenta
     de testemunhagem
   coleta_prevista_kg: 232.675
   plataforma_lander_kg: 1702.675
-  lander_injetado_kg: 4281.490411698945
+  lander_injetado_kg: 4291.589940323774
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.09270854935152095
-    Falcon Heavy (descartável): 1.621576780623009
-    Vulcan VC2: 0.010136581736226224
-    Vulcan VC4: 0.5151890768139729
-    Vulcan VC6: 0.9368440109665948
+    Falcon Heavy (recuperação): 0.09013704521756871
+    Falcon Heavy (descartável): 1.6154073445617225
+    Vulcan VC2: 0.007759396715268263
+    Vulcan VC4: 0.5116233364552476
+    Vulcan VC6: 0.9322859772768453
 - opcao: b_rover_proprio_limite_superior
   nome: Rover próprio de busca (análogo do Sample Fetch Rover do MSR) (limite superior)
   coleta_prevista_kg: 230.0
   plataforma_lander_kg: 1700.0
-  lander_injetado_kg: 4276.058766871737
+  lander_injetado_kg: 4286.158295496566
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.09409655757669144
-    Falcon Heavy (descartável): 1.6249068269895175
-    Vulcan VC2: 0.011419703282980587
-    Vulcan VC4: 0.517113739069571
-    Vulcan VC6: 0.9393042785463528
+    Falcon Heavy (recuperação): 0.09151852411647554
+    Falcon Heavy (descartável): 1.6187217260648636
+    Vulcan VC2: 0.009036482332938744
+    Vulcan VC4: 0.5135389449116059
+    Vulcan VC6: 0.9347346715176037
 - opcao: c_tubos_do_perseverance
   nome: Recuperar os tubos deixados pelo Perseverance em Jezero (plano do MSR)
   coleta_prevista_kg: 6.375
   plataforma_lander_kg: 1476.375
-  lander_injetado_kg: 3821.9834119242983
+  lander_injetado_kg: 3832.0829405491268
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.2240820204069125
-    Falcon Heavy (descartável): 1.936762052590593
-    Vulcan VC2: 0.13158264259250085
-    Vulcan VC4: 0.6973562690121098
-    Vulcan VC6: 1.169705665398176
+    Falcon Heavy (recuperação): 0.22085592859313108
+    Falcon Heavy (descartável): 1.929022159463385
+    Vulcan VC2: 0.12860033467601695
+    Vulcan VC4: 0.6928828537725733
+    Vulcan VC6: 1.1639873641987761
 - opcao: c_mais_a_escolhida
   nome: '(c) + (a): helicópteros (primário) + braço no lander (reserva) — ESCOLHIDA'
   coleta_prevista_kg: 94.875
   plataforma_lander_kg: 1564.875
-  lander_injetado_kg: 4001.6845585440788
+  lander_injetado_kg: 4011.7840871689064
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.16911293441183584
-    Falcon Heavy (descartável): 1.804882715156761
-    Vulcan VC2: 0.08076736832638098
-    Vulcan VC4: 0.6211341522256926
-    Vulcan VC6: 1.072272049580806
+    Falcon Heavy (recuperação): 0.16616973276135005
+    Falcon Heavy (descartável): 1.7978215192759528
+    Vulcan VC2: 0.07804657360362843
+    Vulcan VC4: 0.6170530026873975
+    Vulcan VC6: 1.0670551758836124

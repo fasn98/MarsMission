@@ -77,57 +77,84 @@ faixas:
   fonte: '[F167] p. 6 (mesma citação)'
 - item: MAV O4 do estudo (aquecido)
   tipo: alvo do aquecimento (P-027)
-  min_c: -1.0
+  min_c: 15.0
   max_c: null
   fonte: config/mav_propulsao.yaml, aquecimento.t_minima_c
 aquecimento_mav:
 - alvo: atual (P-027)
-  t_c: -1.0
+  t_c: 15.0
   fonte: config/mav_propulsao.yaml
+  potencia_w: 60.83871896068917
+  energia_wh_sol: 1500.2645579549069
+  carga_sobrevivencia_wh_sol: 2003.5639628908116
+  area_sobrevivencia_m2: 32.79453100719549
+  demanda_operacao_wh_sol: 5000.264557954907
+  area_operacao_m2: 19.21611703159006
+  bateria_operacao_kg: 105.02873472491271
+  area_opcao_m2: 32.79453100719549
+  bateria_opcao_kg: 105.02873472491271
+  total_opcao_kg: 277.5074712408815
+- alvo: anterior_p027
+  t_c: -1.0
+  fonte: valor-base anterior da P-027 (NTO congela a −11 °C [F61] + 10 K)
   potencia_w: 48.27846730428883
   energia_wh_sol: 1190.5325201835713
-  carga_sobrevivencia_wh_sol: 1693.8319251194762
-  area_sobrevivencia_m2: 27.724806703530994
+  carga_sobrevivencia_wh_sol: 1693.831925119476
+  area_sobrevivencia_m2: 27.724806703530987
   demanda_operacao_wh_sol: 4690.532520183571
-  area_operacao_m2: 18.025810595347988
-  bateria_operacao_kg: 98.70503895374793
-  area_opcao_m2: 27.724806703530994
-  bateria_opcao_kg: 98.70503895374793
-  total_opcao_kg: 244.52019421013122
-- alvo: nominal_mmh_nto
-  t_c: 15.0
-  fonte: '[F159] p. 2 (limite inferior da faixa nominal)'
-  potencia_w: 60.83871896068918
-  energia_wh_sol: 1500.2645579549066
-  carga_sobrevivencia_wh_sol: 2003.5639628908116
-  area_sobrevivencia_m2: 32.794531007195495
-  demanda_operacao_wh_sol: 5000.264557954906
-  area_operacao_m2: 19.21611703159006
-  bateria_operacao_kg: 105.0287347249127
-  area_opcao_m2: 32.794531007195495
-  bateria_opcao_kg: 105.0287347249127
-  total_opcao_kg: 277.50747124088144
+  area_operacao_m2: 18.025810595347984
+  bateria_operacao_kg: 98.70503895374794
+  area_opcao_m2: 27.724806703530987
+  bateria_opcao_kg: 98.70503895374794
+  total_opcao_kg: 244.52019421013125
 - alvo: aft_tanques_mer
   t_c: 17.0
   fonte: '[F160] p. 3 (limite inferior da AFT dos tanques)'
   potencia_w: 62.40875041773922
-  energia_wh_sol: 1538.9810626763237
+  energia_wh_sol: 1538.981062676324
   carga_sobrevivencia_wh_sol: 2042.2804676122287
-  area_sobrevivencia_m2: 33.42824654515356
+  area_sobrevivencia_m2: 33.42824654515355
   demanda_operacao_wh_sol: 5038.981062676324
-  area_operacao_m2: 19.36490533612032
-  bateria_operacao_kg: 105.8191966963083
-  area_opcao_m2: 33.42824654515356
-  bateria_opcao_kg: 105.8191966963083
+  area_operacao_m2: 19.364905336120316
+  bateria_operacao_kg: 105.81919669630831
+  area_opcao_m2: 33.42824654515355
+  bateria_opcao_kg: 105.81919669630831
   total_opcao_kg: 281.6308808697253
 area_base_dimensionada_pela_sobrevivencia: true
 amostras:
   aft_c: -20
-  mav_c: -1.0
-  excesso_k: 19.0
+  mav_c: 15.0
+  excesso_k: 35.0
   excesso_com_alvos_k:
-    nominal_mmh_nto: 35.0
+    anterior_p027: 19.0
     aft_tanques_mer: 37.0
+  decisao: transferência tardia para o MAV, tratada como transiente (+30 °C)
+  periodos_pior_caso:
+  - fase: No depósito na superfície
+    duracao: anos
+    max_c:
+    - 5
+    - 53
+    fonte: '[F167] p. 5, Tab. 1: "Cached on Surface Years +5 to +53"'
+  - fase: Transferência para o contêiner (OS)
+    duracao: meses
+    max_c:
+    - 30
+    - 53
+    fonte: '[F167] p. 5, Tab. 1: "Transfer to Orbiting Sample (OS) Months +30 to +53"'
+  - fase: Lançamento do MAV
+    duracao: minutos
+    max_c:
+    - 30
+    - 30
+    fonte: '[F167] p. 5, Tab. 1: "Mars Ascent Vehicle (MAV) launch Minutes +30"'
+  deposito_desde: '2023-02-15'
+  chegada_marte: '2029-09-20'
+  anos_no_deposito_ate_a_chegada: 6.595482546201232
+  aquecimento_tubos_k: 300.0
+  isolamento_conteiner: 'não avaliado: sem análogo com massa publicada (busca de 2026-10-31;
+    só o limite de massa de todo o contêiner e as massas do veículo de entrada na
+    Terra)'
 comparacao_srl:
   lamp_e_bateria_aquecedores_wh_sol: 1540.0
   lamp_frio_total_wh_sol: 2300.0
@@ -137,10 +164,10 @@ comparacao_srl:
   - 70
   nosso_aquecedores_lander_wh_sol: 363.2994049359048
   nosso_rhu_w: 34.59994332722903
-  nosso_rhu_wh_sol: 853.2242224664695
-  nosso_total_wh_sol: 1216.5236274023744
-  nosso_mav_w: 48.27846730428883
-  razao_nosso_srl: 0.7899504074041392
+  nosso_rhu_wh_sol: 853.2242224664697
+  nosso_total_wh_sol: 1216.5236274023746
+  nosso_mav_w: 60.83871896068918
+  razao_nosso_srl: 0.7899504074041394
 cruzeiro:
   rhu_quantidade: 35
   rhu_w: 35.0

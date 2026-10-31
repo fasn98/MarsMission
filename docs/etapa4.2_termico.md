@@ -118,3 +118,36 @@ decisão entre rejeição passiva e HRS depende da dissipação das aviônicas**
      - Contra: o requisito vigente não é atendido.
 3. **Calor no cruzeiro:** registrar que a escolha entre rejeição passiva e HRS fica para a Etapa 4.5, com a dissipação das
    aviônicas do lander.
+
+## Nota (2026-10-31): decisões do portão da Etapa 4.2
+Decisões do Fabio. **Números vigentes:** `results/etapa4.2/termico.md` e `results/etapa4.1/energia.md`, regenerados.
+
+1. **Alvo do MAV (P-027, valor-base mudado com aprovação):**
+   - A faixa de temperatura de entrada de propelente do R-4D-11 não foi achada:
+     - não está na ficha da L3Harris [F106];
+     - não está na Tab. 3 do Orion ESM [F107], que dá empuxo, Isp, duração e partidas;
+     - não está na ficha da Aerojet Rocketdyne do R-4D-11, que só dá pressões de entrada.
+   - Pela regra do Fabio, o alvo passa a 15 °C, o limite inferior da faixa nominal de sistemas MMH/NTO [F159].
+
+   | | Antes (−1 °C) | Depois (15 °C) |
+   | :- | -: | -: |
+   | Aquecimento do MAV | 48,3 W | 60,8 W |
+   | Sobrevivência (C + RHU) | 1.694 Wh/sol | 2.004 Wh/sol |
+   | Demanda em operação | 4.691 Wh/sol | 5.000 Wh/sol |
+   | C + RHU (linha de base) | 27,7 m², 245 kg | 32,8 m², 278 kg |
+   | Lander injetado | 4.002 kg | 4.012 kg |
+   | MAV + energia do aquecimento | 406 kg | 411 kg |
+
+   As margens dos lançadores escolhidos para o lander não mudam no arredondamento (`results/etapa2.5/arquitetura.md`).
+2. **Amostras:** (b) transferência tardia para o MAV, tratada como transiente (+30 °C [F167]), alinhada à operação curta
+   de superfície da Etapa 4.4.
+   - **Registro (d), períodos acima de −20 °C** (estimativas de pior caso [F167, p. 5, Tab. 1]):
+     - no depósito, anos, de +5 a +53 °C;
+     - na transferência para o contêiner, meses, de +30 a +53 °C;
+     - no lançamento do MAV, minutos, +30 °C.
+   - **Tempo no depósito:** de 2023-02-15 (P-062, [F172]) até a chegada em 2029-09-20, 6,6 anos no mínimo. Os tubos podem
+     ser aquecidos repetidamente a até 300 K [F172].
+   - **Opção (a), isolamento do contêiner:** não avaliada, porque não há análogo com massa publicada.
+3. **Rejeição de calor no cruzeiro:** fica para a Etapa 4.5, com a dissipação das aviônicas.
+
+**Premissa nova:** P-062 (data do depósito), NÃO VALIDADA.

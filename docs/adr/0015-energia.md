@@ -125,3 +125,11 @@ O Fabio decidiu, depois do merge do PR #31:
    - Com essa linha do tempo, calcular a probabilidade acumulada de início de tempestade global até o lançamento do MAV,
      pela distribuição de Ls dos inícios do catálogo, e comparar com os 25 % da estada inteira.
    - **Chegada em Ls ~190°**, no início da estação de tempestades: avaliar o efeito na entrada, descida e pouso.
+
+## Nota (Etapa 4.2, 2026-10-31): alvo do MAV de 15 °C (P-027)
+O alvo de temperatura do MAV passou de −1 °C para 15 °C (decisão do Fabio no portão da Etapa 4.2). O aquecimento do MAV, a
+energia do lander e as massas mudaram:
+- a linha de base C + RHU vai de 27,7 m² e 245 kg para 32,8 m² e 278 kg;
+- o lander injetado vai de 4.002 para 4.012 kg.
+
+**Números vigentes:** `results/` e a nota de 2026-10-31 em `docs/etapa4.2_termico.md`.

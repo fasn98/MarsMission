@@ -327,3 +327,11 @@ A energia dos cenários de tempestade é dividida por 1,258, a razão do modelo 
   - **Etapa 4.2:** o calor das RHUs no cruzeiro, dentro do aeroshell.
   - **Etapa 4.4:** a linha do tempo mínima da superfície até o lançamento do MAV, a probabilidade acumulada de tempestade
     até esse lançamento (contra os 25 % da estada) e o efeito da chegada em Ls ~190° na entrada, descida e pouso.
+
+## Nota (Etapa 4.2, 2026-10-31): alvo do MAV de 15 °C (P-027)
+O alvo de temperatura do MAV passou de −1 °C para 15 °C (decisão do Fabio no portão da Etapa 4.2). O aquecimento do MAV, a
+energia do lander e as massas mudaram:
+- a linha de base C + RHU vai de 27,7 m² e 245 kg para 32,8 m² e 278 kg;
+- o lander injetado vai de 4.002 para 4.012 kg.
+
+**Números vigentes:** `results/` e a nota de 2026-10-31 em `docs/etapa4.2_termico.md`.
