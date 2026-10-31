@@ -16,9 +16,9 @@ lander:
   tau_max_modelo: 6.0
   demanda:
     plataforma_wh_sol: 3500.0
-    aquecimento_mav_w: 48.27846730428883
-    aquecimento_mav_wh_sol: 1190.5325201835713
-    total_wh_sol: 4690.532520183571
+    aquecimento_mav_w: 60.83871896068918
+    aquecimento_mav_wh_sol: 1500.2645579549069
+    total_wh_sol: 5000.264557954907
   picos_wh:
     braco: 20.0
     recarga_helicopteros: 17.5
@@ -27,11 +27,11 @@ lander:
   solar:
   - tau: 0.4
     tau_usado: 0.4
-    demanda_wh_sol: 4690.532520183571
-    area_m2: 18.025810595347988
-    painel_kg: 94.8044975999083
-    bateria_kg: 98.70503895374793
-    total_kg: 193.50953655365623
+    demanda_wh_sol: 5000.264557954907
+    area_m2: 19.21611703159006
+    painel_kg: 101.06476551301897
+    bateria_kg: 105.02873472491271
+    total_kg: 206.09350023793166
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 292.73851832041004
@@ -39,11 +39,11 @@ lander:
     carga: operação normal
   - tau: 2.0
     tau_usado: 2.0
-    demanda_wh_sol: 4690.532520183571
-    area_m2: 28.7427006364919
-    painel_kg: 151.1686411600496
-    bateria_kg: 98.70503895374793
-    total_kg: 249.87368011379752
+    demanda_wh_sol: 5000.264557954907
+    area_m2: 30.640680279716648
+    painel_kg: 161.15082784613475
+    bateria_kg: 105.02873472491271
+    total_kg: 266.1795625710474
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 183.5891885018974
@@ -51,11 +51,11 @@ lander:
     carga: operação normal
   - tau: 8.5
     tau_usado: 6.0
-    demanda_wh_sol: 4690.532520183571
-    area_m2: 76.77509529143089
-    painel_kg: 403.7890167983693
-    bateria_kg: 98.70503895374793
-    total_kg: 502.4940557521172
+    demanda_wh_sol: 5000.264557954907
+    area_m2: 81.84481959509539
+    painel_kg: 430.4525980579548
+    bateria_kg: 105.02873472491271
+    total_kg: 535.4813327828675
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -63,11 +63,11 @@ lander:
     carga: operação normal
   - tau: 8.5
     tau_usado: 6.0
-    demanda_wh_sol: 2547.056147585946
-    area_m2: 41.69046427075676
-    painel_kg: 219.26578552401133
-    bateria_kg: 52.0023963465464
-    total_kg: 271.2681818705577
+    demanda_wh_sol: 2856.7881853572812
+    area_m2: 46.76018857442126
+    painel_kg: 245.9293667835968
+    bateria_kg: 58.32609211771116
+    total_kg: 304.255458901308
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -75,11 +75,11 @@ lander:
     carga: 'sobrevivência: MAV + aquecedores e eletrônica do lander (P-056)'
   - tau: 0.4
     tau_usado: 0.4
-    demanda_wh_sol: 4690.532520183571
-    area_m2: 7.13912963031076
-    painel_kg: 37.547359899415646
-    bateria_kg: 98.70503895374793
-    total_kg: 136.25239885316358
+    demanda_wh_sol: 5000.264557954907
+    area_m2: 7.610550979335611
+    painel_kg: 40.02674155694323
+    bateria_kg: 105.02873472491271
+    total_kg: 145.05547628185593
     pior_sol: 137
     pior_sol_ls: 276.48234792718114
     energia_por_m2_no_pior_sol_wh: 739.1445958345515
@@ -87,11 +87,11 @@ lander:
     carga: operação normal, sem poeira acumulada (sensibilidade)
   - tau: 8.5
     tau_usado: 6.0
-    demanda_wh_sol: 3860.2123150111574
-    area_m2: 63.18433292059082
-    painel_kg: 332.3101009542323
-    bateria_kg: 78.81266809814447
-    total_kg: 411.1227690523768
+    demanda_wh_sol: 4169.944352782493
+    area_m2: 68.25405722425532
+    painel_kg: 358.97368221381777
+    bateria_kg: 85.13636386930925
+    total_kg: 444.11004608312703
     pior_sol: 402
     pior_sol_ls: 57.90768368119582
     energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -101,18 +101,18 @@ lander:
   solar_com_sobrevivencia:
     cenario: claro_jezero + global_2018
     carga: operação normal com céu claro; sobrevivência na tempestade global
-    area_m2: 41.69046427075676
-    painel_kg: 219.26578552401133
-    bateria_kg: 98.70503895374793
-    total_kg: 317.97082447775927
+    area_m2: 46.76018857442126
+    painel_kg: 245.9293667835968
+    bateria_kg: 105.02873472491271
+    total_kg: 350.9581015085095
     dimensiona_area: sobrevivência
   solar_com_sobrevivencia_sensibilidade:
     cenario: claro_jezero + global_2018
     carga: operação normal com céu claro; sobrevivência na tempestade global
-    area_m2: 63.18433292059082
-    painel_kg: 332.3101009542323
-    bateria_kg: 98.70503895374793
-    total_kg: 431.01513990798026
+    area_m2: 68.25405722425532
+    painel_kg: 358.97368221381777
+    bateria_kg: 105.02873472491271
+    total_kg: 464.00241693873045
     dimensiona_area: sobrevivência
   sobrevivencia:
     plataforma_lander_kg: 1564.875
@@ -123,8 +123,8 @@ lander:
       rhu_lander_w: 34.59994332722903
       aquecedores_lander_wh_sol: 1216.5236274023744
       eletronica_wh_sol: 140.0
-      mav_wh_sol: 1190.5325201835713
-      total_wh_sol: 2547.056147585946
+      mav_wh_sol: 1500.2645579549069
+      total_wh_sol: 2856.7881853572812
     sensibilidade:
       expoente: 1.0
       com_rhu: false
@@ -132,8 +132,8 @@ lander:
       rhu_lander_w: 71.94827586206897
       aquecedores_lander_wh_sol: 2529.679794827586
       eletronica_wh_sol: 140.0
-      mav_wh_sol: 1190.5325201835713
-      total_wh_sol: 3860.2123150111574
+      mav_wh_sol: 1500.2645579549069
+      total_wh_sol: 4169.944352782493
   comparacao_opportunity_2018:
   - sol: 5106
     data: '2018-06-04'
@@ -153,15 +153,15 @@ lander:
     razao_medida: 0.03374233128834356
     energia_por_m2_referencia_wh: 271.5109781014671
     base:
-      energia_disponivel_wh_sol: 381.9435768350669
-      necessaria_wh_sol: 2865.438166034189
-      cobertura: 0.13329325384245955
-      area_necessaria_m2: 312.7725002499458
+      energia_disponivel_wh_sol: 428.3894168605883
+      necessaria_wh_sol: 3213.886708526941
+      cobertura: 0.13329325384245952
+      area_necessaria_m2: 350.8068655123952
     sensibilidade:
-      energia_disponivel_wh_sol: 578.857792489392
-      necessaria_wh_sol: 4342.738854387552
-      cobertura: 0.13329325384245955
-      area_necessaria_m2: 474.0249870054859
+      energia_disponivel_wh_sol: 625.3036325149134
+      necessaria_wh_sol: 4691.187396880305
+      cobertura: 0.13329325384245952
+      area_necessaria_m2: 512.0593522679354
     opportunity_wh_sol: 22
     desfecho_opportunity: '[F140] sóis 5292–5299 (13–20/12/2018): "No signal from
       Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely
@@ -188,16 +188,16 @@ lander:
       rhu_lander_w: 34.59994332722903
       aquecedores_lander_wh_sol: 363.2994049359048
       eletronica_wh_sol: 140.0
-      mav_wh_sol: 1190.5325201835713
-      total_wh_sol: 1693.8319251194762
+      mav_wh_sol: 1500.2645579549069
+      total_wh_sol: 2003.5639628908116
     dimensionamento_sobrevivencia:
       tau: 8.5
       tau_usado: 6.0
-      demanda_wh_sol: 1693.8319251194762
-      area_m2: 27.724806703530994
-      painel_kg: 145.81515525638332
-      bateria_kg: 34.58240180452264
-      total_kg: 180.39755706090597
+      demanda_wh_sol: 2003.5639628908116
+      area_m2: 32.79453100719549
+      painel_kg: 172.47873651596876
+      bateria_kg: 40.906097575687404
+      total_kg: 213.38483409165616
       pior_sol: 402
       pior_sol_ls: 57.90768368119582
       energia_por_m2_no_pior_sol_wh: 68.73126064091625
@@ -206,19 +206,19 @@ lander:
     opcao:
       cenario: claro_jezero + global_2018
       carga: operação normal com céu claro; sobrevivência na tempestade global
-      area_m2: 27.724806703530994
-      painel_kg: 145.81515525638332
-      bateria_kg: 98.70503895374793
-      total_kg: 244.52019421013125
+      area_m2: 32.79453100719549
+      painel_kg: 172.47873651596876
+      bateria_kg: 105.02873472491271
+      total_kg: 277.5074712408815
       dimensiona_area: sobrevivência
     reducao_carga_sobrevivencia_wh_sol: 853.2242224664697
     reducao_area_m2: 13.965657567225769
     reducao_massa_kg: 73.45063026762801
     acima_do_modelo:
-      energia_disponivel_wh_sol: 253.99841485658874
-      necessaria_wh_sol: 1905.5609157594108
-      cobertura: 0.1332932538424595
-      area_necessaria_m2: 207.99857385355142
+      energia_disponivel_wh_sol: 300.4442548821102
+      necessaria_wh_sol: 2254.009458252163
+      cobertura: 0.13329325384245952
+      area_necessaria_m2: 246.03293911600082
     disponibilidade:
     - '[F153] p. 9 do PDF: "Current Cassini-era LWRHUs available (~.8 Wth) • DOE reconstituting
       approximately 1 Wth LWRHU production capability • Capability completed at ORNL
@@ -253,43 +253,43 @@ lander:
     cenarios:
     - cenario: regional_jezero
       tau: 2.0
-      area_m2: 28.7427006364919
-      area_com_fator_m2: 36.1620876321452
-      total_kg: 249.87368011379752
-      total_com_fator_kg: 288.8950185940616
+      area_m2: 30.640680279716648
+      area_com_fator_m2: 38.54999498470559
+      total_kg: 266.1795625710474
+      total_com_fator_kg: 307.7776145975987
     - cenario: global_2018
       tau: 8.5
-      area_m2: 76.77509529143089
-      area_com_fator_m2: 96.59314060315387
-      total_kg: 502.4940557521172
-      total_com_fator_kg: 606.7245878134603
+      area_m2: 81.84481959509539
+      area_com_fator_m2: 102.97151878196608
+      total_kg: 535.4813327828675
+      total_com_fator_kg: 646.5945663188156
     - cenario: sobrevivência (C)
       tau: 8.5
-      area_m2: 41.69046427075676
-      area_com_fator_m2: 52.452072665358685
-      total_kg: 271.2681818705577
-      total_com_fator_kg: 327.8675160209172
+      area_m2: 46.76018857442126
+      area_com_fator_m2: 58.8304508441709
+      total_kg: 304.255458901308
+      total_com_fator_kg: 367.7374945262724
     - cenario: sobrevivência com RHUs
       tau: 8.5
-      area_m2: 27.724806703530994
-      area_com_fator_m2: 34.881443545513065
-      total_kg: 180.39755706090597
-      total_com_fator_kg: 218.03699395170543
+      area_m2: 32.79453100719549
+      area_com_fator_m2: 41.25982172432528
+      total_kg: 213.38483409165616
+      total_com_fator_kg: 257.90697245706065
     opcao_c:
       cenario: claro_jezero + global_2018
       carga: operação normal com céu claro; sobrevivência na tempestade global
-      area_m2: 52.452072665358685
-      painel_kg: 275.8651196743708
-      bateria_kg: 98.70503895374793
-      total_kg: 374.57015862811875
+      area_m2: 58.8304508441709
+      painel_kg: 309.4114024085613
+      bateria_kg: 105.02873472491271
+      total_kg: 414.44013713347397
       dimensiona_area: sobrevivência
     opcao_c_rhu:
       cenario: claro_jezero + global_2018
       carga: operação normal com céu claro; sobrevivência na tempestade global
-      area_m2: 34.881443545513065
-      painel_kg: 183.45459214718278
-      bateria_kg: 98.70503895374793
-      total_kg: 282.1596311009307
+      area_m2: 41.25982172432528
+      painel_kg: 217.00087488137325
+      bateria_kg: 105.02873472491271
+      total_kg: 322.02960960628593
       dimensiona_area: sobrevivência
   tempestade_global_na_estada:
     estada_ls:
@@ -307,7 +307,7 @@ lander:
     - 2018
     duracao: '[F134] p. 71: "Global dust storms typically occur every few Mars years
       (MY) and persist for weeks to months"'
-  fracao_energia_tau_max_sobre_claro: 0.234787212271424
+  fracao_energia_tau_max_sobre_claro: 0.23478721227142396
   pu238_estado: '[F53] p. 27 do PDF (2016): "First new US Pu-238 production since
     the late 1980s", "~ 50 gm total Pu-238 was produced"; disponibilidade para a missão
     não avaliada'
@@ -330,28 +330,28 @@ lander:
     potencia_inicio_w: 110.0
     anos_do_lancamento_ao_fim: 1.9548254620123204
     potencia_fim_w: 99.91521975653386
-    demanda_media_w: 190.2104453899914
-    unidades: 2
-    massa_sem_margem_kg: 90.0
+    demanda_media_w: 202.77069704639177
+    unidades: 3
+    massa_sem_margem_kg: 135.0
     margem_crescimento: 0.275
     bateria_kg: 2.94
-    massa_kg: 117.68999999999998
-    sobra_por_sol_wh: 237.2261690768249
+    massa_kg: 175.065
+    sobra_por_sol_wh: 2391.3734759356867
     fracao_potencia_fim: 0.9083201796048532
-    pu238_g: 6956.0
+    pu238_g: 10434.0
     nspm20:
-      atividade_tbq: 4408.140408507183
-      multiplo_a2: 4408140.408507182
+      atividade_tbq: 6612.210612760774
+      multiplo_a2: 6612210.612760774
       limite_tier_i_a2: 100000.0
-      vezes_o_limite_tier_i: 44.081404085071824
+      vezes_o_limite_tier_i: 66.12210612760774
       enquadramento: 'acima do Tier I: Tier II, ou Tier III se a análise de segurança
         der probabilidade ≥ 1e-6 de exposição acima de 25 rem (não avaliada)'
-    potencia_termica_total_w: 3950.0
-    energia_por_sol_fim_wh: 4927.758689260396
+    potencia_termica_total_w: 5925.0
+    energia_por_sol_fim_wh: 7391.638033890594
     sensibilidade_abastecimento:
       anos: 2.9548254620123204
       potencia_fim_w: 95.11928920822022
-      unidades: 2
+      unidades: 3
   verificacao_vl1:
     pontos:
     - ls: 69

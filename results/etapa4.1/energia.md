@@ -4,7 +4,7 @@
 
 Estada 2029-09-20 a 2030-11-08 (Ls 190° a 58°), latitude 18,85°. Insolação diária no topo da atmosfera entre 3 627 e 4 672 Wh/m² por sol. Painel horizontal calibrado no 1º sol do InSight (Ls 296°, superfície 3 622 Wh/m², albedo 0,1): η = 0,247. Poeira acumulada no fim da estada, sem limpeza: fator 0,324.
 
-Demanda: plataforma 3 500 Wh/sol (P-032) + aquecimento do MAV 48,3 W (1 191 Wh/sol) = 4 691 Wh/sol.
+Demanda: plataforma 3 500 Wh/sol (P-032) + aquecimento do MAV 60,8 W (1 500 Wh/sol) = 5 000 Wh/sol.
 
 ### Solar (τ constante na estada, como envoltória; bateria para a noite; com margens de crescimento)
 
@@ -14,18 +14,18 @@ O modelo de insolação vale até τ = 6; acima disso usa-se esse limite, e o re
 
 | Cenário | τ | τ usado | Carga | Demanda (Wh/sol) | Área (m²) | Painel (kg) | Bateria (kg) | Total (kg) | Pior sol (Ls) |
 | :- | -: | -: | :- | -: | -: | -: | -: | -: | -: |
-| claro_jezero | 0,4 | 0,4 | operação normal | 4 691 | 18,0 | 95 | 99 | 194 | 58° |
-| regional_jezero | 2,0 | 2,0 | operação normal | 4 691 | 28,7 | 151 | 99 | 250 | 58° |
-| global_2018 | 8,5 | 6,0 | operação normal | 4 691 | 76,8 | 404 | 99 | 502 | 58° |
-| global_2018 | 8,5 | 6,0 | sobrevivência: MAV + aquecedores e eletrônica do lander (P-056) | 2 547 | 41,7 | 219 | 52 | 271 | 58° |
-| claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 4 691 | 7,1 | 38 | 99 | 136 | 276° |
-| global_2018 | 8,5 | 6,0 | sobrevivência, aquecedores com escala linear na massa (sensibilidade da P-056) | 3 860 | 63,2 | 332 | 79 | 411 | 58° |
+| claro_jezero | 0,4 | 0,4 | operação normal | 5 000 | 19,2 | 101 | 105 | 206 | 58° |
+| regional_jezero | 2,0 | 2,0 | operação normal | 5 000 | 30,6 | 161 | 105 | 266 | 58° |
+| global_2018 | 8,5 | 6,0 | operação normal | 5 000 | 81,8 | 430 | 105 | 535 | 58° |
+| global_2018 | 8,5 | 6,0 | sobrevivência: MAV + aquecedores e eletrônica do lander (P-056) | 2 857 | 46,8 | 246 | 58 | 304 | 58° |
+| claro_jezero | 0,4 | 0,4 | operação normal, sem poeira acumulada (sensibilidade) | 5 000 | 7,6 | 40 | 105 | 145 | 276° |
+| global_2018 | 8,5 | 6,0 | sobrevivência, aquecedores com escala linear na massa (sensibilidade da P-056) | 4 170 | 68,3 | 359 | 85 | 444 | 58° |
 
 ### Opção C: solar com sobrevivência, sem RHU (alternativa; a linha de base é a C + RHU, abaixo)
 
-Carga de sobrevivência na tempestade global (P-056): MAV 1 191 Wh/sol + aquecedores do lander 1 217 Wh/sol ((84 Wh/sol de aquecedores do Spirit + 197 Wh/sol das 8 RHUs) × (1 565 kg / 174 kg)^0,67) + eletrônica mínima 140 Wh/sol = 2 547 Wh/sol. Com escala linear na massa (sensibilidade): 3 860 Wh/sol.
+Carga de sobrevivência na tempestade global (P-056): MAV 1 500 Wh/sol + aquecedores do lander 1 217 Wh/sol ((84 Wh/sol de aquecedores do Spirit + 197 Wh/sol das 8 RHUs) × (1 565 kg / 174 kg)^0,67) + eletrônica mínima 140 Wh/sol = 2 857 Wh/sol. Com escala linear na massa (sensibilidade): 4 170 Wh/sol.
 
-Painel e bateria para os dois casos (a maior área e a maior bateria; a área sai da sobrevivência): 41,7 m², painel 219 kg, bateria 99 kg, total 318 kg. Sensibilidade com escala linear: 63,2 m², total 431 kg (área da sobrevivência).
+Painel e bateria para os dois casos (a maior área e a maior bateria; a área sai da sobrevivência): 46,8 m², painel 246 kg, bateria 105 kg, total 351 kg. Sensibilidade com escala linear: 68,3 m², total 464 kg (área da sobrevivência).
 
 Comparação do modelo com o Opportunity na tempestade de 2018 [F140] (razão de energia contra o sol de τ = 0,64; latitude do sítio, painel horizontal, poeira constante):
 
@@ -34,7 +34,7 @@ Comparação do modelo com o Opportunity na tempestade de 2018 [F140] (razão de
 | 5106 | 2018-06-04 | 2,1 | 0,529 | 0,666 | 25,8 % |
 | 5111 | 2018-06-10 | 10,8 | 0,034 | fora do modelo (τ > 6) | — |
 
-Acima de τ = 6 (P-057): com τ = 10,8 o Opportunity produziu 3,4 % da energia de τ = 0,64. Aplicada ao painel da opção C no pior sol da estada: 382 Wh/sol contra 2 865 Wh/sol necessários (13 %); a sobrevivência nessa condição exigiria 313 m². Sensibilidade (escala linear): 13 %, 474 m². A duração da fase com τ > 6 e a ponte pela bateria não foram avaliadas.
+Acima de τ = 6 (P-057): com τ = 10,8 o Opportunity produziu 3,4 % da energia de τ = 0,64. Aplicada ao painel da opção C no pior sol da estada: 428 Wh/sol contra 3 214 Wh/sol necessários (13 %); a sobrevivência nessa condição exigiria 351 m². Sensibilidade (escala linear): 13 %, 512 m². A duração da fase com τ > 6 e a ponte pela bateria não foram avaliadas.
 
 Desfecho do dado de voo usado acima de τ = 6: [F140] sóis 5292–5299 (13–20/12/2018): "No signal from Opportunity has been heard since Sol 5111 (June 10, 2018). Opportunity likely experienced a low-power fault, a mission clock fault and an up-loss timer fault".
 
@@ -42,18 +42,18 @@ Desfecho do dado de voo usado acima de τ = 6: [F140] sóis 5292–5299 (13–20
 
 RHUs no lander no lugar dos aquecedores que repõem o calor das RHUs do MER: 35 RHUs de 1,0 W (34,6 W, mesma escala da P-056). Potência específica do Pu-238: 0,568 W/g pela física; 0,568 W/g pela MMRTG (potência térmica / massa de Pu-238 [F135]), diferença 0,0 %. Pu-238: 61,6 g; atividade 39,1 TBq = 39 056 A2 (0,391 do limite do Tier I): Tier I pelo critério de quantidade (análise de segurança não avaliada; com probabilidade ≥ 1e-6 de 5 a 25 rem, passaria ao Tier II).
 
-Sobrevivência: 1 694 Wh/sol (redução de 853 Wh/sol). Opção C + RHU: 27,7 m², total 245 kg (área da sobrevivência); redução de 14,0 m² e 73 kg. Com τ = 10,8 (P-057): 13 % da sobrevivência, 208 m² necessários.
+Sobrevivência: 2 004 Wh/sol (redução de 853 Wh/sol). Opção C + RHU: 32,8 m², total 278 kg (área da sobrevivência); redução de 14,0 m² e 73 kg. Com τ = 10,8 (P-057): 13 % da sobrevivência, 246 m² necessários.
 
 ### Sensibilidade ao modelo otimista (P-059): energia na tempestade ÷ 1,258 (razão do modelo / razão medida pelo Opportunity em τ = 2,1)
 
 | Cenário | τ | Área (m²) | Área com o fator (m²) | Total (kg) | Total com o fator (kg) |
 | :- | -: | -: | -: | -: | -: |
-| regional_jezero | 2,0 | 28,7 | 36,2 | 250 | 289 |
-| global_2018 | 8,5 | 76,8 | 96,6 | 502 | 607 |
-| sobrevivência (C) | 8,5 | 41,7 | 52,5 | 271 | 328 |
-| sobrevivência com RHUs | 8,5 | 27,7 | 34,9 | 180 | 218 |
+| regional_jezero | 2,0 | 30,6 | 38,5 | 266 | 308 |
+| global_2018 | 8,5 | 81,8 | 103,0 | 535 | 647 |
+| sobrevivência (C) | 8,5 | 46,8 | 58,8 | 304 | 368 |
+| sobrevivência com RHUs | 8,5 | 32,8 | 41,3 | 213 | 258 |
 
-Opção C com o fator: 52,5 m², 375 kg; C + RHU com o fator: 34,9 m², 282 kg.
+Opção C com o fator: 58,8 m², 414 kg; C + RHU com o fator: 41,3 m², 322 kg.
 
 Potência por RHU (o Pu-238 segue o calor; o número de unidades, a potência de cada):
 
@@ -80,9 +80,9 @@ Picos por sol (na bateria das duas opções): braco 20,0 Wh, recarga_helicoptero
 
 ### Alternativa A: MMRTG (condicionada à disponibilidade de Pu-238)
 
-2 unidade(s): 99,9 W cada no fim da estada (1,95 anos depois do lançamento, 90,8 % da inicial), para 190,2 W médios (sobra de 237 Wh/sol); 90 kg sem margem + margem de 27,5 % + bateria dos picos 2,9 kg = 118 kg; 3 950 W térmicos; 6 956 g de Pu-238. Sensibilidade com o abastecimento 1 ano antes do lançamento: 95,1 W cada, 2 unidade(s).
+3 unidade(s): 99,9 W cada no fim da estada (1,95 anos depois do lançamento, 90,8 % da inicial), para 202,8 W médios (sobra de 2 391 Wh/sol); 135 kg sem margem + margem de 27,5 % + bateria dos picos 2,9 kg = 175 kg; 5 925 W térmicos; 10 434 g de Pu-238. Sensibilidade com o abastecimento 1 ano antes do lançamento: 95,1 W cada, 3 unidade(s).
 
-Atividade do Pu-238: 4 408 TBq = 4,41 × 10⁶ A2 (44,1 vezes o limite do Tier I do NSPM-20, 100 mil A2): acima do Tier I: Tier II, ou Tier III se a análise de segurança der probabilidade ≥ 1e-6 de exposição acima de 25 rem (não avaliada).
+Atividade do Pu-238: 6 612 TBq = 6,61 × 10⁶ A2 (66,1 vezes o limite do Tier I do NSPM-20, 100 mil A2): acima do Tier I: Tier II, ou Tier III se a análise de segurança der probabilidade ≥ 1e-6 de exposição acima de 25 rem (não avaliada).
 
 Disponibilidade de Pu-238:
 
@@ -97,11 +97,11 @@ Disponibilidade de Pu-238:
 
 | Opção | Massa (kg) | Área (m²) | Pu-238 | Tempestade global (inclusive τ > 6) | Degradação na estada |
 | :- | -: | -: | :- | :- | :- |
-| **C + RHU (linha de base)** | 245 | 27,7 | 61,6 g em 35 RHUs; Tier I pelo critério de quantidade | sobrevive até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
-| C. Solar com sobrevivência, sem RHU | 318 | 41,7 | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
-| A. MMRTG × 2 (alternativa condicionada) | 118 | — | 6 956 g; condicionada à disponibilidade (fatos acima); acima do Tier I do NSPM-20 | não depende de τ | potência no fim 90,8 % da inicial |
-| B. Solar, céu claro | 194 | 18,0 | — | não atravessa: com τ = 6 a energia cai a 23,5 % da de céu claro | poeira: fator 0,324 |
-| D. Solar operando na tempestade | 502 | 76,8 | — | opera até τ = 6; acima, ver a razão do Opportunity | poeira: fator 0,324 |
+| **C + RHU (linha de base)** | 278 | 32,8 | 61,6 g em 35 RHUs; Tier I pelo critério de quantidade | sobrevive até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
+| C. Solar com sobrevivência, sem RHU | 351 | 46,8 | — | sobrevive (MAV + lander, P-056) até τ = 6; com τ = 10,8, 13 % da energia de sobrevivência (P-057) | poeira: fator 0,324 no fim, sem limpeza |
+| A. MMRTG × 3 (alternativa condicionada) | 175 | — | 10 434 g; condicionada à disponibilidade (fatos acima); acima do Tier I do NSPM-20 | não depende de τ | potência no fim 90,8 % da inicial |
+| B. Solar, céu claro | 206 | 19,2 | — | não atravessa: com τ = 6 a energia cai a 23,5 % da de céu claro | poeira: fator 0,324 |
+| D. Solar operando na tempestade | 535 | 81,8 | — | opera até τ = 6; acima, ver a razão do Opportunity | poeira: fator 0,324 |
 
 ### Verificação da insolação diária contra a tabela do VL1 (22,3° N) [F56]
 

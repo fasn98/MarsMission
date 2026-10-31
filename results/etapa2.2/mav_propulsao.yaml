@@ -8,94 +8,94 @@ opcoes:
 - opcao: O1
   nome: Sólido (como o MSR)
   energia: mmrtg
-  mav_glom_kg: 1404.4450972489167
-  mav_propelente_kg: 991.3497994357266
-  aquecimento_w: 40.50392291831153
+  mav_glom_kg: 1404.4450972488612
+  mav_propelente_kg: 991.3497994356869
+  aquecimento_w: 40.50392291831045
   energia_superficie_kg: 45.0
   energia_superficie: 1 MMRTG
-  massa_pousada_kg: 2299.4450972489167
-  lander_orbita_baixa_kg: 14131.029904635689
-  total_regra_iii_kg: 41444.92990463569
-  total_missao_A_kg: 29985.129904635687
+  massa_pousada_kg: 2299.445097248861
+  lander_orbita_baixa_kg: 14131.029904645937
+  total_regra_iii_kg: 41444.929904645935
+  total_missao_A_kg: 29985.12990464594
 - opcao: O1
   nome: Sólido (como o MSR)
   energia: solar
-  mav_glom_kg: 1404.4450972489167
-  mav_propelente_kg: 991.3497994357266
-  aquecimento_w: 40.50392291831153
-  energia_superficie_kg: 16.039553475651367
+  mav_glom_kg: 1404.4450972488612
+  mav_propelente_kg: 991.3497994356869
+  aquecimento_w: 40.50392291831045
+  energia_superficie_kg: 16.03955347565094
   energia_superficie: solar
-  massa_pousada_kg: 2270.4846507245684
-  lander_orbita_baixa_kg: 13953.056124623807
-  total_regra_iii_kg: 41266.95612462381
-  total_missao_A_kg: 29807.156124623805
+  massa_pousada_kg: 2270.484650724512
+  lander_orbita_baixa_kg: 13953.056124633924
+  total_regra_iii_kg: 41266.95612463393
+  total_missao_A_kg: 29807.156124633926
 - opcao: O4
   nome: Hipergólico armazenável (MMH/NTO)
   energia: mmrtg
-  mav_glom_kg: 254.05375895530074
-  mav_propelente_kg: 181.3969643239392
-  aquecimento_w: 35.68073786572477
+  mav_glom_kg: 254.05375895529932
+  mav_propelente_kg: 181.39696432393808
+  aquecimento_w: 44.96353145680746
   energia_superficie_kg: 45.0
   energia_superficie: 1 MMRTG
-  massa_pousada_kg: 1149.0537589553007
-  lander_orbita_baixa_kg: 7061.404966474608
-  total_regra_iii_kg: 34375.30496647461
-  total_missao_A_kg: 22915.504966474607
+  massa_pousada_kg: 1149.0537589552994
+  lander_orbita_baixa_kg: 7061.404966472159
+  total_regra_iii_kg: 34375.30496647216
+  total_missao_A_kg: 22915.50496647216
 - opcao: O4
   nome: Hipergólico armazenável (MMH/NTO)
   energia: solar
-  mav_glom_kg: 254.05375895530074
-  mav_propelente_kg: 181.3969643239392
-  aquecimento_w: 35.68073786572477
-  energia_superficie_kg: 14.129572194827011
+  mav_glom_kg: 254.05375895529932
+  mav_propelente_kg: 181.39696432393808
+  aquecimento_w: 44.96353145680746
+  energia_superficie_kg: 17.805558456895753
   energia_superficie: solar
-  massa_pousada_kg: 1118.1833311501277
-  lander_orbita_baixa_kg: 6871.693570883572
-  total_regra_iii_kg: 34185.593570883575
-  total_missao_A_kg: 22725.793570883572
+  massa_pousada_kg: 1121.8593174121952
+  lander_orbita_baixa_kg: 6894.284008835239
+  total_regra_iii_kg: 34208.18400883524
+  total_missao_A_kg: 22748.384008835237
 - opcao: O2
   nome: LOX/CH4, tudo da Terra
   energia: mmrtg
-  mav_glom_kg: 305.06266673010106
-  mav_propelente_kg: 203.78918004472126
-  o2_kg: 158.50269559033876
-  ch4_kg: 45.2864844543825
-  zbo_superficie_w: 189.48259745135798
-  zbo_superficie_kg: 22.763526503651498
+  mav_glom_kg: 305.06266673010623
+  mav_propelente_kg: 203.7891800447249
+  o2_kg: 158.5026955903416
+  ch4_kg: 45.2864844543833
+  zbo_superficie_w: 189.4825974513602
+  zbo_superficie_kg: 22.763526503651764
   energia_superficie_kg: 90.0
   energia_superficie: 2 MMRTG
-  zbo_cruzeiro_w: 89.1999746948808
-  zbo_cruzeiro_kg: 27.777710240553482
-  paineis_cruzeiro_kg: 2.5886231683311793
-  armazenamento_pousado_kg: 27.777710240553482
-  massa_pousada_kg: 1272.8403769706545
-  lander_orbita_baixa_kg: 7830.221572697097
-  total_regra_iii_kg: 35144.1215726971
-  total_missao_A_kg: 23684.321572697096
+  zbo_cruzeiro_w: 89.19997469488186
+  zbo_cruzeiro_kg: 27.777710240553812
+  paineis_cruzeiro_kg: 2.58862316833121
+  armazenamento_pousado_kg: 27.777710240553812
+  massa_pousada_kg: 1272.8403769706601
+  lander_orbita_baixa_kg: 7830.221572700145
+  total_regra_iii_kg: 35144.12157270015
+  total_missao_A_kg: 23684.321572700144
 - opcao: O2
   nome: LOX/CH4, tudo da Terra
   energia: solar
-  mav_glom_kg: 305.06266673010106
-  mav_propelente_kg: 203.78918004472126
-  o2_kg: 158.50269559033876
-  ch4_kg: 45.2864844543825
-  zbo_superficie_w: 189.48259745135798
-  zbo_superficie_kg: 22.763526503651498
-  energia_superficie_kg: 75.03510859073776
+  mav_glom_kg: 305.06266673010623
+  mav_propelente_kg: 203.7891800447249
+  o2_kg: 158.5026955903416
+  ch4_kg: 45.2864844543833
+  zbo_superficie_w: 189.4825974513602
+  zbo_superficie_kg: 22.763526503651764
+  energia_superficie_kg: 75.03510859073864
   energia_superficie: solar
-  zbo_cruzeiro_w: 89.1999746948808
-  zbo_cruzeiro_kg: 27.777710240553482
-  paineis_cruzeiro_kg: 2.5886231683311793
-  armazenamento_pousado_kg: 27.777710240553482
-  massa_pousada_kg: 1257.8754855613922
-  lander_orbita_baixa_kg: 7738.256198849296
-  total_regra_iii_kg: 35052.1561988493
-  total_missao_A_kg: 23592.356198849295
+  zbo_cruzeiro_w: 89.19997469488186
+  zbo_cruzeiro_kg: 27.777710240553812
+  paineis_cruzeiro_kg: 2.58862316833121
+  armazenamento_pousado_kg: 27.777710240553812
+  massa_pousada_kg: 1257.8754855613988
+  lander_orbita_baixa_kg: 7738.256198846662
+  total_regra_iii_kg: 35052.156198846664
+  total_missao_A_kg: 23592.35619884666
 melhor_opcao: O4
 varredura_com_melhor_opcao:
   apoapse_escolhido_km: 26949.8
   apoapse_anterior_km: 18482.9
-  total_regra_iii_kg: 31233.3
-  total_missao_A_kg: 21297.6
-  mav_kg: 285.8
-  minimo_regra_iii_kg: 29948.5
+  total_regra_iii_kg: 31256.9
+  total_missao_A_kg: 21321.2
+  mav_kg: 289.6
+  minimo_regra_iii_kg: 29972.7
