@@ -38,7 +38,8 @@ Com Friis, o relé pelo nosso orbitador cobre só de 1 % a 3 % da demanda total.
   - lander: 250 Mbit por sol (P-063);
   - helicópteros, pela média do Ingenuity por câmera (P-072, sem compressão, com imagens em solo nas contagens):
     953 Mbit por sol só com a Navcam e 2.709 com a RTE;
-  - a envoltória da P-068 dá 983 Mbit por sol.
+  - a envoltória da P-068 dá 983 Mbit por sol;
+  - **com a RTE, nenhum caminho cobre os helicópteros** (`results/etapa4.3/comunicacao.md`).
 - **Enlace direto mínimo (P-070):**
   - HGA de 0,297 m e SSPA de 15 W, para os 160 bps do requisito de superfície do MSL na distância máxima;
   - comando de emergência a 7,8125 bps pela RLGA [F137];

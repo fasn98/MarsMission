@@ -114,5 +114,5 @@ dte_minimo:   # reserva: enlace direto para o mínimo crítico (estado, comandos
   microondas_kg: {valor: 3.7, fonte: "[F137] p. 86, Tab. 2-11, Rover X-band: \"Microwave components 3.7\""}
   sdst_rx_w: {valor: 11.3, fonte: "[F137] p. 87, Tab. 2-12, RSDST: \"RX 11.3\""}
   sdst_rx_tx_w: {valor: 14.8, fonte: "[F137] p. 87, Tab. 2-12, RSDST: \"RX + Non-Coherent TX (TLM Only: SAFE_MODE) 14.8\""}
-  receptor_horas_por_sol: {valor: 24.6597, premissa: P-070}   # receptor ligado o sol inteiro (comando de emergência)
+  receptor_ligado_o_sol_inteiro: {valor: true, premissa: P-070}   # duração do sol: config/plataformas.yaml [F47]
   categoria_mga: {valor: eletronica_0_5kg, premissa: P-070}

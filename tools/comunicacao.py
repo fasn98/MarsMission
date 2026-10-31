@@ -281,7 +281,8 @@ def main():
     m_basica = sum(itens.values())
     margem = mga(dmn["categoria_mga"]["valor"], pcfg, "e1_medio")
     m_prev = m_basica * (1 + margem)
-    h_min, h_rx = v(dmn["horas_por_sol"]), v(dmn["receptor_horas_por_sol"])
+    h_min = v(dmn["horas_por_sol"])
+    h_rx = sol_s / 3600 if v(dmn["receptor_ligado_o_sol_inteiro"]) else h_min
     e_min = (msl["sspa_dc_w"] + v(dmn["sdst_rx_tx_w"])) * h_min + v(dmn["sdst_rx_w"]) * max(h_rx - h_min, 0.0)
     area_op_min = claro["area_m2"] * (claro["demanda_wh_sol"] + e_min) / claro["demanda_wh_sol"]
     import arquitetura as arq

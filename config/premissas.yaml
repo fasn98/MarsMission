@@ -788,13 +788,13 @@ premissas:
   - id: P-070
     nome: enlace_direto_minimo_critico
     valor: {horas_por_sol: 1, categoria_mga: eletronica_0_5kg, receptor: "ligado o sol inteiro"}
-    unidade: h; —
+    unidade: h; —; —
     uso: config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3)
     justificativa: >
       O mínimo crítico (estado, comandos de segurança, confirmação do lançamento do MAV) é atendido pelo requisito de
       superfície em banda X do MSL: 160 bps na distância máxima com antena de 34 m e comando de emergência pela RLGA
-      [F137]. Uma hora de passe por sol. O conjunto (HGA, gimbal, SSPA, transponder) entra como adição à plataforma do
-      lander, porque o análogo da P-032 não o detalha; margem de crescimento da categoria de eletrônica. Sem fonte própria.
+      [F137]. Uma hora de passe por sol. O conjunto de banda X entra como adição à plataforma do lander, porque o
+      análogo da P-032 não o detalha; margem de crescimento da categoria de eletrônica. Sem fonte própria.
       Massa: todos os itens do "Rover X-band" do MSL [F137] Tab. 2-11. Energia: SSPA e transponder transmitindo no passe;
       receptor do transponder ligado o sol inteiro para o comando de emergência (caso conservador).
     status: NÃO VALIDADA
