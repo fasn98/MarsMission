@@ -176,7 +176,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-017
     nome: plataforma_superficie_kg
-    valor: 1564.875
+    valor: 1843.6739672650292
     faixa: [529, 2500]
     unidade: kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV)
     uso: config/superficie.yaml — massa pousada = MAV + plataforma de superfície
@@ -195,6 +195,11 @@ premissas:
       Etapa 2.5 (ADR 0009, conceito de coleta (c) + (a)): o braço (item "amostras") deixa de ser provisório e passa a
       ser a coleta de reserva; somam-se 2 helicópteros de recuperação (2 × 2,5 kg [F98], 6,4 kg com margem):
       1558,5 → 1564,9 kg.
+      Etapa 4.5 (decisão do Fabio no portão, 2026-11-01; ADR 0019): caso B, conservador. Somam-se os itens que as Etapas
+      4.1 a 4.4 acrescentaram (energia C + RHU, RHUs, enlace direto mínimo, câmera do TRN), menos a energia do
+      aquecimento do MAV, que o item do MAV já traz; o circuito de fluido fica no estágio de cruzeiro (P-077). Pode haver
+      contagem dupla com energia e telecomunicações próprias do SRL dentro do L3 (limitação declarada). O caso A
+      (1564,9 kg) fica como referência otimista. Valores em results/etapa4.5/lista_massas.md.
     status: NÃO VALIDADA
   - id: P-018
     nome: razao_massa_pousada_entrada
@@ -875,7 +880,7 @@ premissas:
     nome: massa_do_circuito_de_fluido_do_lander
     valor: {escala: "linear no calor rejeitado, a partir do MPF (18 kg para 180 W)"}
     unidade: kg/W
-    uso: config/lista_massas.yaml (rejeição de calor no cruzeiro, Etapa 4.5)
+    uso: tools/lista_massas_lander.py (massa do circuito, Etapa 4.5) e config/superficie.yaml (circuito_fluido_kg, no estágio de cruzeiro do lander)
     justificativa: >
       Nenhuma fonte publica a massa do circuito de fluido de cruzeiro do MSL, do Mars 2020 ou do SRL. O MPF tinha o
       requisito de menos de 18 kg, com fluido, para rejeitar de 90 a 180 W [F205]. Escala linear até a dissipação do

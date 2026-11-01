@@ -163,8 +163,8 @@ Perda de queima finita não calculada: Δv pequeno, longe de qualquer planeta.
 
 | Combinação | Empuxo (N) | Isp (s) | m0 (kg) | Δv total (m/s) | Tempo total de queima (s) | Queima única máx. (s) |
 | :- | -: | -: | -: | -: | -: | -: |
-| Z1: 4 × 10N | 40 | 292 | 4 012 | 71,5 | 7 082 | 28 800 |
-| Z2: 8 × 10N | 80 | 292 | 4 012 | 71,5 | 3 541 | 28 800 |
+| Z1: 4 × 10N | 40 | 292 | 4 615 | 71,5 | 8 147 | 28 800 |
+| Z2: 8 × 10N | 80 | 292 | 4 615 | 71,5 | 4 073 | 28 800 |
 
 ## MAV (dois estágios)
 

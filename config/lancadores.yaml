@@ -44,6 +44,13 @@ escolha:
   lander: [Falcon Heavy (recuperação), Falcon Heavy (descartável), Vulcan VC2, Vulcan VC4, Vulcan VC6]
   lander_anunciados: [New Glenn, SLS Block 1 (5 m + iCPS)]
 
+base:
+  # Decisão do Fabio no portão da Etapa 4.5 (ADR 0020): lançador maior para o lander, com diversidade de veículo, para
+  # que as duas metades da missão não dependam do mesmo lançador. Custo fica para a Fase 6.
+  orbitador: Falcon Heavy (descartável)
+  lander: Vulcan VC4
+  lander_reserva: Vulcan VC6
+
 lancadores:
   # massa separada de espaçonave (kg) × C3 (km²/s²); LEO (kg) por inclinação.
   # categoria: operacional | anunciado (= "desempenho anunciado, não demonstrado").

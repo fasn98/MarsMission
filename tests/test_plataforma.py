@@ -101,10 +101,11 @@ def test_lander_base_e_limite_superior(ferramenta):
 
 
 def test_config_coincide_com_a_etapa_2_3(ferramenta):
-    """P-016 e P-017 no config são os valores calculados por tools/plataformas.py (sem cópia à mão divergente)."""
+    """P-016 no config é o valor calculado por tools/plataformas.py, e a base do lander da Etapa 2.3 é L3 + braço +
+    helicópteros (a P-017 vigente, caso B da Etapa 4.5, é conferida em tests/test_lista_massas.py)."""
     pl, ler = ferramenta
     cfg, po = ler("config/plataformas.yaml"), ler("config/parametros_orbitais.yaml")
     res = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
     m_o = pl.plataforma_orbitador(cfg, po, res["apoapse_regra_5pct_km"], res["periapse_alt_km"])
     assert ler("config/dimensionamento.yaml")["plataforma_orbitador_kg"]["valor"] == pytest.approx(m_o, abs=0.05)
-    assert ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"]["valor"] == pytest.approx(pl.lander_base(cfg))
+    assert ler("results/etapa2.3/plataformas.yaml")["escolha"]["plataforma_lander_kg"] == pytest.approx(pl.lander_base(cfg))

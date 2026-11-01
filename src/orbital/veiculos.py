@@ -30,7 +30,10 @@ def _estagio(e, detalhe):
 
 
 def lander_estagios(chegada, cfg, dcfg, p, caso_saida):
-    """Estágios do lander [saída da Terra, cruzeiro]; [1].massa_inicial é a massa injetada na trajetória."""
+    """Estágios do lander [saída da Terra, cruzeiro]; [1].massa_inicial é a massa injetada na trajetória.
+
+    O estágio de cruzeiro leva, além de `chegada`, o circuito de fluido de rejeição de calor (Etapa 4.5, P-077), que é
+    descartado com ele antes da entrada."""
     margem = v(dcfg["margem_dv"])
     dv = dm.orcamento(caso_saida, dcfg, p)
     cz = cfg["lancamento"]["cruzeiro_lander"]
@@ -39,7 +42,13 @@ def lander_estagios(chegada, cfg, dcfg, p, caso_saida):
                       [fg.Queima("correcoes_ida", (1 + margem) * dv["correcoes_ida"])])
     saida = fg.Estagio("saida_terra_lander", v(st["isp_s"]), v(st["fracao_estrutural"]),
                        [fg.Queima("saida_terra", (1 + margem) * dv["saida_terra"])])
-    return fg.dimensionar_veiculo([saida, cruz], chegada)
+    return fg.dimensionar_veiculo([saida, cruz], chegada + circuito_fluido(cfg))
+
+
+def circuito_fluido(cfg):
+    """Massa do circuito de fluido no estágio de cruzeiro do lander (kg; 0 nas etapas anteriores à 4.5)."""
+    c = cfg["lancamento"]["cruzeiro_lander"].get("circuito_fluido_kg")
+    return 0.0 if c is None else v(c)
 
 
 def dv_extra_orbitador(mu, um_sol, rp, ra, c3l, descer):
@@ -121,7 +130,7 @@ def lander(rp, ra, dcfg=None, scfg=None, mcfg=None, plataforma_lander_kg=None, d
     out = {"injetada_kg": r[1].massa_inicial, "leo_modelo_kg": r[0].massa_inicial,
            "estagios": [_estagio(e, detalhe) for e in r],
            "massa_entrada_kg": chegada - cruz, "massa_pousada_kg": pous + plat, "mav_e_aquecimento_kg": pous,
-           "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz}
+           "plataforma_kg": plat, "paineis_cruzeiro_kg": cruz, "circuito_fluido_cruzeiro_kg": circuito_fluido(scfg)}
     if detalhe:
         out.update({"mav_opcao": op_mav, "mav_estagios": est_mav, "dv_subida_mav_km_s": dv})
     return out

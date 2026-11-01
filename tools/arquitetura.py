@@ -64,9 +64,14 @@ def main():
         {"item": "Plataforma de superfície L3 (lander do MSR sem MAV e sem rover de busca)", "massa_kg": __import__("plataformas").lander_l3(pcfg)},
         {"item": "Braço de coleta de reserva (P-034, com margem)", "massa_kg": mga("amostras")},
         {"item": "Helicópteros de recuperação (ADR 0009, com margem)", "massa_kg": mga("helicopteros")},
+        # P-017 vigente (caso B da Etapa 4.5, ADR 0019) menos L3 + braço + helicópteros
+        {"item": "Itens das Etapas 4.1 a 4.4 (energia C + RHU, RHUs, enlace direto mínimo, câmera do TRN), sem a energia do aquecimento do MAV já no item do MAV (ADR 0019)",
+         "massa_kg": la_["plataforma_kg"] - __import__("plataformas").lander_base(pcfg)},
         {"item": "MAV hipergólico + energia do aquecimento (ADR 0007)", "massa_kg": la_["mav_e_aquecimento_kg"]},
         {"item": "Painéis do armazenamento criogênico no cruzeiro (só MAV criogênico; descartados antes da entrada)",
          "massa_kg": la_["paineis_cruzeiro_kg"]},
+        {"item": "Circuito de fluido de rejeição de calor no estágio de cruzeiro (P-077; descartado antes da entrada)",
+         "massa_kg": la_["circuito_fluido_cruzeiro_kg"]},
     ]
     soma_l = sum(x.get("massa_kg", 0) + x.get("propelente_kg", 0) + x.get("inerte_kg", 0) for x in lander)
 
@@ -84,6 +89,8 @@ def main():
     # Sensibilidade: uma premissa por vez
     pv = pl["orbitador"]["prevista_kg"]
     lb = pl["lander"]["base_L3_braco_helicopteros"]["prevista_kg"]
+    # itens das Etapas 4.1 a 4.4 somados à plataforma (P-017 vigente, ADR 0019): entram também nos casos de margem de massa
+    extra_l = _v(scfg["lander"]["plataforma_superficie_kg"]) - __import__("plataformas").lander_base(pcfg)
     casos = []
 
     mcfg = _ler("config/mav_propulsao.yaml")
@@ -104,8 +111,10 @@ def main():
                       "lander_injetado_kg": v["lander"]["injetada_kg"], "margens": m})
 
     caso("Base", "—")
-    caso("Margem de massa GSFC (+15 % da básica) nas duas plataformas", "P-033", pv["e1_medio_mais_gsfc"], lb["e1_medio_mais_gsfc"])
-    caso("Margem de massa ESA (20 % × 20 %) nas duas plataformas", "P-033", pv["esa"], lb["esa"])
+    caso("Margem de massa GSFC (+15 % da básica) nas duas plataformas (lander: L3 + braço + helicópteros com GSFC + itens das Etapas 4.1 a 4.4)",
+         "P-033", pv["e1_medio_mais_gsfc"], lb["e1_medio_mais_gsfc"] + extra_l)
+    caso("Margem de massa ESA (20 % × 20 %) nas duas plataformas (lander: L3 + braço + helicópteros com ESA + itens das Etapas 4.1 a 4.4)",
+         "P-033", pv["esa"], lb["esa"] + extra_l)
     caso("Plataforma do lander no limite inferior (L1; sem os helicópteros, como definido na Etapa 2.3)", "P-017, P-035",
          plat_l=pl["lander"]["L1"]["prevista_kg"]["e1_medio"])
     caso("Plataforma do lander no limite superior (SRL 2024 − MAV)", "P-017, P-035", plat_l=pl["lander"]["limite_superior_srl_2024_kg"])

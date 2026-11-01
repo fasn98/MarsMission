@@ -288,9 +288,10 @@ def main():
     import arquitetura as arq
     import lancamento as lcm
     lcfg = ler("config/lancadores.yaml")
-    plat_l = v(ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"])   # P-017 (não muda)
-    v0, jan_l, _ = lcm.veiculos()
-    v1 = lcm.veiculos(plat_l + m_prev)[0]
+    # P-017 já inclui o DTE mínimo desde o portão da Etapa 4.5 (ADR 0019): sem ele = P-017 − DTE; com ele = P-017
+    plat_l = v(ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"])
+    _, jan_l, _ = lcm.veiculos()
+    v0, v1 = lcm.veiculos(plat_l - m_prev)[0], lcm.veiculos(plat_l)[0]
     mg0, mg1 = arq.margens(v0, jan_l, lcfg), arq.margens(v1, jan_l, lcfg)
     dte_min = {"taxa_requisito_bps": v(dmn["taxa_requisito_bps"]), "taxa_atual_bps": dte["taxa_bps"], "diametro_m": d_min,
                "rf_w": msl["rf_w"], "itens_kg": itens, "massa_basica_kg": m_basica, "margem_crescimento": margem, "massa_prevista_kg": m_prev,
@@ -421,7 +422,7 @@ def escreve_md(o):
            f"no passe, receptor ligado {br(dm2['horas_receptor'], 1)} h); área de operação {br(dm2['area_operacao_m2'], 1)} m², abaixo dos "
            f"{br(dm2['area_linha_de_base_m2'], 1)} m² da linha de base. Lander injetado {br(dm2['lander_injetado_kg'][0])} → "
            f"{br(dm2['lander_injetado_kg'][1])} kg; margens dos lançadores do lander: "
-           + "; ".join(f"{k} {pc_(a)} → {pc_(b)}" for k, (a, b) in dm2["margens_lander"].items()) + " (sensibilidade; a P-017 não muda)."]
+           + "; ".join(f"{k} {pc_(a)} → {pc_(b)}" for k, (a, b) in dm2["margens_lander"].items()) + " (P-017 sem e com o enlace; a P-017 já o inclui desde o portão da Etapa 4.5, ADR 0019)."]
     (SAIDA / "comunicacao.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

@@ -37,6 +37,8 @@ def prevista(itens, pcfg):
 def main():
     ccfg, pcfg, lcfg = _ler("config/coleta.yaml"), _ler("config/plataformas.yaml"), _ler("config/lancadores.yaml")
     l3 = pl.lander_l3(pcfg)
+    # itens das Etapas 4.1 a 4.4 da P-017 vigente (caso B da Etapa 4.5, ADR 0019), comuns a todas as opções de coleta
+    extra = float(_ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"]["valor"]) - pl.lander_base(pcfg)
     casos = {}
     for k, o in ccfg["opcoes"].items():
         casos[k] = (o["nome"], prevista(o["itens"], pcfg))
@@ -50,18 +52,18 @@ def main():
     lanc = lcfg["escolha"]["lander"]
     linhas = []
     for k, (nome, m_col) in casos.items():
-        plat = l3 + m_col
+        plat = l3 + m_col + extra
         m_inj = lc.veiculos(plat)[0]["lander"]["injetada_kg"]
         margens = {n: lc.pior_margem_a(n, m_inj, janelas, lcfg)[0] for n in lanc}
         linhas.append({"opcao": k, "nome": nome, "coleta_prevista_kg": m_col, "plataforma_lander_kg": plat,
                        "lander_injetado_kg": m_inj, "pior_margem_a": margens})
-    out = {"gerado_por": "tools/coleta.py", "l3_kg": l3, "lancadores_do_lander_a": lanc, "opcoes": linhas}
+    out = {"gerado_por": "tools/coleta.py", "l3_kg": l3, "itens_etapa_4_kg": extra, "lancadores_do_lander_a": lanc, "opcoes": linhas}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "coleta.yaml").write_text(yaml.safe_dump(dm._nativo(out), sort_keys=False, allow_unicode=True), encoding="utf-8")
     br = lambda x, n=0: f"{x:,.{n}f}".replace(",", " ").replace(".", ",")  # noqa: E731
     pc = lambda x: "—" if x is None else f"{100 * x:+.0f} %".replace("-", "−")  # noqa: E731
     md = ["# Opções de coleta (gerado por tools/coleta.py)", "",
-          f"Plataforma do lander = L3 ({br(l3)} kg) + item de coleta. Pior margem na forma (a), nas quatro janelas. Massas em kg.", "",
+          f"Plataforma do lander = L3 ({br(l3)} kg) + item de coleta + itens das Etapas 4.1 a 4.4, sem a energia do aquecimento do MAV já no item do MAV ({br(extra, 1)} kg; P-017, ADR 0019). Pior margem na forma (a), nas quatro janelas. Massas em kg.", "",
           "| Opção | Coleta (prevista) | Plataforma do lander | Lander injetado | " + " | ".join(lanc) + " |",
           "| :- | -: | -: | -: |" + " -: |" * len(lanc)]
     for r in linhas:

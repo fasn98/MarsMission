@@ -101,3 +101,16 @@ Itens identificados (`results/etapa4.5/lista_massas.md`, margem E1 no ponto méd
 - **Isp:** a sensibilidade troca só o Isp; não é um projeto do MAV com outro motor.
 - **Margem de sistema [F210]:** cópia do relatório no arXiv, não conferida contra o original do JPL.
 - **Lançadores:** sem custo, e as curvas são as da Etapa 2.4.
+
+## Nota (2026-11-01): decisões do portão
+Decisões do Fabio (o texto acima fica como estava):
+1. **Lista de massas:** caso B. A P-017 muda de valor-base (aprovado), e o caso A fica como referência otimista (ADR 0019).
+2. **Circuito de fluido:** radiador no estágio de cruzeiro, descartado antes da entrada (ADR 0019).
+3. **Mitigação do MAV:** (b), com diversidade (ADR 0020).
+   - lander no Vulcan VC4, com o VC6 de reserva;
+   - orbitador no Falcon Heavy descartável;
+   - a (c) foi descartada.
+4. **P-077:** aprovada, NÃO VALIDADA. Corrigidos o campo `uso` e o sinal dos ganhos em pontos.
+
+Os números vigentes, com o antes e depois das decisões, estão em `results/etapa4.5/lista_massas.md`. As tabelas das seções 2
+e 4 acima são da versão do portão.
