@@ -78,5 +78,6 @@
 | P-074 | transferencia_e_lancamento | 10 | sóis | NÃO VALIDADA | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) |
 | P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | NÃO VALIDADA | config/operacao_superficie.yaml (caso de pouso de precisão) |
 | P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | NÃO VALIDADA | tools/operacao_superficie.py (volume dos helicópteros) |
+| P-077 | massa_do_circuito_de_fluido_do_lander | escala: linear no calor rejeitado, a partir do MPF (18 kg para 180 W) | kg/W | NÃO VALIDADA | config/lista_massas.yaml (rejeição de calor no cruzeiro, Etapa 4.5) |
 
-Total: 76 premissas, 76 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 77 premissas, 77 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

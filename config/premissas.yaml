@@ -871,3 +871,13 @@ premissas:
       1,73 num produto de 640 × 480 antes do 1º voo e 7,95 e 8,63 em quadros inteiros. Amostra pequena; o limite inferior
       é conservador. A Navcam é sem perdas nos rótulos e a razão não aparece: o volume dela fica sem compressão (envoltória).
     status: NÃO VALIDADA
+  - id: P-077
+    nome: massa_do_circuito_de_fluido_do_lander
+    valor: {escala: "linear no calor rejeitado, a partir do MPF (18 kg para 180 W)"}
+    unidade: kg/W
+    uso: config/lista_massas.yaml (rejeição de calor no cruzeiro, Etapa 4.5)
+    justificativa: >
+      Nenhuma fonte publica a massa do circuito de fluido de cruzeiro do MSL, do Mars 2020 ou do SRL. O MPF tinha o
+      requisito de menos de 18 kg, com fluido, para rejeitar de 90 a 180 W [F205]. Escala linear até a dissipação do
+      LAMP do SRL (322 W [F165]) mais o calor das RHUs (Etapa 4.2). Ordem de grandeza.
+    status: NÃO VALIDADA
