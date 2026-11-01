@@ -14,7 +14,7 @@ iteracoes:
     saida_marte: 0.06270750911290146
   maior_mudanca_km_s: 0.051707509112901465
   orbitador_injetado_kg: 7420.703998190291
-  lander_injetado_kg: 4005.9234789831453
+  lander_injetado_kg: 4608.927970954991
 - iteracao: 2
   perda_usada_km_s:
     captura_marte: 0.05312884293029185
@@ -24,7 +24,7 @@ iteracoes:
     saida_marte: 0.0658492683626879
   maior_mudanca_km_s: 0.004039055137868397
   orbitador_injetado_kg: 7757.28401781235
-  lander_injetado_kg: 4011.7840871689064
+  lander_injetado_kg: 4614.7885791407525
 - iteracao: 3
   perda_usada_km_s:
     captura_marte: 0.05716789806816025
@@ -34,7 +34,7 @@ iteracoes:
     saida_marte: 0.06608061266089904
   maior_mudanca_km_s: 0.0004303068760398432
   orbitador_injetado_kg: 7792.834795852636
-  lander_injetado_kg: 4011.7840871689064
+  lander_injetado_kg: 4614.7885791407525
 - iteracao: 4
   perda_usada_km_s:
     captura_marte: 0.05759820494420009
@@ -44,7 +44,7 @@ iteracoes:
     saida_marte: 0.06609768337664046
   maior_mudanca_km_s: 3.947818790672741e-05
   orbitador_injetado_kg: 7796.093601132789
-  lander_injetado_kg: 4011.7840871689064
+  lander_injetado_kg: 4614.7885791407525
 - iteracao: 5
   perda_usada_km_s:
     captura_marte: 0.05763768313210682
@@ -54,7 +54,7 @@ iteracoes:
     saida_marte: 0.06609894320536291
   maior_mudanca_km_s: 3.3601384910042498e-06
   orbitador_injetado_kg: 7796.370949025199
-  lander_injetado_kg: 4011.7840871689064
+  lander_injetado_kg: 4614.7885791407525
 - iteracao: 6
   perda_usada_km_s:
     captura_marte: 0.057641043270597825
@@ -64,7 +64,7 @@ iteracoes:
     saida_marte: 0.06609903618252932
   maior_mudanca_km_s: 2.737724951185072e-07
   orbitador_injetado_kg: 7796.393546233499
-  lander_injetado_kg: 4011.7840871689064
+  lander_injetado_kg: 4614.7885791407525
 captura:
   combinacao: C4
   motores: 10 × R-4D-11

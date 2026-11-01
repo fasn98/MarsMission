@@ -35,7 +35,10 @@ lander:
   # amostras da P-034 como alocação provisória (59 kg com MGA E1 de 50 % = 88,5 kg). Decisões do Fabio no portão
   # da Etapa 2.3 (substitui os 850 kg). Conferido por tests/test_plataforma.py.
   # Etapa 2.5 (ADR 0009): + 2 helicópteros de recuperação de amostras (2 × 2,5 kg [F98], MGA E1 27,5 %) = 1564,875 kg.
-  plataforma_superficie_kg: {valor: 1564.875, premissa: P-017}
+  # Etapa 4.5 (ADR 0019, caso B): + itens novos das Etapas 4.1 a 4.4 (sem o circuito de fluido, que vai no estágio de
+  # cruzeiro) − energia do aquecimento do MAV já contada no item do MAV. Valor calculado por tools/lista_massas_lander.py;
+  # conferido por tests/test_lista_massas.py.
+  plataforma_superficie_kg: {valor: 1843.6739672650292, premissa: P-017}
   razao_pousada_entrada:
     entrada_direta: {valor: 0.509, premissa: P-018}
     a_partir_de_orbita: {valor: 0.624, premissa: P-018}
@@ -77,6 +80,10 @@ lancamento:
     # Motores escolhidos na Etapa 3.1 (ADR 0011): 4 × 10N ArianeGroup (Z1). Antes: 321 s [F28], do motor de 400 N.
     isp_s: {valor: 292, fonte: "[F28] p. 4: 10N, \"Specific Impulse at Nominal Point 292 s\" (ADR 0011)"}
     fracao_estrutural: {valor: 0.24, fonte: "[F22]"}
+    # Circuito de fluido de rejeição de calor no cruzeiro, no estágio de cruzeiro e descartado com ele antes da entrada,
+    # como no MSL e no Mars 2020 [F206, F207] (decisão do Fabio no portão da Etapa 4.5). Massa calculada por
+    # tools/lista_massas_lander.py (P-077); conferida por tests/test_lista_massas.py.
+    circuito_fluido_kg: {valor: 35.7, premissa: P-077}
 
 varreduras_encontro:
   # Órbita de encontro com periapse fixo e apoapse variável; MAV, lander e orbitador recalculados em cada ponto.

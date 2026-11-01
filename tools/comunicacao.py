@@ -288,9 +288,10 @@ def main():
     import arquitetura as arq
     import lancamento as lcm
     lcfg = ler("config/lancadores.yaml")
-    plat_l = v(ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"])   # P-017 (não muda)
-    v0, jan_l, _ = lcm.veiculos()
-    v1 = lcm.veiculos(plat_l + m_prev)[0]
+    # P-017 já inclui o DTE mínimo desde o portão da Etapa 4.5 (ADR 0019): sem ele = P-017 − DTE; com ele = P-017
+    plat_l = v(ler("config/superficie.yaml")["lander"]["plataforma_superficie_kg"])
+    _, jan_l, _ = lcm.veiculos()
+    v0, v1 = lcm.veiculos(plat_l - m_prev)[0], lcm.veiculos(plat_l)[0]
     mg0, mg1 = arq.margens(v0, jan_l, lcfg), arq.margens(v1, jan_l, lcfg)
     dte_min = {"taxa_requisito_bps": v(dmn["taxa_requisito_bps"]), "taxa_atual_bps": dte["taxa_bps"], "diametro_m": d_min,
                "rf_w": msl["rf_w"], "itens_kg": itens, "massa_basica_kg": m_basica, "margem_crescimento": margem, "massa_prevista_kg": m_prev,

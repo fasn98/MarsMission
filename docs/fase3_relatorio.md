@@ -173,3 +173,27 @@ Os resultados das Fases 2 a 4 foram regenerados. O texto acima e a errata de 202
 - **Margens dos lançadores escolhidos:** sem mudança no arredondamento.
   - orbitador: Falcon Heavy descartável +44 %, Vulcan VC6 +6 %;
   - lander: Falcon Heavy com recuperação +17 %, Vulcan VC2 +8 %.
+
+
+## Errata (portão da Etapa 4.5, 2026-11-01): P-017 no caso B e circuito de fluido no estágio de cruzeiro
+No portão da Etapa 4.5, o Fabio adotou o caso B da lista de massas como valor-base da P-017 (ADR 0019). A plataforma de
+superfície passa a somar os itens das Etapas 4.1 a 4.4, menos a energia do aquecimento do MAV já contada no item do MAV.
+O circuito de fluido de rejeição de calor (P-077) vai no estágio de cruzeiro, descartado antes da entrada. Os resultados
+das Fases 2 a 4 foram regenerados; os das etapas anteriores à 2.3 ficam como estavam. O texto acima fica como estava.
+
+**Números vigentes** (`results/etapa2.5/arquitetura.md`, `results/etapa4.5/lista_massas.md`):
+
+| Item | Antes | Vigente |
+| :- | -: | -: |
+| Plataforma de superfície do lander (P-017) | 1.564,9 kg | **1.843,7 kg** |
+| Circuito de fluido no estágio de cruzeiro | — | **35,7 kg** |
+| Massa de entrada do lander | 3.882 kg | **4.429 kg** |
+| Lander injetado | 4.012 kg | **4.615 kg** |
+| Lander: Falcon Heavy com recuperação | +17 % | **+1 %** |
+| Lander: Falcon Heavy descartável | +180 % | **+143 %** |
+| Lander: Vulcan VC2 | +8 % | **−6 %** |
+| Lander: Vulcan VC4 | +62 % | **+41 %** |
+| Lander: Vulcan VC6 | +107 % | **+80 %** |
+| Orbitador injetado; Falcon Heavy descartável; Vulcan VC6 | 7.796 kg; +44 %; +6 % | sem mudança |
+
+Lançadores de base (ADR 0020): lander no Vulcan VC4, com o VC6 de reserva; orbitador no Falcon Heavy descartável.

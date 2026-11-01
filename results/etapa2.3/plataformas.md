@@ -56,14 +56,14 @@ Energia: pior eclipse 3,34 h num período de 17,91 h; carga 1 022 W; painel 1 31
 
 | Caso | Orbitador | Lander | Total (iii) em 26 950 km | Total (A) em 26 950 km | Apoapse pela regra dos 5 % | Total (iii) nele | Total (A) nele |
 | :- | -: | -: | -: | -: | -: | -: | -: |
-| Antes (P-016 = P-017 = 850 kg) | 850 | 850 | 35 368 | 23 562 | 26 950 | 35 368 | 23 562 |
-| **Base: orbitador E1 médio + L3 + braço + helicópteros** | 614 | 1 565 | 35 599 | 25 581 | 25 952 | 35 845 | 25 692 |
-| GSFC: E1 médio + 15 % nos dois | 688 | 1 795 | 38 320 | 27 745 | 25 952 | 38 581 | 27 863 |
-| ESA: 20 % × 20 % nos dois | 707 | 2 209 | 41 214 | 30 492 | 24 992 | 41 756 | 30 737 |
-| Orbitador E1 mínimo + lander de base | 586 | 1 565 | 35 101 | 25 297 | 25 952 | 35 342 | 25 405 |
-| Orbitador E1 máximo + lander de base | 642 | 1 565 | 36 096 | 25 866 | 25 952 | 36 348 | 25 979 |
-| Limite inferior do lander: L1 (E1 médio) | 614 | 529 | 29 212 | 19 194 | 26 950 | 29 212 | 19 194 |
-| Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada) | 614 | 2 500 | 41 362 | 31 345 | 24 992 | 41 866 | 31 572 |
-| Referência: L2 (E1 médio), antigo limite superior | 614 | 2 328 | 40 301 | 30 284 | 24 992 | 40 805 | 30 510 |
+| Antes (P-016 = P-017 = 850 kg) | 850 | 850 | 35 480 | 23 674 | 26 950 | 35 480 | 23 674 |
+| **Base: orbitador E1 médio + L3 + braço + helicópteros** | 614 | 1 565 | 35 711 | 25 693 | 25 952 | 35 957 | 25 804 |
+| GSFC: E1 médio + 15 % nos dois | 688 | 1 795 | 38 432 | 27 857 | 25 952 | 38 693 | 27 975 |
+| ESA: 20 % × 20 % nos dois | 707 | 2 209 | 41 326 | 30 604 | 24 992 | 41 868 | 30 849 |
+| Orbitador E1 mínimo + lander de base | 586 | 1 565 | 35 213 | 25 409 | 25 952 | 35 454 | 25 517 |
+| Orbitador E1 máximo + lander de base | 642 | 1 565 | 36 208 | 25 978 | 25 952 | 36 460 | 26 091 |
+| Limite inferior do lander: L1 (E1 médio) | 614 | 529 | 29 324 | 19 306 | 26 950 | 29 324 | 19 306 |
+| Limite superior do lander: SRL 2024 − MAV (comparabilidade não confirmada) | 614 | 2 500 | 41 474 | 31 457 | 24 992 | 41 978 | 31 684 |
+| Referência: L2 (E1 médio), antigo limite superior | 614 | 2 328 | 40 413 | 30 396 | 24 992 | 40 917 | 30 622 |
 
 Nos casos de sensibilidade, a plataforma do orbitador é a calculada no apoapse do caso de base.

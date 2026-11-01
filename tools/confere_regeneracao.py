@@ -47,7 +47,7 @@ import tomllib
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from orbital.historico import aplicar_antes_etapa_3_1  # noqa: E402
+from orbital.historico import aplicar_antes_etapa_3_1, aplicar_antes_etapa_4_5  # noqa: E402
 
 import numpy as np
 import yaml
@@ -332,6 +332,7 @@ def regenerar(d: Path):
                                                                     "config/mav_propulsao.yaml")}
     _patch_850(d, antes)
     aplicar_antes_etapa_3_1(d)   # e a propulsão de antes da Etapa 3.1 (ADR 0011)
+    aplicar_antes_etapa_4_5(d)   # e sem o circuito de fluido no estágio de cruzeiro (Etapa 4.5)
     for c in FASE_850:
         rodar(c)
     for a, t in originais.items():

@@ -1,4 +1,4 @@
-"""Etapa 2.5: a opção escolhida de coleta, (c) + (a), reproduz o lander de base (ADR 0009)."""
+"""Etapa 2.5: a opção escolhida de coleta, (c) + (a), reproduz o lander de base (ADR 0009; P-017 vigente, ADR 0019)."""
 
 import sys
 from pathlib import Path
@@ -17,7 +17,9 @@ def test_opcao_escolhida_igual_ao_lander_de_base(monkeypatch):
     escolha = yaml.safe_load((RAIZ / "config/coleta.yaml").read_text(encoding="utf-8"))["escolha"]
     a = next(x for x in r["opcoes"] if x["opcao"] == escolha)
     cfg = yaml.safe_load((RAIZ / "config/plataformas.yaml").read_text(encoding="utf-8"))
-    assert a["plataforma_lander_kg"] == pytest.approx(pl.lander_base(cfg))
+    assert a["plataforma_lander_kg"] == pytest.approx(pl.lander_base(cfg) + r["itens_etapa_4_kg"])
+    p017 = yaml.safe_load((RAIZ / "config/superficie.yaml").read_text(encoding="utf-8"))["lander"]["plataforma_superficie_kg"]["valor"]
+    assert a["plataforma_lander_kg"] == pytest.approx(p017)
     l24 = yaml.safe_load((RAIZ / "results/etapa2.4/lancamento.yaml").read_text(encoding="utf-8"))
     assert a["lander_injetado_kg"] == pytest.approx(l24["veiculos"]["lander"]["injetada_kg"])
 

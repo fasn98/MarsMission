@@ -11,7 +11,7 @@ C = ler("config/lista_massas.yaml")
 
 def test_lista_e_casos():
     r = ler("results/etapa4.5/lista_massas.yaml")
-    assert r["itens_todos_kg"] == pytest.approx(sum(x["prevista_kg"] for x in r["itens"]), rel=1e-12)
+    assert r["itens_todos_kg"] == pytest.approx(sum(x["prevista_kg"] for x in r["itens"] if not x.get("cruzeiro")), rel=1e-12)
     for x in r["itens"]:
         if "basica_kg" in x:
             assert x["prevista_kg"] == pytest.approx(x["basica_kg"] * (1 + x["margem"]), rel=1e-12)
@@ -49,3 +49,16 @@ def test_calor_e_isp():
     assert r["circuito_fluido_kg"] == pytest.approx(v(rc["mpf_massa_max_kg"]) * r["calor_cruzeiro_w"] / v(rc["mpf_calor_w"]), rel=1e-12)
     m = [x["lander_injetado_kg"] for x in sorted(r["mav_isp"], key=lambda x: x["isp_s"])]
     assert all(b < a for a, b in zip(m, m[1:]))   # Isp maior, lander mais leve
+
+
+def test_config_coincide_com_a_etapa_4_5():
+    """P-017 (caso B) e o circuito de fluido no estágio de cruzeiro (P-077) no config são os valores da ferramenta."""
+    r = ler("results/etapa4.5/lista_massas.yaml")
+    s = ler("config/superficie.yaml")
+    b = r["casos"][1]
+    assert v(s["lander"]["plataforma_superficie_kg"]) == pytest.approx(b["plataforma_kg"], rel=1e-9)
+    assert v(s["lancamento"]["cruzeiro_lander"]["circuito_fluido_kg"]) == pytest.approx(r["circuito_fluido_kg"], rel=1e-9)
+    # o circuito fica fora da plataforma de superfície e entra no estágio de cruzeiro
+    assert r["itens_todos_kg"] == pytest.approx(sum(x["prevista_kg"] for x in r["itens"] if not x.get("cruzeiro")), rel=1e-12)
+    ad = r["antes_depois"]
+    assert ad[2]["lander_injetado_kg"] < ad[1]["lander_injetado_kg"]   # circuito no cruzeiro pesa menos que pousado

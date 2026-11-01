@@ -18,7 +18,7 @@
 | P-014 | margem_dv | 0.1 | fração, aplicada a todos os trechos | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-015 | perdas_gravitacionais_do_dra | saida_terra: 0.148; captura_marte: 0.018; saida_marte: 0.011 | km/s | NÃO VALIDADA | config/dimensionamento.yaml |
 | P-016 | plataforma_orbitador_kg | 614.0 | kg (massa seca prevista da plataforma, sem módulos propulsivos e sem carga útil) | NÃO VALIDADA | config/dimensionamento.yaml |
-| P-017 | plataforma_superficie_kg | 1564.875 | kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
+| P-017 | plataforma_superficie_kg | 1843.6739672650292 | kg (massa pousada sem o MAV e sem o bloco de aquecimento do MAV) | NÃO VALIDADA | config/superficie.yaml — massa pousada = MAV + plataforma de superfície |
 | P-018 | razao_massa_pousada_entrada | entrada_direta: 0.509; a_partir_de_orbita: 0.624 | adimensional (massa pousada / massa de entrada) | NÃO VALIDADA | config/superficie.yaml — massa do sistema de entrada, descida e pouso |
 | P-019 | mav_estagios | fracao_estrutural: 0.286; fracao_dv_estagio_1: 0.481 | adimensional | NÃO VALIDADA | config/superficie.yaml — dimensionamento do MAV sólido de dois estágios |
 | P-020 | aerofrenagem_orbitador | dv_saida_km_s: 0.09; duracao_dias: 205 | km/s; dias | NÃO VALIDADA | config/superficie.yaml — arquitetura S4 |
@@ -78,6 +78,6 @@
 | P-074 | transferencia_e_lancamento | 10 | sóis | NÃO VALIDADA | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) |
 | P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | NÃO VALIDADA | config/operacao_superficie.yaml (caso de pouso de precisão) |
 | P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | NÃO VALIDADA | tools/operacao_superficie.py (volume dos helicópteros) |
-| P-077 | massa_do_circuito_de_fluido_do_lander | escala: linear no calor rejeitado, a partir do MPF (18 kg para 180 W) | kg/W | NÃO VALIDADA | config/lista_massas.yaml (rejeição de calor no cruzeiro, Etapa 4.5) |
+| P-077 | massa_do_circuito_de_fluido_do_lander | escala: linear no calor rejeitado, a partir do MPF (18 kg para 180 W) | kg/W | NÃO VALIDADA | tools/lista_massas_lander.py (massa do circuito, Etapa 4.5) e config/superficie.yaml (circuito_fluido_kg, no estágio de cruzeiro do lander) |
 
 Total: 77 premissas, 77 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

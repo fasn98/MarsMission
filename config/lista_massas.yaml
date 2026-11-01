@@ -20,3 +20,7 @@ mav_isp:   # mitigação por Isp maior (sensibilidade só de Isp; herança de vo
   - {motor: "S400-15", isp_s: 321, propelente: MMH/MON, voo: "não conferido para o S400-15 (a lista de herança não separa o S400-12)", fonte: "[F28] p. 8: \"Specific Impulse at Nominal Point 321 s\" (catálogo de config/motores.yaml)"}
   - {motor: "LEROS 1c", isp_s: 324, propelente: MON/hidrazina, voo: "\"more than 60 engines delivered\" [F209]; entregues, voo não conferido", fonte: "[F209]: \"324 second Isp, MON/ Hydrazine dual mode apogee engine\""}
 margem_sistema_jpl: {valor: 0.30, fonte: "[F210] p. 98 do PDF (impr. 4-18): \"system level mass ... was added in order to achieve a 30% margin as required by JPL Design Principles for a concept at this stage of development\" (margem de massa do sistema, não margem do lançador)"}
+antes_etapa_4_5:   # linhas do config mudadas no portão da Etapa 4.5; as etapas antigas regeneram com os valores da época
+  - arquivo: config/superficie.yaml
+    procura: '^    circuito_fluido_kg: \{valor: [\d.]+, premissa: P-077\}$'
+    troca: '    circuito_fluido_kg: {valor: 0, premissa: P-077}'
