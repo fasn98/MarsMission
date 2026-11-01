@@ -64,3 +64,16 @@ def test_modelo_de_rele_na_orbita_baixa_dentro_do_publicado():
     """O modelo de enlace (Friis + limiares do Electra, P-066) numa órbita de 250 km fica na faixa publicada do MRO [F137]."""
     r = ler("results/etapa4.3/comunicacao.yaml")["comparacao"]["conferencia_orbita_baixa"]
     assert r["dentro_da_faixa_publicada"]
+
+
+def test_decisao_caminhos_e_dte_minimo():
+    r = ler("results/etapa4.3/comunicacao.yaml")["decisao_caminhos"]
+    d = r["dte_minimo"]
+    assert d["diametro_m"] >= 0.28 and d["massa_prevista_kg"] == pytest.approx(d["massa_basica_kg"] * (1 + d["margem_crescimento"]), rel=1e-12)
+    assert d["lander_injetado_kg"][1] > d["lander_injetado_kg"][0]
+    assert all(b <= a for a, b in d["margens_lander"].values())
+    c = ler("config/comunicacao.yaml")["helicopteros_ingenuity"]
+    assert r["helicopteros_media_ingenuity"]["navcam_por_voo"] == pytest.approx(v(c["imagens_navcam"]) / v(c["voos"]))
+    assert d["massa_basica_kg"] == pytest.approx(sum(d["itens_kg"].values()), rel=1e-12)
+    tgo = r["caminhos_mbit_sol"]["TGO"]
+    assert tgo[0] < tgo[1]   # faixa (P-071), não um mínimo

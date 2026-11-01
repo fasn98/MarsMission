@@ -63,3 +63,19 @@ Referência: [F178] pPDF 26: "passes supported from near MAVEN apoapsis can have
 ### (b) Enlace direto maior (P-069)
 
 Taxa necessária para a demanda total num passe de 8 h: 42 814 bps, 301 vezes o análogo do MSL (24,8 dB). HGA de 4,86 m com 15 W, ou de 1,86 m com o TWTA de 100 W do MRO; massa do conjunto com 100 W de cerca de 29,6 kg, contra 9,4 kg do MSL; 1 376 Wh por passe. Área de operação com esse consumo: 24,5 m², abaixo dos 32,8 m² da linha de base (a área continua dada pela sobrevivência). A escala vale com o mesmo erro de apontamento do MSL (5°); uma HGA desse tamanho tem feixe mais estreito e pede apontamento melhor. Na conjunção, o enlace direto também para.
+
+## Decisão do portão da 4.3: caminhos de comunicação do lander
+
+Helicópteros (média do Ingenuity por voo, P-072; contagens com imagens em solo, sem compressão): Navcam 194 imagens, 476 Mbit; RTE 8,4 imagens, 878 Mbit [F179, F180, F186]. Com 2 voos por sol (P-054): 953 Mbit/sol só com a Navcam e 2 709 Mbit/sol com a RTE. Envoltória da P-068: 983 Mbit/sol. Lander: 250 Mbit/sol (P-063).
+
+| Caminho | Capacidade (Mbit/sol) | Helicópteros, só Navcam | Helicópteros com RTE | Lander + helicópteros (só Navcam) |
+| :- | :- | :- | :- | :- |
+| TGO | 60 a 2 000 | depende | não | depende |
+| MRO | 100 a 1 150 | depende | não | não |
+| reserva própria (relé + DTE mínimo) | 12 a 35 | não | não | não |
+
+TGO: 2 passes por sol [F184] de 30 a 1 000 Mbit (P-071; o máximo é o da taxa de 2048 kbps [F177]); compartilhado com outros usuários. MRO: faixa do MRO com o MSL [F137].
+
+### Enlace direto mínimo (reserva para o mínimo crítico, P-070)
+
+Requisito: 160 bps na distância máxima (requisito de superfície do MSL [F137]); o análogo dá 142 bps, e a HGA passa a 0,297 m com o SSPA de 15 W. Comando de emergência pela RLGA a 7,8125 bps [F137]. Massa básica (Rover X-band do MSL [F137]): HGA 1,57, gimbal 6,60, SSPA 1,40, SDST 3,00, WTS 0,90, RLGA 0,40, micro-ondas 3,70 = 17,6 kg; + 27,5 % = 22,4 kg. 0,58 Mbit/sol num passe de 1 h; energia 345 Wh/sol (SSPA e transponder no passe, receptor ligado 24,7 h); área de operação 20,5 m², abaixo dos 32,8 m² da linha de base. Lander injetado 4 012 → 4 057 kg; margens dos lançadores do lander: Falcon Heavy (recuperação) +17 % → +15 %; Falcon Heavy (descartável) +180 % → +177 %; Vulcan VC2 +8 % → +7 %; Vulcan VC4 +62 % → +60 %; Vulcan VC6 +107 % → +104 % (sensibilidade; a P-017 não muda).
