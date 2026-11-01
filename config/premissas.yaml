@@ -853,6 +853,7 @@ premissas:
     unidade: adimensional
     uso: tools/operacao_superficie.py (volume dos helicópteros)
     justificativa: >
-      Razões de compressão da RTE (JPEG, qualidade 85) em quatro rótulos PDS4 do Ingenuity [F198], amostra pequena. A
-      Navcam é sem perdas nos rótulos e a razão não aparece: o volume dela fica sem compressão (envoltória).
+      Razões de compressão da RTE (JPEG, qualidade 85) em três valores distintos de rótulos PDS4 do Ingenuity [F198]:
+      1,73 num produto de 640 × 480 antes do 1º voo e 7,95 e 8,63 em quadros inteiros. Amostra pequena; o limite inferior
+      é conservador. A Navcam é sem perdas nos rótulos e a razão não aparece: o volume dela fica sem compressão (envoltória).
     status: NÃO VALIDADA

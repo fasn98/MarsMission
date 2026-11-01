@@ -32,7 +32,10 @@ def test_linha_do_tempo_e_dados():
     for x in r["linha_do_tempo"]:
         assert x["total_sois"] == pytest.approx(fixos + x["busca_sois"])
         assert x["busca_sois"] == pytest.approx(v(C["deposito"]["tubos"]) * x["sois_por_tubo"] / x["helicopteros_em_paralelo"])
-        assert x["antes_da_conjuncao"] == (x["folga_conjuncao_dias"] > 0)
+        if x["antes_da_partida"]:
+            assert x["antes_da_conjuncao"] == (x["folga_conjuncao_dias"] > 0)
+        else:
+            assert x["folga_conjuncao_dias"] is None and x["prob_tempestade_ate_lancamento"] is None and not x["antes_da_conjuncao"]
     base = next(x for x in r["linha_do_tempo"] if x["distancia_m"] == 200 and x["ritmo"] == "SRH" and x["helicopteros_em_paralelo"] == 2)
     assert base["sois_por_tubo"] == v(C["srh"]["sois_por_tubo"])          # o ritmo publicado no caso de ~200 m
     assert 0 <= base["prob_tempestade_ate_lancamento"] <= r["prob_tempestade_estada"]

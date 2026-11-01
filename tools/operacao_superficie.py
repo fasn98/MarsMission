@@ -75,18 +75,26 @@ def main():
             por_tubo = voos_tubo * cad["intervalo_mediano_sois"]
         busca = n_tubos * por_tubo / n_heli
         total = fixos + busca
-        lanc = chegada + dt.timedelta(days=total * hsol / 24)
+        dias = total * hsol / 24
+        lanc_dt = dt.datetime.combine(chegada, dt.time()) + dt.timedelta(days=dias)
+        lanc = lanc_dt.date()
         ls_l = ls_de(lanc)
-        if ls_l < ls_cheg:   # o Ls deu a volta: a estação de início já passou inteira (P-061)
+        dentro = lanc <= partida   # depois da partida do orbitador o caso é inviável (probabilidade não calculada)
+        if not dentro:
+            p, n = None, None
+        elif ls_l < ls_cheg:   # o Ls deu a volta dentro da estada: a estação de início passou inteira (P-061)
             p, n = prob_tempestade_ate(360.0, cat, j0, p_ano)
         else:
             p, n = prob_tempestade_ate(ls_l, cat, j0, p_ano)
+        folga = (dt.datetime.combine(conj, dt.time()) - lanc_dt).total_seconds() / 86400
         return {"distancia_m": d_m, "ritmo": ritmo, "helicopteros_em_paralelo": n_heli, "sois_por_tubo": por_tubo,
                 "voos_por_tubo": voos_tubo, "busca_sois": busca, "total_sois": total, "lancamento": str(lanc), "ls_lancamento": ls_l,
                 "prob_tempestade_ate_lancamento": p, "inicios_do_catalogo_ate_lancamento": n,
-                "folga_conjuncao_dias": (conj - lanc).days, "antes_da_conjuncao": lanc < conj, "voos_por_sol": voos_tubo * n_heli / por_tubo}
+                "folga_conjuncao_dias": folga if dentro else None, "antes_da_conjuncao": folga > 0, "antes_da_partida": dentro,
+                "voos_por_sol": voos_tubo * n_heli / por_tubo}
 
     ls_cheg = ls_de(chegada)
+    partida = dt.date.fromisoformat(ref["partida_marte"][:10])
     dist = {k: v(x) for k, x in op["distancias_m"].items()}
     linha = [caso(d, r, h) for d in dist.values() for r in ("SRH", "Ingenuity") for h in (int(v(srh["helicopteros"])), 1)]
     p_cheg, n_cheg = prob_tempestade_ate(ls_cheg, cat, j0, p_ano)
@@ -118,6 +126,11 @@ def main():
                           "duracao_superficie_sois": rc["total_sois"], "folga_conjuncao_dias": rc["folga_conjuncao_dias"],
                           "prob_tempestade": rc["prob_tempestade_ate_lancamento"]})
 
+    for x in dados:
+        x["cobertura"] = {}
+        for k, (a, b) in cam.items():
+            lo, hi_ = x["total_com_lander"]
+            x["cobertura"][k] = "sim" if a >= hi_ else ("depende" if b >= lo else "não")
     # (c) mais comunicação: enlace direto para a maior demanda total do caso base (escala da Etapa 4.3, P-069)
     dm, dte = cc["dte_maior"], com["lander_dte"]
     base = next(x for x in dados if x["ritmo"].startswith("SRH") and x["volume"].startswith("Navcam + RTE"))
@@ -135,7 +148,11 @@ def main():
     v1 = lcm.veiculos(plat_l + massa)[0]
     lcfg = ler("config/lancadores.yaml")
     m0, m1 = arq.margens(v0, jan, lcfg), arq.margens(v1, jan, lcfg)
-    opc_c = {"demanda_mbit_sol": demanda_c, "taxa_bps": taxa, "fator_sobre_msl": fator, "diametro_hga_100w_m": d100, "massa_kg": massa,
+    enl = ler("results/etapa4.1/energia.yaml")["lander"]
+    claro = next(x for x in enl["solar"] if x["cenario"] == "claro_jezero" and x["carga"] == "operação normal")
+    area_op_c = claro["area_m2"] * (claro["demanda_wh_sol"] + e_c) / claro["demanda_wh_sol"]
+    opc_c = {"demanda_operacao_wh_sol": claro["demanda_wh_sol"], "area_operacao_m2": area_op_c,
+             "area_linha_de_base_m2": enl["variante_rhu"]["opcao"]["area_m2"], "demanda_mbit_sol": demanda_c, "taxa_bps": taxa, "fator_sobre_msl": fator, "diametro_hga_100w_m": d100, "massa_kg": massa,
              "energia_wh_passe": e_c, "lander_injetado_kg": [v0["lander"]["injetada_kg"], v1["lander"]["injetada_kg"]],
              "margens_lander": {k: [m0["lander"][k], m1["lander"][k]] for k in m0["lander"]},
              "tgo_mais_mro_max_mbit_sol": cam["TGO"][1] + cam["MRO"][1]}
@@ -144,7 +161,7 @@ def main():
            "inicio_conjuncao": str(conj), "tempestade_em_curso_na_chegada": {"probabilidade": p_cheg, "inicios_do_catalogo": n_cheg},
            "prob_tempestade_estada": p_estada, "ingenuity_cadencia": cad, "linha_do_tempo": linha,
            "capacidade_caminhos_mbit_sol": cam, "demanda_lander_mbit_sol": lander, "dados_helicopteros": dados,
-           "rte_jpeg_razao": [rz["min"], rz["max"]], "opcao_c": opc_c,
+           "rte_jpeg_razao": [rz["min"], rz["max"]], "opcao_c": opc_c, "catalogo_ls": [x["ls"] for x in cat],
            "pouso": {"elipse_km": oc["pouso"]["elipse_km"]["valor"], "desvio_trn_max_m": v(oc["pouso"]["desvio_trn_max_m"]),
                      "erro_ao_alvo_m": v(oc["pouso"]["erro_ao_alvo_m"]), "erro_de_entrega_m": v(oc["pouso"]["erro_de_entrega_m"]),
                      "alcance_srh_por_carga_m": alc_srh, "alcance_ingenuity_projeto_m": alc_ing,
@@ -169,28 +186,38 @@ def escreve_md(o):
           "## Linha do tempo mínima da superfície", "",
           f"Ritmo real do Ingenuity [F195]: {cad['voos']} voos entre os sóis {cad['sol_primeiro']} e {cad['sol_ultimo']}; intervalo entre voos: mediana "
           f"{br(cad['intervalo_mediano_sois'])} sóis, média {br(cad['intervalo_medio_sois'], 1)}, de {cad['intervalo_min_sois']} a {cad['intervalo_max_sois']}.", "",
-          "| Distância ao depósito | Ritmo | Helicópteros em paralelo | Sóis por tubo | Busca (sóis) | Total (sóis) | Lançamento do MAV | Ls | Tempestade até o lançamento | Folga até a conjunção (dias) | Antes da conjunção? |",
+          "| Distância ao depósito | Ritmo | Helicópteros em paralelo | Sóis por tubo | Busca (sóis) | Total (sóis) | Lançamento do MAV | Ls | Tempestade desde Ls 185° até o lançamento | Folga até a conjunção (dias) | Antes da conjunção? |",
           "| -: | :- | -: | -: | -: | -: | :- | -: | -: | -: | :- |"]
     for x in o["linha_do_tempo"]:
-        md.append(f"| {br(x['distancia_m'])} m | {x['ritmo']} | {x['helicopteros_em_paralelo']} | {br(x['sois_por_tubo'])} | {br(x['busca_sois'])} | "
-                  f"{br(x['total_sois'])} | {x['lancamento']} | {br(x['ls_lancamento'], 1)}° | {br(100 * x['prob_tempestade_ate_lancamento'], 1)} % | {x['folga_conjuncao_dias']} | "
-                  + ("sim" if x["antes_da_conjuncao"] else "**não**") + " |")
+        ini = (f"| {br(x['distancia_m'])} m | {x['ritmo']} | {x['helicopteros_em_paralelo']} | {br(x['sois_por_tubo'])} | {br(x['busca_sois'])} | "
+               f"{br(x['total_sois'])} | {x['lancamento']} | ")
+        if x["antes_da_partida"]:
+            md.append(ini + f"{br(x['ls_lancamento'], 1)}° | {br(100 * x['prob_tempestade_ate_lancamento'], 1)} % | {br(x['folga_conjuncao_dias'], 1)} | "
+                      + ("sim" if x["antes_da_conjuncao"] else "**não**") + " |")
+        else:
+            md.append(ini + "— | — | — | **não** (depois da partida do orbitador) |")
     md += ["", f"Início da conjunção (SEP ≤ 5°): {o['inicio_conjuncao']} (results/etapa4.3). Tempestade: fração dos inícios do catálogo entre "
-           "o começo da estação e o Ls do lançamento, vezes a probabilidade por ano marciano (P-061).", "",
+           "o começo da estação (Ls 185°, inclusive os inícios antes da chegada, que estariam em curso) e o Ls do lançamento, vezes a "
+           f"probabilidade por ano marciano (P-061); com {len(o['catalogo_ls'])} inícios no catálogo, cada um vale {br(100 * o['prob_tempestade_estada'] / len(o['catalogo_ls']), 1)} %. "
+           "Datas com resolução de ±1 dia (a conjunção é amostrada dia a dia).", "",
            "## Dados dos helicópteros contra a capacidade dos caminhos", "",
            "Capacidade (Mbit/sol, results/etapa4.3): " + "; ".join(f"{k} {br(a)} a {br(b)}" for k, (a, b) in o["capacidade_caminhos_mbit_sol"].items())
            + f". Lander: {br(o['demanda_lander_mbit_sol'])} Mbit/sol (P-063). RTE em JPEG com razão de {br(o['rte_jpeg_razao'][0], 2)} a "
            f"{br(o['rte_jpeg_razao'][1], 2)} [F198] (P-076).", "",
-           "| Ritmo | Volume por voo | Voos por sol | Helicópteros (Mbit/sol) | Com o lander (Mbit/sol) | Superfície (sóis) | Folga até a conjunção (dias) |",
-           "| :- | :- | -: | -: | -: | -: | -: |"]
+           "O volume por voo vem da Etapa 4.3; o número de voos por sol é o do ritmo de cada linha (a Etapa 4.3 usava 2 voos por sol, P-054).", "",
+           "| Ritmo | Volume por voo | Voos por sol | Helicópteros (Mbit/sol) | Com o lander (Mbit/sol) | " + " | ".join(o["capacidade_caminhos_mbit_sol"]) + " | Superfície (sóis) | Folga até a conjunção (dias) |",
+           "| :- | :- | -: | -: | -: | " + " :- |" * len(o["capacidade_caminhos_mbit_sol"]) + " -: | -: |"]
     for x in o["dados_helicopteros"]:
         md.append(f"| {x['ritmo']} | {x['volume']} | {br(x['voos_por_sol'], 2)} | {br(x['mbit_por_sol'][0])} a {br(x['mbit_por_sol'][1])} | "
-                  f"{br(x['total_com_lander'][0])} a {br(x['total_com_lander'][1])} | {br(x['duracao_superficie_sois'])} | {x['folga_conjuncao_dias']} |")
+                  f"{br(x['total_com_lander'][0])} a {br(x['total_com_lander'][1])} | " + " | ".join(x["cobertura"][k] for k in o["capacidade_caminhos_mbit_sol"])
+                  + f" | {br(x['duracao_superficie_sois'])} | {br(x['folga_conjuncao_dias'], 1)} |")
     c = o["opcao_c"]
-    md += ["", "### (c) Mais capacidade de comunicação", "",
+    md += ["", "Cobertura: \"sim\" quando o mínimo do caminho cobre o máximo da demanda; \"depende\" quando só a parte alta da faixa cobre; "
+           "\"não\" quando nem o máximo do caminho cobre o mínimo da demanda.", "", "### (c) Mais capacidade de comunicação", "",
            f"Enlace direto para {br(c['demanda_mbit_sol'])} Mbit/sol num passe de 8 h (P-065): {br(c['taxa_bps'])} bps, {br(c['fator_sobre_msl'])} vezes o "
            f"análogo do MSL; HGA de {br(c['diametro_hga_100w_m'], 2)} m com 100 W (P-069), cerca de {br(c['massa_kg'], 1)} kg, {br(c['energia_wh_passe'])} Wh por passe. "
-           f"Lander injetado {br(c['lander_injetado_kg'][0])} → {br(c['lander_injetado_kg'][1])} kg; margens do lander: "
+           f"Energia: área de operação {br(c['area_operacao_m2'], 1)} m² com esse consumo (demanda de {br(c['demanda_operacao_wh_sol'])} Wh/sol), "
+           f"abaixo dos {br(c['area_linha_de_base_m2'], 1)} m² da linha de base. Lander injetado {br(c['lander_injetado_kg'][0])} → {br(c['lander_injetado_kg'][1])} kg; margens do lander: "
            + "; ".join(f"{k} {pc(a)} → {pc(b)}" for k, (a, b) in c["margens_lander"].items())
            + f" (sensibilidade). TGO + MRO no máximo somam {br(c['tgo_mais_mro_max_mbit_sol'])} Mbit/sol, sem avaliar a sobreposição dos passes."]
     (SAIDA / "operacao_superficie.md").write_text("\n".join(md) + "\n", encoding="utf-8")

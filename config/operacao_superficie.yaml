@@ -24,7 +24,7 @@ ingenuity:
   maior_distancia_m: {valor: 705, fonte: "[F195] voo 69 (sol 1007): 705 m, a maior distância da tabela"}
   alcance_de_projeto_m: {valor: 300, fonte: "[F196]: \"Flight range Up to 980 feet (300 meters)\""}
   autonomia: "[F197] p. 6: \"Waypoint-based\", \"Visual-inertial navigation using IMU, altimeter, camera\", \"No landing hazard avoidance\"; [F186]: \"Ingenuity was upgraded with the ability to autonomously choose landing sites in treacherous terrain\"; [F179]: \"Navcam images were acquired at 30 Hz during flights for visual-inertial navigation, but a maximum of 200 images per flight were saved in memory for post-flight downlink\""
-  rte_jpeg_razao: {min: 1.73, max: 8.63, premissa: P-076, fonte: "[F198] rótulos PDS4 da RTE (sóis 43, 91, 403): onboard_compression_type JPEG, jpeg_quality 85, onboard_compression_ratio 1.73 a 8.63"}
+  rte_jpeg_razao: {min: 1.73, max: 8.63, premissa: P-076, fonte: "[F198] rótulos PDS4 da RTE: onboard_compression_type JPEG, jpeg_quality 85; onboard_compression_ratio 1.73 (sol 43, produto de 640 × 480 antes do 1º voo), 7.95 (sol 91) e 8.63 (sol 403, quadros inteiros)"}
   navcam_compressao: "[F198] rótulos PDS4 da Navcam: onboard_compression_type Lossless (razão não publicada nos rótulos: o volume fica sem compressão, envoltória)"
 operacao:
   transferencia_e_lancamento_sois: {valor: 10, premissa: P-074}   # transferência tardia ao MAV e preparação do lançamento
