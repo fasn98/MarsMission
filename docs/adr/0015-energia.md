@@ -1,7 +1,7 @@
 # ADR 0015 — Energia: lander solar com sobrevivência, carga do orbitador por modo e captura com 10 × R-4D-11
 
-Status: Proposed. Itens 1 a 4 decididos pelo Fabio no portão da Etapa 4.1 (2026-10-31); item 5 é proposta para o
-mesmo portão, pendente de decisão.
+Status: Aceito (Fabio, 2026-11-01). Antes: Proposed. Itens 1 a 4 decididos pelo Fabio no portão da Etapa 4.1
+(2026-10-31); item 5 é proposta para o mesmo portão, pendente de decisão.
 Data: 2026-10-31
 
 ## Contexto
