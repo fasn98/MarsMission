@@ -177,8 +177,8 @@ Decisões do Fabio. **Números vigentes:** `results/etapa4.4/operacao_superficie
 ## Nota (2026-11-01): grandezas de precisão e conclusão principal (ADR 0018)
 - **Grandezas:**
   - os 60 m e 5 m do Mars 2020 [F189] medem o erro até um alvo escolhido a bordo, e não se comparam à P-075;
-  - os 1,7 km [F190] (demonstrado) e os < 20 m do lander do MSR [F202] (previsto) medem o erro até um ponto definido antes do
-    voo, e se comparam à parcela de erro da P-075;
+  - os 1,7 km [F190] (demonstrado, distância ao "expected touchdown location", com o desvio do TRN embutido) e os < 20 m do
+    lander do MSR [F202] (previsto, "from target") se comparam à parcela de erro da P-075;
   - os 200 m são um afastamento planejado e **não ficam do lado conservador**.
 - **Faixa sem mudança:** a linha do tempo não muda até 300 m no ritmo do Ingenuity e até 700 m no ritmo do SRH
   (`results/etapa4.4/operacao_superficie.md`).

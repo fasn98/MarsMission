@@ -50,17 +50,17 @@ existentes não garantem.**
 ## Grandezas de precisão de pouso (pedido do Fabio, portão da 4.4)
 | Número | O que mede | Fonte | Comparável com a P-075? |
 | :- | :- | :- | :- |
-| 60 m (requisito) e 5 m (alcançado), Mars 2020 | erro até o alvo escolhido a bordo durante a descida, entre os pontos seguros ao alcance do desvio do TRN | [F189], [F188] | não |
-| 1,7 km, Mars 2020 | distância entre o ponto de toque real e o ponto de toque esperado antes do voo (demonstrado) | [F190] | sim, com a parcela de erro |
-| < 20 m, lander do MSR | erro previsto até o alvo pré-selecionado, na sequência nocional de EDL (não voado) | [F202], [F192] | sim, com a parcela de erro |
+| 60 m (requisito) e 5 m (alcançado), Mars 2020 | erro até o alvo escolhido a bordo durante a descida, entre os pontos seguros ao alcance do desvio do TRN | [F189] p. 2 e p. 15 ("within 5m of the point targeted by STS"), [F188] | não |
+| 1,7 km, Mars 2020 | distância entre o ponto de toque real e o "expected touchdown location" (demonstrado); o toque real já inclui o desvio do TRN, de até 600 m | [F190] p. 1, [F188] | sim, com a parcela de erro |
+| < 20 m, lander do MSR | erro previsto até o alvo ("from target"), na sequência nocional de EDL (não voado) | [F202] p. 10 | sim, com a parcela de erro |
 
 - **A P-075 é uma distância:** o afastamento planejado do ponto-alvo ao depósito mais o erro de pouso em relação a esse ponto.
 - **Os 200 m de [F191] são um afastamento planejado.** Se a seta da figura vai até a borda do círculo de 60 m, a distância
   iria de 200 a 320 m (leitura do agente).
 - **Os 200 m não ficam do lado conservador:**
   - com o erro demonstrado (1,7 km), ficam muito do lado otimista;
-  - com o erro previsto do lander do MSR (< 20 m), só seriam conservadores com um afastamento planejado menor que cerca de
-    180 m.
+  - com o erro previsto do lander do MSR (< 20 m), só seriam conservadores se o afastamento planejado mais o erro ficasse
+    abaixo de 200 m, ou seja, com um afastamento menor que cerca de 180 m (inferência do agente: 200 − 20).
 - **Faixa sem mudança:** pela regra da P-073, a linha do tempo é a mesma do caso de 200 m até 300 m no ritmo do Ingenuity e
   até 700 m no ritmo do SRH (`results/etapa4.4/operacao_superficie.md`).
 
