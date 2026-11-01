@@ -29,6 +29,8 @@ Ritmo real do Ingenuity [F195]: 72 voos entre os sóis 58 e 1035; intervalo entr
 
 Início da conjunção (SEP ≤ 5°): 2030-05-06 (results/etapa4.3). Tempestade: fração dos inícios do catálogo entre o começo da estação (Ls 185°, inclusive os inícios antes da chegada, que estariam em curso) e o Ls do lançamento, vezes a probabilidade por ano marciano (P-061); com 10 inícios no catálogo, cada um vale 2,5 %. Datas com resolução de ±1 dia (a conjunção é amostrada dia a dia). Requisito (ADR 0018): folga mínima de 60 dias; o plano de referência mira de 100 a 180 dias.
 
+Faixa de distância em que a linha do tempo é a mesma do caso de 200 m (regra da P-073: muda quando a distância passa de um alcance): ritmo do SRH, até 700 m (alcance de 700 m); ritmo do Ingenuity, até 300 m (alcance de 300 m). A P-075 é uma distância (afastamento planejado do ponto-alvo ao depósito mais o erro de pouso), não um erro de pouso.
+
 ## Dados dos helicópteros contra a capacidade dos caminhos
 
 Capacidade (Mbit/sol, results/etapa4.3): TGO 60 a 2 000; MRO 100 a 1 150; reserva própria (relé + DTE mínimo) 12 a 35. Lander: 250 Mbit/sol (P-063). RTE em JPEG com razão de 1,73 a 8,63 [F198] (P-076).

@@ -328,6 +328,15 @@ dados_helicopteros:
     TGO: depende
     MRO: depende
     reserva própria (relé + DTE mínimo): não
+faixa_sem_mudanca:
+  SRH:
+    alcance_m: 700.0
+    sem_mudanca_ate_m: 700.0
+    mesmo_resultado: true
+  Ingenuity:
+    alcance_m: 300.0
+    sem_mudanca_ate_m: 300.0
+    mesmo_resultado: true
 requisitos:
   folga_min: 60.0
   alvo:

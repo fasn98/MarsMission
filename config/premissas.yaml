@@ -854,6 +854,12 @@ premissas:
       [F188]. A precisão prevista para o lander do MSR, na sequência nocional de EDL, era "Pin-point landing (< 20 m from target)"
       [F202]. Os 200 m só se sustentam
       com pouso de precisão da classe do lander do MSR, não voado; com a capacidade do Perseverance, não.
+      GRANDEZAS (portão da 4.4): a P-075 é uma distância, o afastamento planejado do ponto-alvo ao depósito mais o erro de
+      pouso em relação a esse ponto. Os 200 m da figura de [F191] são um afastamento planejado; se a seta vai até a borda do
+      círculo de 60 m, a distância iria de 200 a 320 m (leitura do agente). Comparáveis com o erro: 1,7 km [F190] (demonstrado,
+      erro até um ponto definido antes do voo) e < 20 m [F202] (previsto, não voado). Não comparável: os 60 m e 5 m de [F189],
+      que medem o erro até um alvo escolhido a bordo durante a descida. Os 200 m NÃO ficam do lado conservador. A linha do
+      tempo não muda até 300 m no ritmo do Ingenuity e até 700 m no ritmo do SRH (results/etapa4.4).
     status: NÃO VALIDADA
   - id: P-076
     nome: compressao_das_imagens_dos_helicopteros

@@ -97,6 +97,11 @@ def main():
     partida = dt.date.fromisoformat(ref["partida_marte"][:10])
     dist = {k: v(x) for k, x in op["distancias_m"].items()}
     linha = [caso(d, r, h) for d in dist.values() for r in ("SRH", "Ingenuity") for h in (int(v(srh["helicopteros"])), 1)]
+    faixa = {"SRH": {"alcance_m": alc_srh, "sem_mudanca_ate_m": alc_srh * math.ceil(dist["srh"] / alc_srh)},
+             "Ingenuity": {"alcance_m": alc_ing, "sem_mudanca_ate_m": alc_ing * math.ceil(dist["srh"] / alc_ing)}}
+    for r, fx in faixa.items():   # a linha do tempo é a mesma de 200 m até esta distância (mesmo número de cargas por perna)
+        fx["mesmo_resultado"] = caso(fx["sem_mudanca_ate_m"], r, int(v(srh["helicopteros"])))["total_sois"] == \
+            caso(dist["srh"], r, int(v(srh["helicopteros"])))["total_sois"]
     rq = oc["requisitos"]
     fmin, (alo, ahi) = v(rq["folga_min_conjuncao_dias"]), (rq["folga_alvo_conjuncao_dias"]["min"], rq["folga_alvo_conjuncao_dias"]["max"])
     for x in linha:   # requisito (decisão do Fabio, ADR 0018): folga mínima de 60 d; o plano mira 100 a 180 d
@@ -167,6 +172,7 @@ def main():
            "inicio_conjuncao": str(conj), "tempestade_em_curso_na_chegada": {"probabilidade": p_cheg, "inicios_do_catalogo": n_cheg},
            "prob_tempestade_estada": p_estada, "ingenuity_cadencia": cad, "linha_do_tempo": linha,
            "capacidade_caminhos_mbit_sol": cam, "demanda_lander_mbit_sol": lander, "dados_helicopteros": dados,
+           "faixa_sem_mudanca": faixa,
            "requisitos": {"folga_min": fmin, "alvo": [alo, ahi], "pouso_de_precisao": bool(rq["pouso_de_precisao"]["valor"]),
                           "precisao_srl_m": v(rq["precisao_srl_m"])},
            "rte_jpeg_razao": [rz["min"], rz["max"]], "opcao_c": opc_c, "catalogo_ls": [x["ls"] for x in cat],
@@ -211,6 +217,10 @@ def escreve_md(o):
            "Datas com resolução de ±1 dia (a conjunção é amostrada dia a dia). "
            f"Requisito (ADR 0018): folga mínima de {br(o['requisitos']['folga_min'])} dias; o plano de referência mira de "
            f"{br(o['requisitos']['alvo'][0])} a {br(o['requisitos']['alvo'][1])} dias.", "",
+           "Faixa de distância em que a linha do tempo é a mesma do caso de 200 m (regra da P-073: muda quando a distância passa de um "
+           "alcance): " + "; ".join(f"ritmo do {k}, até {br(x['sem_mudanca_ate_m'])} m (alcance de {br(x['alcance_m'])} m)"
+                                     + ("" if x["mesmo_resultado"] else " (conferência falhou)") for k, x in o["faixa_sem_mudanca"].items())
+           + ". A P-075 é uma distância (afastamento planejado do ponto-alvo ao depósito mais o erro de pouso), não um erro de pouso.", "",
            "## Dados dos helicópteros contra a capacidade dos caminhos", "",
            "Capacidade (Mbit/sol, results/etapa4.3): " + "; ".join(f"{k} {br(a)} a {br(b)}" for k, (a, b) in o["capacidade_caminhos_mbit_sol"].items())
            + f". Lander: {br(o['demanda_lander_mbit_sol'])} Mbit/sol (P-063). RTE em JPEG com razão de {br(o['rte_jpeg_razao'][0], 2)} a "

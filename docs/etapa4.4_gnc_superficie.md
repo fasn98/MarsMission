@@ -173,3 +173,15 @@ Decisões do Fabio. **Números vigentes:** `results/etapa4.4/operacao_superficie
 5. **Premissas:** P-073 a P-076 aprovadas, NÃO VALIDADAS; a P-075 é crítica.
 6. **Conclusão registrada:** o plano de superfície só fecha com ritmo rápido OU pouso de precisão, e o ritmo rápido depende de
    dados que os relés existentes não garantem.
+
+## Nota (2026-11-01): grandezas de precisão e conclusão principal (ADR 0018)
+- **Grandezas:**
+  - os 60 m e 5 m do Mars 2020 [F189] medem o erro até um alvo escolhido a bordo, e não se comparam à P-075;
+  - os 1,7 km [F190] (demonstrado) e os < 20 m do lander do MSR [F202] (previsto) medem o erro até um ponto definido antes do
+    voo, e se comparam à parcela de erro da P-075;
+  - os 200 m são um afastamento planejado e **não ficam do lado conservador**.
+- **Faixa sem mudança:** a linha do tempo não muda até 300 m no ritmo do Ingenuity e até 700 m no ritmo do SRH
+  (`results/etapa4.4/operacao_superficie.md`).
+- **Conclusão principal e risco principal da Fase 4:** o plano de superfície depende de uma capacidade não demonstrada em voo
+  em qualquer combinação. Com a precisão de pouso já voada (~1,7 km), só fecha com o ritmo do SRH, não voado. Com o ritmo
+  voado do Ingenuity, só fecha com pouso de precisão abaixo de ~300 m, previsto e não voado.

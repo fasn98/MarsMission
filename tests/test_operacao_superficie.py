@@ -53,3 +53,9 @@ def test_requisitos_de_folga():
             assert x["dentro_do_alvo"] == (alvo["min"] <= x["folga_conjuncao_dias"] <= alvo["max"])
     # todos os casos do ritmo do SRH atendem a folga mínima (base da decisão do Fabio)
     assert all(x["atende_folga_minima"] for x in r["linha_do_tempo"] if x["ritmo"] == "SRH")
+
+
+def test_faixa_sem_mudanca():
+    r = ler("results/etapa4.4/operacao_superficie.yaml")["faixa_sem_mudanca"]
+    assert r["SRH"]["sem_mudanca_ate_m"] == v(C["srh"]["alcance_por_carga_m"]) and r["SRH"]["mesmo_resultado"]
+    assert r["Ingenuity"]["sem_mudanca_ate_m"] == v(C["ingenuity"]["alcance_de_projeto_m"]) and r["Ingenuity"]["mesmo_resultado"]

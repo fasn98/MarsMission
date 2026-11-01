@@ -46,3 +46,35 @@ existentes não garantem.**
   capacidade a demonstrar.
 - O risco de dependência do TGO (ADR 0017) se soma ao ritmo da busca: com menos capacidade de relé, a operação desacelera,
   e a folga cai na direção do mínimo de 60 dias.
+
+## Grandezas de precisão de pouso (pedido do Fabio, portão da 4.4)
+| Número | O que mede | Fonte | Comparável com a P-075? |
+| :- | :- | :- | :- |
+| 60 m (requisito) e 5 m (alcançado), Mars 2020 | erro até o alvo escolhido a bordo durante a descida, entre os pontos seguros ao alcance do desvio do TRN | [F189], [F188] | não |
+| 1,7 km, Mars 2020 | distância entre o ponto de toque real e o ponto de toque esperado antes do voo (demonstrado) | [F190] | sim, com a parcela de erro |
+| < 20 m, lander do MSR | erro previsto até o alvo pré-selecionado, na sequência nocional de EDL (não voado) | [F202], [F192] | sim, com a parcela de erro |
+
+- **A P-075 é uma distância:** o afastamento planejado do ponto-alvo ao depósito mais o erro de pouso em relação a esse ponto.
+- **Os 200 m de [F191] são um afastamento planejado.** Se a seta da figura vai até a borda do círculo de 60 m, a distância
+  iria de 200 a 320 m (leitura do agente).
+- **Os 200 m não ficam do lado conservador:**
+  - com o erro demonstrado (1,7 km), ficam muito do lado otimista;
+  - com o erro previsto do lander do MSR (< 20 m), só seriam conservadores com um afastamento planejado menor que cerca de
+    180 m.
+- **Faixa sem mudança:** pela regra da P-073, a linha do tempo é a mesma do caso de 200 m até 300 m no ritmo do Ingenuity e
+  até 700 m no ritmo do SRH (`results/etapa4.4/operacao_superficie.md`).
+
+## Conclusão principal da Etapa 4.4 (Fabio)
+**"O plano de superfície depende de uma capacidade não demonstrada em voo em qualquer combinação: com a precisão de pouso já
+voada (~1,7 km, Mars 2020), só fecha com o ritmo do SRH (não voado); com o ritmo voado do Ingenuity, só fecha com pouso de
+precisão < ~300 m (previsto, não voado)."**
+
+Conferência nos resultados:
+- a 1,7 km, o ritmo do SRH lança antes da conjunção (63 e 103 sóis), e o do Ingenuity passa da partida;
+- no ritmo do Ingenuity, só o caso de 200 m com dois helicópteros cabe, e a faixa sem mudança vai até 300 m.
+
+## Risco principal da Fase 4
+**Risco principal da Fase 4 (decisão do Fabio): o plano de superfície depende de uma capacidade não demonstrada em voo.**
+- Ou o ritmo de busca do SRH, ou o pouso de precisão abaixo de ~300 m do depósito.
+- O ritmo rápido ainda depende de capacidade de relé que os orbitadores existentes não garantem (ADR 0017).
+- O risco entra no relatório da Fase 4 (Etapa 4.6).
