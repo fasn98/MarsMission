@@ -261,3 +261,7 @@ def test_subsistemas_le_o_resumo_da_fase_4():
     base = yaml.safe_load((RAIZ / "config/lancadores.yaml").read_text(encoding="utf-8"))["base"]
     assert [x["lancador"] for x in s["lancadores"]] == [base["orbitador"], base["lander"], base["lander_reserva"]]
     assert len(s["superficie"]["linha_do_tempo"]) == len(r["superficie"]["linha_do_tempo"])
+    rot = dict((nome, x.rotulo) for nome, x in s["itens"])
+    assert rot["Demanda de dados do lander"] == d.rotulo_premissa("P-063")
+    assert rot["Alvo de temperatura do MAV"] == d.rotulo_premissa("P-027")
+    assert rot["MRO, máximo"] == "dado de fonte publicada [F137]"

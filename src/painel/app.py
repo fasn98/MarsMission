@@ -319,23 +319,13 @@ def pagina_subsistemas():
              "Pior margem nas sensibilidades": f"{100 * x['pior'].valor:+.0f} %".replace("-", "−"), "Caso da pior margem": x["caso_pior"],
              "Rótulo": x["margem"].rotulo, "Origem": x["margem"].origem} for x in s["lancadores"]])
     st.header("Energia, térmico e comunicação")
-    en, te, co = s["energia"], s["termico"], s["comunicacao"]
-    op = en["lander_opcao"]
-    st.markdown(f"- **Lander, C + RHU (ADR 0015):** {br(op['area_m2'], 1)} m² de painel e bateria de {br(op['bateria_kg'], 1)} kg, "
-                f"total {br(op['total_kg'], 1)} kg; {en['rhu_quantidade']} RHUs ({br(en['pu238_g'], 1)} g de Pu-238).\n"
-                f"- **Orbitador:** carga de {br(en['orbitador']['carga_w'], 0)} W, painel de {br(en['orbitador']['painel_w_afelio'], 0)} W no afélio.\n"
-                f"- **MAV a {br(te['mav_alvo_c'], 0)} °C:** {br(te['mav_potencia_w'], 1)} W. **Amostras:** {te['amostras']}.\n"
-                f"- **Cruzeiro do lander:** {br(te['cruzeiro_calor_w'], 0)} W contra {br(te['cruzeiro_passivo_max_w'], 0)} W passivos: "
-                f"rejeição {'ativa' if te['rejeicao_ativa'] else 'passiva'} (ADR 0019).\n"
-                f"- **Conjunção solar (SEP ≤ 5°):** {co['conjuncao']['inicio']} a {co['conjuncao']['fim']} ({co['conjuncao']['dias']} dias).\n"
-                f"- **Caminhos de comunicação (Mbit/sol; ADR 0017):** "
-                + "; ".join(f"{k} {br(v[0], 0)} a {br(v[1], 0)}" for k, v in co["caminhos_mbit_sol"].items())
-                + f". Demanda do lander {br(co['demanda_lander_mbit_sol'], 0)} Mbit/sol.\n\n"
-                f"Rótulo: {d.CALCULADO}. Origem: `{s['origem']}`.")
+    st.markdown(f"Amostras: {s['termico']['amostras']} (Etapa 4.2). Conjunção solar de {s['comunicacao']['conjuncao']['inicio']} a "
+                f"{s['comunicacao']['conjuncao']['fim']} (ADR 0017).")
+    tabela([linha_valor(nome, x) for nome, x in s["itens"]])
     st.header("Operação de superfície (ADR 0018)")
     su = s["superficie"]
-    st.markdown(f"Chegada {su['chegada']}; início da conjunção {su['inicio_conjuncao']}. Folga mínima de "
-                f"{br(su['requisitos']['folga_min'], 0)} dias antes da conjunção; alvo de {br(su['requisitos']['alvo'][0], 0)} a "
+    st.markdown(f"Chegada {su['chegada']}; início da conjunção {su['inicio_conjuncao']}. Requisitos decididos pelo Fabio (ADR 0018): "
+                f"folga mínima de {br(su['requisitos']['folga_min'], 0)} dias antes da conjunção; alvo de {br(su['requisitos']['alvo'][0], 0)} a "
                 f"{br(su['requisitos']['alvo'][1], 0)} dias.")
     tabela([{"Distância ao depósito": f"{br(x['distancia_m'], 0)} m", "Ritmo": x["ritmo"], "Helicópteros": x["helicopteros_em_paralelo"],
              "Sóis": br(x["total_sois"], 0), "Lançamento do MAV": x["lancamento"] or "—",

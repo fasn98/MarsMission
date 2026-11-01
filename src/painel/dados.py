@@ -446,7 +446,29 @@ def subsistemas() -> dict:
     lancadores = [{"veiculo": rot, "lancador": lc[k]["lancador"], "margem": calc(lc[k]["margem_base"], ""),
                    "pior": calc(lc[k]["pior"]["margem"], ""), "caso_pior": lc[k]["pior"]["caso"]}
                   for k, rot in (("orbitador", "Orbitador"), ("lander", "Lander"), ("lander_reserva", "Lander (reserva)"))]
+    # energia, térmico e comunicação: rótulo por item (calculado, premissa ou dado de fonte publicada)
+    en, te, co = r["energia"], r["termico"], r["comunicacao"]
+    prem = lambda x, u, pid: Valor(float(x), u, rotulo_premissa(pid), f"config/premissas.yaml ({pid})", (pid,))  # noqa: E731
+    fonte = lambda x, u, f, arq: Valor(float(x), u, f"dado de fonte publicada {f}", arq)  # noqa: E731
+    cam = co["caminhos_mbit_sol"]
+    reserva = next(k for k in cam if k.startswith("reserva"))
+    itens = [("Energia do lander, C + RHU: painel e bateria (ADR 0015)", calc(en["lander_opcao"]["total_kg"], "kg")),
+             ("Área de painel do lander", calc(en["lander_opcao"]["area_m2"], "m²")),
+             ("Pu-238 nas RHUs", calc(en["pu238_g"], "g")),
+             ("Carga elétrica do orbitador", prem(en["orbitador"]["carga_w"], "W", "P-028")),
+             ("Alvo de temperatura do MAV", prem(te["mav_alvo_c"], "°C", "P-027")),
+             ("Aquecimento do MAV", calc(te["mav_potencia_w"], "W")),
+             ("Calor a rejeitar no cruzeiro (lander)", calc(te["cruzeiro_calor_w"], "W")),
+             ("Perda passiva máxima do LAMP do SRL", fonte(te["cruzeiro_passivo_max_w"], "W", "[F165]", "config/termico.yaml")),
+             ("Duração da conjunção solar (SEP ≤ 5°)", calc(co["conjuncao"]["dias"], "d")),
+             ("Demanda de dados do lander", prem(co["demanda_lander_mbit_sol"], "Mbit/sol", "P-063")),
+             ("TGO, mínimo", prem(cam["TGO"][0], "Mbit/sol", "P-071")),
+             ("TGO, máximo", prem(cam["TGO"][1], "Mbit/sol", "P-071")),
+             ("MRO, mínimo", fonte(cam["MRO"][0], "Mbit/sol", "[F137]", "config/comunicacao.yaml")),
+             ("MRO, máximo", fonte(cam["MRO"][1], "Mbit/sol", "[F137]", "config/comunicacao.yaml")),
+             ("Reserva própria (relé + DTE mínimo), mínimo", calc(cam[reserva][0], "Mbit/sol")),
+             ("Reserva própria (relé + DTE mínimo), máximo", calc(cam[reserva][1], "Mbit/sol"))]
     su = r["superficie"]
     linha = [{**x, "folga": None if x["folga_conjuncao_dias"] is None else calc(x["folga_conjuncao_dias"], "d")} for x in su["linha_do_tempo"]]
-    return {"massas": massas, "lancadores": lancadores, "energia": r["energia"], "termico": r["termico"], "comunicacao": r["comunicacao"],
+    return {"massas": massas, "lancadores": lancadores, "itens": itens, "energia": r["energia"], "termico": r["termico"], "comunicacao": r["comunicacao"],
             "superficie": {**su, "linha_do_tempo": linha}, "premissas": r["premissas"], "origem": o}

@@ -7,7 +7,8 @@ Estudo conceitual (Pré-Fase A) MarsMission. Autor e decisor: Fabio Nogueira.
 
 ## 1. Resultado em uma página
 - **Energia** (Etapa 4.1, ADRs 0015 e 0016):
-  - lander solar com sobrevivência e 35 RHUs (C + RHU), com 61,6 g de Pu-238, Tier I pelo critério de quantidade;
+  - lander solar com sobrevivência e 35 RHUs (C + RHU), com 61,6 g de Pu-238, Tier I pelo critério de quantidade (a análise
+    de segurança não foi feita);
   - painel de 32,8 m² e total de 277,5 kg;
   - orbitador com carga de 1.022 W;
   - MMRTG (alternativa A, hoje com 3 unidades em `results/etapa4.1/energia.md`) é alternativa condicionada à disponibilidade
@@ -29,7 +30,9 @@ Estudo conceitual (Pré-Fase A) MarsMission. Autor e decisor: Fabio Nogueira.
   - lander no Vulcan VC4, com o VC6 de reserva; orbitador no Falcon Heavy descartável.
 
 Os números de energia, térmico, comunicação e superfície estão em `results/fase4/resumo.md`. Massas vigentes
-(`results/fase4/resumo.md`; fim da Fase 3 pelo relatório da Fase 3, seção 1):
+(`results/fase4/resumo.md`). O fim da Fase 3 vem do relatório da Fase 3, seção 1, e de `results/etapa2.5/arquitetura.md` no
+merge da Etapa 3.4 (commit bf15f30). A plataforma vem de `config/superficie.yaml` nesse commit, também citada como "Antes"
+na errata da 4.5 do relatório da Fase 3:
 
 | Item | Fim da Fase 3 | Fim da Fase 4 |
 | :- | -: | -: |
@@ -84,7 +87,8 @@ Os números de energia, térmico, comunicação e superfície estão em `results
     sensibilidade da P-059;
   - a escala do enlace em banda X e o relé UHF contra o Electra (`results/etapa4.3/comunicacao.md`) são conferências de
     ordem de grandeza.
-- **Reprodutibilidade:** os `results/` da Fase 4 saem do código e do `config/` atuais (`tools/confere_regeneracao.py`, CI).
+- **Reprodutibilidade:** `tools/confere_regeneracao.py` regenera os `results/` da Fase 4 junto com os demais. O resultado no
+  commit final está no PR desta etapa e no CI.
 
 ## 4. Decisões (ADRs da Fase 4)
 | ADR | Decisão |
@@ -123,7 +127,10 @@ Os números de energia, térmico, comunicação e superfície estão em `results
    (`results/etapa2.5/arquitetura.md`). A diversidade do ADR 0020 evita que o lander dependa do mesmo veículo.
 5. **Tempestade global:** probabilidade de 25 % na estada (`results/fase4/resumo.md`); risco acima de τ = 6 aceito como
    registrado (ADR 0015).
-6. **Pu-238 das RHUs:** a disponibilidade de 61,6 g é risco de programa (ADR 0016).
+6. **Disponibilidade de RHUs** (ADR 0015, nota do 2º portão, item 3):
+   - as 35 RHUs ficam acima das alocações recentes de 20 [F144] e de 24 [F156];
+   - só a de até 40 [F153] comporta essa quantidade;
+   - com o inventário atual, de cerca de 0,8 W por unidade [F153], seriam 44 RHUs.
 
 ## 7. Premissas NÃO VALIDADAS
 `results/fase4/premissas_nao_validadas.md`, gerado por `tools/lista_premissas.py`:
