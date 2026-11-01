@@ -133,3 +133,8 @@ das Fases 2 a 4 foram regenerados; os das etapas anteriores à 2.3 ficam como es
 | Orbitador injetado; Falcon Heavy descartável; Vulcan VC6 | 7.796 kg; +44 %; +6 % | sem mudança |
 
 Lançadores de base (ADR 0020): lander no Vulcan VC4, com o VC6 de reserva; orbitador no Falcon Heavy descartável.
+
+## Nota (Etapa 4.6, 2026-11-01): mitigação do risco do MAV decidida
+A nota da Etapa 3.4 deixou as mitigações do risco do MAV para avaliar. No portão da Etapa 4.5, o Fabio escolheu a
+mitigação (b), lançador maior para o lander: Vulcan VC4, com o VC6 de reserva (ADR 0020). O Isp maior (c) foi descartado.
+As margens na base e a pior margem nas sensibilidades estão em `results/fase4/resumo.md`.

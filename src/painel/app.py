@@ -294,6 +294,59 @@ def pagina_propulsao():
             for x in p["b"]], estreita=True)
 
 
+def pagina_subsistemas():
+    st.title("Subsistemas (Fase 4)")
+    s = d.subsistemas()
+    st.markdown("Resumo integrado da Fase 4 (`docs/fase4_relatorio.md`; ADRs 0015 a 0020). Números de "
+                f"`{s['origem']}`, gerado por `tools/fase4.py` a partir de `results/etapa4.1` a `results/etapa4.5`.")
+    st.header("Massas e lançadores")
+    m = s["massas"]
+    c = st.columns(3)
+    with c[0]:
+        metrica("Orbitador injetado", m["orbitador_injetado"], 0)
+    with c[1]:
+        metrica("Lander injetado", m["lander_injetado"], 0)
+    with c[2]:
+        metrica("Total na órbita baixa (regra iii)", m["total_leo"], 0)
+    tabela([linha_valor("Plataforma de superfície (P-017, caso B)", m["plataforma"]),
+            linha_valor("Circuito de fluido no estágio de cruzeiro (P-077)", m["circuito"]),
+            linha_valor("Massa de entrada do lander", m["lander_entrada"], 0),
+            linha_valor("Massa pousada do lander", m["lander_pousado"], 0),
+            linha_valor("MAV + energia do aquecimento", m["mav"], 0),
+            linha_valor(f"Lander injetado na referência otimista ({m['caso_a']['caso']})", m["caso_a"]["lander_injetado"], 0)], estreita=True)
+    st.subheader("Lançadores de base (ADR 0020)")
+    tabela([{"Veículo": x["veiculo"], "Lançador": x["lancador"], "Margem na base": f"{100 * x['margem'].valor:+.0f} %".replace("-", "−"),
+             "Pior margem nas sensibilidades": f"{100 * x['pior'].valor:+.0f} %".replace("-", "−"), "Caso da pior margem": x["caso_pior"],
+             "Rótulo": x["margem"].rotulo, "Origem": x["margem"].origem} for x in s["lancadores"]])
+    st.header("Energia, térmico e comunicação")
+    en, te, co = s["energia"], s["termico"], s["comunicacao"]
+    op = en["lander_opcao"]
+    st.markdown(f"- **Lander, C + RHU (ADR 0015):** {br(op['area_m2'], 1)} m² de painel e bateria de {br(op['bateria_kg'], 1)} kg, "
+                f"total {br(op['total_kg'], 1)} kg; {en['rhu_quantidade']} RHUs ({br(en['pu238_g'], 1)} g de Pu-238).\n"
+                f"- **Orbitador:** carga de {br(en['orbitador']['carga_w'], 0)} W, painel de {br(en['orbitador']['painel_w_afelio'], 0)} W no afélio.\n"
+                f"- **MAV a {br(te['mav_alvo_c'], 0)} °C:** {br(te['mav_potencia_w'], 1)} W. **Amostras:** {te['amostras']}.\n"
+                f"- **Cruzeiro do lander:** {br(te['cruzeiro_calor_w'], 0)} W contra {br(te['cruzeiro_passivo_max_w'], 0)} W passivos: "
+                f"rejeição {'ativa' if te['rejeicao_ativa'] else 'passiva'} (ADR 0019).\n"
+                f"- **Conjunção solar (SEP ≤ 5°):** {co['conjuncao']['inicio']} a {co['conjuncao']['fim']} ({co['conjuncao']['dias']} dias).\n"
+                f"- **Caminhos de comunicação (Mbit/sol; ADR 0017):** "
+                + "; ".join(f"{k} {br(v[0], 0)} a {br(v[1], 0)}" for k, v in co["caminhos_mbit_sol"].items())
+                + f". Demanda do lander {br(co['demanda_lander_mbit_sol'], 0)} Mbit/sol.\n\n"
+                f"Rótulo: {d.CALCULADO}. Origem: `{s['origem']}`.")
+    st.header("Operação de superfície (ADR 0018)")
+    su = s["superficie"]
+    st.markdown(f"Chegada {su['chegada']}; início da conjunção {su['inicio_conjuncao']}. Folga mínima de "
+                f"{br(su['requisitos']['folga_min'], 0)} dias antes da conjunção; alvo de {br(su['requisitos']['alvo'][0], 0)} a "
+                f"{br(su['requisitos']['alvo'][1], 0)} dias.")
+    tabela([{"Distância ao depósito": f"{br(x['distancia_m'], 0)} m", "Ritmo": x["ritmo"], "Helicópteros": x["helicopteros_em_paralelo"],
+             "Sóis": br(x["total_sois"], 0), "Lançamento do MAV": x["lancamento"] or "—",
+             "Folga até a conjunção": "—" if x["folga"] is None else f"{br(x['folga'].valor, 0)} d",
+             "Folga mínima": "sim" if x["atende_folga_minima"] else "não", "Alvo": "sim" if x["dentro_do_alvo"] else "não",
+             "Rótulo": d.CALCULADO, "Origem": s["origem"]} for x in su["linha_do_tempo"]])
+    pr = s["premissas"]
+    st.markdown(f"**Premissas:** {pr['total']}, {pr['nao_validadas']} NÃO VALIDADAS; {len(pr['criadas_na_fase_4'])} criadas na Fase 4; "
+                f"críticas: {', '.join(pr['criticas'])}.")
+
+
 # A página padrão fica na raiz "/"; a cópia oculta faz o endereço /visao-geral (links salvos) abrir a mesma página.
 pg = st.navigation([st.Page(visao_geral, title="Visão geral", default=True),
                     st.Page(visao_geral, title="Visão geral", url_path="visao-geral", visibility="hidden"),
@@ -301,5 +354,6 @@ pg = st.navigation([st.Page(visao_geral, title="Visão geral", default=True),
                     st.Page(pagina_porkchops, title="Porkchops", url_path="porkchops"),
                     st.Page(pagina_orcamento, title="Orçamento de massa", url_path="orcamento"),
                     st.Page(pagina_propulsao, title="Propulsão", url_path="propulsao"),
+                    st.Page(pagina_subsistemas, title="Subsistemas", url_path="subsistemas"),
                     st.Page(pagina_premissas, title="Premissas e decisões", url_path="premissas")])
 pg.run()
