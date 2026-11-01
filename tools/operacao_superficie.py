@@ -217,7 +217,7 @@ def escreve_md(o):
            f"Enlace direto para {br(c['demanda_mbit_sol'])} Mbit/sol num passe de 8 h (P-065): {br(c['taxa_bps'])} bps, {br(c['fator_sobre_msl'])} vezes o "
            f"análogo do MSL; HGA de {br(c['diametro_hga_100w_m'], 2)} m com 100 W (P-069), cerca de {br(c['massa_kg'], 1)} kg, {br(c['energia_wh_passe'])} Wh por passe. "
            f"Energia: área de operação {br(c['area_operacao_m2'], 1)} m² com esse consumo (demanda de {br(c['demanda_operacao_wh_sol'])} Wh/sol), "
-           f"abaixo dos {br(c['area_linha_de_base_m2'], 1)} m² da linha de base. Lander injetado {br(c['lander_injetado_kg'][0])} → {br(c['lander_injetado_kg'][1])} kg; margens do lander: "
+           + ("abaixo" if c["area_operacao_m2"] < c["area_linha_de_base_m2"] else "acima") + f" dos {br(c['area_linha_de_base_m2'], 1)} m² da linha de base. Lander injetado {br(c['lander_injetado_kg'][0])} → {br(c['lander_injetado_kg'][1])} kg; margens do lander: "
            + "; ".join(f"{k} {pc(a)} → {pc(b)}" for k, (a, b) in c["margens_lander"].items())
            + f" (sensibilidade). TGO + MRO no máximo somam {br(c['tgo_mais_mro_max_mbit_sol'])} Mbit/sol, sem avaliar a sobreposição dos passes."]
     (SAIDA / "operacao_superficie.md").write_text("\n".join(md) + "\n", encoding="utf-8")
