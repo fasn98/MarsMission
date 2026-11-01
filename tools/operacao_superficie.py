@@ -97,6 +97,17 @@ def main():
     partida = dt.date.fromisoformat(ref["partida_marte"][:10])
     dist = {k: v(x) for k, x in op["distancias_m"].items()}
     linha = [caso(d, r, h) for d in dist.values() for r in ("SRH", "Ingenuity") for h in (int(v(srh["helicopteros"])), 1)]
+    faixa = {"SRH": {"alcance_m": alc_srh, "sem_mudanca_ate_m": alc_srh * math.ceil(dist["srh"] / alc_srh)},
+             "Ingenuity": {"alcance_m": alc_ing, "sem_mudanca_ate_m": alc_ing * math.ceil(dist["srh"] / alc_ing)}}
+    for r, fx in faixa.items():   # a linha do tempo é a mesma de 200 m até esta distância (mesmo número de cargas por perna)
+        fx["mesmo_resultado"] = caso(fx["sem_mudanca_ate_m"], r, int(v(srh["helicopteros"])))["total_sois"] == \
+            caso(dist["srh"], r, int(v(srh["helicopteros"])))["total_sois"]
+    rq = oc["requisitos"]
+    fmin, (alo, ahi) = v(rq["folga_min_conjuncao_dias"]), (rq["folga_alvo_conjuncao_dias"]["min"], rq["folga_alvo_conjuncao_dias"]["max"])
+    for x in linha:   # requisito (decisão do Fabio, ADR 0018): folga mínima de 60 d; o plano mira 100 a 180 d
+        f = x["folga_conjuncao_dias"]
+        x["atende_folga_minima"] = f is not None and f >= fmin
+        x["dentro_do_alvo"] = f is not None and alo <= f <= ahi
     p_cheg, n_cheg = prob_tempestade_ate(ls_cheg, cat, j0, p_ano)
     ls_partida = ls_de(dt.date.fromisoformat(ref["partida_marte"][:10]))
     p_estada = p_ano   # a estada atravessa a estação inteira (P-061)
@@ -161,6 +172,9 @@ def main():
            "inicio_conjuncao": str(conj), "tempestade_em_curso_na_chegada": {"probabilidade": p_cheg, "inicios_do_catalogo": n_cheg},
            "prob_tempestade_estada": p_estada, "ingenuity_cadencia": cad, "linha_do_tempo": linha,
            "capacidade_caminhos_mbit_sol": cam, "demanda_lander_mbit_sol": lander, "dados_helicopteros": dados,
+           "faixa_sem_mudanca": faixa,
+           "requisitos": {"folga_min": fmin, "alvo": [alo, ahi], "pouso_de_precisao": bool(rq["pouso_de_precisao"]["valor"]),
+                          "precisao_srl_m": v(rq["precisao_srl_m"])},
            "rte_jpeg_razao": [rz["min"], rz["max"]], "opcao_c": opc_c, "catalogo_ls": [x["ls"] for x in cat],
            "pouso": {"elipse_km": oc["pouso"]["elipse_km"]["valor"], "desvio_trn_max_m": v(oc["pouso"]["desvio_trn_max_m"]),
                      "erro_ao_alvo_m": v(oc["pouso"]["erro_ao_alvo_m"]), "erro_de_entrega_m": v(oc["pouso"]["erro_de_entrega_m"]),
@@ -186,20 +200,27 @@ def escreve_md(o):
           "## Linha do tempo mínima da superfície", "",
           f"Ritmo real do Ingenuity [F195]: {cad['voos']} voos entre os sóis {cad['sol_primeiro']} e {cad['sol_ultimo']}; intervalo entre voos: mediana "
           f"{br(cad['intervalo_mediano_sois'])} sóis, média {br(cad['intervalo_medio_sois'], 1)}, de {cad['intervalo_min_sois']} a {cad['intervalo_max_sois']}.", "",
-          "| Distância ao depósito | Ritmo | Helicópteros em paralelo | Sóis por tubo | Busca (sóis) | Total (sóis) | Lançamento do MAV | Ls | Tempestade desde Ls 185° até o lançamento | Folga até a conjunção (dias) | Antes da conjunção? |",
-          "| -: | :- | -: | -: | -: | -: | :- | -: | -: | -: | :- |"]
+          "| Distância ao depósito | Ritmo | Helicópteros em paralelo | Sóis por tubo | Busca (sóis) | Total (sóis) | Lançamento do MAV | Ls | Tempestade desde Ls 185° até o lançamento | Folga até a conjunção (dias) | Antes da conjunção? | Folga ≥ mínima? | No alvo? |",
+          "| -: | :- | -: | -: | -: | -: | :- | -: | -: | -: | :- | :- | :- |"]
     for x in o["linha_do_tempo"]:
         ini = (f"| {br(x['distancia_m'])} m | {x['ritmo']} | {x['helicopteros_em_paralelo']} | {br(x['sois_por_tubo'])} | {br(x['busca_sois'])} | "
                f"{br(x['total_sois'])} | {x['lancamento']} | ")
         if x["antes_da_partida"]:
             md.append(ini + f"{br(x['ls_lancamento'], 1)}° | {br(100 * x['prob_tempestade_ate_lancamento'], 1)} % | {br(x['folga_conjuncao_dias'], 1)} | "
-                      + ("sim" if x["antes_da_conjuncao"] else "**não**") + " |")
+                      + ("sim" if x["antes_da_conjuncao"] else "**não**") + " | " + ("sim" if x["atende_folga_minima"] else "não")
+                      + " | " + ("sim" if x["dentro_do_alvo"] else "não") + " |")
         else:
-            md.append(ini + "— | — | — | **não** (depois da partida do orbitador) |")
+            md.append(ini + "— | — | — | **não** (depois da partida do orbitador) | não | não |")
     md += ["", f"Início da conjunção (SEP ≤ 5°): {o['inicio_conjuncao']} (results/etapa4.3). Tempestade: fração dos inícios do catálogo entre "
            "o começo da estação (Ls 185°, inclusive os inícios antes da chegada, que estariam em curso) e o Ls do lançamento, vezes a "
            f"probabilidade por ano marciano (P-061); com {len(o['catalogo_ls'])} inícios no catálogo, cada um vale {br(100 * o['prob_tempestade_estada'] / len(o['catalogo_ls']), 1)} %. "
-           "Datas com resolução de ±1 dia (a conjunção é amostrada dia a dia).", "",
+           "Datas com resolução de ±1 dia (a conjunção é amostrada dia a dia). "
+           f"Requisito (ADR 0018): folga mínima de {br(o['requisitos']['folga_min'])} dias; o plano de referência mira de "
+           f"{br(o['requisitos']['alvo'][0])} a {br(o['requisitos']['alvo'][1])} dias.", "",
+           "Faixa de distância em que a linha do tempo é a mesma do caso de 200 m (regra da P-073: muda quando a distância passa de um "
+           "alcance): " + "; ".join(f"ritmo do {k}, até {br(x['sem_mudanca_ate_m'])} m (alcance de {br(x['alcance_m'])} m)"
+                                     + ("" if x["mesmo_resultado"] else " (conferência falhou)") for k, x in o["faixa_sem_mudanca"].items())
+           + ". A P-075 é uma distância (afastamento planejado do ponto-alvo ao depósito mais o erro de pouso), não um erro de pouso.", "",
            "## Dados dos helicópteros contra a capacidade dos caminhos", "",
            "Capacidade (Mbit/sol, results/etapa4.3): " + "; ".join(f"{k} {br(a)} a {br(b)}" for k, (a, b) in o["capacidade_caminhos_mbit_sol"].items())
            + f". Lander: {br(o['demanda_lander_mbit_sol'])} Mbit/sol (P-063). RTE em JPEG com razão de {br(o['rte_jpeg_razao'][0], 2)} a "

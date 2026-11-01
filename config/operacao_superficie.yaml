@@ -38,3 +38,8 @@ edl:
 cruzeiro:
   ddor: "[F200] p. 19: \"The root-sum-square (RSS) random error is less than 0.06 ns, corresponding to an angular error of 1.9 nrad on an 8000 km baseline. This angular error projects to a cross-position error of 281 m in the plane-of-sky at a distance of 1 AU\""
   msl: "[F201] p. 7: \"Doppler ... at a level of about 0.1 mm/s for 300-second compression time. Range ... with an accuracy of about one meter. ∆DOR ... at the 40 ps level for one session, or around 400 m at the Mars arrival distance\"; p. 1: \"The final EFPA was 0.013° shallower than the -15.5° target\""
+requisitos:   # decisões do Fabio no portão da 4.4 (ADR 0018)
+  folga_min_conjuncao_dias: {valor: 60, fonte: "decisão do Fabio no portão da 4.4: pior caso que cabe no ritmo do SRH, qualquer ponto da elipse"}
+  folga_alvo_conjuncao_dias: {min: 100, max: 180, fonte: "decisão do Fabio no portão da 4.4: o plano de referência mira 100 a 180 dias"}
+  pouso_de_precisao: {valor: true, fonte: "decisão do Fabio no portão da 4.4 (P-075 crítica)"}
+  precisao_srl_m: {valor: 20, fonte: "[F202] p. 10, sequência nocional de EDL do SRL: \"Pin-point landing (< 20 m from target)\""}

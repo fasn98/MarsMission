@@ -43,7 +43,7 @@ amostras:
     - {fase: "No depósito na superfície", duracao: anos, max_c: [5, 53], fonte: "[F167] p. 5, Tab. 1: \"Cached on Surface Years +5 to +53\""}
     - {fase: "Transferência para o contêiner (OS)", duracao: meses, max_c: [30, 53], fonte: "[F167] p. 5, Tab. 1: \"Transfer to Orbiting Sample (OS) Months +30 to +53\""}
     - {fase: "Lançamento do MAV", duracao: minutos, max_c: [30, 30], fonte: "[F167] p. 5, Tab. 1: \"Mars Ascent Vehicle (MAV) launch Minutes +30\""}
-  depositos_ate: {valor: "2023-02-15", premissa: P-062, fonte: "[F172]: os tubos foram selados nas campanhas Crater Floor e Delta Front, esta \"Delta Front Campaign” (which began on sol 415 and ended on sol 707, around mid-February 2023)\"; \"one sample from each pair was deposited on the ground forming the Sample Depot or First Cache at Three Forks\" (a fonte não dá a data do depósito)"}
+  depositos_ate: {valor: "2023-01-28", premissa: P-062, fonte: "[F99] (\"NASA's Perseverance Rover Completes Mars Sample Depot\"): \"on Jan. 28, 2023, the 690th Martian day\"; antes, [F172]: os tubos foram selados nas campanhas Crater Floor e Delta Front, esta \"Delta Front Campaign” (which began on sol 415 and ended on sol 707, around mid-February 2023)\"; \"one sample from each pair was deposited on the ground forming the Sample Depot or First Cache at Three Forks\" (a fonte não dá a data do depósito)"}
   aquecimento_tubos_k: {valor: 300, fonte: "[F172]: \"the tubes may potentially, repeatedly, be heated ocationally to up to 300 K for years\""}
   isolamento_contêiner: "não avaliado: sem análogo com massa publicada (busca de 2026-10-31; só o limite de massa de todo o contêiner e as massas do veículo de entrada na Terra)"
 

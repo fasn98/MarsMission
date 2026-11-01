@@ -65,7 +65,7 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-059 | fator_do_opportunity_nas_tempestades | aplicado_a: cenários de tempestade (τ ≥ 2) e sobrevivência; tau_da_comparacao: 2.1 | adimensional | tools/energia.py (sensibilidade das áreas de painel) | sim |
 | P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) | sim |
 | P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | tools/energia.py (probabilidade do risco acima de τ = 6) | sim |
-| P-062 | data_do_deposito_de_three_forks | 2023-02-15 | data | config/termico.yaml (tempo das amostras no depósito até a chegada) | sim |
+| P-062 | data_do_deposito_de_three_forks | 2023-01-28 | data | config/termico.yaml (tempo das amostras no depósito até a chegada) | sim |
 | P-063 | demanda_de_dados_do_lander | 250 | Mbit por sol | config/comunicacao.yaml (demanda do lander contra o enlace direto e o relé) | sim |
 | P-064 | escala_da_taxa_do_orbitador_com_a_distancia | expoente: 2 | adimensional | tools/comunicacao.py (taxa em banda X do orbitador) | sim |
 | P-065 | passe_dte_do_lander | 8 | horas por sol | config/comunicacao.yaml (volume do enlace direto do lander) | sim |
@@ -78,7 +78,7 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-072 | media_de_imagens_do_ingenuity_por_voo | navcam_por_voo: 13959/72; rte_por_voo: 602/72; compressao: nenhuma | imagens por voo | tools/comunicacao.py (volume dos helicópteros pela média do Ingenuity) | sim |
 | P-073 | ritmo_de_busca_por_tubo | voos_por_tubo: 2; carga_extra_por_perna: 1 sol a cada 700 m além do primeiro trecho | voos; sóis | tools/operacao_superficie.py (linha do tempo da superfície) | sim |
 | P-074 | transferencia_e_lancamento | 10 | sóis | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) | sim |
-| P-075 | distancia_do_lander_ao_deposito | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) | sim |
+| P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) | sim |
 | P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | tools/operacao_superficie.py (volume dos helicópteros) | sim |
 
 Total: 76 de 76 premissas com status NÃO VALIDADA; 36 criadas na Fase 3.

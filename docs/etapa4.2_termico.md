@@ -162,3 +162,7 @@ Decisões do Fabio. **Números vigentes:** `results/etapa4.2/termico.md` e `resu
 3. **Rejeição de calor no cruzeiro:** fica para a Etapa 4.5, com a dissipação das aviônicas.
 
 **Premissa nova:** P-062 (data do depósito), NÃO VALIDADA.
+
+## Nota (Etapa 4.4, 2026-11-01): P-062 corrigida para 28/01/2023
+Decisão do Fabio no portão da 4.4: a data do depósito (P-062) passa de 15/02/2023 para 28/01/2023, alinhada à fonte [F99].
+O tempo no depósito até a chegada continua em 6,6 anos (`results/etapa4.2/termico.md`).

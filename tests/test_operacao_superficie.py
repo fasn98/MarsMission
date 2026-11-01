@@ -41,3 +41,21 @@ def test_linha_do_tempo_e_dados():
     assert 0 <= base["prob_tempestade_ate_lancamento"] <= r["prob_tempestade_estada"]
     for d in r["dados_helicopteros"]:
         assert d["mbit_por_sol"][0] <= d["mbit_por_sol"][1]
+
+
+def test_requisitos_de_folga():
+    r = ler("results/etapa4.4/operacao_superficie.yaml")
+    rq = C["requisitos"]
+    for x in r["linha_do_tempo"]:
+        if x["antes_da_partida"]:
+            assert x["atende_folga_minima"] == (x["folga_conjuncao_dias"] >= v(rq["folga_min_conjuncao_dias"]))
+            alvo = rq["folga_alvo_conjuncao_dias"]
+            assert x["dentro_do_alvo"] == (alvo["min"] <= x["folga_conjuncao_dias"] <= alvo["max"])
+    # todos os casos do ritmo do SRH atendem a folga mínima (base da decisão do Fabio)
+    assert all(x["atende_folga_minima"] for x in r["linha_do_tempo"] if x["ritmo"] == "SRH")
+
+
+def test_faixa_sem_mudanca():
+    r = ler("results/etapa4.4/operacao_superficie.yaml")["faixa_sem_mudanca"]
+    assert r["SRH"]["sem_mudanca_ate_m"] == v(C["srh"]["alcance_por_carga_m"]) and r["SRH"]["mesmo_resultado"]
+    assert r["Ingenuity"]["sem_mudanca_ate_m"] == v(C["ingenuity"]["alcance_de_projeto_m"]) and r["Ingenuity"]["mesmo_resultado"]

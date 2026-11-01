@@ -160,9 +160,9 @@ amostras:
     - 30
     - 30
     fonte: '[F167] p. 5, Tab. 1: "Mars Ascent Vehicle (MAV) launch Minutes +30"'
-  deposito_desde: '2023-02-15'
+  deposito_desde: '2023-01-28'
   chegada_marte: '2029-09-20'
-  anos_no_deposito_ate_a_chegada: 6.595482546201232
+  anos_no_deposito_ate_a_chegada: 6.6447638603696095
   aquecimento_tubos_k: 300.0
   isolamento_conteiner: 'não avaliado: sem análogo com massa publicada (busca de 2026-10-31;
     só o limite de massa de todo o contêiner e as massas do veículo de entrada na

@@ -31,6 +31,8 @@ linha_do_tempo:
   antes_da_conjuncao: true
   antes_da_partida: true
   voos_por_sol: 1.0
+  atende_folga_minima: true
+  dentro_do_alvo: false
 - distancia_m: 200.0
   ritmo: SRH
   helicopteros_em_paralelo: 1
@@ -46,6 +48,8 @@ linha_do_tempo:
   antes_da_conjuncao: true
   antes_da_partida: true
   voos_por_sol: 0.5
+  atende_folga_minima: true
+  dentro_do_alvo: true
 - distancia_m: 200.0
   ritmo: Ingenuity
   helicopteros_em_paralelo: 2
@@ -61,6 +65,8 @@ linha_do_tempo:
   antes_da_conjuncao: true
   antes_da_partida: true
   voos_por_sol: 0.2
+  atende_folga_minima: true
+  dentro_do_alvo: true
 - distancia_m: 200.0
   ritmo: Ingenuity
   helicopteros_em_paralelo: 1
@@ -76,6 +82,8 @@ linha_do_tempo:
   antes_da_conjuncao: false
   antes_da_partida: true
   voos_por_sol: 0.1
+  atende_folga_minima: false
+  dentro_do_alvo: false
 - distancia_m: 1700.0
   ritmo: SRH
   helicopteros_em_paralelo: 2
@@ -91,6 +99,8 @@ linha_do_tempo:
   antes_da_conjuncao: true
   antes_da_partida: true
   voos_por_sol: 1.5
+  atende_folga_minima: true
+  dentro_do_alvo: true
 - distancia_m: 1700.0
   ritmo: SRH
   helicopteros_em_paralelo: 1
@@ -106,6 +116,8 @@ linha_do_tempo:
   antes_da_conjuncao: true
   antes_da_partida: true
   voos_por_sol: 0.75
+  atende_folga_minima: true
+  dentro_do_alvo: true
 - distancia_m: 1700.0
   ritmo: Ingenuity
   helicopteros_em_paralelo: 2
@@ -121,6 +133,8 @@ linha_do_tempo:
   antes_da_conjuncao: false
   antes_da_partida: false
   voos_por_sol: 0.2
+  atende_folga_minima: false
+  dentro_do_alvo: false
 - distancia_m: 1700.0
   ritmo: Ingenuity
   helicopteros_em_paralelo: 1
@@ -136,6 +150,8 @@ linha_do_tempo:
   antes_da_conjuncao: false
   antes_da_partida: false
   voos_por_sol: 0.1
+  atende_folga_minima: false
+  dentro_do_alvo: false
 - distancia_m: 3850.0
   ritmo: SRH
   helicopteros_em_paralelo: 2
@@ -151,6 +167,8 @@ linha_do_tempo:
   antes_da_conjuncao: true
   antes_da_partida: true
   voos_por_sol: 1.7142857142857142
+  atende_folga_minima: true
+  dentro_do_alvo: true
 - distancia_m: 3850.0
   ritmo: SRH
   helicopteros_em_paralelo: 1
@@ -166,6 +184,8 @@ linha_do_tempo:
   antes_da_conjuncao: true
   antes_da_partida: true
   voos_por_sol: 0.8571428571428571
+  atende_folga_minima: true
+  dentro_do_alvo: false
 - distancia_m: 3850.0
   ritmo: Ingenuity
   helicopteros_em_paralelo: 2
@@ -181,6 +201,8 @@ linha_do_tempo:
   antes_da_conjuncao: false
   antes_da_partida: false
   voos_por_sol: 0.2
+  atende_folga_minima: false
+  dentro_do_alvo: false
 - distancia_m: 3850.0
   ritmo: Ingenuity
   helicopteros_em_paralelo: 1
@@ -196,6 +218,8 @@ linha_do_tempo:
   antes_da_conjuncao: false
   antes_da_partida: false
   voos_por_sol: 0.1
+  atende_folga_minima: false
+  dentro_do_alvo: false
 capacidade_caminhos_mbit_sol:
   TGO:
   - 60.0
@@ -304,6 +328,22 @@ dados_helicopteros:
     TGO: depende
     MRO: depende
     reserva própria (relé + DTE mínimo): não
+faixa_sem_mudanca:
+  SRH:
+    alcance_m: 700.0
+    sem_mudanca_ate_m: 700.0
+    mesmo_resultado: true
+  Ingenuity:
+    alcance_m: 300.0
+    sem_mudanca_ate_m: 300.0
+    mesmo_resultado: true
+requisitos:
+  folga_min: 60.0
+  alvo:
+  - 100
+  - 180
+  pouso_de_precisao: true
+  precisao_srl_m: 20.0
 rte_jpeg_razao:
 - 1.73
 - 8.63

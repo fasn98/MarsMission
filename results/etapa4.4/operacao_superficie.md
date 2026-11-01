@@ -12,22 +12,24 @@ Chegada em 2029-09-20, Ls 189,5°. Inícios do catálogo na estação antes da c
 
 Ritmo real do Ingenuity [F195]: 72 voos entre os sóis 58 e 1035; intervalo entre voos: mediana 10 sóis, média 13,8, de 1 a 84.
 
-| Distância ao depósito | Ritmo | Helicópteros em paralelo | Sóis por tubo | Busca (sóis) | Total (sóis) | Lançamento do MAV | Ls | Tempestade desde Ls 185° até o lançamento | Folga até a conjunção (dias) | Antes da conjunção? |
-| -: | :- | -: | -: | -: | -: | :- | -: | -: | -: | :- |
-| 200 m | SRH | 2 | 4 | 20 | 43 | 2029-11-03 | 215,8° | 10,0 % | 183,8 | sim |
-| 200 m | SRH | 1 | 4 | 40 | 63 | 2029-11-23 | 228,2° | 10,0 % | 163,3 | sim |
-| 200 m | Ingenuity | 2 | 20 | 100 | 123 | 2030-01-24 | 267,4° | 20,0 % | 101,6 | sim |
-| 200 m | Ingenuity | 1 | 20 | 200 | 223 | 2030-05-07 | 328,9° | 25,0 % | −1,1 | **não** |
-| 1 700 m | SRH | 2 | 8 | 40 | 63 | 2029-11-23 | 228,2° | 10,0 % | 163,3 | sim |
-| 1 700 m | SRH | 1 | 8 | 80 | 103 | 2030-01-03 | 254,1° | 15,0 % | 122,2 | sim |
-| 1 700 m | Ingenuity | 2 | 120 | 600 | 623 | 2031-06-22 | — | — | — | **não** (depois da partida do orbitador) |
-| 1 700 m | Ingenuity | 1 | 120 | 1 200 | 1 223 | 2033-02-27 | — | — | — | **não** (depois da partida do orbitador) |
-| 3 850 m | SRH | 2 | 14 | 70 | 93 | 2029-12-24 | 247,7° | 10,0 % | 132,4 | sim |
-| 3 850 m | SRH | 1 | 14 | 140 | 163 | 2030-03-06 | 292,8° | 20,0 % | 60,5 | sim |
-| 3 850 m | Ingenuity | 2 | 260 | 1 300 | 1 323 | 2033-06-10 | — | — | — | **não** (depois da partida do orbitador) |
-| 3 850 m | Ingenuity | 1 | 260 | 2 600 | 2 623 | 2037-02-05 | — | — | — | **não** (depois da partida do orbitador) |
+| Distância ao depósito | Ritmo | Helicópteros em paralelo | Sóis por tubo | Busca (sóis) | Total (sóis) | Lançamento do MAV | Ls | Tempestade desde Ls 185° até o lançamento | Folga até a conjunção (dias) | Antes da conjunção? | Folga ≥ mínima? | No alvo? |
+| -: | :- | -: | -: | -: | -: | :- | -: | -: | -: | :- | :- | :- |
+| 200 m | SRH | 2 | 4 | 20 | 43 | 2029-11-03 | 215,8° | 10,0 % | 183,8 | sim | sim | não |
+| 200 m | SRH | 1 | 4 | 40 | 63 | 2029-11-23 | 228,2° | 10,0 % | 163,3 | sim | sim | sim |
+| 200 m | Ingenuity | 2 | 20 | 100 | 123 | 2030-01-24 | 267,4° | 20,0 % | 101,6 | sim | sim | sim |
+| 200 m | Ingenuity | 1 | 20 | 200 | 223 | 2030-05-07 | 328,9° | 25,0 % | −1,1 | **não** | não | não |
+| 1 700 m | SRH | 2 | 8 | 40 | 63 | 2029-11-23 | 228,2° | 10,0 % | 163,3 | sim | sim | sim |
+| 1 700 m | SRH | 1 | 8 | 80 | 103 | 2030-01-03 | 254,1° | 15,0 % | 122,2 | sim | sim | sim |
+| 1 700 m | Ingenuity | 2 | 120 | 600 | 623 | 2031-06-22 | — | — | — | **não** (depois da partida do orbitador) | não | não |
+| 1 700 m | Ingenuity | 1 | 120 | 1 200 | 1 223 | 2033-02-27 | — | — | — | **não** (depois da partida do orbitador) | não | não |
+| 3 850 m | SRH | 2 | 14 | 70 | 93 | 2029-12-24 | 247,7° | 10,0 % | 132,4 | sim | sim | sim |
+| 3 850 m | SRH | 1 | 14 | 140 | 163 | 2030-03-06 | 292,8° | 20,0 % | 60,5 | sim | sim | não |
+| 3 850 m | Ingenuity | 2 | 260 | 1 300 | 1 323 | 2033-06-10 | — | — | — | **não** (depois da partida do orbitador) | não | não |
+| 3 850 m | Ingenuity | 1 | 260 | 2 600 | 2 623 | 2037-02-05 | — | — | — | **não** (depois da partida do orbitador) | não | não |
 
-Início da conjunção (SEP ≤ 5°): 2030-05-06 (results/etapa4.3). Tempestade: fração dos inícios do catálogo entre o começo da estação (Ls 185°, inclusive os inícios antes da chegada, que estariam em curso) e o Ls do lançamento, vezes a probabilidade por ano marciano (P-061); com 10 inícios no catálogo, cada um vale 2,5 %. Datas com resolução de ±1 dia (a conjunção é amostrada dia a dia).
+Início da conjunção (SEP ≤ 5°): 2030-05-06 (results/etapa4.3). Tempestade: fração dos inícios do catálogo entre o começo da estação (Ls 185°, inclusive os inícios antes da chegada, que estariam em curso) e o Ls do lançamento, vezes a probabilidade por ano marciano (P-061); com 10 inícios no catálogo, cada um vale 2,5 %. Datas com resolução de ±1 dia (a conjunção é amostrada dia a dia). Requisito (ADR 0018): folga mínima de 60 dias; o plano de referência mira de 100 a 180 dias.
+
+Faixa de distância em que a linha do tempo é a mesma do caso de 200 m (regra da P-073: muda quando a distância passa de um alcance): ritmo do SRH, até 700 m (alcance de 700 m); ritmo do Ingenuity, até 300 m (alcance de 300 m). A P-075 é uma distância (afastamento planejado do ponto-alvo ao depósito mais o erro de pouso), não um erro de pouso.
 
 ## Dados dos helicópteros contra a capacidade dos caminhos
 
