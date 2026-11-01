@@ -879,5 +879,5 @@ premissas:
     justificativa: >
       Nenhuma fonte publica a massa do circuito de fluido de cruzeiro do MSL, do Mars 2020 ou do SRL. O MPF tinha o
       requisito de menos de 18 kg, com fluido, para rejeitar de 90 a 180 W [F205]. Escala linear até a dissipação do
-      lander do SRL (339 W [F165]) mais o calor das RHUs (Etapa 4.2). Ordem de grandeza.
+      LAMP do SRL (322 W [F165]) mais o calor das RHUs (Etapa 4.2). Ordem de grandeza.
     status: NÃO VALIDADA

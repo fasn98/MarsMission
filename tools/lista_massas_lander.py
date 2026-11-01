@@ -4,10 +4,13 @@
   listados (UHF, radar, braço, helicópteros), com a margem de crescimento E1 (config/plataformas.yaml).
 - Núcleo sem lista publicada: o L3 (P-017) é a alocação de cima para baixo; confere-se se o L3 comporta os itens e se o
   que sobra para o núcleo é compatível com a descida seca do Mars 2020 [F204].
-- Rejeição de calor no cruzeiro: dissipação contra o limite passivo do SRL [F165]; circuito de fluido com massa escalada
-  do MPF (P-077).
+- Rejeição de calor no cruzeiro: dissipação máxima do LAMP do SRL contra a perda passiva máxima do LAMP [F165]
+  (config/termico.yaml, cruzeiro); circuito de fluido com massa escalada do MPF (P-077), sem margem E1 (o MPF dá um máximo).
+  Conservador: entra na plataforma de superfície, embora no MSL e no Mars 2020 o radiador fique no estágio de
+  cruzeiro, descartado antes da entrada [F206].
 - Totais e margens dos lançadores em três casos de plataforma; dependência do orbitador em relação ao Falcon Heavy.
-- MAV: margem de lançador, lançador maior e Isp maior com motor que voou (config/lista_massas.yaml).
+- MAV: margem de lançador, lançador maior e Isp maior (config/lista_massas.yaml). A sensibilidade troca só o Isp:
+  empuxo, número e massa dos motores e o propelente ficam os do R-4D-11.
 Saída: results/etapa4.5/lista_massas.yaml e .md
 
 Uso: python tools/lista_massas_lander.py
@@ -35,7 +38,7 @@ SAIDA = RAIZ / "results" / "etapa4.5"
 
 def main():
     lm, pcfg, lcfg = ler("config/lista_massas.yaml"), ler("config/plataformas.yaml"), ler("config/lancadores.yaml")
-    scfg, mcfg = ler("config/superficie.yaml"), ler("config/mav_propulsao.yaml")
+    scfg, mcfg, tcfg = ler("config/superficie.yaml"), ler("config/mav_propulsao.yaml"), ler("config/termico.yaml")
     en = ler("results/etapa4.1/energia.yaml")["lander"]
     com = ler("results/etapa4.3/comunicacao.yaml")["decisao_caminhos"]["dte_minimo"]
     arqr = ler("results/etapa2.5/arquitetura.yaml")
@@ -56,9 +59,10 @@ def main():
         {"item": "Braço de coleta (reserva)", "basica_kg": sub["amostras"]["massa_kg"], "categoria": sub["amostras"]["categoria"], "novo": False, "fonte": "[F40]"},
         {"item": "Helicópteros (2)", "basica_kg": sub["helicopteros"]["massa_kg"], "categoria": sub["helicopteros"]["categoria"], "novo": False, "fonte": "[F98]"},
     ]
-    # rejeição de calor no cruzeiro: dissipação do lander do SRL [F165] + RHUs (Etapa 4.2) contra o limite passivo
-    rc = lm["rejeicao_calor_cruzeiro"]
-    calor = v(rc["srl_dissipacao_w"]) + ler("results/etapa4.2/termico.yaml")["cruzeiro"]["rhu_w"]
+    # rejeição de calor no cruzeiro: dissipação máxima do LAMP do SRL [F165] + RHUs (Etapa 4.2) contra a perda passiva
+    # máxima do LAMP [F165]; as duas são do LAMP
+    rc, srl = lm["rejeicao_calor_cruzeiro"], tcfg["cruzeiro"]
+    calor = v(srl["srl_dissipacao_max_lamp_w"]) + ler("results/etapa4.2/termico.yaml")["cruzeiro"]["rhu_w"]
     hrs_kg = v(rc["mpf_massa_max_kg"]) * calor / v(rc["mpf_calor_w"])   # P-077
     itens.append({"item": "Circuito de fluido de cruzeiro (rejeição ativa)", "prevista_kg": hrs_kg, "novo": True, "fonte": "P-077 ([F205], [F165])"})
     for x in itens:
@@ -76,7 +80,8 @@ def main():
     l3 = (v(pcfg["lander"]["topo_para_baixo"]["srl_seco_superficie_kg"]) - v(pcfg["lander"]["topo_para_baixo"]["srl_mav_kg"])
           - v(pcfg["lander"]["topo_para_baixo"]["srl_sfr_kg"]))
     plat = v(scfg["lander"]["plataforma_superficie_kg"])   # P-017: L3 + braço + helicópteros
-    nucleo_folga = l3 - (todos - sum(x["prevista_kg"] for x in itens if x["item"].startswith(("Braço", "Helicópteros"))))
+    # itens dentro do L3: todos menos braço e helicópteros; a energia do aquecimento do MAV (dupla) fica no item do MAV
+    nucleo_folga = l3 - (todos - sum(x["prevista_kg"] for x in itens if x["item"].startswith(("Braço", "Helicópteros")))) + dupla
     ds = v(lm["referencias_nucleo"]["m2020_descida_seca_kg"])
 
     # casos de plataforma: (A) L3 vigente; (B) L3 + itens novos − dupla contagem; (C) descida seca do Mars 2020 + todos os itens
@@ -98,10 +103,12 @@ def main():
         vv = ve.veiculos(casos["B: L3 + itens novos, sem a dupla contagem"], mcfg=m2)[0]
         mg = arq.margens(vv, jan, lcfg)
         isp.append({**mo, "lander_injetado_kg": vv["lander"]["injetada_kg"], "margens_lander": mg["lander"]})
+    for x in isp:   # ganho em pontos percentuais sobre o motor de base (primeiro da lista), por lançador
+        x["ganho_pp"] = {n: 100 * (x["margens_lander"][n] - isp[0]["margens_lander"][n]) for n in x["margens_lander"]}
     out = {"gerado_por": "tools/lista_massas_lander.py", "itens": itens, "itens_novos_kg": novos, "itens_todos_kg": todos,
            "dupla_contagem_energia_mav_kg": dupla, "l3_kg": l3, "folga_para_o_nucleo_kg": nucleo_folga,
-           "m2020_descida_seca_kg": ds, "calor_cruzeiro_w": calor, "passivo_max_w": v(rc["srl_passivo_max_w"]),
-           "rejeicao_ativa_necessaria": calor > v(rc["srl_passivo_max_w"]), "circuito_fluido_kg": hrs_kg,
+           "m2020_descida_seca_kg": ds, "calor_cruzeiro_w": calor, "passivo_max_w": v(srl["srl_perda_passiva_max_w"]),
+           "rejeicao_ativa_necessaria": calor > v(srl["srl_perda_passiva_max_w"]), "circuito_fluido_kg": hrs_kg,
            "casos": linhas, "mav_isp": isp, "margem_sistema_jpl": v(lm["margem_sistema_jpl"]),
            "escolha_lancadores": {k: lcfg["escolha"][k] for k in ("orbitador", "lander")}}
     SAIDA.mkdir(parents=True, exist_ok=True)
@@ -126,11 +133,12 @@ def escreve_md(o):
            "## O L3 comporta os itens?", "",
            f"L3 = {br(o['l3_kg'])} kg (SRL seco − MAV − rover de busca). Tirando os itens que estão dentro do L3 (todos menos braço e helicópteros, "
            f"que somam fora dele), sobram {br(o['folga_para_o_nucleo_kg'])} kg para o núcleo, contra {br(o['m2020_descida_seca_kg'], 1)} kg da descida "
-           "seca do Mars 2020 [F204] (sky crane: propulsão, estrutura e aviônica de descida, sem pernas nem plataforma de superfície).", "",
+           "seca do Mars 2020 [F204] (descent stage de sky crane, sem pernas nem plataforma de superfície). A energia do aquecimento do MAV, que fica no item do MAV, não é descontada do L3.", "",
            "## Rejeição de calor no cruzeiro (lander)", "",
-           f"Dissipação: {br(o['calor_cruzeiro_w'])} W (lander do SRL [F165] + RHUs, Etapa 4.2), contra {br(o['passivo_max_w'])} W de limite passivo do SRL "
-           f"[F165]: rejeição {'ativa' if o['rejeicao_ativa_necessaria'] else 'passiva'}. Circuito de fluido, como no MSL e no Mars 2020 [F206, F207]: "
-           f"cerca de {br(o['circuito_fluido_kg'], 1)} kg (P-077, escala do MPF [F205]).", "",
+           f"Dissipação: {br(o['calor_cruzeiro_w'])} W (máximo do LAMP do SRL [F165] + RHUs, Etapa 4.2), contra {br(o['passivo_max_w'])} W de perda passiva "
+           f"máxima do LAMP [F165]: rejeição {'ativa' if o['rejeicao_ativa_necessaria'] else 'passiva'}. Circuito de fluido, como no MSL e no Mars 2020 [F206, F207]: "
+           f"cerca de {br(o['circuito_fluido_kg'], 1)} kg (P-077, escala do MPF [F205], sem margem E1). Conservador: o circuito entra na plataforma "
+           "de superfície; no MSL e no Mars 2020 o radiador fica no estágio de cruzeiro, descartado antes da entrada [F206].", "",
            "## Totais e margens dos lançadores", "",
            "| Caso | Plataforma (kg) | Lander injetado (kg) | " + " | ".join(f"Lander: {n}" for n in o["escolha_lancadores"]["lander"]) + " | "
            + " | ".join(f"Orbitador: {n}" for n in o["escolha_lancadores"]["orbitador"]) + " |",
@@ -139,12 +147,13 @@ def escreve_md(o):
         md.append(f"| {c['caso']} | {br(c['plataforma_kg'])} | {br(c['lander_injetado_kg'])} | "
                   + " | ".join(pc(c["margens"]["lander"][n]) for n in o["escolha_lancadores"]["lander"]) + " | "
                   + " | ".join(pc(c["margens"]["orbitador"][n]) for n in o["escolha_lancadores"]["orbitador"]) + " |")
-    md += ["", "## MAV: Isp maior com motor que voou (caso B)", "",
+    md += ["", "## MAV: Isp maior (caso B; só o Isp muda)", "",
+           "Empuxo, número e massa dos motores e o propelente ficam os do R-4D-11. Ganho em pontos sobre o motor de base entre parênteses.", "",
            "| Motor | Isp (s) | Propelente | Voo | Lander injetado (kg) | " + " | ".join(o["escolha_lancadores"]["lander"]) + " |",
            "| :- | -: | :- | :- | -: |" + " -: |" * len(o["escolha_lancadores"]["lander"])]
     for x in o["mav_isp"]:
         md.append(f"| {x['motor']} | {br(x['isp_s'])} | {x['propelente']} | {x['voo']} | {br(x['lander_injetado_kg'])} | "
-                  + " | ".join(pc(x["margens_lander"][n]) for n in o["escolha_lancadores"]["lander"]) + " |")
+                  + " | ".join(f"{pc(x['margens_lander'][n])} ({br(x['ganho_pp'][n], 1)} pp)" for n in o["escolha_lancadores"]["lander"]) + " |")
     md += ["", f"Margem de sistema do JPL para um conceito nesta fase: {br(100 * o['margem_sistema_jpl'])} % [F210] (margem de massa do sistema, "
            "não margem do lançador)."]
     (SAIDA / "lista_massas.md").write_text("\n".join(md) + "\n", encoding="utf-8")
