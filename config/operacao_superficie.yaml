@@ -1,0 +1,40 @@
+# Etapa 4.4: GNC e operação de superfície (tools/operacao_superficie.py). Dados com fonte; premissas indicadas.
+pouso:
+  elipse_km: {valor: [7.7, 6.6], fonte: "[F187]: \"The landing ellipse, measuring 4.8 miles by 4.1 miles (7.7 kilometers by 6.6 kilometers)\""}
+  desvio_trn_max_m: {valor: 600, fonte: "[F188] p. 22: \"Terrain-Relative Navigation can change the rover's touchdown point by up to 2,000 feet (600 meters)\""}
+  erro_ao_alvo_m: {valor: 5, fonte: "[F189] p. 15: \"Perseverance touched down within 5m of the point targeted by STS\""}
+  erro_de_entrega_m: {valor: 1700, fonte: "[F190] p. 1: \"delivered the Perseverance rover to 1.7 km from the expected touchdown location\""}
+  srh_distancia_ao_deposito_m: {valor: 200, premissa: P-075, fonte: "[F191] slide 7: figura com \"60 m radius landing circle\" e seta \"200 m\" até o depósito (leitura da figura)"}
+  ppl: "[F192]: \"there is a high probability that SRL would have to land very close to the samples on the surface to expedite retrieval operations; therefore, Pin Point Landing (PPL) accu-racy may be required\" (hifenização do original)"
+deposito:
+  tubos: {valor: 10, fonte: "[F99]; [F193]: \"Perseverance will deposit a total of 10 tubes\""}
+  espacamento_m: {min: 5, max: 15, fonte: "[F193]: \"each sample 16 to 49 feet (5 to 15 meters) apart from one another\""}
+  um_tubo_por_vez: "[F193]: \"the recovery helicopters are designed to interact with only one tube at a time\""
+  data_ultimo_tubo: {valor: "2023-01-28", fonte: "[F99]: \"on Jan. 28, 2023, the 690th Martian day\""}
+srh:   # helicóptero de recuperação de amostras do MSR (conceito)
+  saida_sois: {valor: 6, fonte: "[F191] slides 10–21: \"LandingEgress (6 Sols)\" (texto extraído do slide; na imagem, Landing-Egress)"}
+  mapeamento_sois: {valor: 7, fonte: "[F191] slides 10–21: \"Mapping flights (~7 Sols)\""}
+  sois_por_tubo: {valor: 4, fonte: "[F191] slides 10–21: \"Fly – Drive – Manipulate (4 Sols/Tube/Helicopter)\"; [F98] p. 2: \"a worst-case, four-sol cadence returns all the samples to the lander (assuming only one helicopter is used at a time)\""}
+  alcance_por_carga_m: {valor: 700, fonte: "[F194] p. 4: \"Max range per daily charge ~700m\""}
+  voos_por_tubo: {valor: 2, premissa: P-073}   # ida até perto do tubo e volta ao lander (sequência dos slides de [F191])
+  helicopteros: {valor: 2, fonte: "[F98] p. 1: \"two Ingenuity-sized SRHs\""}
+ingenuity:
+  voos_sois: {fonte: "[F195] tabela de voos (sóis dos 72 voos)",
+              valor: [58, 61, 64, 69, 76, 91, 107, 120, 133, 152, 163, 174, 193, 241, 254, 268, 282, 292, 345, 362, 375, 384, 388, 398, 403, 414, 418, 423, 465, 533, 550, 561, 567, 625, 635, 642, 649, 667, 673, 681, 689, 697, 708, 711, 714, 717, 729, 741, 752, 763, 772, 776, 860, 872, 881, 894, 902, 910, 915, 924, 933, 940, 947, 954, 960, 961, 990, 1003, 1007, 1009, 1024, 1035]}
+  maior_distancia_m: {valor: 705, fonte: "[F195] voo 69 (sol 1007): 705 m, a maior distância da tabela"}
+  alcance_de_projeto_m: {valor: 300, fonte: "[F196]: \"Flight range Up to 980 feet (300 meters)\""}
+  autonomia: "[F197] p. 6: \"Waypoint-based\", \"Visual-inertial navigation using IMU, altimeter, camera\", \"No landing hazard avoidance\"; [F186]: \"Ingenuity was upgraded with the ability to autonomously choose landing sites in treacherous terrain\"; [F179]: \"Navcam images were acquired at 30 Hz during flights for visual-inertial navigation, but a maximum of 200 images per flight were saved in memory for post-flight downlink\""
+  rte_jpeg_razao: {min: 1.73, max: 8.63, premissa: P-076, fonte: "[F198] rótulos PDS4 da RTE: onboard_compression_type JPEG, jpeg_quality 85; onboard_compression_ratio 1.73 (sol 43, produto de 640 × 480 antes do 1º voo), 7.95 (sol 91) e 8.63 (sol 403, quadros inteiros)"}
+  navcam_compressao: "[F198] rótulos PDS4 da Navcam: onboard_compression_type Lossless (razão não publicada nos rótulos: o volume fica sem compressão, envoltória)"
+operacao:
+  transferencia_e_lancamento_sois: {valor: 10, premissa: P-074}   # transferência tardia ao MAV e preparação do lançamento
+  distancias_m:   # do lander ao depósito
+    srh: {valor: 200, premissa: P-075}
+    erro_de_entrega_m2020: {valor: 1700, fonte: "[F190] p. 1 (ver pouso.erro_de_entrega_m)"}
+    semieixo_maior_da_elipse: {valor: 3850, fonte: "[F187] (metade de 7,7 km)"}
+edl:
+  insight_estacao: "[F199] p. 2: \"InSight was the first Mars mission to land during the Mars dust storm season. The increased range of uncertainty in the atmospheric conditions during EDL required a new atmosphere model ... one of four dust conditions representative of \\\"background\\\" dust, a regional dust storm, a decaying dust storm, or a global dust storm\\\"\""
+  srl_janela_ls: "[F191] slides 10–21: janela de superfície de \"Ls 40\" a \"Ls 150\" (fora da estação de tempestades)"
+cruzeiro:
+  ddor: "[F200] p. 19: \"The root-sum-square (RSS) random error is less than 0.06 ns, corresponding to an angular error of 1.9 nrad on an 8000 km baseline. This angular error projects to a cross-position error of 281 m in the plane-of-sky at a distance of 1 AU\""
+  msl: "[F201] p. 7: \"Doppler ... at a level of about 0.1 mm/s for 300-second compression time. Range ... with an accuracy of about one meter. ∆DOR ... at the 40 ps level for one session, or around 400 m at the Mars arrival distance\"; p. 1: \"The final EFPA was 0.013° shallower than the -15.5° target\""

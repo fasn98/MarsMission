@@ -818,3 +818,42 @@ premissas:
       extraída) e são divididas pelos 72 voos [F186]. Sem compressão: Navcam 640 × 480 × 8 bits e RTE 4208 × 3120 × 8 bits
       (Bayer) [F179, F180]. É uma envoltória por câmera, não a operação real.
     status: NÃO VALIDADA
+  - id: P-073
+    nome: ritmo_de_busca_por_tubo
+    valor: {voos_por_tubo: 2, carga_extra_por_perna: "1 sol a cada 700 m além do primeiro trecho"}
+    unidade: voos; sóis
+    uso: tools/operacao_superficie.py (linha do tempo da superfície)
+    justificativa: >
+      O conceito do SRH dá 4 sóis por tubo por helicóptero [F191, F98], com o lander a ~200 m do depósito. Cada tubo pede
+      dois voos (ida até perto do tubo e volta), pela sequência dos slides de [F191]. Para distâncias maiores, cada perna
+      ganha um sol por carga diária adicional (alcance de ~700 m por carga [F194]). No ritmo do Ingenuity, voos de até
+      300 m [F196] e um voo a cada intervalo mediano entre voos [F195].
+    status: NÃO VALIDADA
+  - id: P-074
+    nome: transferencia_e_lancamento
+    valor: 10
+    unidade: sóis
+    uso: config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento)
+    justificativa: >
+      Sem fonte para a duração da transferência dos tubos ao contêiner, do fechamento e da preparação do lançamento do MAV.
+      A transferência é tardia e tratada como transiente (+30 °C [F167], decisão do Fabio no portão da 4.2).
+    status: NÃO VALIDADA
+  - id: P-075
+    nome: distancia_do_lander_ao_deposito
+    valor: {srh: 200}
+    unidade: m
+    uso: config/operacao_superficie.yaml (caso de pouso de precisão)
+    justificativa: >
+      Leitura da figura do conceito do SRH [F191], com o lander a ~200 m do depósito num círculo de pouso de 60 m. Os outros
+      casos têm fonte: o erro de entrega do Mars 2020 (1,7 km [F190]) e o semieixo maior da elipse (7,7 km / 2 [F187]).
+    status: NÃO VALIDADA
+  - id: P-076
+    nome: compressao_das_imagens_dos_helicopteros
+    valor: {rte_jpeg_razao: [1.73, 8.63], navcam: "sem compressão (sem perdas, razão não publicada)"}
+    unidade: adimensional
+    uso: tools/operacao_superficie.py (volume dos helicópteros)
+    justificativa: >
+      Razões de compressão da RTE (JPEG, qualidade 85) em três valores distintos de rótulos PDS4 do Ingenuity [F198]:
+      1,73 num produto de 640 × 480 antes do 1º voo e 7,95 e 8,63 em quadros inteiros. Amostra pequena; o limite inferior
+      é conservador. A Navcam é sem perdas nos rótulos e a razão não aparece: o volume dela fica sem compressão (envoltória).
+    status: NÃO VALIDADA
