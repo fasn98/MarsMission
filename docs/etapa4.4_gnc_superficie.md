@@ -158,3 +158,18 @@ TGO e MRO no máximo somam 3.150 Mbit/sol, sem avaliar a sobreposição dos pass
 - **Volumes:** a Navcam fica sem compressão; a razão do JPEG da RTE vem de três valores de rótulos.
 - **Opção (c):** usa a escala da Etapa 4.3 (P-069), com o mesmo erro de apontamento do MSL.
 - **Navegação de cruzeiro e encontro:** só análogos, sem análise própria.
+
+## Nota (2026-11-01): decisões do portão da Etapa 4.4 (ADR 0018)
+Decisões do Fabio. **Números vigentes:** `results/etapa4.4/operacao_superficie.md`.
+1. **Helicópteros:** operação adaptativa (a) + (b). A autonomia fica no nível do Ingenuity e o ritmo se ajusta à capacidade
+   dos passes de relé. A opção (c) fica só como sensibilidade.
+2. **Pouso de precisão:** vira requisito, e a P-075 passa a crítica.
+   - O requisito do lander do MSR era de menos de 20 m do alvo [F202].
+   - O Perseverance pousou a 5 m do alvo escolhido pelo TRN [F189], mas a entrega guiada ficou a 1,7 km [F190].
+   - Os 200 m só se sustentam com pouso de precisão da classe do lander do MSR, não voado.
+3. **Folga do MAV antes da conjunção:** mínimo de 60 dias; o plano mira de 100 a 180 dias. A tabela da linha do tempo mostra
+   agora, para cada caso, se a folga atende o mínimo e se fica no alvo.
+4. **P-062:** 28/01/2023 [F99]. O tempo no depósito até a chegada continua em 6,6 anos.
+5. **Premissas:** P-073 a P-076 aprovadas, NÃO VALIDADAS; a P-075 é crítica.
+6. **Conclusão registrada:** o plano de superfície só fecha com ritmo rápido OU pouso de precisão, e o ritmo rápido depende de
+   dados que os relés existentes não garantem.

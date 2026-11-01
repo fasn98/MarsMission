@@ -44,7 +44,7 @@ Decisão (portão da 4.2): transferência tardia para o MAV, tratada como transi
 | Transferência para o contêiner (OS) | meses | 30 a 53 |
 | Lançamento do MAV | minutos | 30 |
 
-No depósito desde 2023-02-15 (P-062) até a chegada da missão de referência em 2029-09-20: 6,6 anos, no mínimo (inferência da P-062: a coleta é depois da chegada); os tubos podem ser aquecidos repetidamente a até 300 K [F172]. Isolamento do contêiner (opção a): não avaliado: sem análogo com massa publicada (busca de 2026-10-31; só o limite de massa de todo o contêiner e as massas do veículo de entrada na Terra).
+No depósito desde 2023-01-28 (P-062) até a chegada da missão de referência em 2029-09-20: 6,6 anos, no mínimo (inferência da P-062: a coleta é depois da chegada); os tubos podem ser aquecidos repetidamente a até 300 K [F172]. Isolamento do contêiner (opção a): não avaliado: sem análogo com massa publicada (busca de 2026-10-31; só o limite de massa de todo o contêiner e as massas do veículo de entrada na Terra).
 
 ## Comparação com o projeto publicado do SRL (análise, não medida)
 

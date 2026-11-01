@@ -41,3 +41,13 @@ def test_linha_do_tempo_e_dados():
     assert 0 <= base["prob_tempestade_ate_lancamento"] <= r["prob_tempestade_estada"]
     for d in r["dados_helicopteros"]:
         assert d["mbit_por_sol"][0] <= d["mbit_por_sol"][1]
+
+
+def test_requisitos_de_folga():
+    r = ler("results/etapa4.4/operacao_superficie.yaml")
+    rq = C["requisitos"]
+    for x in r["linha_do_tempo"]:
+        if x["antes_da_partida"]:
+            assert x["atende_folga_minima"] == (x["folga_conjuncao_dias"] >= v(rq["folga_min_conjuncao_dias"]))
+    # todos os casos do ritmo do SRH atendem a folga mínima (base da decisão do Fabio)
+    assert all(x["atende_folga_minima"] for x in r["linha_do_tempo"] if x["ritmo"] == "SRH")
