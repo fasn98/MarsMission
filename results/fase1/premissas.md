@@ -79,5 +79,16 @@
 | P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | NÃO VALIDADA | config/operacao_superficie.yaml (caso de pouso de precisão) |
 | P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | NÃO VALIDADA | tools/operacao_superficie.py (volume dos helicópteros) |
 | P-077 | massa_do_circuito_de_fluido_do_lander | escala: linear no calor rejeitado, a partir do MPF (18 kg para 180 W) | kg/W | NÃO VALIDADA | tools/lista_massas_lander.py (massa do circuito, Etapa 4.5) e config/superficie.yaml (circuito_fluido_kg, no estágio de cruzeiro do lander) |
+| P-078 | densidade_do_mon3_igual_a_do_n2o4 | 1431 | kg/m³ (25 °C) | NÃO VALIDADA | config/cad.yaml (volume dos tanques de oxidante, Etapa 7.1) |
+| P-079 | densidade_da_hidrazina | 1004 | kg/m³ (~25 °C) | NÃO VALIDADA | config/cad.yaml (volume dos tanques de descida do lander, Etapa 7.1) |
+| P-080 | razao_de_mistura_do_cruzeiro_do_lander | 1.65 | adimensional (O/F, massa) | NÃO VALIDADA | config/cad.yaml (tanques do estágio de cruzeiro do lander, 4 × 10N, ADR 0011) |
+| P-081 | fracao_de_ullage_dos_tanques | 0.05 | fração do volume do tanque | NÃO VALIDADA | config/cad.yaml (volume dos tanques, Etapa 7.1) |
+| P-082 | arranjo_dos_tanques | orbitador: 2 pares esféricos por estágio, em quadrado em torno do cilindro central; cruzeiro_lander: 1 par esférico | — | NÃO VALIDADA | config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1) |
+| P-083 | altura_do_conjunto_cruzeiro_aeroshell_proporcional_ao_diametro | altura = 3,0 m × (D / 4,5 m) | m | NÃO VALIDADA | config/cad.yaml (conjunto do lander na coifa do Vulcan, Etapa 7.1) |
+| P-084 | propelente_de_descida_proporcional_a_massa_de_entrada | 387 kg × (massa de entrada / 3150 kg), hidrazina, 3 tanques esféricos | kg | NÃO VALIDADA | config/cad.yaml (tanques de descida do lander, Etapa 7.1) |
+| P-085 | geometria_dos_tanques_do_mav | forma: cilindro com tampos hemisféricos no diâmetro interno do MAV; espessura_parede_m: 0.01 | m | NÃO VALIDADA | config/cad.yaml (comprimento do MAV, Etapa 7.1) |
+| P-086 | comprimento_do_mav_fora_dos_tanques | motores_estagio_1_m: 0.6; motor_estagio_2_m: 0.45; interestagio_m: 0.1; carga_os_m: 0.35 | m | NÃO VALIDADA | config/cad.yaml (comprimento do MAV, Etapa 7.1) |
+| P-087 | folgas_de_arranjo | entre_conjuntos_m: 0.1; radial_m: 0.05; interna_aeroshell_m: 0.25 | m | NÃO VALIDADA | config/cad.yaml (esquemas do arranjo, Etapa 7.1) |
+| P-088 | paineis_do_lander_em_duas_asas_circulares | 2 | asas | NÃO VALIDADA | config/cad.yaml (painéis do lander abertos, Etapa 7.1) |
 
-Total: 77 premissas, 77 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 88 premissas, 88 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

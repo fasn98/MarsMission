@@ -25,7 +25,7 @@ from orbital import veiculos as ve  # noqa: E402
 from orbital.config import ler, nativo  # noqa: E402
 
 SAIDA = RAIZ / "results" / "fase4"
-from lista_premissas import PRIMEIRA_DA_FASE_4  # noqa: E402
+from lista_premissas import PRIMEIRA_DA_FASE_4, PRIMEIRA_DA_FASE_7  # noqa: E402
 
 
 def main():
@@ -78,7 +78,8 @@ def main():
                   "linha_do_tempo": [{k: x[k] for k in ("distancia_m", "ritmo", "helicopteros_em_paralelo", "total_sois", "lancamento",
                                                        "folga_conjuncao_dias", "atende_folga_minima", "dentro_do_alvo")} for x in op["linha_do_tempo"]]}
 
-    ps = ler("config/premissas.yaml")["premissas"]
+    # premissas existentes ao fim da Fase 4 (a Fase 7 começa na P-078, ADR 0021)
+    ps = [p for p in ler("config/premissas.yaml")["premissas"] if int(p["id"][2:]) < PRIMEIRA_DA_FASE_7]
     nao = [p for p in ps if p["status"] == "NÃO VALIDADA"]
     premissas = {"total": len(ps), "nao_validadas": len(nao),
                  "criadas_na_fase_4": [p["id"] for p in ps if int(p["id"][2:]) >= PRIMEIRA_DA_FASE_4],

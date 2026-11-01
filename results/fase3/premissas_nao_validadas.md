@@ -53,33 +53,5 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-047 | operacao_propulsao_eletrica | reservas: 1; desligado_no_eclipse: True; alimentacao_xips_kg: 11.4 | propulsores; kg | config/eletrica.yaml (orbital.hibrido, tools/orbitador_eletrico.py, Etapa 3.3) | sim |
 | P-048 | perdas_quimicas_do_hibrido | captura_marte: Etapa 3.1; saida_marte: Etapa 3.1 | km/s | tools/orbitador_eletrico.py (Etapa 3.3) | sim |
 | P-049 | varredura_orbitador_eletrico | encontro_alt_km: [300, 20000, 40]; captura_alt_km: [1000, 40000, 40]; n_ativos_max: 12; c1_meio_arco_graus: 30; n_ativos_ordem_de_grandeza: [1, 4, 12]; c1_folga_apoapse: 0.01; demonstracao_tangencial_empuxo_n: 1.0; convergencia_massas_kg: 1e-09; arredondamento: {'voltas': 0.1, 'excentricidade': 0.0001, 'altitude_km': 0.1} | km; propulsores | config/eletrica.yaml (tools/orbitador_eletrico.py, Etapa 3.3) | sim |
-| P-050 | modelo_energia_solar_lander | albedo: 0.1; data_primeiro_sol_insight: 2018-11-27T12:00:00; painel: horizontal; tau_constante_na_estada: True; mmrtg_anos_antes_do_lancamento_sensibilidade: 1.0; tolerancia_teste_fluxo: 0.007; tolerancia_teste_vl1: 0.07 | adimensional; data TDB | config/energia.yaml (orbital.energia, tools/energia.py, Etapa 4.1) | sim |
-| P-051 | sem_limpeza_dos_paineis | False | — | config/energia.yaml (lander.limpeza) | sim |
-| P-052 | helicopteros_com_energia_propria | True | — | config/energia.yaml (lander.helicopteros_energia_propria) | sim |
-| P-053 | carga_do_orbitador_por_modo | cruzeiro: [445, 300, 0]; captura: [310, 0, 0]; encontro: [445, 500, 77]; retorno: [445, 500, 0] | W (plataforma, CCRS, outros) | config/energia.yaml (orbitador.modos) — PROPOSTA lado a lado com a P-028, que continua o valor-base | sim |
-| P-054 | cargas_de_pico_e_base_do_mmrtg | braco_horas_por_sol: 2.0; voos_de_helicoptero_por_sol: 2; margem_do_mmrtg: painel_solar | h/sol; voos/sol; categoria E1 | config/energia.yaml (lander.picos, lander.mmrtg_margem_categoria) | sim |
-| P-055 | arranjo_simetrico_de_mais_r4d11 | C4: 10; C5: 12 | motores R-4D-11 | config/motores.yaml (combinações de captura C4 e C5) | sim |
-| P-056 | sobrevivencia_do_lander_pelo_spirit | expoente_escala: 0.6667; expoente_sensibilidade: 1.0 | adimensional | tools/energia.py (opção C, carga de sobrevivência na tempestade) | sim |
-| P-057 | razao_de_energia_do_opportunity_em_2018 | tau_alto: 10.8; tau_referencia: 0.64 | adimensional | tools/energia.py (sobrevivência da opção C acima de τ = 6) | sim |
-| P-058 | atividade_do_pu238 | massa_molar_g_mol: 238; dias_por_ano: 365.25 | g/mol; dias | tools/energia.py (atividade e enquadramento no NSPM-20 da alternativa A) | sim |
-| P-059 | fator_do_opportunity_nas_tempestades | aplicado_a: cenários de tempestade (τ ≥ 2) e sobrevivência; tau_da_comparacao: 2.1 | adimensional | tools/energia.py (sensibilidade das áreas de painel) | sim |
-| P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) | sim |
-| P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | tools/energia.py (probabilidade do risco acima de τ = 6) | sim |
-| P-062 | data_do_deposito_de_three_forks | 2023-01-28 | data | config/termico.yaml (tempo das amostras no depósito até a chegada) | sim |
-| P-063 | demanda_de_dados_do_lander | 250 | Mbit por sol | config/comunicacao.yaml (demanda do lander contra o enlace direto e o relé) | sim |
-| P-064 | escala_da_taxa_do_orbitador_com_a_distancia | expoente: 2 | adimensional | tools/comunicacao.py (taxa em banda X do orbitador) | sim |
-| P-065 | passe_dte_do_lander | 8 | horas por sol | config/comunicacao.yaml (volume do enlace direto do lander) | sim |
-| P-066 | enlace_uhf_do_rele_proprio | potencia_tx_w: 5; ganhos_antenas_dbi: 0; margem_db: 3 | W; dBi; dB | config/comunicacao.yaml (taxa do relé UHF lander–orbitador) | sim |
-| P-067 | geometria_dos_passes_de_rele | inclinacao_graus: 30; sois_simulados: 60; passo_s: 30 | graus; sóis; s | tools/comunicacao.py (simulação dos passes do orbitador sobre Jezero) | sim |
-| P-068 | volume_de_dados_dos_helicopteros | imagens_por_voo: 200; compressao: nenhuma | imagens; — | tools/comunicacao.py (demanda de dados dos helicópteros) | sim |
-| P-069 | escala_do_enlace_direto_maior | ganho: ∝ D²; taxa: ∝ potência de RF; massa_refletor: densidade de área do MRO; gimbal: ∝ D² a partir do MRO | — | tools/comunicacao.py (opção (b), enlace direto maior) | sim |
-| P-070 | enlace_direto_minimo_critico | horas_por_sol: 1; categoria_mga: eletronica_0_5kg; receptor: ligado o sol inteiro | h; —; — | config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3) | sim |
-| P-071 | capacidade_do_tgo_por_passe | mbit_por_passe_min: 30; mbit_por_passe_max: 1000; passes_por_sol: 2 | Mbit; passes por sol | config/comunicacao.yaml (capacidade do caminho primário) | sim |
-| P-072 | media_de_imagens_do_ingenuity_por_voo | navcam_por_voo: 13959/72; rte_por_voo: 602/72; compressao: nenhuma | imagens por voo | tools/comunicacao.py (volume dos helicópteros pela média do Ingenuity) | sim |
-| P-073 | ritmo_de_busca_por_tubo | voos_por_tubo: 2; carga_extra_por_perna: 1 sol a cada 700 m além do primeiro trecho | voos; sóis | tools/operacao_superficie.py (linha do tempo da superfície) | sim |
-| P-074 | transferencia_e_lancamento | 10 | sóis | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) | sim |
-| P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) | sim |
-| P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | tools/operacao_superficie.py (volume dos helicópteros) | sim |
-| P-077 | massa_do_circuito_de_fluido_do_lander | escala: linear no calor rejeitado, a partir do MPF (18 kg para 180 W) | kg/W | tools/lista_massas_lander.py (massa do circuito, Etapa 4.5) e config/superficie.yaml (circuito_fluido_kg, no estágio de cruzeiro do lander) | sim |
 
-Total: 77 de 77 premissas com status NÃO VALIDADA; 37 criadas na Fase 3.
+Total: 49 de 49 premissas com status NÃO VALIDADA; 9 criadas na Fase 3.

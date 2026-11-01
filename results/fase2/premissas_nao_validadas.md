@@ -44,42 +44,5 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.
 | P-038 | categoria_de_margem_dos_helicopteros | eletronica_0_5kg | categoria do AIAA S-120A (E1; 20–35 %, ponto médio 27,5 %) | config/plataformas.yaml — helicópteros de recuperação no lander (ADR 0009) |
 | P-039 | tolerancia_regeneracao_numerica | relativa: 1e-09; piso_absoluto: 1e-10 | adimensional (passa se |a − b| ≤ max(relativa · |b|, piso_absoluto); a = versionado, b = regenerado) | tools/confere_regeneracao.py — números em YAML, Markdown e NPZ de results/ regenerados contra os versionados |
 | P-040 | tolerancia_regeneracao_png | 0.001 | fração de pixels diferentes por figura | tools/confere_regeneracao.py — figuras PNG de results/ regeneradas contra as versionadas |
-| P-041 | parametros_numericos_queima_finita | rtol: 1e-11; atol_km: 1e-09; tolerancia_alvo: 1e-06; passo_continuacao: 2.0; duracao_inicial_continuacao_s: 60; demais: ver config/queima_finita.yaml | adimensional; km e km/s; s | config/queima_finita.yaml (orbital.queima_finita e tools/queima_finita.py, Etapa 3.1) |
-| P-042 | divisao_captura_saida_varias_queimas | numero_de_queimas: 1, 2, 3, 4; fracao_raio_hill: 0.1; sensibilidade: 0,05 e 1/3 | adimensional | config/queima_finita.yaml (orbital.queima_multipla, Etapa 3.1) |
-| P-043 | hipoteses_conferencia_ero | massa_na_captura: 6500 kg [F22] ou 7200 kg [F29]; propelente_da_captura: todo o do OIM, 1900 kg [F22]; motor: 2 x 400 N [F29] como 2 x S400-15; periapse: o da órbita de 1 sol; orbita_alvo: 1 sol ou órbita alta (P-042); vinf_km_s: 2,0 a 2,75 e o da missão de referência | kg; km/s | config/queima_finita.yaml (verificacao_ero; tools/queima_finita.py) |
-| P-044 | ponto_fixo_perdas_e_massas | tolerancia_km_s: 1e-06; max_iteracoes: 10 | km/s; adimensional | config/queima_finita.yaml (tools/redimensiona.py, Etapa 3.1) |
-| P-045 | mav_fracao_estrutural_ilustracao_de_risco | 0.3 | adimensional (por estágio, MAV de dois estágios) | config/mav_propulsao.yaml (O4, sensibilidade) e tools/arquitetura.py (Etapa 2.5) |
-| P-046 | espiral_baixo_empuxo_parametros | rtol: 1e-11; atol_relativo: 1e-12; tolerancia_verificacao_relativa: 0.0001; convergencia: ['DOP853 1e-9', 'DOP853 1e-13', 'Radau 1e-11']; eps_conferencia: [0.01, 0.001, 0.0001]; raio_terra_ua: 1.0; arredondamento: {'raio_e_excentricidade': 1e-06, 'voltas': 0.001} | adimensional; UA | config/baixo_empuxo.yaml (orbital.baixo_empuxo, tools/baixo_empuxo.py, Etapa 3.2) |
-| P-047 | operacao_propulsao_eletrica | reservas: 1; desligado_no_eclipse: True; alimentacao_xips_kg: 11.4 | propulsores; kg | config/eletrica.yaml (orbital.hibrido, tools/orbitador_eletrico.py, Etapa 3.3) |
-| P-048 | perdas_quimicas_do_hibrido | captura_marte: Etapa 3.1; saida_marte: Etapa 3.1 | km/s | tools/orbitador_eletrico.py (Etapa 3.3) |
-| P-049 | varredura_orbitador_eletrico | encontro_alt_km: [300, 20000, 40]; captura_alt_km: [1000, 40000, 40]; n_ativos_max: 12; c1_meio_arco_graus: 30; n_ativos_ordem_de_grandeza: [1, 4, 12]; c1_folga_apoapse: 0.01; demonstracao_tangencial_empuxo_n: 1.0; convergencia_massas_kg: 1e-09; arredondamento: {'voltas': 0.1, 'excentricidade': 0.0001, 'altitude_km': 0.1} | km; propulsores | config/eletrica.yaml (tools/orbitador_eletrico.py, Etapa 3.3) |
-| P-050 | modelo_energia_solar_lander | albedo: 0.1; data_primeiro_sol_insight: 2018-11-27T12:00:00; painel: horizontal; tau_constante_na_estada: True; mmrtg_anos_antes_do_lancamento_sensibilidade: 1.0; tolerancia_teste_fluxo: 0.007; tolerancia_teste_vl1: 0.07 | adimensional; data TDB | config/energia.yaml (orbital.energia, tools/energia.py, Etapa 4.1) |
-| P-051 | sem_limpeza_dos_paineis | False | — | config/energia.yaml (lander.limpeza) |
-| P-052 | helicopteros_com_energia_propria | True | — | config/energia.yaml (lander.helicopteros_energia_propria) |
-| P-053 | carga_do_orbitador_por_modo | cruzeiro: [445, 300, 0]; captura: [310, 0, 0]; encontro: [445, 500, 77]; retorno: [445, 500, 0] | W (plataforma, CCRS, outros) | config/energia.yaml (orbitador.modos) — PROPOSTA lado a lado com a P-028, que continua o valor-base |
-| P-054 | cargas_de_pico_e_base_do_mmrtg | braco_horas_por_sol: 2.0; voos_de_helicoptero_por_sol: 2; margem_do_mmrtg: painel_solar | h/sol; voos/sol; categoria E1 | config/energia.yaml (lander.picos, lander.mmrtg_margem_categoria) |
-| P-055 | arranjo_simetrico_de_mais_r4d11 | C4: 10; C5: 12 | motores R-4D-11 | config/motores.yaml (combinações de captura C4 e C5) |
-| P-056 | sobrevivencia_do_lander_pelo_spirit | expoente_escala: 0.6667; expoente_sensibilidade: 1.0 | adimensional | tools/energia.py (opção C, carga de sobrevivência na tempestade) |
-| P-057 | razao_de_energia_do_opportunity_em_2018 | tau_alto: 10.8; tau_referencia: 0.64 | adimensional | tools/energia.py (sobrevivência da opção C acima de τ = 6) |
-| P-058 | atividade_do_pu238 | massa_molar_g_mol: 238; dias_por_ano: 365.25 | g/mol; dias | tools/energia.py (atividade e enquadramento no NSPM-20 da alternativa A) |
-| P-059 | fator_do_opportunity_nas_tempestades | aplicado_a: cenários de tempestade (τ ≥ 2) e sobrevivência; tau_da_comparacao: 2.1 | adimensional | tools/energia.py (sensibilidade das áreas de painel) |
-| P-060 | tolerancia_potencia_especifica_pu238 | 0.01 | fração | tests/test_energia.py (potência específica do Pu-238 pela física contra a da MMRTG [F135]) |
-| P-061 | probabilidade_de_tempestade_global_na_estada | probabilidade_por_ano_marciano: 0.25 | fração | tools/energia.py (probabilidade do risco acima de τ = 6) |
-| P-062 | data_do_deposito_de_three_forks | 2023-01-28 | data | config/termico.yaml (tempo das amostras no depósito até a chegada) |
-| P-063 | demanda_de_dados_do_lander | 250 | Mbit por sol | config/comunicacao.yaml (demanda do lander contra o enlace direto e o relé) |
-| P-064 | escala_da_taxa_do_orbitador_com_a_distancia | expoente: 2 | adimensional | tools/comunicacao.py (taxa em banda X do orbitador) |
-| P-065 | passe_dte_do_lander | 8 | horas por sol | config/comunicacao.yaml (volume do enlace direto do lander) |
-| P-066 | enlace_uhf_do_rele_proprio | potencia_tx_w: 5; ganhos_antenas_dbi: 0; margem_db: 3 | W; dBi; dB | config/comunicacao.yaml (taxa do relé UHF lander–orbitador) |
-| P-067 | geometria_dos_passes_de_rele | inclinacao_graus: 30; sois_simulados: 60; passo_s: 30 | graus; sóis; s | tools/comunicacao.py (simulação dos passes do orbitador sobre Jezero) |
-| P-068 | volume_de_dados_dos_helicopteros | imagens_por_voo: 200; compressao: nenhuma | imagens; — | tools/comunicacao.py (demanda de dados dos helicópteros) |
-| P-069 | escala_do_enlace_direto_maior | ganho: ∝ D²; taxa: ∝ potência de RF; massa_refletor: densidade de área do MRO; gimbal: ∝ D² a partir do MRO | — | tools/comunicacao.py (opção (b), enlace direto maior) |
-| P-070 | enlace_direto_minimo_critico | horas_por_sol: 1; categoria_mga: eletronica_0_5kg; receptor: ligado o sol inteiro | h; —; — | config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3) |
-| P-071 | capacidade_do_tgo_por_passe | mbit_por_passe_min: 30; mbit_por_passe_max: 1000; passes_por_sol: 2 | Mbit; passes por sol | config/comunicacao.yaml (capacidade do caminho primário) |
-| P-072 | media_de_imagens_do_ingenuity_por_voo | navcam_por_voo: 13959/72; rte_por_voo: 602/72; compressao: nenhuma | imagens por voo | tools/comunicacao.py (volume dos helicópteros pela média do Ingenuity) |
-| P-073 | ritmo_de_busca_por_tubo | voos_por_tubo: 2; carga_extra_por_perna: 1 sol a cada 700 m além do primeiro trecho | voos; sóis | tools/operacao_superficie.py (linha do tempo da superfície) |
-| P-074 | transferencia_e_lancamento | 10 | sóis | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) |
-| P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) |
-| P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | tools/operacao_superficie.py (volume dos helicópteros) |
-| P-077 | massa_do_circuito_de_fluido_do_lander | escala: linear no calor rejeitado, a partir do MPF (18 kg para 180 W) | kg/W | tools/lista_massas_lander.py (massa do circuito, Etapa 4.5) e config/superficie.yaml (circuito_fluido_kg, no estágio de cruzeiro do lander) |
 
-Total: 77 de 77 premissas com status NÃO VALIDADA.
+Total: 40 de 40 premissas com status NÃO VALIDADA.
