@@ -1,0 +1,310 @@
+gerado_por: tools/operacao_superficie.py
+chegada: '2029-09-20'
+ls_chegada: 189.45127899559026
+ls_partida: 58.12707945076532
+inicio_conjuncao: '2030-05-06'
+tempestade_em_curso_na_chegada:
+  probabilidade: 0.05
+  inicios_do_catalogo: 2
+prob_tempestade_estada: 0.25
+ingenuity_cadencia:
+  voos: 72
+  sol_primeiro: 58
+  sol_ultimo: 1035
+  intervalo_mediano_sois: 10
+  intervalo_medio_sois: 13.76056338028169
+  intervalo_min_sois: 1
+  intervalo_max_sois: 84
+linha_do_tempo:
+- distancia_m: 200.0
+  ritmo: SRH
+  helicopteros_em_paralelo: 2
+  sois_por_tubo: 4.0
+  voos_por_tubo: 2.0
+  busca_sois: 20.0
+  total_sois: 43.0
+  lancamento: '2029-11-03'
+  ls_lancamento: 215.75245873417234
+  prob_tempestade_ate_lancamento: 0.1
+  inicios_do_catalogo_ate_lancamento: 4
+  folga_conjuncao_dias: 184
+  antes_da_conjuncao: true
+  voos_por_sol: 1.0
+- distancia_m: 200.0
+  ritmo: SRH
+  helicopteros_em_paralelo: 1
+  sois_por_tubo: 4.0
+  voos_por_tubo: 2.0
+  busca_sois: 40.0
+  total_sois: 63.0
+  lancamento: '2029-11-23'
+  ls_lancamento: 228.1679115177577
+  prob_tempestade_ate_lancamento: 0.1
+  inicios_do_catalogo_ate_lancamento: 4
+  folga_conjuncao_dias: 164
+  antes_da_conjuncao: true
+  voos_por_sol: 0.5
+- distancia_m: 200.0
+  ritmo: Ingenuity
+  helicopteros_em_paralelo: 2
+  sois_por_tubo: 20.0
+  voos_por_tubo: 2.0
+  busca_sois: 100.0
+  total_sois: 123.0
+  lancamento: '2030-01-24'
+  ls_lancamento: 267.38062285246497
+  prob_tempestade_ate_lancamento: 0.2
+  inicios_do_catalogo_ate_lancamento: 8
+  folga_conjuncao_dias: 102
+  antes_da_conjuncao: true
+  voos_por_sol: 0.2
+- distancia_m: 200.0
+  ritmo: Ingenuity
+  helicopteros_em_paralelo: 1
+  sois_por_tubo: 20.0
+  voos_por_tubo: 2.0
+  busca_sois: 200.0
+  total_sois: 223.0
+  lancamento: '2030-05-07'
+  ls_lancamento: 328.8576593676369
+  prob_tempestade_ate_lancamento: 0.25
+  inicios_do_catalogo_ate_lancamento: 10
+  folga_conjuncao_dias: -1
+  antes_da_conjuncao: false
+  voos_por_sol: 0.1
+- distancia_m: 1700.0
+  ritmo: SRH
+  helicopteros_em_paralelo: 2
+  sois_por_tubo: 8.0
+  voos_por_tubo: 6.0
+  busca_sois: 40.0
+  total_sois: 63.0
+  lancamento: '2029-11-23'
+  ls_lancamento: 228.1679115177577
+  prob_tempestade_ate_lancamento: 0.1
+  inicios_do_catalogo_ate_lancamento: 4
+  folga_conjuncao_dias: 164
+  antes_da_conjuncao: true
+  voos_por_sol: 1.5
+- distancia_m: 1700.0
+  ritmo: SRH
+  helicopteros_em_paralelo: 1
+  sois_por_tubo: 8.0
+  voos_por_tubo: 6.0
+  busca_sois: 80.0
+  total_sois: 103.0
+  lancamento: '2030-01-03'
+  ls_lancamento: 254.08651401646588
+  prob_tempestade_ate_lancamento: 0.15
+  inicios_do_catalogo_ate_lancamento: 6
+  folga_conjuncao_dias: 123
+  antes_da_conjuncao: true
+  voos_por_sol: 0.75
+- distancia_m: 1700.0
+  ritmo: Ingenuity
+  helicopteros_em_paralelo: 2
+  sois_por_tubo: 120.0
+  voos_por_tubo: 12.0
+  busca_sois: 600.0
+  total_sois: 623.0
+  lancamento: '2031-06-22'
+  ls_lancamento: 163.3076981017119
+  prob_tempestade_ate_lancamento: 0.25
+  inicios_do_catalogo_ate_lancamento: 10
+  folga_conjuncao_dias: -412
+  antes_da_conjuncao: false
+  voos_por_sol: 0.2
+- distancia_m: 1700.0
+  ritmo: Ingenuity
+  helicopteros_em_paralelo: 1
+  sois_por_tubo: 120.0
+  voos_por_tubo: 12.0
+  busca_sois: 1200.0
+  total_sois: 1223.0
+  lancamento: '2033-02-27'
+  ls_lancamento: 127.50829276526899
+  prob_tempestade_ate_lancamento: 0.25
+  inicios_do_catalogo_ate_lancamento: 10
+  folga_conjuncao_dias: -1028
+  antes_da_conjuncao: false
+  voos_por_sol: 0.1
+- distancia_m: 3850.0
+  ritmo: SRH
+  helicopteros_em_paralelo: 2
+  sois_por_tubo: 14.0
+  voos_por_tubo: 12.0
+  busca_sois: 70.0
+  total_sois: 93.0
+  lancamento: '2029-12-24'
+  ls_lancamento: 247.73940706194162
+  prob_tempestade_ate_lancamento: 0.1
+  inicios_do_catalogo_ate_lancamento: 4
+  folga_conjuncao_dias: 133
+  antes_da_conjuncao: true
+  voos_por_sol: 1.7142857142857142
+- distancia_m: 3850.0
+  ritmo: SRH
+  helicopteros_em_paralelo: 1
+  sois_por_tubo: 14.0
+  voos_por_tubo: 12.0
+  busca_sois: 140.0
+  total_sois: 163.0
+  lancamento: '2030-03-06'
+  ls_lancamento: 292.82425644592615
+  prob_tempestade_ate_lancamento: 0.2
+  inicios_do_catalogo_ate_lancamento: 8
+  folga_conjuncao_dias: 61
+  antes_da_conjuncao: true
+  voos_por_sol: 0.8571428571428571
+- distancia_m: 3850.0
+  ritmo: Ingenuity
+  helicopteros_em_paralelo: 2
+  sois_por_tubo: 260.0
+  voos_por_tubo: 26.0
+  busca_sois: 1300.0
+  total_sois: 1323.0
+  lancamento: '2033-06-10'
+  ls_lancamento: 180.90298509914655
+  prob_tempestade_ate_lancamento: 0.25
+  inicios_do_catalogo_ate_lancamento: 10
+  folga_conjuncao_dias: -1131
+  antes_da_conjuncao: false
+  voos_por_sol: 0.2
+- distancia_m: 3850.0
+  ritmo: Ingenuity
+  helicopteros_em_paralelo: 1
+  sois_por_tubo: 260.0
+  voos_por_tubo: 26.0
+  busca_sois: 2600.0
+  total_sois: 2623.0
+  lancamento: '2037-02-05'
+  ls_lancamento: 160.1416137984451
+  prob_tempestade_ate_lancamento: 0.25
+  inicios_do_catalogo_ate_lancamento: 10
+  folga_conjuncao_dias: -2467
+  antes_da_conjuncao: false
+  voos_por_sol: 0.1
+capacidade_caminhos_mbit_sol:
+  TGO:
+  - 60.0
+  - 2000.0
+  MRO:
+  - 100
+  - 1150
+  reserva própria (relé + DTE mínimo):
+  - 11.777000000000005
+  - 35.042
+demanda_lander_mbit_sol: 250.0
+dados_helicopteros:
+- ritmo: SRH, 2 helicópteros, 200 m
+  volume: Navcam + RTE, sem compressão (Etapa 4.3)
+  voos_por_sol: 1.0
+  mbit_por_sol:
+  - 1354.6487466666665
+  - 1354.6487466666665
+  total_com_lander:
+  - 1604.6487466666665
+  - 1604.6487466666665
+  duracao_superficie_sois: 43.0
+  folga_conjuncao_dias: 184
+  prob_tempestade: 0.1
+- ritmo: SRH, 2 helicópteros, 200 m
+  volume: Navcam sem compressão + RTE em JPEG
+  voos_por_sol: 1.0
+  mbit_por_sol:
+  - 578.2263595210505
+  - 984.0865911368014
+  total_com_lander:
+  - 828.2263595210505
+  - 1234.0865911368014
+  duracao_superficie_sois: 43.0
+  folga_conjuncao_dias: 184
+  prob_tempestade: 0.1
+- ritmo: SRH, 2 helicópteros, 200 m
+  volume: '(a) mais autonomia: só a RTE em JPEG (a Navcam fica a bordo)'
+  voos_por_sol: 1.0
+  mbit_por_sol:
+  - 101.75915952105058
+  - 507.6193911368015
+  total_com_lander:
+  - 351.7591595210506
+  - 757.6193911368015
+  duracao_superficie_sois: 43.0
+  folga_conjuncao_dias: 184
+  prob_tempestade: 0.1
+- ritmo: (b) ritmo do Ingenuity, 2 helicópteros, 200 m
+  volume: Navcam + RTE, sem compressão (Etapa 4.3)
+  voos_por_sol: 0.2
+  mbit_por_sol:
+  - 270.9297493333333
+  - 270.9297493333333
+  total_com_lander:
+  - 520.9297493333333
+  - 520.9297493333333
+  duracao_superficie_sois: 123.0
+  folga_conjuncao_dias: 102
+  prob_tempestade: 0.2
+- ritmo: (b) ritmo do Ingenuity, 2 helicópteros, 200 m
+  volume: Navcam sem compressão + RTE em JPEG
+  voos_por_sol: 0.2
+  mbit_por_sol:
+  - 115.64527190421012
+  - 196.8173182273603
+  total_com_lander:
+  - 365.6452719042101
+  - 446.81731822736026
+  duracao_superficie_sois: 123.0
+  folga_conjuncao_dias: 102
+  prob_tempestade: 0.2
+- ritmo: (b) ritmo do Ingenuity, 2 helicópteros, 200 m
+  volume: '(a) mais autonomia: só a RTE em JPEG (a Navcam fica a bordo)'
+  voos_por_sol: 0.2
+  mbit_por_sol:
+  - 20.351831904210115
+  - 101.5238782273603
+  total_com_lander:
+  - 270.35183190421014
+  - 351.5238782273603
+  duracao_superficie_sois: 123.0
+  folga_conjuncao_dias: 102
+  prob_tempestade: 0.2
+rte_jpeg_razao:
+- 1.73
+- 8.63
+opcao_c:
+  demanda_mbit_sol: 1604.6487466666665
+  taxa_bps: 55716.97037037036
+  fator_sobre_msl: 391.44365902040147
+  diametro_hga_100w_m: 2.124409359687849
+  massa_kg: 37.04340885273672
+  energia_wh_passe: 1376.0
+  lander_injetado_kg:
+  - 4011.7840871689064
+  - 4087.0015227117556
+  margens_lander:
+    Falcon Heavy (recuperação):
+    - 0.16616973276135005
+    - 0.14470747094946845
+    Falcon Heavy (descartável):
+    - 1.7978215192759528
+    - 1.7463302343774574
+    Vulcan VC2:
+    - 0.07804657360362843
+    - 0.0582061360085826
+    Vulcan VC4:
+    - 0.6170530026873975
+    - 0.587292656545342
+    Vulcan VC6:
+    - 1.0670551758836124
+    - 1.029012961171547
+  tgo_mais_mro_max_mbit_sol: 3150.0
+pouso:
+  elipse_km:
+  - 7.7
+  - 6.6
+  desvio_trn_max_m: 600.0
+  erro_ao_alvo_m: 5.0
+  erro_de_entrega_m: 1700.0
+  alcance_srh_por_carga_m: 700.0
+  alcance_ingenuity_projeto_m: 300.0
+  maior_voo_ingenuity_m: 705.0

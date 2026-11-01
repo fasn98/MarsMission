@@ -76,5 +76,9 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.
 | P-070 | enlace_direto_minimo_critico | horas_por_sol: 1; categoria_mga: eletronica_0_5kg; receptor: ligado o sol inteiro | h; —; — | config/comunicacao.yaml (reserva própria do lander, decisão do Fabio no portão da 4.3) |
 | P-071 | capacidade_do_tgo_por_passe | mbit_por_passe_min: 30; mbit_por_passe_max: 1000; passes_por_sol: 2 | Mbit; passes por sol | config/comunicacao.yaml (capacidade do caminho primário) |
 | P-072 | media_de_imagens_do_ingenuity_por_voo | navcam_por_voo: 13959/72; rte_por_voo: 602/72; compressao: nenhuma | imagens por voo | tools/comunicacao.py (volume dos helicópteros pela média do Ingenuity) |
+| P-073 | ritmo_de_busca_por_tubo | voos_por_tubo: 2; carga_extra_por_perna: 1 sol a cada 700 m além do primeiro trecho | voos; sóis | tools/operacao_superficie.py (linha do tempo da superfície) |
+| P-074 | transferencia_e_lancamento | 10 | sóis | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) |
+| P-075 | distancia_do_lander_ao_deposito | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) |
+| P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | tools/operacao_superficie.py (volume dos helicópteros) |
 
-Total: 72 de 72 premissas com status NÃO VALIDADA.
+Total: 76 de 76 premissas com status NÃO VALIDADA.
