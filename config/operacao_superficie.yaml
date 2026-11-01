@@ -42,4 +42,4 @@ requisitos:   # decisões do Fabio no portão da 4.4 (ADR 0018)
   folga_min_conjuncao_dias: {valor: 60, fonte: "decisão do Fabio no portão da 4.4: pior caso que cabe no ritmo do SRH, qualquer ponto da elipse"}
   folga_alvo_conjuncao_dias: {min: 100, max: 180, fonte: "decisão do Fabio no portão da 4.4: o plano de referência mira 100 a 180 dias"}
   pouso_de_precisao: {valor: true, fonte: "decisão do Fabio no portão da 4.4 (P-075 crítica)"}
-  precisao_srl_m: {valor: 20, fonte: "[F202] p. 10: \"Pin-point landing (< 20 m from target)\""}
+  precisao_srl_m: {valor: 20, fonte: "[F202] p. 10, sequência nocional de EDL do SRL: \"Pin-point landing (< 20 m from target)\""}

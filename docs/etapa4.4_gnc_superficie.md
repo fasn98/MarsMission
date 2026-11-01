@@ -164,7 +164,7 @@ Decisões do Fabio. **Números vigentes:** `results/etapa4.4/operacao_superficie
 1. **Helicópteros:** operação adaptativa (a) + (b). A autonomia fica no nível do Ingenuity e o ritmo se ajusta à capacidade
    dos passes de relé. A opção (c) fica só como sensibilidade.
 2. **Pouso de precisão:** vira requisito, e a P-075 passa a crítica.
-   - O requisito do lander do MSR era de menos de 20 m do alvo [F202].
+   - A precisão prevista para o lander do MSR, na sequência nocional de EDL, era de menos de 20 m do alvo [F202].
    - O Perseverance pousou a 5 m do alvo escolhido pelo TRN [F189], mas a entrega guiada ficou a 1,7 km [F190].
    - Os 200 m só se sustentam com pouso de precisão da classe do lander do MSR, não voado.
 3. **Folga do MAV antes da conjunção:** mínimo de 60 dias; o plano mira de 100 a 180 dias. A tabela da linha do tempo mostra

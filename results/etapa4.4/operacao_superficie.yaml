@@ -333,7 +333,7 @@ requisitos:
   alvo:
   - 100
   - 180
-  pouso_de_precisao: 1.0
+  pouso_de_precisao: true
   precisao_srl_m: 20.0
 rte_jpeg_razao:
 - 1.73

@@ -167,7 +167,7 @@ def main():
            "inicio_conjuncao": str(conj), "tempestade_em_curso_na_chegada": {"probabilidade": p_cheg, "inicios_do_catalogo": n_cheg},
            "prob_tempestade_estada": p_estada, "ingenuity_cadencia": cad, "linha_do_tempo": linha,
            "capacidade_caminhos_mbit_sol": cam, "demanda_lander_mbit_sol": lander, "dados_helicopteros": dados,
-           "requisitos": {"folga_min": fmin, "alvo": [alo, ahi], "pouso_de_precisao": v(rq["pouso_de_precisao"]),
+           "requisitos": {"folga_min": fmin, "alvo": [alo, ahi], "pouso_de_precisao": bool(rq["pouso_de_precisao"]["valor"]),
                           "precisao_srl_m": v(rq["precisao_srl_m"])},
            "rte_jpeg_razao": [rz["min"], rz["max"]], "opcao_c": opc_c, "catalogo_ls": [x["ls"] for x in cat],
            "pouso": {"elipse_km": oc["pouso"]["elipse_km"]["valor"], "desvio_trn_max_m": v(oc["pouso"]["desvio_trn_max_m"]),

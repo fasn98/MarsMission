@@ -24,10 +24,13 @@ a capacidade de cada caminho de comunicação.
 ## A P-075 é sustentável? (`config/premissas.yaml`, P-075)
 - O Perseverance pousou a 5 m do alvo que o TRN escolheu [F189]. Mas a entrada guiada o entregou a 1,7 km do ponto esperado
   [F190], e o TRN desvia no máximo 600 m [F188].
-- O requisito do lander do MSR era "Pin-point landing (< 20 m from target)" [F202]. Um artigo de 2024 da AIAA citaria 60 m;
-  esse valor não foi conferido, porque o texto completo está atrás de paywall.
+- A precisão prevista para o lander do MSR, na sequência nocional de EDL, era "Pin-point landing (< 20 m from target)" [F202].
+  - Um artigo de 2024 da AIAA citaria 60 m para o lander do MSR; não foi conferido, porque o texto completo está atrás de
+    paywall.
+  - O "60m touchdown error requirement" de [F189] é do Mars 2020, não do lander do MSR.
 - **Conclusão:** 200 m só se sustentam com pouso de precisão da classe do lander do MSR, que não voou. Com a capacidade
-  demonstrada pelo Perseverance, a distância esperada até o depósito é da ordem do erro de entrega, 1,7 km.
+  demonstrada pelo Perseverance, a distância até o depósito tende à ordem do erro de entrega, 1,7 km. Essa leitura é do
+  agente: a fonte dá o erro, não a distância a um depósito.
 
 ## Conclusão registrada
 **O plano de superfície só fecha com ritmo rápido OU pouso de precisão, e o ritmo rápido depende de dados que os relés
@@ -39,6 +42,7 @@ existentes não garantem.**
   exige pouso de precisão.
 
 ## Consequências
-- O pouso de precisão entra na lista de massas e na EDL (Etapa 4.5 em diante), como capacidade a demonstrar.
+- **Proposta, a confirmar pelo Fabio:** o pouso de precisão entra na lista de massas e na EDL (Etapa 4.5 em diante), como
+  capacidade a demonstrar.
 - O risco de dependência do TGO (ADR 0017) se soma ao ritmo da busca: com menos capacidade de relé, a operação desacelera,
   e a folga cai na direção do mínimo de 60 dias.

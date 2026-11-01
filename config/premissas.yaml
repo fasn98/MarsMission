@@ -714,7 +714,7 @@ premissas:
       depósito completo até 15/02/2023. O tempo no depósito é contado até a chegada da missão de referência; chamá-lo de
       "mínimo" é inferência desta premissa (a coleta é depois da chegada), não da fonte.
       VALOR-BASE MUDADO com aprovação do Fabio no portão da Etapa 4.4 (2026-11-01): de 15/02/2023 para 28/01/2023,
-      alinhado à fonte [F99] ("on Jan. 28, 2023, the 690th Martian day"), a data do último tubo do depósito.
+      alinhado à fonte [F99] ("NASA's Perseverance Rover Completes Mars Sample Depot"; "on Jan. 28, 2023, the 690th Martian day").
     status: NÃO VALIDADA
   - id: P-063
     nome: demanda_de_dados_do_lander
@@ -851,7 +851,8 @@ premissas:
       casos têm fonte: o erro de entrega do Mars 2020 (1,7 km [F190]) e o semieixo maior da elipse (7,7 km / 2 [F187]).
       CRÍTICA (Fabio, portão da 4.4): o pouso de precisão vira requisito. O Perseverance pousou a 5 m do alvo que o TRN
       escolheu [F189], mas a entrada guiada o entregou a 1,7 km do ponto esperado [F190]; o TRN desvia no máximo 600 m
-      [F188]. O requisito do lander do MSR era "Pin-point landing (< 20 m from target)" [F202]. Os 200 m só se sustentam
+      [F188]. A precisão prevista para o lander do MSR, na sequência nocional de EDL, era "Pin-point landing (< 20 m from target)"
+      [F202]. Os 200 m só se sustentam
       com pouso de precisão da classe do lander do MSR, não voado; com a capacidade do Perseverance, não.
     status: NÃO VALIDADA
   - id: P-076

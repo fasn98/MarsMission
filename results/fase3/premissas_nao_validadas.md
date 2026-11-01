@@ -78,7 +78,7 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-072 | media_de_imagens_do_ingenuity_por_voo | navcam_por_voo: 13959/72; rte_por_voo: 602/72; compressao: nenhuma | imagens por voo | tools/comunicacao.py (volume dos helicópteros pela média do Ingenuity) | sim |
 | P-073 | ritmo_de_busca_por_tubo | voos_por_tubo: 2; carga_extra_por_perna: 1 sol a cada 700 m além do primeiro trecho | voos; sóis | tools/operacao_superficie.py (linha do tempo da superfície) | sim |
 | P-074 | transferencia_e_lancamento | 10 | sóis | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) | sim |
-| P-075 | distancia_do_lander_ao_deposito | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) | sim |
+| P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) | sim |
 | P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | tools/operacao_superficie.py (volume dos helicópteros) | sim |
 
 Total: 76 de 76 premissas com status NÃO VALIDADA; 36 criadas na Fase 3.

@@ -49,5 +49,7 @@ def test_requisitos_de_folga():
     for x in r["linha_do_tempo"]:
         if x["antes_da_partida"]:
             assert x["atende_folga_minima"] == (x["folga_conjuncao_dias"] >= v(rq["folga_min_conjuncao_dias"]))
+            alvo = rq["folga_alvo_conjuncao_dias"]
+            assert x["dentro_do_alvo"] == (alvo["min"] <= x["folga_conjuncao_dias"] <= alvo["max"])
     # todos os casos do ritmo do SRH atendem a folga mínima (base da decisão do Fabio)
     assert all(x["atende_folga_minima"] for x in r["linha_do_tempo"] if x["ritmo"] == "SRH")

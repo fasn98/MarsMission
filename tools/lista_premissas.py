@@ -24,7 +24,7 @@ def main():
         valor = p["valor"]
         if isinstance(valor, dict):
             valor = "; ".join(f"{k}: {v}" for k, v in valor.items())
-        md.append(f"| {p['id']} | {p['nome']} | {valor} | {p.get('unidade', '')} | {p['status']} | {p['uso']} |")
+        md.append(f"| {p['id']} | {p['nome']}{' (CRÍTICA)' if p.get('critica') else ''} | {valor} | {p.get('unidade', '')} | {p['status']} | {p['uso']} |")
     nv = sum(p["status"] == "NÃO VALIDADA" for p in ps)
     md += ["", f"Total: {len(ps)} premissas, {nv} com status NÃO VALIDADA. Justificativas em config/premissas.yaml."]
     saida = RAIZ / "results/fase1/premissas.md"
@@ -38,7 +38,7 @@ def main():
         valor = p["valor"]
         if isinstance(valor, dict):
             valor = "; ".join(f"{k}: {v}" for k, v in valor.items())
-        md2.append(f"| {p['id']} | {p['nome']} | {valor} | {p.get('unidade', '')} | {p['uso']} |")
+        md2.append(f"| {p['id']} | {p['nome']}{' (CRÍTICA)' if p.get('critica') else ''} | {valor} | {p.get('unidade', '')} | {p['uso']} |")
     md2 += ["", f"Total: {len(nao)} de {len(ps)} premissas com status NÃO VALIDADA."]
     s2 = RAIZ / "results/fase2/premissas_nao_validadas.md"
     s2.parent.mkdir(parents=True, exist_ok=True)
@@ -53,7 +53,7 @@ def main():
             valor = "; ".join(f"{k}: {v}" for k, v in valor.items())
         f3 = int(p["id"][2:]) >= PRIMEIRA_DA_FASE_3
         novas += f3
-        md3.append(f"| {p['id']} | {p['nome']} | {valor} | {p.get('unidade', '')} | {p['uso']} | {'sim' if f3 else ''} |")
+        md3.append(f"| {p['id']} | {p['nome']}{' (CRÍTICA)' if p.get('critica') else ''} | {valor} | {p.get('unidade', '')} | {p['uso']} | {'sim' if f3 else ''} |")
     md3 += ["", f"Total: {len(nao)} de {len(ps)} premissas com status NÃO VALIDADA; {novas} criadas na Fase 3."]
     s3 = RAIZ / "results/fase3/premissas_nao_validadas.md"
     s3.parent.mkdir(parents=True, exist_ok=True)
