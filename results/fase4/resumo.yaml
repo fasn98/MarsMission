@@ -1,0 +1,265 @@
+gerado_por: tools/fase4.py
+massas:
+  orbitador_injetado_kg: 7796.395336836866
+  orbitador_leo_kg: 23666.606118460862
+  lander_injetado_kg: 4614.7885791407525
+  lander_leo_kg: 14008.574335175625
+  total_leo_kg: 37675.18045363649
+  lander_entrada_kg: 4429.351262237578
+  lander_pousado_kg: 2254.539792478927
+  plataforma_superficie_kg: 1843.6739672650292
+  mav_e_aquecimento_kg: 410.8658252138979
+  circuito_fluido_cruzeiro_kg: 35.7
+  caso_a_referencia_otimista:
+    caso: 'A: L3 + braço + helicópteros (referência otimista)'
+    plataforma_kg: 1564.875
+    lander_injetado_kg: 4048.681301243166
+    orbitador_injetado_kg: 7796.395336836866
+    margens:
+      orbitador:
+        Falcon Heavy (descartável): 0.43967248514669066
+        Vulcan VC6: 0.06364270969286756
+      lander:
+        Falcon Heavy (recuperação): 0.15554197249199864
+        Falcon Heavy (descartável): 1.7723238789685771
+        Vulcan VC2: 0.06822191410374101
+        Vulcan VC4: 0.6023161670685353
+        Vulcan VC6: 1.0482172946938864
+lancadores:
+  orbitador:
+    lancador: Falcon Heavy (descartável)
+    margem_base: 0.43967248514669066
+    pior:
+      margem: 0.18409186340234318
+      caso: Margem de Δv 20 % (base 10 %)
+  lander:
+    lancador: Vulcan VC4
+    margem_base: 0.405756166948366
+    pior:
+      margem: 0.07780520411267489
+      caso: ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230
+  lander_reserva:
+    lancador: Vulcan VC6
+    margem_base: 0.7969575246400631
+    pior:
+      margem: 0.37774261081909843
+      caso: ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230
+  todas_as_margens_base:
+    orbitador:
+      Falcon Heavy (descartável): 0.43967248514669066
+      Vulcan VC6: 0.06364270969286756
+    lander:
+      Falcon Heavy (recuperação): 0.013788843540281093
+      Falcon Heavy (descartável): 1.4322362026517572
+      Vulcan VC2: -0.06281945206355044
+      Vulcan VC4: 0.405756166948366
+      Vulcan VC6: 0.7969575246400631
+energia:
+  lander_opcao:
+    cenario: claro_jezero + global_2018
+    carga: operação normal com céu claro; sobrevivência na tempestade global
+    area_m2: 32.79453100719549
+    painel_kg: 172.47873651596876
+    bateria_kg: 105.02873472491271
+    total_kg: 277.5074712408815
+    dimensiona_area: sobrevivência
+  rhu_quantidade: 35
+  pu238_g: 61.630514783359835
+  orbitador:
+    carga_w: 1022.0
+    painel_w_afelio: 1314.4709677419355
+    bateria_wh: 11366.890119726919
+    plataforma_kg: 614.0257625684388
+termico:
+  mav_alvo_c: 15.0
+  mav_potencia_w: 60.83871896068917
+  mav_energia_wh_sol: 1500.2645579549069
+  amostras: transferência tardia para o MAV, tratada como transiente (+30 °C)
+  cruzeiro_calor_w: 357.0
+  cruzeiro_passivo_max_w: 200.0
+  rejeicao_ativa: true
+  circuito_fluido_kg: 35.7
+comunicacao:
+  conjuncao:
+    inicio: '2030-05-06'
+    fim: '2030-06-13'
+    dias: 39
+    dias_desde_chegada: 228
+    dias_ate_partida: 148
+  sem_comando:
+    inicio: '2030-05-18'
+    fim: '2030-06-02'
+    dias: 16
+    dias_desde_chegada: 240
+    dias_ate_partida: 159
+  sep_minimo:
+    data: '2030-05-25'
+    graus: 0.2974604071649664
+    distancia_km: 376495674.8952821
+    dias_desde_chegada: 247
+  tempo_luz_max_min: 21.162432028108235
+  demanda_lander_mbit_sol: 250.0
+  helicopteros_envoltoria_mbit_sol: 983.04
+  caminhos_mbit_sol:
+    TGO:
+    - 60.0
+    - 2000.0
+    MRO:
+    - 100
+    - 1150
+    reserva própria (relé + DTE mínimo):
+    - 11.777000000000005
+    - 35.042
+  dte_minimo_kg: 22.406503732580525
+superficie:
+  chegada: '2029-09-20'
+  inicio_conjuncao: '2030-05-06'
+  prob_tempestade_estada: 0.25
+  requisitos:
+    folga_min: 60.0
+    alvo:
+    - 100
+    - 180
+    pouso_de_precisao: true
+    precisao_srl_m: 20.0
+  pouso:
+    elipse_km:
+    - 7.7
+    - 6.6
+    desvio_trn_max_m: 600.0
+    erro_ao_alvo_m: 5.0
+    erro_de_entrega_m: 1700.0
+    alcance_srh_por_carga_m: 700.0
+    alcance_ingenuity_projeto_m: 300.0
+    maior_voo_ingenuity_m: 705.0
+  linha_do_tempo:
+  - distancia_m: 200.0
+    ritmo: SRH
+    helicopteros_em_paralelo: 2
+    total_sois: 43.0
+    lancamento: '2029-11-03'
+    folga_conjuncao_dias: 183.8180375
+    atende_folga_minima: true
+    dentro_do_alvo: false
+  - distancia_m: 200.0
+    ritmo: SRH
+    helicopteros_em_paralelo: 1
+    total_sois: 63.0
+    lancamento: '2029-11-23'
+    folga_conjuncao_dias: 163.26828749999999
+    atende_folga_minima: true
+    dentro_do_alvo: true
+  - distancia_m: 200.0
+    ritmo: Ingenuity
+    helicopteros_em_paralelo: 2
+    total_sois: 123.0
+    lancamento: '2030-01-24'
+    folga_conjuncao_dias: 101.6190375
+    atende_folga_minima: true
+    dentro_do_alvo: true
+  - distancia_m: 200.0
+    ritmo: Ingenuity
+    helicopteros_em_paralelo: 1
+    total_sois: 223.0
+    lancamento: '2030-05-07'
+    folga_conjuncao_dias: -1.1297125000000001
+    atende_folga_minima: false
+    dentro_do_alvo: false
+  - distancia_m: 1700.0
+    ritmo: SRH
+    helicopteros_em_paralelo: 2
+    total_sois: 63.0
+    lancamento: '2029-11-23'
+    folga_conjuncao_dias: 163.26828749999999
+    atende_folga_minima: true
+    dentro_do_alvo: true
+  - distancia_m: 1700.0
+    ritmo: SRH
+    helicopteros_em_paralelo: 1
+    total_sois: 103.0
+    lancamento: '2030-01-03'
+    folga_conjuncao_dias: 122.16878750000001
+    atende_folga_minima: true
+    dentro_do_alvo: true
+  - distancia_m: 1700.0
+    ritmo: Ingenuity
+    helicopteros_em_paralelo: 2
+    total_sois: 623.0
+    lancamento: '2031-06-22'
+    folga_conjuncao_dias: null
+    atende_folga_minima: false
+    dentro_do_alvo: false
+  - distancia_m: 1700.0
+    ritmo: Ingenuity
+    helicopteros_em_paralelo: 1
+    total_sois: 1223.0
+    lancamento: '2033-02-27'
+    folga_conjuncao_dias: null
+    atende_folga_minima: false
+    dentro_do_alvo: false
+  - distancia_m: 3850.0
+    ritmo: SRH
+    helicopteros_em_paralelo: 2
+    total_sois: 93.0
+    lancamento: '2029-12-24'
+    folga_conjuncao_dias: 132.4436625
+    atende_folga_minima: true
+    dentro_do_alvo: true
+  - distancia_m: 3850.0
+    ritmo: SRH
+    helicopteros_em_paralelo: 1
+    total_sois: 163.0
+    lancamento: '2030-03-06'
+    folga_conjuncao_dias: 60.5195375
+    atende_folga_minima: true
+    dentro_do_alvo: false
+  - distancia_m: 3850.0
+    ritmo: Ingenuity
+    helicopteros_em_paralelo: 2
+    total_sois: 1323.0
+    lancamento: '2033-06-10'
+    folga_conjuncao_dias: null
+    atende_folga_minima: false
+    dentro_do_alvo: false
+  - distancia_m: 3850.0
+    ritmo: Ingenuity
+    helicopteros_em_paralelo: 1
+    total_sois: 2623.0
+    lancamento: '2037-02-05'
+    folga_conjuncao_dias: null
+    atende_folga_minima: false
+    dentro_do_alvo: false
+premissas:
+  total: 77
+  nao_validadas: 77
+  criadas_na_fase_4:
+  - P-050
+  - P-051
+  - P-052
+  - P-053
+  - P-054
+  - P-055
+  - P-056
+  - P-057
+  - P-058
+  - P-059
+  - P-060
+  - P-061
+  - P-062
+  - P-063
+  - P-064
+  - P-065
+  - P-066
+  - P-067
+  - P-068
+  - P-069
+  - P-070
+  - P-071
+  - P-072
+  - P-073
+  - P-074
+  - P-075
+  - P-076
+  - P-077
+  criticas:
+  - P-075

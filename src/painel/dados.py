@@ -427,3 +427,48 @@ def propulsao() -> dict:
     return {"perdas": perdas, "verificacao": verif, "opcoes": opcoes, "c1": c1, "b": b,
             "estada_dias": {k: float(x) for k, x in oe["janelas"].items()}, "periapse_minimo_km": rp_min,
             "ida_referencia_dias": float(oe["eletrico"]["ida_referencia_dias"])}
+
+
+def subsistemas() -> dict:
+    """Resumo integrado da Fase 4 (subsistemas), lido de results/fase4/resumo.yaml (tools/fase4.py). Tudo "calculado",
+    menos a plataforma de superfície (P-017) e o circuito de fluido (P-077), que são premissas."""
+    o = "results/fase4/resumo.yaml"
+    r = ler(o)
+    m, lc = r["massas"], r["lancadores"]
+    calc = lambda x, u: Valor(float(x), u, CALCULADO, o)  # noqa: E731
+    massas = {"orbitador_injetado": calc(m["orbitador_injetado_kg"], "kg"), "lander_injetado": calc(m["lander_injetado_kg"], "kg"),
+              "lander_entrada": calc(m["lander_entrada_kg"], "kg"), "lander_pousado": calc(m["lander_pousado_kg"], "kg"),
+              "total_leo": calc(m["total_leo_kg"], "kg"), "mav": calc(m["mav_e_aquecimento_kg"], "kg"),
+              "plataforma": Valor(float(m["plataforma_superficie_kg"]), "kg", rotulo_premissa("P-017"), "config/superficie.yaml (P-017)"),
+              "circuito": Valor(float(m["circuito_fluido_cruzeiro_kg"]), "kg", rotulo_premissa("P-077"), "config/superficie.yaml (P-077)"),
+              "caso_a": {"caso": m["caso_a_referencia_otimista"]["caso"],
+                         "lander_injetado": calc(m["caso_a_referencia_otimista"]["lander_injetado_kg"], "kg")}}
+    lancadores = [{"veiculo": rot, "lancador": lc[k]["lancador"], "margem": calc(lc[k]["margem_base"], ""),
+                   "pior": calc(lc[k]["pior"]["margem"], ""), "caso_pior": lc[k]["pior"]["caso"]}
+                  for k, rot in (("orbitador", "Orbitador"), ("lander", "Lander"), ("lander_reserva", "Lander (reserva)"))]
+    # energia, térmico e comunicação: rótulo por item (calculado, premissa ou dado de fonte publicada)
+    en, te, co = r["energia"], r["termico"], r["comunicacao"]
+    prem = lambda x, u, pid: Valor(float(x), u, rotulo_premissa(pid), f"config/premissas.yaml ({pid})", (pid,))  # noqa: E731
+    fonte = lambda x, u, f, arq: Valor(float(x), u, f"dado de fonte publicada {f}", arq)  # noqa: E731
+    cam = co["caminhos_mbit_sol"]
+    reserva = next(k for k in cam if k.startswith("reserva"))
+    itens = [("Energia do lander, C + RHU: painel e bateria (ADR 0015)", calc(en["lander_opcao"]["total_kg"], "kg")),
+             ("Área de painel do lander", calc(en["lander_opcao"]["area_m2"], "m²")),
+             ("Pu-238 nas RHUs", calc(en["pu238_g"], "g")),
+             ("Carga elétrica do orbitador", prem(en["orbitador"]["carga_w"], "W", "P-028")),
+             ("Alvo de temperatura do MAV", prem(te["mav_alvo_c"], "°C", "P-027")),
+             ("Aquecimento do MAV", calc(te["mav_potencia_w"], "W")),
+             ("Calor a rejeitar no cruzeiro (lander)", calc(te["cruzeiro_calor_w"], "W")),
+             ("Perda passiva máxima do LAMP do SRL", fonte(te["cruzeiro_passivo_max_w"], "W", "[F165]", "config/termico.yaml")),
+             ("Duração da conjunção solar (SEP ≤ 5°)", calc(co["conjuncao"]["dias"], "d")),
+             ("Demanda de dados do lander", prem(co["demanda_lander_mbit_sol"], "Mbit/sol", "P-063")),
+             ("TGO, mínimo", prem(cam["TGO"][0], "Mbit/sol", "P-071")),
+             ("TGO, máximo", prem(cam["TGO"][1], "Mbit/sol", "P-071")),
+             ("MRO, mínimo", fonte(cam["MRO"][0], "Mbit/sol", "[F137]", "config/comunicacao.yaml")),
+             ("MRO, máximo", fonte(cam["MRO"][1], "Mbit/sol", "[F137]", "config/comunicacao.yaml")),
+             ("Reserva própria (relé + DTE mínimo), mínimo", calc(cam[reserva][0], "Mbit/sol")),
+             ("Reserva própria (relé + DTE mínimo), máximo", calc(cam[reserva][1], "Mbit/sol"))]
+    su = r["superficie"]
+    linha = [{**x, "folga": None if x["folga_conjuncao_dias"] is None else calc(x["folga_conjuncao_dias"], "d")} for x in su["linha_do_tempo"]]
+    return {"massas": massas, "lancadores": lancadores, "itens": itens, "energia": r["energia"], "termico": r["termico"], "comunicacao": r["comunicacao"],
+            "superficie": {**su, "linha_do_tempo": linha}, "premissas": r["premissas"], "origem": o}

@@ -250,3 +250,18 @@ def test_propulsao_le_os_resultados_da_fase_3():
     assert p["verificacao"]["verificado"] is False and p["verificacao"]["fora_da_tolerancia"] == ["u"]   # ADR 0012
     assert {x["manobra"] for x in p["perdas"]} == {"captura", "saida"}
     assert all(x["ida"].rotulo == "calculado, não verificado" for x in p["b"])
+
+
+def test_subsistemas_le_o_resumo_da_fase_4():
+    s = d.subsistemas()
+    r = yaml.safe_load((RAIZ / "results/fase4/resumo.yaml").read_text(encoding="utf-8"))
+    assert s["massas"]["lander_injetado"].valor == r["massas"]["lander_injetado_kg"]
+    assert s["massas"]["plataforma"].rotulo == d.rotulo_premissa("P-017")
+    assert s["massas"]["circuito"].rotulo == d.rotulo_premissa("P-077")
+    base = yaml.safe_load((RAIZ / "config/lancadores.yaml").read_text(encoding="utf-8"))["base"]
+    assert [x["lancador"] for x in s["lancadores"]] == [base["orbitador"], base["lander"], base["lander_reserva"]]
+    assert len(s["superficie"]["linha_do_tempo"]) == len(r["superficie"]["linha_do_tempo"])
+    rot = dict((nome, x.rotulo) for nome, x in s["itens"])
+    assert rot["Demanda de dados do lander"] == d.rotulo_premissa("P-063")
+    assert rot["Alvo de temperatura do MAV"] == d.rotulo_premissa("P-027")
+    assert rot["MRO, máximo"] == "dado de fonte publicada [F137]"
