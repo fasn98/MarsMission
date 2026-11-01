@@ -1,6 +1,6 @@
 # Opções de coleta (gerado por tools/coleta.py)
 
-Plataforma do lander = L3 (1 470 kg) + item de coleta + itens das Etapas 4.1 a 4.4 (278,8 kg; P-017, ADR 0019). Pior margem na forma (a), nas quatro janelas. Massas em kg.
+Plataforma do lander = L3 (1 470 kg) + item de coleta + itens das Etapas 4.1 a 4.4, sem a energia do aquecimento do MAV já no item do MAV (278,8 kg; P-017, ADR 0019). Pior margem na forma (a), nas quatro janelas. Massas em kg.
 
 | Opção | Coleta (prevista) | Plataforma do lander | Lander injetado | Falcon Heavy (recuperação) | Falcon Heavy (descartável) | Vulcan VC2 | Vulcan VC4 | Vulcan VC6 |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: |

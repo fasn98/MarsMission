@@ -40,3 +40,9 @@ Os números (antes e depois) estão em `results/etapa4.5/lista_massas.md`, seç�
   caso B é conservador por construção.
 - **Sem massa publicada:** o computador de visão do TRN (VCE) e o propelente do desvio não têm massa publicada.
 - **Circuito de fluido:** a massa vem de uma escala linear a partir de um requisito do MPF (ordem de grandeza).
+- **Margens misturadas:** nos casos de margem GSFC e ESA (`results/etapa2.5/arquitetura.md`), a margem GSFC ou ESA vale para
+  L3 + braço + helicópteros, e os itens das Etapas 4.1 a 4.4 entram com a margem E1. Os casos L1 e SRL 2024 − MAV são
+  plataformas inteiras e não recebem os itens.
+- **Opção (c) da Etapa 4.4:** a HGA maior (`results/etapa4.4/operacao_superficie.md`) continua somada por cima da P-017, que
+  agora já inclui o enlace direto mínimo. Há sobreposição parcial (HGA e gimbal); como é só sensibilidade, o resultado fica
+  conservador.

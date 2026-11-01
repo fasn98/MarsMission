@@ -22,7 +22,7 @@ Missão de referência 2028-conjuncao; órbita de encontro 300 × 25 952 km; env
 | Plataforma de superfície L3 (lander do MSR sem MAV e sem rover de busca) | — | 1 470 |
 | Braço de coleta de reserva (P-034, com margem) | — | 88 |
 | Helicópteros de recuperação (ADR 0009, com margem) | — | 6 |
-| Itens das Etapas 4.1 a 4.4 (energia C + RHU, RHUs, enlace direto mínimo, câmera do TRN; ADR 0019) | — | 279 |
+| Itens das Etapas 4.1 a 4.4 (energia C + RHU, RHUs, enlace direto mínimo, câmera do TRN), sem a energia do aquecimento do MAV já no item do MAV (ADR 0019) | — | 279 |
 | MAV hipergólico + energia do aquecimento (ADR 0007) | — | 411 |
 | Painéis do armazenamento criogênico no cruzeiro (só MAV criogênico; descartados antes da entrada) | — | 0 |
 | Circuito de fluido de rejeição de calor no estágio de cruzeiro (P-077; descartado antes da entrada) | — | 36 |

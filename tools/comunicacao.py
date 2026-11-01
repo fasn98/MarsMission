@@ -422,7 +422,7 @@ def escreve_md(o):
            f"no passe, receptor ligado {br(dm2['horas_receptor'], 1)} h); área de operação {br(dm2['area_operacao_m2'], 1)} m², abaixo dos "
            f"{br(dm2['area_linha_de_base_m2'], 1)} m² da linha de base. Lander injetado {br(dm2['lander_injetado_kg'][0])} → "
            f"{br(dm2['lander_injetado_kg'][1])} kg; margens dos lançadores do lander: "
-           + "; ".join(f"{k} {pc_(a)} → {pc_(b)}" for k, (a, b) in dm2["margens_lander"].items()) + " (sensibilidade; a P-017 não muda)."]
+           + "; ".join(f"{k} {pc_(a)} → {pc_(b)}" for k, (a, b) in dm2["margens_lander"].items()) + " (P-017 sem e com o enlace; a P-017 já o inclui desde o portão da Etapa 4.5, ADR 0019)."]
     (SAIDA / "comunicacao.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

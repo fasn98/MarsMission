@@ -63,7 +63,7 @@ def main():
     br = lambda x, n=0: f"{x:,.{n}f}".replace(",", " ").replace(".", ",")  # noqa: E731
     pc = lambda x: "—" if x is None else f"{100 * x:+.0f} %".replace("-", "−")  # noqa: E731
     md = ["# Opções de coleta (gerado por tools/coleta.py)", "",
-          f"Plataforma do lander = L3 ({br(l3)} kg) + item de coleta + itens das Etapas 4.1 a 4.4 ({br(extra, 1)} kg; P-017, ADR 0019). Pior margem na forma (a), nas quatro janelas. Massas em kg.", "",
+          f"Plataforma do lander = L3 ({br(l3)} kg) + item de coleta + itens das Etapas 4.1 a 4.4, sem a energia do aquecimento do MAV já no item do MAV ({br(extra, 1)} kg; P-017, ADR 0019). Pior margem na forma (a), nas quatro janelas. Massas em kg.", "",
           "| Opção | Coleta (prevista) | Plataforma do lander | Lander injetado | " + " | ".join(lanc) + " |",
           "| :- | -: | -: | -: |" + " -: |" * len(lanc)]
     for r in linhas:

@@ -65,7 +65,7 @@ def main():
         {"item": "Braço de coleta de reserva (P-034, com margem)", "massa_kg": mga("amostras")},
         {"item": "Helicópteros de recuperação (ADR 0009, com margem)", "massa_kg": mga("helicopteros")},
         # P-017 vigente (caso B da Etapa 4.5, ADR 0019) menos L3 + braço + helicópteros
-        {"item": "Itens das Etapas 4.1 a 4.4 (energia C + RHU, RHUs, enlace direto mínimo, câmera do TRN; ADR 0019)",
+        {"item": "Itens das Etapas 4.1 a 4.4 (energia C + RHU, RHUs, enlace direto mínimo, câmera do TRN), sem a energia do aquecimento do MAV já no item do MAV (ADR 0019)",
          "massa_kg": la_["plataforma_kg"] - __import__("plataformas").lander_base(pcfg)},
         {"item": "MAV hipergólico + energia do aquecimento (ADR 0007)", "massa_kg": la_["mav_e_aquecimento_kg"]},
         {"item": "Painéis do armazenamento criogênico no cruzeiro (só MAV criogênico; descartados antes da entrada)",

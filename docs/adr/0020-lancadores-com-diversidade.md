@@ -19,7 +19,8 @@ Data: 2026-11-01
    - registrado em `config/lancadores.yaml` (`base`).
 2. **Motivo da diversidade:** evitar que as duas metades da missão dependam do mesmo veículo. Com o lander também no Falcon
    Heavy descartável, uma indisponibilidade desse lançador pararia as duas.
-3. **(c) descartada:** o ganho é pequeno e reabriria o ADR 0011 (troca de combustível com os LEROS).
+3. **(c) descartada**, pelos motivos apresentados no portão (`docs/etapa4.5_massas.md`, seção 5): o ganho é pequeno e
+   reabriria o ADR 0011 (troca de combustível com os LEROS).
 4. **Custo dos lançadores:** fica para a Fase 6.
 
 ## Consequências

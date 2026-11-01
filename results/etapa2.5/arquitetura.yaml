@@ -35,7 +35,7 @@ lander:
   - item: Helicópteros de recuperação (ADR 0009, com margem)
     massa_kg: 6.375
   - item: Itens das Etapas 4.1 a 4.4 (energia C + RHU, RHUs, enlace direto mínimo,
-      câmera do TRN; ADR 0019)
+      câmera do TRN), sem a energia do aquecimento do MAV já no item do MAV (ADR 0019)
     massa_kg: 278.7989672650292
   - item: MAV hipergólico + energia do aquecimento (ADR 0007)
     massa_kg: 410.8658252138979

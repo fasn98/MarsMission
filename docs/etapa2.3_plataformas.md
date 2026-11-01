@@ -298,7 +298,8 @@ O circuito de fluido de rejeição de calor (P-077) vai no estágio de cruzeiro,
 das Fases 2 a 4 foram regenerados; os das etapas anteriores à 2.3 ficam como estavam. O texto acima fica como estava.
 
 Nesta etapa, a base do lander continua L3 + braço + helicópteros (`results/etapa2.3/plataformas.md`), agora com o circuito no
-estágio de cruzeiro, o que aumenta a massa na órbita baixa da Terra em todos os casos da tabela.
+estágio de cruzeiro, o que aumenta a massa na órbita baixa da Terra em todos os casos da tabela. Isso vale também para a
+linha "Antes (P-016 = P-017 = 850 kg)", que agora mistura as plataformas daquela época com o circuito da Etapa 4.5.
 
 **Números vigentes** (`results/etapa2.5/arquitetura.md`, `results/etapa4.5/lista_massas.md`):
 
