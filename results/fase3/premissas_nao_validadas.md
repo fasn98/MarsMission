@@ -80,5 +80,6 @@ Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. 
 | P-074 | transferencia_e_lancamento | 10 | sóis | config/operacao_superficie.yaml (transferência tardia ao MAV e preparação do lançamento) | sim |
 | P-075 | distancia_do_lander_ao_deposito (CRÍTICA) | srh: 200 | m | config/operacao_superficie.yaml (caso de pouso de precisão) | sim |
 | P-076 | compressao_das_imagens_dos_helicopteros | rte_jpeg_razao: [1.73, 8.63]; navcam: sem compressão (sem perdas, razão não publicada) | adimensional | tools/operacao_superficie.py (volume dos helicópteros) | sim |
+| P-077 | massa_do_circuito_de_fluido_do_lander | escala: linear no calor rejeitado, a partir do MPF (18 kg para 180 W) | kg/W | config/lista_massas.yaml (rejeição de calor no cruzeiro, Etapa 4.5) | sim |
 
-Total: 76 de 76 premissas com status NÃO VALIDADA; 36 criadas na Fase 3.
+Total: 77 de 77 premissas com status NÃO VALIDADA; 37 criadas na Fase 3.
