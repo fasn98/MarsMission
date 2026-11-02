@@ -1,0 +1,244 @@
+gerado_por: tools/envelope_arranjo.py
+orbitador:
+  tanques:
+    insercao_marte:
+      oxidante_kg: 1998.9035724548999
+      combustivel_kg: 1211.4567105787273
+      tanque_oxidante_m3: 1.4703766761961823
+      tanque_combustivel_m3: 1.4674540737432347
+      propelente_kg: 3210.360283033627
+      pares: 2
+      diametro_esfera_m: 1.119781605307442
+      raio_conjunto_m: 1.957281605307442
+      alternativa_um_par:
+        diametro_esfera_m: 1.4108364158119189
+        raio_com_cilindro_m: 2.248336415811919
+        raio_sem_cilindro_m: 1.4358364158119188
+        margem_com_cilindro_m: 0.06421255829526107
+        margem_sem_cilindro_m: 0.8767125582952611
+    retorno:
+      oxidante_kg: 1063.9300699577152
+      combustivel_kg: 644.8061030046758
+      tanque_oxidante_m3: 0.7826180219630846
+      tanque_combustivel_m3: 0.7810624468592767
+      propelente_kg: 1708.736172962391
+      pares: 2
+      diametro_esfera_m: 0.9074869926527942
+      raio_conjunto_m: 1.7449869926527941
+      alternativa_um_par:
+        diametro_esfera_m: 1.1433619645490494
+        raio_com_cilindro_m: 1.9808619645490495
+        raio_sem_cilindro_m: 1.1683619645490493
+        margem_com_cilindro_m: 0.3237876294641562
+        margem_sem_cilindro_m: 1.1362876294641564
+  conjuntos:
+  - conjunto: Estágio de inserção em Marte
+    h0_m: 0.0
+    h1_m: 1.119781605307442
+    raio_m: 1.957281605307442
+    margem_radial_m: 0.3577122292079755
+  - conjunto: Estágio de retorno
+    h0_m: 1.2197816053074422
+    h1_m: 2.1272685979602364
+    raio_m: 1.7449869926527941
+    margem_radial_m: 0.5616439511243398
+  - conjunto: CCRS (3,4 × 0,5 × 2 m; a maior dimensão na horizontal, P-082)
+    h0_m: 2.2272685979602365
+    h1_m: 4.2272685979602365
+    raio_m: 1.7182840277439582
+    margem_radial_m: 0.5709523697527679
+  altura_total_m: 4.2272685979602365
+  topo_envelope_m: 11.3476
+  cabe: true
+  area_paineis_m2: 14.283349246897568
+  ees_diametro_m: 1.273
+  ccrs_m:
+  - 3.4
+  - 0.5
+  - 2.0
+  raio_cilindro_central_m: 0.7875
+  folga_radial_m: 0.05
+  plataforma_kg: 614.0
+  paf_mm: 1575.0
+lander:
+  massa_entrada_kg: 4429.351262237578
+  opcoes_aeroshell:
+    m2020:
+      diametro_m: 4.5
+      altura_conjunto_m: 3.0
+      margem_radial_vulcan_m: 0.13648606904906124
+      diametro_util_interno_m: 4.0
+      massa_entrada_referencia_kg: 3360.0
+      referencia_e_minimo: false
+      massa_por_area_lander_kg_m2: 278.50000911622186
+      massa_por_area_referencia_kg_m2: 211.26345038568627
+    srl_duplo:
+      diametro_m: 4.65
+      altura_conjunto_m: 3.1
+      margem_radial_vulcan_m: 0.05975227135069616
+      diametro_util_interno_m: 4.15
+      massa_entrada_referencia_kg: 5000.0
+      referencia_e_minimo: true
+      massa_por_area_lander_kg_m2: 260.82206889136285
+      massa_por_area_referencia_kg_m2: 294.4246837172304
+  semiangulo_graus: 70.0
+  cruzeiro:
+    oxidante_kg: 70.85682845154001
+    combustivel_kg: 42.94353239487274
+    tanque_oxidante_m3: 0.0521216877792784
+    tanque_combustivel_m3: 0.052018087814030334
+    propelente_kg: 113.80036084641276
+    diametro_esfera_m: 0.4634539799209311
+  descida:
+    propelente_kg: 544.1774407891882
+    tanques: 3
+    volume_total_m3: 0.5705362138699813
+    diametro_esfera_m: 0.7134898176273361
+  paineis:
+    area_m2: 32.79453100719549
+    asas: 2
+    diametro_asa_m: 4.5692063714284545
+    phoenix_envergadura_m: 5.52
+    phoenix_deck_m: 1.5
+  helicoptero:
+    diametro_rotor_m: 1.4
+    altura_m: 0.49
+  braco_m: 2.35
+mav:
+  src_2022:
+    diametro_m: 0.5
+    segmentos:
+    - item: Motores do estágio 1 (4 × R-4D-11)
+      comprimento_m: 0.6
+      tipo: estrutura
+    - item: Tanque de oxidante do estágio 1
+      comprimento_m: 0.7661974643171878
+      tipo: oxidante
+    - item: Tanque de combustível do estágio 1
+      comprimento_m: 0.7650323056371977
+      tipo: combustivel
+    - item: Interestágio
+      comprimento_m: 0.1
+      tipo: estrutura
+    - item: Motor do estágio 2 (1 × R-4D-11)
+      comprimento_m: 0.45
+      tipo: estrutura
+    - item: Tanque de oxidante do estágio 2
+      comprimento_m: 0.3812485088235078
+      tipo: oxidante
+    - item: Tanque de combustível do estágio 2
+      comprimento_m: 0.38100900419374834
+      tipo: combustivel
+    - item: Carga (contêiner de amostras)
+      comprimento_m: 0.35
+      tipo: carga
+    comprimento_m: 3.793487282971642
+    dentro_do_diametro_util:
+      m2020: true
+      srl_duplo: true
+  restricao_2019:
+    diametro_m: 0.57
+    segmentos:
+    - item: Motores do estágio 1 (4 × R-4D-11)
+      comprimento_m: 0.6
+      tipo: estrutura
+    - item: Tanque de oxidante do estágio 1
+      comprimento_m: 0.6498123276430197
+      tipo: oxidante
+    - item: Tanque de combustível do estágio 1
+      comprimento_m: 0.6489248811641114
+      tipo: combustivel
+    - item: Interestágio
+      comprimento_m: 0.1
+      tipo: estrutura
+    - item: Motor do estágio 2 (1 × R-4D-11)
+      comprimento_m: 0.45
+      tipo: estrutura
+    - item: Tanque de oxidante do estágio 2
+      comprimento_m: 0.3812485088235078
+      tipo: oxidante
+    - item: Tanque de combustível do estágio 2
+      comprimento_m: 0.38100900419374834
+      tipo: combustivel
+    - item: Carga (contêiner de amostras)
+      comprimento_m: 0.35
+      tipo: carga
+    comprimento_m: 3.5609947218243874
+    dentro_do_diametro_util:
+      m2020: true
+      srl_duplo: true
+mav_referencias:
+  limite_src_m: 2.99
+  limite_2019_m: 3.0
+  diametro_src_m: 0.5
+  diametro_2019_m: 0.57
+  bowles_comprimento_m: 2.19
+  bowles_diametro_m: 0.52
+  bowles_glow_kg: 312.5
+  glom_kg: 386.77369250546496
+coifas:
+  falcon:
+    nome: Falcon, coifa padrão (5,2 m), volume útil com mantas, PAF de 1575 mm
+    altura_m:
+    - 0.0
+    - 0.5
+    - 1.0
+    - 1.5
+    - 2.0
+    - 2.5
+    - 3.0
+    - 3.5
+    - 4.0
+    - 4.5
+    - 5.0
+    - 5.5
+    - 6.0
+    - 6.5
+    - 7.0
+    - 7.5
+    - 8.0
+    - 8.5
+    - 9.0
+    - 9.5
+    - 10.0
+    - 10.5
+    - 11.0
+    - 11.3476
+    raio_m:
+    - 2.323
+    - 2.3201
+    - 2.316
+    - 2.3118
+    - 2.3077
+    - 2.3035
+    - 2.2994
+    - 2.2953
+    - 2.2911
+    - 2.287
+    - 2.2827
+    - 2.2787
+    - 2.2745
+    - 2.2704
+    - 2.2606
+    - 2.2099
+    - 2.1051
+    - 1.9619
+    - 1.7996
+    - 1.5966
+    - 1.3356
+    - 1.0023
+    - 0.5787
+    - 0.0
+  vulcan:
+    nome: Vulcan, coifa de 15,5 m, envelope estático acima do plano do PAF de 1575
+      mm
+    altura_m:
+    - 0.0
+    - 6.604
+    - 9.398
+    - 12.801599999999999
+    raio_m:
+    - 2.4385
+    - 2.324
+    - 1.816
+    - 0.419

@@ -1,0 +1,104 @@
+# Fase 7 (CAD paramétrico), Etapa 7.1: envelope e arranjo. Usado por tools/envelope_arranjo.py.
+# Fontes em docs/fontes.md; premissas (NÃO VALIDADAS) em config/premissas.yaml. Comprimentos em m, massas em kg.
+# Nenhuma dimensão é digitada no FeatureScript (Etapa 7.2): todas saem daqui ou de results/ por tools/.
+
+propelentes:
+  densidade_mmh_kg_m3: {valor: 869, fonte: "[F211] p. 5 impressa (PDF p. 10), Tab. I: \"Density @ 26.5±1.5°C g/cc\"; linha MMH 100 %, aditivo 0: \"0.869\""}
+  # MON-3 sem densidade tabelada encontrada; usa-se a do N2O4 puro a 25 °C (P-078).
+  densidade_oxidante_kg_m3: {valor: 1431, premissa: P-078, fonte: "[F212] p. 121 impressa (PDF p. 129), Tab. 4-XII \"DENSITY OF LIQUID N2O4 (Under its Own Vapor Pressure)\": \"77.0 1.431\" (°F; densidade relativa)"}
+  densidade_hidrazina_kg_m3: {valor: 1004, premissa: P-079}
+  razao_mistura_r4d11: {valor: 1.65, fonte: "[F107] p. 6, Tab. 4 \"Evolution of Aux Engine Requirements\": \"Mixture 1.65 1.85 1.74\" (requisito inicial; o Artemis I voou com 1,74, Tab. 3)"}
+  razao_mistura_cruzeiro_lander: {valor: 1.65, premissa: P-080}
+  fracao_ullage: {valor: 0.05, premissa: P-081}
+
+# Arranjo dos tanques (P-082): esféricos, dois de oxidante e dois de combustível por estágio do orbitador, em quadrado
+# em torno do cilindro central; um par no estágio de cruzeiro do lander. Alternativa calculada: um par por estágio.
+tanques:
+  pares_por_estagio_orbitador: {valor: 2, premissa: P-082}
+  pares_estagio_cruzeiro_lander: {valor: 1, premissa: P-082}
+  folga_entre_conjuntos_m: {valor: 0.10, premissa: P-087}
+  folga_radial_m: {valor: 0.05, premissa: P-087}
+
+coifas:
+  # Falcon Heavy (orbitador, ADR 0020): volume útil da coifa padrão, recuperável, com mantas acústicas, PAF de 1575 mm.
+  # Perfil (altura acima do plano do PAF, raio) lido do arquivo STEP do fabricante com OpenCascade; raio máximo em cada
+  # faixa de 500 mm (amostra na base da faixa; na ogiva, a interpolação linear entre amostras fica do lado seguro).
+  falcon_padrao:
+    nome: "Falcon, coifa padrão (5,2 m), volume útil com mantas, PAF de 1575 mm"
+    diametro_externo_m: {valor: 5.2, fonte: "[F82] p. 16 (PDF p. 27): \"The standard SpaceX Falcon fairing is 5.2 m (17.2 ft) in outer diameter and 13.2 m (43.5 ft) high overall.\""}
+    perfil:
+      altura_m: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.3476]
+      raio_m: [2.3230, 2.3201, 2.3160, 2.3118, 2.3077, 2.3035, 2.2994, 2.2953, 2.2911, 2.2870, 2.2827, 2.2787, 2.2745, 2.2704, 2.2606, 2.2099, 2.1051, 1.9619, 1.7996, 1.5966, 1.3356, 1.0023, 0.5787, 0.0]
+      fonte: "[F82] p. 16 (PDF p. 27): \"The payload static envelope for the recoverable standard fairing with acoustic blankets installed is available for download in Table 4-1\"; arquivo FAIRING_KEEP_IN_RECOVERABLE_WITH_BLANKETS_1575_PAF_A-1.stp (\"Payload Keep-in Volume, With Acoustic Blankets, 1575 mm PAF\"), em polegadas; lido com OpenCascade (cadquery-ocp, fora das dependências do projeto): malha de 0,2 mm, faixas de 500 mm a partir da origem, raio = máximo de √(y² + z²) dos nós da malha em cada faixa, eixo x; topo em 11,3476 m. A origem do arquivo foi tomada como o plano do PAF: não conferido."
+  # Vulcan (lander, ADR 0020): coifa de 15,5 m; envelope estático lido da figura (cotas em mm; estações em polegadas).
+  vulcan_15_5:
+    nome: "Vulcan, coifa de 15,5 m, envelope estático acima do plano do PAF de 1575 mm"
+    diametro_externo_m: {valor: 5.4, fonte: "[F80] Tab. 1.5-1, p. 1-5: \"Composite 5.4-m Diameter Payload Fairing\""}
+    perfil:
+      # alturas: (estação − 2596,66 pol) × 0,0254; raios: metade das cotas de diâmetro em mm (calculado aqui)
+      estacao_pol: [2596.66, 2856.66, 2966.66, 3100.66]
+      diametro_mm: [4877, 4648, 3632, 838]
+      estacao_interface_pol: 2596.66
+      fonte: "[F80] Fig. 4.3.1-1, p. 4-8 (PDF p. 44), \"Vulcan Centaur 15.5-m (51-ft.) PLF Simplified Static Payload Envelope\": Ø 4877 em \"LV STA 2596.66 (1575 Interface)\", Ø 4648 em \"LV STA 2856.66\", Ø 3632 em \"LV STA 2966.66\", Ø 838 em \"LV STA 3100.66\" (leitura da figura)"
+  vulcan_reserva: "VC6 usa a mesma coifa (lançador de reserva, ADR 0020)"
+
+aeroshell:
+  # Opções de diâmetro (decisão do Fabio no portão da 7.1): a massa de entrada do lander fica entre a do Mars 2020 e a
+  # do SRL de lançamento duplo.
+  opcoes:
+    m2020:
+      diametro_m: {valor: 4.5, fonte: "[F202] p. 13: \"Capsule diameter (m) 4.5 4.5 4.65 >5.4\" (MSL, Mars 2020, SRL lançamento duplo, SRL lançamento único)"}
+      massa_entrada_kg: {valor: 3360, fonte: "[F202] p. 13: \"Entry mass (kg) 3150 3360 >5000 >7500\""}
+    srl_duplo:
+      diametro_m: {valor: 4.65, fonte: "[F202] p. 13 (mesma tabela); p. 12: \"A capsule diameter > 4.65-m may lead to a new launch vehicle fairing\""}
+      massa_entrada_min_kg: {valor: 5000, fonte: "[F202] p. 13: \"Entry mass (kg) ... >5000\" (SRL lançamento duplo)"}
+  semiangulo_frente_graus: {valor: 70, fonte: "[F215] PDF p. 3: \"The MSL aeroshell is a 4.5-meter diameter spherically-blunted 70-degree half-angle cone forebody with a triconic afterbody\""}
+  # Conjunto estágio de cruzeiro + aeroshell do MSL; a altura escala com o diâmetro (P-083).
+  msl_conjunto:
+    diametro_m: {valor: 4.5, fonte: "[F214] PDF p. 6: \"Cruise vehicle dimensions (cruise stage and aeroshell with rover and descent stage inside): Diameter: 14 feet, 9 inches (4.5 meters); height: 9 feet, 8 inches (3 meters)\""}
+    altura_m: {valor: 3.0, fonte: "[F214] PDF p. 6 (mesma citação)"}
+    escala_altura: {premissa: P-083}
+  folga_interna_m: {valor: 0.25, premissa: P-087}
+
+descida:
+  # Propelente de descida (hidrazina, como no MSL) escalado pela massa de entrada (P-084).
+  msl_propelente_kg: {valor: 387, fonte: "[F214] PDF p. 37: \"Three spherical fuel tanks provide a usable propellant load of about 853 pounds (about 387 kilograms) of hydrazine\""}
+  msl_massa_entrada_kg: {valor: 3150, fonte: "[F202] p. 13: \"Entry mass (kg) 3150 3360 >5000 >7500\" (MSL)"}
+  msl_tanques: {valor: 3, fonte: "[F214] PDF p. 37 (mesma citação: \"Three spherical fuel tanks\")"}
+  escala: {premissa: P-084}
+
+mav:
+  # Diâmetro: opções com fonte (decisão do Fabio). Tanques cilíndricos com tampos hemisféricos no diâmetro interno (P-085);
+  # o comprimento que não é tanque (motores, interestágio, carga) é premissa (P-086).
+  diametro_opcoes_m:
+    src_2022: {valor: 0.50, fonte: "[F35] p. 3: \"a maximum MAV target mass allocation of 400kg with a geometric length not to exceed 2.99m and a diameter not to exceed 0.5m\""}
+    restricao_2019: {valor: 0.57, fonte: "[F216] p. 3, tabela de restrições: \"Vehicle Length 3 m (max.)\", \"Vehicle Diameter 0.57 m (max.)\", \"Vehicle Mass 400 kg (max.)\""}
+  comprimento_max_src_m: {valor: 2.99, fonte: "[F35] p. 3 (mesma citação)"}
+  comprimento_max_2019_m: {valor: 3.0, fonte: "[F216] p. 3 (mesma tabela)"}
+  bowles_analogo:
+    comprimento_m: {valor: 2.19, fonte: "[F46] Tab. 2, p. 23 impressa (PDF p. 27), coluna 20 kg: \"Length, m 2.19\"; \"Diameter, m 0.52\"; \"GLOW, kg 312.5\""}
+    diametro_m: {valor: 0.52, fonte: "[F46] Tab. 2, p. 23 impressa (mesma citação)"}
+    glow_kg: {valor: 312.5, fonte: "[F46] Tab. 2, p. 23 impressa (mesma citação)"}
+  espessura_parede_m: {valor: 0.01, premissa: P-085}
+  comprimento_nao_tanque_m:
+    motores_estagio_1: {valor: 0.60, premissa: P-086}
+    motor_estagio_2: {valor: 0.45, premissa: P-086}
+    interestagio: {valor: 0.10, premissa: P-086}
+    carga_os: {valor: 0.35, premissa: P-086}
+
+lander:
+  # Painéis da Etapa 4.1 (área em results/etapa4.1) em duas asas circulares (P-088), como o Phoenix e o InSight.
+  asas_paineis: {valor: 2, premissa: P-088}
+  phoenix:
+    deck_diametro_m: {valor: 1.5, fonte: "[F40] PDF p. 6: \"span of deployed solar arrays 5.52 meters (18.1 feet); deck diameter 1.5 meters (4.9 feet); length of robotic arm 2.35 meters (7.71 feet)\""}
+    envergadura_paineis_m: {valor: 5.52, fonte: "[F40] PDF p. 6 (mesma citação)"}
+  braco_comprimento_m: {valor: 2.35, fonte: "[F40] PDF p. 6 (mesma citação; braço do Phoenix como análogo)"}
+  helicoptero:
+    raio_rotor_m: {valor: 0.7, fonte: "[F213] PDF p. 6: \"blade (0.7 m radius, 0.128 solidity, thrust-weighted chord)\" (SRH)"}
+    altura_m: {valor: 0.49, fonte: "[F217] p. 12: \"Height: 1.6 feet (0.49 meters)\" (Ingenuity; altura do SRH não publicada)"}
+
+orbitador:
+  ccrs_m:
+    dimensoes: {valor: [3.4, 0.5, 2.0], fonte: "[F23] p. 7, legenda da Fig. 9: \"The overall dimensions of CCRS are approximately 3.4 m × 0.5 m × 2 m.\""}
+  ees_diametro_m: {valor: 1.273, fonte: "[F26] p. 3: \"The basic test article geometry is a 52.5-deg sphere-cone shape with a 1.273 m diameter and 0.3146 m nose radius\" (artigo em escala real)"}
+  cilindro_central_diametro_m: {valor: 1.575, fonte: "[F82] p. 17 (PDF p. 28): PAF de 1575 mm (o cilindro central do orbitador acompanha a interface; escolha de arranjo, P-082)"}

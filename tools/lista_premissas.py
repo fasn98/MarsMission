@@ -1,7 +1,8 @@
 """Lista as premissas de config/premissas.yaml em results/fase1/premissas.md e, só as NÃO VALIDADAS, em
 results/fase2/, results/fase3/ e results/fase4/premissas_nao_validadas.md (sem edição à mão). As listas das Fases 3 e 4
 marcam as premissas criadas nelas: as premissas são numeradas em ordem de criação; a primeira da Fase 3 é a P-041
-(Etapa 3.1) e a primeira da Fase 4 é a P-050 (Etapa 4.1).
+(Etapa 3.1), a primeira da Fase 4 é a P-050 (Etapa 4.1) e a primeira da Fase 7 é a P-078 (Etapa 7.1). Cada lista de
+fase traz só as premissas que existiam ao fim dela (a lista completa fica em results/fase1/premissas.md).
 
 Uso: python tools/lista_premissas.py
 """
@@ -15,6 +16,7 @@ import yaml
 RAIZ = Path(__file__).resolve().parents[1]
 PRIMEIRA_DA_FASE_3 = 41
 PRIMEIRA_DA_FASE_4 = 50
+PRIMEIRA_DA_FASE_7 = 78   # a Fase 7 veio antes das Fases 5 e 6 (ADR 0021)
 
 
 def main():
@@ -31,7 +33,13 @@ def main():
     saida = RAIZ / "results/fase1/premissas.md"
     saida.parent.mkdir(parents=True, exist_ok=True)
     saida.write_text("\n".join(md) + "\n", encoding="utf-8")
-    nao = [p for p in ps if p["status"] == "NÃO VALIDADA"]
+    num = lambda p: int(p["id"][2:])  # noqa: E731
+
+    def ate(limite):   # (premissas existentes ao fim da fase, as NÃO VALIDADAS entre elas)
+        xs = [p for p in ps if num(p) < limite]
+        return xs, [p for p in xs if p["status"] == "NÃO VALIDADA"]
+
+    ps2, nao = ate(PRIMEIRA_DA_FASE_3)
     md2 = ["# Premissas NÃO VALIDADAS ao fim da Fase 2 (gerado por tools/lista_premissas.py)", "",
            "Só o Fabio altera o status. Justificativas completas em config/premissas.yaml.", "",
            "| Id | Nome | Valor | Unidade | Uso |", "| :- | :- | :- | :- | :- |"]
@@ -40,7 +48,7 @@ def main():
         if isinstance(valor, dict):
             valor = "; ".join(f"{k}: {v}" for k, v in valor.items())
         md2.append(f"| {p['id']} | {p['nome']}{' (CRÍTICA)' if p.get('critica') else ''} | {valor} | {p.get('unidade', '')} | {p['uso']} |")
-    md2 += ["", f"Total: {len(nao)} de {len(ps)} premissas com status NÃO VALIDADA."]
+    md2 += ["", f"Total: {len(nao)} de {len(ps2)} premissas com status NÃO VALIDADA."]
     s2 = RAIZ / "results/fase2/premissas_nao_validadas.md"
     s2.parent.mkdir(parents=True, exist_ok=True)
     s2.write_text("\n".join(md2) + "\n", encoding="utf-8")
@@ -48,14 +56,15 @@ def main():
            "Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. \"Fase 3\" marca as criadas nela.", "",
            "| Id | Nome | Valor | Unidade | Uso | Fase 3 |", "| :- | :- | :- | :- | :- | :- |"]
     novas = 0
+    ps3, nao = ate(PRIMEIRA_DA_FASE_4)
     for p in nao:
         valor = p["valor"]
         if isinstance(valor, dict):
             valor = "; ".join(f"{k}: {v}" for k, v in valor.items())
-        f3 = int(p["id"][2:]) >= PRIMEIRA_DA_FASE_3
+        f3 = num(p) >= PRIMEIRA_DA_FASE_3
         novas += f3
         md3.append(f"| {p['id']} | {p['nome']}{' (CRÍTICA)' if p.get('critica') else ''} | {valor} | {p.get('unidade', '')} | {p['uso']} | {'sim' if f3 else ''} |")
-    md3 += ["", f"Total: {len(nao)} de {len(ps)} premissas com status NÃO VALIDADA; {novas} criadas na Fase 3."]
+    md3 += ["", f"Total: {len(nao)} de {len(ps3)} premissas com status NÃO VALIDADA; {novas} criadas na Fase 3."]
     s3 = RAIZ / "results/fase3/premissas_nao_validadas.md"
     s3.parent.mkdir(parents=True, exist_ok=True)
     s3.write_text("\n".join(md3) + "\n", encoding="utf-8")
@@ -63,14 +72,15 @@ def main():
            "Só o Fabio altera o status. Justificativas completas em config/premissas.yaml. \"Fase 4\" marca as criadas nela.", "",
            "| Id | Nome | Valor | Unidade | Uso | Fase 4 |", "| :- | :- | :- | :- | :- | :- |"]
     novas4 = 0
+    ps4, nao = ate(PRIMEIRA_DA_FASE_7)
     for p in nao:
         valor = p["valor"]
         if isinstance(valor, dict):
             valor = "; ".join(f"{k}: {v}" for k, v in valor.items())
-        f4 = int(p["id"][2:]) >= PRIMEIRA_DA_FASE_4
+        f4 = num(p) >= PRIMEIRA_DA_FASE_4
         novas4 += f4
         md4.append(f"| {p['id']} | {p['nome']}{' (CRÍTICA)' if p.get('critica') else ''} | {valor} | {p.get('unidade', '')} | {p['uso']} | {'sim' if f4 else ''} |")
-    md4 += ["", f"Total: {len(nao)} de {len(ps)} premissas com status NÃO VALIDADA; {novas4} criadas na Fase 4."]
+    md4 += ["", f"Total: {len(nao)} de {len(ps4)} premissas com status NÃO VALIDADA; {novas4} criadas na Fase 4."]
     s4 = RAIZ / "results/fase4/premissas_nao_validadas.md"
     s4.parent.mkdir(parents=True, exist_ok=True)
     s4.write_text("\n".join(md4) + "\n", encoding="utf-8")

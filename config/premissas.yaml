@@ -886,3 +886,113 @@ premissas:
       requisito de menos de 18 kg, com fluido, para rejeitar de 90 a 180 W [F205]. Escala linear até a dissipação do
       LAMP do SRL (322 W [F165]) mais o calor das RHUs (Etapa 4.2). Ordem de grandeza.
     status: NÃO VALIDADA
+  - id: P-078
+    nome: densidade_do_mon3_igual_a_do_n2o4
+    valor: 1431
+    unidade: kg/m³ (25 °C)
+    uso: config/cad.yaml (volume dos tanques de oxidante, Etapa 7.1)
+    justificativa: >
+      Não foi encontrada densidade tabelada do MON-3 em fonte primária. Usa-se a do N2O4 puro a 77 °F (25 °C), 1,431 de
+      densidade relativa [F212], que é uma compilação de relatório de contrato da NASA (cita as referências 1 e 27). O NO
+      dissolvido muda pouco a densidade (não quantificado aqui).
+    status: NÃO VALIDADA
+  - id: P-079
+    nome: densidade_da_hidrazina
+    valor: 1004
+    unidade: kg/m³ (~25 °C)
+    uso: config/cad.yaml (volume dos tanques de descida do lander, Etapa 7.1)
+    justificativa: >
+      Sem fonte primária encontrada nesta etapa (procura em NTRS sem resultado). Valor de ordem de grandeza para a
+      hidrazina líquida perto da temperatura ambiente; afeta só o volume dos tanques de descida, que ficam dentro do
+      aeroshell.
+    status: NÃO VALIDADA
+  - id: P-080
+    nome: razao_de_mistura_do_cruzeiro_do_lander
+    valor: 1.65
+    unidade: adimensional (O/F, massa)
+    uso: config/cad.yaml (tanques do estágio de cruzeiro do lander, 4 × 10N, ADR 0011)
+    justificativa: >
+      A brochura do motor de 10 N [F28] não foi conferida quanto à razão de mistura nesta etapa. Usa-se a do R-4D-11 [F107]
+      (MMH/MON nos dois). O propelente de cruzeiro é pequeno (results/etapa2.5/arquitetura.md); o efeito no arranjo é
+      desprezível.
+    status: NÃO VALIDADA
+  - id: P-081
+    nome: fracao_de_ullage_dos_tanques
+    valor: 0.05
+    unidade: fração do volume do tanque
+    uso: config/cad.yaml (volume dos tanques, Etapa 7.1)
+    justificativa: >
+      Não foi encontrada norma ou guia da NASA ou da ESA com fração recomendada. Um estudo da Martin Marietta para a NASA
+      (CR-114493, 1972) usa 5 % nos tanques de combustível armazenável, como valor de projeto daquele estudo, não como
+      recomendação. Volume do tanque = volume de propelente / (1 − fração).
+    status: NÃO VALIDADA
+  - id: P-082
+    nome: arranjo_dos_tanques
+    valor: {orbitador: "2 pares esféricos por estágio, em quadrado em torno do cilindro central", cruzeiro_lander: "1 par esférico", ccrs: "maior dimensão na horizontal"}
+    unidade: —
+    uso: config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1)
+    justificativa: >
+      Escolha de arranjo para o esquema da Etapa 7.1, a decidir pelo Fabio. Alternativa calculada: um par por estágio
+      (tanques maiores e conjunto mais alto), com e sem o cilindro central; com o cilindro, a folga radial no estágio de
+      inserção fica pequena (results/etapa7.1/envelope.md). O cilindro central acompanha o PAF de 1575 mm [F82]. O CCRS
+      vai com a maior dimensão na horizontal, sobre o estágio de retorno.
+    status: NÃO VALIDADA
+  - id: P-083
+    nome: altura_do_conjunto_cruzeiro_aeroshell_proporcional_ao_diametro
+    valor: "altura = 3,0 m × (D / 4,5 m)"
+    unidade: m
+    uso: config/cad.yaml (conjunto do lander na coifa do Vulcan, Etapa 7.1)
+    justificativa: >
+      O MSL tinha conjunto (estágio de cruzeiro + aeroshell) de 4,5 m de diâmetro e 3 m de altura [F214]. Supõe-se
+      semelhança geométrica para outro diâmetro. Para a conferência na coifa, o diâmetro máximo fica no topo do conjunto
+      (lado seguro, porque o envelope do Vulcan se estreita com a altura).
+    status: NÃO VALIDADA
+  - id: P-084
+    nome: propelente_de_descida_proporcional_a_massa_de_entrada
+    valor: "387 kg × (massa de entrada / 3150 kg), hidrazina, 3 tanques esféricos"
+    unidade: kg
+    uso: config/cad.yaml (tanques de descida do lander, Etapa 7.1)
+    justificativa: >
+      O modelo de massa da Fase 2 não separa o propelente de descida do sistema de EDL (P-018). Escala-se o do MSL
+      (387 kg de hidrazina utilizável, 3 tanques [F214]; massa de entrada 3150 kg [F202]) pela massa de entrada do lander
+      (results/etapa2.5/arquitetura.yaml). O SRL é um lander de pouso com pernas, não sky crane [F202]; o perfil de descida
+      diferente não é modelado.
+    status: NÃO VALIDADA
+  - id: P-085
+    nome: geometria_dos_tanques_do_mav
+    valor: {forma: "cilindro com tampos hemisféricos no diâmetro interno do MAV", espessura_parede_m: 0.01}
+    unidade: m
+    uso: config/cad.yaml (comprimento do MAV, Etapa 7.1)
+    justificativa: >
+      Os tanques do MAV ocupam o diâmetro do veículo, como nos tanques estruturais de Bowles [F46] ("The mated tanks are
+      structural members carrying pressure"). Diâmetro interno = diâmetro do MAV − 2 × parede. A espessura é de ordem de
+      grandeza.
+    status: NÃO VALIDADA
+  - id: P-086
+    nome: comprimento_do_mav_fora_dos_tanques
+    valor: {motores_estagio_1_m: 0.60, motor_estagio_2_m: 0.45, interestagio_m: 0.10, carga_os_m: 0.35}
+    unidade: m
+    uso: config/cad.yaml (comprimento do MAV, Etapa 7.1)
+    justificativa: >
+      Sem dimensões publicadas do R-4D-11 nem do contêiner de amostras encontradas nesta etapa. Valores de ordem de
+      grandeza para o esquema; o comprimento total é comparado com o limite do MSR (2,99 m [F35]) e com Bowles (2,19 m
+      [F46]).
+    status: NÃO VALIDADA
+  - id: P-087
+    nome: folgas_de_arranjo
+    valor: {entre_conjuntos_m: 0.10, radial_m: 0.05, interna_aeroshell_m: 0.25}
+    unidade: m
+    uso: config/cad.yaml (esquemas do arranjo, Etapa 7.1)
+    justificativa: >
+      Folgas de desenho entre conjuntos e até paredes, sem fonte. A conferência nas coifas usa o envelope estático
+      publicado, que já tem a folga dinâmica do lançador (Vulcan: 25,4 mm [F80]).
+    status: NÃO VALIDADA
+  - id: P-088
+    nome: paineis_do_lander_em_duas_asas_circulares
+    valor: 2
+    unidade: asas
+    uso: config/cad.yaml (painéis do lander abertos, Etapa 7.1)
+    justificativa: >
+      A área da Etapa 4.1 (results/etapa4.1/energia.yaml) é dividida em duas asas circulares, como no Phoenix [F40] e no
+      InSight. Diâmetro aberto de cada asa = √(4 · área / (2 π)). O empacotamento dentro do aeroshell fica para a 7.2.
+    status: NÃO VALIDADA
