@@ -929,11 +929,12 @@ premissas:
     status: NÃO VALIDADA
   - id: P-082
     nome: arranjo_dos_tanques
-    valor: {orbitador: "2 pares esféricos por estágio, em quadrado em torno do cilindro central", cruzeiro_lander: "1 par esférico", ccrs: "maior dimensão na horizontal"}
-    unidade: —
+    valor: {pares_por_estagio_orbitador: 2, pares_estagio_cruzeiro_lander: 1}
+    unidade: pares de tanques (um de oxidante e um de combustível)
     uso: config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1)
     justificativa: >
-      Escolha de arranjo para o esquema da Etapa 7.1, a decidir pelo Fabio. Alternativa calculada: um par por estágio
+      Esferas; no orbitador, em quadrado em torno do cilindro central. Escolha de arranjo para o esquema da Etapa 7.1, a
+      decidir pelo Fabio (decidido no ADR 0022: dois pares). Alternativa calculada: um par por estágio
       (tanques maiores e conjunto mais alto), com e sem o cilindro central; com o cilindro, a folga radial no estágio de
       inserção fica pequena (results/etapa7.1/envelope.md). O cilindro central acompanha o PAF de 1575 mm [F82]. O CCRS
       vai com a maior dimensão na horizontal, sobre o estágio de retorno.
@@ -971,7 +972,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-086
     nome: comprimento_do_mav_fora_dos_tanques
-    valor: {motores_estagio_1_m: 0.60, motor_estagio_2_m: 0.45, interestagio_m: 0.10, carga_os_m: 0.35}
+    valor: {motores_estagio_1: 0.60, motor_estagio_2: 0.45, interestagio: 0.10, carga_os: 0.35}
     unidade: m
     uso: config/cad.yaml (comprimento do MAV, Etapa 7.1)
     justificativa: >
@@ -981,7 +982,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-087
     nome: folgas_de_arranjo
-    valor: {entre_conjuntos_m: 0.10, radial_m: 0.05, interna_aeroshell_m: 0.25}
+    valor: {folga_entre_conjuntos_m: 0.10, folga_radial_m: 0.05, folga_interna_m: 0.25}
     unidade: m
     uso: config/cad.yaml (esquemas do arranjo, Etapa 7.1)
     justificativa: >
@@ -1040,16 +1041,16 @@ premissas:
     status: NÃO VALIDADA
   - id: P-093
     nome: materiais_e_espessuras_das_pecas_modeladas
-    valor: {tanques: "Ti-6Al-4V, 1,5 mm", cilindro_central: "Al 2219, 3 mm", raio_minimo_m: 0.005}
+    valor: {tanques_espessura_m: 0.0015, cilindro_central_espessura_m: 0.003, raio_minimo_m: 0.005}
     unidade: m
     uso: config/cad.yaml (construcao, Etapa 7.2)
     justificativa: >
-      Espessuras de ordem de grandeza para o CAD conceitual, sem dimensionamento estrutural (pressão e cargas não
+      Tanques de Ti-6Al-4V e cilindro central de Al 2219. Espessuras de ordem de grandeza para o CAD conceitual, sem dimensionamento estrutural (pressão e cargas não
       calculadas). Densidades com fonte [F219, F220]. A massa do CAD não é ajustada ao orçamento (regra da Fase 7).
     status: NÃO VALIDADA
   - id: P-094
     nome: pecas_com_densidade_equivalente
-    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, raio_ponta_ees_m: 0.0064}
+    valor: {plataforma_orbitador_altura_m: 0.30, deck_lander_altura_m: 0.30, ees_raio_ponta_m: 0.0064}
     unidade: m
     uso: config/cad.yaml (construcao.equivalentes, Etapa 7.2)
     justificativa: >
@@ -1061,8 +1062,8 @@ premissas:
     status: NÃO VALIDADA
   - id: P-095
     nome: arranjo_interno_do_lander
-    valor: {tanques_cruzeiro_raio_m: 1.5, tanques_descida: "3 a 120°, raio 1,4 m", braco_x_m: 0.45, braco_raio_m: 0.05, helicopteros_y_m: 0.75, folga_m: 0.05}
-    unidade: m
+    valor: {raio_tanques_cruzeiro_m: 1.5, raio_tanques_descida_m: 1.4, angulos_tanques_descida_graus: [0, 120, 240], braco_posicao_x_m: 0.45, braco_raio_m: 0.05, helicopteros_posicao_y_m: 0.75, folga_entre_pecas_m: 0.05}
+    unidade: m (ângulos em graus)
     uso: config/cad.yaml (arranjo_lander, Etapa 7.2)
     justificativa: >
       Posições de desenho para o CAD conceitual, sem fonte: tanques do estágio de cruzeiro ao lado da casca traseira (onde

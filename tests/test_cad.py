@@ -97,3 +97,30 @@ def test_cone_interno_estendido_na_mesma_reta():
             assert raio(c["p0"][2]) == pytest.approx(c["ri0"], abs=1e-9)
             assert raio(c["p1"][2]) == pytest.approx(c["ri1"], abs=1e-9)
             assert min(x["rie0"], x["rie1"]) > 0
+
+
+def _itens_com_premissa(no, caminho=()):
+    """(caminho, chave, valor, premissa) dos itens de config com valor numérico (ou lista) e premissa."""
+    if isinstance(no, dict):
+        if "premissa" in no and "valor" in no:
+            yield caminho, no["valor"], no["premissa"]
+        for k, x in no.items():
+            if isinstance(x, (dict, list)):
+                yield from _itens_com_premissa(x, caminho + (k,))
+
+
+def test_config_cad_coincide_com_as_premissas():
+    """Cada valor de config/cad.yaml que cita uma premissa aparece nela: valor escalar igual, ou chave de mesmo nome
+    (a do item, ou "pai_item") com o mesmo valor. Cobre P-078 a P-095, inclusive o ees_raio_ponta_m da P-094."""
+    ps = {p["id"]: p["valor"] for p in ler("config/premissas.yaml")["premissas"]}
+    itens = list(_itens_com_premissa(ler("config/cad.yaml")))
+    assert any(c[-1] == "ees_raio_ponta_m" for c, _, _ in itens)
+    for caminho, valor, pid in itens:
+        pv = ps[pid]
+        if isinstance(pv, dict):
+            chaves = [caminho[-1], "_".join(caminho[-2:])]
+            k = next((c for c in chaves if c in pv), None)
+            assert k is not None, (pid, caminho)
+            assert pv[k] == valor, (pid, caminho, pv[k], valor)
+        else:
+            assert pv == valor, (pid, caminho, pv, valor)
