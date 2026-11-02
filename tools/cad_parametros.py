@@ -393,7 +393,10 @@ def extensao_interna(c):
     u = (p1 - p0) / h
     e = max(c["r0"] - c["ri0"], c["r1"] - c["ri1"])
     k = (c["ri1"] - c["ri0"]) / h
-    return {"pe0": (p0 - u * e).tolist(), "pe1": (p1 + u * e).tolist(), "rie0": max(c["ri0"] - k * e, 0.0), "rie1": c["ri1"] + k * e}
+    # no lado em que o raio diminui, o prolongamento para antes de o raio chegar a zero: o cone fica na mesma reta
+    e0 = min(e, 0.5 * c["ri0"] / k) if k > 0 else e
+    e1 = min(e, 0.5 * c["ri1"] / -k) if k < 0 else e
+    return {"pe0": (p0 - u * e0).tolist(), "pe1": (p1 + u * e1).tolist(), "rie0": c["ri0"] - k * e0, "rie1": c["ri1"] + k * e1}
 
 
 def featurescript(nome, corpos, materiais):

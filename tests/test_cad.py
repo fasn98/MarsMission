@@ -82,3 +82,18 @@ def test_casca_do_escudo_tem_o_volume_da_espessura():
     h = abs(c["p1"][2] - c["p0"][2])
     alvo = math.pi * (c["r0"] + c["r1"]) * math.hypot(h, c["r1"] - c["r0"]) * t
     assert cp.volume(c) == pytest.approx(alvo, rel=1e-3)
+
+
+def test_cone_interno_estendido_na_mesma_reta():
+    """O cone interno estendido de cada tronco oco passa pelos raios internos ri0 e ri1 nas faces do tronco."""
+    r = ler("results/etapa7.2/parametros.yaml")
+    for corpos in r["veiculos"].values():
+        for c in corpos:
+            if c["tipo"] != "tronco_oco":
+                continue
+            x = cp.extensao_interna(c)
+            pe0, pe1 = x["pe0"][2], x["pe1"][2]
+            raio = lambda z: x["rie0"] + (x["rie1"] - x["rie0"]) * (z - pe0) / (pe1 - pe0)  # noqa: E731
+            assert raio(c["p0"][2]) == pytest.approx(c["ri0"], abs=1e-9)
+            assert raio(c["p1"][2]) == pytest.approx(c["ri1"], abs=1e-9)
+            assert min(x["rie0"], x["rie1"]) > 0

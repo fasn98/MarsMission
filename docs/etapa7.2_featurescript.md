@@ -57,7 +57,7 @@ por `tools/cad_parametros.py`.
   - entre o plano do PAF (Ø 4.877 mm) e a estação 2856.66 (Ø 4.648 mm), o contorno desenhado é reto, sem degrau (largura
     medida linha a linha na página);
   - a figura não está em escala: a razão das larguras em pixels é cerca de 0,974, contra 0,953 pelas cotas (medição feita
-    na página renderizada do guia, fora de `results/`);
+    na página renderizada do guia, fora de `results/`; observação de ambiente, 2026-11-02, nesta sessão no Replit);
   - a folga da quarta coluna usa a interpolação linear entre as cotas;
   - a última coluna supõe o diâmetro menor (4.648 mm) desde o plano do PAF.
 - **Resultado:** com 4,65 m, a folga só é positiva na leitura linear do envelope (3 a 5 cm, acima do erro de leitura da

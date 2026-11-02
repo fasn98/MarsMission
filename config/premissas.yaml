@@ -1049,7 +1049,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-094
     nome: pecas_com_densidade_equivalente
-    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, ees_sobre_o_ccrs: true, ees_ponta_fracao: 0.01}
+    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, ees_sobre_o_ccrs: "sim (arranjo de tools/cad_parametros.py)", ees_ponta_fracao: 0.01}
     unidade: m
     uso: config/cad.yaml (construcao.equivalentes, Etapa 7.2)
     justificativa: >
