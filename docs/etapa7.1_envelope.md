@@ -3,7 +3,7 @@
 Fase 7, CAD paramétrico no Onshape. A ordem das fases foi decidida no ADR 0021: a Fase 7 vem antes das Fases 5 e 6.
 - **Números:** `results/etapa7.1/envelope.md` e `.yaml`, gerados por `tools/envelope_arranjo.py`.
 - **Entradas:**
-  - `config/cad.yaml`: fontes F211 a F218, mais as citações acrescentadas a F26, F35, F40, F46, F80, F82, F107 e F202;
+  - `config/cad.yaml`: fontes F211 a F217, mais as citações acrescentadas a F23, F26, F35, F40, F46, F80, F82, F107 e F202 (a F218 ficou reservada);
   - premissas P-078 a P-088;
   - `results/etapa2.5/arquitetura.yaml` e `results/etapa4.1/energia.yaml`.
 - **Vistas 2D** (esquemas, não desenho de projeto), em `results/etapa7.1/`:
