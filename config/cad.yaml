@@ -163,7 +163,7 @@ construcao:   # P-093: materiais e espessuras das peças modeladas pela geometri
   equivalentes:
     plataforma_orbitador_altura_m: {valor: 0.30, premissa: P-094}
     deck_lander_altura_m: {valor: 0.30, premissa: P-094}
-    ees_ponta_fracao: {valor: 0.01, premissa: P-094}   # raio da ponta do cone do EES, fração do raio da base
+    ees_raio_ponta_m: {valor: 0.0064, premissa: P-094}   # raio da ponta do cone do EES
 
 arranjo_lander:   # P-095: arranjo interno (lançamento e entrada); posições em m; eixo da cápsula = z; MAV ao longo de y
   raio_tanques_cruzeiro_m: {valor: 1.5, premissa: P-095}

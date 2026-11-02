@@ -1049,14 +1049,15 @@ premissas:
     status: NÃO VALIDADA
   - id: P-094
     nome: pecas_com_densidade_equivalente
-    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, ees_sobre_o_ccrs: "sim (arranjo de tools/cad_parametros.py)", ees_ponta_fracao: 0.01}
+    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, raio_ponta_ees_m: 0.0064}
     unidade: m
     uso: config/cad.yaml (construcao.equivalentes, Etapa 7.2)
     justificativa: >
       Peças sem geometria própria (plataforma do orbitador, núcleo do lander, CCRS, EES, braço, helicópteros, motores e
       carga do MAV) entram como volumes simples com densidade equivalente = massa do orçamento / volume. A massa delas no
       CAD é a do orçamento por construção; o CAD informa o CG e as inércias, e a comparação de massa da Etapa 7.3 vale só
-      para as peças com geometria. Alturas e a posição do EES são escolhas de arranjo.
+      para as peças com geometria. Alturas, o raio da ponta do cone do EES e a posição do EES (sobre o CCRS, no arranjo de
+      tools/cad_parametros.py) são escolhas de arranjo.
     status: NÃO VALIDADA
   - id: P-095
     nome: arranjo_interno_do_lander

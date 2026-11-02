@@ -40,7 +40,7 @@ const CORPOS = [
     { "tipo" : "tubo", "nome" : "Cilindro central", "mat" : 1, "densidade" : 0, "cor" : [0.78, 0.79, 0.81], "p0" : [0, 0, 0], "p1" : [0, 0, 2.12727], "r" : 0.7875, "t" : 0.003 },
     { "tipo" : "cilindro", "nome" : "Plataforma (P-016)", "mat" : -1, "densidade" : 213.95, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 2.22727], "p1" : [0, 0, 2.52727], "r" : 1.74499 },
     { "tipo" : "caixa", "nome" : "CCRS", "mat" : -1, "densidade" : 182.353, "cor" : [0.48, 0.37, 0.65], "c1" : [-1.7, -0.25, 2.62727], "c2" : [1.7, 0.25, 4.62727] },
-    { "tipo" : "tronco", "nome" : "EES com o conteiner de amostras", "mat" : -1, "densidade" : 429.528, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 4.62727], "p1" : [0, 0, 5.11567], "r0" : 0.6365, "r1" : 0.006365, "ri0" : 0, "ri1" : 0 }
+    { "tipo" : "tronco", "nome" : "EES com o conteiner de amostras", "mat" : -1, "densidade" : 429.504, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 4.62727], "p1" : [0, 0, 5.11567], "r0" : 0.6365, "r1" : 0.0064, "ri0" : 0, "ri1" : 0 }
 ];
 
 annotation { "Feature Type Name" : "MarsMission orbitador" }

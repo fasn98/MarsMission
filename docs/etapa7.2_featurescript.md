@@ -177,6 +177,9 @@ exemplo, `ONSHAPE_ACCESS_KEY` e `ONSHAPE_SECRET_KEY` no Replit), nunca no reposi
   - os tanques de descida, centrados no plano do ombro a 1,4 m do eixo, atravessam a frente do escudo térmico;
   - o tanque de descida 1 se sobrepõe ao núcleo do lander;
   - o Onshape vai mostrar essas sobreposições. O arranjo interno fica para revisão na 7.3.
+- **Escolha de construção (não premissa):** no tronco oco, o cone interno é prolongado além das faces para a subtração
+  não ter faces coplanares. No lado em que o raio diminui, o prolongamento vai no máximo até metade do raio (fator 0,5 em
+  `tools/cad_parametros.py`). Esse fator não muda massa, CG nem geometria: o prolongamento fica fora do tronco externo.
 - **Perfil do nariz:** o nariz rombudo entra como um vértice lido da figura, (0,02 m; 0,25 m).
 - **Configuração:** o lander está em configuração de lançamento. A configuração de entrada (sem o estágio de cruzeiro), que
   dá o deslocamento do CG, fica para a 7.3.

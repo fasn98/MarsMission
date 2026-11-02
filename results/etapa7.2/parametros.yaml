@@ -155,7 +155,7 @@ resumo:
     cg_m:
     - -2.985527209658525e-17
     - 4.3683692850104755e-17
-    - 1.392800095339909
+    - 1.392800189916957
     por_origem_kg:
       geometria modelada: 263.25509373665153
       propelente: 4919.096455996018
@@ -414,10 +414,10 @@ veiculos:
     - 0
     - 5.115672225808845
     r0: 0.6365
-    r1: 0.006365
+    r1: 0.0064
     ri0: 0.0
     ri1: 0.0
-    densidade: 429.52753085909603
+    densidade: 429.503680455152
     massa_kg: 89.9
   lander:
   - nome: Nariz do escudo (PICA)

@@ -186,7 +186,7 @@ def main():
     h_ees = r_ees / math.tan(ang_ees)
     z_ees = z_cc + cc[2]
     orb.equivalente("EES com o contêiner de amostras", pega(comp_o, "Carga útil CU-2: EEV")["massa_kg"], "massa do orçamento (P-094)",
-                    tipo="tronco", p0=[0, 0, z_ees], p1=[0, 0, z_ees + h_ees], r0=r_ees, r1=r_ees * v(eqv["ees_ponta_fracao"]), ri0=0.0, ri1=0.0)
+                    tipo="tronco", p0=[0, 0, z_ees], p1=[0, 0, z_ees + h_ees], r0=r_ees, r1=v(eqv["ees_raio_ponta_m"]), ri0=0.0, ri1=0.0)
     perf_f = (env["coifas"]["falcon"]["altura_m"], env["coifas"]["falcon"]["raio_m"])
     conj_orb = [("Tanques de inserção", 0.0, eo["tanques"]["insercao_marte"]["diametro_esfera_m"], eo["conjuntos"][0]["raio_m"] + t_tq),
                 ("Tanques de retorno", eo["conjuntos"][1]["h0_m"], topo_ret, eo["conjuntos"][1]["raio_m"] + t_tq),
@@ -393,7 +393,9 @@ def extensao_interna(c):
     u = (p1 - p0) / h
     e = max(c["r0"] - c["ri0"], c["r1"] - c["ri1"])
     k = (c["ri1"] - c["ri0"]) / h
-    # no lado em que o raio diminui, o prolongamento para antes de o raio chegar a zero: o cone fica na mesma reta
+    # no lado em que o raio diminui, o prolongamento para antes de o raio chegar a zero: o cone fica na mesma reta.
+    # O fator 0,5 é escolha de construção, não premissa: qualquer valor entre 0 e 1 dá o mesmo volume removido dentro do
+    # tronco externo (o prolongamento fica fora dele), e portanto a mesma massa, o mesmo CG e a mesma geometria.
     e0 = min(e, 0.5 * c["ri0"] / k) if k > 0 else e
     e1 = min(e, 0.5 * c["ri1"] / -k) if k < 0 else e
     return {"pe0": (p0 - u * e0).tolist(), "pe1": (p1 + u * e1).tolist(), "rie0": c["ri0"] - k * e0, "rie1": c["ri1"] + k * e1}

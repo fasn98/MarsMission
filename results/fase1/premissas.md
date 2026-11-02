@@ -95,7 +95,7 @@
 | P-091 | orientacao_do_lander_na_coifa | frente_para_cima: True; estagio_de_cruzeiro: conjunto do MSL menos a cápsula lida da figura | — | NÃO VALIDADA | config/cad.yaml (lançamento do lander, Etapa 7.2) |
 | P-092 | estacao_da_base_do_mav_deitado | 0.85 | m do nariz (plano do ombro) | NÃO VALIDADA | config/cad.yaml (MAV deitado contra a casca traseira, Etapa 7.2) |
 | P-093 | materiais_e_espessuras_das_pecas_modeladas | tanques: Ti-6Al-4V, 1,5 mm; cilindro_central: Al 2219, 3 mm; raio_minimo_m: 0.005 | m | NÃO VALIDADA | config/cad.yaml (construcao, Etapa 7.2) |
-| P-094 | pecas_com_densidade_equivalente | altura_plataforma_orbitador_m: 0.3; altura_deck_lander_m: 0.3; ees_sobre_o_ccrs: sim (arranjo de tools/cad_parametros.py); ees_ponta_fracao: 0.01 | m | NÃO VALIDADA | config/cad.yaml (construcao.equivalentes, Etapa 7.2) |
+| P-094 | pecas_com_densidade_equivalente | altura_plataforma_orbitador_m: 0.3; altura_deck_lander_m: 0.3; raio_ponta_ees_m: 0.0064 | m | NÃO VALIDADA | config/cad.yaml (construcao.equivalentes, Etapa 7.2) |
 | P-095 | arranjo_interno_do_lander | tanques_cruzeiro_raio_m: 1.5; tanques_descida: 3 a 120°, raio 1,4 m; braco_x_m: 0.45; braco_raio_m: 0.05; helicopteros_y_m: 0.75; folga_m: 0.05 | m | NÃO VALIDADA | config/cad.yaml (arranjo_lander, Etapa 7.2) |
 
 Total: 95 premissas, 95 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
