@@ -996,3 +996,73 @@ premissas:
       A área da Etapa 4.1 (results/etapa4.1/energia.yaml) é dividida em duas asas circulares, como no Phoenix [F40] e no
       InSight. Diâmetro aberto de cada asa = √(4 · área / (2 π)). O empacotamento dentro do aeroshell fica para a 7.2.
     status: NÃO VALIDADA
+  - id: P-089
+    nome: forma_da_capsula_por_opcao_de_aeroshell
+    valor: {opcao_4_65_m: "SRL-A", opcao_4_5_m: "MSL/M2020"}
+    unidade: —
+    uso: config/cad.yaml (capsulas, Etapa 7.2)
+    justificativa: >
+      A cápsula do SRL não é o MSL escalado: a frente é a mesma, e a casca traseira é maior e mais cheia (curvas SRL-A e
+      SRL-C, [F41] Fig. 2), com o projeto ainda em mudança. A SRL-A, mais longa, fica do lado seguro na conferência da
+      coifa. Os perfis são leitura da figura.
+    status: NÃO VALIDADA
+  - id: P-090
+    nome: densidade_do_sla_561v
+    valor: 256
+    unidade: kg/m³
+    uso: config/cad.yaml (massa da proteção térmica da casca traseira, Etapa 7.2)
+    justificativa: >
+      Sem densidade do SLA-561V em fonte primária encontrada nesta etapa (procurados: NASA TM-110402, o artigo do TPS do
+      Mars 2020 [F225] e o do MEDLI2, que só dá a variação de 0,5 % sobre o modelo herdado). Valor de ordem de grandeza.
+      A espessura tem fonte (1,27 cm [F225]).
+    status: NÃO VALIDADA
+  - id: P-091
+    nome: orientacao_do_lander_na_coifa
+    valor: {frente_para_cima: true, estagio_de_cruzeiro: "conjunto do MSL menos a cápsula lida da figura"}
+    unidade: —
+    uso: config/cad.yaml (lançamento do lander, Etapa 7.2)
+    justificativa: >
+      A orientação do MSL na coifa e a fixação do estágio de cruzeiro no adaptador não foram achadas nas fontes. Com a
+      frente para cima, o ombro (diâmetro máximo) fica mais alto, onde o envelope do Vulcan é mais estreito: lado
+      seguro. A altura do estágio de cruzeiro além da cápsula sai do MSL: conjunto de 3,0 m [F214] menos a cápsula
+      MSL/M2020 lida de [F41].
+    status: NÃO VALIDADA
+  - id: P-092
+    nome: estacao_da_base_do_mav_deitado
+    valor: 0.85
+    unidade: m do nariz (plano do ombro)
+    uso: config/cad.yaml (MAV deitado contra a casca traseira, Etapa 7.2)
+    justificativa: >
+      O MAV deitado apoiado no plano do ombro do aeroshell, como referência. É otimista: a estrutura de descida e o deck
+      ocupam parte desse espaço. Por isso a conferência varre a estação da base e mostra onde o MAV deixa de caber.
+    status: NÃO VALIDADA
+  - id: P-093
+    nome: materiais_e_espessuras_das_pecas_modeladas
+    valor: {tanques: "Ti-6Al-4V, 1,5 mm", cilindro_central: "Al 2219, 3 mm"}
+    unidade: m
+    uso: config/cad.yaml (construcao, Etapa 7.2)
+    justificativa: >
+      Espessuras de ordem de grandeza para o CAD conceitual, sem dimensionamento estrutural (pressão e cargas não
+      calculadas). Densidades com fonte [F219, F220]. A massa do CAD não é ajustada ao orçamento (regra da Fase 7).
+    status: NÃO VALIDADA
+  - id: P-094
+    nome: pecas_com_densidade_equivalente
+    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, ees_sobre_o_ccrs: true}
+    unidade: m
+    uso: config/cad.yaml (construcao.equivalentes, Etapa 7.2)
+    justificativa: >
+      Peças sem geometria própria (plataforma do orbitador, núcleo do lander, CCRS, EES, braço, helicópteros, motores e
+      carga do MAV) entram como volumes simples com densidade equivalente = massa do orçamento / volume. A massa delas no
+      CAD é a do orçamento por construção; o CAD informa o CG e as inércias, e a comparação de massa da Etapa 7.3 vale só
+      para as peças com geometria. Alturas e a posição do EES são escolhas de arranjo.
+    status: NÃO VALIDADA
+  - id: P-095
+    nome: arranjo_interno_do_lander
+    valor: {tanques_cruzeiro_raio_m: 1.5, tanques_descida: "3 a 120°, raio 1,4 m", braco_x_m: 0.45, braco_raio_m: 0.05, helicopteros_y_m: 0.75, folga_m: 0.05}
+    unidade: m
+    uso: config/cad.yaml (arranjo_lander, Etapa 7.2)
+    justificativa: >
+      Posições de desenho para o CAD conceitual, sem fonte: tanques do estágio de cruzeiro ao lado da casca traseira (onde
+      a cápsula é estreita), tanques de descida a 120° fora da faixa ocupada pelo MAV, braço guardado paralelo ao MAV e
+      helicópteros acima dele. Não há conferência de interferência entre peças nesta etapa.
+    status: NÃO VALIDADA

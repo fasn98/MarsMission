@@ -90,5 +90,12 @@
 | P-086 | comprimento_do_mav_fora_dos_tanques | motores_estagio_1_m: 0.6; motor_estagio_2_m: 0.45; interestagio_m: 0.1; carga_os_m: 0.35 | m | NÃO VALIDADA | config/cad.yaml (comprimento do MAV, Etapa 7.1) |
 | P-087 | folgas_de_arranjo | entre_conjuntos_m: 0.1; radial_m: 0.05; interna_aeroshell_m: 0.25 | m | NÃO VALIDADA | config/cad.yaml (esquemas do arranjo, Etapa 7.1) |
 | P-088 | paineis_do_lander_em_duas_asas_circulares | 2 | asas | NÃO VALIDADA | config/cad.yaml (painéis do lander abertos, Etapa 7.1) |
+| P-089 | forma_da_capsula_por_opcao_de_aeroshell | opcao_4_65_m: SRL-A; opcao_4_5_m: MSL/M2020 | — | NÃO VALIDADA | config/cad.yaml (capsulas, Etapa 7.2) |
+| P-090 | densidade_do_sla_561v | 256 | kg/m³ | NÃO VALIDADA | config/cad.yaml (massa da proteção térmica da casca traseira, Etapa 7.2) |
+| P-091 | orientacao_do_lander_na_coifa | frente_para_cima: True; estagio_de_cruzeiro: conjunto do MSL menos a cápsula lida da figura | — | NÃO VALIDADA | config/cad.yaml (lançamento do lander, Etapa 7.2) |
+| P-092 | estacao_da_base_do_mav_deitado | 0.85 | m do nariz (plano do ombro) | NÃO VALIDADA | config/cad.yaml (MAV deitado contra a casca traseira, Etapa 7.2) |
+| P-093 | materiais_e_espessuras_das_pecas_modeladas | tanques: Ti-6Al-4V, 1,5 mm; cilindro_central: Al 2219, 3 mm | m | NÃO VALIDADA | config/cad.yaml (construcao, Etapa 7.2) |
+| P-094 | pecas_com_densidade_equivalente | altura_plataforma_orbitador_m: 0.3; altura_deck_lander_m: 0.3; ees_sobre_o_ccrs: True | m | NÃO VALIDADA | config/cad.yaml (construcao.equivalentes, Etapa 7.2) |
+| P-095 | arranjo_interno_do_lander | tanques_cruzeiro_raio_m: 1.5; tanques_descida: 3 a 120°, raio 1,4 m; braco_x_m: 0.45; braco_raio_m: 0.05; helicopteros_y_m: 0.75; folga_m: 0.05 | m | NÃO VALIDADA | config/cad.yaml (arranjo_lander, Etapa 7.2) |
 
-Total: 88 premissas, 88 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 95 premissas, 95 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

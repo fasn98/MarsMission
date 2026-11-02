@@ -108,3 +108,14 @@ lista completa continua em `results/fase1/premissas.md`.
 - **Fase 2:** a lista tem 40 premissas, como na §9 do relatório da Fase 2 depois da nota de 2026-10-27. As notas
   seguintes do relatório da Fase 2, que contavam a lista acumulada, receberam uma nota (2026-11-02).
 - **Fase 3:** a lista tem 49 premissas, 9 delas criadas na Fase 3, como na §7 do relatório da Fase 3 (nota no relatório).
+
+## Nota (2026-11-02): decisões do portão
+Decisões do Fabio (ADR 0022; o texto acima fica como estava):
+1. **Aeroshell de 4,65 m** (massa por área de 261 kg/m², abaixo da classe do SRL). Condição: na 7.2, conferir a folga radial
+   no Vulcan com a geometria real, sem a altura escalada da P-083. Se a folga não se confirmar, volta para 4,5 m, e a massa
+   por área de 279 kg/m² fica registrada como risco de EDL.
+2. **MAV de Ø 0,57 m** (3,56 m). O limite de 3 m do MSR fica como referência, não como restrição. Na 7.2, conferir
+   obrigatoriamente o MAV deitado contra o estreitamento da casca traseira.
+3. **Tanques do orbitador:** dois pares por estágio.
+4. **ADR 0021:** status confirmado.
+5. **P-078 a P-088:** aprovadas, NÃO VALIDADAS. Procurar fonte para a densidade da hidrazina (P-079).
