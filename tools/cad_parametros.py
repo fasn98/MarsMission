@@ -124,7 +124,7 @@ def casca_tronco(x0, r0, x1, r1, t):
     """Raio interno (deslocamento radial) que dá o volume de uma casca de espessura normal t no tronco (x0,r0)–(x1,r1)."""
     h = abs(x1 - x0)
     alvo = math.pi * (r0 + r1) * math.hypot(h, r1 - r0) * t   # área lateral × espessura
-    lo, hi = 0.0, min(r0, r1) if min(r0, r1) > 0 else max(r0, r1)
+    lo, hi = 0.0, max(r0, r1)   # o raio interno já é limitado a ≥ 0 abaixo
     for _ in range(80):   # bissecção no deslocamento radial
         d = (lo + hi) / 2
         vol = vol_tronco(h, r0, r1) - vol_tronco(h, max(r0 - d, 0.0), max(r1 - d, 0.0))
@@ -186,7 +186,7 @@ def main():
     h_ees = r_ees / math.tan(ang_ees)
     z_ees = z_cc + cc[2]
     orb.equivalente("EES com o contêiner de amostras", pega(comp_o, "Carga útil CU-2: EEV")["massa_kg"], "massa do orçamento (P-094)",
-                    tipo="tronco", p0=[0, 0, z_ees], p1=[0, 0, z_ees + h_ees], r0=r_ees, r1=r_ees * 0.01, ri0=0.0, ri1=0.0)
+                    tipo="tronco", p0=[0, 0, z_ees], p1=[0, 0, z_ees + h_ees], r0=r_ees, r1=r_ees * v(eqv["ees_ponta_fracao"]), ri0=0.0, ri1=0.0)
     perf_f = (env["coifas"]["falcon"]["altura_m"], env["coifas"]["falcon"]["raio_m"])
     conj_orb = [("Tanques de inserção", 0.0, eo["tanques"]["insercao_marte"]["diametro_esfera_m"], eo["conjuntos"][0]["raio_m"] + t_tq),
                 ("Tanques de retorno", eo["conjuntos"][1]["h0_m"], topo_ret, eo["conjuntos"][1]["raio_m"] + t_tq),
@@ -214,21 +214,32 @@ def main():
         Lc = perfil[0][-1]
         return min(ea.raio_envelope(perf_v, h_aft + (Lc - x)) - capsula_raio(perfil, x) for x in xs)
     fol_v = {k: {"folga_radial_m": folga_vulcan(p, h_cz), "raio_max_m": max(p[1]), "comprimento_m": p[0][-1]} for k, p in perfis.items()}
+    # sensibilidade: envelope sem o afunilamento linear entre as cotas (o diâmetro menor, da estação de cima, desde o PAF)
+    perf_v_ref = perf_v
+    perf_v = ([perf_v_ref[0][0], perf_v_ref[0][1]] + list(perf_v_ref[0][2:]), [perf_v_ref[1][1], perf_v_ref[1][1]] + list(perf_v_ref[1][2:]))
+    for k, p in perfis.items():
+        fol_v[k]["folga_sem_afunilamento_m"] = folga_vulcan(p, h_cz)
+    perf_v = perf_v_ref
 
     lan = Veiculo("lander")
     t_pica = v(capsulas["espessura_pica_m"])
     t_sla = v(capsulas["espessura_casca_traseira_m"])
+    rmin = v(cons["raio_minimo_m"])
+    i_ombro = int(np.argmax(prr))
     segs = list(zip(px[:-1], prr[:-1], px[1:], prr[1:]))
     for i, (x0, r0, x1, r1) in enumerate(segs):
         if x1 == x0:
             continue
-        frente = x0 == 0.0
+        frente = i < i_ombro
+        if i == 0:   # ponta do nariz rombudo: tronco maciço de PICA
+            lan.add("Nariz do escudo (PICA)", "pica", "geometria: perfil de [F41]", tipo="tronco",
+                    p0=[0, 0, zst(x0)], p1=[0, 0, zst(x1)], r0=max(r0, rmin), r1=r1, ri0=0.0, ri1=0.0)
+            continue
         t = t_pica if frente else t_sla
-        r0e = max(r0, 0.01)   # sem raio zero no nariz
-        d = casca_tronco(x0, r0e, x1, r1, t)
-        lan.add("Escudo térmico (PICA)" if frente else f"Casca traseira {i} (SLA-561V)", "pica" if frente else "sla_561v",
+        d = casca_tronco(x0, r0, x1, r1, t)
+        lan.add("Escudo térmico (PICA)" if frente else f"Casca traseira {i - i_ombro + 1} (SLA-561V)", "pica" if frente else "sla_561v",
                 "geometria: perfil de [F41], espessura de [F215]/[F225]", tipo="tronco_oco",
-                p0=[0, 0, zst(x0)], p1=[0, 0, zst(x1)], r0=r0e, r1=r1, ri0=max(r0e - d, 0.005), ri1=max(r1 - d, 0.005))
+                p0=[0, 0, zst(x0)], p1=[0, 0, zst(x1)], r0=r0, r1=r1, ri0=max(r0 - d, rmin), ri1=max(r1 - d, rmin))
     lan.add("Tampa traseira (SLA-561V)", "sla_561v", "geometria (P-090)", tipo="cilindro", p0=[0, 0, z_aft], p1=[0, 0, z_aft + t_sla], r=prr[-2])
     # estágio de cruzeiro: dois tanques ao lado da casca traseira e o circuito de fluido como disco equivalente
     lc = env["lander"]["cruzeiro"]
@@ -243,7 +254,7 @@ def main():
     de = env["lander"]["descida"]
     d_de = de["diametro_esfera_m"]
     r_de = v(al["raio_tanques_descida_m"])
-    x_ombro = px[1]
+    x_ombro = px[i_ombro]
     x_mav0 = v(cad["mav_no_aeroshell"]["estacao_base_referencia_m"])
     for i, a in enumerate(float(x) for x in al["angulos_tanques_descida_graus"]["valor"]):
         a = math.radians(a)
@@ -302,7 +313,7 @@ def main():
             massa += m
             mom += m * centro(c)
             chave = "densidade equivalente (massa do orçamento)" if c["material"] == "equivalente" else (
-                "propelente" if c["material"] in rho else "geometria e densidade com fonte")
+                "propelente" if c["material"] in rho else "geometria modelada")
             por_origem[chave] = por_origem.get(chave, 0.0) + m
         resumo[k] = {"massa_kg": massa, "cg_m": (mom / massa).tolist(), "por_origem_kg": por_origem, "corpos": len(ve_.corpos)}
     resumo["orcamento"] = {"orbitador_injetado_kg": arq["orbitador"]["injetado_kg"], "lander_injetado_kg": arq["lander"]["injetado_kg"],
@@ -374,6 +385,17 @@ def _vec(p):
     return "[" + ", ".join(_num(x) for x in p) + "]"
 
 
+def extensao_interna(c):
+    """Cone interno de um tronco oco estendido além das duas faces (pela espessura da parede), com os raios na mesma reta:
+    a subtração não tem faces coplanares e o volume removido dentro do tronco externo é o mesmo."""
+    p0, p1 = np.array(c["p0"], float), np.array(c["p1"], float)
+    h = float(np.linalg.norm(p1 - p0))
+    u = (p1 - p0) / h
+    e = max(c["r0"] - c["ri0"], c["r1"] - c["ri1"])
+    k = (c["ri1"] - c["ri0"]) / h
+    return {"pe0": (p0 - u * e).tolist(), "pe1": (p1 + u * e).tolist(), "rie0": max(c["ri0"] - k * e, 0.0), "rie1": c["ri1"] + k * e}
+
+
 def featurescript(nome, corpos, materiais):
     """Modelo cad/featurescript/modelo.fs + bloco de dados deste veículo."""
     chaves = list(materiais) + ["equivalente"]
@@ -381,9 +403,9 @@ def featurescript(nome, corpos, materiais):
     for k in chaves:
         if k == "equivalente":
             continue
-        linhas.append(f'    ["{ascii_(materiais[k]["nome"])}", {_num(materiais[k]["densidade_kg_m3"])}],')
-    linhas.append("];")
-    linhas.append("const CORPOS = [")
+        linhas.append(f'    ["{ascii_(materiais[k]["nome"])}", {_num(materiais[k]["densidade_kg_m3"])}]')
+    linhas = [linhas[0], ",\n".join(linhas[1:]), "];"]
+    corpos_txt = []
     for c in corpos:
         if c["material"] == "equivalente":
             mat = f'"mat" : -1, "densidade" : {_num(c["densidade"])}'
@@ -391,9 +413,11 @@ def featurescript(nome, corpos, materiais):
             mat = f'"mat" : {list(materiais).index(c["material"])}, "densidade" : 0'
         cor = CORES.get(c["material"], CORES["equivalente"])
         g = {k: c[k] for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1") if k in c}
+        if c["tipo"] == "tronco_oco":
+            g.update(extensao_interna(c))
         campos = ", ".join(f'"{k}" : ' + (_vec(x) if isinstance(x, list) else _num(x)) for k, x in g.items())
-        linhas.append(f'    {{ "tipo" : "{c["tipo"]}", "nome" : "{ascii_(c["nome"])}", {mat}, "cor" : {_vec(cor)}, {campos} }},')
-    linhas.append("];")
+        corpos_txt.append(f'    {{ "tipo" : "{c["tipo"]}", "nome" : "{ascii_(c["nome"])}", {mat}, "cor" : {_vec(cor)}, {campos} }}')
+    linhas += ["const CORPOS = [", ",\n".join(corpos_txt), "];"]
     texto = MODELO.read_text(encoding="utf-8")
     return (texto.replace("__FEATURE__", f"marsMission{nome.capitalize()}")
             .replace("__TITULO__", f"MarsMission {ascii_(nome)}")
@@ -410,9 +434,11 @@ def escreve_md(o):
           "## Lander no Vulcan com o perfil real da cápsula (sem a P-083)", "",
           f"Perfis lidos de [F41] Fig. 2 (P-089); frente para cima e estágio de cruzeiro de {br(cf['lander_vulcan']['altura_estagio_cruzeiro_m'])} m "
           "além da cápsula (P-091).", "",
-          "| Forma | Raio máximo | Comprimento | Menor folga radial ao envelope do Vulcan |", "| :- | -: | -: | -: |"]
+          "| Forma | Raio máximo | Comprimento | Menor folga radial ao envelope do Vulcan | Sem o afunilamento linear entre as cotas |", "| :- | -: | -: | -: | -: |"]
     for k, x in cf["lander_vulcan"]["por_forma"].items():
-        md.append(f"| {nomes.get(k, k)} | {br(x['raio_max_m'])} | {br(x['comprimento_m'])} | {br(x['folga_radial_m'], 3)} |")
+        md.append(f"| {nomes.get(k, k)} | {br(x['raio_max_m'])} | {br(x['comprimento_m'])} | {br(x['folga_radial_m'], 3)} | {br(x['folga_sem_afunilamento_m'], 3)} |")
+    md += ["", "Envelope do Vulcan: [F80] Fig. 4.3.1-1 (\"Simplified\"), cotas de diâmetro nas estações; entre elas o contorno desenhado é reto, "
+           "e a interpolação é linear. A última coluna supõe o diâmetro menor (o da estação de cima) desde o plano do PAF."]
     mv = cf["mav_deitado"]
     md += ["", f"Forma usada no CAD: {nomes.get(cf['lander_vulcan']['forma'])}.", "",
            f"## MAV deitado contra a casca traseira (Ø {br(mv['diametro_m'])} m, {br(mv['comprimento_m'])} m; folga interna de "
@@ -427,14 +453,16 @@ def escreve_md(o):
     for c in cf["orbitador_falcon"]:
         md.append(f"| {c['conjunto']} | {br(c['h0_m'])} | {br(c['h1_m'])} | {br(c['raio_m'])} | {br(c['folga_radial_m'])} |")
     md += ["", "## Massa e CG esperados do CAD (pelos volumes dos primitivos; para conferir o Onshape)", "",
-           "| Veículo | Corpos | Massa do CAD | Com geometria e densidade com fonte | Propelente | Densidade equivalente (orçamento) | CG (x, y, z) |",
+           "| Veículo | Corpos | Massa do CAD | Geometria modelada | Propelente | Densidade equivalente (orçamento) | CG (x, y, z) |",
            "| :- | -: | -: | -: | -: | -: | :- |"]
     for k in ("orbitador", "lander", "mav"):
         r = rs[k]
         po = r["por_origem_kg"]
-        md.append(f"| {k} | {r['corpos']} | {br(r['massa_kg'], 1)} | {br(po.get('geometria e densidade com fonte', 0), 1)} | "
+        md.append(f"| {k} | {r['corpos']} | {br(r['massa_kg'], 1)} | {br(po.get('geometria modelada', 0), 1)} | "
                   f"{br(po.get('propelente', 0), 1)} | {br(po.get('densidade equivalente (massa do orçamento)', 0), 1)} | "
                   + ", ".join(br(x, 3) for x in r["cg_m"]) + " |")
+    md += ["", "Geometria modelada: tanques, cilindro central, escudo térmico (PICA [F223]) e casca traseira (SLA-561V, densidade da P-090), "
+           "com espessuras das fontes [F215, F225] ou da P-093."]
     oc = rs["orcamento"]
     md += ["", f"Orçamento (results/etapa2.5/arquitetura.yaml): orbitador {br(oc['orbitador_injetado_kg'], 0)} kg, lander {br(oc['lander_injetado_kg'], 0)} kg, "
            f"MAV {br(oc['mav_glom_kg'], 1)} kg. A diferença (estrutura, motores e peças sem geometria nesta etapa) é assunto da Etapa 7.3; "

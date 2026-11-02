@@ -904,7 +904,8 @@ premissas:
     justificativa: >
       Sem fonte primária encontrada nesta etapa (procura em NTRS sem resultado). Valor de ordem de grandeza para a
       hidrazina líquida perto da temperatura ambiente; afeta só o volume dos tanques de descida, que ficam dentro do
-      aeroshell.
+      aeroshell. Etapa 7.2: a densidade relativa publicada é 1,01 a 15 °C [F224] (três algarismos, cerca de 1004 a
+      1014 kg/m³ com a densidade da água, que não tem fonte própria aqui); o valor-base fica dentro dessa faixa.
     status: NÃO VALIDADA
   - id: P-080
     nome: razao_de_mistura_do_cruzeiro_do_lander
@@ -1003,8 +1004,9 @@ premissas:
     uso: config/cad.yaml (capsulas, Etapa 7.2)
     justificativa: >
       A cápsula do SRL não é o MSL escalado: a frente é a mesma, e a casca traseira é maior e mais cheia (curvas SRL-A e
-      SRL-C, [F41] Fig. 2), com o projeto ainda em mudança. A SRL-A, mais longa, fica do lado seguro na conferência da
-      coifa. Os perfis são leitura da figura.
+      SRL-C, [F41] Fig. 2), com o projeto ainda em mudança. O CAD usa a SRL-A, a mais longa. A conferência na coifa usa a
+      pior folga entre as duas: a da SRL-C, cujo ombro é mais largo (results/etapa7.2/conferencias.md). Os perfis são
+      leitura da figura, com o nariz rombudo como o vértice (0,02; 0,25).
     status: NÃO VALIDADA
   - id: P-090
     nome: densidade_do_sla_561v
@@ -1038,7 +1040,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-093
     nome: materiais_e_espessuras_das_pecas_modeladas
-    valor: {tanques: "Ti-6Al-4V, 1,5 mm", cilindro_central: "Al 2219, 3 mm"}
+    valor: {tanques: "Ti-6Al-4V, 1,5 mm", cilindro_central: "Al 2219, 3 mm", raio_minimo_m: 0.005}
     unidade: m
     uso: config/cad.yaml (construcao, Etapa 7.2)
     justificativa: >
@@ -1047,7 +1049,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-094
     nome: pecas_com_densidade_equivalente
-    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, ees_sobre_o_ccrs: true}
+    valor: {altura_plataforma_orbitador_m: 0.30, altura_deck_lander_m: 0.30, ees_sobre_o_ccrs: true, ees_ponta_fracao: 0.01}
     unidade: m
     uso: config/cad.yaml (construcao.equivalentes, Etapa 7.2)
     justificativa: >

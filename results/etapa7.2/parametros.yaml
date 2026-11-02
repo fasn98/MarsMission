@@ -67,14 +67,17 @@ conferencias:
         folga_radial_m: 0.14252150287894194
         raio_max_m: 2.26
         comprimento_m: 2.88
+        folga_sem_afunilamento_m: 0.06526817042606536
       srl_a:
-        folga_radial_m: 0.04680516374039767
+        folga_radial_m: 0.046599138400648776
         raio_max_m: 2.34
         comprimento_m: 3.85
+        folga_sem_afunilamento_m: -0.013791164658634614
       srl_c:
         folga_radial_m: 0.03187213060367977
         raio_max_m: 2.36
         comprimento_m: 3.55
+        folga_sem_afunilamento_m: -0.0338064727034979
   mav_deitado:
     diametro_m: 0.57
     comprimento_m: 3.5609947218243874
@@ -154,21 +157,21 @@ resumo:
     - 4.3683692850104755e-17
     - 1.392800095339909
     por_origem_kg:
-      geometria e densidade com fonte: 263.25509373665153
+      geometria modelada: 263.25509373665153
       propelente: 4919.096455996018
       densidade equivalente (massa do orçamento): 1323.9
     corpos: 20
   lander:
-    massa_kg: 3045.145771391448
+    massa_kg: 3190.4186543780343
     cg_m:
-    - 0.026827925563534243
-    - -0.027509678282954655
-    - 2.9830593390441646
+    - 0.025606339773902524
+    - -0.026257049488074002
+    - 3.003184430413971
     por_origem_kg:
-      geometria e densidade com fonte: 184.75262026160854
+      geometria modelada: 330.02550324819515
       propelente: 943.473544864809
       densidade equivalente (massa do orçamento): 1916.9196062650292
-    corpos: 32
+    corpos: 33
   mav:
     massa_kg: 348.1263316474716
     cg_m:
@@ -177,7 +180,7 @@ resumo:
     - 1.5398635079679448
     por_origem_kg:
       densidade equivalente (massa do orçamento): 37.545638999999994
-      geometria e densidade com fonte: 25.08494941826345
+      geometria modelada: 25.08494941826345
       propelente: 285.49574322920813
     corpos: 12
   orcamento:
@@ -417,10 +420,10 @@ veiculos:
     densidade: 429.52753085909603
     massa_kg: 89.9
   lander:
-  - nome: Escudo térmico (PICA)
+  - nome: Nariz do escudo (PICA)
     material: pica
-    origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
-    tipo: tronco_oco
+    origem: 'geometria: perfil de [F41]'
+    tipo: tronco
     p0:
     - 0
     - 0
@@ -428,12 +431,29 @@ veiculos:
     p1:
     - 0
     - 0
+    - 3.95
+    r0: 0.005
+    r1: 0.25
+    ri0: 0.0
+    ri1: 0.0
+    massa_kg: 0.3659819305750457
+  - nome: Escudo térmico (PICA)
+    material: pica
+    origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
+    tipo: tronco_oco
+    p0:
+    - 0
+    - 0
+    - 3.95
+    p1:
+    - 0
+    - 0
     - 3.12
-    r0: 0.01
+    r0: 0.25
     r1: 2.34
-    ri0: 0.005
-    ri1: 2.33
-    massa_kg: 14.273797423652292
+    ri0: 0.16091322126885843
+    ri1: 2.250913221268858
+    massa_kg: 159.18069847966382
   - nome: Casca traseira 1 (SLA-561V)
     material: sla_561v
     origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
@@ -631,8 +651,8 @@ veiculos:
     - 0
     - 0
     - 3.12
-    r: 1.2641176470588236
-    densidade: 1161.164560731373
+    r: 1.334578313253012
+    densidade: 1041.7910786712512
     massa_kg: 1748.7989672650292
   - nome: MAV motores do estágio 1 (4 x R-4D-11)
     material: equivalente

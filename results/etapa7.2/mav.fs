@@ -18,7 +18,7 @@ const MATERIAIS = [
     ["SLA-561V", 256],
     ["MMH", 869],
     ["MON-3", 1431],
-    ["Hidrazina", 1004],
+    ["Hidrazina", 1004]
 ];
 const CORPOS = [
     { "tipo" : "cilindro", "nome" : "MAV motores do estagio 1 (4 x R-4D-11)", "mat" : -1, "densidade" : 120.916, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 0], "p1" : [0, 0, 0.6], "r" : 0.275 },
@@ -32,7 +32,7 @@ const CORPOS = [
     { "tipo" : "cilindro", "nome" : "MAV propelente oxidante do estagio 2", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "p0" : [0, 0, 2.58947], "p1" : [0, 0, 2.68926], "r" : 0.2735 },
     { "tipo" : "tubo", "nome" : "MAV Tanque de combustivel do estagio 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 2.82999], "p1" : [0, 0, 3.21099], "r" : 0.275, "t" : 0.0015 },
     { "tipo" : "cilindro", "nome" : "MAV propelente combustivel do estagio 2", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "p0" : [0, 0, 2.9707], "p1" : [0, 0, 3.07028], "r" : 0.2735 },
-    { "tipo" : "cilindro", "nome" : "MAV carga (conteiner de amostras)", "mat" : -1, "densidade" : 192.414, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 3.21099], "p1" : [0, 0, 3.56099], "r" : 0.275 },
+    { "tipo" : "cilindro", "nome" : "MAV carga (conteiner de amostras)", "mat" : -1, "densidade" : 192.414, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 3.21099], "p1" : [0, 0, 3.56099], "r" : 0.275 }
 ];
 
 annotation { "Feature Type Name" : "MarsMission mav" }
@@ -101,8 +101,9 @@ function constroi(context is Context, opId is Id, b is map)
     {
         fCone(context, opId + "a", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
                     "bottomRadius" : b["r0"] * meter, "topRadius" : b["r1"] * meter });
-        fCone(context, opId + "n", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
-                    "bottomRadius" : b["ri0"] * meter, "topRadius" : b["ri1"] * meter });
+        // cone interno estendido alem das faces (pe0, pe1, rie0, rie1, calculados pela ferramenta): sem faces coplanares
+        fCone(context, opId + "n", { "bottomCenter" : vec(b["pe0"]), "topCenter" : vec(b["pe1"]),
+                    "bottomRadius" : b["rie0"] * meter, "topRadius" : b["rie1"] * meter });
         hollow(context, opId + "h", opId + "a", opId + "n");
     }
     else if (t == "caixa")
@@ -112,25 +113,13 @@ function constroi(context is Context, opId is Id, b is map)
 }
 
 // Metodo reaproveitado de projeto anterior: subtracao de corpos (oco) e acabamento (nome, aparencia e material).
+// Sem recuperacao silenciosa: se a subtracao falhar, a feature falha, em vez de deixar um corpo macico com massa errada.
 function hollow(context is Context, opId is Id, outerId is Id, innerId is Id)
 {
-    try
-    {
-        opBoolean(context, opId, {
-                    "tools" : qCreatedBy(innerId, EntityType.BODY),
-                    "targets" : qCreatedBy(outerId, EntityType.BODY),
-                    "operationType" : BooleanOperationType.SUBTRACTION });
-    }
-    catch (error)
-    {
-        try
-        {
-            opDeleteBodies(context, opId + "limpa", { "entities" : qCreatedBy(innerId, EntityType.BODY) });
-        }
-        catch (error2)
-        {
-        }
-    }
+    opBoolean(context, opId, {
+                "tools" : qCreatedBy(innerId, EntityType.BODY),
+                "targets" : qCreatedBy(outerId, EntityType.BODY),
+                "operationType" : BooleanOperationType.SUBTRACTION });
 }
 
 function finish(context is Context, bodies is Query, name is string, mat is array, c is Color, assign is boolean)

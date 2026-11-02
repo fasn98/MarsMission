@@ -114,21 +114,22 @@ orbitador:
 # ------------------------------------------------------------------------------------------------- Etapa 7.2
 # Perfis externos das cápsulas, lidos da Fig. 2 de [F41] (raio em função da distância ao nariz, m). Leitura feita pelos
 # pixels das curvas coloridas, com o quadro do gráfico como escala; o MSL/M2020 sai com raio máximo de 2,26 m (Ø 4,52,
-# contra 4,5 m publicados [F214]), o que dá a ordem do erro de leitura.
+# contra 4,5 m publicados [F214]), o que dá a ordem do erro de leitura. O nariz rombudo entra como o vértice (0,02; 0,25).
 capsulas:
   msl_m2020:
-    x_m: [0.0, 0.85, 1.90, 2.40, 2.88, 2.88]
-    r_m: [0.0, 2.26, 1.49, 0.66, 0.40, 0.0]
+    x_m: [0.0, 0.02, 0.85, 1.90, 2.40, 2.88, 2.88]
+    r_m: [0.0, 0.25, 2.26, 1.49, 0.66, 0.40, 0.0]
     fonte: "[F41] Fig. 2, p. 2: \"Figure 2 shows two of the SRL geometry options used for the analysis in this paper, compared with MSL/Mars 2020\"; \"All dimensions in meters\" (curva MSL/M2020, leitura da figura)"
   srl_a:
-    x_m: [0.0, 0.85, 2.00, 2.60, 3.85, 3.85]
-    r_m: [0.0, 2.34, 1.75, 1.20, 0.40, 0.0]
-    fonte: "[F41] Fig. 2, p. 2 (curva SRL-A; coincide com a SRL-C até cerca de 2,6 m; leitura da figura)"
+    x_m: [0.0, 0.02, 0.85, 2.00, 2.60, 3.85, 3.85]
+    r_m: [0.0, 0.25, 2.34, 1.75, 1.20, 0.40, 0.0]
+    fonte: "[F41] Fig. 2, p. 2 (curva SRL-A; coincide com a SRL-C até cerca de 2,0 m; leitura da figura)"
   srl_c:
-    x_m: [0.0, 0.85, 2.00, 2.60, 3.50, 3.55]
-    r_m: [0.0, 2.36, 1.75, 1.29, 0.44, 0.0]
+    x_m: [0.0, 0.02, 0.85, 2.00, 2.60, 3.50, 3.55]
+    r_m: [0.0, 0.25, 2.36, 1.75, 1.29, 0.44, 0.0]
     fonte: "[F41] Fig. 2, p. 2 (curva SRL-C, fundo arredondado; leitura da figura)"
-  forma_da_opcao: {srl_duplo: srl_a, m2020: msl_m2020}   # P-089: a SRL-A, mais longa, é a do lado seguro na coifa
+  # P-089: o CAD usa a SRL-A (a mais longa); a conferência na coifa usa a pior folga entre SRL-A e SRL-C
+  forma_da_opcao: {srl_duplo: srl_a, m2020: msl_m2020}
   semiangulo_nota: "a frente das três curvas coincide com o cone de 70° [F215]"
   espessura_pica_m: {valor: 0.03175, fonte: "[F215] PDF p. 3: \"A uniform PICA thickness of 1.25 in was established for MSL\" (1,25 pol = 0,03175 m)"}
   espessura_casca_traseira_m: {valor: 0.0127, fonte: "[F225] PDF p. 4: \"The nominal uniform thickness of SLA-561V for Mars 2020 was 1.27 cm (0.5 inch), the same as it was for MSL.\""}
@@ -155,13 +156,14 @@ materiais:   # densidades em kg/m³
 
 construcao:   # P-093: materiais e espessuras das peças modeladas pela geometria
   tanques: {material: ti_6al_4v, espessura_m: {valor: 0.0015, premissa: P-093}}
+  raio_minimo_m: {valor: 0.005, premissa: P-093}   # menor raio de um tronco no FeatureScript (pontas de cone)
   cilindro_central: {material: al_2219, espessura_m: {valor: 0.003, premissa: P-093}}
   # Peças sem geometria própria (massa do orçamento, results/etapa2.5/arquitetura.yaml, em volume do arranjo): densidade
   # equivalente = massa / volume (P-094). A massa delas no CAD é a do orçamento por construção.
   equivalentes:
     plataforma_orbitador_altura_m: {valor: 0.30, premissa: P-094}
     deck_lander_altura_m: {valor: 0.30, premissa: P-094}
-    ees_sobre_o_ccrs: {valor: true, premissa: P-094}
+    ees_ponta_fracao: {valor: 0.01, premissa: P-094}   # raio da ponta do cone do EES, fração do raio da base
 
 arranjo_lander:   # P-095: arranjo interno (lançamento e entrada); posições em m; eixo da cápsula = z; MAV ao longo de y
   raio_tanques_cruzeiro_m: {valor: 1.5, premissa: P-095}

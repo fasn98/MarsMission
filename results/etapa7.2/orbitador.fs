@@ -18,7 +18,7 @@ const MATERIAIS = [
     ["SLA-561V", 256],
     ["MMH", 869],
     ["MON-3", 1431],
-    ["Hidrazina", 1004],
+    ["Hidrazina", 1004]
 ];
 const CORPOS = [
     { "tipo" : "esfera_oca", "nome" : "Tanque insercao MON-3 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [1.39739, 0, 0.559891], "r" : 0.561391, "t" : 0.0015 },
@@ -40,7 +40,7 @@ const CORPOS = [
     { "tipo" : "tubo", "nome" : "Cilindro central", "mat" : 1, "densidade" : 0, "cor" : [0.78, 0.79, 0.81], "p0" : [0, 0, 0], "p1" : [0, 0, 2.12727], "r" : 0.7875, "t" : 0.003 },
     { "tipo" : "cilindro", "nome" : "Plataforma (P-016)", "mat" : -1, "densidade" : 213.95, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 2.22727], "p1" : [0, 0, 2.52727], "r" : 1.74499 },
     { "tipo" : "caixa", "nome" : "CCRS", "mat" : -1, "densidade" : 182.353, "cor" : [0.48, 0.37, 0.65], "c1" : [-1.7, -0.25, 2.62727], "c2" : [1.7, 0.25, 4.62727] },
-    { "tipo" : "tronco", "nome" : "EES com o conteiner de amostras", "mat" : -1, "densidade" : 429.528, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 4.62727], "p1" : [0, 0, 5.11567], "r0" : 0.6365, "r1" : 0.006365, "ri0" : 0, "ri1" : 0 },
+    { "tipo" : "tronco", "nome" : "EES com o conteiner de amostras", "mat" : -1, "densidade" : 429.528, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 4.62727], "p1" : [0, 0, 5.11567], "r0" : 0.6365, "r1" : 0.006365, "ri0" : 0, "ri1" : 0 }
 ];
 
 annotation { "Feature Type Name" : "MarsMission orbitador" }
@@ -109,8 +109,9 @@ function constroi(context is Context, opId is Id, b is map)
     {
         fCone(context, opId + "a", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
                     "bottomRadius" : b["r0"] * meter, "topRadius" : b["r1"] * meter });
-        fCone(context, opId + "n", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
-                    "bottomRadius" : b["ri0"] * meter, "topRadius" : b["ri1"] * meter });
+        // cone interno estendido alem das faces (pe0, pe1, rie0, rie1, calculados pela ferramenta): sem faces coplanares
+        fCone(context, opId + "n", { "bottomCenter" : vec(b["pe0"]), "topCenter" : vec(b["pe1"]),
+                    "bottomRadius" : b["rie0"] * meter, "topRadius" : b["rie1"] * meter });
         hollow(context, opId + "h", opId + "a", opId + "n");
     }
     else if (t == "caixa")
@@ -120,25 +121,13 @@ function constroi(context is Context, opId is Id, b is map)
 }
 
 // Metodo reaproveitado de projeto anterior: subtracao de corpos (oco) e acabamento (nome, aparencia e material).
+// Sem recuperacao silenciosa: se a subtracao falhar, a feature falha, em vez de deixar um corpo macico com massa errada.
 function hollow(context is Context, opId is Id, outerId is Id, innerId is Id)
 {
-    try
-    {
-        opBoolean(context, opId, {
-                    "tools" : qCreatedBy(innerId, EntityType.BODY),
-                    "targets" : qCreatedBy(outerId, EntityType.BODY),
-                    "operationType" : BooleanOperationType.SUBTRACTION });
-    }
-    catch (error)
-    {
-        try
-        {
-            opDeleteBodies(context, opId + "limpa", { "entities" : qCreatedBy(innerId, EntityType.BODY) });
-        }
-        catch (error2)
-        {
-        }
-    }
+    opBoolean(context, opId, {
+                "tools" : qCreatedBy(innerId, EntityType.BODY),
+                "targets" : qCreatedBy(outerId, EntityType.BODY),
+                "operationType" : BooleanOperationType.SUBTRACTION });
 }
 
 function finish(context is Context, bodies is Query, name is string, mat is array, c is Color, assign is boolean)

@@ -47,17 +47,28 @@ por `tools/cad_parametros.py`.
   - A leitura do MSL dá raio máximo de 2,26 m, contra 2,25 m publicados; o erro de leitura é da ordem de 0,01 m.
 - **Montagem:** frente para cima (P-091, lado seguro), com o estágio de cruzeiro 0,12 m além da cápsula.
 
-| Forma | Raio máximo (m) | Comprimento (m) | Menor folga radial no Vulcan (m) |
-| :- | -: | -: | -: |
-| MSL/M2020 (Ø 4,5 m) | 2,26 | 2,88 | 0,143 |
-| SRL-A (forma do CAD) | 2,34 | 3,85 | 0,047 |
-| SRL-C | 2,36 | 3,55 | 0,032 |
+| Forma | Raio máximo (m) | Comprimento (m) | Folga radial no Vulcan (m) | Sem o afunilamento linear (m) |
+| :- | -: | -: | -: | -: |
+| MSL/M2020 (Ø 4,5 m) | 2,26 | 2,88 | 0,143 | 0,065 |
+| SRL-A (forma do CAD) | 2,34 | 3,85 | 0,047 | −0,014 |
+| SRL-C | 2,36 | 3,55 | 0,032 | −0,034 |
 
-- **Resultado:** a folga se confirma positiva com 4,65 m, nas duas formas do SRL. Ela é pequena (3 a 5 cm), mas maior que o
-  erro de leitura.
+- **Envelope do Vulcan** ([F80] Fig. 4.3.1-1, "Simplified Static Payload Envelope"):
+  - entre o plano do PAF (Ø 4.877 mm) e a estação 2856.66 (Ø 4.648 mm), o contorno desenhado é reto, sem degrau (largura
+    medida linha a linha na página);
+  - a figura não está em escala: a razão das larguras em pixels é cerca de 0,974, contra 0,953 pelas cotas (medição feita
+    na página renderizada do guia, fora de `results/`);
+  - a folga da quarta coluna usa a interpolação linear entre as cotas;
+  - a última coluna supõe o diâmetro menor (4.648 mm) desde o plano do PAF.
+- **Resultado:** com 4,65 m, a folga só é positiva na leitura linear do envelope (3 a 5 cm, acima do erro de leitura da
+  cápsula, de cerca de 1 cm). Sem o afunilamento linear, ela fica negativa nas duas formas do SRL. **A condição não fica
+  confirmada sem a confirmação do envelope pela ULA.**
+  - O guia admite análise caso a caso: "Some increases in diameter may also be allowed on a mission unique basis, but must
+    be analyzed" ([F80] p. 4-8).
+  - Com 4,5 m (MSL/M2020), a folga é positiva nas duas leituras.
 - **Dependências:**
   - a orientação na coifa (P-091);
-  - o perfil da SRL-A, que é de 2024 e ainda está mudando [F41].
+  - o perfil do SRL, que é de 2024 e ainda está mudando [F41].
 
 ### 2.2 MAV deitado contra o estreitamento da casca traseira
 - **MAV:** Ø 0,57 m, 3,56 m de comprimento.
@@ -86,11 +97,13 @@ por `tools/cad_parametros.py`.
 Os valores vêm dos volumes dos primitivos. Eles servem para conferir o que o Onshape construir. Não são a comparação com o
 orçamento, que fica para a Etapa 7.3.
 
-| Veículo | Massa do CAD (kg) | Com geometria | Propelente | Densidade equivalente | CG z (m) | Orçamento (kg) |
+| Veículo | Massa do CAD (kg) | Geometria modelada | Propelente | Densidade equivalente | CG z (m) | Orçamento (kg) |
 | :- | -: | -: | -: | -: | -: | -: |
 | Orbitador | 6.506,3 | 263,3 | 4.919,1 | 1.323,9 | 1,393 | 7.796 |
-| Lander (lançamento) | 3.045,1 | 184,8 | 943,5 | 1.916,9 | 2,983 | 4.615 |
+| Lander (lançamento) | 3.190,4 | 330,0 | 943,5 | 1.916,9 | 3,003 | 4.615 |
 | MAV | 348,1 | 25,1 | 285,5 | 37,5 | 1,540 | 386,8 |
+
+A geometria modelada inclui o SLA-561V, cuja densidade é a premissa P-090, e as espessuras da P-093.
 
 A diferença para o orçamento não é ajustada. São as peças que ainda não têm geometria:
 - **Orbitador:** estrutura e motores dos estágios.
@@ -116,7 +129,16 @@ A diferença para o orçamento não é ajustada. São as peças que ainda não t
 exemplo, `ONSHAPE_ACCESS_KEY` e `ONSHAPE_SECRET_KEY` no Replit), nunca no repositório.
 
 ## 5. Para decidir (Fabio)
-1. **Aeroshell de 4,65 m:** a condição se confirmou, com folga positiva no Vulcan (seção 2.1). A proposta é manter.
+1. **Aeroshell de 4,65 m:** a folga no Vulcan só é positiva com a leitura linear do envelope; com o diâmetro menor desde o
+   PAF, é negativa (seção 2.1).
+
+   | Opção | Prós | Contras |
+   | :- | :- | :- |
+   | (a) manter 4,65 m e pedir à ULA a confirmação do envelope (ou a análise caso a caso que o guia admite) | massa por área de 261 kg/m²; o MAV deitado cabe na forma do SRL | folga de 3 a 5 cm, que depende do envelope |
+   | (b) voltar para 4,5 m (critério do ADR 0022) | folga positiva nas duas leituras | massa por área de 279 kg/m² (risco de EDL); o MAV deitado não cabe na forma do MSL (seção 2.2) |
+
+   A proposta do agente é (a), mantendo a (b) como alternativa registrada. A decisão é sua, porque a condição do ADR 0022
+   não ficou confirmada sem ressalva.
 2. **MAV deitado:** cabe só com a base no plano do ombro, com 2 a 3 cm de folga de cada lado (seção 2.2). As opções:
 
    | Opção | Prós | Contras |
@@ -128,9 +150,10 @@ exemplo, `ONSHAPE_ACCESS_KEY` e `ONSHAPE_SECRET_KEY` no Replit), nunca no reposi
 
    A proposta do agente é manter (a) no CAD da 7.3 e registrar o risco. As opções (c) e (d) seriam calculadas se você
    pedir.
-3. **P-079, densidade da hidrazina:** achei fonte, a densidade relativa de 1,01 a 15 °C [F224].
-   - Proposta: mudar o valor-base de 1.004 para cerca de 1.009 kg/m³ (1,01 × a densidade da água a 15 °C, que precisaria
-     de fonte própria). Não mudei: valor-base só com a sua aprovação.
+3. **P-079, densidade da hidrazina:** achei fonte, a densidade relativa de 1,01 a 15 °C [F224], com três algarismos. Ela
+   corresponde a cerca de 1.004 a 1.014 kg/m³, e o valor-base atual (1.004) já está dentro dessa faixa.
+   - Proposta: manter o valor e acrescentar [F224] à justificativa (feito, sem mudar o valor).
+   - A densidade da água, necessária para converter, não tem fonte própria aqui.
 4. **Premissas novas (NÃO VALIDADAS):**
 
    | Premissa | O que define |
@@ -148,6 +171,12 @@ exemplo, `ONSHAPE_ACCESS_KEY` e `ONSHAPE_SECRET_KEY` no Replit), nunca no reposi
 - **Geometria simplificada:** os primitivos não dimensionam estrutura nem pressão, as espessuras são de ordem de grandeza
   (P-093) e o CAD não confere interferência entre peças.
 - **Compilação:** o FeatureScript não foi compilado aqui (não conferido). A biblioteca padrão foi conferida na documentação
-  oficial do FeatureScript: `fCylinder`, `fCone`, `fCuboid`, `opSphere`, `opBoolean` e `setProperty`.
+  oficial do FeatureScript: `fCylinder`, `fCone`, `fCuboid`, `opSphere`, `opBoolean` e `setProperty`. Se uma subtração (corpo
+  oco) falhar, a feature falha com erro, em vez de deixar um corpo maciço com massa errada.
+- **Interferências conhecidas no arranjo do lander** (P-095, sem conferência de interferência):
+  - os tanques de descida, centrados no plano do ombro a 1,4 m do eixo, atravessam a frente do escudo térmico;
+  - o tanque de descida 1 se sobrepõe ao núcleo do lander;
+  - o Onshape vai mostrar essas sobreposições. O arranjo interno fica para revisão na 7.3.
+- **Perfil do nariz:** o nariz rombudo entra como um vértice lido da figura, (0,02 m; 0,25 m).
 - **Configuração:** o lander está em configuração de lançamento. A configuração de entrada (sem o estágio de cruzeiro), que
   dá o deslocamento do CG, fica para a 7.3.

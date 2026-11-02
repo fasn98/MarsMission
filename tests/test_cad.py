@@ -72,3 +72,13 @@ def test_conferencias():
         comp = [x["comprimento_max_m"] for x in linhas]
         assert all(b <= a for a, b in zip(comp, comp[1:]))   # mais para trás, a casca estreita
     assert set(r["lander_vulcan"]["por_forma"]) == {"msl_m2020", "srl_a", "srl_c"}
+
+
+def test_casca_do_escudo_tem_o_volume_da_espessura():
+    """A casca de PICA tem volume = área lateral × espessura [F215] (o deslocamento não fica limitado pelo nariz)."""
+    r = ler("results/etapa7.2/parametros.yaml")
+    t = ler("config/cad.yaml")["capsulas"]["espessura_pica_m"]["valor"]
+    c = next(x for x in r["veiculos"]["lander"] if x["nome"] == "Escudo térmico (PICA)")
+    h = abs(c["p1"][2] - c["p0"][2])
+    alvo = math.pi * (c["r0"] + c["r1"]) * math.hypot(h, c["r1"] - c["r0"]) * t
+    assert cp.volume(c) == pytest.approx(alvo, rel=1e-3)

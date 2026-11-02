@@ -18,13 +18,14 @@ const MATERIAIS = [
     ["SLA-561V", 256],
     ["MMH", 869],
     ["MON-3", 1431],
-    ["Hidrazina", 1004],
+    ["Hidrazina", 1004]
 ];
 const CORPOS = [
-    { "tipo" : "tronco_oco", "nome" : "Escudo termico (PICA)", "mat" : 4, "densidade" : 0, "cor" : [0.35, 0.22, 0.12], "p0" : [0, 0, 3.97], "p1" : [0, 0, 3.12], "r0" : 0.01, "r1" : 2.34, "ri0" : 0.005, "ri1" : 2.33 },
-    { "tipo" : "tronco_oco", "nome" : "Casca traseira 1 (SLA-561V)", "mat" : 5, "densidade" : 0, "cor" : [0.85, 0.8, 0.62], "p0" : [0, 0, 3.12], "p1" : [0, 0, 1.97], "r0" : 2.34, "r1" : 1.75, "ri0" : 2.32568, "ri1" : 1.73568 },
-    { "tipo" : "tronco_oco", "nome" : "Casca traseira 2 (SLA-561V)", "mat" : 5, "densidade" : 0, "cor" : [0.85, 0.8, 0.62], "p0" : [0, 0, 1.97], "p1" : [0, 0, 1.37], "r0" : 1.75, "r1" : 1.2, "ri0" : 1.73267, "ri1" : 1.18267 },
-    { "tipo" : "tronco_oco", "nome" : "Casca traseira 3 (SLA-561V)", "mat" : 5, "densidade" : 0, "cor" : [0.85, 0.8, 0.62], "p0" : [0, 0, 1.37], "p1" : [0, 0, 0.12], "r0" : 1.2, "r1" : 0.4, "ri0" : 1.18478, "ri1" : 0.384777 },
+    { "tipo" : "tronco", "nome" : "Nariz do escudo (PICA)", "mat" : 4, "densidade" : 0, "cor" : [0.35, 0.22, 0.12], "p0" : [0, 0, 3.97], "p1" : [0, 0, 3.95], "r0" : 0.005, "r1" : 0.25, "ri0" : 0, "ri1" : 0 },
+    { "tipo" : "tronco_oco", "nome" : "Escudo termico (PICA)", "mat" : 4, "densidade" : 0, "cor" : [0.35, 0.22, 0.12], "p0" : [0, 0, 3.95], "p1" : [0, 0, 3.12], "r0" : 0.25, "r1" : 2.34, "ri0" : 0.160913, "ri1" : 2.25091, "pe0" : [0, 0, 4.03909], "pe1" : [0, 0, 3.03091], "rie0" : 0, "rie1" : 2.47524 },
+    { "tipo" : "tronco_oco", "nome" : "Casca traseira 1 (SLA-561V)", "mat" : 5, "densidade" : 0, "cor" : [0.85, 0.8, 0.62], "p0" : [0, 0, 3.12], "p1" : [0, 0, 1.97], "r0" : 2.34, "r1" : 1.75, "ri0" : 2.32568, "ri1" : 1.73568, "pe0" : [0, 0, 3.13432], "pe1" : [0, 0, 1.95568], "rie0" : 2.33302, "rie1" : 1.72833 },
+    { "tipo" : "tronco_oco", "nome" : "Casca traseira 2 (SLA-561V)", "mat" : 5, "densidade" : 0, "cor" : [0.85, 0.8, 0.62], "p0" : [0, 0, 1.97], "p1" : [0, 0, 1.37], "r0" : 1.75, "r1" : 1.2, "ri0" : 1.73267, "ri1" : 1.18267, "pe0" : [0, 0, 1.98733], "pe1" : [0, 0, 1.35267], "rie0" : 1.74856, "rie1" : 1.16678 },
+    { "tipo" : "tronco_oco", "nome" : "Casca traseira 3 (SLA-561V)", "mat" : 5, "densidade" : 0, "cor" : [0.85, 0.8, 0.62], "p0" : [0, 0, 1.37], "p1" : [0, 0, 0.12], "r0" : 1.2, "r1" : 0.4, "ri0" : 1.18478, "ri1" : 0.384777, "pe0" : [0, 0, 1.38522], "pe1" : [0, 0, 0.104777], "rie0" : 1.19452, "rie1" : 0.375034 },
     { "tipo" : "cilindro", "nome" : "Tampa traseira (SLA-561V)", "mat" : 5, "densidade" : 0, "cor" : [0.85, 0.8, 0.62], "p0" : [0, 0, 0.12], "p1" : [0, 0, 0.1327], "r" : 0.4 },
     { "tipo" : "esfera_oca", "nome" : "Tanque cruzeiro MON-3", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [1.5, 0, 0.351727], "r" : 0.233227, "t" : 0.0015 },
     { "tipo" : "esfera", "nome" : "Propelente cruzeiro MON-3", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [1.5, 0, 0.351727], "r" : 0.227799 },
@@ -37,7 +38,7 @@ const CORPOS = [
     { "tipo" : "esfera", "nome" : "Propelente descida 2", "mat" : 8, "densidade" : 0, "cor" : [0.11, 0.69, 0.48], "c" : [-0.7, 1.21244, 3.12], "r" : 0.350697 },
     { "tipo" : "esfera_oca", "nome" : "Tanque descida 3", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-0.7, -1.21244, 3.12], "r" : 0.358245, "t" : 0.0015 },
     { "tipo" : "esfera", "nome" : "Propelente descida 3", "mat" : 8, "densidade" : 0, "cor" : [0.11, 0.69, 0.48], "c" : [-0.7, -1.21244, 3.12], "r" : 0.350697 },
-    { "tipo" : "cilindro", "nome" : "Nucleo do lander (P-017 sem braco e helicopteros)", "mat" : -1, "densidade" : 1161.16, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 3.42], "p1" : [0, 0, 3.12], "r" : 1.26412 },
+    { "tipo" : "cilindro", "nome" : "Nucleo do lander (P-017 sem braco e helicopteros)", "mat" : -1, "densidade" : 1041.79, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 3.42], "p1" : [0, 0, 3.12], "r" : 1.33458 },
     { "tipo" : "cilindro", "nome" : "MAV motores do estagio 1 (4 x R-4D-11)", "mat" : -1, "densidade" : 120.916, "cor" : [0.48, 0.37, 0.65], "p0" : [0, -1.7805, 2.835], "p1" : [0, -1.1805, 2.835], "r" : 0.275 },
     { "tipo" : "tubo", "nome" : "MAV Tanque de oxidante do estagio 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, -1.1805, 2.835], "p1" : [0, -0.530685, 2.835], "r" : 0.275, "t" : 0.0015 },
     { "tipo" : "cilindro", "nome" : "MAV propelente oxidante do estagio 1", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "p0" : [0, -1.07, 2.835], "p1" : [0, -0.641181, 2.835], "r" : 0.2735 },
@@ -52,7 +53,7 @@ const CORPOS = [
     { "tipo" : "cilindro", "nome" : "MAV carga (conteiner de amostras)", "mat" : -1, "densidade" : 192.414, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 1.4305, 2.835], "p1" : [0, 1.7805, 2.835], "r" : 0.275 },
     { "tipo" : "cilindro", "nome" : "Braco de coleta (guardado)", "mat" : -1, "densidade" : 4794.97, "cor" : [0.48, 0.37, 0.65], "p0" : [0.45, -1.175, 3.07], "p1" : [0.45, 1.175, 3.07], "r" : 0.05 },
     { "tipo" : "cilindro", "nome" : "Helicoptero 1", "mat" : -1, "densidade" : 4.22579, "cor" : [0.48, 0.37, 0.65], "p0" : [0, -0.75, 2.5], "p1" : [0, -0.75, 2.01], "r" : 0.7 },
-    { "tipo" : "cilindro", "nome" : "Helicoptero 2", "mat" : -1, "densidade" : 4.22579, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0.75, 2.5], "p1" : [0, 0.75, 2.01], "r" : 0.7 },
+    { "tipo" : "cilindro", "nome" : "Helicoptero 2", "mat" : -1, "densidade" : 4.22579, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0.75, 2.5], "p1" : [0, 0.75, 2.01], "r" : 0.7 }
 ];
 
 annotation { "Feature Type Name" : "MarsMission lander" }
@@ -121,8 +122,9 @@ function constroi(context is Context, opId is Id, b is map)
     {
         fCone(context, opId + "a", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
                     "bottomRadius" : b["r0"] * meter, "topRadius" : b["r1"] * meter });
-        fCone(context, opId + "n", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
-                    "bottomRadius" : b["ri0"] * meter, "topRadius" : b["ri1"] * meter });
+        // cone interno estendido alem das faces (pe0, pe1, rie0, rie1, calculados pela ferramenta): sem faces coplanares
+        fCone(context, opId + "n", { "bottomCenter" : vec(b["pe0"]), "topCenter" : vec(b["pe1"]),
+                    "bottomRadius" : b["rie0"] * meter, "topRadius" : b["rie1"] * meter });
         hollow(context, opId + "h", opId + "a", opId + "n");
     }
     else if (t == "caixa")
@@ -132,25 +134,13 @@ function constroi(context is Context, opId is Id, b is map)
 }
 
 // Metodo reaproveitado de projeto anterior: subtracao de corpos (oco) e acabamento (nome, aparencia e material).
+// Sem recuperacao silenciosa: se a subtracao falhar, a feature falha, em vez de deixar um corpo macico com massa errada.
 function hollow(context is Context, opId is Id, outerId is Id, innerId is Id)
 {
-    try
-    {
-        opBoolean(context, opId, {
-                    "tools" : qCreatedBy(innerId, EntityType.BODY),
-                    "targets" : qCreatedBy(outerId, EntityType.BODY),
-                    "operationType" : BooleanOperationType.SUBTRACTION });
-    }
-    catch (error)
-    {
-        try
-        {
-            opDeleteBodies(context, opId + "limpa", { "entities" : qCreatedBy(innerId, EntityType.BODY) });
-        }
-        catch (error2)
-        {
-        }
-    }
+    opBoolean(context, opId, {
+                "tools" : qCreatedBy(innerId, EntityType.BODY),
+                "targets" : qCreatedBy(outerId, EntityType.BODY),
+                "operationType" : BooleanOperationType.SUBTRACTION });
 }
 
 function finish(context is Context, bodies is Query, name is string, mat is array, c is Color, assign is boolean)

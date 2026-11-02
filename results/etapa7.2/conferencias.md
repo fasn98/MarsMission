@@ -6,11 +6,13 @@ Escolhas (ADR 0022): aeroshell srl_duplo, MAV restricao_2019, 2 pares de tanques
 
 Perfis lidos de [F41] Fig. 2 (P-089); frente para cima e estágio de cruzeiro de 0,12 m além da cápsula (P-091).
 
-| Forma | Raio máximo | Comprimento | Menor folga radial ao envelope do Vulcan |
-| :- | -: | -: | -: |
-| MSL/M2020 (Ø 4,5 m) | 2,26 | 2,88 | 0,143 |
-| SRL-A | 2,34 | 3,85 | 0,047 |
-| SRL-C | 2,36 | 3,55 | 0,032 |
+| Forma | Raio máximo | Comprimento | Menor folga radial ao envelope do Vulcan | Sem o afunilamento linear entre as cotas |
+| :- | -: | -: | -: | -: |
+| MSL/M2020 (Ø 4,5 m) | 2,26 | 2,88 | 0,143 | 0,065 |
+| SRL-A | 2,34 | 3,85 | 0,047 | −0,014 |
+| SRL-C | 2,36 | 3,55 | 0,032 | −0,034 |
+
+Envelope do Vulcan: [F80] Fig. 4.3.1-1 ("Simplified"), cotas de diâmetro nas estações; entre elas o contorno desenhado é reto, e a interpolação é linear. A última coluna supõe o diâmetro menor (o da estação de cima) desde o plano do PAF.
 
 Forma usada no CAD: SRL-A.
 
@@ -40,11 +42,13 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 
 ## Massa e CG esperados do CAD (pelos volumes dos primitivos; para conferir o Onshape)
 
-| Veículo | Corpos | Massa do CAD | Com geometria e densidade com fonte | Propelente | Densidade equivalente (orçamento) | CG (x, y, z) |
+| Veículo | Corpos | Massa do CAD | Geometria modelada | Propelente | Densidade equivalente (orçamento) | CG (x, y, z) |
 | :- | -: | -: | -: | -: | -: | :- |
 | orbitador | 20 | 6 506,3 | 263,3 | 4 919,1 | 1 323,9 | 0,000, 0,000, 1,393 |
-| lander | 32 | 3 045,1 | 184,8 | 943,5 | 1 916,9 | 0,027, −0,028, 2,983 |
+| lander | 33 | 3 190,4 | 330,0 | 943,5 | 1 916,9 | 0,026, −0,026, 3,003 |
 | mav | 12 | 348,1 | 25,1 | 285,5 | 37,5 | 0,000, 0,000, 1,540 |
+
+Geometria modelada: tanques, cilindro central, escudo térmico (PICA [F223]) e casca traseira (SLA-561V, densidade da P-090), com espessuras das fontes [F215, F225] ou da P-093.
 
 Orçamento (results/etapa2.5/arquitetura.yaml): orbitador 7 796 kg, lander 4 615 kg, MAV 386,8 kg. A diferença (estrutura, motores e peças sem geometria nesta etapa) é assunto da Etapa 7.3; nada é ajustado.
 

@@ -77,8 +77,9 @@ function constroi(context is Context, opId is Id, b is map)
     {
         fCone(context, opId + "a", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
                     "bottomRadius" : b["r0"] * meter, "topRadius" : b["r1"] * meter });
-        fCone(context, opId + "n", { "bottomCenter" : vec(b["p0"]), "topCenter" : vec(b["p1"]),
-                    "bottomRadius" : b["ri0"] * meter, "topRadius" : b["ri1"] * meter });
+        // cone interno estendido alem das faces (pe0, pe1, rie0, rie1, calculados pela ferramenta): sem faces coplanares
+        fCone(context, opId + "n", { "bottomCenter" : vec(b["pe0"]), "topCenter" : vec(b["pe1"]),
+                    "bottomRadius" : b["rie0"] * meter, "topRadius" : b["rie1"] * meter });
         hollow(context, opId + "h", opId + "a", opId + "n");
     }
     else if (t == "caixa")
@@ -88,25 +89,13 @@ function constroi(context is Context, opId is Id, b is map)
 }
 
 // Metodo reaproveitado de projeto anterior: subtracao de corpos (oco) e acabamento (nome, aparencia e material).
+// Sem recuperacao silenciosa: se a subtracao falhar, a feature falha, em vez de deixar um corpo macico com massa errada.
 function hollow(context is Context, opId is Id, outerId is Id, innerId is Id)
 {
-    try
-    {
-        opBoolean(context, opId, {
-                    "tools" : qCreatedBy(innerId, EntityType.BODY),
-                    "targets" : qCreatedBy(outerId, EntityType.BODY),
-                    "operationType" : BooleanOperationType.SUBTRACTION });
-    }
-    catch (error)
-    {
-        try
-        {
-            opDeleteBodies(context, opId + "limpa", { "entities" : qCreatedBy(innerId, EntityType.BODY) });
-        }
-        catch (error2)
-        {
-        }
-    }
+    opBoolean(context, opId, {
+                "tools" : qCreatedBy(innerId, EntityType.BODY),
+                "targets" : qCreatedBy(outerId, EntityType.BODY),
+                "operationType" : BooleanOperationType.SUBTRACTION });
 }
 
 function finish(context is Context, bodies is Query, name is string, mat is array, c is Color, assign is boolean)
