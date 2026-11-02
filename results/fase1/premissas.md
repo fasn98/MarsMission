@@ -83,7 +83,7 @@
 | P-079 | densidade_da_hidrazina | 1004 | kg/m³ (~25 °C) | NÃO VALIDADA | config/cad.yaml (volume dos tanques de descida do lander, Etapa 7.1) |
 | P-080 | razao_de_mistura_do_cruzeiro_do_lander | 1.65 | adimensional (O/F, massa) | NÃO VALIDADA | config/cad.yaml (tanques do estágio de cruzeiro do lander, 4 × 10N, ADR 0011) |
 | P-081 | fracao_de_ullage_dos_tanques | 0.05 | fração do volume do tanque | NÃO VALIDADA | config/cad.yaml (volume dos tanques, Etapa 7.1) |
-| P-082 | arranjo_dos_tanques | orbitador: 2 pares esféricos por estágio, em quadrado em torno do cilindro central; cruzeiro_lander: 1 par esférico | — | NÃO VALIDADA | config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1) |
+| P-082 | arranjo_dos_tanques | orbitador: 2 pares esféricos por estágio, em quadrado em torno do cilindro central; cruzeiro_lander: 1 par esférico; ccrs: maior dimensão na horizontal | — | NÃO VALIDADA | config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1) |
 | P-083 | altura_do_conjunto_cruzeiro_aeroshell_proporcional_ao_diametro | altura = 3,0 m × (D / 4,5 m) | m | NÃO VALIDADA | config/cad.yaml (conjunto do lander na coifa do Vulcan, Etapa 7.1) |
 | P-084 | propelente_de_descida_proporcional_a_massa_de_entrada | 387 kg × (massa de entrada / 3150 kg), hidrazina, 3 tanques esféricos | kg | NÃO VALIDADA | config/cad.yaml (tanques de descida do lander, Etapa 7.1) |
 | P-085 | geometria_dos_tanques_do_mav | forma: cilindro com tampos hemisféricos no diâmetro interno do MAV; espessura_parede_m: 0.01 | m | NÃO VALIDADA | config/cad.yaml (comprimento do MAV, Etapa 7.1) |

@@ -63,7 +63,7 @@ Fase 7, CAD paramétrico no Onshape. A ordem das fases foi decidida no ADR 0021:
 | Diâmetro do MAV | (a) 0,50 m (limite do MSR) | encaixa no padrão do MSR | 3,79 m de comprimento |
 | | (b) 0,57 m (restrição de 2019) | 3,56 m, mais curto | também acima do limite de 3 m |
 | Arranjo dos tanques do orbitador | (a) dois pares por estágio (base) | conjunto mais baixo | mais tanques e linhas |
-| | (b) um par por estágio | menos tanques (esferas de 1,41 e 1,14 m) | conjunto mais alto |
+| | (b) um par por estágio | menos tanques (esferas de 1,41 e 1,14 m) | conjunto mais alto; com o cilindro central, folga radial de 0,06 m no estágio de inserção (0,88 m sem o cilindro) |
 
 **Proposta do agente (o Fabio decide):**
 - **Aeroshell:** (b), 4,65 m, porque a massa de entrada do lander está mais perto da classe do SRL. A folga radial no Vulcan
@@ -93,6 +93,10 @@ Fase 7, CAD paramétrico no Onshape. A ordem das fases foi decidida no ADR 0021:
 - **Dimensões sem fonte:** as do R-4D-11 e do contêiner de amostras não foram encontradas (P-086).
 - **Densidades:** a do MON-3 e a da hidrazina são premissas (P-078, P-079).
 - **Coifas:** o perfil do Falcon foi lido de um arquivo CAD, e o do Vulcan, de uma figura. Nenhum dos dois é texto citado.
+  Os passos da leitura do STEP estão na fonte do perfil em `config/cad.yaml`.
+- **MAV deitado no aeroshell:** a conferência usa o diâmetro útil interno, sem o estreitamento da casca traseira
+  (afterbody triconic [F215]).
+- **EES no CCRS:** o encaixe do EES (Ø 1,273 m) no CCRS (3,4 × 0,5 × 2 m) não foi conferido.
 - **Padrão do drone:** o repositório fasn98/AeroDesignFlow não estava acessível com o token desta sessão (ADR 0021). Ele
   é necessário para a 7.2.
 
@@ -101,3 +105,6 @@ As listas `results/fase2/` e `results/fase3/premissas_nao_validadas.md` vinham a
 e a da Fase 3 marcava como "criadas na Fase 3" também as da Fase 4. `tools/lista_premissas.py` foi corrigido: cada lista traz
 só as premissas que existiam ao fim da fase. Com isso, as listas voltam a bater com os relatórios das Fases 2, 3 e 4. A
 lista completa continua em `results/fase1/premissas.md`.
+- **Fase 2:** a lista tem 40 premissas, como na §9 do relatório da Fase 2 depois da nota de 2026-10-27. As notas
+  seguintes do relatório da Fase 2, que contavam a lista acumulada, receberam uma nota (2026-11-02).
+- **Fase 3:** a lista tem 49 premissas, 9 delas criadas na Fase 3, como na §7 do relatório da Fase 3 (nota no relatório).

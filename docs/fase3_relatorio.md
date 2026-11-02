@@ -197,3 +197,9 @@ das Fases 2 a 4 foram regenerados; os das etapas anteriores à 2.3 ficam como es
 | Orbitador injetado; Falcon Heavy descartável; Vulcan VC6 | 7.796 kg; +44 %; +6 % | sem mudança |
 
 Lançadores de base (ADR 0020): lander no Vulcan VC4, com o VC6 de reserva; orbitador no Falcon Heavy descartável.
+
+
+## Nota (Etapa 7.1, 2026-11-02): lista de premissas da Fase 3
+`tools/lista_premissas.py` passou a gravar em `results/fase3/premissas_nao_validadas.md` só as premissas que existiam ao
+fim da Fase 3 (P-001 a P-049). Antes, a lista acumulava as da Fase 4 e as marcava como "criadas na Fase 3". Vigente: 49
+premissas, todas NÃO VALIDADAS, 9 criadas na Fase 3, como na §7 acima. O texto acima fica como estava.

@@ -12,7 +12,10 @@ orbitador:
       raio_conjunto_m: 1.957281605307442
       alternativa_um_par:
         diametro_esfera_m: 1.4108364158119189
-        raio_conjunto_m: 1.4358364158119188
+        raio_com_cilindro_m: 2.248336415811919
+        raio_sem_cilindro_m: 1.4358364158119188
+        margem_com_cilindro_m: 0.06421255829526107
+        margem_sem_cilindro_m: 0.8767125582952611
     retorno:
       oxidante_kg: 1063.9300699577152
       combustivel_kg: 644.8061030046758
@@ -24,7 +27,10 @@ orbitador:
       raio_conjunto_m: 1.7449869926527941
       alternativa_um_par:
         diametro_esfera_m: 1.1433619645490494
-        raio_conjunto_m: 1.1683619645490493
+        raio_com_cilindro_m: 1.9808619645490495
+        raio_sem_cilindro_m: 1.1683619645490493
+        margem_com_cilindro_m: 0.3237876294641562
+        margem_sem_cilindro_m: 1.1362876294641564
   conjuntos:
   - conjunto: Estágio de inserção em Marte
     h0_m: 0.0
@@ -36,7 +42,7 @@ orbitador:
     h1_m: 2.1272685979602364
     raio_m: 1.7449869926527941
     margem_radial_m: 0.5616439511243398
-  - conjunto: CCRS (3,4 × 0,5 × 2 m, deitado)
+  - conjunto: CCRS (3,4 × 0,5 × 2 m; a maior dimensão na horizontal, P-082)
     h0_m: 2.2272685979602365
     h1_m: 4.2272685979602365
     raio_m: 1.7182840277439582
@@ -50,6 +56,10 @@ orbitador:
   - 3.4
   - 0.5
   - 2.0
+  raio_cilindro_central_m: 0.7875
+  folga_radial_m: 0.05
+  plataforma_kg: 614.0
+  paf_mm: 1575.0
 lander:
   massa_entrada_kg: 4429.351262237578
   opcoes_aeroshell:
@@ -160,6 +170,8 @@ mav:
 mav_referencias:
   limite_src_m: 2.99
   limite_2019_m: 3.0
+  diametro_src_m: 0.5
+  diametro_2019_m: 0.57
   bowles_comprimento_m: 2.19
   bowles_diametro_m: 0.52
   bowles_glow_kg: 312.5

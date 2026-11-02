@@ -928,12 +928,14 @@ premissas:
     status: NÃO VALIDADA
   - id: P-082
     nome: arranjo_dos_tanques
-    valor: {orbitador: "2 pares esféricos por estágio, em quadrado em torno do cilindro central", cruzeiro_lander: "1 par esférico"}
+    valor: {orbitador: "2 pares esféricos por estágio, em quadrado em torno do cilindro central", cruzeiro_lander: "1 par esférico", ccrs: "maior dimensão na horizontal"}
     unidade: —
     uso: config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1)
     justificativa: >
       Escolha de arranjo para o esquema da Etapa 7.1, a decidir pelo Fabio. Alternativa calculada: um par por estágio
-      (tanques maiores, conjunto mais alto e mais estreito). O cilindro central acompanha o PAF de 1575 mm [F82].
+      (tanques maiores e conjunto mais alto), com e sem o cilindro central; com o cilindro, a folga radial no estágio de
+      inserção fica pequena (results/etapa7.1/envelope.md). O cilindro central acompanha o PAF de 1575 mm [F82]. O CCRS
+      vai com a maior dimensão na horizontal, sobre o estágio de retorno.
     status: NÃO VALIDADA
   - id: P-083
     nome: altura_do_conjunto_cruzeiro_aeroshell_proporcional_ao_diametro

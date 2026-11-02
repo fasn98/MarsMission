@@ -91,27 +91,39 @@ def main():
         vol = volumes(x["propelente_kg"], of, rho_ox, rho_fu, ull)
         d = esfera(max(vol["tanque_oxidante_m3"], vol["tanque_combustivel_m3"]) / pares)
         d1 = esfera(max(vol["tanque_oxidante_m3"], vol["tanque_combustivel_m3"]))
+        # alternativa de um par por estágio: com o cilindro central (esferas dos dois lados dele) e sem ele (esferas
+        # encostadas no eixo, folga radial entre elas)
         tanques_o[nome] = {**vol, "propelente_kg": x["propelente_kg"], "pares": pares, "diametro_esfera_m": d,
                            "raio_conjunto_m": rc + f_rad + d,
-                           "alternativa_um_par": {"diametro_esfera_m": d1, "raio_conjunto_m": d1 + f_rad / 2}}
+                           "alternativa_um_par": {"diametro_esfera_m": d1, "raio_com_cilindro_m": rc + f_rad + d1,
+                                                  "raio_sem_cilindro_m": d1 + f_rad / 2}}
     cc = [float(x) for x in ob["ccrs_m"]["dimensoes"]["valor"]]
     conj_o, h = [], 0.0
     for nome, rot in (("insercao_marte", "Estágio de inserção em Marte"), ("retorno", "Estágio de retorno")):
         t = tanques_o[nome]
         conj_o.append({"conjunto": rot, "h0_m": h, "h1_m": h + t["diametro_esfera_m"], "raio_m": t["raio_conjunto_m"]})
         h += t["diametro_esfera_m"] + f_ent
-    conj_o.append({"conjunto": "CCRS (3,4 × 0,5 × 2 m, deitado)", "h0_m": h, "h1_m": h + cc[2], "raio_m": math.hypot(cc[0] / 2, cc[1] / 2)})
+    rot_cc = " × ".join(f"{x:g}" for x in cc).replace(".", ",")
+    conj_o.append({"conjunto": f"CCRS ({rot_cc} m; a maior dimensão na horizontal, P-082)", "h0_m": h, "h1_m": h + cc[2], "raio_m": math.hypot(cc[0] / 2, cc[1] / 2)})
     fal = cad["coifas"]["falcon_padrao"]["perfil"]
     perf_f = ([float(x) for x in fal["altura_m"]], [float(x) for x in fal["raio_m"]])
     for c in conj_o:
         c["margem_radial_m"] = margem_conjunto(perf_f, c["h0_m"], c["h1_m"], c["raio_m"])
+    for c, nome in zip(conj_o[:2], ("insercao_marte", "retorno")):
+        alt = tanques_o[nome]["alternativa_um_par"]
+        h1 = c["h0_m"] + alt["diametro_esfera_m"]
+        alt["margem_com_cilindro_m"] = margem_conjunto(perf_f, c["h0_m"], h1, alt["raio_com_cilindro_m"])
+        alt["margem_sem_cilindro_m"] = margem_conjunto(perf_f, c["h0_m"], h1, alt["raio_sem_cilindro_m"])
     oe = pcfg["orbitador"]["energia"]
     d_af = en["orbitador"]["afelio_marte_ua"]
     area_o = (en["orbitador"]["adotada"]["painel_w_afelio"] * d_af ** 2
               / (v(pcfg["lander"]["energia"]["densidade_area_painel_w_m2"]) * v(oe["fator_perdas_painel"])))
     orbitador = {"tanques": tanques_o, "conjuntos": conj_o, "altura_total_m": conj_o[-1]["h1_m"],
                  "topo_envelope_m": perf_f[0][-1], "cabe": all(c["margem_radial_m"] >= 0 for c in conj_o) and conj_o[-1]["h1_m"] <= perf_f[0][-1],
-                 "area_paineis_m2": area_o, "ees_diametro_m": v(ob["ees_diametro_m"]), "ccrs_m": cc}
+                 "area_paineis_m2": area_o, "ees_diametro_m": v(ob["ees_diametro_m"]), "ccrs_m": cc,
+                 "raio_cilindro_central_m": rc, "folga_radial_m": f_rad,
+                 "plataforma_kg": next(x["massa_kg"] for k, x in comp_o.items() if k.startswith("Plataforma")),
+                 "paf_mm": v(ob["cilindro_central_diametro_m"]) * 1000}
 
     # ---------------- lander: estágio de cruzeiro + aeroshell (opções de diâmetro) no Vulcan de 15,5 m
     vul = cad["coifas"]["vulcan_15_5"]["perfil"]
@@ -169,6 +181,7 @@ def main():
         mavs[k] = {"diametro_m": dmav, "segmentos": [{"item": a, "comprimento_m": b, "tipo": c} for a, b, c in segs], "comprimento_m": comp,
                    "dentro_do_diametro_util": {kk: comp <= oo["diametro_util_interno_m"] for kk, oo in opcoes.items()}}
     ref_mav = {"limite_src_m": v(mv["comprimento_max_src_m"]), "limite_2019_m": v(mv["comprimento_max_2019_m"]),
+               "diametro_src_m": v(mv["diametro_opcoes_m"]["src_2022"]), "diametro_2019_m": v(mv["diametro_opcoes_m"]["restricao_2019"]),
                "bowles_comprimento_m": v(mv["bowles_analogo"]["comprimento_m"]), "bowles_diametro_m": v(mv["bowles_analogo"]["diametro_m"]),
                "bowles_glow_kg": v(mv["bowles_analogo"]["glow_kg"]), "glom_kg": est_m[0]["massa_inicial_kg"]}
 
@@ -189,18 +202,25 @@ def escreve_md(o):
     md = ["# Envelope e arranjo dos veículos (gerado por tools/envelope_arranjo.py)", "",
           "Dimensões derivadas de results/ e config/cad.yaml (fontes e premissas). Comprimentos em m, volumes em m³, massas em kg.", "",
           "## Orbitador no Falcon Heavy (coifa padrão, volume útil com mantas)", "",
-          "| Estágio | Propelente | Oxidante | Combustível | Tanque de oxidante | Tanque de combustível | Pares | Ø da esfera | Ø da esfera com 1 par |",
-          "| :- | -: | -: | -: | -: | -: | -: | -: | -: |"]
+          "| Estágio | Propelente | Oxidante | Combustível | Tanque de oxidante | Tanque de combustível | Pares | Ø da esfera |",
+          "| :- | -: | -: | -: | -: | -: | -: | -: |"]
     for k, rot in (("insercao_marte", "Inserção em Marte"), ("retorno", "Retorno")):
         t = ob["tanques"][k]
         md.append(f"| {rot} | {br(t['propelente_kg'], 0)} | {br(t['oxidante_kg'], 0)} | {br(t['combustivel_kg'], 0)} | {br(t['tanque_oxidante_m3'], 3)} | "
-                  f"{br(t['tanque_combustivel_m3'], 3)} | {t['pares']} | {br(t['diametro_esfera_m'])} | {br(t['alternativa_um_par']['diametro_esfera_m'])} |")
+                  f"{br(t['tanque_combustivel_m3'], 3)} | {t['pares']} | {br(t['diametro_esfera_m'])} |")
+    md += ["", "Alternativa de um par por estágio (P-082):", "",
+           "| Estágio | Ø da esfera | Raio com o cilindro central | Folga radial | Raio sem o cilindro central | Folga radial |", "| :- | -: | -: | -: | -: | -: |"]
+    for k, rot in (("insercao_marte", "Inserção em Marte"), ("retorno", "Retorno")):
+        a = ob["tanques"][k]["alternativa_um_par"]
+        md.append(f"| {rot} | {br(a['diametro_esfera_m'])} | {br(a['raio_com_cilindro_m'])} | {br(a['margem_com_cilindro_m'])} | "
+                  f"{br(a['raio_sem_cilindro_m'])} | {br(a['margem_sem_cilindro_m'])} |")
     md += ["", "| Conjunto | Altura da base | Altura do topo | Raio do conjunto | Folga radial ao envelope |", "| :- | -: | -: | -: | -: |"]
     for c in ob["conjuntos"]:
         md.append(f"| {c['conjunto']} | {br(c['h0_m'])} | {br(c['h1_m'])} | {br(c['raio_m'])} | {br(c['margem_radial_m'])} |")
     md += ["", f"Altura do conjunto empilhado {br(ob['altura_total_m'])} m, contra {br(ob['topo_envelope_m'])} m do topo do volume útil: "
            f"**{'cabe' if ob['cabe'] else 'não cabe'}**. Painéis do orbitador: {br(ob['area_paineis_m2'], 1)} m² (dobrados no lançamento; empacotamento na 7.2). "
-           f"EES: Ø {br(ob['ees_diametro_m'], 3)} m, dentro do CCRS. A plataforma (614 kg) não tem volume dimensionado nesta etapa.", "",
+           f"EES: Ø {br(ob['ees_diametro_m'], 3)} m (o encaixe no CCRS não foi conferido). A plataforma ({br(ob['plataforma_kg'], 0)} kg) não tem volume "
+           "dimensionado nesta etapa.", "",
            "## Lander no Vulcan de 15,5 m (estágio de cruzeiro + aeroshell)", "",
            f"Massa de entrada do lander: {br(la['massa_entrada_kg'], 0)} kg. Semiângulo da frente do aeroshell: {br(la['semiangulo_graus'], 0)}°.", "",
            "| Opção de aeroshell | Diâmetro | Massa de entrada da referência | Massa por área: lander / referência (kg/m²) | Altura do conjunto (P-083) | Folga radial no Vulcan | Diâmetro útil interno |",
@@ -224,11 +244,12 @@ def escreve_md(o):
     for i, s in enumerate(mv[ks[0]]["segmentos"]):
         md.append(f"| {s['item']} | " + " | ".join(br(mv[k]["segmentos"][i]["comprimento_m"]) for k in ks) + " |")
     md.append("| **Comprimento total** | " + " | ".join(f"**{br(mv[k]['comprimento_m'])}**" for k in ks) + " |")
-    md += ["", f"Referências: limite do MAV do MSR {br(rf['limite_src_m'])} m × Ø 0,50 m [F35]; restrição de 2019 {br(rf['limite_2019_m'])} m × Ø 0,57 m [F216]; "
+    md += ["", f"Referências: limite do MAV do MSR {br(rf['limite_src_m'])} m × Ø {br(rf['diametro_src_m'])} m [F35]; restrição de 2019 "
+           f"{br(rf['limite_2019_m'])} m × Ø {br(rf['diametro_2019_m'])} m [F216]; "
            f"Bowles, MAV de {br(rf['bowles_glow_kg'], 1)} kg: {br(rf['bowles_comprimento_m'])} m × Ø {br(rf['bowles_diametro_m'])} m [F46]. "
            f"GLOM do nosso MAV: {br(rf['glom_kg'], 1)} kg."]
     for k in ks:
-        md.append(f"- Ø {br(mv[k]['diametro_m'])} m: cabe deitado no diâmetro útil interno do aeroshell? "
+        md.append(f"- Ø {br(mv[k]['diametro_m'])} m: cabe deitado no diâmetro útil interno do aeroshell (sem o estreitamento da casca traseira)? "
                   + "; ".join(f"{nomes.get(kk, kk)}: {'sim' if ok else 'não'}" for kk, ok in mv[k]["dentro_do_diametro_util"].items()))
     md += ["", "Vistas: orbitador_na_coifa.png, lander_na_coifa.png, lander_superficie.png, mav.png (esquemas, não desenho de projeto)."]
     (SAIDA / "envelope.md").write_text("\n".join(md) + "\n", encoding="utf-8")
@@ -262,7 +283,7 @@ def vistas(o):
     # orbitador na coifa do Falcon (corte lateral)
     fig, ax = _eixo("Orbitador no volume útil da coifa do Falcon (esquema)")
     _envelope(ax, o["coifas"]["falcon"], "volume útil (STEP do fabricante)")
-    rc = (ob["conjuntos"][0]["raio_m"] - ob["tanques"]["insercao_marte"]["diametro_esfera_m"]) - 0.05
+    rc = ob["raio_cilindro_central_m"]
     for c, k in zip(ob["conjuntos"][:2], ("insercao_marte", "retorno")):
         d = ob["tanques"][k]["diametro_esfera_m"]
         for s, cor in ((-1, COR["oxidante"]), (1, COR["combustivel"])):
@@ -271,7 +292,7 @@ def vistas(o):
     cc = ob["conjuntos"][2]
     ax.add_patch(Rectangle((-ob["ccrs_m"][0] / 2, cc["h0_m"]), ob["ccrs_m"][0], cc["h1_m"] - cc["h0_m"], fc=COR["carga"], ec=TINTA, lw=0.6, alpha=0.6))
     ax.text(0, (cc["h0_m"] + cc["h1_m"]) / 2, "CCRS", ha="center", va="center", color=SUPERFICIE, fontsize=8)
-    ax.text(0, -0.5, "plano do PAF de 1575 mm", ha="center", color=TINTA_2, fontsize=7)
+    ax.text(0, -0.5, f"plano do PAF de {ob['paf_mm']:.0f} mm", ha="center", color=TINTA_2, fontsize=7)
     ax.set_xlim(-3, 3)
     ax.set_ylim(-1, 12)
     ax.set_xlabel("m")
@@ -300,7 +321,7 @@ def vistas(o):
     plt.close(fig)
 
     # lander na superfície (vista de cima): diâmetro útil interno, asas abertas, MAV deitado, helicópteros e braço
-    fig, ax = _eixo("Lander na superfície, vista de cima (esquema)", figsize=(9, 6))
+    fig, ax = _eixo("Lander na superfície, vista de cima (esquema; posições ilustrativas)", figsize=(9, 6))
     op = la["opcoes_aeroshell"]["srl_duplo"]
     ru = op["diametro_util_interno_m"] / 2
     rot_ae = f"diâmetro útil interno (Ø {op['diametro_util_interno_m']:.2f} m) do aeroshell de Ø {op['diametro_m']:.2f} m".replace(".", ",")
@@ -312,12 +333,15 @@ def vistas(o):
     m = mv[list(mv)[-1]]
     ax.add_patch(Rectangle((-m["comprimento_m"] / 2, -m["diametro_m"] / 2), m["comprimento_m"], m["diametro_m"], fc=COR["carga"], ec=TINTA, lw=0.6, alpha=0.7))
     ax.text(0, 0, f"MAV deitado (Ø {m['diametro_m']:.2f} m)".replace(".", ","), ha="center", va="center", color=SUPERFICIE, fontsize=7)
+    # posições ilustrativas: helicópteros lado a lado dentro do círculo, abaixo do MAV; braço horizontal no comprimento real
     dr = la["helicoptero"]["diametro_rotor_m"]
+    yh = -(m["diametro_m"] / 2 + dr / 2)
     for s in (-1, 1):
-        ax.add_patch(Circle((s * 0.9, -ru + dr / 2 + 0.1), dr / 2, fc="none", ec=COR["hidrazina"], lw=1))
-    ax.text(0, -ru + dr / 2 + 0.1, "helicópteros", ha="center", va="center", fontsize=7, color=TINTA_2)
-    ax.plot([0.6, 0.6 + la["braco_m"]], [ru * 0.6, ru * 0.6 + 0.4], color=TINTA, lw=2)
-    ax.text(0.6, ru * 0.6 + 0.15, "braço", fontsize=7, color=TINTA)
+        ax.add_patch(Circle((s * dr / 2, yh), dr / 2, fc="none", ec=COR["hidrazina"], lw=1))
+    ax.text(0, yh, "helicópteros", ha="center", va="center", fontsize=7, color=TINTA_2)
+    yb = m["diametro_m"] / 2 + dr / 4
+    ax.plot([0, la["braco_m"]], [yb, yb], color=TINTA, lw=2)
+    ax.text(0, yb + 0.1, "braço", fontsize=7, color=TINTA)
     lim = ru + da + 0.3
     ax.set_xlim(-lim, lim)
     ax.set_ylim(-3.2, 3.2)

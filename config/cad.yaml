@@ -29,7 +29,7 @@ coifas:
     perfil:
       altura_m: [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.3476]
       raio_m: [2.3230, 2.3201, 2.3160, 2.3118, 2.3077, 2.3035, 2.2994, 2.2953, 2.2911, 2.2870, 2.2827, 2.2787, 2.2745, 2.2704, 2.2606, 2.2099, 2.1051, 1.9619, 1.7996, 1.5966, 1.3356, 1.0023, 0.5787, 0.0]
-      fonte: "[F82] p. 16 (PDF p. 27): \"The payload static envelope for the recoverable standard fairing with acoustic blankets installed is available for download in Table 4-1\"; arquivo FAIRING_KEEP_IN_RECOVERABLE_WITH_BLANKETS_1575_PAF_A-1.stp (\"Payload Keep-in Volume, With Acoustic Blankets, 1575 mm PAF\"), em polegadas; lido com OpenCascade (topo em 11,3476 m). A origem do arquivo foi tomada como o plano do PAF: não conferido."
+      fonte: "[F82] p. 16 (PDF p. 27): \"The payload static envelope for the recoverable standard fairing with acoustic blankets installed is available for download in Table 4-1\"; arquivo FAIRING_KEEP_IN_RECOVERABLE_WITH_BLANKETS_1575_PAF_A-1.stp (\"Payload Keep-in Volume, With Acoustic Blankets, 1575 mm PAF\"), em polegadas; lido com OpenCascade (cadquery-ocp, fora das dependências do projeto): malha de 0,2 mm, faixas de 500 mm a partir da origem, raio = máximo de √(y² + z²) dos nós da malha em cada faixa, eixo x; topo em 11,3476 m. A origem do arquivo foi tomada como o plano do PAF: não conferido."
   # Vulcan (lander, ADR 0020): coifa de 15,5 m; envelope estático lido da figura (cotas em mm; estações em polegadas).
   vulcan_15_5:
     nome: "Vulcan, coifa de 15,5 m, envelope estático acima do plano do PAF de 1575 mm"
@@ -99,6 +99,6 @@ lander:
 
 orbitador:
   ccrs_m:
-    dimensoes: {valor: [3.4, 0.5, 2.0], fonte: "[F218] p. 7, legenda da Fig. 9: \"The overall dimensions of CCRS are approximately 3.4 m × 0.5 m × 2 m.\""}
+    dimensoes: {valor: [3.4, 0.5, 2.0], fonte: "[F23] p. 7, legenda da Fig. 9: \"The overall dimensions of CCRS are approximately 3.4 m × 0.5 m × 2 m.\""}
   ees_diametro_m: {valor: 1.273, fonte: "[F26] p. 3: \"The basic test article geometry is a 52.5-deg sphere-cone shape with a 1.273 m diameter and 0.3146 m nose radius\" (artigo em escala real)"}
   cilindro_central_diametro_m: {valor: 1.575, fonte: "[F82] p. 17 (PDF p. 28): PAF de 1575 mm (o cilindro central do orbitador acompanha a interface; escolha de arranjo, P-082)"}
