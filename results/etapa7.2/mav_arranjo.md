@@ -14,9 +14,11 @@ Mesmo propelente; comprimento pelos segmentos da Etapa 7.1 (P-085, P-086); folga
 | 0,72 | 3,48 | 19,8 | −0,1 |
 | 0,75 | 3,48 | 19,8 | −0,1 |
 
-O orçamento do MAV (386,8 kg, fração estrutural do ADR 0007) não depende do diâmetro; a variação acima é só a das cascas dos tanques.
+**Por que o comprimento para de cair:** a partir de Ø 0,61 m, os quatro tanques (oxidante e combustível de cada estágio, em série) já cabem em esferas menores que o diâmetro interno; daí em diante o comprimento é a soma dessas esferas mais os 1,50 m fora dos tanques (P-086). Alargar o MAV só encurta mais com outro arranjo de tanques (lado a lado, antepara comum ou toroidal), que o modelo da P-085 não inclui. As esferas menores que o diâmetro interno são uma extensão da P-085.
 
-## MSL/M2020 (4,5 m)
+**Massa:** cascas dos tanques em Ti-6Al-4V ([F219]) com a espessura da P-093, sem dimensionamento por pressão; a casca externa e a estrutura do MAV (que crescem com o diâmetro) não estão modeladas. O orçamento do MAV (386,8 kg, fração estrutural do ADR 0007) não depende do diâmetro.
+
+## MSL/M2020 (Ø 4,52 m no perfil lido)
 
 | Diâmetro | Comprimento | Deitado, base no ombro | Deitado, base no ombro + meio deck | Deitado, base no ombro + deck (P-094) | Em pé, base no ombro | Em pé, base no ombro + meio deck | Em pé, base no ombro + deck (P-094) |
 | -: | -: | -: | -: | -: | -: | -: | -: |
@@ -28,7 +30,7 @@ O orçamento do MAV (386,8 kg, fração estrutural do ADR 0007) não depende do 
 | 0,72 | 3,48 | −0,26 | −0,37 | −0,48 | −1,83 (disp. 1,64) | −1,98 (disp. 1,49) | −2,13 (disp. 1,34) |
 | 0,75 | 3,48 | −0,28 | −0,39 | −0,50 | −1,86 (disp. 1,61) | −2,01 (disp. 1,47) | −2,16 (disp. 1,32) |
 
-## SRL-A (4,65 m)
+## SRL-A (Ø 4,68 m no perfil lido)
 
 | Diâmetro | Comprimento | Deitado, base no ombro | Deitado, base no ombro + meio deck | Deitado, base no ombro + deck (P-094) | Em pé, base no ombro | Em pé, base no ombro + meio deck | Em pé, base no ombro + deck (P-094) |
 | -: | -: | -: | -: | -: | -: | -: | -: |
@@ -40,5 +42,6 @@ O orçamento do MAV (386,8 kg, fração estrutural do ADR 0007) não depende do 
 | 0,72 | 3,48 | −0,02 | −0,09 | −0,17 | −0,80 (disp. 2,67) | −0,95 (disp. 2,52) | −1,10 (disp. 2,37) |
 | 0,75 | 3,48 | −0,03 | −0,11 | −0,19 | −0,83 (disp. 2,65) | −0,98 (disp. 2,50) | −1,13 (disp. 2,35) |
 
+Faixa de diâmetros: pedido do Fabio no portão da 7.2 (0,57 a 0,75 m); estações da base derivadas do ombro do perfil e da altura do deck (P-094), como a varredura de estações da Etapa 7.1.
 Estações da base (distância ao nariz): ombro = 0,85 m; ombro + meio deck = 1,00 m; ombro + deck (P-094) = 1,15 m.
 Em pé: comprimento disponível da base até onde o raio interno (raio − folga) fica igual ao raio do MAV; a folga é esse comprimento menos o do MAV.

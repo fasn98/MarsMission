@@ -262,3 +262,8 @@ casos:
       em_pe_comprimento_disponivel_m: 2.348824412206103
       em_pe_folga_m: -1.1276776733005551
 glom_orcamento_kg: 386.77369250546496
+diametro_saturacao_m: 0.6073169792776654
+comprimento_fora_dos_tanques_m: 1.5
+diametro_perfil_m:
+  msl_m2020: 4.52
+  srl_a: 4.68

@@ -63,6 +63,10 @@ def main():
     h_deck = v(cad["construcao"]["equivalentes"]["deck_lander_altura_m"])
 
     perfis = {k: ([float(x) for x in cad["capsulas"][k]["x_m"]], [float(x) for x in cad["capsulas"][k]["r_m"]]) for k in alt["formas"]}
+    # diâmetro a partir do qual os quatro tanques são esferas em série (o volume cabe numa esfera menor que o diâmetro
+    # interno): daí em diante o comprimento não cai mais
+    vmax = max(max(ea.volumes(e["propelente_kg"], of, rho_ox, rho_fu, ull)[k] for k in ("tanque_oxidante_m3", "tanque_combustivel_m3")) for e in est_m)
+    d_sat = ea.esfera(vmax) + 2 * t_env
     linhas, ref = [], None
     for d in [float(x) for x in alt["diametros_m"]]:
         segs = ea.segmentos_mav(d, est_m, nt, t_env, of, rho_ox, rho_fu, ull)
@@ -87,7 +91,9 @@ def main():
             caso["formas"][k] = estacoes
         linhas.append(caso)
     out = nativo({"gerado_por": "tools/mav_arranjo.py", "folga_interna_m": fi, "altura_deck_m": h_deck, "casos": linhas,
-                  "glom_orcamento_kg": est_m[0]["massa_inicial_kg"]})
+                  "glom_orcamento_kg": est_m[0]["massa_inicial_kg"], "diametro_saturacao_m": d_sat,
+                  "comprimento_fora_dos_tanques_m": sum(nt.values()),
+                  "diametro_perfil_m": {k: 2 * max(p[1]) for k, p in perfis.items()}})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "mav_arranjo.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -95,7 +101,7 @@ def main():
 
 def escreve_md(o):
     br = lambda x, n=2: f"{round(x, n) + 0.0:,.{n}f}".replace(",", " ").replace(".", ",").replace("-", "−")  # noqa: E731
-    nomes = {"msl_m2020": "MSL/M2020 (4,5 m)", "srl_a": "SRL-A (4,65 m)"}
+    nomes = {k: f"{ {'msl_m2020': 'MSL/M2020', 'srl_a': 'SRL-A'}.get(k, k)} (Ø {br(d)} m no perfil lido)" for k, d in o["diametro_perfil_m"].items()}
     c0 = o["casos"][0]
     formas = list(c0["formas"])
     ests = [e["estacao"] for e in c0["formas"][formas[0]]]
@@ -106,7 +112,13 @@ def escreve_md(o):
           "| Diâmetro | Comprimento | Massa dos tanques (kg) | Variação sobre o diâmetro de 0,57 m (kg) |", "| -: | -: | -: | -: |"]
     for c in o["casos"]:
         md.append(f"| {br(c['diametro_m'])} | {br(c['comprimento_m'])} | {br(c['massa_tanques_kg'], 1)} | {br(c['variacao_massa_tanques_kg'], 1)} |")
-    md += ["", f"O orçamento do MAV ({br(o['glom_orcamento_kg'], 1)} kg, fração estrutural do ADR 0007) não depende do diâmetro; a variação acima é só a das cascas dos tanques.", ""]
+    md += ["", f"**Por que o comprimento para de cair:** a partir de Ø {br(o['diametro_saturacao_m'])} m, os quatro tanques (oxidante e combustível de "
+           "cada estágio, em série) já cabem em esferas menores que o diâmetro interno; daí em diante o comprimento é a soma dessas esferas mais os "
+           f"{br(o['comprimento_fora_dos_tanques_m'])} m fora dos tanques (P-086). Alargar o MAV só encurta mais com outro arranjo de tanques (lado a lado, "
+           "antepara comum ou toroidal), que o modelo da P-085 não inclui. As esferas menores que o diâmetro interno são uma extensão da P-085.", "",
+           f"**Massa:** cascas dos tanques em Ti-6Al-4V ([F219]) com a espessura da P-093, sem dimensionamento por pressão; a casca externa e a "
+           f"estrutura do MAV (que crescem com o diâmetro) não estão modeladas. O orçamento do MAV ({br(o['glom_orcamento_kg'], 1)} kg, fração "
+           "estrutural do ADR 0007) não depende do diâmetro.", ""]
     for k in formas:
         md += [f"## {nomes.get(k, k)}", "",
                "| Diâmetro | Comprimento | " + " | ".join(f"Deitado, base no {e}" for e in ests) + " | " + " | ".join(f"Em pé, base no {e}" for e in ests) + " |",
@@ -116,7 +128,9 @@ def escreve_md(o):
             md.append(f"| {br(c['diametro_m'])} | {br(c['comprimento_m'])} | " + " | ".join(br(e["deitado_folga_m"]) for e in es) + " | "
                       + " | ".join(f"{br(e['em_pe_folga_m'])} (disp. {br(e['em_pe_comprimento_disponivel_m'])})" for e in es) + " |")
         md.append("")
-    md += ["Estações da base (distância ao nariz): " + "; ".join(f"{e['estacao']} = {br(e['estacao_base_m'])} m" for e in c0["formas"][formas[0]]) + ".",
+    md += ["Faixa de diâmetros: pedido do Fabio no portão da 7.2 (0,57 a 0,75 m); estações da base derivadas do ombro do perfil e da altura do deck (P-094), "
+           "como a varredura de estações da Etapa 7.1.",
+           "Estações da base (distância ao nariz): " + "; ".join(f"{e['estacao']} = {br(e['estacao_base_m'])} m" for e in c0["formas"][formas[0]]) + ".",
            "Em pé: comprimento disponível da base até onde o raio interno (raio − folga) fica igual ao raio do MAV; a folga é esse comprimento menos o do MAV."]
     (SAIDA / "mav_arranjo.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))

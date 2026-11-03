@@ -129,7 +129,6 @@ def test_config_cad_coincide_com_as_premissas():
 def test_mav_arranjo_coerente():
     """Varredura do MAV (tools/mav_arranjo.py): o diâmetro de 0,57 m reproduz o comprimento da Etapa 7.1 e a folga do MAV
     deitado é o raio interno no topo menos o meio comprimento."""
-    import mav_arranjo as ma  # noqa: F401
     r = ler("results/etapa7.2/mav_arranjo.yaml")
     env = ler("results/etapa7.1/envelope.yaml")["mav"]["restricao_2019"]
     c57 = next(c for c in r["casos"] if c["diametro_m"] == pytest.approx(0.57))

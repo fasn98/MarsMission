@@ -174,7 +174,7 @@ arranjo_lander:   # P-095: arranjo interno (lançamento e entrada); posições e
   helicopteros_posicao_y_m: {valor: 0.75, premissa: P-095}
   folga_entre_pecas_m: {valor: 0.05, premissa: P-095}
 
-mav_alternativas:   # pedido do Fabio no portão da 7.2: varredura antes de decidir aeroshell e MAV (tools/mav_arranjo.py)
+mav_alternativas:   # pedido do Fabio no portão da 7.2 (faixa dada por ele): varredura antes de decidir aeroshell e MAV (tools/mav_arranjo.py)
   diametros_m: [0.57, 0.60, 0.63, 0.66, 0.69, 0.72, 0.75]
   formas: [msl_m2020, srl_a]
   # estações da base: o plano do ombro, o ombro + metade da altura do deck e o ombro + a altura do deck (P-094),
