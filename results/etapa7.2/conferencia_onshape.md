@@ -4,6 +4,8 @@
 
 Medição: Fabio, 2026-11-03, conta real do Onshape, FeatureScript versão 3112, arquivos do commit 32cb41d (cópias em tests/data/onshape/), Assign materials: sim. Unidades SI; inércias no centro de massa, nos eixos do Part Studio.
 
+Documento no Onshape: "MarsMission Fase 7", gerado com os arquivos do commit 32cb41d e versionado no Onshape como "etapa7.2-32cb41d". Os arquivos atuais (results/etapa7.2/*.fs) diferem dos compilados: modelo atual menos compilado, Orbitador +0,6 g; Lander −0,027 kg; MAV sem diferença. Os previstos dos arquivos atuais estão em results/etapa7.2/parametros.yaml.
+
 Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. O script calcula CG em x, y e z e o tensor de inércia completo; os produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.
 
 Tolerância: meia unidade da última casa decimal mostrada em cada valor, lido manualmente na tela do Onshape (Mass properties, workspace units em SI). Cada linha mostra as casas decimais lidas; um CG mostrado como "0" usa as casas da coordenada z do mesmo veículo.

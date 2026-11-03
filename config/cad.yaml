@@ -189,3 +189,24 @@ entrada_referencia:   # MSL: deslocamento radial do CG usado para trimar e gerar
   msl_massas_balanco_entrada: {valor: 6, massa_cada_kg: 25, fonte: "[F214] PDF p. 28: \"This set of six weights, the “entry balance mass devices,” each has a mass of about 55 pounds (25 kilograms)\""}
   msl_massas_balanco_cruzeiro: {valor: 2, massa_cada_kg: 75, fonte: "[F214] PDF p. 27: \"two solid-tungsten weights, called the “cruise balance mass devices.” ... which weigh about 165 pounds (75 kilograms) each\""}
   pecas_do_estagio_de_cruzeiro: ["Tanque cruzeiro", "Propelente cruzeiro", "Circuito de fluido"]   # prefixos dos nomes (tools/cad_parametros.py)
+  # varredura do propelente de cruzeiro restante (fração do carregado), consumido na razão de mistura da P-080
+  fracoes_propelente_cruzeiro: [1.0, 0.75, 0.5, 0.25, 0.0]
+
+# Portão da 7.2 (tools/portao_7_2.py): o que as fontes dizem sobre a P-086 (a premissa não muda aqui).
+r4d11_164:
+  flange_a_saida_pol: {valor: 19.32, fonte: "[F228] PDF p. 22, desenho: \"DIMENSIONS ARE IN INCHES\"; \"164:1 = 19.32\""}
+  a_frente_da_flange_pol: {valor: 2.5, fonte: "[F228] PDF p. 22, desenho: \"2.5\" (somar à cota anterior é leitura do desenho)"}
+  diametro_saida_pol: {valor: 11.0, fonte: "[F228] PDF p. 22, desenho: \"164:1 = 11.0\""}
+  massa_164_kg: {valor: 3.76, fonte: "[F228] PDF p. 22: \"Mass .....164:1 = 3.76 kg (8.3 lbm), 300:1 = 4.31 kg (9.5 lbm)\""}
+analogos_mav:   # só geometria: não são o nosso MAV
+  - {nome: "Bowles, hipergólico pressurizado de um estágio, 393 kg", comprimento_m: 2.74, diametro_m: 0.56, fonte: "[F46] Tab. 11, p. 40 impressa: \"Overall length/Diameter, m 2.74 / 0.56\""}
+  - {nome: "MAV do MSR, SRC (sólido, dois estágios), limite", comprimento_m: 2.99, diametro_m: 0.50, fonte: "[F35] p. 3"}
+referencias_p086:
+  - {item: "Divisão do comprimento de um MAV por elemento", achado: "**não achada** em nenhuma fonte primária consultada (Yaghoubi 2022, McCollum 2019, Yaghoubi e Schnell, Bowles 2013, Desai 1998): só envelopes totais e figuras sem cotas (não conferido além dessas)", fonte: "[F35], [F216], [F230], [F46], [F229]"}
+  - {item: "Única cota por elemento achada", achado: "\"a length margin of 10cm on SRM1\" (margem, não comprimento)", fonte: "[F230] PDF p. 6"}
+  - {item: "Motor R-4D-11", achado: "dimensões publicadas; ver a conta acima", fonte: "[F228] PDF p. 22"}
+  - {item: "Interestágio", achado: "sem cota; no MSR, o bocal do 2º estágio fica dentro do interestágio (\"the nested SRM2 nozzle\")", fonte: "[F35] PDF p. 15"}
+  - {item: "Carga (contêiner de amostras)", achado: "não conferido em fonte com página: a página do MSR da NASA daria cerca de 0,24 m × 0,23 m, lida só por resumo, sem cópia local", fonte: "não conferido"}
+  - {item: "Arranjo sem empilhar", achado: "MAV pressurizado de dois estágios com o 2º dentro do 1º, cerca de 1,2 m × 1,7 m; cabe em outro envelope, com outro diâmetro", fonte: "[F229] PDF p. 3"}
+  - {item: "Conceito líquido no envelope do MSR", achado: "\"Liquid propulsion vehicle found to not be feasible\"", fonte: "[F231] PDF p. 3"}
+  - {item: "Fonte que poderia resolver", achado: "desenho cotado do MAV do MSR, ou o estudo líquido de dois estágios (Trinidad et al. 2012, IEEE, não obtido; não conferido)", fonte: "não conferido"}

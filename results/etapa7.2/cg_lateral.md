@@ -33,6 +33,18 @@ Massa 3 031,9 kg; CG (0,0131; −0,0276; 3,1452) m; deslocamento radial 0,0306 m
 
 Produtos na forma de tensor (−∫ x y dm). "No eixo": em torno do ponto do eixo do veículo na altura do CG, (0, 0, z do CG), e mostra quem causa a assimetria (peças no eixo ou simétricas dão zero). "No CG": em torno do CG composto, e a soma dá o tensor total; aí até peças no eixo aparecem.
 
+## Consumo dos propelentes de cruzeiro no CG (NÃO VALIDADO)
+
+Tanques em lados opostos, a 1,50 m do eixo (P-095): MON-3 com 70,9 kg em +x e MMH com 42,9 kg em −x. Consumo na razão de mistura constante (P-080), sem lei de consumo nem controle de CG modelados.
+
+| Propelente de cruzeiro restante | Massa (kg) | CG x (m) | CG y (m) | CG z (m) | Deslocamento radial (m) |
+| -: | -: | -: | -: | -: | -: |
+| 100 % | 3 190,4 | 0,0256 | −0,0263 | 3,0032 | 0,0367 |
+| 75 % | 3 162,0 | 0,0225 | −0,0265 | 3,0270 | 0,0348 |
+| 50 % | 3 133,5 | 0,0194 | −0,0267 | 3,0513 | 0,0330 |
+| 25 % | 3 105,1 | 0,0162 | −0,0270 | 3,0761 | 0,0315 |
+| 0 % | 3 076,6 | 0,0129 | −0,0272 | 3,1013 | 0,0301 |
+
 ## Referência: MSL
 
 - O MSL voou com deslocamento radial do CG intencional, zcg/d = −0,0215 sobre dref = 4,5 m ([F226]), isto é, 0,0967 m (calculado aqui), para trimar em cerca de −16° de ângulo de ataque hipersônico e gerar sustentação para a entrada guiada ([F226]), com L/D de projeto de 0,24 ([F227], configuração de base de 2006).

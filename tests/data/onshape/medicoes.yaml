@@ -9,6 +9,9 @@ comum:
   conta: conta real do Onshape
   versao_featurescript: 3112
   commit_dos_arquivos: 32cb41d
+  documento_onshape: "MarsMission Fase 7"
+  versao_no_onshape: etapa7.2-32cb41d
+  origem_da_tolerancia: "meia unidade da última casa decimal mostrada em cada valor, lido manualmente na tela do Onshape (Mass properties, workspace units em SI)"
   assign_materials: true
   unidades: {massa: kg, comprimento: m, inercia: kg·m², volume: m³, area: m²}
 mav:

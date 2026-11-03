@@ -1,0 +1,1069 @@
+gerado_por: tools/portao_7_2.py
+aeroshell:
+  msl_m2020:
+    rotulo: 4,5 m (forma MSL/M2020)
+    folga_vulcan_linear_m: 0.14252150287894194
+    folga_vulcan_sem_afunilamento_m: 0.06526817042606536
+    massa_por_area_lander_kg_m2: 278.50000911622186
+  srl_a:
+    rotulo: 4,65 m (forma SRL-A)
+    folga_vulcan_linear_m: 0.046599138400648776
+    folga_vulcan_sem_afunilamento_m: -0.013791164658634614
+    massa_por_area_lander_kg_m2: 260.82206889136285
+m2020_massa_por_area_kg_m2: 211.26345038568627
+srl_c:
+  folga_radial_m: 0.03187213060367977
+  raio_max_m: 2.36
+  comprimento_m: 3.55
+  folga_sem_afunilamento_m: -0.0338064727034979
+p086_m: 1.5
+folga_interna_m: 0.25
+piso:
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  fora_dos_tanques_m: 1.5
+  fracao_p086: 0.43146817206105403
+  diametro_saturacao_m: 0.6073169792776654
+linhas:
+- forma: msl_m2020
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.18849736091219382
+  disponivel_m: 3.1839999999999997
+  max_fora_dos_tanques_m: 1.1230052781756124
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -1.7797941215242377
+  disponivel_m: 1.7812006003001497
+  max_fora_dos_tanques_m: -0.27979412152423766
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.2984973609121939
+  disponivel_m: 2.9639999999999995
+  max_fora_dos_tanques_m: 0.9030052781756122
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -1.9302193341305407
+  disponivel_m: 1.6307753876938467
+  max_fora_dos_tanques_m: -0.4302193341305407
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.4084973609121938
+  disponivel_m: 2.7439999999999998
+  max_fora_dos_tanques_m: 0.6830052781756124
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -2.079373911419185
+  disponivel_m: 1.4816208104052024
+  max_fora_dos_tanques_m: -0.5793739114191849
+  situacao: bloqueada pelos tanques
+- forma: srl_a
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: 0.017067856479110466
+  disponivel_m: 3.5951304347826083
+  max_fora_dos_tanques_m: 1.534135712958221
+  situacao: cabe
+- forma: srl_a
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.7710997743506507
+  disponivel_m: 2.7898949474737367
+  max_fora_dos_tanques_m: 0.7289002256493493
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.05988866526001968
+  disponivel_m: 3.441217391304348
+  max_fora_dos_tanques_m: 1.3802226694799606
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.9205745117193347
+  disponivel_m: 2.6404202101050527
+  max_fora_dos_tanques_m: 0.5794254882806653
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.13684518699915027
+  disponivel_m: 3.287304347826087
+  max_fora_dos_tanques_m: 1.2263096260016995
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  tanques_m: 2.0609947218243874
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -1.0717000745007255
+  disponivel_m: 2.489294647323662
+  max_fora_dos_tanques_m: 0.42829992549927454
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.1755490978643912
+  disponivel_m: 3.1399999999999997
+  max_fora_dos_tanques_m: 1.1489018042712176
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -1.7373163047833096
+  disponivel_m: 1.7537818909454725
+  max_fora_dos_tanques_m: -0.23731630478330956
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.2855490978643913
+  disponivel_m: 2.9199999999999995
+  max_fora_dos_tanques_m: 0.9289018042712174
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -1.8875964448533442
+  disponivel_m: 1.603501750875438
+  max_fora_dos_tanques_m: -0.3875964448533442
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.3955490978643912
+  disponivel_m: 2.6999999999999997
+  max_fora_dos_tanques_m: 0.7089018042712176
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -2.037171232247041
+  disponivel_m: 1.453926963481741
+  max_fora_dos_tanques_m: -0.537171232247041
+  situacao: bloqueada pelos tanques
+- forma: srl_a
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: 0.03662481517908733
+  disponivel_m: 3.5643478260869568
+  max_fora_dos_tanques_m: 1.5732496303581747
+  situacao: cabe
+- forma: srl_a
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.7252152542580466
+  disponivel_m: 2.7658829414707355
+  max_fora_dos_tanques_m: 0.7747847457419534
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.04033170656004326
+  disponivel_m: 3.4104347826086956
+  max_fora_dos_tanques_m: 1.4193365868799135
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.874915104183009
+  disponivel_m: 2.616183091545773
+  max_fora_dos_tanques_m: 0.625084895816991
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.11728822829917385
+  disponivel_m: 3.2565217391304344
+  max_fora_dos_tanques_m: 1.2654235434016523
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  tanques_m: 1.991098195728782
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -1.0247650291454904
+  disponivel_m: 2.4663331665832917
+  max_fora_dos_tanques_m: 0.4752349708545096
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.19025104275332927
+  disponivel_m: 3.0959999999999996
+  max_fora_dos_tanques_m: 1.1194979144933415
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -1.7501389039158628
+  disponivel_m: 1.7263631815907954
+  max_fora_dos_tanques_m: -0.2501389039158628
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.30025104275332937
+  disponivel_m: 2.8759999999999994
+  max_fora_dos_tanques_m: 0.8994979144933413
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -1.90027397144963
+  disponivel_m: 1.5762281140570282
+  max_fora_dos_tanques_m: -0.40027397144962995
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.41025104275332924
+  disponivel_m: 2.6559999999999997
+  max_fora_dos_tanques_m: 0.6794979144933415
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -2.0502689689483793
+  disponivel_m: 1.426233116558279
+  max_fora_dos_tanques_m: -0.5502689689483793
+  situacao: bloqueada pelos tanques
+- forma: srl_a
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: 0.02853156594232309
+  disponivel_m: 3.5335652173913044
+  max_fora_dos_tanques_m: 1.5570631318846462
+  situacao: cabe
+- forma: srl_a
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.7331303996637368
+  disponivel_m: 2.7433716858429213
+  max_fora_dos_tanques_m: 0.7668696003362632
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.0484249557968075
+  disponivel_m: 3.379652173913043
+  max_fora_dos_tanques_m: 1.403150088406385
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.8831303996637367
+  disponivel_m: 2.5933716858429214
+  max_fora_dos_tanques_m: 0.6168696003362633
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.12538147753593765
+  disponivel_m: 3.225739130434783
+  max_fora_dos_tanques_m: 1.2492370449281247
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -1.0331303996637367
+  disponivel_m: 2.4433716858429215
+  max_fora_dos_tanques_m: 0.46686960033626335
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.2122510427533293
+  disponivel_m: 3.0519999999999996
+  max_fora_dos_tanques_m: 1.0754979144933414
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -1.7785731210244173
+  disponivel_m: 1.6979289644822408
+  max_fora_dos_tanques_m: -0.27857312102441734
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.3222510427533294
+  disponivel_m: 2.8319999999999994
+  max_fora_dos_tanques_m: 0.8554979144933412
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -1.9284880785031562
+  disponivel_m: 1.548014007003502
+  max_fora_dos_tanques_m: -0.4284880785031562
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.43225104275332926
+  disponivel_m: 2.6119999999999997
+  max_fora_dos_tanques_m: 0.6354979144933415
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -2.0779628158718406
+  disponivel_m: 1.3985392696348176
+  max_fora_dos_tanques_m: -0.5779628158718406
+  situacao: bloqueada pelos tanques
+- forma: srl_a
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: 0.013140261594496883
+  disponivel_m: 3.502782608695652
+  max_fora_dos_tanques_m: 1.5262805231889938
+  situacao: cabe
+- forma: srl_a
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.7571424056667384
+  disponivel_m: 2.7193596798399198
+  max_fora_dos_tanques_m: 0.7428575943332616
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.06381626014463371
+  disponivel_m: 3.3488695652173908
+  max_fora_dos_tanques_m: 1.3723674797107326
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.9073675182230163
+  disponivel_m: 2.569134567283642
+  max_fora_dos_tanques_m: 0.5926324817769837
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.14077278188376385
+  disponivel_m: 3.1949565217391305
+  max_fora_dos_tanques_m: 1.2184544362324723
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -1.0574425557417757
+  disponivel_m: 2.4190595297648825
+  max_fora_dos_tanques_m: 0.4425574442582243
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.2342510427533293
+  disponivel_m: 3.0079999999999996
+  max_fora_dos_tanques_m: 1.0314979144933414
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -1.8059918303790945
+  disponivel_m: 1.6705102551275637
+  max_fora_dos_tanques_m: -0.3059918303790945
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.3442510427533292
+  disponivel_m: 2.788
+  max_fora_dos_tanques_m: 0.8114979144933416
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -1.9557617153215658
+  disponivel_m: 1.5207403701850923
+  max_fora_dos_tanques_m: -0.45576171532156584
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.4542510427533293
+  disponivel_m: 2.5679999999999996
+  max_fora_dos_tanques_m: 0.5914979144933414
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -2.1056566627953024
+  disponivel_m: 1.3708454227113558
+  max_fora_dos_tanques_m: -0.6056566627953024
+  situacao: bloqueada pelos tanques
+- forma: srl_a
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.0022510427533293242
+  disponivel_m: 3.4719999999999995
+  max_fora_dos_tanques_m: 1.4954979144933414
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.7811544116697395
+  disponivel_m: 2.6953476738369186
+  max_fora_dos_tanques_m: 0.7188455883302605
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.07920756449245947
+  disponivel_m: 3.3180869565217392
+  max_fora_dos_tanques_m: 1.341584871015081
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.9301789239258675
+  disponivel_m: 2.5463231615807906
+  max_fora_dos_tanques_m: 0.5698210760741325
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.15616408623159006
+  disponivel_m: 3.164173913043478
+  max_fora_dos_tanques_m: 1.1876718275368199
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -1.080404036482146
+  disponivel_m: 2.3960980490245123
+  max_fora_dos_tanques_m: 0.4195959635178541
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.25625104275332933
+  disponivel_m: 2.9639999999999995
+  max_fora_dos_tanques_m: 0.9874979144933413
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -1.833410539733772
+  disponivel_m: 1.643091545772886
+  max_fora_dos_tanques_m: -0.3334105397337721
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.3662510427533292
+  disponivel_m: 2.7439999999999998
+  max_fora_dos_tanques_m: 0.7674979144933416
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -1.983975822375092
+  disponivel_m: 1.4925262631315661
+  max_fora_dos_tanques_m: -0.48397582237509207
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.4762510427533293
+  disponivel_m: 2.5239999999999996
+  max_fora_dos_tanques_m: 0.5474979144933414
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -2.133350509718764
+  disponivel_m: 1.343151575787894
+  max_fora_dos_tanques_m: -0.6333505097187642
+  situacao: bloqueada pelos tanques
+- forma: srl_a
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.017642347101155087
+  disponivel_m: 3.441217391304348
+  max_fora_dos_tanques_m: 1.4647153057976898
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.8036656672975537
+  disponivel_m: 2.6728364182091044
+  max_fora_dos_tanques_m: 0.6963343327024463
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.09459886884028568
+  disponivel_m: 3.287304347826087
+  max_fora_dos_tanques_m: 1.3108022623194286
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.9544160424851476
+  disponivel_m: 2.5220860430215106
+  max_fora_dos_tanques_m: 0.5455839575148524
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.17155539057941627
+  disponivel_m: 3.1333913043478256
+  max_fora_dos_tanques_m: 1.1568892188411675
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -1.103365517222516
+  disponivel_m: 2.373136568284142
+  max_fora_dos_tanques_m: 0.3966344827774839
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.27825104275332935
+  disponivel_m: 2.9199999999999995
+  max_fora_dos_tanques_m: 0.9434979144933413
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -1.8618447568423262
+  disponivel_m: 1.614657328664332
+  max_fora_dos_tanques_m: -0.3618447568423262
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.3882510427533292
+  disponivel_m: 2.6999999999999997
+  max_fora_dos_tanques_m: 0.7234979144933416
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -2.0112494591935017
+  disponivel_m: 1.4652526263131564
+  max_fora_dos_tanques_m: -0.5112494591935017
+  situacao: bloqueada pelos tanques
+- forma: msl_m2020
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.4982510427533291
+  disponivel_m: 2.48
+  max_fora_dos_tanques_m: 0.5034979144933418
+  situacao: depende da P-086
+- forma: msl_m2020
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -2.161044356642226
+  disponivel_m: 1.3154577288644322
+  max_fora_dos_tanques_m: -0.6610443566422259
+  situacao: bloqueada pelos tanques
+- forma: srl_a
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.033033651448981294
+  disponivel_m: 3.4104347826086956
+  max_fora_dos_tanques_m: 1.4339326971020374
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro
+  estacao_base_m: 0.85
+  folga_m: -0.8276776733005553
+  disponivel_m: 2.648824412206103
+  max_fora_dos_tanques_m: 0.6723223266994447
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.10999017318811188
+  disponivel_m: 3.2565217391304344
+  max_fora_dos_tanques_m: 1.2800196536237762
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + meio deck
+  estacao_base_m: 1.0
+  folga_m: -0.9772274481879988
+  disponivel_m: 2.4992746373186594
+  max_fora_dos_tanques_m: 0.5227725518120012
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: deitado
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -0.18694669492724203
+  disponivel_m: 3.102608695652174
+  max_fora_dos_tanques_m: 1.126106610145516
+  situacao: depende da P-086
+- forma: srl_a
+  diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  tanques_m: 1.9765020855066582
+  orientacao: em pé
+  estacao: ombro + deck (P-094)
+  estacao_base_m: 1.15
+  folga_m: -1.1276776733005551
+  disponivel_m: 2.348824412206103
+  max_fora_dos_tanques_m: 0.37232232669944487
+  situacao: depende da P-086
+contagem:
+- forma: msl_m2020
+  orientacao: deitado
+  situacao: depende da P-086
+  casos: 21
+- forma: msl_m2020
+  orientacao: em pé
+  situacao: bloqueada pelos tanques
+  casos: 21
+- forma: srl_a
+  orientacao: deitado
+  situacao: cabe
+  casos: 4
+- forma: srl_a
+  orientacao: em pé
+  situacao: depende da P-086
+  casos: 21
+- forma: srl_a
+  orientacao: deitado
+  situacao: depende da P-086
+  casos: 17
+referencias_p086:
+- item: Divisão do comprimento de um MAV por elemento
+  achado: '**não achada** em nenhuma fonte primária consultada (Yaghoubi 2022, McCollum
+    2019, Yaghoubi e Schnell, Bowles 2013, Desai 1998): só envelopes totais e figuras
+    sem cotas (não conferido além dessas)'
+  fonte: '[F35], [F216], [F230], [F46], [F229]'
+- item: Única cota por elemento achada
+  achado: '"a length margin of 10cm on SRM1" (margem, não comprimento)'
+  fonte: '[F230] PDF p. 6'
+- item: Motor R-4D-11
+  achado: dimensões publicadas; ver a conta acima
+  fonte: '[F228] PDF p. 22'
+- item: Interestágio
+  achado: sem cota; no MSR, o bocal do 2º estágio fica dentro do interestágio ("the
+    nested SRM2 nozzle")
+  fonte: '[F35] PDF p. 15'
+- item: Carga (contêiner de amostras)
+  achado: 'não conferido em fonte com página: a página do MSR da NASA daria cerca
+    de 0,24 m × 0,23 m, lida só por resumo, sem cópia local'
+  fonte: não conferido
+- item: Arranjo sem empilhar
+  achado: MAV pressurizado de dois estágios com o 2º dentro do 1º, cerca de 1,2 m
+    × 1,7 m; cabe em outro envelope, com outro diâmetro
+  fonte: '[F229] PDF p. 3'
+- item: Conceito líquido no envelope do MSR
+  achado: '"Liquid propulsion vehicle found to not be feasible"'
+  fonte: '[F231] PDF p. 3'
+- item: Fonte que poderia resolver
+  achado: desenho cotado do MAV do MSR, ou o estudo líquido de dois estágios (Trinidad
+    et al. 2012, IEEE, não obtido; não conferido)
+  fonte: não conferido
+r4d:
+  comprimento_m: 0.5542279999999999
+  diametro_saida_m: 0.2794
+  diametro_min_4_saidas_m: 0.6745312693270427
+  massa_164_kg: 3.76
+  massa_catalogo_kg: 4.3091278
+  p086_motores_estagio_1_m: 0.6
+  p086_motor_estagio_2_m: 0.45
+  diametro_mav_escolhido_m: 0.57
+analogos:
+- nome: Bowles, hipergólico pressurizado de um estágio, 393 kg
+  fonte: '[F46] Tab. 11, p. 40 impressa: "Overall length/Diameter, m 2.74 / 0.56"'
+  forma: msl_m2020
+  estacao: ombro
+  comprimento_m: 2.74
+  diametro_m: 0.56
+  folga_deitado_m: 0.22933333333333294
+- nome: Bowles, hipergólico pressurizado de um estágio, 393 kg
+  fonte: '[F46] Tab. 11, p. 40 impressa: "Overall length/Diameter, m 2.74 / 0.56"'
+  forma: msl_m2020
+  estacao: ombro + deck (P-094)
+  comprimento_m: 2.74
+  diametro_m: 0.56
+  folga_deitado_m: 0.009333333333333194
+- nome: Bowles, hipergólico pressurizado de um estágio, 393 kg
+  fonte: '[F46] Tab. 11, p. 40 impressa: "Overall length/Diameter, m 2.74 / 0.56"'
+  forma: srl_a
+  estacao: ombro
+  comprimento_m: 2.74
+  diametro_m: 0.56
+  folga_deitado_m: 0.4326956521739129
+- nome: Bowles, hipergólico pressurizado de um estágio, 393 kg
+  fonte: '[F46] Tab. 11, p. 40 impressa: "Overall length/Diameter, m 2.74 / 0.56"'
+  forma: srl_a
+  estacao: ombro + deck (P-094)
+  comprimento_m: 2.74
+  diametro_m: 0.56
+  folga_deitado_m: 0.27878260869565197
+- nome: MAV do MSR, SRC (sólido, dois estágios), limite
+  fonte: '[F35] p. 3'
+  forma: msl_m2020
+  estacao: ombro
+  comprimento_m: 2.99
+  diametro_m: 0.5
+  folga_deitado_m: 0.14833333333333298
+- nome: MAV do MSR, SRC (sólido, dois estágios), limite
+  fonte: '[F35] p. 3'
+  forma: msl_m2020
+  estacao: ombro + deck (P-094)
+  comprimento_m: 2.99
+  diametro_m: 0.5
+  folga_deitado_m: -0.07166666666666677
+- nome: MAV do MSR, SRC (sólido, dois estágios), limite
+  fonte: '[F35] p. 3'
+  forma: srl_a
+  estacao: ombro
+  comprimento_m: 2.99
+  diametro_m: 0.5
+  folga_deitado_m: 0.3384782608695649
+- nome: MAV do MSR, SRC (sólido, dois estágios), limite
+  fonte: '[F35] p. 3'
+  forma: srl_a
+  estacao: ombro + deck (P-094)
+  comprimento_m: 2.99
+  diametro_m: 0.5
+  folga_deitado_m: 0.18456521739130416

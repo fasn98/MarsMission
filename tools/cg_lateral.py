@@ -86,6 +86,19 @@ def main():
         out["configuracoes"][nome] = {"massa_kg": m, "cg_m": cg.tolist(), "deslocamento_radial_m": rad, "radial_sobre_d": rad / d_cap,
                                       "produtos_kg_m2": {"Ixy": T[0][1], "Ixz": T[0][2], "Iyz": T[1][2]},
                                       "por_conjunto": grupos}
+    # consumo do propelente de cruzeiro: a massa dos dois corpos de propelente escala com a fração restante, nas posições
+    # atuais (P-095), com a razão de mistura constante (P-080); o resto do conjunto de lançamento fica como está
+    prop = tuple(p_ for p_ in cruz if p_.startswith("Propelente"))
+    m_lan, cg_lan, _, _ = propriedades(corpos, dens)
+    consumo = []
+    for f in [float(x) for x in ref["fracoes_propelente_cruzeiro"]]:
+        ms = sum(c["massa_kg"] * (f if c["nome"].startswith(prop) else 1.0) for c in corpos)
+        mom = sum(c["massa_kg"] * (f if c["nome"].startswith(prop) else 1.0) * cp.centro(c) for c in corpos)
+        cg_f = mom / ms
+        consumo.append({"fracao_restante": f, "massa_kg": ms, "cg_m": cg_f.tolist(), "radial_m": math.hypot(cg_f[0], cg_f[1])})
+    out["consumo_cruzeiro"] = {"mon3_kg": next(c["massa_kg"] for c in corpos if c["nome"] == "Propelente cruzeiro MON-3"),
+                               "mmh_kg": next(c["massa_kg"] for c in corpos if c["nome"] == "Propelente cruzeiro MMH"),
+                               "raio_tanques_m": v(cad["arranjo_lander"]["raio_tanques_cruzeiro_m"]), "linhas": consumo}
     ent = out["configuracoes"]["entrada (sem o estágio de cruzeiro)"]
     out["comparacao_entrada"] = {"lander_radial_sobre_d": ent["radial_sobre_d"], "msl_radial_sobre_d": abs(v(ref["msl_zcg_sobre_d"])),
                                  "razao_lander_msl": ent["radial_sobre_d"] / abs(v(ref["msl_zcg_sobre_d"])),
@@ -119,7 +132,14 @@ def escreve_md(o):
                       f"{br(x['Ixy'], 2)}; {br(x['Ixz'], 2)}; {br(x['Iyz'], 2)} |")
         md += ["", "Produtos na forma de tensor (−∫ x y dm). \"No eixo\": em torno do ponto do eixo do veículo na altura do CG, (0, 0, z do CG), e mostra quem "
                "causa a assimetria (peças no eixo ou simétricas dão zero). \"No CG\": em torno do CG composto, e a soma dá o tensor total; aí até peças no eixo aparecem.", ""]
-    md += ["## Referência: MSL", "",
+    cc = o["consumo_cruzeiro"]
+    md += ["## Consumo dos propelentes de cruzeiro no CG (NÃO VALIDADO)", "",
+           f"Tanques em lados opostos, a {br(cc['raio_tanques_m'], 2)} m do eixo (P-095): MON-3 com {br(cc['mon3_kg'], 1)} kg em +x e MMH com "
+           f"{br(cc['mmh_kg'], 1)} kg em −x. Consumo na razão de mistura constante (P-080), sem lei de consumo nem controle de CG modelados.", "",
+           "| Propelente de cruzeiro restante | Massa (kg) | CG x (m) | CG y (m) | CG z (m) | Deslocamento radial (m) |", "| -: | -: | -: | -: | -: | -: |"]
+    for x in cc["linhas"]:
+        md.append(f"| {br(100 * x['fracao_restante'], 0)} % | {br(x['massa_kg'], 1)} | {br(x['cg_m'][0], 4)} | {br(x['cg_m'][1], 4)} | {br(x['cg_m'][2], 4)} | {br(x['radial_m'], 4)} |")
+    md += ["", "## Referência: MSL", "",
            f"- O MSL voou com deslocamento radial do CG intencional, zcg/d = {br(ms['zcg_sobre_d'], 4)} sobre dref = 4,5 m ([F226]), isto é, "
            f"{br(ms['deslocamento_radial_m'], 4)} m (calculado aqui), para trimar em cerca de {br(ms['trimagem_graus'], 0)}° de ângulo de ataque "
            f"hipersônico e gerar sustentação para a entrada guiada ([F226]), com L/D de projeto de {br(ms['l_sobre_d'], 2)} ([F227], configuração de base de 2006).",

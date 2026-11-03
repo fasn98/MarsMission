@@ -116,12 +116,18 @@ def main():
                               "area_m2_medida": num(m["area"]), "area_texto": str(m["area"]),
                               "modelo_atual": {"massa_kg": atual["massa_kg"], "diferenca_massa_kg": atual["massa_kg"] - p["massa_kg"],
                                                "diferenca_cg_m": [a - b for a, b in zip(atual["cg_m"], p["cg_m"])]}}
-    out["origem_da_tolerancia"] = ("meia unidade da última casa decimal mostrada em cada valor, lido manualmente na tela do Onshape "
-                                   "(Mass properties, workspace units em SI)")
     out = nativo(out)
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "conferencia_onshape.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
+
+
+def ex_kg(x):
+    """Diferença de massa (modelo menos compilado), em kg ou, abaixo de 10 g, em g."""
+    if x == 0:
+        return "sem diferença"
+    s = f"{x:+.3f} kg" if abs(x) >= 0.01 else f"{1e3 * x:+.1f} g"
+    return s.replace(".", ",").replace("-", "−")
 
 
 def escreve_md(o):
@@ -139,9 +145,13 @@ def escreve_md(o):
           f"Medição: {c['responsavel']}, {c['data']}, {c['conta']}, FeatureScript versão {c['versao_featurescript']}, arquivos do commit "
           f"{c['commit_dos_arquivos']} (cópias em tests/data/onshape/), Assign materials: {'sim' if c['assign_materials'] else 'não'}. "
           "Unidades SI; inércias no centro de massa, nos eixos do Part Studio.", "",
+          f"Documento no Onshape: \"{c['documento_onshape']}\", gerado com os arquivos do commit {c['commit_dos_arquivos']} e versionado no Onshape como "
+          f"\"{c['versao_no_onshape']}\". Os arquivos atuais (results/etapa7.2/*.fs) diferem dos compilados: modelo atual menos compilado, "
+          + "; ".join(f"{NOMES[k]} {ex_kg(x['modelo_atual']['diferenca_massa_kg'])}" for k, x in o["veiculos"].items() if x["situacao"] == "conferido")
+          + ". Os previstos dos arquivos atuais estão em results/etapa7.2/parametros.yaml.", "",
           "Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. O script calcula CG em "
           "x, y e z e o tensor de inércia completo; os produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.", "",
-          f"Tolerância: {o['origem_da_tolerancia']}. Cada linha mostra as casas decimais lidas; um CG mostrado como \"0\" usa as casas da "
+          f"Tolerância: {c['origem_da_tolerancia']}. Cada linha mostra as casas decimais lidas; um CG mostrado como \"0\" usa as casas da "
           "coordenada z do mesmo veículo.", ""]
     for k, x in o["veiculos"].items():
         md += [f"## {NOMES[k]}", ""]
