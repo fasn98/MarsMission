@@ -2,6 +2,13 @@
 # Fontes em docs/fontes.md; premissas (NÃO VALIDADAS) em config/premissas.yaml. Comprimentos em m, massas em kg.
 # Nenhuma dimensão é digitada no FeatureScript (Etapa 7.2): todas saem daqui ou de results/ por tools/.
 
+# Decisões do Fabio no portão da Etapa 7.1 (ADR 0022).
+escolha:
+  aeroshell: srl_duplo        # 4,65 m, com a condição de conferir a folga no Vulcan com a geometria real (Etapa 7.2)
+  aeroshell_alternativa: m2020  # 4,5 m, se a folga não se confirmar; a massa por área de 279 kg/m² vira risco de EDL
+  mav_diametro: restricao_2019  # 0,57 m; o limite de 3 m do MSR é referência, não restrição
+  orbitador_pares: 2
+
 propelentes:
   densidade_mmh_kg_m3: {valor: 869, fonte: "[F211] p. 5 impressa (PDF p. 10), Tab. I: \"Density @ 26.5±1.5°C g/cc\"; linha MMH 100 %, aditivo 0: \"0.869\""}
   # MON-3 sem densidade tabelada encontrada; usa-se a do N2O4 puro a 25 °C (P-078).
@@ -100,5 +107,85 @@ lander:
 orbitador:
   ccrs_m:
     dimensoes: {valor: [3.4, 0.5, 2.0], fonte: "[F23] p. 7, legenda da Fig. 9: \"The overall dimensions of CCRS are approximately 3.4 m × 0.5 m × 2 m.\""}
+  ees_semiangulo_graus: {valor: 52.5, fonte: "[F26] p. 3: \"The basic test article geometry is a 52.5-deg sphere-cone shape\""}
   ees_diametro_m: {valor: 1.273, fonte: "[F26] p. 3: \"The basic test article geometry is a 52.5-deg sphere-cone shape with a 1.273 m diameter and 0.3146 m nose radius\" (artigo em escala real)"}
   cilindro_central_diametro_m: {valor: 1.575, fonte: "[F82] p. 17 (PDF p. 28): PAF de 1575 mm (o cilindro central do orbitador acompanha a interface; escolha de arranjo, P-082)"}
+
+# ------------------------------------------------------------------------------------------------- Etapa 7.2
+# Perfis externos das cápsulas, lidos da Fig. 2 de [F41] (raio em função da distância ao nariz, m). Leitura feita pelos
+# pixels das curvas coloridas, com o quadro do gráfico como escala; o MSL/M2020 sai com raio máximo de 2,26 m (Ø 4,52,
+# contra 4,5 m publicados [F214]), o que dá a ordem do erro de leitura. O nariz rombudo entra como o vértice (0,02; 0,25).
+capsulas:
+  msl_m2020:
+    x_m: [0.0, 0.02, 0.85, 1.90, 2.40, 2.88, 2.88]
+    r_m: [0.0, 0.25, 2.26, 1.49, 0.66, 0.40, 0.0]
+    fonte: "[F41] Fig. 2, p. 2: \"Figure 2 shows two of the SRL geometry options used for the analysis in this paper, compared with MSL/Mars 2020\"; \"All dimensions in meters\" (curva MSL/M2020, leitura da figura)"
+  srl_a:
+    x_m: [0.0, 0.02, 0.85, 2.00, 2.60, 3.85, 3.85]
+    r_m: [0.0, 0.25, 2.34, 1.75, 1.20, 0.40, 0.0]
+    fonte: "[F41] Fig. 2, p. 2 (curva SRL-A; coincide com a SRL-C até cerca de 2,0 m; leitura da figura)"
+  srl_c:
+    x_m: [0.0, 0.02, 0.85, 2.00, 2.60, 3.50, 3.55]
+    r_m: [0.0, 0.25, 2.36, 1.75, 1.29, 0.44, 0.0]
+    fonte: "[F41] Fig. 2, p. 2 (curva SRL-C, fundo arredondado; leitura da figura)"
+  # P-089: o CAD usa a SRL-A (a mais longa); a conferência na coifa usa a pior folga entre SRL-A e SRL-C
+  forma_da_opcao: {srl_duplo: srl_a, m2020: msl_m2020}
+  semiangulo_nota: "a frente das três curvas coincide com o cone de 70° [F215]"
+  espessura_pica_m: {valor: 0.03175, fonte: "[F215] PDF p. 3: \"A uniform PICA thickness of 1.25 in was established for MSL\" (1,25 pol = 0,03175 m)"}
+  espessura_casca_traseira_m: {valor: 0.0127, fonte: "[F225] PDF p. 4: \"The nominal uniform thickness of SLA-561V for Mars 2020 was 1.27 cm (0.5 inch), the same as it was for MSL.\""}
+
+lancamento_lander:
+  frente_para_cima: {valor: true, premissa: P-091}
+  altura_estagio_cruzeiro_m: {premissa: P-091, nota: "conjunto do MSL (3,0 m [F214]) menos o comprimento da cápsula MSL/M2020 lido de [F41] (calculado na ferramenta)"}
+
+mav_no_aeroshell:
+  # Estações (distância ao nariz) da base do MAV deitado, varridas para achar onde ele deixa de caber (P-092).
+  estacao_base_m: [0.85, 0.95, 1.05, 1.15, 1.25, 1.35, 1.45]
+  estacao_base_referencia_m: {valor: 0.85, premissa: P-092}
+
+materiais:   # densidades em kg/m³
+  ti_6al_4v: {nome: "Ti-6Al-4V", valor: 4424, fonte: "[F219] p. 81 impressa (PDF p. 88), §9.1: \"Density at room temperature 0.160 lbs/in3 (4.424 g/cm3)\""}
+  al_2219: {nome: "Al 2219", valor: 2840, fonte: "[F220] PDF p. 6: \"Density --- 2.84 g/cm3 at room temperature\""}
+  al_7075: {nome: "Al 7075", valor: 2800, fonte: "[F221] PDF p. 114, §9.1: \"0.101 lb/in3 at 68°F\"; \"9.11 Specific Gravity 2.80\" (20 °C)"}
+  cfrp_im7_8552: {nome: "CFRP IM7/8552 (fita unidirecional)", valor: 1574, fonte: "[F222] p. 25, §4.7: \"It was determined that the density was 98.28 lb/ft3 for the tape\" (98,28 lb/ft³ = 1574 kg/m³, calculado aqui)"}
+  pica: {nome: "PICA", valor: 274, fonte: "[F223] PDF p. 12: \"the nominal PICA value of 0.274 g/cm3\""}
+  sla_561v: {nome: "SLA-561V", valor: 256, premissa: P-090}
+  mmh: {nome: "MMH", referencia: propelentes.densidade_mmh_kg_m3}
+  mon3: {nome: "MON-3", referencia: propelentes.densidade_oxidante_kg_m3}
+  hidrazina: {nome: "Hidrazina", referencia: propelentes.densidade_hidrazina_kg_m3}
+
+construcao:   # P-093: materiais e espessuras das peças modeladas pela geometria
+  tanques: {material: ti_6al_4v, espessura_m: {valor: 0.0015, premissa: P-093}}
+  raio_minimo_m: {valor: 0.005, premissa: P-093}   # menor raio de um tronco no FeatureScript (pontas de cone)
+  cilindro_central: {material: al_2219, espessura_m: {valor: 0.003, premissa: P-093}}
+  # Peças sem geometria própria (massa do orçamento, results/etapa2.5/arquitetura.yaml, em volume do arranjo): densidade
+  # equivalente = massa / volume (P-094). A massa delas no CAD é a do orçamento por construção.
+  equivalentes:
+    plataforma_orbitador_altura_m: {valor: 0.30, premissa: P-094}
+    deck_lander_altura_m: {valor: 0.30, premissa: P-094}
+    ees_raio_ponta_m: {valor: 0.0064, premissa: P-094}   # raio da ponta do cone do EES
+
+arranjo_lander:   # P-095: arranjo interno (lançamento e entrada); posições em m; eixo da cápsula = z; MAV ao longo de y
+  raio_tanques_cruzeiro_m: {valor: 1.5, premissa: P-095}
+  raio_tanques_descida_m: {valor: 1.4, premissa: P-095}
+  angulos_tanques_descida_graus: {valor: [0, 120, 240], premissa: P-095}
+  braco_posicao_x_m: {valor: 0.45, premissa: P-095}
+  braco_raio_m: {valor: 0.05, premissa: P-095}
+  helicopteros_posicao_y_m: {valor: 0.75, premissa: P-095}
+  folga_entre_pecas_m: {valor: 0.05, premissa: P-095}
+
+mav_alternativas:   # pedido do Fabio no portão da 7.2 (faixa dada por ele): varredura antes de decidir aeroshell e MAV (tools/mav_arranjo.py)
+  diametros_m: [0.57, 0.60, 0.63, 0.66, 0.69, 0.72, 0.75]
+  formas: [msl_m2020, srl_a]
+  # estações da base: o plano do ombro, o ombro + metade da altura do deck e o ombro + a altura do deck (P-094),
+  # calculadas na ferramenta a partir do perfil e da P-094
+
+
+entrada_referencia:   # MSL: deslocamento radial do CG usado para trimar e gerar sustentação (tools/cg_lateral.py)
+  msl_zcg_sobre_d: {valor: -0.0215, fonte: "[F226] PDF p. 4, Fig. 2, coluna nominal: \"zcg/d = -0.0215\""}
+  msl_dref_m: {valor: 4.500, fonte: "[F226] PDF p. 3, Fig. 1: \"dref = 4.500 m\""}
+  msl_trimagem_graus: {valor: -16, fonte: "[F226] PDF p. 2: \"approximately −16◦ at hypersonic conditions\""}
+  msl_l_sobre_d: {valor: 0.24, fonte: "[F227] PDF p. 5: \"a hypersonic lift-to-drag ratio (L/D) of 0.24 by means of six balance masses\""}
+  msl_massas_balanco_entrada: {valor: 6, massa_cada_kg: 25, fonte: "[F214] PDF p. 28: \"This set of six weights, the “entry balance mass devices,” each has a mass of about 55 pounds (25 kilograms)\""}
+  msl_massas_balanco_cruzeiro: {valor: 2, massa_cada_kg: 75, fonte: "[F214] PDF p. 27: \"two solid-tungsten weights, called the “cruise balance mass devices.” ... which weigh about 165 pounds (75 kilograms) each\""}
+  pecas_do_estagio_de_cruzeiro: ["Tanque cruzeiro", "Propelente cruzeiro", "Circuito de fluido"]   # prefixos dos nomes (tools/cad_parametros.py)

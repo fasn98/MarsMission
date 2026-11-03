@@ -904,7 +904,8 @@ premissas:
     justificativa: >
       Sem fonte primária encontrada nesta etapa (procura em NTRS sem resultado). Valor de ordem de grandeza para a
       hidrazina líquida perto da temperatura ambiente; afeta só o volume dos tanques de descida, que ficam dentro do
-      aeroshell.
+      aeroshell. Etapa 7.2: a densidade relativa publicada é 1,01 a 15 °C [F224] (três algarismos, cerca de 1004 a
+      1014 kg/m³ com a densidade da água, que não tem fonte própria aqui); o valor-base fica dentro dessa faixa.
     status: NÃO VALIDADA
   - id: P-080
     nome: razao_de_mistura_do_cruzeiro_do_lander
@@ -928,11 +929,12 @@ premissas:
     status: NÃO VALIDADA
   - id: P-082
     nome: arranjo_dos_tanques
-    valor: {orbitador: "2 pares esféricos por estágio, em quadrado em torno do cilindro central", cruzeiro_lander: "1 par esférico", ccrs: "maior dimensão na horizontal"}
-    unidade: —
+    valor: {pares_por_estagio_orbitador: 2, pares_estagio_cruzeiro_lander: 1}
+    unidade: pares de tanques (um de oxidante e um de combustível)
     uso: config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1)
     justificativa: >
-      Escolha de arranjo para o esquema da Etapa 7.1, a decidir pelo Fabio. Alternativa calculada: um par por estágio
+      Esferas; no orbitador, em quadrado em torno do cilindro central. Escolha de arranjo para o esquema da Etapa 7.1, a
+      decidir pelo Fabio (decidido no ADR 0022: dois pares). Alternativa calculada: um par por estágio
       (tanques maiores e conjunto mais alto), com e sem o cilindro central; com o cilindro, a folga radial no estágio de
       inserção fica pequena (results/etapa7.1/envelope.md). O cilindro central acompanha o PAF de 1575 mm [F82]. O CCRS
       vai com a maior dimensão na horizontal, sobre o estágio de retorno.
@@ -970,7 +972,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-086
     nome: comprimento_do_mav_fora_dos_tanques
-    valor: {motores_estagio_1_m: 0.60, motor_estagio_2_m: 0.45, interestagio_m: 0.10, carga_os_m: 0.35}
+    valor: {motores_estagio_1: 0.60, motor_estagio_2: 0.45, interestagio: 0.10, carga_os: 0.35}
     unidade: m
     uso: config/cad.yaml (comprimento do MAV, Etapa 7.1)
     justificativa: >
@@ -980,7 +982,7 @@ premissas:
     status: NÃO VALIDADA
   - id: P-087
     nome: folgas_de_arranjo
-    valor: {entre_conjuntos_m: 0.10, radial_m: 0.05, interna_aeroshell_m: 0.25}
+    valor: {folga_entre_conjuntos_m: 0.10, folga_radial_m: 0.05, folga_interna_m: 0.25}
     unidade: m
     uso: config/cad.yaml (esquemas do arranjo, Etapa 7.1)
     justificativa: >
@@ -995,4 +997,76 @@ premissas:
     justificativa: >
       A área da Etapa 4.1 (results/etapa4.1/energia.yaml) é dividida em duas asas circulares, como no Phoenix [F40] e no
       InSight. Diâmetro aberto de cada asa = √(4 · área / (2 π)). O empacotamento dentro do aeroshell fica para a 7.2.
+    status: NÃO VALIDADA
+  - id: P-089
+    nome: forma_da_capsula_por_opcao_de_aeroshell
+    valor: {opcao_4_65_m: "SRL-A", opcao_4_5_m: "MSL/M2020"}
+    unidade: —
+    uso: config/cad.yaml (capsulas, Etapa 7.2)
+    justificativa: >
+      A cápsula do SRL não é o MSL escalado: a frente é a mesma, e a casca traseira é maior e mais cheia (curvas SRL-A e
+      SRL-C, [F41] Fig. 2), com o projeto ainda em mudança. O CAD usa a SRL-A, a mais longa. A conferência na coifa usa a
+      pior folga entre as duas: a da SRL-C, cujo ombro é mais largo (results/etapa7.2/conferencias.md). Os perfis são
+      leitura da figura, com o nariz rombudo como o vértice (0,02; 0,25).
+    status: NÃO VALIDADA
+  - id: P-090
+    nome: densidade_do_sla_561v
+    valor: 256
+    unidade: kg/m³
+    uso: config/cad.yaml (massa da proteção térmica da casca traseira, Etapa 7.2)
+    justificativa: >
+      Sem densidade do SLA-561V em fonte primária encontrada nesta etapa (procurados: NASA TM-110402, o artigo do TPS do
+      Mars 2020 [F225] e o do MEDLI2, que só dá a variação de 0,5 % sobre o modelo herdado). Valor de ordem de grandeza.
+      A espessura tem fonte (1,27 cm [F225]).
+    status: NÃO VALIDADA
+  - id: P-091
+    nome: orientacao_do_lander_na_coifa
+    valor: {frente_para_cima: true, estagio_de_cruzeiro: "conjunto do MSL menos a cápsula lida da figura"}
+    unidade: —
+    uso: config/cad.yaml (lançamento do lander, Etapa 7.2)
+    justificativa: >
+      A orientação do MSL na coifa e a fixação do estágio de cruzeiro no adaptador não foram achadas nas fontes. Com a
+      frente para cima, o ombro (diâmetro máximo) fica mais alto, onde o envelope do Vulcan é mais estreito: lado
+      seguro. A altura do estágio de cruzeiro além da cápsula sai do MSL: conjunto de 3,0 m [F214] menos a cápsula
+      MSL/M2020 lida de [F41].
+    status: NÃO VALIDADA
+  - id: P-092
+    nome: estacao_da_base_do_mav_deitado
+    valor: 0.85
+    unidade: m do nariz (plano do ombro)
+    uso: config/cad.yaml (MAV deitado contra a casca traseira, Etapa 7.2)
+    justificativa: >
+      O MAV deitado apoiado no plano do ombro do aeroshell, como referência. É otimista: a estrutura de descida e o deck
+      ocupam parte desse espaço. Por isso a conferência varre a estação da base e mostra onde o MAV deixa de caber.
+    status: NÃO VALIDADA
+  - id: P-093
+    nome: materiais_e_espessuras_das_pecas_modeladas
+    valor: {tanques_espessura_m: 0.0015, cilindro_central_espessura_m: 0.003, raio_minimo_m: 0.005}
+    unidade: m
+    uso: config/cad.yaml (construcao, Etapa 7.2)
+    justificativa: >
+      Tanques de Ti-6Al-4V e cilindro central de Al 2219. Espessuras de ordem de grandeza para o CAD conceitual, sem dimensionamento estrutural (pressão e cargas não
+      calculadas). Densidades com fonte [F219, F220]. A massa do CAD não é ajustada ao orçamento (regra da Fase 7).
+    status: NÃO VALIDADA
+  - id: P-094
+    nome: pecas_com_densidade_equivalente
+    valor: {plataforma_orbitador_altura_m: 0.30, deck_lander_altura_m: 0.30, ees_raio_ponta_m: 0.0064}
+    unidade: m
+    uso: config/cad.yaml (construcao.equivalentes, Etapa 7.2)
+    justificativa: >
+      Peças sem geometria própria (plataforma do orbitador, núcleo do lander, CCRS, EES, braço, helicópteros, motores e
+      carga do MAV) entram como volumes simples com densidade equivalente = massa do orçamento / volume. A massa delas no
+      CAD é a do orçamento por construção; o CAD informa o CG e as inércias, e a comparação de massa da Etapa 7.3 vale só
+      para as peças com geometria. Alturas, o raio da ponta do cone do EES e a posição do EES (sobre o CCRS, no arranjo de
+      tools/cad_parametros.py) são escolhas de arranjo.
+    status: NÃO VALIDADA
+  - id: P-095
+    nome: arranjo_interno_do_lander
+    valor: {raio_tanques_cruzeiro_m: 1.5, raio_tanques_descida_m: 1.4, angulos_tanques_descida_graus: [0, 120, 240], braco_posicao_x_m: 0.45, braco_raio_m: 0.05, helicopteros_posicao_y_m: 0.75, folga_entre_pecas_m: 0.05}
+    unidade: m (ângulos em graus)
+    uso: config/cad.yaml (arranjo_lander, Etapa 7.2)
+    justificativa: >
+      Posições de desenho para o CAD conceitual, sem fonte: tanques do estágio de cruzeiro ao lado da casca traseira (onde
+      a cápsula é estreita), tanques de descida a 120° fora da faixa ocupada pelo MAV, braço guardado paralelo ao MAV e
+      helicópteros acima dele. Não há conferência de interferência entre peças nesta etapa.
     status: NÃO VALIDADA

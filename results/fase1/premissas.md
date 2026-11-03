@@ -83,12 +83,19 @@
 | P-079 | densidade_da_hidrazina | 1004 | kg/m³ (~25 °C) | NÃO VALIDADA | config/cad.yaml (volume dos tanques de descida do lander, Etapa 7.1) |
 | P-080 | razao_de_mistura_do_cruzeiro_do_lander | 1.65 | adimensional (O/F, massa) | NÃO VALIDADA | config/cad.yaml (tanques do estágio de cruzeiro do lander, 4 × 10N, ADR 0011) |
 | P-081 | fracao_de_ullage_dos_tanques | 0.05 | fração do volume do tanque | NÃO VALIDADA | config/cad.yaml (volume dos tanques, Etapa 7.1) |
-| P-082 | arranjo_dos_tanques | orbitador: 2 pares esféricos por estágio, em quadrado em torno do cilindro central; cruzeiro_lander: 1 par esférico; ccrs: maior dimensão na horizontal | — | NÃO VALIDADA | config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1) |
+| P-082 | arranjo_dos_tanques | pares_por_estagio_orbitador: 2; pares_estagio_cruzeiro_lander: 1 | pares de tanques (um de oxidante e um de combustível) | NÃO VALIDADA | config/cad.yaml (arranjo do orbitador e do estágio de cruzeiro, Etapa 7.1) |
 | P-083 | altura_do_conjunto_cruzeiro_aeroshell_proporcional_ao_diametro | altura = 3,0 m × (D / 4,5 m) | m | NÃO VALIDADA | config/cad.yaml (conjunto do lander na coifa do Vulcan, Etapa 7.1) |
 | P-084 | propelente_de_descida_proporcional_a_massa_de_entrada | 387 kg × (massa de entrada / 3150 kg), hidrazina, 3 tanques esféricos | kg | NÃO VALIDADA | config/cad.yaml (tanques de descida do lander, Etapa 7.1) |
 | P-085 | geometria_dos_tanques_do_mav | forma: cilindro com tampos hemisféricos no diâmetro interno do MAV; espessura_parede_m: 0.01 | m | NÃO VALIDADA | config/cad.yaml (comprimento do MAV, Etapa 7.1) |
-| P-086 | comprimento_do_mav_fora_dos_tanques | motores_estagio_1_m: 0.6; motor_estagio_2_m: 0.45; interestagio_m: 0.1; carga_os_m: 0.35 | m | NÃO VALIDADA | config/cad.yaml (comprimento do MAV, Etapa 7.1) |
-| P-087 | folgas_de_arranjo | entre_conjuntos_m: 0.1; radial_m: 0.05; interna_aeroshell_m: 0.25 | m | NÃO VALIDADA | config/cad.yaml (esquemas do arranjo, Etapa 7.1) |
+| P-086 | comprimento_do_mav_fora_dos_tanques | motores_estagio_1: 0.6; motor_estagio_2: 0.45; interestagio: 0.1; carga_os: 0.35 | m | NÃO VALIDADA | config/cad.yaml (comprimento do MAV, Etapa 7.1) |
+| P-087 | folgas_de_arranjo | folga_entre_conjuntos_m: 0.1; folga_radial_m: 0.05; folga_interna_m: 0.25 | m | NÃO VALIDADA | config/cad.yaml (esquemas do arranjo, Etapa 7.1) |
 | P-088 | paineis_do_lander_em_duas_asas_circulares | 2 | asas | NÃO VALIDADA | config/cad.yaml (painéis do lander abertos, Etapa 7.1) |
+| P-089 | forma_da_capsula_por_opcao_de_aeroshell | opcao_4_65_m: SRL-A; opcao_4_5_m: MSL/M2020 | — | NÃO VALIDADA | config/cad.yaml (capsulas, Etapa 7.2) |
+| P-090 | densidade_do_sla_561v | 256 | kg/m³ | NÃO VALIDADA | config/cad.yaml (massa da proteção térmica da casca traseira, Etapa 7.2) |
+| P-091 | orientacao_do_lander_na_coifa | frente_para_cima: True; estagio_de_cruzeiro: conjunto do MSL menos a cápsula lida da figura | — | NÃO VALIDADA | config/cad.yaml (lançamento do lander, Etapa 7.2) |
+| P-092 | estacao_da_base_do_mav_deitado | 0.85 | m do nariz (plano do ombro) | NÃO VALIDADA | config/cad.yaml (MAV deitado contra a casca traseira, Etapa 7.2) |
+| P-093 | materiais_e_espessuras_das_pecas_modeladas | tanques_espessura_m: 0.0015; cilindro_central_espessura_m: 0.003; raio_minimo_m: 0.005 | m | NÃO VALIDADA | config/cad.yaml (construcao, Etapa 7.2) |
+| P-094 | pecas_com_densidade_equivalente | plataforma_orbitador_altura_m: 0.3; deck_lander_altura_m: 0.3; ees_raio_ponta_m: 0.0064 | m | NÃO VALIDADA | config/cad.yaml (construcao.equivalentes, Etapa 7.2) |
+| P-095 | arranjo_interno_do_lander | raio_tanques_cruzeiro_m: 1.5; raio_tanques_descida_m: 1.4; angulos_tanques_descida_graus: [0, 120, 240]; braco_posicao_x_m: 0.45; braco_raio_m: 0.05; helicopteros_posicao_y_m: 0.75; folga_entre_pecas_m: 0.05 | m (ângulos em graus) | NÃO VALIDADA | config/cad.yaml (arranjo_lander, Etapa 7.2) |
 
-Total: 88 premissas, 88 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 95 premissas, 95 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

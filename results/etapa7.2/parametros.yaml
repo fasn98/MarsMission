@@ -1,0 +1,1087 @@
+gerado_por: tools/cad_parametros.py
+escolha:
+  aeroshell: srl_duplo
+  aeroshell_alternativa: m2020
+  mav_diametro: restricao_2019
+  orbitador_pares: 2
+materiais:
+  ti_6al_4v:
+    nome: Ti-6Al-4V
+    densidade_kg_m3: 4424.0
+  al_2219:
+    nome: Al 2219
+    densidade_kg_m3: 2840.0
+  al_7075:
+    nome: Al 7075
+    densidade_kg_m3: 2800.0
+  cfrp_im7_8552:
+    nome: CFRP IM7/8552 (fita unidirecional)
+    densidade_kg_m3: 1574.0
+  pica:
+    nome: PICA
+    densidade_kg_m3: 274.0
+  sla_561v:
+    nome: SLA-561V
+    densidade_kg_m3: 256.0
+  mmh:
+    nome: MMH
+    densidade_kg_m3: 869.0
+  mon3:
+    nome: MON-3
+    densidade_kg_m3: 1431.0
+  hidrazina:
+    nome: Hidrazina
+    densidade_kg_m3: 1004.0
+conferencias:
+  orbitador_falcon:
+  - conjunto: Tanques de inserção
+    h0_m: 0.0
+    h1_m: 1.119781605307442
+    raio_m: 1.958781605307442
+    folga_radial_m: 0.35621222920797546
+  - conjunto: Tanques de retorno
+    h0_m: 1.2197816053074422
+    h1_m: 2.1272685979602364
+    raio_m: 1.7464869926527942
+    folga_radial_m: 0.5601439511243398
+  - conjunto: Plataforma
+    h0_m: 2.2272685979602365
+    h1_m: 2.5272685979602363
+    raio_m: 1.7449869926527941
+    folga_radial_m: 0.558289404843932
+  - conjunto: CCRS
+    h0_m: 2.6272685979602364
+    h1_m: 4.627268597960237
+    raio_m: 1.7182840277439582
+    folga_radial_m: 0.5676214623135836
+  - conjunto: EES
+    h0_m: 4.627268597960237
+    h1_m: 5.115672225808845
+    raio_m: 0.6365
+    folga_radial_m: 1.6452746221935297
+  lander_vulcan:
+    forma: srl_a
+    altura_estagio_cruzeiro_m: 0.1200000000000001
+    por_forma:
+      msl_m2020:
+        folga_radial_m: 0.14252150287894194
+        raio_max_m: 2.26
+        comprimento_m: 2.88
+        folga_sem_afunilamento_m: 0.06526817042606536
+      srl_a:
+        folga_radial_m: 0.046599138400648776
+        raio_max_m: 2.34
+        comprimento_m: 3.85
+        folga_sem_afunilamento_m: -0.013791164658634614
+      srl_c:
+        folga_radial_m: 0.03187213060367977
+        raio_max_m: 2.36
+        comprimento_m: 3.55
+        folga_sem_afunilamento_m: -0.0338064727034979
+  mav_deitado:
+    diametro_m: 0.57
+    comprimento_m: 3.5609947218243874
+    folga_interna_m: 0.25
+    por_forma:
+      msl_m2020:
+      - estacao_base_m: 0.85
+        comprimento_max_m: 3.1839999999999997
+        folga_m: -0.18849736091219382
+      - estacao_base_m: 0.95
+        comprimento_max_m: 3.0373333333333328
+        folga_m: -0.2618306942455273
+      - estacao_base_m: 1.05
+        comprimento_max_m: 2.8906666666666663
+        folga_m: -0.33516402757886055
+      - estacao_base_m: 1.15
+        comprimento_max_m: 2.7439999999999998
+        folga_m: -0.4084973609121938
+      - estacao_base_m: 1.25
+        comprimento_max_m: 2.5973333333333333
+        folga_m: -0.48183069424552705
+      - estacao_base_m: 1.35
+        comprimento_max_m: 2.4135999999999997
+        folga_m: -0.5736973609121938
+      - estacao_base_m: 1.45
+        comprimento_max_m: 2.0816
+        folga_m: -0.7396973609121937
+      srl_a:
+      - estacao_base_m: 0.85
+        comprimento_max_m: 3.5951304347826083
+        folga_m: 0.017067856479110466
+      - estacao_base_m: 0.95
+        comprimento_max_m: 3.4925217391304346
+        folga_m: -0.03423649134697637
+      - estacao_base_m: 1.05
+        comprimento_max_m: 3.3899130434782605
+        folga_m: -0.08554083917306343
+      - estacao_base_m: 1.15
+        comprimento_max_m: 3.287304347826087
+        folga_m: -0.13684518699915027
+      - estacao_base_m: 1.25
+        comprimento_max_m: 3.184695652173913
+        folga_m: -0.1881495348252371
+      - estacao_base_m: 1.35
+        comprimento_max_m: 3.0820869565217395
+        folga_m: -0.23945388265132395
+      - estacao_base_m: 1.45
+        comprimento_max_m: 2.9633333333333334
+        folga_m: -0.298830694245527
+      srl_c:
+      - estacao_base_m: 0.85
+        comprimento_max_m: 3.615304347826087
+        folga_m: 0.027154813000849876
+      - estacao_base_m: 0.95
+        comprimento_max_m: 3.5092173913043476
+        folga_m: -0.025888665260019872
+      - estacao_base_m: 1.05
+        comprimento_max_m: 3.4031304347826086
+        folga_m: -0.0789321435208894
+      - estacao_base_m: 1.15
+        comprimento_max_m: 3.2970434782608695
+        folga_m: -0.13197562178175892
+      - estacao_base_m: 1.25
+        comprimento_max_m: 3.1909565217391305
+        folga_m: -0.18501910004262845
+      - estacao_base_m: 1.35
+        comprimento_max_m: 3.0848695652173914
+        folga_m: -0.23806257830349797
+      - estacao_base_m: 1.45
+        comprimento_max_m: 2.969333333333333
+        folga_m: -0.2958306942455271
+resumo:
+  orbitador:
+    massa_kg: 6506.245401470078
+    cg_m:
+    - -2.985534334243933e-17
+    - 4.368373413025915e-17
+    - 1.3928028268488128
+    inercia_cg_kg_m2:
+    - - 12069.915079680859
+      - -8.352478253692152e-14
+      - -1.6145802743950625e-13
+    - - -8.352478253692152e-14
+      - 14890.708868767731
+      - 1.9829897903064447e-13
+    - - -1.6145802743950625e-13
+      - 1.9829897903064447e-13
+      - 11604.863063782157
+    volume_m3: 10.826365796210773
+    por_origem_kg:
+      geometria modelada: 263.2550760529966
+      propelente: 4919.088780612104
+      densidade equivalente (massa do orçamento): 1323.9015448049765
+    corpos: 20
+  lander:
+    massa_kg: 3190.406282097587
+    cg_m:
+    - 0.02560650161180367
+    - -0.026256892276789314
+    - 3.0031885372363116
+    inercia_cg_kg_m2:
+    - - 3647.9893772264027
+      - -2.1450605851691242
+      - 108.35621727460902
+    - - -2.1450605851691242
+      - 3639.167512167565
+      - -14.089179676795741
+    - - 108.35621727460902
+      - -14.089179676795741
+      - 4131.24914511398
+    volume_m3: 6.999202185745185
+    por_origem_kg:
+      geometria modelada: 330.0108161809555
+      propelente: 943.4730824202659
+      densidade equivalente (massa do orçamento): 1916.922383496366
+    corpos: 33
+  mav:
+    massa_kg: 348.12696494567564
+    cg_m:
+    - 0.0
+    - 0.0
+    - 1.5398567193604524
+    inercia_cg_kg_m2:
+    - - 252.62895337685165
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 252.62895337685165
+      - 0.0
+    - - 0.0
+      - 0.0
+      - 13.869936333858373
+    volume_m3: 0.5064900356202316
+    por_origem_kg:
+      densidade equivalente (massa do orçamento): 37.54567520614788
+      geometria modelada: 25.08489542461023
+      propelente: 285.4963943149176
+    corpos: 12
+  orcamento:
+    orbitador_injetado_kg: 7796.395336836866
+    lander_injetado_kg: 4614.7885791407525
+    mav_glom_kg: 386.77369250546496
+veiculos:
+  orbitador:
+  - nome: Tanque insercao MON-3 1
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - 1.39739
+    - 0.0
+    - 0.559891
+    r: 0.561391
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 26.211158101094906
+  - nome: Propelente insercao MON-3 1
+    material: mon3
+    origem: massa do orçamento / densidade
+    c:
+    - 1.39739
+    - 0.0
+    - 0.559891
+    r: 0.550399
+    tipo: esfera
+    massa_kg: 999.4501824052583
+  - nome: Tanque insercao MMH 1
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - 8.55655e-17
+    - 1.39739
+    - 0.559891
+    r: 0.561391
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 26.211158101094906
+  - nome: Propelente insercao MMH 1
+    material: mmh
+    origem: massa do orçamento / densidade
+    c:
+    - 8.55655e-17
+    - 1.39739
+    - 0.559891
+    r: 0.550034
+    tipo: esfera
+    massa_kg: 605.7270851632488
+  - nome: Tanque insercao MON-3 2
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - -1.39739
+    - 1.71131e-16
+    - 0.559891
+    r: 0.561391
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 26.211158101094906
+  - nome: Propelente insercao MON-3 2
+    material: mon3
+    origem: massa do orçamento / densidade
+    c:
+    - -1.39739
+    - 1.71131e-16
+    - 0.559891
+    r: 0.550399
+    tipo: esfera
+    massa_kg: 999.4501824052583
+  - nome: Tanque insercao MMH 2
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - -2.56697e-16
+    - -1.39739
+    - 0.559891
+    r: 0.561391
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 26.211158101094906
+  - nome: Propelente insercao MMH 2
+    material: mmh
+    origem: massa do orçamento / densidade
+    c:
+    - -2.56697e-16
+    - -1.39739
+    - 0.559891
+    r: 0.550034
+    tipo: esfera
+    massa_kg: 605.7270851632488
+  - nome: Tanque retorno MON-3 1
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - 1.29124
+    - 0.0
+    - 1.67353
+    r: 0.455243
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 17.225468113996342
+  - nome: Propelente retorno MON-3 1
+    material: mon3
+    origem: massa do orçamento / densidade
+    c:
+    - 1.29124
+    - 0.0
+    - 1.67353
+    r: 0.446051
+    tipo: esfera
+    massa_kg: 531.9634514429453
+  - nome: Tanque retorno MMH 1
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - 7.90659e-17
+    - 1.29124
+    - 1.67353
+    r: 0.455243
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 17.225468113996342
+  - nome: Propelente retorno MMH 1
+    material: mmh
+    origem: massa do orçamento / densidade
+    c:
+    - 7.90659e-17
+    - 1.29124
+    - 1.67353
+    r: 0.445756
+    tipo: esfera
+    massa_kg: 322.40367129459963
+  - nome: Tanque retorno MON-3 2
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - -1.29124
+    - 1.58132e-16
+    - 1.67353
+    r: 0.455243
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 17.225468113996342
+  - nome: Propelente retorno MON-3 2
+    material: mon3
+    origem: massa do orçamento / densidade
+    c:
+    - -1.29124
+    - 1.58132e-16
+    - 1.67353
+    r: 0.446051
+    tipo: esfera
+    massa_kg: 531.9634514429453
+  - nome: Tanque retorno MMH 2
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - -2.37198e-16
+    - -1.29124
+    - 1.67353
+    r: 0.455243
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 17.225468113996342
+  - nome: Propelente retorno MMH 2
+    material: mmh
+    origem: massa do orçamento / densidade
+    c:
+    - -2.37198e-16
+    - -1.29124
+    - 1.67353
+    r: 0.445756
+    tipo: esfera
+    massa_kg: 322.40367129459963
+  - nome: Cilindro central
+    material: al_2219
+    origem: geometria (P-093)
+    p0:
+    - 0.0
+    - 0.0
+    - 0.0
+    p1:
+    - 0.0
+    - 0.0
+    - 2.12727
+    r: 0.7875
+    t: 0.003
+    tipo: tubo
+    massa_kg: 89.5085711926317
+  - nome: Plataforma (P-016)
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    p0:
+    - 0.0
+    - 0.0
+    - 2.22727
+    p1:
+    - 0.0
+    - 0.0
+    - 2.52727
+    r: 1.74499
+    tipo: cilindro
+    densidade: 213.95
+    massa_kg: 614.001317766395
+  - nome: CCRS
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    c1:
+    - -1.7
+    - -0.25
+    - 2.62727
+    c2:
+    - 1.7
+    - 0.25
+    - 4.62727
+    tipo: caixa
+    densidade: 182.353
+    massa_kg: 620.0002000000001
+  - nome: EES com o contêiner de amostras
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    p0:
+    - 0.0
+    - 0.0
+    - 4.62727
+    p1:
+    - 0.0
+    - 0.0
+    - 5.11567
+    r0: 0.6365
+    r1: 0.0064
+    ri0: 0.0
+    ri1: 0.0
+    tipo: tronco
+    densidade: 429.507
+    massa_kg: 89.90002703858167
+  lander:
+  - nome: Nariz do escudo (PICA)
+    material: pica
+    origem: 'geometria: perfil de [F41]'
+    p0:
+    - 0.0
+    - 0.0
+    - 3.97
+    p1:
+    - 0.0
+    - 0.0
+    - 3.95
+    r0: 0.005
+    r1: 0.25
+    ri0: 0.0
+    ri1: 0.0
+    tipo: tronco
+    massa_kg: 0.3659819305750457
+  - nome: Escudo térmico (PICA)
+    material: pica
+    origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
+    p0:
+    - 0.0
+    - 0.0
+    - 3.95
+    p1:
+    - 0.0
+    - 0.0
+    - 3.12
+    r0: 0.25
+    r1: 2.34
+    ri0: 0.160913
+    ri1: 2.25091
+    tipo: tronco_oco
+    massa_kg: 159.1844111034063
+  - nome: Casca traseira 1 (SLA-561V)
+    material: sla_561v
+    origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
+    p0:
+    - 0.0
+    - 0.0
+    - 3.12
+    p1:
+    - 0.0
+    - 0.0
+    - 1.97
+    r0: 2.34
+    r1: 1.75
+    ri0: 2.32568
+    ri1: 1.73568
+    tipo: tronco_oco
+    massa_kg: 53.97973828409067
+  - nome: Casca traseira 2 (SLA-561V)
+    material: sla_561v
+    origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
+    p0:
+    - 0.0
+    - 0.0
+    - 1.97
+    p1:
+    - 0.0
+    - 0.0
+    - 1.37
+    r0: 1.75
+    r1: 1.2
+    ri0: 1.73267
+    ri1: 1.18267
+    tipo: tronco_oco
+    massa_kg: 24.52465166744014
+  - nome: Casca traseira 3 (SLA-561V)
+    material: sla_561v
+    origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
+    p0:
+    - 0.0
+    - 0.0
+    - 1.37
+    p1:
+    - 0.0
+    - 0.0
+    - 0.12
+    r0: 1.2
+    r1: 0.4
+    ri0: 1.18478
+    ri1: 0.384777
+    tipo: tronco_oco
+    massa_kg: 24.25038691818395
+  - nome: Tampa traseira (SLA-561V)
+    material: sla_561v
+    origem: geometria (P-090)
+    p0:
+    - 0.0
+    - 0.0
+    - 0.12
+    p1:
+    - 0.0
+    - 0.0
+    - 0.1327
+    r: 0.4
+    tipo: cilindro
+    massa_kg: 1.634231365656184
+  - nome: Tanque cruzeiro MON-3
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - 1.5
+    - 0.0
+    - 0.351727
+    r: 0.233227
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 4.506898042536611
+  - nome: Propelente cruzeiro MON-3
+    material: mon3
+    origem: massa do orçamento / densidade
+    c:
+    - 1.5
+    - 0.0
+    - 0.351727
+    r: 0.227799
+    tipo: esfera
+    massa_kg: 70.85715042504485
+  - nome: Tanque cruzeiro MMH
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - -1.5
+    - 0.0
+    - 0.351727
+    r: 0.233227
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 4.506898042536611
+  - nome: Propelente cruzeiro MMH
+    material: mmh
+    origem: massa do orçamento / densidade
+    c:
+    - -1.5
+    - 0.0
+    - 0.351727
+    r: 0.227648
+    tipo: esfera
+    massa_kg: 42.9437438075496
+  - nome: Circuito de fluido de cruzeiro (P-077)
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    p0:
+    - 0.0
+    - 0.0
+    - 0.0
+    p1:
+    - 0.0
+    - 0.0
+    - 0.12
+    r: 2.09
+    tipo: cilindro
+    densidade: 21.6793
+    massa_kg: 35.70006001333763
+  - nome: Tanque descida 1
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - 1.4
+    - 0.0
+    - 3.12
+    r: 0.358245
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 10.657536350928423
+  - nome: Propelente descida 1
+    material: hidrazina
+    origem: massa do orçamento / densidade
+    c:
+    - 1.4
+    - 0.0
+    - 3.12
+    r: 0.350697
+    tipo: esfera
+    massa_kg: 181.3921441522867
+  - nome: Tanque descida 2
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - -0.7
+    - 1.21244
+    - 3.12
+    r: 0.358245
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 10.657536350928423
+  - nome: Propelente descida 2
+    material: hidrazina
+    origem: massa do orçamento / densidade
+    c:
+    - -0.7
+    - 1.21244
+    - 3.12
+    r: 0.350697
+    tipo: esfera
+    massa_kg: 181.3921441522867
+  - nome: Tanque descida 3
+    material: ti_6al_4v
+    origem: geometria (P-093)
+    c:
+    - -0.7
+    - -1.21244
+    - 3.12
+    r: 0.358245
+    t: 0.0015
+    tipo: esfera_oca
+    massa_kg: 10.657536350928423
+  - nome: Propelente descida 3
+    material: hidrazina
+    origem: massa do orçamento / densidade
+    c:
+    - -0.7
+    - -1.21244
+    - 3.12
+    r: 0.350697
+    tipo: esfera
+    massa_kg: 181.3921441522867
+  - nome: Nucleo do lander (P-017 sem braço e helicópteros)
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    p0:
+    - 0.0
+    - 0.0
+    - 3.42
+    p1:
+    - 0.0
+    - 0.0
+    - 3.12
+    r: 1.33458
+    tipo: cilindro
+    densidade: 1041.79
+    massa_kg: 1748.8015770999743
+  - nome: MAV motores do estágio 1 (4 x R-4D-11)
+    material: equivalente
+    origem: massa de [F106] (P-094)
+    p0:
+    - 0.0
+    - -1.7805
+    - 2.835
+    p1:
+    - 0.0
+    - -1.1805
+    - 2.835
+    r: 0.275
+    tipo: cilindro
+    densidade: 120.916
+    massa_kg: 17.236547585053902
+  - nome: MAV Tanque de oxidante do estágio 1
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - -1.1805
+    - 2.835
+    p1:
+    - 0.0
+    - -0.530685
+    - 2.835
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 7.430578285979849
+  - nome: MAV propelente oxidante do estágio 1
+    material: mon3
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - -1.07
+    - 2.835
+    p1:
+    - 0.0
+    - -0.641181
+    - 2.835
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 144.20429229355403
+  - nome: MAV Tanque de combustível do estágio 1
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - -0.530685
+    - 2.835
+    p1:
+    - 0.0
+    - 0.11824
+    - 2.835
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 7.420401213005967
+  - nome: MAV propelente combustível do estágio 1
+    material: mmh
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - -0.420207
+    - 2.835
+    p1:
+    - 0.0
+    - 0.0077614
+    - 2.835
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 87.39689703269651
+  - nome: MAV interestágio
+    material: al_2219
+    origem: geometria (P-093)
+    p0:
+    - 0.0
+    - 0.11824
+    - 2.835
+    p1:
+    - 0.0
+    - 0.21824
+    - 2.835
+    r: 0.285
+    t: 0.003
+    tipo: tubo
+    massa_kg: 1.5176531454667785
+  - nome: MAV motor do estágio 2 (1 x R-4D-11)
+    material: equivalente
+    origem: massa de [F106] (P-094)
+    p0:
+    - 0.0
+    - 0.21824
+    - 2.835
+    p1:
+    - 0.0
+    - 0.66824
+    - 2.835
+    r: 0.1375
+    tipo: cilindro
+    densidade: 161.221
+    massa_kg: 4.30912798690306
+  - nome: MAV Tanque de oxidante do estágio 2
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - 0.66824
+    - 2.835
+    p1:
+    - 0.0
+    - 1.04949
+    - 2.835
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 4.3595607542605475
+  - nome: MAV propelente oxidante do estágio 2
+    material: mon3
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - 0.80897
+    - 2.835
+    p1:
+    - 0.0
+    - 0.908758
+    - 2.835
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 33.55695041355249
+  - nome: MAV Tanque de combustível do estágio 2
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - 1.04949
+    - 2.835
+    p1:
+    - 0.0
+    - 1.4305
+    - 2.835
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 4.356816375031636
+  - nome: MAV propelente combustível do estágio 2
+    material: mmh
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - 1.1902
+    - 2.835
+    p1:
+    - 0.0
+    - 1.28979
+    - 2.835
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 20.33761599100834
+  - nome: MAV carga (contêiner de amostras)
+    material: equivalente
+    origem: massa de [F34] (P-094)
+    p0:
+    - 0.0
+    - 1.4305
+    - 2.835
+    p1:
+    - 0.0
+    - 1.7805
+    - 2.835
+    r: 0.275
+    tipo: cilindro
+    densidade: 192.414
+    massa_kg: 15.999999634190903
+  - nome: Braço de coleta (guardado)
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    p0:
+    - 0.45
+    - -1.175
+    - 3.07
+    p1:
+    - 0.45
+    - 1.175
+    - 3.07
+    r: 0.05
+    tipo: cilindro
+    densidade: 4794.97
+    massa_kg: 88.50007484132779
+  - nome: Helicóptero 1
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    p0:
+    - 0.0
+    - -0.75
+    - 2.5
+    p1:
+    - 0.0
+    - -0.75
+    - 2.01
+    r: 0.7
+    tipo: cilindro
+    densidade: 4.22579
+    massa_kg: 3.187498167789133
+  - nome: Helicóptero 2
+    material: equivalente
+    origem: massa do orçamento (P-094)
+    p0:
+    - 0.0
+    - 0.75
+    - 2.5
+    p1:
+    - 0.0
+    - 0.75
+    - 2.01
+    r: 0.7
+    tipo: cilindro
+    densidade: 4.22579
+    massa_kg: 3.187498167789133
+  mav:
+  - nome: MAV motores do estágio 1 (4 x R-4D-11)
+    material: equivalente
+    origem: massa de [F106] (P-094)
+    p0:
+    - 0.0
+    - 0.0
+    - 0.0
+    p1:
+    - 0.0
+    - 0.0
+    - 0.6
+    r: 0.275
+    tipo: cilindro
+    densidade: 120.916
+    massa_kg: 17.236547585053906
+  - nome: MAV Tanque de oxidante do estágio 1
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - 0.0
+    - 0.6
+    p1:
+    - 0.0
+    - 0.0
+    - 1.24981
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 7.430521111412579
+  - nome: MAV propelente oxidante do estágio 1
+    material: mon3
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - 0.0
+    - 0.710496
+    p1:
+    - 0.0
+    - 0.0
+    - 1.13932
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 144.2059737056684
+  - nome: MAV Tanque de combustível do estágio 1
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - 0.0
+    - 1.24981
+    p1:
+    - 0.0
+    - 0.0
+    - 1.89874
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 7.420458387573237
+  - nome: MAV propelente combustível do estágio 1
+    material: mmh
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - 0.0
+    - 1.36029
+    p1:
+    - 0.0
+    - 0.0
+    - 1.78826
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 87.39722377419251
+  - nome: MAV interestágio
+    material: al_2219
+    origem: geometria (P-093)
+    p0:
+    - 0.0
+    - 0.0
+    - 1.89874
+    p1:
+    - 0.0
+    - 0.0
+    - 1.99874
+    r: 0.285
+    t: 0.003
+    tipo: tubo
+    massa_kg: 1.5176531454667768
+  - nome: MAV motor do estágio 2 (1 x R-4D-11)
+    material: equivalente
+    origem: massa de [F106] (P-094)
+    p0:
+    - 0.0
+    - 0.0
+    - 1.99874
+    p1:
+    - 0.0
+    - 0.0
+    - 2.44874
+    r: 0.1375
+    tipo: cilindro
+    densidade: 161.221
+    massa_kg: 4.30912798690306
+  - nome: MAV Tanque de oxidante do estágio 2
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - 0.0
+    - 2.44874
+    p1:
+    - 0.0
+    - 0.0
+    - 2.82999
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 4.3595607542605475
+  - nome: MAV propelente oxidante do estágio 2
+    material: mon3
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - 0.0
+    - 2.58947
+    p1:
+    - 0.0
+    - 0.0
+    - 2.68926
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 33.55762297839826
+  - nome: MAV Tanque de combustível do estágio 2
+    material: ti_6al_4v
+    origem: geometria (P-085, P-093)
+    p0:
+    - 0.0
+    - 0.0
+    - 2.82999
+    p1:
+    - 0.0
+    - 0.0
+    - 3.21099
+    r: 0.275
+    t: 0.0015
+    tipo: tubo
+    massa_kg: 4.3567020258970945
+  - nome: MAV propelente combustível do estágio 2
+    material: mmh
+    origem: massa do orçamento / densidade
+    p0:
+    - 0.0
+    - 0.0
+    - 2.9707
+    p1:
+    - 0.0
+    - 0.0
+    - 3.07028
+    r: 0.2735
+    tipo: cilindro
+    massa_kg: 20.33557385665839
+  - nome: MAV carga (contêiner de amostras)
+    material: equivalente
+    origem: massa de [F34] (P-094)
+    p0:
+    - 0.0
+    - 0.0
+    - 3.21099
+    p1:
+    - 0.0
+    - 0.0
+    - 3.56099
+    r: 0.275
+    tipo: cilindro
+    densidade: 192.414
+    massa_kg: 15.999999634190912

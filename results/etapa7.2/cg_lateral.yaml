@@ -1,0 +1,175 @@
+gerado_por: tools/cg_lateral.py
+diametro_capsula_m: 4.68
+configuracoes:
+  lançamento:
+    massa_kg: 3190.406282097587
+    cg_m:
+    - 0.02560650161180367
+    - -0.026256892276789314
+    - 3.0031885372363116
+    deslocamento_radial_m: 0.03667584105143633
+    radial_sobre_d: 0.007836718173383831
+    produtos_kg_m2:
+      Ixy: -2.1450605851691242
+      Ixz: 108.35621727460902
+      Iyz: -14.089179676795741
+    por_conjunto:
+    - conjunto: Estágio de cruzeiro
+      massa_kg: 158.5147503310053
+      mx_kg_m: 41.870109926242876
+      my_kg_m: 0.0
+      Ixy: -0.9928020246341687
+      Ixz: 99.9879985813746
+      Iyz: 11.309117494147225
+      Ixy_origem: 0.0
+      Ixz_origem: 111.01698602928926
+      Iyz_origem: 0.0
+    - conjunto: Descida (3 tanques a 120°)
+      massa_kg: 576.1490415096454
+      mx_kg_m: 1.4210854715202004e-14
+      my_kg_m: 0.0
+      Ixy: 0.38737216857308
+      Ixz: 1.7233383588568518
+      Iyz: -1.7671101789283448
+      Ixy_origem: 0.0
+      Ixz_origem: -1.7763568394002505e-15
+      Iyz_origem: 0.0
+    - conjunto: MAV (deitado ao longo de y)
+      massa_kg: 348.12644071070406
+      mx_kg_m: 0.0
+      my_kg_m: -83.77015406822824
+      Ixy: -1.9109987633836023
+      Ixz: -1.499283122084227
+      Iyz: -12.551815610990415
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: -14.089179676795764
+    - conjunto: Braço (guardado em x = +0,45 m)
+      massa_kg: 88.50007484132779
+      mx_kg_m: 39.82503367859751
+      my_kg_m: 0.0
+      Ixy: -0.9861788457341067
+      Ixz: -2.509362133779454
+      Iyz: -0.15525226347796905
+      Ixy_origem: 0.0
+      Ixz_origem: -2.660768754680246
+      Iyz_origem: 0.0
+    - conjunto: Helicópteros
+      massa_kg: 6.374996335578266
+      mx_kg_m: 0.0
+      my_kg_m: 0.0
+      Ixy: 0.004286210645578305
+      Ixz: -0.12213530982251013
+      Iyz: 0.12523747764605497
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: 0.0
+    - conjunto: Núcleo do lander
+      massa_kg: 1748.8015770999743
+      mx_kg_m: 0.0
+      my_kg_m: 0.0
+      Ixy: 1.1758017639848737
+      Ixz: 11.948001509921667
+      Iyz: -12.251473993789018
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: 0.0
+    - conjunto: Cápsula (escudo e casca)
+      massa_kg: 263.9394012693523
+      mx_kg_m: 0.0
+      my_kg_m: 0.0
+      Ixy: 0.17745890537922046
+      Ixz: -1.172340609857892
+      Iyz: 1.2021173985967202
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: 0.0
+  entrada (sem o estágio de cruzeiro):
+    massa_kg: 3031.8915317665815
+    cg_m:
+    - 0.013135375478090672
+    - -0.027629667219466185
+    - 3.1452485121668228
+    deslocamento_radial_m: 0.030593080910703813
+    radial_sobre_d: 0.0065369831005777385
+    produtos_kg_m2:
+      Ixy: -1.1003524275436787
+      Ixz: 2.9967745313080476
+      Iyz: -25.98956566365327
+    por_conjunto:
+    - conjunto: Descida (3 tanques a 120°)
+      massa_kg: 576.1490415096454
+      mx_kg_m: 1.4210854715202004e-14
+      my_kg_m: 0.0
+      Ixy: 0.20909949772601522
+      Ixz: -0.19107907346389608
+      Iyz: 0.4019261741864444
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: 0.0
+    - conjunto: MAV (deitado ao longo de y)
+      massa_kg: 348.12644071070406
+      mx_kg_m: 0.0
+      my_kg_m: -83.77015406822824
+      Ixy: -0.9740082723802668
+      Ixz: -1.4186955582587528
+      Iyz: -23.005403830913558
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: -25.989565663653323
+    - conjunto: Braço (guardado em x = +0,45 m)
+      massa_kg: 88.50007484132779
+      mx_kg_m: 39.82503367859751
+      my_kg_m: 0.0
+      Ixy: -1.0682334446680937
+      Ixz: 2.9092995119927196
+      Iyz: 0.1839997400706976
+      Ixy_origem: 0.0
+      Ixz_origem: 2.9967745313080774
+      Iyz_origem: 0.0
+    - conjunto: Helicópteros
+      massa_kg: 6.374996335578266
+      mx_kg_m: 0.0
+      my_kg_m: 0.0
+      Ixy: 0.0023136522596335606
+      Ixz: -0.07454760368445672
+      Iyz: 0.1568075069681667
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: 0.0
+    - conjunto: Núcleo do lander
+      massa_kg: 1748.8015770999743
+      mx_kg_m: 0.0
+      my_kg_m: 0.0
+      Ixy: 0.6346856543159226
+      Ixz: 2.865687054909621
+      Iyz: -6.027842889938772
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: 0.0
+    - conjunto: Cápsula (escudo e casca)
+      massa_kg: 263.9394012693523
+      mx_kg_m: 0.0
+      my_kg_m: 0.0
+      Ixy: 0.09579048520312211
+      Ixz: -1.0938898001871873
+      Iyz: 2.300947635973754
+      Ixy_origem: 0.0
+      Ixz_origem: 0.0
+      Iyz_origem: 0.0
+comparacao_entrada:
+  lander_radial_sobre_d: 0.0065369831005777385
+  msl_radial_sobre_d: 0.0215
+  razao_lander_msl: 0.3040457256082669
+  azimute_graus: -64.57319363144765
+msl:
+  zcg_sobre_d: -0.0215
+  deslocamento_radial_m: 0.09674999999999999
+  trimagem_graus: -16.0
+  l_sobre_d: 0.24
+  massas_balanco_entrada:
+  - 6.0
+  - 25
+  massas_balanco_cruzeiro:
+  - 2.0
+  - 75
