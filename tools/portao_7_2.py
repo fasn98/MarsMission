@@ -22,7 +22,9 @@ import yaml
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
+sys.path.insert(0, str(RAIZ / "tools"))
 
+from conferencia_onshape import _bloco  # noqa: E402
 from orbital import motores as om  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
@@ -44,6 +46,7 @@ def main():
     env = ler("results/etapa7.1/envelope.yaml")["lander"]
     p086 = ma["comprimento_fora_dos_tanques_m"]
     cad = ler("config/cad.yaml")
+    med = ler("tests/data/onshape/medicoes.yaml")
 
     aero = {}
     for k, (op, rot) in OPCOES.items():
@@ -69,15 +72,46 @@ def main():
     for li in linhas:
         ch = (li["forma"], li["orientacao"], li["situacao"])
         contagem[ch] = contagem.get(ch, 0) + 1
-    # R-4D-11 de bocal 164:1 [F228]: comprimento total, diâmetro de saída e o menor círculo com 4 saídas em quadrado
-    rd = cad["r4d11_164"]
-    comp_r4d = (v(rd["flange_a_saida_pol"]) + v(rd["a_frente_da_flange_pol"])) * POL
-    saida = v(rd["diametro_saida_pol"]) * POL
-    r4d = {"comprimento_m": comp_r4d, "diametro_saida_m": saida, "diametro_min_4_saidas_m": saida * (1 + math.sqrt(2)),
-           "massa_164_kg": v(rd["massa_164_kg"]), "massa_catalogo_kg": om.catalogo()["R-4D-11"]["massa_kg"],
-           "p086_motores_estagio_1_m": v(cad["mav"]["comprimento_nao_tanque_m"]["motores_estagio_1"]),
-           "p086_motor_estagio_2_m": v(cad["mav"]["comprimento_nao_tanque_m"]["motor_estagio_2"]),
-           "diametro_mav_escolhido_m": v(cad["mav"]["diametro_opcoes_m"][cad["escolha"]["mav_diametro"]])}
+    # R-4D-11 por variante [F228]: comprimento total e diâmetro de saída
+    rd = cad["r4d11_variantes"]
+    frente = v(rd["a_frente_da_flange_pol"])
+    variantes = {k: {"comprimento_m": (rd[k]["flange_a_saida_pol"] + frente) * POL, "diametro_saida_m": rd[k]["diametro_saida_pol"] * POL,
+                     "isp_s": rd[k].get("isp_s"), "massa_kg": rd[k].get("massa_kg"), "fonte": rd[k]["fonte"]} for k in ("44:1", "164:1", "300:1")}
+    d_mav = v(cad["mav"]["diametro_opcoes_m"][cad["escolha"]["mav_diametro"]])
+    # empacotamento: menor círculo que contém n círculos de diâmetro d (n = 1 a 4)
+    fator = {1: 1.0, 2: 2.0, 3: 1 + 2 / math.sqrt(3), 4: 1 + math.sqrt(2)}
+    s0 = variantes["164:1"]["diametro_saida_m"]
+    bocais = {"diametro_saida_m": s0, "diametro_mav_m": d_mav, "fator_por_n": fator,
+              "minimo_por_n_m": {n: f * s0 for n, f in fator.items()}, "cabe_por_n": {n: f * s0 <= d_mav for n, f in fator.items()},
+              "minimo_4_por_variante_m": {k: fator[4] * x["diametro_saida_m"] for k, x in variantes.items()},
+              "menor_diametro_da_varredura_que_contem_4_m": min((c["diametro_m"] for c in ma["casos"] if c["diametro_m"] >= fator[4] * s0), default=None)}
+    # como os motores foram modelados no arquivo compilado (32cb41d)
+    compilado = _bloco((RAIZ / med["mav"]["arquivo"]).read_text(encoding="utf-8"), "CORPOS")
+    modelo = []
+    for b in compilado:
+        if b["nome"].startswith(("MAV motores", "MAV motor")):
+            h = math.dist(b["p0"], b["p1"])
+            modelo.append({"nome": b["nome"], "tipo": b["tipo"], "diametro_m": 2 * b["r"], "comprimento_m": h, "densidade_kg_m3": b["densidade"]})
+    # catálogo: o que usa hoje, por grandeza
+    cat = om.catalogo()["R-4D-11"]
+    pc = cad["mav"]["comprimento_nao_tanque_m"]
+    combos = ler("config/motores.yaml")
+    n_motores = {f: sum(q["quantidade"] for q in next(c for g in combos["combinacoes"].values() for k_, c in g.items() if k_ == nome)["motores"] if q["motor"] == "R-4D-11")
+                 for f, nome in combos["escolha"].items() if f in ("captura", "retorno", "mav_1", "mav_2")}
+    r4d = {"variantes": variantes, "catalogo_isp_s": cat["isp_s"], "catalogo_massa_kg": cat["massa_kg"],
+           "p086_motores_estagio_1_m": v(pc["motores_estagio_1"]), "p086_motor_estagio_2_m": v(pc["motor_estagio_2"]), "n_motores": n_motores,
+           "diferenca_massa_por_motor_kg": cat["massa_kg"] - variantes["164:1"]["massa_kg"],
+           "diferenca_massa_total_kg": (cat["massa_kg"] - variantes["164:1"]["massa_kg"]) * sum(n_motores.values()),
+           "diferenca_massa_mav_kg": (cat["massa_kg"] - variantes["164:1"]["massa_kg"]) * (n_motores["mav_1"] + n_motores["mav_2"]),
+           "falta_no_estagio_2_m": variantes["164:1"]["comprimento_m"] - v(pc["motor_estagio_2"]),
+           "sobra_no_estagio_1_m": v(pc["motores_estagio_1"]) - variantes["164:1"]["comprimento_m"]}
+    # nosso MAV, para a tabela lado a lado com o de Bowles
+    mav_arq = ler("results/etapa2.5/arquitetura.yaml")["lander"]["mav"]
+    res = ler("results/etapa7.2/parametros.yaml")["resumo"]["mav"]
+    nosso = {"estagios": len(mav_arq["estagios"]), "dv_m_s": 1e3 * mav_arq["dv_com_margem_km_s"], "carga_kg": v(ler("config/superficie.yaml")["mav"]["carga_util_kg"]),
+             "propelente_kg": sum(e["propelente_kg"] for e in mav_arq["estagios"]), "glom_orcamento_kg": mav_arq["estagios"][0]["massa_inicial_kg"],
+             "massa_cad_kg": res["massa_kg"], "n_motores": [n_motores["mav_1"], n_motores["mav_2"]], "diametro_m": d_mav,
+             "comprimento_m": next(c["comprimento_m"] for c in ma["casos"] if c["diametro_m"] == d_mav)}
     # análogos publicados, só pela geometria (mesma conta do MAV deitado e em pé, mesma folga interna)
     h_deck = ma["altura_deck_m"]
     analogos = []
@@ -95,7 +129,8 @@ def main():
     out = nativo({"gerado_por": "tools/portao_7_2.py", "aeroshell": aero, "m2020_massa_por_area_kg_m2": m2020, "srl_c": srl_c, "p086_m": p086,
                   "folga_interna_m": ma["folga_interna_m"], "piso": piso, "linhas": linhas,
                   "contagem": [{"forma": a, "orientacao": b, "situacao": s, "casos": n} for (a, b, s), n in contagem.items()],
-                  "referencias_p086": cad["referencias_p086"], "r4d": r4d, "analogos": analogos})
+                  "referencias_p086": cad["referencias_p086"], "r4d": r4d, "bocais": bocais, "modelo_motores_compilado": modelo, "nosso_mav": nosso,
+                  "bowles": cad["comparacao_bowles"], "analogos": analogos})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "portao_decisao.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -149,24 +184,84 @@ def escreve_md(o):
         for ori in ("deitado", "em pé"):
             sel = [x for x in o["linhas"] if (x["forma"], x["diametro_m"]) == ch and x["orientacao"] == ori]
             md.append(f"| {o['aeroshell'][ch[0]]['rotulo']} | {br(ch[1])} | {ori} | " + " | ".join(br(next(x for x in sel if x["estacao"] == e)["max_fora_dos_tanques_m"]) for e in ests) + " |")
-    r4 = o["r4d"]
-    md += ["", "## 4. O que as fontes dizem sobre a P-086", "", "| Item | O que foi achado | Fonte |", "| :- | :- | :- |"]
+    r4, bc, no, bw = o["r4d"], o["bocais"], o["nosso_mav"], o["bowles"]
+    bw_c = next(a["comprimento_m"] for a in o["analogos"] if "Bowles" in a["nome"])
+    md.append("")
+    md += ["## 4. O que as fontes dizem sobre a P-086", "", "| Item | O que foi achado | Fonte |", "| :- | :- | :- |"]
     for r in o["referencias_p086"]:
         md.append(f"| {r['item']} | {r['achado']} | {r['fonte']} |")
-    md += ["", f"**R-4D-11, bocal 164:1 (a variante do Isp que usamos), conta a partir de [F228]:** {br(r4['comprimento_m'], 3)} m de comprimento total, contra "
-           f"{br(r4['p086_motores_estagio_1_m'])} m (estágio 1) e {br(r4['p086_motor_estagio_2_m'])} m (estágio 2) da P-086; saída de Ø {br(r4['diametro_saida_m'], 3)} m. "
-           f"Quatro saídas em quadrado pedem um círculo de Ø {br(r4['diametro_min_4_saidas_m'], 3)} m (conta geométrica, saídas encostadas), contra o Ø {br(r4['diametro_mav_escolhido_m'])} m do ADR 0022. "
-           "Bocais podem ficar fora do diâmetro do veículo ou aninhados; isso não está modelado.", "",
-           f"**Achado à parte, sem mudança aqui:** a mesma folha dá {br(r4['massa_164_kg'])} kg para o bocal 164:1, e o catálogo (config/motores.yaml) usa "
-           f"{br(r4['massa_catalogo_kg'])} kg, a massa do bocal 300:1, junto com o Isp do 164:1.", "",
-           "**Análogos publicados, só pela geometria (não são o nosso MAV):**", "",
+    md += ["", "**Análogos publicados, só pela geometria (não são o nosso MAV):**", "",
            "| MAV | Comprimento × Ø | Aeroshell | Base | Folga deitado | Fonte |", "| :- | :- | :- | :- | -: | :- |"]
     for a in o["analogos"]:
         md.append(f"| {a['nome']} | {br(a['comprimento_m'])} × {br(a['diametro_m'])} | {o['aeroshell'][a['forma']]['rotulo']} | {a['estacao']} | {sg(a['folga_deitado_m'])} | {a['fonte']} |")
-    md += ["", "## 5. Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", "",
+    # ---- achado 1: Bowles × nosso MAV
+    md += ["", "## 5. Achado: o MAV de Bowles ao lado do nosso", "",
+           "| Grandeza | Bowles, conceito pressurizado de 20 kg | Fonte | Nosso MAV | Origem |", "| :- | :- | :- | :- | :- |",
+           f"| Estágios | {bw['estagios']['valor']} | {bw['estagios']['fonte']} | {no['estagios']} | results/etapa2.5/arquitetura.yaml |",
+           f"| Δv | {bw['dv']['valor']} | {bw['dv']['fonte']} | {br(no['dv_m_s'], 0)} m/s, com margem | results/etapa2.5/arquitetura.yaml |",
+           f"| Carga útil | {bw['carga']['valor']} | {bw['carga']['fonte']} | {br(no['carga_kg'], 0)} kg | [F34] p. 4 |",
+           f"| Propelente | {bw['propelente']['valor']} | {bw['propelente']['fonte']} | {br(no['propelente_kg'], 1)} kg, MMH/MON-3 | results/etapa2.5/arquitetura.yaml |",
+           f"| Motores | {bw['motores']['valor']} | {bw['motores']['fonte']} | {no['n_motores'][0]} + {no['n_motores'][1]} R-4D-11 | config/motores.yaml (M2, N2) |",
+           f"| Razão de expansão | {bw['expansao']['valor']} | {bw['expansao']['fonte']} | 164:1 no Isp; ver a seção 7 | [F107] p. 5 |",
+           f"| Alimentação | {bw['alimentacao']['valor']} | {bw['alimentacao']['fonte']} | pressurizada | ADR 0007, config/mav_propulsao.yaml |",
+           f"| Tanques | {bw['tanques']['valor']} | {bw['tanques']['fonte']} | em série | results/etapa7.2/mav_arranjo.md |",
+           f"| Dimensões e massa | {bw['dimensoes']['valor']} | {bw['dimensoes']['fonte']} | {br(no['comprimento_m'])} m × {br(no['diametro_m'])} m; {br(no['glom_orcamento_kg'], 1)} kg no orçamento, {br(no['massa_cad_kg'], 1)} kg no CAD | results/etapa7.2 |",
+           "", "**A comparação não é de veículos equivalentes:**",
+           "- o de Bowles tem um estágio, então não tem interestágio nem segundo motor, que no nosso somam parte da P-086;",
+           f"- o Δv dele é menor ({bw['dv']['valor']} contra {br(no['dv_m_s'], 0)} m/s, e não conferimos se as margens são iguais), embora a massa de propelente seja da mesma ordem;",
+           "- os tanques do estudo dele são aninhados, para encurtar o veículo, e os nossos estão em série;",
+           "- a carga, o motor e a origem dos números também diferem, e não achamos a razão de expansão dele.", "",
+           f"**O que os dados permitem afirmar:** existe um conceito publicado, hipergólico e pressurizado, com massa de propelente da mesma ordem e {br(bw_c)} m. **O que não permitem:** "
+           f"dizer que o nosso MAV caberia nesse comprimento, ou que o piso de {br(pi['comprimento_m'])} m está errado. O piso é o resultado do nosso arranjo (dois estágios em série e a P-086).", "",
+           "## 6. Achado: bocais do estágio 1 no diâmetro do MAV", "",
+           f"Saída do R-4D-11 de bocal 164:1: {br(bc['diametro_saida_m'], 3)} m ([F228], 11,0 pol). Menor círculo que contém n saídas, contra o Ø {br(bc['diametro_mav_m'])} m do ADR 0022:", "",
+           "| Saídas | Fator sobre o diâmetro de saída | Círculo mínimo (m) | Cabe em Ø do MAV? |", "| -: | :- | -: | :- |"]
+    nomes_f = {1: "1", 2: "2", 3: "1 + 2/√3", 4: "1 + √2"}
+    for n, x in bc["minimo_por_n_m"].items():
+        md.append(f"| {n} | {nomes_f[n]} = {br(bc['fator_por_n'][n], 3)} | {br(x, 3)} | {'sim' if bc['cabe_por_n'][n] else 'não'} |")
+    minv = bc["minimo_4_por_variante_m"]
+    md += ["", "**Conta para 4 saídas, em qualquer arranjo:** se nenhum centro está no eixo, dois centros vizinhos ficam a no máximo 90° vistos do eixo, logo a no máximo R√2 um do outro, com R o "
+           "raio em que estão os centros. Eles precisam estar a pelo menos d um do outro, então R ≥ d/√2, e o círculo total é 2R + d ≥ d(1 + √2). Com um centro no eixo, os outros "
+           "três ficam a pelo menos d dele, e o círculo é ≥ 3d, pior.", "",
+           f"**Resultado: 4 bocais de saída 164:1 não cabem em Ø {br(bc['diametro_mav_m'])} m em nenhum arranjo.** O mínimo é {br(minv['164:1'], 3)} m, sem folga entre eles e sem parede. "
+           f"Na varredura, o primeiro diâmetro que os contém é {br(bc['menor_diametro_da_varredura_que_contem_4_m'])} m. Com outras variantes: {br(minv['44:1'], 3)} m (44:1) e {br(minv['300:1'], 3)} m (300:1).", "",
+           "**Hipótese da conta:** as saídas não se sobrepõem vistas ao longo do eixo e ficam dentro do diâmetro. Saídas escalonadas no eixo, ou bocais que passem do diâmetro do corpo, não foram calculadas; "
+           "o R-4D-11 de 44:1 cabe na conta, mas a folha não dá o Isp nem a massa dele.", "",
+           "**Como o modelo compilado (32cb41d) representa os motores:**", "",
+           "| Peça | Forma | Ø (m) | Comprimento (m) | Densidade equivalente (kg/m³) |", "| :- | :- | -: | -: | -: |"]
+    for m_ in o["modelo_motores_compilado"]:
+        md.append(f"| {m_['nome']} | {m_['tipo']} maciço | {br(m_['diametro_m'], 3)} | {br(m_['comprimento_m'])} | {br(m_['densidade_kg_m3'], 1)} |")
+    md += ["", "**A peça é um volume simplificado, não os bocais reais.** O cilindro cabe no diâmetro por construção. **O modelo do Onshape esconde essa interferência**: a compilação e a "
+           "conferência de massa não a mostram. As folgas do MAV no aeroshell da seção 1 também não consideram os bocais, porque usam o Ø do corpo.", "",
+           f"**Ligação com o MSR:** a fonte cita \"the small clearances of the interstage hardware and the nested SRM2 nozzle\" ([F35] PDF p. 15). O bocal de um 2º estágio aninhado reduz comprimento, e o "
+           f"nosso motor do estágio 2 só cabe nos {br(r4['p086_motor_estagio_2_m'])} m da P-086 se entrar ao menos {br(r4['falta_no_estagio_2_m'], 3)} m em outro elemento. Isso não resolve o diâmetro: o aninhamento é no 2º estágio, "
+           "e o achado é no 1º (inferência, NÃO VALIDADO; o MSR usa motor sólido).", "",
+           "## 7. Achado: variantes do R-4D-11 misturadas no catálogo", "",
+           "| Variante | Isp (s) | Massa (kg) | Comprimento total (m) | Ø de saída (m) | Fonte |", "| :- | -: | -: | -: | -: | :- |"]
+    for k, x in r4["variantes"].items():
+        md.append(f"| {k} | {br(x['isp_s'], 1) if x['isp_s'] else 'não dado'} | {br(x['massa_kg']) if x['massa_kg'] else 'não dado'} | {br(x['comprimento_m'], 3)} | {br(x['diametro_saida_m'], 3)} | {x['fonte']} |")
+    n_m = r4["n_motores"]
+    md += ["", "| Grandeza | O que o estudo usa hoje | Variante | Fonte |", "| :- | :- | :- | :- |",
+           f"| Isp | {br(r4['catalogo_isp_s'], 0)} s | 164:1 (Orion, requisito do Artemis I) | [F107] p. 6, Tab. 3; variante em p. 5 |",
+           f"| Massa | {br(r4['catalogo_massa_kg'])} kg | 300:1, pela massa e pelo Isp de 315 s da mesma ficha ([F228]); a ficha não diz a variante | [F106] p. 3, em lb |",
+           f"| Comprimento | {br(r4['p086_motores_estagio_1_m'])} m (estágio 1), {br(r4['p086_motor_estagio_2_m'])} m (estágio 2) | nenhuma: premissa sem fonte; o 164:1 tem {br(r4['variantes']['164:1']['comprimento_m'], 3)} m | P-086 |",
+           "| Diâmetro de saída | não entra no modelo | — | ver a seção 6 |", "",
+           f"**Misturas:** o Isp é do 164:1, e a massa é do 300:1. A diferença é de {br(r4['diferenca_massa_por_motor_kg'])} kg por motor, {br(r4['diferenca_massa_total_kg'], 1)} kg nos "
+           f"{sum(n_m.values())} motores escolhidos (captura {n_m['captura']}, retorno {n_m['retorno']}, MAV {n_m['mav_1']} + {n_m['mav_2']}). A massa do catálogo só entra no CAD do MAV "
+           f"({br(r4['diferenca_massa_mav_kg'], 1)} kg de diferença) e como coluna informativa da queima finita (results/etapa3.1). Os estágios usam fração estrutural, então a cadeia de massa não depende dela "
+           "(conferido por busca no código).", "",
+           f"**Outras diferenças:** o motor 164:1 mede {br(r4['variantes']['164:1']['comprimento_m'], 3)} m, mais que os {br(r4['p086_motor_estagio_2_m'])} m do estágio 2 e {br(r4['sobra_no_estagio_1_m'], 3)} m menos que os "
+           f"{br(r4['p086_motores_estagio_1_m'])} m do estágio 1. O Isp do 164:1 é {br(r4['catalogo_isp_s'], 0)} s como requisito do Orion [F107] e {br(r4['variantes']['164:1']['isp_s'], 0)} s na folha [F228]. "
+           "Não conferido: se o 164:1 da folha é o mesmo motor \"modified\" do Orion [F107].", "",
+           "**Para decidir (Fabio), sem nenhuma troca feita:**", "",
+           "| Opção | Massa e Isp | Prós | Contras |", "| :- | :- | :- | :- |",
+           f"| (a) 164:1 em tudo | {br(r4['variantes']['164:1']['massa_kg'])} kg [F228], {br(r4['catalogo_isp_s'], 0)} s [F107] | variante única, a do Isp escolhido no ADR 0011; a cadeia de massa não muda | o CAD do MAV e a coluna da queima finita mudam; pede errata |",
+           f"| (b) 300:1 em tudo | {br(r4['variantes']['300:1']['massa_kg'])} kg, {br(r4['variantes']['300:1']['isp_s'], 1)} s [F228] | variante única, com mais Isp | muda o Isp e reabre o ADR 0011; bocal maior ({br(minv['300:1'], 3)} m para 4 saídas); sem o voo no Orion |",
+           "| (c) manter e registrar a limitação | sem mudança | nenhum resultado muda | a mistura continua, pequena na massa |", "",
+           "## 8. Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", "",
            "Opinião: com o que está calculado, nenhuma combinação com base realista cabe sem mexer na P-086 ou no arranjo dos tanques, e o que mais pesa na decisão é "
-           "essa premissa sem fonte, não o diâmetro. Eu calcularia um arranjo sem tanques em série antes de escolher o aeroshell, porque alargar o MAV não o encurta. "
-           "A decisão é do Fabio."]
+           "essa premissa sem fonte, não o diâmetro. Além disso, a seção 6 pesa contra o Ø 0,57 m com quatro motores no estágio 1. Eu calcularia um arranjo sem tanques em série antes de "
+           "escolher o aeroshell. A decisão é do Fabio."]
     (SAIDA / "portao_decisao.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

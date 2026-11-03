@@ -980,7 +980,7 @@ referencias_p086:
   achado: '"a length margin of 10cm on SRM1" (margem, não comprimento)'
   fonte: '[F230] PDF p. 6'
 - item: Motor R-4D-11
-  achado: dimensões publicadas; ver a conta acima
+  achado: dimensões publicadas; ver a seção 7
   fonte: '[F228] PDF p. 22'
 - item: Interestágio
   achado: sem cota; no MSR, o bocal do 2º estágio fica dentro do interestágio ("the
@@ -1002,14 +1002,126 @@ referencias_p086:
     et al. 2012, IEEE, não obtido; não conferido)
   fonte: não conferido
 r4d:
-  comprimento_m: 0.5542279999999999
-  diametro_saida_m: 0.2794
-  diametro_min_4_saidas_m: 0.6745312693270427
-  massa_164_kg: 3.76
-  massa_catalogo_kg: 4.3091278
+  variantes:
+    '44:1':
+      comprimento_m: 0.316738
+      diametro_saida_m: 0.15265399999999998
+      isp_s: null
+      massa_kg: null
+      fonte: '[F228] PDF p. 22, desenho: "44:1 = 9.97"; "44:1 = 6.01" (sem Isp nem
+        massa na folha)'
+    '164:1':
+      comprimento_m: 0.5542279999999999
+      diametro_saida_m: 0.2794
+      isp_s: 311
+      massa_kg: 3.76
+      fonte: '[F228] PDF p. 22: "164:1 = 19.32"; "164:1 = 11.0"; "164:1 = 311 sec";
+        "164:1 = 3.76 kg (8.3 lbm)"'
+    '300:1':
+      comprimento_m: 0.7365999999999999
+      diametro_saida_m: 0.376936
+      isp_s: 315.5
+      massa_kg: 4.31
+      fonte: '[F228] PDF p. 22: "300:1 = 26.5"; "300:1 = 14.84"; "300:1 = 315.5 sec";
+        "300:1 = 4.31 kg (9.5 lbm)"'
+  catalogo_isp_s: 310.0
+  catalogo_massa_kg: 4.3091278
   p086_motores_estagio_1_m: 0.6
   p086_motor_estagio_2_m: 0.45
-  diametro_mav_escolhido_m: 0.57
+  n_motores:
+    captura: 10
+    retorno: 4
+    mav_1: 4
+    mav_2: 1
+  diferenca_massa_por_motor_kg: 0.5491277999999999
+  diferenca_massa_total_kg: 10.433428199999998
+  diferenca_massa_mav_kg: 2.7456389999999997
+  falta_no_estagio_2_m: 0.10422799999999993
+  sobra_no_estagio_1_m: 0.045772000000000035
+bocais:
+  diametro_saida_m: 0.2794
+  diametro_mav_m: 0.57
+  fator_por_n:
+    1: 1.0
+    2: 2.0
+    3: 2.1547005383792515
+    4: 2.414213562373095
+  minimo_por_n_m:
+    1: 0.2794
+    2: 0.5588
+    3: 0.6020233304231628
+    4: 0.6745312693270427
+  cabe_por_n:
+    1: true
+    2: true
+    3: false
+    4: false
+  minimo_4_por_variante_m:
+    '44:1': 0.3685393571505024
+    '164:1': 0.6745312693270427
+    '300:1': 0.9100040033466649
+  menor_diametro_da_varredura_que_contem_4_m: 0.69
+modelo_motores_compilado:
+- nome: MAV motores do estagio 1 (4 x R-4D-11)
+  tipo: cilindro
+  diametro_m: 0.55
+  comprimento_m: 0.6
+  densidade_kg_m3: 120.916
+- nome: MAV motor do estagio 2 (1 x R-4D-11)
+  tipo: cilindro
+  diametro_m: 0.275
+  comprimento_m: 0.44999999999999996
+  densidade_kg_m3: 161.221
+nosso_mav:
+  estagios: 2
+  dv_m_s: 5772.354040682595
+  carga_kg: 16.0
+  propelente_kg: 285.49574322920796
+  glom_orcamento_kg: 386.77369250546496
+  massa_cad_kg: 348.12696494567564
+  n_motores:
+  - 4
+  - 1
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+bowles:
+  estagios:
+    valor: '1'
+    fonte: '[F46] PDF p. 44: "resulted in a single stage-to-orbit architecture"'
+  dv:
+    valor: 4150 m/s
+    fonte: '[F46] Tab. 11, PDF p. 44: "ΔVTOTAL/ERV Mass 4150 / 20 kg"'
+  carga:
+    valor: 20 kg
+    fonte: '[F46] Tab. 11, PDF p. 44: "Payload, kg (%GLOW) 20 (5.1%)"'
+  propelente:
+    valor: 303,88 kg, MMH/NTO; inclui reservas e partida
+    fonte: '[F46] Tab. 11, PDF p. 44: "Propellants, kg (%GLOW) 303.88"; PDF p. 42:
+      "includes ascent propellant, reserves and engine start-up"; PDF p. 42: "All
+      concepts utilize storable hypergolic propellants"'
+  motores:
+    valor: 'a fonte diverge: 3 de 1210 N na tabela; "single engine" no texto; modelo
+      não nomeado (referência de escala: XLR-132); não conferido se os 3 são bocais
+      de uma cabeça comum'
+    fonte: '[F46] Tab. 11, PDF p. 44: "3 / 1210 nts"; §9.1, PDF p. 42: "a pressure-feed
+      single engine concept"; PDF p. 46: "The reference engine selected was the Rocketdyne
+      orbital-transfer XLR-132"; PDF p. 30: "multiple expansion nozzles with a common
+      power head"'
+  expansao:
+    valor: não achada para este conceito (não conferido)
+    fonte: 'nos outros conceitos da Tab. 11: 200 ([F46] PDF p. 43)'
+  alimentacao:
+    valor: pressurizada
+    fonte: '[F46] §9.1, PDF p. 42: "a pressure-feed single engine concept was selected"'
+  tanques:
+    valor: aninhados no estudo; não confirmado para este conceito
+    fonte: '[F46] PDF p. 17: "a nested tank configuration was selected"; PDF p. 44:
+      "A nested tank design was chosen to eliminate the fuel/oxidizer inter-tank section,
+      saving weight and reducing overall vehicle length"'
+  dimensoes:
+    valor: 2,74 m × 0,56 m; 392,6 kg
+    fonte: '[F46] Tab. 11, PDF p. 44: "Overall length/Diameter, m 2.74 / 0.56"; "Gross
+      Liftoff Mass, kg 392.6"'
 analogos:
 - nome: Bowles, hipergólico pressurizado de um estágio, 393 kg
   fonte: '[F46] Tab. 11, p. 40 impressa: "Overall length/Diameter, m 2.74 / 0.56"'

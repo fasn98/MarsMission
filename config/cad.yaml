@@ -193,18 +193,28 @@ entrada_referencia:   # MSL: deslocamento radial do CG usado para trimar e gerar
   fracoes_propelente_cruzeiro: [1.0, 0.75, 0.5, 0.25, 0.0]
 
 # Portão da 7.2 (tools/portao_7_2.py): o que as fontes dizem sobre a P-086 (a premissa não muda aqui).
-r4d11_164:
-  flange_a_saida_pol: {valor: 19.32, fonte: "[F228] PDF p. 22, desenho: \"DIMENSIONS ARE IN INCHES\"; \"164:1 = 19.32\""}
-  a_frente_da_flange_pol: {valor: 2.5, fonte: "[F228] PDF p. 22, desenho: \"2.5\" (somar à cota anterior é leitura do desenho)"}
-  diametro_saida_pol: {valor: 11.0, fonte: "[F228] PDF p. 22, desenho: \"164:1 = 11.0\""}
-  massa_164_kg: {valor: 3.76, fonte: "[F228] PDF p. 22: \"Mass .....164:1 = 3.76 kg (8.3 lbm), 300:1 = 4.31 kg (9.5 lbm)\""}
+r4d11_variantes:   # [F228] PDF p. 22; cotas em polegadas ("DIMENSIONS ARE IN INCHES"); somar as 2,5 pol à frente da flange é leitura do desenho
+  a_frente_da_flange_pol: {valor: 2.5, fonte: "[F228] PDF p. 22, desenho: \"2.5\""}
+  "44:1": {flange_a_saida_pol: 9.97, diametro_saida_pol: 6.01, fonte: "[F228] PDF p. 22, desenho: \"44:1 = 9.97\"; \"44:1 = 6.01\" (sem Isp nem massa na folha)"}
+  "164:1": {flange_a_saida_pol: 19.32, diametro_saida_pol: 11.0, isp_s: 311, massa_kg: 3.76, fonte: "[F228] PDF p. 22: \"164:1 = 19.32\"; \"164:1 = 11.0\"; \"164:1 = 311 sec\"; \"164:1 = 3.76 kg (8.3 lbm)\""}
+  "300:1": {flange_a_saida_pol: 26.5, diametro_saida_pol: 14.84, isp_s: 315.5, massa_kg: 4.31, fonte: "[F228] PDF p. 22: \"300:1 = 26.5\"; \"300:1 = 14.84\"; \"300:1 = 315.5 sec\"; \"300:1 = 4.31 kg (9.5 lbm)\""}
+comparacao_bowles:   # conceito final hipergólico pressurizado de 20 kg de carga, coluna "Inert" da Tab. 11 de [F46]
+  estagios: {valor: "1", fonte: "[F46] PDF p. 44: \"resulted in a single stage-to-orbit architecture\""}
+  dv: {valor: "4150 m/s", fonte: "[F46] Tab. 11, PDF p. 44: \"ΔVTOTAL/ERV Mass 4150 / 20 kg\""}
+  carga: {valor: "20 kg", fonte: "[F46] Tab. 11, PDF p. 44: \"Payload, kg (%GLOW) 20 (5.1%)\""}
+  propelente: {valor: "303,88 kg, MMH/NTO; inclui reservas e partida", fonte: "[F46] Tab. 11, PDF p. 44: \"Propellants, kg (%GLOW) 303.88\"; PDF p. 42: \"includes ascent propellant, reserves and engine start-up\"; PDF p. 42: \"All concepts utilize storable hypergolic propellants\""}
+  motores: {valor: "a fonte diverge: 3 de 1210 N na tabela; \"single engine\" no texto; modelo não nomeado (referência de escala: XLR-132); não conferido se os 3 são bocais de uma cabeça comum", fonte: "[F46] Tab. 11, PDF p. 44: \"3 / 1210 nts\"; §9.1, PDF p. 42: \"a pressure-feed single engine concept\"; PDF p. 46: \"The reference engine selected was the Rocketdyne orbital-transfer XLR-132\"; PDF p. 30: \"multiple expansion nozzles with a common power head\""}
+  expansao: {valor: "não achada para este conceito (não conferido)", fonte: "nos outros conceitos da Tab. 11: 200 ([F46] PDF p. 43)"}
+  alimentacao: {valor: "pressurizada", fonte: "[F46] §9.1, PDF p. 42: \"a pressure-feed single engine concept was selected\""}
+  tanques: {valor: "aninhados no estudo; não confirmado para este conceito", fonte: "[F46] PDF p. 17: \"a nested tank configuration was selected\"; PDF p. 44: \"A nested tank design was chosen to eliminate the fuel/oxidizer inter-tank section, saving weight and reducing overall vehicle length\""}
+  dimensoes: {valor: "2,74 m × 0,56 m; 392,6 kg", fonte: "[F46] Tab. 11, PDF p. 44: \"Overall length/Diameter, m 2.74 / 0.56\"; \"Gross Liftoff Mass, kg 392.6\""}
 analogos_mav:   # só geometria: não são o nosso MAV
   - {nome: "Bowles, hipergólico pressurizado de um estágio, 393 kg", comprimento_m: 2.74, diametro_m: 0.56, fonte: "[F46] Tab. 11, p. 40 impressa: \"Overall length/Diameter, m 2.74 / 0.56\""}
   - {nome: "MAV do MSR, SRC (sólido, dois estágios), limite", comprimento_m: 2.99, diametro_m: 0.50, fonte: "[F35] p. 3"}
 referencias_p086:
   - {item: "Divisão do comprimento de um MAV por elemento", achado: "**não achada** em nenhuma fonte primária consultada (Yaghoubi 2022, McCollum 2019, Yaghoubi e Schnell, Bowles 2013, Desai 1998): só envelopes totais e figuras sem cotas (não conferido além dessas)", fonte: "[F35], [F216], [F230], [F46], [F229]"}
   - {item: "Única cota por elemento achada", achado: "\"a length margin of 10cm on SRM1\" (margem, não comprimento)", fonte: "[F230] PDF p. 6"}
-  - {item: "Motor R-4D-11", achado: "dimensões publicadas; ver a conta acima", fonte: "[F228] PDF p. 22"}
+  - {item: "Motor R-4D-11", achado: "dimensões publicadas; ver a seção 7", fonte: "[F228] PDF p. 22"}
   - {item: "Interestágio", achado: "sem cota; no MSR, o bocal do 2º estágio fica dentro do interestágio (\"the nested SRM2 nozzle\")", fonte: "[F35] PDF p. 15"}
   - {item: "Carga (contêiner de amostras)", achado: "não conferido em fonte com página: a página do MSR da NASA daria cerca de 0,24 m × 0,23 m, lida só por resumo, sem cópia local", fonte: "não conferido"}
   - {item: "Arranjo sem empilhar", achado: "MAV pressurizado de dois estágios com o 2º dentro do 1º, cerca de 1,2 m × 1,7 m; cabe em outro envelope, com outro diâmetro", fonte: "[F229] PDF p. 3"}

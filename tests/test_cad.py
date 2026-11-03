@@ -237,9 +237,15 @@ def test_portao_7_2():
         assert li["situacao"] == pt.classifica(li["max_fora_dos_tanques_m"], r["p086_m"])
         # coerência: cabe hoje se e só se a folga é positiva
         assert (li["situacao"] == "cabe") == (li["folga_m"] >= 0)
-    # R-4D-11 de bocal 164:1: (19,32 + 2,5) pol
-    assert r["r4d"]["comprimento_m"] == pytest.approx(21.82 * 0.0254)
-    assert r["r4d"]["diametro_min_4_saidas_m"] == pytest.approx(11.0 * 0.0254 * (1 + math.sqrt(2)))
+    # R-4D-11 de bocal 164:1: (19,32 + 2,5) pol; 4 saídas não cabem em Ø 0,57 m (mínimo d(1 + √2))
+    assert r["r4d"]["variantes"]["164:1"]["comprimento_m"] == pytest.approx(21.82 * 0.0254)
+    assert r["bocais"]["minimo_por_n_m"][4] == pytest.approx(11.0 * 0.0254 * (1 + math.sqrt(2)))
+    assert r["bocais"]["cabe_por_n"][4] is False and r["bocais"]["cabe_por_n"][2] is True
+    # a peça do modelo compilado é um cilindro maciço que cabe no diâmetro, não os bocais
+    m1 = next(x for x in r["modelo_motores_compilado"] if "estagio 1" in x["nome"])
+    assert m1["tipo"] == "cilindro" and m1["diametro_m"] < r["bocais"]["diametro_mav_m"]
+    # mistura de variantes: o catálogo usa a massa do 300:1
+    assert r["r4d"]["catalogo_massa_kg"] == pytest.approx(r["r4d"]["variantes"]["300:1"]["massa_kg"], rel=1e-3)
 
 
 def test_consumo_cruzeiro():
