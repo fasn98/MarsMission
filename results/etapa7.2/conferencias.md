@@ -44,7 +44,7 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 
 | Veículo | Corpos | Massa do CAD | Geometria modelada | Propelente | Densidade equivalente (orçamento) | CG (x, y, z) |
 | :- | -: | -: | -: | -: | -: | :- |
-| orbitador | 20 | 6 506,3 | 263,3 | 4 919,1 | 1 323,9 | 0,000, 0,000, 1,393 |
+| orbitador | 20 | 6 506,2 | 263,3 | 4 919,1 | 1 323,9 | 0,000, 0,000, 1,393 |
 | lander | 33 | 3 190,4 | 330,0 | 943,5 | 1 916,9 | 0,026, −0,026, 3,003 |
 | mav | 12 | 348,1 | 25,1 | 285,5 | 37,5 | 0,000, 0,000, 1,540 |
 

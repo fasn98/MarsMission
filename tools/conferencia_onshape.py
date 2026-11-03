@@ -44,18 +44,16 @@ def main():
             continue
         assert m["unidades"] == {"massa": "lb", "comprimento": "mm"}, m["unidades"]
         res = m["resolucao"]
-        meia = lambda x, alg: 0.5 * 10 ** (math.floor(math.log10(abs(x))) - alg + 1)  # noqa: E731   meia unidade do último algarismo
+        meia = lambda x, alg: 0.5 * 10 ** (math.floor(math.log10(abs(x))) - alg + 1) if x else 0.0  # noqa: E731   meia unidade do último algarismo
         medida = {"massa_kg": m["massa"] * lb, "cg_m": [x * MM for x in m["cg"]],
                   "inercia_cg_kg_m2": [m["inercia_no_cg"][e] * lb * MM ** 2 for e in ("Lxx", "Lyy", "Lzz")],
                   "volume_m3": m["volume"] * MM ** 3, "area_m2": m["area"] * MM ** 2, "pecas": m["pecas"]}
-        # precisão de leitura (meia resolução do número mostrado, no SI) mais o arredondamento dos dados do FeatureScript
-        # (6 algarismos significativos em tools/cad_parametros.py: meia unidade relativa = 5e-6)
-        arred = 5e-6
-        tol = {"massa_kg": 0.5 * res["massa"] * lb + arred * medida["massa_kg"],
-               "cg_m": [0.5 * res["cg"] * MM + arred * abs(prevista["cg_m"][2]) for _ in range(3)],
-               "inercia_cg_kg_m2": [meia(m["inercia_no_cg"][e], res["inercia_algarismos"]) * lb * MM ** 2 + arred * a
-                                    for e, a in zip(("Lxx", "Lyy", "Lzz"), medida["inercia_cg_kg_m2"])],
-               "volume_m3": meia(m["volume"], res["volume_algarismos"]) * MM ** 3 + arred * medida["volume_m3"]}
+        # precisão de leitura: meia resolução do número que o Onshape mostrou, no SI. O previsto já sai da geometria arredondada
+        # como vai para o FeatureScript (tools/cad_parametros.py, r6), então não há folga adicional.
+        tol = {"massa_kg": 0.5 * res["massa"] * lb,
+               "cg_m": [0.5 * res["cg"] * MM] * 3,
+               "inercia_cg_kg_m2": [meia(m["inercia_no_cg"][e], res["inercia_algarismos"]) * lb * MM ** 2 for e in ("Lxx", "Lyy", "Lzz")],
+               "volume_m3": meia(m["volume"], res["volume_algarismos"]) * MM ** 3}
         dentro = {"massa_kg": abs(medida["massa_kg"] - prevista["massa_kg"]) <= tol["massa_kg"],
                   "cg_m": [abs(a - b) <= t for a, b, t in zip(medida["cg_m"], prevista["cg_m"], tol["cg_m"])],
                   "inercia_cg_kg_m2": [abs(a - b) <= t for a, b, t in zip(medida["inercia_cg_kg_m2"], prevista["inercia_cg_kg_m2"], tol["inercia_cg_kg_m2"])],
@@ -67,7 +65,7 @@ def main():
                   "volume_relativo": rel(medida["volume_m3"], prevista["volume_m3"]),
                   "pecas": medida["pecas"] - prevista["corpos"]}
         pi = m.get("produtos_de_inercia")
-        produtos = {"medido": pi if isinstance(pi, str) else [x * lb * MM ** 2 for x in pi],
+        produtos = {"medido": "não informado" if pi is None else (pi if isinstance(pi, str) else [x * lb * MM ** 2 for x in pi]),
                     "previsto_max_abs_kg_m2": max(abs(p["inercia_cg_kg_m2"][i][j]) for i in range(3) for j in range(3) if i != j)}
         out["veiculos"][k] = {"situacao": "conferido", "medicao": {x: m[x] for x in ("data", "responsavel", "versao_featurescript", "arquivo",
                                                                                    "compilou", "assign_materials", "eixos")},
@@ -111,8 +109,8 @@ def escreve_md(o):
         md += [f"| Volume (m³) | {br(mm['volume_m3'], 4)} | {br(p['volume_m3'], 4)} | {ex(d['volume_relativo'])} (relativo) | {ok(dt['volume_m3'])} |",
                f"| Produtos de inércia | {pm} | maior valor absoluto {ex(pr['previsto_max_abs_kg_m2'])} kg·m² | — | — |",
                f"| Área (m²) | {br(mm['area_m2'], 2)} | não calculada pelo script | — | — |", "",
-               "Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou (tests/data/onshape/medicoes.yaml, resolucao) mais o "
-               "arredondamento dos dados do FeatureScript a 6 algarismos significativos (tools/cad_parametros.py).", ""]
+               "Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou (tests/data/onshape/medicoes.yaml, resolucao). O previsto "
+               "sai da geometria arredondada a 6 algarismos significativos, como vai para o FeatureScript (tools/cad_parametros.py).", ""]
     (SAIDA / "conferencia_onshape.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

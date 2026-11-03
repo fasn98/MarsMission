@@ -59,11 +59,12 @@ def test_arquivos_gerados_coerentes():
         assert r["resumo"][k]["massa_kg"] == pytest.approx(sum(c["massa_kg"] for c in corpos))
     # peças equivalentes: massa = a do orçamento usada (P-094)
     orb = {c["nome"]: c for c in r["veiculos"]["orbitador"]}
-    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0)
+    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-5)   # densidade arredondada a 6 algarismos
     # propelente do orbitador = o do orçamento
     prop = sum(c["massa_kg"] for c in r["veiculos"]["orbitador"] if c["nome"].startswith("Propelente"))
     arq = ler("results/etapa2.5/arquitetura.yaml")["orbitador"]["composicao"]
-    assert prop == pytest.approx(sum(x.get("propelente_kg", 0) for x in arq))
+    # raio arredondado a 6 algarismos (como no FeatureScript): o volume triplica o erro relativo, até ~1,5e-5
+    assert prop == pytest.approx(sum(x.get("propelente_kg", 0) for x in arq), rel=2e-5)
 
 
 def test_conferencias():
@@ -170,3 +171,17 @@ def test_conferencia_onshape():
     assert mv["previsto_script"]["massa_kg"] == pytest.approx(ler("results/etapa7.2/parametros.yaml")["resumo"]["mav"]["massa_kg"])
     for k in ("orbitador", "lander"):
         assert (med[k] is None) == (r["veiculos"][k]["situacao"] == "aguardando medição")
+    tol, dentro = mv["tolerancia_de_leitura"], mv["dentro_da_precisao_de_leitura"]
+    assert tol["massa_kg"] == pytest.approx(0.5 * med["mav"]["resolucao"]["massa"] * 0.45359237)
+    assert dentro["massa_kg"] == (abs(mv["medido_onshape"]["massa_kg"] - mv["previsto_script"]["massa_kg"]) <= tol["massa_kg"])
+    assert mv["medido_onshape"]["area_m2"] == pytest.approx(med["mav"]["area"] * 1e-6)
+
+
+def test_previsto_e_a_geometria_do_featurescript():
+    """Os corpos do script já estão arredondados como no FeatureScript: o previsto é o que o Onshape constrói."""
+    r = ler("results/etapa7.2/parametros.yaml")
+    for corpos in r["veiculos"].values():
+        for c in corpos:
+            for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1", "densidade"):
+                if k in c:
+                    assert c[k] == cp.r6(c[k])

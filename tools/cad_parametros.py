@@ -132,17 +132,25 @@ def ascii_(s):
 
 
 # ------------------------------------------------------------------------------------------------- construtores
+def r6(x):
+    """Arredonda como o FeatureScript recebe (6 algarismos significativos, _num): massa, CG e inércias do script saem da
+    mesma geometria que o Onshape constrói."""
+    if isinstance(x, (list, tuple)):
+        return [r6(y) for y in x]
+    return float(f"{float(x):.6g}")
+
+
 class Veiculo:
     def __init__(self, nome):
         self.nome, self.corpos = nome, []
 
     def add(self, nome, mat, origem, **g):
-        self.corpos.append({"nome": nome, "material": mat, "origem": origem, **g})
+        self.corpos.append({"nome": nome, "material": mat, "origem": origem, **{k: r6(x) for k, x in g.items() if k != "tipo"}, "tipo": g["tipo"]})
 
     def equivalente(self, nome, massa, origem, **g):
         """Corpo de densidade equivalente: massa do orçamento / volume do primitivo (P-094)."""
-        c = {"nome": nome, "material": "equivalente", "origem": origem, **g}
-        c["densidade"] = massa / volume(c)
+        c = {"nome": nome, "material": "equivalente", "origem": origem, **{k: r6(x) for k, x in g.items() if k != "tipo"}, "tipo": g["tipo"]}
+        c["densidade"] = r6(massa / volume(c))
         self.corpos.append(c)
 
 
