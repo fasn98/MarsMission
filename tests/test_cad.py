@@ -143,7 +143,7 @@ def test_mav_arranjo_coerente():
 
 
 def test_inercias_analiticas():
-    """Inércia no CG dos primitivos contra as fórmulas fechadas (cilindro, cone, esfera oca, caixa)."""
+    """Inércia no CG dos primitivos contra as fórmulas fechadas (cilindro, cone, caixa)."""
     m_cil = 1000.0 * math.pi * 1.0 * 2.0
     I = cp.inercia({"tipo": "cilindro", "p0": [0, 0, 0], "p1": [0, 0, 2], "r": 1.0}, 1000.0)
     assert I[2][2] == pytest.approx(m_cil / 2, rel=1e-6)

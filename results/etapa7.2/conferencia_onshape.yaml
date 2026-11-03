@@ -51,6 +51,7 @@ veiculos:
       - 252.65095008999998
       - 13.8708546746
       volume_m3: 0.5065000000000001
+      area_m2: 14.28
       pecas: 12
     previsto_script:
       massa_kg: 348.1263316474716
@@ -76,3 +77,28 @@ veiculos:
       - 6.777220966885755e-05
       volume_relativo: 1.9258160002829475e-05
       pecas: 0
+    tolerancia_de_leitura:
+      massa_kg: 0.00196743195729465
+      cg_m:
+      - 8.199317539839725e-06
+      - 8.199317539839725e-06
+      - 8.199317539839725e-06
+      inercia_cg_kg_m2:
+      - 0.023942873250449997
+      - 0.023942873250449997
+      - 0.002337316123373
+      volume_m3: 5.2532500000000006e-05
+    dentro_da_precisao_de_leitura:
+      massa_kg: true
+      cg_m:
+      - true
+      - true
+      - true
+      inercia_cg_kg_m2:
+      - true
+      - true
+      - true
+      volume_m3: true
+    produtos_de_inercia:
+      medido: da ordem de 1e-8 (ruído numérico)
+      previsto_max_abs_kg_m2: 0.0

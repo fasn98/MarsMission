@@ -16,17 +16,19 @@ Aguardando medição. Previsto pelo script: massa 3 190,4 kg; CG z 3,003 m; Ixx,
 
 Medição: Fabio, 2026-11-03, FeatureScript versão 3112, results/etapa7.2/mav.fs; compilou: sim; Assign materials: sim.
 
-| Grandeza | Medido no Onshape | Previsto pelo script | Desvio |
-| :- | -: | -: | -: |
-| Peças | 12 | 12 | 0 |
-| Massa (kg) | 348,127 | 348,126 | +2,4e−06 (relativo) |
-| CG x (m) | 0,0000 | 0,0000 | +0,0e+00 m |
-| CG y (m) | 0,0000 | 0,0000 | +0,0e+00 m |
-| CG z (m) | 1,5399 | 1,5399 | −6,5e−06 m |
-| Ixx no CG (kg·m²) | 252,65 | 252,63 | +7,5e−05 (relativo) |
-| Iyy no CG (kg·m²) | 252,65 | 252,63 | +7,5e−05 (relativo) |
-| Izz no CG (kg·m²) | 13,87 | 13,87 | +6,8e−05 (relativo) |
-| Volume (m³) | 0,5065 | 0,5065 | +1,9e−05 (relativo) |
+| Grandeza | Medido no Onshape | Previsto pelo script | Desvio | Precisão de leitura |
+| :- | -: | -: | -: | :- |
+| Peças | 12 | 12 | 0 | — |
+| Massa (kg) | 348,127 | 348,126 | +2,4e−06 (relativo) | dentro |
+| CG x (m) | 0,0000 | 0,0000 | +0,0e+00 m | dentro |
+| CG y (m) | 0,0000 | 0,0000 | +0,0e+00 m | dentro |
+| CG z (m) | 1,5399 | 1,5399 | −6,5e−06 m | dentro |
+| Ixx no CG (kg·m²) | 252,65 | 252,63 | +7,5e−05 (relativo) | dentro |
+| Iyy no CG (kg·m²) | 252,65 | 252,63 | +7,5e−05 (relativo) | dentro |
+| Izz no CG (kg·m²) | 13,87 | 13,87 | +6,8e−05 (relativo) | dentro |
+| Volume (m³) | 0,5065 | 0,5065 | +1,9e−05 (relativo) | dentro |
+| Produtos de inércia | da ordem de 1e-8 (ruído numérico) | maior valor absoluto +0,0e+00 kg·m² | — | — |
+| Área (m²) | 14,28 | não calculada pelo script | — | — |
 
-As inércias e o volume medidos têm 4 algarismos significativos (como o Onshape os mostrou); os desvios abaixo de ~1e-4 estão dentro dessa precisão de leitura. Os dados do FeatureScript vão com 6 algarismos significativos (tools/cad_parametros.py), o que explica desvios da ordem de 1e-6 na massa e no CG.
+Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou (tests/data/onshape/medicoes.yaml, resolucao) mais o arredondamento dos dados do FeatureScript a 6 algarismos significativos (tools/cad_parametros.py).
 

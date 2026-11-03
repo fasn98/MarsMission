@@ -181,4 +181,5 @@ mav_alternativas:   # pedido do Fabio no portão da 7.2 (faixa dada por ele): va
   # calculadas na ferramenta a partir do perfil e da P-094
 
 onshape:   # conferência das propriedades de massa medidas no Onshape (tools/conferencia_onshape.py)
-  lb_para_kg: {valor: 0.45359237, fonte: "[F112] p. 65 do PDF: \"pound (avoirdupois) (lb) ... kilogram (kg) ... 4.535 924 E−01\" (sete algarismos); os algarismos seguintes são os da definição exata pedida pelo Fabio (fonte da definição não conferida)"}
+  # fator exato; config/motores.yaml (conversao.lb_para_kg) usa o valor arredondado da tabela, 4.535 924 E−01 (diferença ~7e-8)
+  lb_para_kg: {valor: 0.45359237, fonte: "[F112] p. 65 do PDF, nota 22: \"The exact conversion factor is 4.535 923 7 E−01.\""}
