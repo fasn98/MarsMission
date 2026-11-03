@@ -1,0 +1,78 @@
+gerado_por: tools/conferencia_onshape.py
+natureza: 'verificação: o CAD reproduz o modelo do script (não é validação)'
+lb_para_kg: 0.45359237
+veiculos:
+  orbitador:
+    situacao: aguardando medição
+    previsto:
+      massa_kg: 6506.251549732671
+      cg_m:
+      - -2.985527209658525e-17
+      - 4.3683692850104755e-17
+      - 1.392800189916957
+      inercia_cg_kg_m2:
+      - 12069.91753440743
+      - 14890.725336221103
+      - 11604.897057194748
+      volume_m3: 10.826363407154476
+      corpos: 20
+  lander:
+    situacao: aguardando medição
+    previsto:
+      massa_kg: 3190.4186543780343
+      cg_m:
+      - 0.025606339773902524
+      - -0.026257049488074002
+      - 3.003184430413971
+      inercia_cg_kg_m2:
+      - 3648.022699564861
+      - 3639.204305561397
+      - 4131.295080895719
+      volume_m3: 6.999256956750625
+      corpos: 33
+  mav:
+    situacao: conferido
+    medicao:
+      data: '2026-11-03'
+      responsavel: Fabio
+      versao_featurescript: 3112
+      arquivo: results/etapa7.2/mav.fs
+      compilou: true
+      assign_materials: true
+      eixos: eixos do Part Studio, no centro de massa
+    medido_onshape:
+      massa_kg: 348.12715445893
+      cg_m:
+      - 0.0
+      - 0.0
+      - 1.539857
+      inercia_cg_kg_m2:
+      - 252.65095008999998
+      - 252.65095008999998
+      - 13.8708546746
+      volume_m3: 0.5065000000000001
+      pecas: 12
+    previsto_script:
+      massa_kg: 348.1263316474716
+      cg_m:
+      - 0.0
+      - 0.0
+      - 1.5398635079679448
+      inercia_cg_kg_m2:
+      - 252.63188655589533
+      - 252.63188655589533
+      - 13.86991467983423
+      volume_m3: 0.5064902459298041
+      corpos: 12
+    desvio:
+      massa_relativo: 2.3635427246368365e-06
+      cg_m:
+      - 0.0
+      - 0.0
+      - -6.507967944768822e-06
+      inercia_relativo:
+      - 7.545973061649939e-05
+      - 7.545973061649939e-05
+      - 6.777220966885755e-05
+      volume_relativo: 1.9258160002829475e-05
+      pecas: 0

@@ -70,6 +70,39 @@ def volume(c):
     raise ValueError(t)
 
 
+FATIAS = 4000   # fatias da integração numérica das inércias dos corpos de revolução (escolha numérica, não premissa)
+
+
+def inercia(c, rho_c):
+    """Tensor de inércia (kg·m²) do corpo homogêneo em torno do próprio centro de massa, nos eixos globais."""
+    t = c["tipo"]
+    if t in ("esfera", "esfera_oca"):
+        ri = c["r"] - c["t"] if t == "esfera_oca" else 0.0
+        m = rho_c * volume(c)
+        i = 2 / 5 * m * (c["r"] ** 5 - ri ** 5) / (c["r"] ** 3 - ri ** 3)
+        return np.eye(3) * i
+    if t == "caixa":
+        a, b, h = np.abs(np.subtract(c["c2"], c["c1"]))
+        m = rho_c * volume(c)
+        return np.diag([m * (b * b + h * h) / 12, m * (a * a + h * h) / 12, m * (a * a + b * b) / 12])
+    # corpos de revolução: fatias ao longo do eixo (raio externo e interno lineares)
+    p0, p1 = np.array(c["p0"], float), np.array(c["p1"], float)
+    h = float(np.linalg.norm(p1 - p0))
+    u = (p1 - p0) / h
+    s = (np.arange(FATIAS) + 0.5) / FATIAS * h
+    if t in ("cilindro", "tubo"):
+        ro = np.full_like(s, c["r"])
+        ri = np.full_like(s, c["r"] - c["t"] if t == "tubo" else 0.0)
+    else:
+        ro = c["r0"] + (c["r1"] - c["r0"]) * s / h
+        ri = (c["ri0"] + (c["ri1"] - c["ri0"]) * s / h) if t == "tronco_oco" else np.zeros_like(s)
+    dm = rho_c * math.pi * (ro ** 2 - ri ** 2) * (h / FATIAS)
+    sc = float((dm * s).sum() / dm.sum())
+    i_ax = float((dm * (ro ** 2 + ri ** 2) / 2).sum())
+    i_tr = float((dm * ((ro ** 2 + ri ** 2) / 4 + (s - sc) ** 2)).sum())
+    return i_tr * np.eye(3) + (i_ax - i_tr) * np.outer(u, u)
+
+
 def centro(c):
     """Centro de massa (m) do corpo (homogêneo)."""
     t = c["tipo"]
@@ -315,7 +348,15 @@ def main():
             chave = "densidade equivalente (massa do orçamento)" if c["material"] == "equivalente" else (
                 "propelente" if c["material"] in rho else "geometria modelada")
             por_origem[chave] = por_origem.get(chave, 0.0) + m
-        resumo[k] = {"massa_kg": massa, "cg_m": (mom / massa).tolist(), "por_origem_kg": por_origem, "corpos": len(ve_.corpos)}
+        cg = mom / massa
+        tensor, vol = np.zeros((3, 3)), 0.0
+        for c in ve_.corpos:   # teorema dos eixos paralelos até o CG do veículo
+            rho_c = c["densidade"] if c["material"] == "equivalente" else dens[c["material"]]
+            d = centro(c) - cg
+            tensor += inercia(c, rho_c) + c["massa_kg"] * (np.dot(d, d) * np.eye(3) - np.outer(d, d))
+            vol += volume(c)
+        resumo[k] = {"massa_kg": massa, "cg_m": cg.tolist(), "inercia_cg_kg_m2": tensor.tolist(), "volume_m3": vol,
+                     "por_origem_kg": por_origem, "corpos": len(ve_.corpos)}
     resumo["orcamento"] = {"orbitador_injetado_kg": arq["orbitador"]["injetado_kg"], "lander_injetado_kg": arq["lander"]["injetado_kg"],
                            "mav_glom_kg": arq["lander"]["mav"]["estagios"][0]["massa_inicial_kg"]}
 

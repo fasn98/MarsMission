@@ -183,3 +183,10 @@ exemplo, `ONSHAPE_ACCESS_KEY` e `ONSHAPE_SECRET_KEY` no Replit), nunca no reposi
 - **Perfil do nariz:** o nariz rombudo entra como um vértice lido da figura, (0,02 m; 0,25 m).
 - **Configuração:** o lander está em configuração de lançamento. A configuração de entrada (sem o estágio de cruzeiro), que
   dá o deslocamento do CG, fica para a 7.3.
+
+## Nota (2026-11-03): conferência no Onshape
+O Fabio gerou o MAV numa conta real do Onshape (FeatureScript versão 3112). O arquivo compilou e gerou as 12 peças. As
+propriedades de massa medidas estão em `tests/data/onshape/medicoes.yaml`. A comparação com o previsto pelo script está em
+`results/etapa7.2/conferencia_onshape.md`: é uma verificação de que o CAD reproduz o modelo, não validação.
+- **Inércias:** o script passou a calcular as inércias no CG pela mesma geometria (`tools/cad_parametros.py`).
+- **Pendente:** o orbitador e o lander ainda não foram gerados; o arquivo já tem os previstos deles.

@@ -179,3 +179,6 @@ mav_alternativas:   # pedido do Fabio no portão da 7.2 (faixa dada por ele): va
   formas: [msl_m2020, srl_a]
   # estações da base: o plano do ombro, o ombro + metade da altura do deck e o ombro + a altura do deck (P-094),
   # calculadas na ferramenta a partir do perfil e da P-094
+
+onshape:   # conferência das propriedades de massa medidas no Onshape (tools/conferencia_onshape.py)
+  lb_para_kg: {valor: 0.45359237, fonte: "[F112] p. 65 do PDF: \"pound (avoirdupois) (lb) ... kilogram (kg) ... 4.535 924 E−01\" (sete algarismos); os algarismos seguintes são os da definição exata pedida pelo Fabio (fonte da definição não conferida)"}

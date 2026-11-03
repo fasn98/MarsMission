@@ -1,0 +1,21 @@
+# Medições das propriedades de massa no Onshape, feitas pelo Fabio (dado medido no CAD; não é premissa nem fonte).
+# Valores como o Onshape os mostrou (unidades do Part Studio). Comparados com o previsto por tools/conferencia_onshape.py.
+# Veículo sem medição: null (aguardando).
+mav:
+  data: "2026-11-03"
+  responsavel: Fabio
+  conta: conta real do Onshape
+  versao_featurescript: 3112
+  arquivo: results/etapa7.2/mav.fs
+  compilou: true
+  assign_materials: true
+  pecas: 12
+  unidades: {massa: lb, comprimento: mm}
+  massa: 767.489
+  cg: [0, 0, 1539.857]
+  inercia_no_cg: {Lxx: 5.570e+8, Lyy: 5.570e+8, Lzz: 3.058e+7, produtos: "da ordem de 1e-8 (ruído numérico)"}
+  eixos: "eixos do Part Studio, no centro de massa"
+  volume: 5.065e+8
+  area: 1.428e+7
+orbitador: null
+lander: null

@@ -140,3 +140,33 @@ def test_mav_arranjo_coerente():
     r_in = float(np.interp(e["estacao_base_m"] + 0.57, xs, rs)) - r["folga_interna_m"]
     assert e["deitado_folga_m"] == pytest.approx(r_in - c57["comprimento_m"] / 2)
     assert all(c["comprimento_m"] <= c57["comprimento_m"] + 1e-12 for c in r["casos"])
+
+
+def test_inercias_analiticas():
+    """Inércia no CG dos primitivos contra as fórmulas fechadas (cilindro, cone, esfera oca, caixa)."""
+    m_cil = 1000.0 * math.pi * 1.0 * 2.0
+    I = cp.inercia({"tipo": "cilindro", "p0": [0, 0, 0], "p1": [0, 0, 2], "r": 1.0}, 1000.0)
+    assert I[2][2] == pytest.approx(m_cil / 2, rel=1e-6)
+    assert I[0][0] == pytest.approx(m_cil * (3 + 4) / 12, rel=1e-6)
+    cone = {"tipo": "tronco", "p0": [0, 0, 0], "p1": [0, 0, 3], "r0": 1.0, "r1": 0.0, "ri0": 0, "ri1": 0}
+    m_cone = 1000.0 * math.pi * 3 / 3
+    I = cp.inercia(cone, 1000.0)
+    assert I[2][2] == pytest.approx(3 / 10 * m_cone, rel=1e-5)
+    assert I[0][0] == pytest.approx(m_cone * (3 / 20 + 3 * 9 / 80), rel=1e-5)
+    I = cp.inercia({"tipo": "caixa", "c1": [0, 0, 0], "c2": [1, 2, 3]}, 1.0)
+    assert I[0][0] == pytest.approx(6 * (4 + 9) / 12)
+    # cilindro ao longo de y: o eixo de simetria vira yy
+    I = cp.inercia({"tipo": "cilindro", "p0": [0, 0, 0], "p1": [0, 2, 0], "r": 1.0}, 1000.0)
+    assert I[1][1] == pytest.approx(m_cil / 2, rel=1e-6)
+
+
+def test_conferencia_onshape():
+    """O medido no Onshape (tests/data/onshape) convertido e comparado com o previsto pelo script."""
+    r = ler("results/etapa7.2/conferencia_onshape.yaml")
+    med = ler("tests/data/onshape/medicoes.yaml")
+    mv = r["veiculos"]["mav"]
+    assert mv["situacao"] == "conferido"
+    assert mv["medido_onshape"]["massa_kg"] == pytest.approx(med["mav"]["massa"] * 0.45359237)
+    assert mv["previsto_script"]["massa_kg"] == pytest.approx(ler("results/etapa7.2/parametros.yaml")["resumo"]["mav"]["massa_kg"])
+    for k in ("orbitador", "lander"):
+        assert (med[k] is None) == (r["veiculos"][k]["situacao"] == "aguardando medição")
