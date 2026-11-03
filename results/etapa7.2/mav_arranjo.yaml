@@ -1,0 +1,264 @@
+gerado_por: tools/mav_arranjo.py
+folga_interna_m: 0.25
+altura_deck_m: 0.3
+casos:
+- diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  massa_tanques_kg: 19.8705533692267
+  variacao_massa_tanques_kg: 0.0
+  formas:
+    msl_m2020:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.18849736091219382
+      em_pe_comprimento_disponivel_m: 1.7812006003001497
+      em_pe_folga_m: -1.7797941215242377
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.2984973609121939
+      em_pe_comprimento_disponivel_m: 1.6307753876938467
+      em_pe_folga_m: -1.9302193341305407
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.4084973609121938
+      em_pe_comprimento_disponivel_m: 1.4816208104052024
+      em_pe_folga_m: -2.079373911419185
+    srl_a:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: 0.017067856479110466
+      em_pe_comprimento_disponivel_m: 2.7898949474737367
+      em_pe_folga_m: -0.7710997743506507
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.05988866526001968
+      em_pe_comprimento_disponivel_m: 2.6404202101050527
+      em_pe_folga_m: -0.9205745117193347
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.13684518699915027
+      em_pe_comprimento_disponivel_m: 2.489294647323662
+      em_pe_folga_m: -1.0717000745007255
+- diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  massa_tanques_kg: 19.812641445564715
+  variacao_massa_tanques_kg: -0.05791192366198317
+  formas:
+    msl_m2020:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.1755490978643912
+      em_pe_comprimento_disponivel_m: 1.7537818909454725
+      em_pe_folga_m: -1.7373163047833096
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.2855490978643913
+      em_pe_comprimento_disponivel_m: 1.603501750875438
+      em_pe_folga_m: -1.8875964448533442
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.3955490978643912
+      em_pe_comprimento_disponivel_m: 1.453926963481741
+      em_pe_folga_m: -2.037171232247041
+    srl_a:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: 0.03662481517908733
+      em_pe_comprimento_disponivel_m: 2.7658829414707355
+      em_pe_folga_m: -0.7252152542580466
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.04033170656004326
+      em_pe_comprimento_disponivel_m: 2.616183091545773
+      em_pe_folga_m: -0.874915104183009
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.11728822829917385
+      em_pe_comprimento_disponivel_m: 2.4663331665832917
+      em_pe_folga_m: -1.0247650291454904
+- diametro_m: 0.63
+  comprimento_m: 3.476502085506658
+  massa_tanques_kg: 19.81050743946884
+  variacao_massa_tanques_kg: -0.06004592975785883
+  formas:
+    msl_m2020:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.19025104275332927
+      em_pe_comprimento_disponivel_m: 1.7263631815907954
+      em_pe_folga_m: -1.7501389039158628
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.30025104275332937
+      em_pe_comprimento_disponivel_m: 1.5762281140570282
+      em_pe_folga_m: -1.90027397144963
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.41025104275332924
+      em_pe_comprimento_disponivel_m: 1.426233116558279
+      em_pe_folga_m: -2.0502689689483793
+    srl_a:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: 0.02853156594232309
+      em_pe_comprimento_disponivel_m: 2.7433716858429213
+      em_pe_folga_m: -0.7331303996637368
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.0484249557968075
+      em_pe_comprimento_disponivel_m: 2.5933716858429214
+      em_pe_folga_m: -0.8831303996637367
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.12538147753593765
+      em_pe_comprimento_disponivel_m: 2.4433716858429215
+      em_pe_folga_m: -1.0331303996637367
+- diametro_m: 0.66
+  comprimento_m: 3.476502085506658
+  massa_tanques_kg: 19.81050743946884
+  variacao_massa_tanques_kg: -0.06004592975785883
+  formas:
+    msl_m2020:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.2122510427533293
+      em_pe_comprimento_disponivel_m: 1.6979289644822408
+      em_pe_folga_m: -1.7785731210244173
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.3222510427533294
+      em_pe_comprimento_disponivel_m: 1.548014007003502
+      em_pe_folga_m: -1.9284880785031562
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.43225104275332926
+      em_pe_comprimento_disponivel_m: 1.3985392696348176
+      em_pe_folga_m: -2.0779628158718406
+    srl_a:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: 0.013140261594496883
+      em_pe_comprimento_disponivel_m: 2.7193596798399198
+      em_pe_folga_m: -0.7571424056667384
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.06381626014463371
+      em_pe_comprimento_disponivel_m: 2.569134567283642
+      em_pe_folga_m: -0.9073675182230163
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.14077278188376385
+      em_pe_comprimento_disponivel_m: 2.4190595297648825
+      em_pe_folga_m: -1.0574425557417757
+- diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  massa_tanques_kg: 19.81050743946884
+  variacao_massa_tanques_kg: -0.06004592975785883
+  formas:
+    msl_m2020:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.2342510427533293
+      em_pe_comprimento_disponivel_m: 1.6705102551275637
+      em_pe_folga_m: -1.8059918303790945
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.3442510427533292
+      em_pe_comprimento_disponivel_m: 1.5207403701850923
+      em_pe_folga_m: -1.9557617153215658
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.4542510427533293
+      em_pe_comprimento_disponivel_m: 1.3708454227113558
+      em_pe_folga_m: -2.1056566627953024
+    srl_a:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.0022510427533293242
+      em_pe_comprimento_disponivel_m: 2.6953476738369186
+      em_pe_folga_m: -0.7811544116697395
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.07920756449245947
+      em_pe_comprimento_disponivel_m: 2.5463231615807906
+      em_pe_folga_m: -0.9301789239258675
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.15616408623159006
+      em_pe_comprimento_disponivel_m: 2.3960980490245123
+      em_pe_folga_m: -1.080404036482146
+- diametro_m: 0.72
+  comprimento_m: 3.476502085506658
+  massa_tanques_kg: 19.81050743946884
+  variacao_massa_tanques_kg: -0.06004592975785883
+  formas:
+    msl_m2020:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.25625104275332933
+      em_pe_comprimento_disponivel_m: 1.643091545772886
+      em_pe_folga_m: -1.833410539733772
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.3662510427533292
+      em_pe_comprimento_disponivel_m: 1.4925262631315661
+      em_pe_folga_m: -1.983975822375092
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.4762510427533293
+      em_pe_comprimento_disponivel_m: 1.343151575787894
+      em_pe_folga_m: -2.133350509718764
+    srl_a:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.017642347101155087
+      em_pe_comprimento_disponivel_m: 2.6728364182091044
+      em_pe_folga_m: -0.8036656672975537
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.09459886884028568
+      em_pe_comprimento_disponivel_m: 2.5220860430215106
+      em_pe_folga_m: -0.9544160424851476
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.17155539057941627
+      em_pe_comprimento_disponivel_m: 2.373136568284142
+      em_pe_folga_m: -1.103365517222516
+- diametro_m: 0.75
+  comprimento_m: 3.476502085506658
+  massa_tanques_kg: 19.81050743946884
+  variacao_massa_tanques_kg: -0.06004592975785883
+  formas:
+    msl_m2020:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.27825104275332935
+      em_pe_comprimento_disponivel_m: 1.614657328664332
+      em_pe_folga_m: -1.8618447568423262
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.3882510427533292
+      em_pe_comprimento_disponivel_m: 1.4652526263131564
+      em_pe_folga_m: -2.0112494591935017
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.4982510427533291
+      em_pe_comprimento_disponivel_m: 1.3154577288644322
+      em_pe_folga_m: -2.161044356642226
+    srl_a:
+    - estacao: ombro
+      estacao_base_m: 0.85
+      deitado_folga_m: -0.033033651448981294
+      em_pe_comprimento_disponivel_m: 2.648824412206103
+      em_pe_folga_m: -0.8276776733005553
+    - estacao: ombro + meio deck
+      estacao_base_m: 1.0
+      deitado_folga_m: -0.10999017318811188
+      em_pe_comprimento_disponivel_m: 2.4992746373186594
+      em_pe_folga_m: -0.9772274481879988
+    - estacao: ombro + deck (P-094)
+      estacao_base_m: 1.15
+      deitado_folga_m: -0.18694669492724203
+      em_pe_comprimento_disponivel_m: 2.348824412206103
+      em_pe_folga_m: -1.1276776733005551
+glom_orcamento_kg: 386.77369250546496

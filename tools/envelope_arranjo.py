@@ -72,6 +72,24 @@ def margem_conjunto(perfil, h0, h1, r):
     return min(raio_envelope(perfil, h) for h in hs) - r
 
 
+def segmentos_mav(dmav, est_m, nt, t_par, of, rho_ox, rho_fu, ull):
+    """Segmentos do MAV de baixo para cima [(item, comprimento, tipo)]: tanques cilíndricos no diâmetro interno do MAV
+    (P-085) e os comprimentos fora dos tanques (P-086)."""
+    di = dmav - 2 * t_par
+    segs = []
+    for i, e in enumerate(est_m):
+        vol = volumes(e["propelente_kg"], of, rho_ox, rho_fu, ull)
+        if i == 0:
+            segs.append(("Motores do estágio 1 (4 × R-4D-11)", nt["motores_estagio_1"], "estrutura"))
+        else:
+            segs.append(("Interestágio", nt["interestagio"], "estrutura"))
+            segs.append(("Motor do estágio 2 (1 × R-4D-11)", nt["motor_estagio_2"], "estrutura"))
+        segs.append((f"Tanque de oxidante do estágio {i + 1}", tanque_cilindrico(vol["tanque_oxidante_m3"], di) + 2 * t_par, "oxidante"))
+        segs.append((f"Tanque de combustível do estágio {i + 1}", tanque_cilindrico(vol["tanque_combustivel_m3"], di) + 2 * t_par, "combustivel"))
+    segs.append(("Carga (contêiner de amostras)", nt["carga_os"], "carga"))
+    return segs
+
+
 def main():
     cad, arq = ler("config/cad.yaml"), ler("results/etapa2.5/arquitetura.yaml")
     en, pcfg = ler("results/etapa4.1/energia.yaml"), ler("config/plataformas.yaml")
@@ -165,18 +183,7 @@ def main():
     mavs = {}
     for k, o in mv["diametro_opcoes_m"].items():
         dmav = v(o)
-        di = dmav - 2 * t_par
-        segs = []
-        for i, e in enumerate(est_m):
-            vol = volumes(e["propelente_kg"], of, rho_ox, rho_fu, ull)
-            if i == 0:
-                segs.append(("Motores do estágio 1 (4 × R-4D-11)", nt["motores_estagio_1"], "estrutura"))
-            else:
-                segs.append(("Interestágio", nt["interestagio"], "estrutura"))
-                segs.append(("Motor do estágio 2 (1 × R-4D-11)", nt["motor_estagio_2"], "estrutura"))
-            segs.append((f"Tanque de oxidante do estágio {i + 1}", tanque_cilindrico(vol["tanque_oxidante_m3"], di) + 2 * t_par, "oxidante"))
-            segs.append((f"Tanque de combustível do estágio {i + 1}", tanque_cilindrico(vol["tanque_combustivel_m3"], di) + 2 * t_par, "combustivel"))
-        segs.append(("Carga (contêiner de amostras)", nt["carga_os"], "carga"))
+        segs = segmentos_mav(dmav, est_m, nt, t_par, of, rho_ox, rho_fu, ull)
         comp = sum(s[1] for s in segs)
         mavs[k] = {"diametro_m": dmav, "segmentos": [{"item": a, "comprimento_m": b, "tipo": c} for a, b, c in segs], "comprimento_m": comp,
                    "dentro_do_diametro_util": {kk: comp <= oo["diametro_util_interno_m"] for kk, oo in opcoes.items()}}
