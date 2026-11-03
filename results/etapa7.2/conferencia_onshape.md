@@ -2,33 +2,66 @@
 
 **VERIFICAÇÃO**: o CAD gerado no Onshape reproduz o modelo do script (mesma geometria e mesmas densidades). Não é validação do projeto nem comparação com o orçamento (Etapa 7.3).
 
-Medido: propriedades de massa lidas no Onshape (tests/data/onshape/medicoes.yaml), convertidas com 1 lb = 0.45359237 kg e 1 mm = 1e-3 m. Previsto: tools/cad_parametros.py (results/etapa7.2/parametros.yaml). Inércias no centro de massa, nos eixos do Part Studio.
+Medição: Fabio, 2026-11-03, conta real do Onshape, FeatureScript versão 3112, arquivos do commit 32cb41d (cópias em tests/data/onshape/), Assign materials: sim. Unidades SI; inércias no centro de massa, nos eixos do Part Studio.
+
+Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou. O script calcula CG em x, y e z e o tensor de inércia completo.
 
 ## Orbitador
 
-Aguardando medição. Previsto pelo script: massa 6 506,2 kg; CG z 1,393 m; Ixx, Iyy, Izz = 12 069,92, 14 890,71, 11 604,86 kg·m²; 20 corpos.
+Arquivo tests/data/onshape/compilados_32cb41d/orbitador.fs; compilou: sim; peças: 20 medidas, 20 corpos no arquivo.
+
+| Grandeza | Medido no Onshape | Previsto pelo script | Desvio absoluto | Desvio relativo | Precisão de leitura |
+| :- | -: | -: | -: | -: | :- |
+| massa (kg) | 6506,2448 | 6506,2448 | +2,6e−05 | +4,1e−09 | dentro (± 5,0e−05) |
+| CG x (m) | 0,0000 | −2,986e−17 | +3,0e−17 | — | dentro (± 5,0e−05) |
+| CG y (m) | 0,0000 | 4,368e−17 | −4,4e−17 | — | dentro (± 5,0e−05) |
+| CG z (m) | 1,3928 | 1,3928 | −2,5e−06 | −1,8e−06 | dentro (± 5,0e−05) |
+| Ixx (kg·m²) | 12069,9080 | 12069,9080 | +4,4e−05 | +3,6e−09 | dentro (± 5,0e−04) |
+| Iyy (kg·m²) | 14890,7017 | 14890,7017 | −4,5e−05 | −3,0e−09 | dentro (± 5,0e−05) |
+| Izz (kg·m²) | 11604,8630 | 11604,8630 | +1,3e−05 | +1,1e−09 | dentro (± 5,0e−04) |
+| volume (m³) | 10,8264 | 10,8264 | +3,4e−05 | +3,2e−06 | dentro (± 5,0e−05) |
+| produtos de inércia | ~1e-13 (zero numérico) | maior valor absoluto +2,1e−13 | — | — | — |
+| área (m²) | 142,9220 | não calculada pelo script | — | — | — |
+
+Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa +6,3e−04 kg; CG +2,9e−24, −4,2e−24, +3,2e−07 m.
 
 ## Lander
 
-Aguardando medição. Previsto pelo script: massa 3 190,4 kg; CG z 3,003 m; Ixx, Iyy, Izz = 3 647,99, 3 639,17, 4 131,25 kg·m²; 33 corpos.
+Arquivo tests/data/onshape/compilados_32cb41d/lander.fs; compilou: sim; peças: 33 medidas, 33 corpos no arquivo.
+
+| Grandeza | Medido no Onshape | Previsto pelo script | Desvio absoluto | Desvio relativo | Precisão de leitura |
+| :- | -: | -: | -: | -: | :- |
+| massa (kg) | 3190,4337 | 3190,4337 | +1,4e−05 | +4,5e−09 | dentro (± 5,0e−05) |
+| CG x (m) | 0,0256 | 0,0256 | −6,3e−06 | −2,5e−04 | dentro (± 5,0e−05) |
+| CG y (m) | −0,0263 | −0,0263 | −4,3e−05 | +1,7e−03 | dentro (± 5,0e−05) |
+| CG z (m) | 3,0032 | 3,0032 | +1,3e−05 | +4,4e−06 | dentro (± 5,0e−05) |
+| Ixx (kg·m²) | 3648,0512 | 3648,0512 | +2,3e−05 | +6,3e−09 | dentro (± 5,0e−05) |
+| Iyy (kg·m²) | 3639,2293 | 3639,2293 | −1,1e−05 | −3,0e−09 | dentro (± 5,0e−05) |
+| Izz (kg·m²) | 4131,3508 | 4131,3508 | +2,3e−05 | +5,5e−09 | dentro (± 5,0e−05) |
+| Ixy (kg·m²) | −2,1450 | −2,1450 | +4,2e−05 | −2,0e−05 | dentro (± 5,0e−04) |
+| Ixz (kg·m²) | 108,3561 | 108,3561 | +3,2e−05 | +3,0e−07 | dentro (± 5,0e−05) |
+| Iyz (kg·m²) | −14,0890 | −14,0890 | +2,6e−05 | −1,9e−06 | dentro (± 5,0e−04) |
+| volume (m³) | 6,9993 | 6,9993 | −7,2e−06 | −1,0e−06 | dentro (± 5,0e−05) |
+| área (m²) | 188,4070 | não calculada pelo script | — | — | — |
+
+Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa −2,7e−02 kg; CG +2,2e−07, −2,3e−07, +1,8e−06 m.
 
 ## MAV
 
-Medição: Fabio, 2026-11-03, FeatureScript versão 3112, results/etapa7.2/mav.fs; compilou: sim; Assign materials: sim.
+Arquivo tests/data/onshape/compilados_32cb41d/mav.fs; compilou: sim; peças: 12 medidas, 12 corpos no arquivo.
 
-| Grandeza | Medido no Onshape | Previsto pelo script | Desvio | Precisão de leitura |
-| :- | -: | -: | -: | :- |
-| Peças | 12 | 12 | 0 | — |
-| Massa (kg) | 348,127 | 348,127 | +5,4e−07 (relativo) | dentro |
-| CG x (m) | 0,0000 | 0,0000 | +0,0e+00 m | dentro |
-| CG y (m) | 0,0000 | 0,0000 | +0,0e+00 m | dentro |
-| CG z (m) | 1,5399 | 1,5399 | +2,8e−07 m | dentro |
-| Ixx no CG (kg·m²) | 252,65 | 252,63 | +8,7e−05 (relativo) | dentro |
-| Iyy no CG (kg·m²) | 252,65 | 252,63 | +8,7e−05 (relativo) | dentro |
-| Izz no CG (kg·m²) | 13,87 | 13,87 | +6,6e−05 (relativo) | dentro |
-| Volume (m³) | 0,5065 | 0,5065 | +2,0e−05 (relativo) | dentro |
-| Produtos de inércia | da ordem de 1e-8 (ruído numérico) | maior valor absoluto +0,0e+00 kg·m² | — | — |
-| Área (m²) | 14,28 | não calculada pelo script | — | — |
+| Grandeza | Medido no Onshape | Previsto pelo script | Desvio absoluto | Desvio relativo | Precisão de leitura |
+| :- | -: | -: | -: | -: | :- |
+| massa (kg) | 348,1270 | 348,1270 | +3,5e−05 | +1,0e−07 | dentro (± 5,0e−04) |
+| CG x (m) | 0,0000 | 0,0000 | +0,0e+00 | — | dentro (± 5,0e−05) |
+| CG y (m) | 0,0000 | 0,0000 | +0,0e+00 | — | dentro (± 5,0e−05) |
+| CG z (m) | 1,5399 | 1,5399 | +4,3e−05 | +2,8e−05 | dentro (± 5,0e−05) |
+| Ixx (kg·m²) | 252,6290 | 252,6290 | +4,7e−05 | +1,8e−07 | dentro (± 5,0e−04) |
+| Iyy (kg·m²) | 252,6290 | 252,6290 | +4,7e−05 | +1,8e−07 | dentro (± 5,0e−04) |
+| Izz (kg·m²) | 13,8699 | 13,8699 | −3,6e−05 | −2,6e−06 | dentro (± 5,0e−05) |
+| volume (m³) | 0,5065 | 0,5065 | +1,0e−05 | +2,0e−05 | dentro (± 5,0e−05) |
+| produtos de inércia | ~1e-15 (zero numérico) | maior valor absoluto +0,0e+00 | — | — | — |
+| área (m²) | 14,2848 | não calculada pelo script | — | — | — |
 
-Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou (tests/data/onshape/medicoes.yaml, resolucao). O previsto sai da geometria arredondada a 6 algarismos significativos, como vai para o FeatureScript (tools/cad_parametros.py).
+Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa +0,0e+00 kg; CG +0,0e+00, +0,0e+00, +0,0e+00 m.
 

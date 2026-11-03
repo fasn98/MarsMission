@@ -1,11 +1,13 @@
 """Etapa 7.2: conferência do CAD no Onshape contra o modelo do script (VERIFICAÇÃO: o CAD reproduz o modelo; não é
 validação do projeto).
 
-- Medido: propriedades de massa que o Fabio leu no Onshape (tests/data/onshape/medicoes.yaml), nas unidades do Part
-  Studio; convertidas para o SI (lb → kg por config/cad.yaml, onshape.lb_para_kg; mm → m pelo prefixo SI).
-- Previsto: massa, CG, inércias no CG e volume calculados por tools/cad_parametros.py com a mesma geometria
-  (results/etapa7.2/parametros.yaml).
-- Veículos ainda não gerados no Onshape ficam como "aguardando medição".
+- Medido: propriedades de massa lidas pelo Fabio no Onshape (tests/data/onshape/medicoes.yaml), em SI e em texto, como o
+  Onshape as mostrou; a resolução de leitura de cada número sai dos algarismos exibidos.
+- Previsto: massa, CG (x, y, z), tensor de inércia no CG e volume calculados pelo script (tools/cad_parametros.py:
+  volume, centro e inercia) a partir dos dados do próprio arquivo .fs que foi compilado (cópia em tests/data/onshape/),
+  com o cone interno dos troncos ocos tomado na reta que o arquivo define (pe0, pe1, rie0, rie1). Assim o previsto é o
+  que o Onshape construiu, qualquer que seja a versão do arquivo.
+- Também mostra a diferença entre o arquivo compilado e o modelo atual (results/etapa7.2/parametros.yaml).
 Saída: results/etapa7.2/conferencia_onshape.yaml e .md
 
 Uso: python tools/conferencia_onshape.py
@@ -13,64 +15,101 @@ Uso: python tools/conferencia_onshape.py
 
 from __future__ import annotations
 
-import math
+import json
 import sys
+from decimal import Decimal
 from pathlib import Path
 
+import numpy as np
 import yaml
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
+sys.path.insert(0, str(RAIZ / "tools"))
 
-from orbital.config import ler, nativo, v  # noqa: E402
+import cad_parametros as cp  # noqa: E402
+from orbital.config import ler, nativo  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa7.2"
-MM = 1e-3   # prefixo SI
+NOMES = {"orbitador": "Orbitador", "lander": "Lander", "mav": "MAV"}
+
+
+def _bloco(texto, nome):
+    ini = texto.index(f"const {nome} = ") + len(f"const {nome} = ")
+    resto = texto[ini:]
+    return json.loads(resto[:resto.index("\n];") + 2])
+
+
+def previsto_do_arquivo(caminho):
+    """Massa, CG, tensor de inércia no CG e volume dos corpos do arquivo .fs, pelas fórmulas do script."""
+    texto = (RAIZ / caminho).read_text(encoding="utf-8")
+    mats, corpos = _bloco(texto, "MATERIAIS"), _bloco(texto, "CORPOS")
+    massa, mom, dados = 0.0, np.zeros(3), []
+    for b in corpos:
+        c = dict(b)
+        if c["tipo"] == "tronco_oco":   # raios internos nas faces, na reta do cone estendido que o arquivo define
+            p0, p1, e0, e1 = (np.array(c[k], float) for k in ("p0", "p1", "pe0", "pe1"))
+            u = (e1 - e0) / np.linalg.norm(e1 - e0)
+            raio = lambda p: c["rie0"] + (c["rie1"] - c["rie0"]) * float(np.dot(p - e0, u)) / float(np.linalg.norm(e1 - e0))  # noqa: E731
+            c["ri0"], c["ri1"] = raio(p0), raio(p1)
+        rho = c["densidade"] if c["mat"] < 0 else mats[c["mat"]][1]
+        m = rho * cp.volume(c)
+        massa += m
+        mom += m * cp.centro(c)
+        dados.append((c, rho, m))
+    cg = mom / massa
+    tensor, vol = np.zeros((3, 3)), 0.0
+    for c, rho, m in dados:
+        d = cp.centro(c) - cg
+        tensor += cp.inercia(c, rho) + m * (np.dot(d, d) * np.eye(3) - np.outer(d, d))
+        vol += cp.volume(c)
+    return {"massa_kg": massa, "cg_m": cg.tolist(), "inercia_cg_kg_m2": tensor.tolist(), "volume_m3": vol, "corpos": len(corpos)}
+
+
+def num(s):
+    """(valor, meia resolução de leitura) de um número em texto, pelo último algarismo exibido."""
+    d = Decimal(str(s))
+    return float(d), 0.5 * 10.0 ** d.as_tuple().exponent
 
 
 def main():
     med = ler("tests/data/onshape/medicoes.yaml")
-    prev = ler("results/etapa7.2/parametros.yaml")["resumo"]
-    lb = v(ler("config/cad.yaml")["onshape"]["lb_para_kg"])
+    modelo = ler("results/etapa7.2/parametros.yaml")["resumo"]
     out = {"gerado_por": "tools/conferencia_onshape.py", "natureza": "verificação: o CAD reproduz o modelo do script (não é validação)",
-           "lb_para_kg": lb, "veiculos": {}}
+           "comum": med["comum"], "veiculos": {}}
     for k in ("orbitador", "lander", "mav"):
         m = med.get(k)
-        p = prev[k]
-        prevista = {"massa_kg": p["massa_kg"], "cg_m": p["cg_m"], "inercia_cg_kg_m2": [p["inercia_cg_kg_m2"][i][i] for i in range(3)],
-                    "volume_m3": p["volume_m3"], "corpos": p["corpos"]}
         if m is None:
-            out["veiculos"][k] = {"situacao": "aguardando medição", "previsto": prevista}
+            out["veiculos"][k] = {"situacao": "aguardando medição"}
             continue
-        assert m["unidades"] == {"massa": "lb", "comprimento": "mm"}, m["unidades"]
-        res = m["resolucao"]
-        meia = lambda x, alg: 0.5 * 10 ** (math.floor(math.log10(abs(x))) - alg + 1) if x else 0.0  # noqa: E731   meia unidade do último algarismo
-        medida = {"massa_kg": m["massa"] * lb, "cg_m": [x * MM for x in m["cg"]],
-                  "inercia_cg_kg_m2": [m["inercia_no_cg"][e] * lb * MM ** 2 for e in ("Lxx", "Lyy", "Lzz")],
-                  "volume_m3": m["volume"] * MM ** 3, "area_m2": m["area"] * MM ** 2, "pecas": m["pecas"]}
-        # precisão de leitura: meia resolução do número que o Onshape mostrou, no SI. O previsto já sai da geometria arredondada
-        # como vai para o FeatureScript (tools/cad_parametros.py, r6), então não há folga adicional.
-        tol = {"massa_kg": 0.5 * res["massa"] * lb,
-               "cg_m": [0.5 * res["cg"] * MM] * 3,
-               "inercia_cg_kg_m2": [meia(m["inercia_no_cg"][e], res["inercia_algarismos"]) * lb * MM ** 2 for e in ("Lxx", "Lyy", "Lzz")],
-               "volume_m3": meia(m["volume"], res["volume_algarismos"]) * MM ** 3}
-        dentro = {"massa_kg": abs(medida["massa_kg"] - prevista["massa_kg"]) <= tol["massa_kg"],
-                  "cg_m": [abs(a - b) <= t for a, b, t in zip(medida["cg_m"], prevista["cg_m"], tol["cg_m"])],
-                  "inercia_cg_kg_m2": [abs(a - b) <= t for a, b, t in zip(medida["inercia_cg_kg_m2"], prevista["inercia_cg_kg_m2"], tol["inercia_cg_kg_m2"])],
-                  "volume_m3": abs(medida["volume_m3"] - prevista["volume_m3"]) <= tol["volume_m3"]}
-        rel = lambda a, b: (a - b) / b  # noqa: E731
-        desvio = {"massa_relativo": rel(medida["massa_kg"], prevista["massa_kg"]),
-                  "cg_m": [a - b for a, b in zip(medida["cg_m"], prevista["cg_m"])],
-                  "inercia_relativo": [rel(a, b) for a, b in zip(medida["inercia_cg_kg_m2"], prevista["inercia_cg_kg_m2"])],
-                  "volume_relativo": rel(medida["volume_m3"], prevista["volume_m3"]),
-                  "pecas": medida["pecas"] - prevista["corpos"]}
+        p = previsto_do_arquivo(m["arquivo"])
+        linhas = []
+
+        def linha(grandeza, s, prev, unidade, meia_forcada=None):
+            v_, meia = num(s)
+            meia = meia if meia_forcada is None else meia_forcada
+            linhas.append({"grandeza": grandeza, "unidade": unidade, "medido": v_, "previsto": prev, "desvio_abs": v_ - prev,
+                           "desvio_rel": (v_ - prev) / prev if abs(prev) > 1e-9 else None, "meia_resolucao": meia, "dentro": abs(v_ - prev) <= meia})
+        linha("massa", m["massa"], p["massa_kg"], "kg")
+        meia_cg = num(m["cg"][2])[1]   # um CG mostrado como "0" usa a resolução da coordenada z
+        for i, e in enumerate("xyz"):
+            linha(f"CG {e}", m["cg"][i], p["cg_m"][i], "m", meia_cg if num(m["cg"][i])[0] == 0 else None)
+        T = p["inercia_cg_kg_m2"]
+        for i, e in enumerate(("Ixx", "Iyy", "Izz")):
+            linha(e, m["inercia_no_cg"][e], T[i][i], "kg·m²")
         pi = m.get("produtos_de_inercia")
-        produtos = {"medido": "não informado" if pi is None else (pi if isinstance(pi, str) else [x * lb * MM ** 2 for x in pi]),
-                    "previsto_max_abs_kg_m2": max(abs(p["inercia_cg_kg_m2"][i][j]) for i in range(3) for j in range(3) if i != j)}
-        out["veiculos"][k] = {"situacao": "conferido", "medicao": {x: m[x] for x in ("data", "responsavel", "versao_featurescript", "arquivo",
-                                                                                   "compilou", "assign_materials", "eixos")},
-                              "medido_onshape": medida, "previsto_script": prevista, "desvio": desvio,
-                              "tolerancia_de_leitura": tol, "dentro_da_precisao_de_leitura": dentro, "produtos_de_inercia": produtos}
+        if isinstance(pi, dict):
+            for e, (i, j) in (("Ixy", (0, 1)), ("Ixz", (0, 2)), ("Iyz", (1, 2))):
+                linha(e, pi[e], T[i][j], "kg·m²")
+        linha("volume", m["volume"], p["volume_m3"], "m³")
+        produtos_max = max(abs(T[i][j]) for i in range(3) for j in range(3) if i != j)
+        atual = modelo[k]
+        out["veiculos"][k] = {"situacao": "conferido", "arquivo": m["arquivo"], "compilou": m["compilou"],
+                              "pecas_medidas": m["pecas"], "corpos_no_arquivo": p["corpos"], "linhas": linhas,
+                              "produtos_medidos_texto": pi if isinstance(pi, str) else None, "produtos_previstos_max_abs_kg_m2": produtos_max,
+                              "area_m2_medida": num(m["area"])[0],
+                              "modelo_atual": {"massa_kg": atual["massa_kg"], "diferenca_massa_kg": atual["massa_kg"] - p["massa_kg"],
+                                               "diferenca_cg_m": [a - b for a, b in zip(atual["cg_m"], p["cg_m"])]}}
     out = nativo(out)
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "conferencia_onshape.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -78,39 +117,40 @@ def main():
 
 
 def escreve_md(o):
-    br = lambda x, n=3: f"{round(x, n) + 0.0:,.{n}f}".replace(",", " ").replace(".", ",").replace("-", "−")  # noqa: E731
-    ex = lambda x: f"{x:+.1e}".replace(".", ",").replace("-", "−")  # noqa: E731
+    def f(x):
+        if x is None:
+            return "—"
+        a = abs(x)
+        s = f"{x:.4f}" if 1e-3 <= a < 1e5 or x == 0 else f"{x:.3e}"
+        return s.replace(".", ",").replace("-", "−")
+    ex = lambda x: "—" if x is None else f"{x:+.1e}".replace(".", ",").replace("-", "−")  # noqa: E731
+    c = o["comum"]
     md = ["# Conferência do CAD no Onshape (gerado por tools/conferencia_onshape.py)", "",
           "**VERIFICAÇÃO**: o CAD gerado no Onshape reproduz o modelo do script (mesma geometria e mesmas densidades). Não é validação do projeto "
           "nem comparação com o orçamento (Etapa 7.3).", "",
-          f"Medido: propriedades de massa lidas no Onshape (tests/data/onshape/medicoes.yaml), convertidas com 1 lb = {o['lb_para_kg']} kg e 1 mm = 1e-3 m. "
-          "Previsto: tools/cad_parametros.py (results/etapa7.2/parametros.yaml). Inércias no centro de massa, nos eixos do Part Studio.", ""]
+          f"Medição: {c['responsavel']}, {c['data']}, {c['conta']}, FeatureScript versão {c['versao_featurescript']}, arquivos do commit "
+          f"{c['commit_dos_arquivos']} (cópias em tests/data/onshape/), Assign materials: {'sim' if c['assign_materials'] else 'não'}. "
+          "Unidades SI; inércias no centro de massa, nos eixos do Part Studio.", "",
+          "Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. Precisão de leitura: meia "
+          "unidade do último algarismo que o Onshape mostrou. O script calcula CG em x, y e z e o tensor de inércia completo.", ""]
     for k, x in o["veiculos"].items():
-        md += [f"## {({'orbitador': 'Orbitador', 'lander': 'Lander', 'mav': 'MAV'})[k]}", ""]
-        p = x["previsto"] if x["situacao"] != "conferido" else x["previsto_script"]
+        md += [f"## {NOMES[k]}", ""]
         if x["situacao"] != "conferido":
-            md += [f"Aguardando medição. Previsto pelo script: massa {br(p['massa_kg'], 1)} kg; CG z {br(p['cg_m'][2])} m; "
-                   "Ixx, Iyy, Izz = " + ", ".join(br(i, 2) for i in p["inercia_cg_kg_m2"]) + " kg·m²; " f"{p['corpos']} corpos.", ""]
+            md += ["Aguardando medição.", ""]
             continue
-        mm, d, mi, dt = x["medido_onshape"], x["desvio"], x["medicao"], x["dentro_da_precisao_de_leitura"]
-        ok = lambda b: "dentro" if b else "**fora**"  # noqa: E731
-        md += [f"Medição: {mi['responsavel']}, {mi['data']}, FeatureScript versão {mi['versao_featurescript']}, {mi['arquivo']}; compilou: "
-               f"{'sim' if mi['compilou'] else 'não'}; Assign materials: {'sim' if mi['assign_materials'] else 'não'}.", "",
-               "| Grandeza | Medido no Onshape | Previsto pelo script | Desvio | Precisão de leitura |", "| :- | -: | -: | -: | :- |",
-               f"| Peças | {mm['pecas']} | {p['corpos']} | {d['pecas']} | — |",
-               f"| Massa (kg) | {br(mm['massa_kg'])} | {br(p['massa_kg'])} | {ex(d['massa_relativo'])} (relativo) | {ok(dt['massa_kg'])} |"]
-        for i, e in enumerate("xyz"):
-            md.append(f"| CG {e} (m) | {br(mm['cg_m'][i], 4)} | {br(p['cg_m'][i], 4)} | {ex(d['cg_m'][i])} m | {ok(dt['cg_m'][i])} |")
-        for i, e in enumerate(("xx", "yy", "zz")):
-            md.append(f"| I{e} no CG (kg·m²) | {br(mm['inercia_cg_kg_m2'][i], 2)} | {br(p['inercia_cg_kg_m2'][i], 2)} | {ex(d['inercia_relativo'][i])} (relativo) | "
-                      f"{ok(dt['inercia_cg_kg_m2'][i])} |")
-        pr = x["produtos_de_inercia"]
-        pm = pr["medido"] if isinstance(pr["medido"], str) else ", ".join(br(v_, 2) for v_ in pr["medido"]) + " kg·m²"
-        md += [f"| Volume (m³) | {br(mm['volume_m3'], 4)} | {br(p['volume_m3'], 4)} | {ex(d['volume_relativo'])} (relativo) | {ok(dt['volume_m3'])} |",
-               f"| Produtos de inércia | {pm} | maior valor absoluto {ex(pr['previsto_max_abs_kg_m2'])} kg·m² | — | — |",
-               f"| Área (m²) | {br(mm['area_m2'], 2)} | não calculada pelo script | — | — |", "",
-               "Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou (tests/data/onshape/medicoes.yaml, resolucao). O previsto "
-               "sai da geometria arredondada a 6 algarismos significativos, como vai para o FeatureScript (tools/cad_parametros.py).", ""]
+        md += [f"Arquivo {x['arquivo']}; compilou: {'sim' if x['compilou'] else 'não'}; peças: {x['pecas_medidas']} medidas, "
+               f"{x['corpos_no_arquivo']} corpos no arquivo.", "",
+               "| Grandeza | Medido no Onshape | Previsto pelo script | Desvio absoluto | Desvio relativo | Precisão de leitura |",
+               "| :- | -: | -: | -: | -: | :- |"]
+        for li in x["linhas"]:
+            md.append(f"| {li['grandeza']} ({li['unidade']}) | {f(li['medido'])} | {f(li['previsto'])} | {ex(li['desvio_abs'])} | "
+                      f"{ex(li['desvio_rel'])} | {'dentro' if li['dentro'] else '**fora**'} (± {ex(li['meia_resolucao'])[1:]}) |")
+        if x["produtos_medidos_texto"]:
+            md.append(f"| produtos de inércia | {x['produtos_medidos_texto']} | maior valor absoluto {ex(x['produtos_previstos_max_abs_kg_m2'])} | — | — | — |")
+        ma = x["modelo_atual"]
+        md += [f"| área (m²) | {f(x['area_m2_medida'])} | não calculada pelo script | — | — | — |", "",
+               f"Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa {ex(ma['diferenca_massa_kg'])} kg; CG "
+               + ", ".join(ex(d) for d in ma["diferenca_cg_m"]) + " m.", ""]
     (SAIDA / "conferencia_onshape.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

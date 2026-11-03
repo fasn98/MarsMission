@@ -162,19 +162,36 @@ def test_inercias_analiticas():
 
 
 def test_conferencia_onshape():
-    """O medido no Onshape (tests/data/onshape) convertido e comparado com o previsto pelo script."""
+    """Medido no Onshape (tests/data/onshape) contra o previsto pelo script sobre o arquivo compilado."""
+    import conferencia_onshape as co
     r = ler("results/etapa7.2/conferencia_onshape.yaml")
     med = ler("tests/data/onshape/medicoes.yaml")
-    mv = r["veiculos"]["mav"]
-    assert mv["situacao"] == "conferido"
-    assert mv["medido_onshape"]["massa_kg"] == pytest.approx(med["mav"]["massa"] * 0.45359237)
-    assert mv["previsto_script"]["massa_kg"] == pytest.approx(ler("results/etapa7.2/parametros.yaml")["resumo"]["mav"]["massa_kg"])
-    for k in ("orbitador", "lander"):
-        assert (med[k] is None) == (r["veiculos"][k]["situacao"] == "aguardando medição")
-    tol, dentro = mv["tolerancia_de_leitura"], mv["dentro_da_precisao_de_leitura"]
-    assert tol["massa_kg"] == pytest.approx(0.5 * med["mav"]["resolucao"]["massa"] * 0.45359237)
-    assert dentro["massa_kg"] == (abs(mv["medido_onshape"]["massa_kg"] - mv["previsto_script"]["massa_kg"]) <= tol["massa_kg"])
-    assert mv["medido_onshape"]["area_m2"] == pytest.approx(med["mav"]["area"] * 1e-6)
+    for k in ("orbitador", "lander", "mav"):
+        x = r["veiculos"][k]
+        assert x["situacao"] == "conferido"
+        p = co.previsto_do_arquivo(med[k]["arquivo"])
+        li = {y["grandeza"]: y for y in x["linhas"]}
+        assert li["massa"]["previsto"] == pytest.approx(p["massa_kg"], rel=1e-12)
+        assert li["massa"]["medido"] == float(med[k]["massa"])
+        for y in x["linhas"]:
+            assert y["dentro"] == (abs(y["medido"] - y["previsto"]) <= y["meia_resolucao"])
+    # resolução de leitura pelo último algarismo exibido
+    assert co.num("6506.2448") == (6506.2448, pytest.approx(0.5e-4))
+    # o arquivo atual do lander (cone interno com 12 algarismos) reproduz o modelo atual
+    m = ler("results/etapa7.2/parametros.yaml")["resumo"]["lander"]
+    assert co.previsto_do_arquivo("results/etapa7.2/lander.fs")["massa_kg"] == pytest.approx(m["massa_kg"], rel=1e-9)
+
+
+def test_cg_lateral_por_conjunto():
+    """Os conjuntos somam o CG lateral e os produtos de inércia do lander, nas duas configurações."""
+    r = ler("results/etapa7.2/cg_lateral.yaml")
+    for c in r["configuracoes"].values():
+        g = c["por_conjunto"]
+        assert sum(x["mx_kg_m"] for x in g) / c["massa_kg"] == pytest.approx(c["cg_m"][0], abs=1e-12)
+        assert sum(x["my_kg_m"] for x in g) / c["massa_kg"] == pytest.approx(c["cg_m"][1], abs=1e-12)
+        assert sum(x["Ixz"] for x in g) == pytest.approx(c["produtos_kg_m2"]["Ixz"], abs=1e-9)
+    lan = r["configuracoes"]["lançamento"]
+    assert lan["cg_m"] == pytest.approx(ler("results/etapa7.2/parametros.yaml")["resumo"]["lander"]["cg_m"], abs=1e-12)
 
 
 def test_previsto_e_a_geometria_do_featurescript():

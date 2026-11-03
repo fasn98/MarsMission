@@ -185,8 +185,15 @@ exemplo, `ONSHAPE_ACCESS_KEY` e `ONSHAPE_SECRET_KEY` no Replit), nunca no reposi
   dá o deslocamento do CG, fica para a 7.3.
 
 ## Nota (2026-11-03): conferência no Onshape
-O Fabio gerou o MAV numa conta real do Onshape (FeatureScript versão 3112). O arquivo compilou e gerou as 12 peças. As
-propriedades de massa medidas estão em `tests/data/onshape/medicoes.yaml`. A comparação com o previsto pelo script está em
-`results/etapa7.2/conferencia_onshape.md`: é uma verificação de que o CAD reproduz o modelo, não validação.
+O Fabio gerou os três modelos numa conta real do Onshape (FeatureScript versão 3112), com os arquivos do commit 32cb41d.
+Os três compilaram e geraram as peças: 20 no orbitador, 33 no lander e 12 no MAV.
+- **Dados:** as propriedades de massa medidas estão em `tests/data/onshape/medicoes.yaml`, e as cópias dos arquivos
+  compilados em `tests/data/onshape/compilados_32cb41d/`.
+- **Comparação:** `results/etapa7.2/conferencia_onshape.md` compara o medido com o previsto pelo script sobre o próprio arquivo
+  compilado: massa, CG em x, y e z, tensor de inércia e volume. É uma verificação de que o CAD reproduz o modelo, não
+  validação.
 - **Inércias:** o script passou a calcular as inércias no CG pela mesma geometria (`tools/cad_parametros.py`).
-- **Pendente:** o orbitador e o lander ainda não foram gerados; o arquivo já tem os previstos deles.
+- **Arredondamento corrigido:** o cone interno do escudo estava escrito com 6 algarismos, o que acrescentava 0,027 kg ao
+  lander compilado. O gerador agora escreve esses parâmetros com 12 algarismos.
+- **CG lateral do lander:** a análise peça a peça está em `results/etapa7.2/cg_lateral.md`, como achado para o portão da
+  7.3. Nenhuma peça foi movida.

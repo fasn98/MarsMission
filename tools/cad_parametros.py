@@ -467,9 +467,13 @@ def featurescript(nome, corpos, materiais):
             mat = f'"mat" : {list(materiais).index(c["material"])}, "densidade" : 0'
         cor = CORES.get(c["material"], CORES["equivalente"])
         g = {k: c[k] for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1") if k in c}
-        if c["tipo"] == "tronco_oco":
-            g.update(extensao_interna(c))
         campos = ", ".join(f'"{k}" : ' + (_vec(x) if isinstance(x, list) else _num(x)) for k, x in g.items())
+        if c["tipo"] == "tronco_oco":
+            # parâmetros de construção do cone interno com 12 algarismos: com 6, a reta deslocava a superfície interna da
+            # casca de PICA em ~1e-5 m (conferência no Onshape, 2026-11-03, +0,027 kg no lander)
+            ext = extensao_interna(c)
+            campos += ", " + ", ".join(f'"{k}" : ' + ("[" + ", ".join(f"{float(y):.12g}" for y in x) + "]" if isinstance(x, list) else f"{float(x):.12g}")
+                                       for k, x in ext.items())
         corpos_txt.append(f'    {{ "tipo" : "{c["tipo"]}", "nome" : "{ascii_(c["nome"])}", {mat}, "cor" : {_vec(cor)}, {campos} }}')
     linhas += ["const CORPOS = [", ",\n".join(corpos_txt), "];"]
     texto = MODELO.read_text(encoding="utf-8")

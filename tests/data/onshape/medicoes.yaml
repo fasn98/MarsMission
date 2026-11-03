@@ -1,24 +1,43 @@
 # Medições das propriedades de massa no Onshape, feitas pelo Fabio (dado medido no CAD; não é premissa nem fonte).
-# Valores como o Onshape os mostrou (unidades do Part Studio). Comparados com o previsto por tools/conferencia_onshape.py.
-# Veículo sem medição: null (aguardando).
-mav:
+# Valores como o Onshape os mostrou, em texto, para guardar os algarismos exibidos (a resolução de leitura sai deles).
+# Unidades SI; inércias no centro de massa, nos eixos do Part Studio; todas as peças de cada Part Studio selecionadas.
+# Os arquivos compilados são os do branch feat/etapa7.2-featurescript no commit 32cb41d (a ponta do branch no GitHub
+# quando o Fabio os baixou); as cópias estão em tests/data/onshape/compilados_32cb41d/.
+comum:
   data: "2026-11-03"
   responsavel: Fabio
   conta: conta real do Onshape
   versao_featurescript: 3112
-  arquivo: results/etapa7.2/mav.fs
-  compilou: true
+  commit_dos_arquivos: 32cb41d
   assign_materials: true
+  unidades: {massa: kg, comprimento: m, inercia: kg·m², volume: m³, area: m²}
+mav:
+  arquivo: tests/data/onshape/compilados_32cb41d/mav.fs
+  compilou: true
   pecas: 12
-  unidades: {massa: lb, comprimento: mm}
-  massa: 767.489
-  cg: [0, 0, 1539.857]
-  inercia_no_cg: {Lxx: 5.570e+8, Lyy: 5.570e+8, Lzz: 3.058e+7}
-  produtos_de_inercia: "da ordem de 1e-8 (ruído numérico)"   # número em lb·mm², ou texto como o Onshape mostrou
-  eixos: "eixos do Part Studio, no centro de massa"
-  volume: 5.065e+8
-  area: 1.428e+7
-  # resolução com que o Onshape mostrou cada número (unidades acima): para a precisão de leitura da conferência
-  resolucao: {massa: 0.001, cg: 0.001, inercia_algarismos: 4, volume_algarismos: 4, area_algarismos: 4}
-orbitador: null
-lander: null
+  massa: "348.127"
+  cg: ["0", "0", "1.5399"]
+  inercia_no_cg: {Ixx: "252.629", Iyy: "252.629", Izz: "13.8699"}
+  produtos_de_inercia: "~1e-15 (zero numérico)"
+  volume: "0.5065"
+  area: "14.2848"
+orbitador:
+  arquivo: tests/data/onshape/compilados_32cb41d/orbitador.fs
+  compilou: true
+  pecas: 20
+  massa: "6506.2448"
+  cg: ["0", "0", "1.3928"]
+  inercia_no_cg: {Ixx: "12069.908", Iyy: "14890.7017", Izz: "11604.863"}
+  produtos_de_inercia: "~1e-13 (zero numérico)"
+  volume: "10.8264"
+  area: "142.922"
+lander:
+  arquivo: tests/data/onshape/compilados_32cb41d/lander.fs
+  compilou: true
+  pecas: 33
+  massa: "3190.4337"
+  cg: ["0.0256", "-0.0263", "3.0032"]
+  inercia_no_cg: {Ixx: "3648.0512", Iyy: "3639.2293", Izz: "4131.3508"}
+  produtos_de_inercia: {Ixy: "-2.145", Ixz: "108.3561", Iyz: "-14.089"}
+  volume: "6.9993"
+  area: "188.407"

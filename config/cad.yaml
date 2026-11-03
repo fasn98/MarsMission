@@ -180,6 +180,12 @@ mav_alternativas:   # pedido do Fabio no portão da 7.2 (faixa dada por ele): va
   # estações da base: o plano do ombro, o ombro + metade da altura do deck e o ombro + a altura do deck (P-094),
   # calculadas na ferramenta a partir do perfil e da P-094
 
-onshape:   # conferência das propriedades de massa medidas no Onshape (tools/conferencia_onshape.py)
-  # fator exato; config/motores.yaml (conversao.lb_para_kg) usa o valor arredondado da tabela, 4.535 924 E−01 (diferença ~7e-8)
-  lb_para_kg: {valor: 0.45359237, fonte: "[F112] p. 65 do PDF, nota 22: \"The exact conversion factor is 4.535 923 7 E−01.\""}
+
+entrada_referencia:   # MSL: deslocamento radial do CG usado para trimar e gerar sustentação (tools/cg_lateral.py)
+  msl_zcg_sobre_d: {valor: -0.0215, fonte: "[F226] PDF p. 4, Fig. 2, coluna nominal: \"zcg/d = -0.0215\""}
+  msl_dref_m: {valor: 4.500, fonte: "[F226] PDF p. 3, Fig. 1: \"dref = 4.500 m\""}
+  msl_trimagem_graus: {valor: -16, fonte: "[F226] PDF p. 2: \"approximately −16◦ at hypersonic conditions\""}
+  msl_l_sobre_d: {valor: 0.24, fonte: "[F227] PDF p. 5: \"a hypersonic lift-to-drag ratio (L/D) of 0.24 by means of six balance masses\""}
+  msl_massas_balanco_entrada: {valor: 6, massa_cada_kg: 25, fonte: "[F214] PDF p. 28: \"This set of six weights, the “entry balance mass devices,” each has a mass of about 55 pounds (25 kilograms)\""}
+  msl_massas_balanco_cruzeiro: {valor: 2, massa_cada_kg: 75, fonte: "[F214] PDF p. 27: \"two solid-tungsten weights, called the “cruise balance mass devices.” ... which weigh about 165 pounds (75 kilograms) each\""}
+  pecas_do_estagio_de_cruzeiro: ["Tanque cruzeiro", "Propelente cruzeiro", "Circuito de fluido"]   # prefixos dos nomes (tools/cad_parametros.py)
