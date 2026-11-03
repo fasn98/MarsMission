@@ -4,7 +4,7 @@
 
 Medição: Fabio, 2026-11-03, conta real do Onshape, FeatureScript versão 3112, arquivos do commit 32cb41d (cópias em tests/data/onshape/), Assign materials: sim. Unidades SI; inércias no centro de massa, nos eixos do Part Studio.
 
-Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou. O script calcula CG em x, y e z e o tensor de inércia completo.
+Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. Precisão de leitura: meia unidade do último algarismo que o Onshape mostrou; se o Onshape omite zeros à direita, a precisão real é mais fina, e todos os desvios ainda passam com meia unidade da quarta casa decimal. O script calcula CG em x, y e z e o tensor de inércia completo; os produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.
 
 ## Orbitador
 

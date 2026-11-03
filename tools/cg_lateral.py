@@ -40,7 +40,8 @@ def agrupa(contrib):
     for nome, pref in CONJUNTOS:
         xs = [x for x in contrib if x["nome"].startswith(pref)]
         if xs:
-            out.append({"conjunto": nome, "massa_kg": sum(x["massa_kg"] for x in xs), **{k: sum(x[k] for x in xs) for k in ("mx_kg_m", "my_kg_m", "Ixy", "Ixz", "Iyz")}})
+            out.append({"conjunto": nome, "massa_kg": sum(x["massa_kg"] for x in xs),
+                        **{k: sum(x[k] for x in xs) for k in ("mx_kg_m", "my_kg_m", "Ixy", "Ixz", "Iyz", "Ixy_origem", "Ixz_origem", "Iyz_origem")}})
     resto = [x for x in contrib if not any(x["nome"].startswith(p) for _, pr in CONJUNTOS for p in pr)]
     assert not resto, [x["nome"] for x in resto]
     return out
@@ -59,8 +60,10 @@ def propriedades(corpos, dens):
         d = ci - cg
         t = cp.inercia(c, rho) + mi * (np.dot(d, d) * np.eye(3) - np.outer(d, d))
         T += t
+        # produtos em torno da origem (eixo do veículo): mostram quem causa a assimetria; os do CG somam o tensor total
+        to = cp.inercia(c, rho) + mi * (np.dot(ci, ci) * np.eye(3) - np.outer(ci, ci))
         contrib.append({"nome": c["nome"], "massa_kg": mi, "centro_m": ci.tolist(), "mx_kg_m": mi * ci[0], "my_kg_m": mi * ci[1],
-                        "Ixy": t[0][1], "Ixz": t[0][2], "Iyz": t[1][2]})
+                        "Ixy": t[0][1], "Ixz": t[0][2], "Iyz": t[1][2], "Ixy_origem": to[0][1], "Ixz_origem": to[0][2], "Iyz_origem": to[1][2]})
     return m, cg, T, contrib
 
 
@@ -81,6 +84,10 @@ def main():
         out["configuracoes"][nome] = {"massa_kg": m, "cg_m": cg.tolist(), "deslocamento_radial_m": rad, "radial_sobre_d": rad / d_cap,
                                       "produtos_kg_m2": {"Ixy": T[0][1], "Ixz": T[0][2], "Iyz": T[1][2]},
                                       "por_conjunto": grupos}
+    ent = out["configuracoes"]["entrada (sem o estágio de cruzeiro)"]
+    out["comparacao_entrada"] = {"lander_radial_sobre_d": ent["radial_sobre_d"], "msl_radial_sobre_d": abs(v(ref["msl_zcg_sobre_d"])),
+                                 "razao_lander_msl": ent["radial_sobre_d"] / abs(v(ref["msl_zcg_sobre_d"])),
+                                 "azimute_graus": math.degrees(math.atan2(ent["cg_m"][1], ent["cg_m"][0]))}
     out["msl"] = {"zcg_sobre_d": v(ref["msl_zcg_sobre_d"]), "deslocamento_radial_m": abs(v(ref["msl_zcg_sobre_d"])) * v(ref["msl_dref_m"]),
                   "trimagem_graus": v(ref["msl_trimagem_graus"]), "l_sobre_d": v(ref["msl_l_sobre_d"]),
                   "massas_balanco_entrada": [v(ref["msl_massas_balanco_entrada"]), ref["msl_massas_balanco_entrada"]["massa_cada_kg"]],
@@ -102,21 +109,30 @@ def escreve_md(o):
                f"Massa {br(c['massa_kg'], 1)} kg; CG ({br(c['cg_m'][0], 4)}; {br(c['cg_m'][1], 4)}; {br(c['cg_m'][2], 4)}) m; deslocamento radial "
                f"{br(c['deslocamento_radial_m'], 4)} m = {br(c['radial_sobre_d'], 4)} do diâmetro. Produtos de inércia: Ixy {br(p['Ixy'], 2)}, "
                f"Ixz {br(p['Ixz'], 2)}, Iyz {br(p['Iyz'], 2)} kg·m².", "",
-               "| Conjunto | Massa (kg) | m·x (kg·m) | m·y (kg·m) | Contribuição ao CG x (m) | Contribuição ao CG y (m) | Ixy | Ixz | Iyz (kg·m²) |",
-               "| :- | -: | -: | -: | -: | -: | -: | -: | -: |"]
+               "| Conjunto | Massa (kg) | m·x (kg·m) | m·y (kg·m) | Contribuição ao CG x (m) | Contribuição ao CG y (m) | Ixy, Ixz, Iyz no eixo (kg·m²) | Ixy, Ixz, Iyz no CG (kg·m²) |",
+               "| :- | -: | -: | -: | -: | -: | -: | -: |"]
         for x in c["por_conjunto"]:
             md.append(f"| {x['conjunto']} | {br(x['massa_kg'], 1)} | {br(x['mx_kg_m'], 2)} | {br(x['my_kg_m'], 2)} | {br(x['mx_kg_m'] / c['massa_kg'], 4)} | "
-                      f"{br(x['my_kg_m'] / c['massa_kg'], 4)} | {br(x['Ixy'], 2)} | {br(x['Ixz'], 2)} | {br(x['Iyz'], 2)} |")
-        md.append("")
+                      f"{br(x['my_kg_m'] / c['massa_kg'], 4)} | {br(x['Ixy_origem'], 2)}; {br(x['Ixz_origem'], 2)}; {br(x['Iyz_origem'], 2)} | "
+                      f"{br(x['Ixy'], 2)}; {br(x['Ixz'], 2)}; {br(x['Iyz'], 2)} |")
+        md += ["", "Produtos na forma de tensor (−∫ x y dm). \"No eixo\": em torno da origem, no eixo do veículo, e mostra quem causa a assimetria (peças "
+               "simétricas dão zero). \"No CG\": em torno do CG composto, e a soma dá o tensor total; aí até peças no eixo aparecem.", ""]
     md += ["## Referência: MSL", "",
            f"- O MSL voou com deslocamento radial do CG intencional, zcg/d = {br(ms['zcg_sobre_d'], 4)} sobre dref = 4,5 m ([F226]), isto é, "
            f"{br(ms['deslocamento_radial_m'], 4)} m (calculado aqui), para trimar em cerca de {br(ms['trimagem_graus'], 0)}° de ângulo de ataque "
-           f"hipersônico e gerar sustentação para a entrada guiada ([F226]), com L/D de {br(ms['l_sobre_d'], 2)} ([F227]).",
+           f"hipersônico e gerar sustentação para a entrada guiada ([F226]), com L/D de projeto de {br(ms['l_sobre_d'], 2)} ([F227], configuração de base de 2006).",
            f"- O deslocamento vinha de massas de balanço: {int(ms['massas_balanco_cruzeiro'][0])} de cerca de {ms['massas_balanco_cruzeiro'][1]} kg no "
            f"cruzeiro, ejetadas para criar o deslocamento, e {int(ms['massas_balanco_entrada'][0])} de cerca de {ms['massas_balanco_entrada'][1]} kg ejetadas "
            "antes do paraquedas para voltar o CG ao eixo ([F214]).",
-           "- A sensibilidade da trimagem ao deslocamento do CG (graus por cm) não foi achada em texto legível nas fontes (não conferido); os valores do "
-           "Mars 2020 também não (não conferido).", ""]
+           "- A sensibilidade da trimagem ao deslocamento do CG (graus por cm) não foi achada em texto legível nas fontes (não conferido). Para o "
+           "Mars 2020, a fonte consultada (reconstrução do MEADS) não dá valores de CG; o JPL Publication 22-1 não foi obtido (não conferido).", ""]
+    ce = o["comparacao_entrada"]
+    md += ["## Achado para o portão da 7.3", "",
+           f"Na configuração de entrada, o deslocamento radial do CG do lander é {br(ce['lander_radial_sobre_d'], 4)} do diâmetro da cápsula (perfil "
+           f"lido), contra {br(ce['msl_radial_sobre_d'], 4)} do dref no MSL: {br(100 * ce['razao_lander_msl'], 0)} % do valor do MSL (diâmetros de "
+           f"referência diferentes: o do perfil lido e o dref do MSL). No MSL o deslocamento era intencional, para trimar e gerar sustentação; aqui ele "
+           f"sai do arranjo (braço e MAV), num azimute de {br(ce['azimute_graus'], 0)}° que não foi escolhido. Não é desprezível para a trimagem e o "
+           "L/D da entrada; a ordem de grandeza da trimagem não foi calculada (aerodinâmica não modelada). Nenhuma peça foi movida."]
     (SAIDA / "cg_lateral.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 
