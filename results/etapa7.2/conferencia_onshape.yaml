@@ -281,3 +281,5 @@ veiculos:
       - 0.0
       - 0.0
       - 0.0
+maior_desvio_abs: 4.662314833581149e-05
+todos_dentro_4a_casa: true

@@ -202,3 +202,21 @@ def test_previsto_e_a_geometria_do_featurescript():
             for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1", "densidade"):
                 if k in c:
                     assert c[k] == cp.r6(c[k])
+
+
+
+def test_cg_lateral_achado_e_produtos_no_eixo():
+    """Razão lander/MSL e azimute calculados pela ferramenta; peças simétricas ou no eixo dão produtos nulos no eixo."""
+    import math as m_
+    r = ler("results/etapa7.2/cg_lateral.yaml")
+    ce = r["comparacao_entrada"]
+    ent = r["configuracoes"]["entrada (sem o estágio de cruzeiro)"]
+    assert ce["razao_lander_msl"] == pytest.approx(ent["radial_sobre_d"] / abs(r["msl"]["zcg_sobre_d"]))
+    assert ce["azimute_graus"] == pytest.approx(m_.degrees(m_.atan2(ent["cg_m"][1], ent["cg_m"][0])))
+    for c in r["configuracoes"].values():
+        g = {x["conjunto"]: x for x in c["por_conjunto"]}
+        for nome in ("Núcleo do lander", "Cápsula (escudo e casca)", "Descida (3 tanques a 120°)"):
+            for k in ("Ixy_origem", "Ixz_origem", "Iyz_origem"):
+                assert abs(g[nome][k]) < 1e-6, (nome, k)
+        # Ixz e Iyz no eixo somam o total (o ponto de referência fica na altura do CG)
+        assert sum(x["Ixz_origem"] for x in c["por_conjunto"]) == pytest.approx(c["produtos_kg_m2"]["Ixz"], abs=1e-6)

@@ -22,7 +22,7 @@ configuracoes:
       Ixz: 99.9879985813746
       Iyz: 11.309117494147225
       Ixy_origem: 0.0
-      Ixz_origem: -14.726848154027625
+      Ixz_origem: 111.01698602928926
       Iyz_origem: 0.0
     - conjunto: Descida (3 tanques a 120°)
       massa_kg: 576.1490415096454
@@ -32,7 +32,7 @@ configuracoes:
       Ixz: 1.7233383588568518
       Iyz: -1.7671101789283448
       Ixy_origem: 0.0
-      Ixz_origem: 0.0
+      Ixz_origem: -1.7763568394002505e-15
       Iyz_origem: 0.0
     - conjunto: MAV (deitado ao longo de y)
       massa_kg: 348.12644071070406
@@ -43,7 +43,7 @@ configuracoes:
       Iyz: -12.551815610990415
       Ixy_origem: 0.0
       Ixz_origem: 0.0
-      Iyz_origem: 237.48838678342705
+      Iyz_origem: -14.089179676795764
     - conjunto: Braço (guardado em x = +0,45 m)
       massa_kg: 88.50007484132779
       mx_kg_m: 39.82503367859751
@@ -52,7 +52,7 @@ configuracoes:
       Ixz: -2.509362133779454
       Iyz: -0.15525226347796905
       Ixy_origem: 0.0
-      Ixz_origem: -122.26285339329434
+      Ixz_origem: -2.660768754680246
       Iyz_origem: 0.0
     - conjunto: Helicópteros
       massa_kg: 6.374996335578266
@@ -116,7 +116,7 @@ configuracoes:
       Iyz: -23.005403830913558
       Ixy_origem: 0.0
       Ixz_origem: 0.0
-      Iyz_origem: 237.48838678342705
+      Iyz_origem: -25.989565663653323
     - conjunto: Braço (guardado em x = +0,45 m)
       massa_kg: 88.50007484132779
       mx_kg_m: 39.82503367859751
@@ -125,7 +125,7 @@ configuracoes:
       Ixz: 2.9092995119927196
       Iyz: 0.1839997400706976
       Ixy_origem: 0.0
-      Ixz_origem: -122.26285339329434
+      Ixz_origem: 2.9967745313080774
       Iyz_origem: 0.0
     - conjunto: Helicópteros
       massa_kg: 6.374996335578266

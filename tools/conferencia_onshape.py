@@ -110,6 +110,9 @@ def main():
                               "area_m2_medida": num(m["area"])[0],
                               "modelo_atual": {"massa_kg": atual["massa_kg"], "diferenca_massa_kg": atual["massa_kg"] - p["massa_kg"],
                                                "diferenca_cg_m": [a - b for a, b in zip(atual["cg_m"], p["cg_m"])]}}
+    todos = [li for x in out["veiculos"].values() if x["situacao"] == "conferido" for li in x["linhas"]]
+    out["maior_desvio_abs"] = max(abs(li["desvio_abs"]) for li in todos)
+    out["todos_dentro_4a_casa"] = all(abs(li["desvio_abs"]) <= 5e-5 for li in todos)
     out = nativo(out)
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "conferencia_onshape.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -132,8 +135,9 @@ def escreve_md(o):
           f"{c['commit_dos_arquivos']} (cópias em tests/data/onshape/), Assign materials: {'sim' if c['assign_materials'] else 'não'}. "
           "Unidades SI; inércias no centro de massa, nos eixos do Part Studio.", "",
           "Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. Precisão de leitura: meia "
-          "unidade do último algarismo que o Onshape mostrou; se o Onshape omite zeros à direita, a precisão real é mais fina, e todos os "
-          "desvios ainda passam com meia unidade da quarta casa decimal. O script calcula CG em x, y e z e o tensor de inércia completo; os "
+          "unidade do último algarismo que o Onshape mostrou; se o Onshape omite zeros à direita, a precisão real é mais fina: com meia unidade "
+          f"da quarta casa decimal (5e-5), {'todos os desvios ainda passam' if o['todos_dentro_4a_casa'] else 'algum desvio NÃO passa'} "
+          f"(maior desvio absoluto {o['maior_desvio_abs']:.1e}). O script calcula CG em x, y e z e o tensor de inércia completo; os "
           "produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.", ""]
     for k, x in o["veiculos"].items():
         md += [f"## {NOMES[k]}", ""]

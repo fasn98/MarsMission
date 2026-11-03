@@ -60,8 +60,10 @@ def propriedades(corpos, dens):
         d = ci - cg
         t = cp.inercia(c, rho) + mi * (np.dot(d, d) * np.eye(3) - np.outer(d, d))
         T += t
-        # produtos em torno da origem (eixo do veículo): mostram quem causa a assimetria; os do CG somam o tensor total
-        to = cp.inercia(c, rho) + mi * (np.dot(ci, ci) * np.eye(3) - np.outer(ci, ci))
+        # produtos em torno do ponto do eixo do veículo na altura do CG, (0, 0, z_cg): peças no eixo dão zero e mostram quem
+        # causa a assimetria; os do CG composto somam o tensor total
+        e = ci - np.array([0.0, 0.0, cg[2]])
+        to = cp.inercia(c, rho) + mi * (np.dot(e, e) * np.eye(3) - np.outer(e, e))
         contrib.append({"nome": c["nome"], "massa_kg": mi, "centro_m": ci.tolist(), "mx_kg_m": mi * ci[0], "my_kg_m": mi * ci[1],
                         "Ixy": t[0][1], "Ixz": t[0][2], "Iyz": t[1][2], "Ixy_origem": to[0][1], "Ixz_origem": to[0][2], "Iyz_origem": to[1][2]})
     return m, cg, T, contrib
@@ -115,8 +117,8 @@ def escreve_md(o):
             md.append(f"| {x['conjunto']} | {br(x['massa_kg'], 1)} | {br(x['mx_kg_m'], 2)} | {br(x['my_kg_m'], 2)} | {br(x['mx_kg_m'] / c['massa_kg'], 4)} | "
                       f"{br(x['my_kg_m'] / c['massa_kg'], 4)} | {br(x['Ixy_origem'], 2)}; {br(x['Ixz_origem'], 2)}; {br(x['Iyz_origem'], 2)} | "
                       f"{br(x['Ixy'], 2)}; {br(x['Ixz'], 2)}; {br(x['Iyz'], 2)} |")
-        md += ["", "Produtos na forma de tensor (−∫ x y dm). \"No eixo\": em torno da origem, no eixo do veículo, e mostra quem causa a assimetria (peças "
-               "simétricas dão zero). \"No CG\": em torno do CG composto, e a soma dá o tensor total; aí até peças no eixo aparecem.", ""]
+        md += ["", "Produtos na forma de tensor (−∫ x y dm). \"No eixo\": em torno do ponto do eixo do veículo na altura do CG, (0, 0, z do CG), e mostra quem "
+               "causa a assimetria (peças no eixo ou simétricas dão zero). \"No CG\": em torno do CG composto, e a soma dá o tensor total; aí até peças no eixo aparecem.", ""]
     md += ["## Referência: MSL", "",
            f"- O MSL voou com deslocamento radial do CG intencional, zcg/d = {br(ms['zcg_sobre_d'], 4)} sobre dref = 4,5 m ([F226]), isto é, "
            f"{br(ms['deslocamento_radial_m'], 4)} m (calculado aqui), para trimar em cerca de {br(ms['trimagem_graus'], 0)}° de ângulo de ataque "
@@ -131,7 +133,7 @@ def escreve_md(o):
            f"Na configuração de entrada, o deslocamento radial do CG do lander é {br(ce['lander_radial_sobre_d'], 4)} do diâmetro da cápsula (perfil "
            f"lido), contra {br(ce['msl_radial_sobre_d'], 4)} do dref no MSL: {br(100 * ce['razao_lander_msl'], 0)} % do valor do MSL (diâmetros de "
            f"referência diferentes: o do perfil lido e o dref do MSL). No MSL o deslocamento era intencional, para trimar e gerar sustentação; aqui ele "
-           f"sai do arranjo (braço e MAV), num azimute de {br(ce['azimute_graus'], 0)}° que não foi escolhido. Não é desprezível para a trimagem e o "
+           f"sai do arranjo (braço e MAV), num azimute de {br(ce['azimute_graus'], 0)}° (atan2(y, x) nos eixos do Part Studio, de +x para +y) que não foi escolhido. Não é desprezível para a trimagem e o "
            "L/D da entrada; a ordem de grandeza da trimagem não foi calculada (aerodinâmica não modelada). Nenhuma peça foi movida."]
     (SAIDA / "cg_lateral.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
