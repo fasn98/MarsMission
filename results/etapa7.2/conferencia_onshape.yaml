@@ -24,6 +24,8 @@ veiculos:
     - grandeza: massa
       unidade: kg
       medido: 6506.2448
+      medido_texto: '6506.2448'
+      casas_mostradas: 4
       previsto: 6506.244773540659
       desvio_abs: 2.6459341825102456e-05
       desvio_rel: 4.066760896040412e-09
@@ -32,6 +34,8 @@ veiculos:
     - grandeza: CG x
       unidade: m
       medido: 0.0
+      medido_texto: '0'
+      casas_mostradas: 4
       previsto: -2.985534622383237e-17
       desvio_abs: 2.985534622383237e-17
       desvio_rel: null
@@ -40,6 +44,8 @@ veiculos:
     - grandeza: CG y
       unidade: m
       medido: 0.0
+      medido_texto: '0'
+      casas_mostradas: 4
       previsto: 4.368373834625513e-17
       desvio_abs: -4.368373834625513e-17
       desvio_rel: null
@@ -48,6 +54,8 @@ veiculos:
     - grandeza: CG z
       unidade: m
       medido: 1.3928
+      medido_texto: '1.3928'
+      casas_mostradas: 4
       previsto: 1.3928025027808038
       desvio_abs: -2.502780803714799e-06
       desvio_rel: -1.7969387610360156e-06
@@ -56,6 +64,8 @@ veiculos:
     - grandeza: Ixx
       unidade: kg·m²
       medido: 12069.908
+      medido_texto: '12069.908'
+      casas_mostradas: 3
       previsto: 12069.907955968354
       desvio_abs: 4.403164530231152e-05
       desvio_rel: 3.648051456808223e-09
@@ -64,6 +74,8 @@ veiculos:
     - grandeza: Iyy
       unidade: kg·m²
       medido: 14890.7017
+      medido_texto: '14890.7017'
+      casas_mostradas: 4
       previsto: 14890.701745055228
       desvio_abs: -4.5055228838464245e-05
       desvio_rel: -3.0257290495678475e-09
@@ -72,6 +84,8 @@ veiculos:
     - grandeza: Izz
       unidade: kg·m²
       medido: 11604.863
+      medido_texto: '11604.863'
+      casas_mostradas: 3
       previsto: 11604.862987463745
       desvio_abs: 1.2536254871520214e-05
       desvio_rel: 1.0802587574762937e-09
@@ -80,6 +94,8 @@ veiculos:
     - grandeza: volume
       unidade: m³
       medido: 10.8264
+      medido_texto: '10.8264'
+      casas_mostradas: 4
       previsto: 10.826365796210773
       desvio_abs: 3.4203789226694425e-05
       desvio_rel: 3.159304781542274e-06
@@ -88,6 +104,7 @@ veiculos:
     produtos_medidos_texto: ~1e-13 (zero numérico)
     produtos_previstos_max_abs_kg_m2: 2.1250977118669855e-13
     area_m2_medida: 142.922
+    area_texto: '142.922'
     modelo_atual:
       massa_kg: 6506.245401470078
       diferenca_massa_kg: 0.0006279294193518581
@@ -105,6 +122,8 @@ veiculos:
     - grandeza: massa
       unidade: kg
       medido: 3190.4337
+      medido_texto: '3190.4337'
+      casas_mostradas: 4
       previsto: 3190.4336855181755
       desvio_abs: 1.448182456442737e-05
       desvio_rel: 4.539139813550238e-09
@@ -113,6 +132,8 @@ veiculos:
     - grandeza: CG x
       unidade: m
       medido: 0.0256
+      medido_texto: '0.0256'
+      casas_mostradas: 4
       previsto: 0.02560628167125557
       desvio_abs: -6.2816712555688325e-06
       desvio_rel: -0.000245317587934696
@@ -121,6 +142,8 @@ veiculos:
     - grandeza: CG y
       unidade: m
       medido: -0.0263
+      medido_texto: '-0.0263'
+      casas_mostradas: 4
       previsto: -0.02625666674987563
       desvio_abs: -4.333325012437217e-05
       desvio_rel: 0.0016503713337709719
@@ -129,6 +152,8 @@ veiculos:
     - grandeza: CG z
       unidade: m
       medido: 3.0032
+      medido_texto: '3.0032'
+      casas_mostradas: 4
       previsto: 3.0031867049361796
       desvio_abs: 1.3295063820528696e-05
       desvio_rel: 4.426985441390075e-06
@@ -137,6 +162,8 @@ veiculos:
     - grandeza: Ixx
       unidade: kg·m²
       medido: 3648.0512
+      medido_texto: '3648.0512'
+      casas_mostradas: 4
       previsto: 3648.0511768900874
       desvio_abs: 2.310991249032668e-05
       desvio_rel: 6.3348652115202935e-09
@@ -145,6 +172,8 @@ veiculos:
     - grandeza: Iyy
       unidade: kg·m²
       medido: 3639.2293
+      medido_texto: '3639.2293'
+      casas_mostradas: 4
       previsto: 3639.229310906902
       desvio_abs: -1.0906901934504276e-05
       desvio_rel: -2.9970361861551007e-09
@@ -153,6 +182,8 @@ veiculos:
     - grandeza: Izz
       unidade: kg·m²
       medido: 4131.3508
+      medido_texto: '4131.3508'
+      casas_mostradas: 4
       previsto: 4131.3507772500925
       desvio_abs: 2.274990765727125e-05
       desvio_rel: 5.506651185986689e-09
@@ -161,6 +192,8 @@ veiculos:
     - grandeza: Ixy
       unidade: kg·m²
       medido: -2.145
+      medido_texto: '-2.145'
+      casas_mostradas: 3
       previsto: -2.1450421607155614
       desvio_abs: 4.216071556140122e-05
       desvio_rel: -1.965495892506695e-05
@@ -169,6 +202,8 @@ veiculos:
     - grandeza: Ixz
       unidade: kg·m²
       medido: 108.3561
+      medido_texto: '108.3561'
+      casas_mostradas: 4
       previsto: 108.35606758458644
       desvio_abs: 3.241541355691879e-05
       desvio_rel: 2.991564227043789e-07
@@ -177,6 +212,8 @@ veiculos:
     - grandeza: Iyz
       unidade: kg·m²
       medido: -14.089
+      medido_texto: '-14.089'
+      casas_mostradas: 3
       previsto: -14.089026184731368
       desvio_abs: 2.6184731368061875e-05
       desvio_rel: -1.858519604175264e-06
@@ -185,6 +222,8 @@ veiculos:
     - grandeza: volume
       unidade: m³
       medido: 6.9993
+      medido_texto: '6.9993'
+      casas_mostradas: 4
       previsto: 6.999307248147545
       desvio_abs: -7.248147545269035e-06
       desvio_rel: -1.035552132275283e-06
@@ -193,6 +232,7 @@ veiculos:
     produtos_medidos_texto: null
     produtos_previstos_max_abs_kg_m2: 108.35606758458644
     area_m2_medida: 188.407
+    area_texto: '188.407'
     modelo_atual:
       massa_kg: 3190.406282097587
       diferenca_massa_kg: -0.027403420588598237
@@ -210,6 +250,8 @@ veiculos:
     - grandeza: massa
       unidade: kg
       medido: 348.127
+      medido_texto: '348.127'
+      casas_mostradas: 3
       previsto: 348.12696494567564
       desvio_abs: 3.5054324371230905e-05
       desvio_rel: 1.006940797496139e-07
@@ -218,6 +260,8 @@ veiculos:
     - grandeza: CG x
       unidade: m
       medido: 0.0
+      medido_texto: '0'
+      casas_mostradas: 4
       previsto: 0.0
       desvio_abs: 0.0
       desvio_rel: null
@@ -226,6 +270,8 @@ veiculos:
     - grandeza: CG y
       unidade: m
       medido: 0.0
+      medido_texto: '0'
+      casas_mostradas: 4
       previsto: 0.0
       desvio_abs: 0.0
       desvio_rel: null
@@ -234,6 +280,8 @@ veiculos:
     - grandeza: CG z
       unidade: m
       medido: 1.5399
+      medido_texto: '1.5399'
+      casas_mostradas: 4
       previsto: 1.5398567193604524
       desvio_abs: 4.328063954761596e-05
       desvio_rel: 2.8106926445462848e-05
@@ -242,6 +290,8 @@ veiculos:
     - grandeza: Ixx
       unidade: kg·m²
       medido: 252.629
+      medido_texto: '252.629'
+      casas_mostradas: 3
       previsto: 252.62895337685165
       desvio_abs: 4.662314833581149e-05
       desvio_rel: 1.8455188018873994e-07
@@ -250,6 +300,8 @@ veiculos:
     - grandeza: Iyy
       unidade: kg·m²
       medido: 252.629
+      medido_texto: '252.629'
+      casas_mostradas: 3
       previsto: 252.62895337685165
       desvio_abs: 4.662314833581149e-05
       desvio_rel: 1.8455188018873994e-07
@@ -258,6 +310,8 @@ veiculos:
     - grandeza: Izz
       unidade: kg·m²
       medido: 13.8699
+      medido_texto: '13.8699'
+      casas_mostradas: 4
       previsto: 13.869936333858373
       desvio_abs: -3.633385837353842e-05
       desvio_rel: -2.61961248407771e-06
@@ -266,6 +320,8 @@ veiculos:
     - grandeza: volume
       unidade: m³
       medido: 0.5065
+      medido_texto: '0.5065'
+      casas_mostradas: 4
       previsto: 0.5064900356202316
       desvio_abs: 9.964379768301335e-06
       desvio_rel: 1.9673397436337065e-05
@@ -274,6 +330,7 @@ veiculos:
     produtos_medidos_texto: ~1e-15 (zero numérico)
     produtos_previstos_max_abs_kg_m2: 0.0
     area_m2_medida: 14.2848
+    area_texto: '14.2848'
     modelo_atual:
       massa_kg: 348.12696494567564
       diferenca_massa_kg: 0.0
@@ -281,5 +338,5 @@ veiculos:
       - 0.0
       - 0.0
       - 0.0
-maior_desvio_abs: 4.662314833581149e-05
-todos_dentro_4a_casa: true
+origem_da_tolerancia: meia unidade da última casa decimal mostrada em cada valor,
+  lido manualmente na tela do Onshape (Mass properties, workspace units em SI)

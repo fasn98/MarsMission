@@ -67,9 +67,13 @@ def previsto_do_arquivo(caminho):
 
 
 def num(s):
-    """(valor, meia resolução de leitura) de um número em texto, pelo último algarismo exibido."""
-    d = Decimal(str(s))
-    return float(d), 0.5 * 10.0 ** d.as_tuple().exponent
+    """Valor de um número em texto (como o Onshape o mostrou)."""
+    return float(Decimal(str(s)))
+
+
+def casas(s):
+    """Casas decimais mostradas num número em texto."""
+    return max(-Decimal(str(s)).as_tuple().exponent, 0)
 
 
 def main():
@@ -85,15 +89,17 @@ def main():
         p = previsto_do_arquivo(m["arquivo"])
         linhas = []
 
-        def linha(grandeza, s, prev, unidade, meia_forcada=None):
-            v_, meia = num(s)
-            meia = meia if meia_forcada is None else meia_forcada
-            linhas.append({"grandeza": grandeza, "unidade": unidade, "medido": v_, "previsto": prev, "desvio_abs": v_ - prev,
+        def linha(grandeza, s, prev, unidade, casas_forcadas=None):
+            v_ = num(s)
+            nc = casas(s) if casas_forcadas is None else casas_forcadas
+            meia = 0.5 * 10.0 ** -nc   # meia unidade da última casa decimal mostrada
+            linhas.append({"grandeza": grandeza, "unidade": unidade, "medido": v_, "medido_texto": str(s), "casas_mostradas": nc,
+                           "previsto": prev, "desvio_abs": v_ - prev,
                            "desvio_rel": (v_ - prev) / prev if abs(prev) > 1e-9 else None, "meia_resolucao": meia, "dentro": abs(v_ - prev) <= meia})
         linha("massa", m["massa"], p["massa_kg"], "kg")
-        meia_cg = num(m["cg"][2])[1]   # um CG mostrado como "0" usa a resolução da coordenada z
+        casas_cg = casas(m["cg"][2])   # um CG mostrado como "0" usa as casas da coordenada z
         for i, e in enumerate("xyz"):
-            linha(f"CG {e}", m["cg"][i], p["cg_m"][i], "m", meia_cg if num(m["cg"][i])[0] == 0 else None)
+            linha(f"CG {e}", m["cg"][i], p["cg_m"][i], "m", casas_cg if num(m["cg"][i]) == 0 else None)
         T = p["inercia_cg_kg_m2"]
         for i, e in enumerate(("Ixx", "Iyy", "Izz")):
             linha(e, m["inercia_no_cg"][e], T[i][i], "kg·m²")
@@ -107,12 +113,11 @@ def main():
         out["veiculos"][k] = {"situacao": "conferido", "arquivo": m["arquivo"], "compilou": m["compilou"],
                               "pecas_medidas": m["pecas"], "corpos_no_arquivo": p["corpos"], "linhas": linhas,
                               "produtos_medidos_texto": pi if isinstance(pi, str) else None, "produtos_previstos_max_abs_kg_m2": produtos_max,
-                              "area_m2_medida": num(m["area"])[0],
+                              "area_m2_medida": num(m["area"]), "area_texto": str(m["area"]),
                               "modelo_atual": {"massa_kg": atual["massa_kg"], "diferenca_massa_kg": atual["massa_kg"] - p["massa_kg"],
                                                "diferenca_cg_m": [a - b for a, b in zip(atual["cg_m"], p["cg_m"])]}}
-    todos = [li for x in out["veiculos"].values() if x["situacao"] == "conferido" for li in x["linhas"]]
-    out["maior_desvio_abs"] = max(abs(li["desvio_abs"]) for li in todos)
-    out["todos_dentro_4a_casa"] = all(abs(li["desvio_abs"]) <= 5e-5 for li in todos)
+    out["origem_da_tolerancia"] = ("meia unidade da última casa decimal mostrada em cada valor, lido manualmente na tela do Onshape "
+                                   "(Mass properties, workspace units em SI)")
     out = nativo(out)
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "conferencia_onshape.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -134,11 +139,10 @@ def escreve_md(o):
           f"Medição: {c['responsavel']}, {c['data']}, {c['conta']}, FeatureScript versão {c['versao_featurescript']}, arquivos do commit "
           f"{c['commit_dos_arquivos']} (cópias em tests/data/onshape/), Assign materials: {'sim' if c['assign_materials'] else 'não'}. "
           "Unidades SI; inércias no centro de massa, nos eixos do Part Studio.", "",
-          "Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. Precisão de leitura: meia "
-          "unidade do último algarismo que o Onshape mostrou; se o Onshape omite zeros à direita, a precisão real é mais fina: com meia unidade "
-          f"da quarta casa decimal (5e-5), {'todos os desvios ainda passam' if o['todos_dentro_4a_casa'] else 'algum desvio NÃO passa'} "
-          f"(maior desvio absoluto {o['maior_desvio_abs']:.1e}). O script calcula CG em x, y e z e o tensor de inércia completo; os "
-          "produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.", ""]
+          "Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. O script calcula CG em "
+          "x, y e z e o tensor de inércia completo; os produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.", "",
+          f"Tolerância: {o['origem_da_tolerancia']}. Cada linha mostra as casas decimais lidas; um CG mostrado como \"0\" usa as casas da "
+          "coordenada z do mesmo veículo.", ""]
     for k, x in o["veiculos"].items():
         md += [f"## {NOMES[k]}", ""]
         if x["situacao"] != "conferido":
@@ -146,15 +150,16 @@ def escreve_md(o):
             continue
         md += [f"Arquivo {x['arquivo']}; compilou: {'sim' if x['compilou'] else 'não'}; peças: {x['pecas_medidas']} medidas, "
                f"{x['corpos_no_arquivo']} corpos no arquivo.", "",
-               "| Grandeza | Medido no Onshape | Previsto pelo script | Desvio absoluto | Desvio relativo | Precisão de leitura |",
-               "| :- | -: | -: | -: | -: | :- |"]
+               "| Grandeza | Medido no Onshape | Casas mostradas | Previsto pelo script | Desvio absoluto | Desvio relativo | Tolerância de leitura |",
+               "| :- | -: | -: | -: | -: | -: | :- |"]
         for li in x["linhas"]:
-            md.append(f"| {li['grandeza']} ({li['unidade']}) | {f(li['medido'])} | {f(li['previsto'])} | {ex(li['desvio_abs'])} | "
-                      f"{ex(li['desvio_rel'])} | {'dentro' if li['dentro'] else '**fora**'} (± {ex(li['meia_resolucao'])[1:]}) |")
+            md.append(f"| {li['grandeza']} ({li['unidade']}) | {li['medido_texto'].replace('.', ',').replace('-', '−')} | {li['casas_mostradas']} | "
+                      f"{f(li['previsto'])} | {ex(li['desvio_abs'])} | {ex(li['desvio_rel'])} | "
+                      f"± {ex(li['meia_resolucao'])[1:]}: {'dentro' if li['dentro'] else '**fora**'} |")
         if x["produtos_medidos_texto"]:
-            md.append(f"| produtos de inércia | {x['produtos_medidos_texto']} | maior valor absoluto {ex(x['produtos_previstos_max_abs_kg_m2'])} | — | — | — |")
+            md.append(f"| produtos de inércia | {x['produtos_medidos_texto']} | — | maior valor absoluto {ex(x['produtos_previstos_max_abs_kg_m2'])} | — | — | — |")
         ma = x["modelo_atual"]
-        md += [f"| área (m²) | {f(x['area_m2_medida'])} | não calculada pelo script | — | — | — |", "",
+        md += [f"| área (m²) | {x['area_texto'].replace('.', ',')} | {casas(x['area_texto'])} | não calculada pelo script | — | — | — |", "",
                f"Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa {ex(ma['diferenca_massa_kg'])} kg; CG "
                + ", ".join(ex(d) for d in ma["diferenca_cg_m"]) + " m.", ""]
     (SAIDA / "conferencia_onshape.md").write_text("\n".join(md) + "\n", encoding="utf-8")

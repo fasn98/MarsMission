@@ -175,8 +175,12 @@ def test_conferencia_onshape():
         assert li["massa"]["medido"] == float(med[k]["massa"])
         for y in x["linhas"]:
             assert y["dentro"] == (abs(y["medido"] - y["previsto"]) <= y["meia_resolucao"])
-    # resolução de leitura pelo último algarismo exibido
-    assert co.num("6506.2448") == (6506.2448, pytest.approx(0.5e-4))
+    # tolerância: meia unidade da última casa decimal mostrada
+    assert co.casas("348.127") == 3 and co.casas("6506.2448") == 4
+    mav = {y["grandeza"]: y for y in r["veiculos"]["mav"]["linhas"]}
+    assert mav["massa"]["meia_resolucao"] == pytest.approx(5e-4)
+    lan = {y["grandeza"]: y for y in r["veiculos"]["lander"]["linhas"]}
+    assert lan["massa"]["meia_resolucao"] == pytest.approx(5e-5) and lan["CG x"]["meia_resolucao"] == pytest.approx(5e-5)
     # o arquivo atual do lander (cone interno com 12 algarismos) reproduz o modelo atual
     m = ler("results/etapa7.2/parametros.yaml")["resumo"]["lander"]
     assert co.previsto_do_arquivo("results/etapa7.2/lander.fs")["massa_kg"] == pytest.approx(m["massa_kg"], rel=1e-9)
@@ -202,7 +206,6 @@ def test_previsto_e_a_geometria_do_featurescript():
             for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1", "densidade"):
                 if k in c:
                     assert c[k] == cp.r6(c[k])
-
 
 
 def test_cg_lateral_achado_e_produtos_no_eixo():
