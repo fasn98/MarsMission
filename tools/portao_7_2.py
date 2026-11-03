@@ -29,7 +29,7 @@ from orbital import motores as om  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa7.2"
-POL = 0.0254   # definição da polegada (m)
+POL = 0.0254   # [F112] Apêndice B.8, PDF p. 62: polegada em metros
 OPCOES = {"msl_m2020": ("m2020", "MSL/M2020"), "srl_a": ("srl_duplo", "SRL-A")}
 
 
@@ -112,7 +112,7 @@ def main():
              "propelente_kg": sum(e["propelente_kg"] for e in mav_arq["estagios"]), "glom_orcamento_kg": mav_arq["estagios"][0]["massa_inicial_kg"],
              "massa_cad_kg": res["massa_kg"], "n_motores": [n_motores["mav_1"], n_motores["mav_2"]], "diametro_m": d_mav,
              "comprimento_m": next(c["comprimento_m"] for c in ma["casos"] if c["diametro_m"] == d_mav)}
-    # análogos publicados, só pela geometria (mesma conta do MAV deitado e em pé, mesma folga interna)
+    # análogos publicados, só pela geometria (mesma conta do MAV deitado, mesma folga interna)
     h_deck = ma["altura_deck_m"]
     analogos = []
     for an in cad["analogos_mav"]:
@@ -126,7 +126,9 @@ def main():
     ult = ma["casos"][-1]
     piso = {"comprimento_m": ult["comprimento_m"], "tanques_m": ult["comprimento_m"] - p086, "fora_dos_tanques_m": p086,
             "fracao_p086": p086 / ult["comprimento_m"], "diametro_saturacao_m": ma["diametro_saturacao_m"]}
-    out = nativo({"gerado_por": "tools/portao_7_2.py", "aeroshell": aero, "m2020_massa_por_area_kg_m2": m2020, "srl_c": srl_c, "p086_m": p086,
+    out = nativo({"gerado_por": "tools/portao_7_2.py", "aeroshell": aero, "m2020_massa_por_area_kg_m2": m2020,
+                  "m2020": {"massa_entrada_kg": v(cad["aeroshell"]["opcoes"]["m2020"]["massa_entrada_kg"]), "diametro_m": v(cad["aeroshell"]["opcoes"]["m2020"]["diametro_m"])},
+                  "vulcan_diametros_mm": cad["coifas"]["vulcan_15_5"]["perfil"]["diametro_mm"][:2], "srl_c": srl_c, "p086_m": p086,
                   "folga_interna_m": ma["folga_interna_m"], "piso": piso, "linhas": linhas,
                   "contagem": [{"forma": a, "orientacao": b, "situacao": s, "casos": n} for (a, b, s), n in contagem.items()],
                   "referencias_p086": cad["referencias_p086"], "r4d": r4d, "bocais": bocais, "modelo_motores_compilado": modelo, "nosso_mav": nosso,
@@ -138,7 +140,8 @@ def main():
 
 def escreve_md(o):
     br = lambda x, n=2: f"{round(x, n) + 0.0:,.{n}f}".replace(",", " ").replace(".", ",").replace("-", "−")  # noqa: E731
-    sg = lambda x, n=2: f"{round(x, n) + 0.0:+,.{n}f}".replace(",", " ").replace(".", ",").replace("-", "−")  # noqa: E731
+    # uma casa a mais quando o arredondamento apagaria o sinal
+    sg = lambda x, n=2: f"{round(x, n + (x != 0 and round(x, n) == 0)) + 0.0:+,.{n + (x != 0 and round(x, n) == 0)}f}".replace(",", " ").replace(".", ",").replace("-", "−")  # noqa: E731
     p, pi = o["p086_m"], o["piso"]
     ests = []
     for li in o["linhas"]:
@@ -148,7 +151,7 @@ def escreve_md(o):
           "Esta página não escolhe. A decisão é do Fabio.", "",
           "## 1. Comparação", "",
           f"Folga do MAV no aeroshell com a folga interna de {br(o['folga_interna_m'])} m (P-087) e a base em cada estação ({', '.join(ests)}). A massa por área do lander é "
-          f"comparada com {br(o['m2020_massa_por_area_kg_m2'], 0)} kg/m² do Mars 2020 (3.360 kg de entrada em 4,5 m, [F202] p. 13; calculado).", "",
+          f"comparada com {br(o['m2020_massa_por_area_kg_m2'], 0)} kg/m² do Mars 2020 ({br(o['m2020']['massa_entrada_kg'], 0)} kg de entrada em {br(o['m2020']['diametro_m'], 1)} m, [F202] p. 13; calculado).", "",
           "| Aeroshell | Folga no Vulcan, contorno reto entre as cotas | Folga no Vulcan, Ø menor desde o PAF | Massa por área (kg/m²) | Ø do MAV | Comprimento | "
           + " | ".join(f"Deitado, {e}" for e in ests) + " | " + " | ".join(f"Em pé, {e}" for e in ests) + " |",
           "| :- | -: | -: | -: | -: | -: |" + " -: |" * (2 * len(ests))]
@@ -163,8 +166,8 @@ def escreve_md(o):
         ae = o["aeroshell"][li["forma"]]
         md.append(f"| {ae['rotulo']} | {sg(ae['folga_vulcan_linear_m'], 3)} | {sg(ae['folga_vulcan_sem_afunilamento_m'], 3)} | {br(ae['massa_por_area_lander_kg_m2'], 0)} | "
                   f"{br(li['diametro_m'])} | {br(li['comprimento_m'])} | " + " | ".join(sg(x["folga_m"]) for x in col) + " |")
-    md += ["", "Duas leituras do envelope do Vulcan, [F80] Fig. 4.3.1-1 (\"Simplified\"), p. 4-8: a primeira interpola em linha reta entre Ø 4.877 mm e Ø 4.648 mm; a segunda "
-           f"usa Ø 4.648 mm desde o plano do PAF. Com a forma SRL-C, as folgas são {sg(o['srl_c']['folga_radial_m'], 3)} e {sg(o['srl_c']['folga_sem_afunilamento_m'], 3)} m. "
+    md += ["", f"Duas leituras do envelope do Vulcan, [F80] Fig. 4.3.1-1 (\"Simplified\"), p. 4-8: a primeira interpola em linha reta entre Ø {o['vulcan_diametros_mm'][0]} mm e Ø {o['vulcan_diametros_mm'][1]} mm; a segunda "
+           f"usa Ø {o['vulcan_diametros_mm'][1]} mm desde o plano do PAF. Com a forma SRL-C, as folgas são {sg(o['srl_c']['folga_radial_m'], 3)} e {sg(o['srl_c']['folga_sem_afunilamento_m'], 3)} m. "
            "A massa por área usa os diâmetros nominais. Comprimentos e folgas em m; folga positiva = cabe.", "",
            "## 2. Piso do comprimento do MAV", "",
            f"**Confirmado:** com o arranjo atual (P-085), o comprimento para de cair em {br(pi['comprimento_m'])} m a partir de Ø {br(pi['diametro_saturacao_m'])} m.", "",
@@ -183,7 +186,7 @@ def escreve_md(o):
     for ch in vistos:
         for ori in ("deitado", "em pé"):
             sel = [x for x in o["linhas"] if (x["forma"], x["diametro_m"]) == ch and x["orientacao"] == ori]
-            md.append(f"| {o['aeroshell'][ch[0]]['rotulo']} | {br(ch[1])} | {ori} | " + " | ".join(br(next(x for x in sel if x["estacao"] == e)["max_fora_dos_tanques_m"]) for e in ests) + " |")
+            md.append(f"| {o['aeroshell'][ch[0]]['rotulo']} | {br(ch[1])} | {ori} | " + " | ".join(br(next(x for x in sel if x["estacao"] == e)["max_fora_dos_tanques_m"], 3) for e in ests) + " |")
     r4, bc, no, bw = o["r4d"], o["bocais"], o["nosso_mav"], o["bowles"]
     bw_c = next(a["comprimento_m"] for a in o["analogos"] if "Bowles" in a["nome"])
     md.append("")
@@ -214,14 +217,14 @@ def escreve_md(o):
            f"**O que os dados permitem afirmar:** existe um conceito publicado, hipergólico e pressurizado, com massa de propelente da mesma ordem e {br(bw_c)} m. **O que não permitem:** "
            f"dizer que o nosso MAV caberia nesse comprimento, ou que o piso de {br(pi['comprimento_m'])} m está errado. O piso é o resultado do nosso arranjo (dois estágios em série e a P-086).", "",
            "## 6. Achado: bocais do estágio 1 no diâmetro do MAV", "",
-           f"Saída do R-4D-11 de bocal 164:1: {br(bc['diametro_saida_m'], 3)} m ([F228], 11,0 pol). Menor círculo que contém n saídas, contra o Ø {br(bc['diametro_mav_m'])} m do ADR 0022:", "",
+           f"Saída do R-4D-11 de bocal 164:1: {br(bc['diametro_saida_m'], 3)} m ([F228], {br(bc['diametro_saida_m'] / POL, 1)} pol). Menor círculo que contém n saídas, contra o Ø {br(bc['diametro_mav_m'])} m do ADR 0022:", "",
            "| Saídas | Fator sobre o diâmetro de saída | Círculo mínimo (m) | Cabe em Ø do MAV? |", "| -: | :- | -: | :- |"]
     nomes_f = {1: "1", 2: "2", 3: "1 + 2/√3", 4: "1 + √2"}
     for n, x in bc["minimo_por_n_m"].items():
         md.append(f"| {n} | {nomes_f[n]} = {br(bc['fator_por_n'][n], 3)} | {br(x, 3)} | {'sim' if bc['cabe_por_n'][n] else 'não'} |")
     minv = bc["minimo_4_por_variante_m"]
     md += ["", "**Conta para 4 saídas, em qualquer arranjo:** se nenhum centro está no eixo, dois centros vizinhos ficam a no máximo 90° vistos do eixo, logo a no máximo R√2 um do outro, com R o "
-           "raio em que estão os centros. Eles precisam estar a pelo menos d um do outro, então R ≥ d/√2, e o círculo total é 2R + d ≥ d(1 + √2). Com um centro no eixo, os outros "
+           "maior raio entre os centros. Eles precisam estar a pelo menos d um do outro, então R ≥ d/√2, e o círculo total é 2R + d ≥ d(1 + √2). Com um centro no eixo, os outros "
            "três ficam a pelo menos d dele, e o círculo é ≥ 3d, pior.", "",
            f"**Resultado: 4 bocais de saída 164:1 não cabem em Ø {br(bc['diametro_mav_m'])} m em nenhum arranjo.** O mínimo é {br(minv['164:1'], 3)} m, sem folga entre eles e sem parede. "
            f"Na varredura, o primeiro diâmetro que os contém é {br(bc['menor_diametro_da_varredura_que_contem_4_m'])} m. Com outras variantes: {br(minv['44:1'], 3)} m (44:1) e {br(minv['300:1'], 3)} m (300:1).", "",
@@ -246,21 +249,21 @@ def escreve_md(o):
            f"| Massa | {br(r4['catalogo_massa_kg'])} kg | 300:1, pela massa e pelo Isp de 315 s da mesma ficha ([F228]); a ficha não diz a variante | [F106] p. 3, em lb |",
            f"| Comprimento | {br(r4['p086_motores_estagio_1_m'])} m (estágio 1), {br(r4['p086_motor_estagio_2_m'])} m (estágio 2) | nenhuma: premissa sem fonte; o 164:1 tem {br(r4['variantes']['164:1']['comprimento_m'], 3)} m | P-086 |",
            "| Diâmetro de saída | não entra no modelo | — | ver a seção 6 |", "",
-           f"**Misturas:** o Isp é do 164:1, e a massa é do 300:1. A diferença é de {br(r4['diferenca_massa_por_motor_kg'])} kg por motor, {br(r4['diferenca_massa_total_kg'], 1)} kg nos "
-           f"{sum(n_m.values())} motores escolhidos (captura {n_m['captura']}, retorno {n_m['retorno']}, MAV {n_m['mav_1']} + {n_m['mav_2']}). A massa do catálogo só entra no CAD do MAV "
-           f"({br(r4['diferenca_massa_mav_kg'], 1)} kg de diferença) e como coluna informativa da queima finita (results/etapa3.1). Os estágios usam fração estrutural, então a cadeia de massa não depende dela "
-           "(conferido por busca no código).", "",
+           f"**Misturas:** o Isp é do 164:1, e a massa coincide com a do 300:1 (inferência pelo valor e pelo Isp da ficha, que não diz a variante; NÃO VALIDADO). A diferença é de {br(r4['diferenca_massa_por_motor_kg'])} kg por motor, {br(r4['diferenca_massa_total_kg'], 1)} kg nos "
+           f"{sum(n_m.values())} motores escolhidos (captura {n_m['captura']}, retorno {n_m['retorno']}, MAV {n_m['mav_1']} + {n_m['mav_2']}). A massa do catálogo entra no CAD do MAV "
+           f"({br(r4['diferenca_massa_mav_kg'], 1)} kg de diferença), e portanto no CAD do lander que o leva, no CG lateral (results/etapa7.2/cg_lateral.md, repetido em docs/etapa7.3_portao_perguntas.md) e no modelo "
+           "comparado com o Onshape. Também é um campo sem leitor em results/etapa3.1/queima_finita.yaml. Os estágios usam fração estrutural, então a cadeia de massa não depende dela (conferido por busca no código).", "",
            f"**Outras diferenças:** o motor 164:1 mede {br(r4['variantes']['164:1']['comprimento_m'], 3)} m, mais que os {br(r4['p086_motor_estagio_2_m'])} m do estágio 2 e {br(r4['sobra_no_estagio_1_m'], 3)} m menos que os "
            f"{br(r4['p086_motores_estagio_1_m'])} m do estágio 1. O Isp do 164:1 é {br(r4['catalogo_isp_s'], 0)} s como requisito do Orion [F107] e {br(r4['variantes']['164:1']['isp_s'], 0)} s na folha [F228]. "
            "Não conferido: se o 164:1 da folha é o mesmo motor \"modified\" do Orion [F107].", "",
            "**Para decidir (Fabio), sem nenhuma troca feita:**", "",
            "| Opção | Massa e Isp | Prós | Contras |", "| :- | :- | :- | :- |",
-           f"| (a) 164:1 em tudo | {br(r4['variantes']['164:1']['massa_kg'])} kg [F228], {br(r4['catalogo_isp_s'], 0)} s [F107] | variante única, a do Isp escolhido no ADR 0011; a cadeia de massa não muda | o CAD do MAV e a coluna da queima finita mudam; pede errata |",
+           f"| (a) 164:1 em tudo | {br(r4['variantes']['164:1']['massa_kg'])} kg [F228], {br(r4['catalogo_isp_s'], 0)} s [F107] | variante única, a do Isp escolhido no ADR 0011; a cadeia de massa não muda | mudam o CAD do MAV e do lander, o CG lateral e o campo da queima finita; pede gerar e conferir de novo o lander e o MAV no Onshape, e errata |",
            f"| (b) 300:1 em tudo | {br(r4['variantes']['300:1']['massa_kg'])} kg, {br(r4['variantes']['300:1']['isp_s'], 1)} s [F228] | variante única, com mais Isp | muda o Isp e reabre o ADR 0011; bocal maior ({br(minv['300:1'], 3)} m para 4 saídas); sem o voo no Orion |",
            "| (c) manter e registrar a limitação | sem mudança | nenhum resultado muda | a mistura continua, pequena na massa |", "",
            "## 8. Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", "",
-           "Opinião: com o que está calculado, nenhuma combinação com base realista cabe sem mexer na P-086 ou no arranjo dos tanques, e o que mais pesa na decisão é "
-           "essa premissa sem fonte, não o diâmetro. Além disso, a seção 6 pesa contra o Ø 0,57 m com quatro motores no estágio 1. Eu calcularia um arranjo sem tanques em série antes de "
+           f"Opinião: com o que está calculado, só {sum(x['situacao'] == 'cabe' for x in o['linhas'])} casos cabem, todos com a base no ombro, e não conferi se o deck permite isso. Os demais dependem da P-086 ou do arranjo dos tanques, e o que mais pesa na decisão é "
+           f"essa premissa sem fonte, não o diâmetro. Além disso, a seção 6 pesa contra o Ø {br(bc['diametro_mav_m'])} m com quatro motores no estágio 1. Eu calcularia um arranjo sem tanques em série antes de "
            "escolher o aeroshell. A decisão é do Fabio."]
     (SAIDA / "portao_decisao.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))

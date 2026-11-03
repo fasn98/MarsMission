@@ -89,7 +89,6 @@ def main():
     # consumo do propelente de cruzeiro: a massa dos dois corpos de propelente escala com a fração restante, nas posições
     # atuais (P-095), com a razão de mistura constante (P-080); o resto do conjunto de lançamento fica como está
     prop = tuple(p_ for p_ in cruz if p_.startswith("Propelente"))
-    m_lan, cg_lan, _, _ = propriedades(corpos, dens)
     consumo = []
     for f in [float(x) for x in ref["fracoes_propelente_cruzeiro"]]:
         ms = sum(c["massa_kg"] * (f if c["nome"].startswith(prop) else 1.0) for c in corpos)

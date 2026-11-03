@@ -124,7 +124,7 @@ def main():
 
 def ex_kg(x):
     """Diferença de massa (modelo menos compilado), em kg ou, abaixo de 10 g, em g."""
-    if x == 0:
+    if abs(x) < 5e-5:   # abaixo da última casa mostrada (0,1 g)
         return "sem diferença"
     s = f"{x:+.3f} kg" if abs(x) >= 0.01 else f"{1e3 * x:+.1f} g"
     return s.replace(".", ",").replace("-", "−")

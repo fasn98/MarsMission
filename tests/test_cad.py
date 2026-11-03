@@ -226,7 +226,7 @@ def test_cg_lateral_achado_e_produtos_no_eixo():
 
 
 def test_portao_7_2():
-    """Página do portão: o piso soma tanques e P-086; o caso de 0,57 m bate com a varredura; a situação segue a regra."""
+    """Página do portão: o piso soma tanques e P-086; a situação segue a regra; os achados de bocais e variantes."""
     import portao_7_2 as pt
     r = ler("results/etapa7.2/portao_decisao.yaml")
     ma = ler("results/etapa7.2/mav_arranjo.yaml")
@@ -245,7 +245,8 @@ def test_portao_7_2():
     m1 = next(x for x in r["modelo_motores_compilado"] if "estagio 1" in x["nome"])
     assert m1["tipo"] == "cilindro" and m1["diametro_m"] < r["bocais"]["diametro_mav_m"]
     # mistura de variantes: o catálogo usa a massa do 300:1
-    assert r["r4d"]["catalogo_massa_kg"] == pytest.approx(r["r4d"]["variantes"]["300:1"]["massa_kg"], rel=1e-3)
+    assert round(r["r4d"]["catalogo_massa_kg"], 2) == r["r4d"]["variantes"]["300:1"]["massa_kg"]
+    assert sum(r["r4d"]["n_motores"].values()) == 19   # C4 + R3 + M2 + N2
 
 
 def test_consumo_cruzeiro():

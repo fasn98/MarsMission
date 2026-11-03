@@ -11,6 +11,12 @@ aeroshell:
     folga_vulcan_sem_afunilamento_m: -0.013791164658634614
     massa_por_area_lander_kg_m2: 260.82206889136285
 m2020_massa_por_area_kg_m2: 211.26345038568627
+m2020:
+  massa_entrada_kg: 3360.0
+  diametro_m: 4.5
+vulcan_diametros_mm:
+- 4877
+- 4648
 srl_c:
   folga_radial_m: 0.03187213060367977
   raio_max_m: 2.36
@@ -987,8 +993,8 @@ referencias_p086:
     nested SRM2 nozzle")
   fonte: '[F35] PDF p. 15'
 - item: Carga (contêiner de amostras)
-  achado: 'não conferido em fonte com página: a página do MSR da NASA daria cerca
-    de 0,24 m × 0,23 m, lida só por resumo, sem cópia local'
+  achado: 'não conferido em fonte com página: a página do MSR da NASA daria as dimensões,
+    lida só por resumo, sem cópia local'
   fonte: não conferido
 - item: Arranjo sem empilhar
   achado: MAV pressurizado de dois estágios com o 2º dentro do 1º, cerca de 1,2 m
@@ -1098,7 +1104,8 @@ bowles:
     valor: 303,88 kg, MMH/NTO; inclui reservas e partida
     fonte: '[F46] Tab. 11, PDF p. 44: "Propellants, kg (%GLOW) 303.88"; PDF p. 42:
       "includes ascent propellant, reserves and engine start-up"; PDF p. 42: "All
-      concepts utilize storable hypergolic propellants"'
+      concepts utilize storable hypergolic propellants"; PDF p. 46: "specifically
+      MMH and NTO"'
   motores:
     valor: 'a fonte diverge: 3 de 1210 N na tabela; "single engine" no texto; modelo
       não nomeado (referência de escala: XLR-132); não conferido se os 3 são bocais

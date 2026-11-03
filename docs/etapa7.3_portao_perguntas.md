@@ -65,12 +65,12 @@ Valores de `results/etapa7.2/cg_lateral.md`, com a tabela completa.
     spacecraft spun" [F235] PDF p. 24;
   - "the need to direct the thrust vector through the estimated spacecraft center of mass" [F111] p. 4.
 - **Não conferido:** o efeito do consumo de propelente no CG ou no balanceamento de rotação do MSL. As fontes consultadas não
-  o descrevem, e o MSL usava hidrazina em tanques iguais ("Each tank contained 36kg of hydrazine at launch" [F234]), sem a
+  o descrevem, e o MSL usava hidrazina em tanques iguais ("Each tank contained 36kg of hydrazine at launch" [F234] PDF p. 5), sem a
   diferença de massa entre oxidante e combustível do nosso arranjo.
 - **Fora do nosso modelo:** o estudo não definiu se o cruzeiro do lander é estabilizado por rotação (NÃO VALIDADO).
 
 ## Opções a comparar no portão (sem escolha aqui)
 | Opção | O que resolve | O que falta saber |
 | :- | :- | :- |
-| (a) deslocamento intencional, com valor e direção escolhidos | permite entrada guiada com sustentação, como no MSL | valor pedido para o nosso L/D, massas de balanço, arranjo; aerodinâmica não modelada |
+| (a) deslocamento intencional, com valor e direção escolhidos | permitiria entrada guiada com sustentação, como no MSL (NÃO VALIDADO para o nosso veículo) | valor pedido para o nosso L/D, massas de balanço, arranjo; aerodinâmica não modelada |
 | (b) anular pelo arranjo | CG no eixo, sem assimetria acidental | sem sustentação, os valores de elipse e de erro de entrega da Fase 4 ficam sem referência (NÃO VALIDADO) |
