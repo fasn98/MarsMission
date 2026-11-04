@@ -220,3 +220,21 @@ referencias_p086:
   - {item: "Arranjo sem empilhar", achado: "MAV pressurizado de dois estágios com o 2º dentro do 1º, cerca de 1,2 m × 1,7 m; cabe em outro envelope, com outro diâmetro", fonte: "[F229] PDF p. 3"}
   - {item: "Conceito líquido no envelope do MSR", achado: "\"Liquid propulsion vehicle found to not be feasible\"", fonte: "[F231] PDF p. 3"}
   - {item: "Fonte que poderia resolver", achado: "desenho cotado do MAV do MSR, ou o estudo líquido de dois estágios (Trinidad et al. 2012, IEEE, não obtido; não conferido)", fonte: "não conferido"}
+
+motores_geometria_mav:   # alternativas do estágio 1 do MAV: folhas de [F228], cotas em polegadas, conferidas nas imagens das páginas
+  R-42:
+    diametro_saida_pol: 15.34
+    comprimento_pol: [6.0, 25.00]
+    expansao: "160:1"
+    isp_s: 305
+    massa_kg: 4.53
+    producao: "em produção"
+    fonte: "[F228] PDF p. 25, desenho: \"15.34\", \"6.0\", \"25.00\", \"Dimensions are in inches\"; \"Expansion Ratio 160:1\"; \"305 sec\"; \"4.53 kg (10.0 lbm)\"; \"Currently in Production\""
+  R-40B:
+    diametro_saida_pol: 15.8
+    comprimento_pol: [5.7, 22.3]
+    expansao: "60:1"
+    isp_s: 293
+    massa_kg: 10.5
+    producao: "fora de produção; pede atualização"
+    fonte: "[F228] PDF p. 30, desenho: \"(15.8\")\", \"(5.7\")\", \"(22.3\")\" (os rótulos em mm do desenho estão inconsistentes com as polegadas, \"40 mm\" e \"56.6 mm\"; usadas as polegadas); \"Expansion Ratio 60:1\"; \"293 sec\"; \"10.5 kg (23.0 lbm)\"; \"Not in Production; Requires component obsolescence update\""

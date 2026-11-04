@@ -256,3 +256,19 @@ def test_consumo_cruzeiro():
     assert li[0]["cg_m"] == pytest.approx(r["configuracoes"]["lançamento"]["cg_m"], abs=1e-12)
     xs = [x["cg_m"][0] for x in li]
     assert all(b < a for a, b in zip(xs, xs[1:]))
+
+
+def test_bocais_estagio1():
+    """Alternativas dos bocais: círculo mínimo, empuxo/peso e folga, conferidos por fora da ferramenta."""
+    r = ler("results/etapa7.2/bocais_alternativas.yaml")
+    a = {x["id"]: x for x in r["alternativas"]}
+    assert a["A"]["circulo_minimo_m"] == pytest.approx(11.0 * 0.0254 * (1 + math.sqrt(2)))
+    assert a["E"]["circulo_minimo_m"] == pytest.approx(2 * 15.34 * 0.0254) and a["E"]["menor_d_varredura_m"] is None
+    assert a["F"]["cabe_em_d_mav_com_parede"] and a["F"]["comprimento_motor_m"] == pytest.approx(28.0 * 0.0254)
+    # empuxo/peso: a C não vence o peso, e A, E e F batem com a Etapa 3.1
+    assert a["C"]["empuxo_peso_marte"] < 1 < a["D"]["empuxo_peso_marte"]
+    q = {x["combinacao"]: x["empuxo_peso_marte"] for x in ler("results/etapa3.1/queima_finita.yaml")["mav"] if x["estagio"] == "mav_1"}
+    for k, c in (("A", "M2"), ("E", "M1"), ("F", "M3")):
+        assert a[k]["empuxo_peso_marte"] == pytest.approx(q[c], rel=1e-12)
+    # o 44:1 não tem Isp na fonte: o Δv não é calculado
+    assert a["B"]["isp_s"] is None and a["B"]["variacao_dv_estagio_m_s"] is None
