@@ -223,3 +223,36 @@ def test_cg_lateral_achado_e_produtos_no_eixo():
                 assert abs(g[nome][k]) < 1e-6, (nome, k)
         # Ixz e Iyz no eixo somam o total (o ponto de referência fica na altura do CG)
         assert sum(x["Ixz_origem"] for x in c["por_conjunto"]) == pytest.approx(c["produtos_kg_m2"]["Ixz"], abs=1e-6)
+
+
+def test_portao_7_2():
+    """Página do portão: o piso soma tanques e P-086; a situação segue a regra; os achados de bocais e variantes."""
+    import portao_7_2 as pt
+    r = ler("results/etapa7.2/portao_decisao.yaml")
+    ma = ler("results/etapa7.2/mav_arranjo.yaml")
+    pi = r["piso"]
+    assert pi["tanques_m"] + pi["fora_dos_tanques_m"] == pytest.approx(pi["comprimento_m"])
+    assert pi["comprimento_m"] == pytest.approx(ma["casos"][-1]["comprimento_m"])
+    for li in r["linhas"]:
+        assert li["situacao"] == pt.classifica(li["max_fora_dos_tanques_m"], r["p086_m"])
+        # coerência: cabe hoje se e só se a folga é positiva
+        assert (li["situacao"] == "cabe") == (li["folga_m"] >= 0)
+    # R-4D-11 de bocal 164:1: (19,32 + 2,5) pol; 4 saídas não cabem em Ø 0,57 m (mínimo d(1 + √2))
+    assert r["r4d"]["variantes"]["164:1"]["comprimento_m"] == pytest.approx(21.82 * 0.0254)
+    assert r["bocais"]["minimo_por_n_m"][4] == pytest.approx(11.0 * 0.0254 * (1 + math.sqrt(2)))
+    assert r["bocais"]["cabe_por_n"][4] is False and r["bocais"]["cabe_por_n"][2] is True
+    # a peça do modelo compilado é um cilindro maciço que cabe no diâmetro, não os bocais
+    m1 = next(x for x in r["modelo_motores_compilado"] if "estagio 1" in x["nome"])
+    assert m1["tipo"] == "cilindro" and m1["diametro_m"] < r["bocais"]["diametro_mav_m"]
+    # mistura de variantes: o catálogo usa a massa do 300:1
+    assert round(r["r4d"]["catalogo_massa_kg"], 2) == r["r4d"]["variantes"]["300:1"]["massa_kg"]
+    assert sum(r["r4d"]["n_motores"].values()) == 19   # C4 + R3 + M2 + N2
+
+
+def test_consumo_cruzeiro():
+    """Com propelente de cruzeiro cheio, o CG é o do lançamento; o CG x cai com o consumo (MON-3 mais pesado em +x)."""
+    r = ler("results/etapa7.2/cg_lateral.yaml")
+    li = r["consumo_cruzeiro"]["linhas"]
+    assert li[0]["cg_m"] == pytest.approx(r["configuracoes"]["lançamento"]["cg_m"], abs=1e-12)
+    xs = [x["cg_m"][0] for x in li]
+    assert all(b < a for a, b in zip(xs, xs[1:]))
