@@ -331,6 +331,14 @@ def test_encaixe_coifas():
         for x in (li[(veic, "Contorno")], li[(veic, "Diametro")]):
             assert x["reproducao_grade_400_m"] == pytest.approx(x["referencia_7_2_m"], abs=1e-12)
             assert x["diferenca_m"] < 0
+    # errata: os valores vigentes de parametros.yaml são os da geometria
+    fv = par["conferencias"]["lander_vulcan"]["por_forma"]
+    assert li[("lander_4_65", "Contorno")]["radial"]["folga_radial_m"] == pytest.approx(fv["srl_a"]["folga_radial_vertice_m"], abs=1e-9)
+    assert li[("lander_4_65", "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(fv["srl_a"]["folga_sem_afunilamento_vertice_m"], abs=1e-9)
+    assert li[("lander_4_5", "Contorno")]["radial"]["folga_radial_m"] == pytest.approx(fv["msl_m2020"]["folga_radial_vertice_m"], abs=1e-9)
+    assert li[("lander_4_5", "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(fv["msl_m2020"]["folga_sem_afunilamento_vertice_m"], abs=1e-9)
+    assert "Errata (2026-11-04" in (RAIZ / "results/etapa7.2/conferencias.md").read_text(encoding="utf-8")
+    assert "Errata (2026-11-04" in (RAIZ / "results/etapa7.2/portao_decisao.md").read_text(encoding="utf-8")
     # as premissas propostas não entraram
     ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
     assert not ({p["id"] for p in r["premissas_propostas"]} & ids)

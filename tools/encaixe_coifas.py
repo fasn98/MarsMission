@@ -241,7 +241,7 @@ def escreve_md(o):
     sc = o["srl_c_so_perfil"]
     md += ["", f"Com a SRL-C, a pior forma da P-089 e sem modelo próprio, os vértices dão {sg(sc['folga_radial_m']['vertice_m'])} e {sg(sc['folga_sem_afunilamento_m']['vertice_m'])} m, "
            f"contra {sg(sc['folga_radial_m']['referencia_7_2_m'])} e {sg(sc['folga_sem_afunilamento_m']['referencia_7_2_m'])} m publicados.", "",
-           "Os resultados de `results/etapa7.2` não foram alterados: corrigir esses números e registrar a errata é decisão do Fabio.", "",
+           "A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/conferencias.md` e `portao_decisao.md`, com os valores antigos e os novos lado a lado.", "",
            f"**Orbitador:** a Etapa 7.2 dá {sg(orb['referencia_7_2_m'])} m ({orb['referencia_7_2_conjunto']}), porque trata cada conjunto como um cilindro no raio máximo. Aqui as esferas têm a forma real, e a folga é maior. "
            "As duas contas respondem a perguntas diferentes, e a da 7.2 fica do lado seguro.", "",
            "## O que os arquivos têm", "", "| Arquivo | Veículo | Corpos | Massa (kg) | CG x, y, z (m) | Mate connector preso a |", "| :- | :- | -: | -: | :- | :- |"]

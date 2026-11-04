@@ -49,6 +49,22 @@ coifas:
       fonte: "[F80] Fig. 4.3.1-1, p. 4-8 (PDF p. 44), \"Vulcan Centaur 15.5-m (51-ft.) PLF Simplified Static Payload Envelope\": Ø 4877 em \"LV STA 2596.66 (1575 Interface)\", Ø 4648 em \"LV STA 2856.66\", Ø 3632 em \"LV STA 2966.66\", Ø 838 em \"LV STA 3100.66\" (leitura da figura)"
   vulcan_reserva: "VC6 usa a mesma coifa (lançador de reserva, ADR 0020)"
 
+encaixe:   # Etapa 7.2b: verificação geométrica do modelo nas coifas, no Onshape
+  versao_featurescript: {valor: 3112, fonte: "observação de ambiente: conta do Fabio no Onshape, docs/etapa7.2_featurescript.md; não é dado científico"}
+  espessura_casca_envelope_m: {valor: 0.01, natureza: "escolha de construção, não premissa: só desenha a casca; as folgas são medidas na face interna e não dependem dela"}
+  cor_envelope: {valor: [0.15, 0.55, 0.85, 0.25], natureza: "aparência (r, g, b, transparência), sem efeito em nenhum número"}
+  plano_vulcan: {fonte: "[F80] Fig. 4.3.1-1, p. 4-8: \"LV STA 2596.66 (1575 Interface)\""}
+  plano_falcon: {fonte: "[F82] PDF p. 26: \"The origin of the payload coordinate system is fixed at the center of the separation plane\"; o arquivo STEP não declara que usa esse sistema (P-096 proposta)"}
+  premissas_propostas:   # NÃO estão em config/premissas.yaml: só entram com a aprovação do Fabio
+    - id: P-096
+      nome: origem_do_step_do_falcon
+      texto: "A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm, com o eixo x axial."
+      evidencia: "[F82] PDF p. 26 define a origem do sistema da carga útil no plano de separação; o topo do arquivo, em 446,76 pol, é coerente com o guia. O arquivo não declara o sistema, e separação e interface podem não coincidir."
+    - id: P-097
+      nome: veiculo_sobre_o_plano_da_interface
+      texto: "A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação."
+      evidencia: "Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura."
+
 aeroshell:
   # Opções de diâmetro (decisão do Fabio no portão da 7.1): a massa de entrada do lander fica entre a do Mars 2020 e a
   # do SRL de lançamento duplo.
@@ -242,19 +258,3 @@ motores_geometria_mav:   # alternativas do estágio 1 do MAV: folhas de [F228], 
 bocais_decisoes:   # decisões do Fabio sobre as alternativas (2026-11-04)
   C: {situacao: "DESCARTADA", motivo: "empuxo/peso abaixo de 1 em Marte"}
   F: {situacao: "REFERÊNCIA APENAS", motivo: "R-40B fora de produção", fonte: "[F228] PDF p. 30: \"Not in Production; Requires component obsolescence update\"; [F106] p. 3: \"NIP=Not In Production\""}
-
-encaixe:   # Etapa 7.2b: verificação geométrica do modelo nas coifas, no Onshape
-  versao_featurescript: {valor: 3112, fonte: "observação de ambiente: conta do Fabio no Onshape, docs/etapa7.2_featurescript.md; não é dado científico"}
-  espessura_casca_envelope_m: {valor: 0.01, natureza: "escolha de construção, não premissa: só desenha a casca; as folgas são medidas na face interna e não dependem dela"}
-  cor_envelope: {valor: [0.15, 0.55, 0.85, 0.25], natureza: "aparência (r, g, b, transparência), sem efeito em nenhum número"}
-  plano_vulcan: {fonte: "[F80] Fig. 4.3.1-1, p. 4-8: \"LV STA 2596.66 (1575 Interface)\""}
-  plano_falcon: {fonte: "[F82] PDF p. 26: \"The origin of the payload coordinate system is fixed at the center of the separation plane\"; o arquivo STEP não declara que usa esse sistema (P-096 proposta)"}
-  premissas_propostas:   # NÃO estão em config/premissas.yaml: só entram com a aprovação do Fabio
-    - id: P-096
-      nome: origem_do_step_do_falcon
-      texto: "A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm, com o eixo x axial."
-      evidencia: "[F82] PDF p. 26 define a origem do sistema da carga útil no plano de separação; o topo do arquivo, em 446,76 pol, é coerente com o guia. O arquivo não declara o sistema, e separação e interface podem não coincidir."
-    - id: P-097
-      nome: veiculo_sobre_o_plano_da_interface
-      texto: "A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação."
-      evidencia: "Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura."

@@ -341,12 +341,17 @@ def main():
         xs = np.linspace(0, perfil[0][-1], 400)
         Lc = perfil[0][-1]
         return min(ea.raio_envelope(perf_v, h_aft + (Lc - x)) - capsula_raio(perfil, x) for x in xs)
-    fol_v = {k: {"folga_radial_m": folga_vulcan(p, h_cz), "raio_max_m": max(p[1]), "comprimento_m": p[0][-1]} for k, p in perfis.items()}
+    def folga_nos_vertices(perfil, h_aft):
+        """Errata (2026-11-04): a menor folga do perfil, nos vértices dele, sem a grade de 400 pontos de folga_vulcan."""
+        Lc = perfil[0][-1]
+        return min(ea.raio_envelope(perf_v, h_aft + (Lc - x)) - r for x, r in zip(*perfil))
+    fol_v = {k: {"folga_radial_m": folga_vulcan(p, h_cz), "folga_radial_vertice_m": folga_nos_vertices(p, h_cz), "raio_max_m": max(p[1]), "comprimento_m": p[0][-1]} for k, p in perfis.items()}
     # sensibilidade: envelope sem o afunilamento linear entre as cotas (o diâmetro menor, da estação de cima, desde o PAF)
     perf_v_ref = perf_v
     perf_v = ([perf_v_ref[0][0], perf_v_ref[0][1]] + list(perf_v_ref[0][2:]), [perf_v_ref[1][1], perf_v_ref[1][1]] + list(perf_v_ref[1][2:]))
     for k, p in perfis.items():
         fol_v[k]["folga_sem_afunilamento_m"] = folga_vulcan(p, h_cz)
+        fol_v[k]["folga_sem_afunilamento_vertice_m"] = folga_nos_vertices(p, h_cz)
     perf_v = perf_v_ref
 
     lan = monta_lander(cad, env, arq, mot, forma)
@@ -531,6 +536,13 @@ def escreve_md(o):
     for i, x0 in enumerate(next(iter(mv["por_forma"].values()))):
         md.append(f"| {br(x0['estacao_base_m'])} | " + " | ".join(
             f"{br(p[i]['comprimento_max_m'])} ({'cabe' if p[i]['folga_m'] >= 0 else 'não cabe'})" for p in mv["por_forma"].values()) + " |")
+    md += ["", "## Errata (2026-11-04, aprovada pelo Fabio): folgas do lander no Vulcan", "",
+           "**O que muda:** as folgas da primeira tabela valem menos do que está escrito. **Causa:** o cálculo amostra o perfil da cápsula em 400 pontos, e nenhum cai no vértice do ombro, onde o raio é máximo. "
+           "Os valores vigentes são os da coluna \"Vigente\", calculados nos vértices do perfil. Os antigos ficam como registro.", "",
+           "| Forma | Leitura do envelope | Publicado (grade de 400 pontos) | Vigente (vértices) | Diferença (mm) |", "| :- | :- | -: | -: | -: |"]
+    for k, x in cf["lander_vulcan"]["por_forma"].items():
+        for rot, a, b in (("contorno reto", "folga_radial_m", "folga_radial_vertice_m"), ("Ø menor desde o PAF", "folga_sem_afunilamento_m", "folga_sem_afunilamento_vertice_m")):
+            md.append(f"| {nomes.get(k, k)} | {rot} | {br(x[a], 4)} | {br(x[b], 4)} | {br(1e3 * (x[b] - x[a]), 1)} |")
     md += ["", "## Orbitador no Falcon (com a plataforma e o EES no arranjo do CAD)", "",
            "| Conjunto | Base | Topo | Raio | Folga radial |", "| :- | -: | -: | -: | -: |"]
     for c in cf["orbitador_falcon"]:

@@ -27,7 +27,7 @@ Calculadas com todos os corpos de cada modelo, contra a face interna do envelope
 
 Com a SRL-C, a pior forma da P-089 e sem modelo próprio, os vértices dão +0,030 e −0,036 m, contra +0,032 e −0,034 m publicados.
 
-Os resultados de `results/etapa7.2` não foram alterados: corrigir esses números e registrar a errata é decisão do Fabio.
+A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/conferencias.md` e `portao_decisao.md`, com os valores antigos e os novos lado a lado.
 
 **Orbitador:** a Etapa 7.2 dá +0,356 m (Tanques de inserção), porque trata cada conjunto como um cilindro no raio máximo. Aqui as esferas têm a forma real, e a folga é maior. As duas contas respondem a perguntas diferentes, e a da 7.2 fica do lado seguro.
 

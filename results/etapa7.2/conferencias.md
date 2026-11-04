@@ -30,6 +30,19 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 | 1,35 | 2,41 (não cabe) | 3,08 (não cabe) | 3,08 (não cabe) |
 | 1,45 | 2,08 (não cabe) | 2,96 (não cabe) | 2,97 (não cabe) |
 
+## Errata (2026-11-04, aprovada pelo Fabio): folgas do lander no Vulcan
+
+**O que muda:** as folgas da primeira tabela valem menos do que está escrito. **Causa:** o cálculo amostra o perfil da cápsula em 400 pontos, e nenhum cai no vértice do ombro, onde o raio é máximo. Os valores vigentes são os da coluna "Vigente", calculados nos vértices do perfil. Os antigos ficam como registro.
+
+| Forma | Leitura do envelope | Publicado (grade de 400 pontos) | Vigente (vértices) | Diferença (mm) |
+| :- | :- | -: | -: | -: |
+| MSL/M2020 (Ø 4,5 m) | contorno reto | 0,1425 | 0,1412 | −1,3 |
+| MSL/M2020 (Ø 4,5 m) | Ø menor desde o PAF | 0,0653 | 0,0640 | −1,3 |
+| SRL-A | contorno reto | 0,0466 | 0,0444 | −2,2 |
+| SRL-A | Ø menor desde o PAF | −0,0138 | −0,0160 | −2,2 |
+| SRL-C | contorno reto | 0,0319 | 0,0296 | −2,3 |
+| SRL-C | Ø menor desde o PAF | −0,0338 | −0,0360 | −2,2 |
+
 ## Orbitador no Falcon (com a plataforma e o EES no arranjo do CAD)
 
 | Conjunto | Base | Topo | Raio | Folga radial |

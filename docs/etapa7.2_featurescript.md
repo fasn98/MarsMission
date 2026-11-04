@@ -197,3 +197,8 @@ Os três compilaram e geraram as peças: 20 no orbitador, 33 no lander e 12 no M
   lander compilado. O gerador agora escreve esses parâmetros com 12 algarismos.
 - **CG lateral do lander:** a análise peça a peça está em `results/etapa7.2/cg_lateral.md`, como achado para o portão da
   7.3. Nenhuma peça foi movida.
+
+## Errata (2026-11-04, aprovada pelo Fabio)
+As folgas da tabela de `results/etapa7.2/conferencias.md` copiadas acima (MSL/M2020, SRL-A e SRL-C no Vulcan) valem 1,3 a 2,2 mm
+menos. O cálculo amostrava o perfil da cápsula em 400 pontos, e nenhum caía no vértice do ombro. Os valores vigentes estão em
+`results/etapa7.2/conferencias.md`, seção "Errata", ao lado dos antigos.

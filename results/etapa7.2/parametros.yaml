@@ -65,19 +65,25 @@ conferencias:
     por_forma:
       msl_m2020:
         folga_radial_m: 0.14252150287894194
+        folga_radial_vertice_m: 0.14122334948516047
         raio_max_m: 2.26
         comprimento_m: 2.88
         folga_sem_afunilamento_m: 0.06526817042606536
+        folga_sem_afunilamento_vertice_m: 0.06400000000000006
       srl_a:
         folga_radial_m: 0.046599138400648776
+        folga_radial_vertice_m: 0.04440551181102359
         raio_max_m: 2.34
         comprimento_m: 3.85
         folga_sem_afunilamento_m: -0.013791164658634614
+        folga_sem_afunilamento_vertice_m: -0.016000000000000014
       srl_c:
         folga_radial_m: 0.03187213060367977
+        folga_radial_vertice_m: 0.029606904906117393
         raio_max_m: 2.36
         comprimento_m: 3.55
         folga_sem_afunilamento_m: -0.0338064727034979
+        folga_sem_afunilamento_vertice_m: -0.03600000000000003
   mav_deitado:
     diametro_m: 0.57
     comprimento_m: 3.5609947218243874
