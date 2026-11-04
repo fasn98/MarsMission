@@ -272,3 +272,6 @@ def test_bocais_estagio1():
         assert a[k]["empuxo_peso_marte"] == pytest.approx(q[c], rel=1e-12)
     # o 44:1 não tem Isp na fonte: o Δv não é calculado
     assert a["B"]["isp_s"] is None and a["B"]["variacao_dv_estagio_m_s"] is None
+    # decisões do Fabio na página
+    md = (RAIZ / "results/etapa7.2/bocais_alternativas.md").read_text(encoding="utf-8")
+    assert "**C: DESCARTADA.**" in md and "**F: REFERÊNCIA APENAS.**" in md and "Not in Production" in md

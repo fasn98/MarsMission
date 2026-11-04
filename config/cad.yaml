@@ -238,3 +238,7 @@ motores_geometria_mav:   # alternativas do estágio 1 do MAV: folhas de [F228], 
     massa_kg: 10.5
     producao: "fora de produção; pede atualização"
     fonte: "[F228] PDF p. 30, desenho: \"(15.8\")\", \"(5.7\")\", \"(22.3\")\" (os rótulos em mm do desenho estão inconsistentes com as polegadas, \"40 mm\" e \"56.6 mm\"; usadas as polegadas); \"Expansion Ratio 60:1\"; \"293 sec\"; \"10.5 kg (23.0 lbm)\"; \"Not in Production; Requires component obsolescence update\""
+
+bocais_decisoes:   # decisões do Fabio sobre as alternativas (2026-11-04)
+  C: {situacao: "DESCARTADA", motivo: "empuxo/peso abaixo de 1 em Marte"}
+  F: {situacao: "REFERÊNCIA APENAS", motivo: "R-40B fora de produção", fonte: "[F228] PDF p. 30: \"Not in Production; Requires component obsolescence update\"; [F106] p. 3: \"NIP=Not In Production\""}
