@@ -259,7 +259,7 @@ def test_consumo_cruzeiro():
 
 
 def test_bocais_estagio1():
-    """Alternativas dos bocais: círculo mínimo, empuxo/peso e folga, conferidos por fora da ferramenta."""
+    """Alternativas dos bocais: círculo mínimo, empuxo/peso, Δv e folga, conferidos por fora da ferramenta."""
     r = ler("results/etapa7.2/bocais_alternativas.yaml")
     a = {x["id"]: x for x in r["alternativas"]}
     assert a["A"]["circulo_minimo_m"] == pytest.approx(11.0 * 0.0254 * (1 + math.sqrt(2)))
@@ -272,6 +272,18 @@ def test_bocais_estagio1():
         assert a[k]["empuxo_peso_marte"] == pytest.approx(q[c], rel=1e-12)
     # o 44:1 não tem Isp na fonte: o Δv não é calculado
     assert a["B"]["isp_s"] is None and a["B"]["variacao_dv_estagio_m_s"] is None
+    # círculo de 3 saídas, varredura com parede e Δv proporcional ao Isp
+    assert a["D"]["circulo_minimo_m"] == pytest.approx(11.0 * 0.0254 * (1 + 2 / math.sqrt(3)))
+    assert a["A"]["menor_d_varredura_m"] == 0.69 and a["A"]["menor_d_varredura_com_parede_m"] == 0.72
+    assert a["F"]["variacao_dv_estagio_m_s"] == pytest.approx(r["dv_estagio_1_m_s"] * (a["F"]["isp_s"] / r["isp_dimensionamento_s"] - 1))
+    # folga: a do portão menos a metade do excesso sobre a P-086, em cada aeroshell e sem trocar um pelo outro
+    por = ler("results/etapa7.2/portao_decisao.yaml")["linhas"]
+    base = lambda forma: next(x["folga_m"] for x in por if x["forma"] == forma and x["diametro_m"] == 0.57 and x["orientacao"] == "deitado" and x["estacao"] == "ombro")  # noqa: E731
+    f = a["F"]["folgas"][0]
+    assert a["F"]["excesso_sobre_p086_m"] == pytest.approx(28.0 * 0.0254 - r["p086_motores_estagio_1_m"])
+    assert f["folga_4_5_m"] == pytest.approx(base("msl_m2020") - a["F"]["excesso_sobre_p086_m"] / 2)
+    assert f["folga_4_65_m"] == pytest.approx(base("srl_a") - a["F"]["excesso_sobre_p086_m"] / 2)
+    assert a["A"]["excesso_sobre_p086_m"] == 0
     # decisões do Fabio na página
     md = (RAIZ / "results/etapa7.2/bocais_alternativas.md").read_text(encoding="utf-8")
     assert "**C: DESCARTADA.**" in md and "**F: REFERÊNCIA APENAS.**" in md and "Not in Production" in md

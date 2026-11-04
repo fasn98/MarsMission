@@ -8,7 +8,7 @@ Esta página não escolhe, e nenhuma premissa muda. Nada foi redimensionado: as 
 
 ## 1. Cabe, e sobe?
 
-Saídas em círculo mínimo, sem folga entre elas. "Com parede" desconta 0,01 m de cada lado (P-085). Empuxo/peso em Marte com 386,8 kg e g = 3,713 m/s². Δv: efeito só do Isp no estágio 1 (2 777 m/s a 310 s), com as mesmas massas.
+Saídas em círculo mínimo, sem folga entre elas. "Com parede" desconta 0,01 m de cada lado, a parede que a P-085 define para os tanques, aqui estendida à região dos motores. Empuxo/peso em Marte com 386,8 kg e g = 3,713 m/s². Δv: efeito só do Isp no estágio 1 (2 777 m/s a 310 s), com as mesmas massas.
 
 | Opção | Variante | Saída (m) | Círculo mínimo (m) | Cabe em Ø 0,57 m? | Empuxo/peso | Isp do catálogo (s) | Variação do Δv (m/s) | Motor (m) | Além da P-086 (m) |
 | :- | :- | -: | -: | :- | -: | -: | -: | -: | -: |
@@ -21,9 +21,9 @@ Saídas em círculo mínimo, sem folga entre elas. "Com parede" desconta 0,01 m 
 
 ## 2. Folga do MAV deitado, com a base no ombro
 
-Mesma conta de results/etapa7.2/portao_decisao.md, menos a metade do que o motor passa da P-086. Folga em m; positivo = cabe.
+Mesma conta de results/etapa7.2/portao_decisao.md, menos a metade do que o motor passa da P-086. Motor mais curto que a P-086 não dá crédito, porque ela não muda aqui. Folga em m; positivo = cabe nesta estação, a mais favorável; nas outras estações ela é menor (portao_decisao.md). Os diâmetros são pontos da varredura.
 
-| Opção | Ø (m) | Comprimento (m) | Tanques, variação de massa (kg) | Aeroshell 4,5 m | Aeroshell 4,65 m |
+| Opção | Ø (m) | Comprimento (m) | Tanques, variação de massa (kg) | 4,5 m (forma MSL/M2020) | 4,65 m (forma SRL-A) |
 | :- | -: | -: | -: | -: | -: |
 | A | 0,69 | 3,477 | −0,1 | −0,234 | −0,002 |
 | A | 0,72 | 3,477 | −0,1 | −0,256 | −0,018 |
@@ -38,14 +38,16 @@ Mesma conta de results/etapa7.2/portao_decisao.md, menos a metade do que o motor
 
 | Opção | Prós | Contras |
 | :- | :- | :- |
-| A | mantém o motor, o Isp e o histórico do Orion | muda o Ø do ADR 0022: 0,69 m sem parede, 0,72 m com parede |
-| B | cabe em Ø 0,57 m, e o motor é 0,283 m mais curto que a P-086 | [F228] não dá Isp nem massa do 44:1, então a perda não é calculável (na folha, o Isp sobe do 164:1 para o 300:1); o empuxo/peso supõe o mesmo empuxo das outras variantes (não conferido) |
+| A | mantém o motor e o Isp da variante do Orion ([F107] p. 5, motor "modified") | muda o Ø do ADR 0022: mínimo de 0,675 m sem parede, 0,695 m com parede; 0,69 e 0,72 m pela varredura |
+| B | cabe em Ø 0,57 m, e o motor é 0,283 m mais curto que a P-086 | [F228] não dá Isp nem massa do 44:1, então a perda não é calculável (na folha, o Isp sobe do 164:1 para o 300:1); disponibilidade não conferida: a folha só cita o 44:1 no desenho, e "Expansion Ratio" lista 164:1 e 300:1; o empuxo/peso supõe o mesmo empuxo das outras variantes (não conferido) |
 | C (DESCARTADA) | cabe em Ø 0,57 m, por 0,011 m, só sem parede | **empuxo/peso de 0,68, abaixo de 1: não decola na vertical** |
 | D | empuxo/peso de 1,02 | não cabe; o empuxo quase não vence o peso; Ø de 0,63 m pela varredura |
 | E | em produção, combinação já no catálogo | pior no diâmetro: pede 0,779 m, além da varredura; motor 0,187 m além da P-086 |
 | F (REFERÊNCIA APENAS) | cabe em Ø 0,57 m com sobra de 0,169 m; maior empuxo/peso, 2,79 | fora de produção; −125 m/s pelo Isp; motor 0,111 m além da P-086; um só motor, sem redundância e com controle de atitude a definir |
 
 ## 4. Diferenças entre fontes (nada foi trocado)
+
+O R-4D-11 está em portao_decisao.md, seção 7.
 
 | Motor | Massa no catálogo [F106] (kg) | Massa em [F228] (kg) | Isp no catálogo (s) | Isp em [F228] (s) | Situação em [F228] |
 | :- | -: | -: | -: | -: | :- |

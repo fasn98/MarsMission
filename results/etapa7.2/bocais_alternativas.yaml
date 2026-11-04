@@ -7,6 +7,9 @@ isp_dimensionamento_s: 310
 dv_estagio_1_m_s: 2776.5022935683282
 m0_kg: 386.77369250546496
 maior_d_varredura_m: 0.75
+aeroshell:
+  msl_m2020: 4,5 m (forma MSL/M2020)
+  srl_a: 4,65 m (forma SRL-A)
 decisoes:
   C:
     situacao: DESCARTADA
@@ -33,9 +36,8 @@ alternativas:
   menor_d_varredura_com_parede_m: 0.72
   empuxo_n: 1957.2176800000002
   empuxo_peso_marte: 1.3628076997021517
-  isp_s: 310
+  isp_s: 310.0
   variacao_dv_estagio_m_s: 0.0
-  duracao_s: 359.7366612517917
   excesso_sobre_p086_m: 0.0
   sobra_na_p086_m: 0.045772000000000035
   folgas:
@@ -67,7 +69,6 @@ alternativas:
   empuxo_peso_marte: 1.3628076997021517
   isp_s: null
   variacao_dv_estagio_m_s: null
-  duracao_s: 359.7366612517917
   excesso_sobre_p086_m: 0.0
   sobra_na_p086_m: 0.28326199999999996
   folgas:
@@ -92,9 +93,8 @@ alternativas:
   menor_d_varredura_com_parede_m: 0.6
   empuxo_n: 978.6088400000001
   empuxo_peso_marte: 0.6814038498510758
-  isp_s: 310
+  isp_s: 310.0
   variacao_dv_estagio_m_s: 0.0
-  duracao_s: null
   excesso_sobre_p086_m: 0.0
   sobra_na_p086_m: 0.045772000000000035
   folgas:
@@ -124,9 +124,8 @@ alternativas:
   menor_d_varredura_com_parede_m: 0.63
   empuxo_n: 1467.9132600000003
   empuxo_peso_marte: 1.0221057747766138
-  isp_s: 310
+  isp_s: 310.0
   variacao_dv_estagio_m_s: 0.0
-  duracao_s: null
   excesso_sobre_p086_m: 0.0
   sobra_na_p086_m: 0.045772000000000035
   folgas:
@@ -153,7 +152,6 @@ alternativas:
   empuxo_peso_marte: 1.2389160906383194
   isp_s: 305.0
   variacao_dv_estagio_m_s: -44.78229505755364
-  duracao_s: 393.20428451955775
   excesso_sobre_p086_m: 0.1874
   sobra_na_p086_m: -0.1874
   folgas: []
@@ -177,7 +175,6 @@ alternativas:
   empuxo_peso_marte: 2.7875612039362188
   isp_s: 296.0
   variacao_dv_estagio_m_s: -125.39042616115032
-  duracao_s: 172.68535199427947
   excesso_sobre_p086_m: 0.11119999999999997
   sobra_na_p086_m: -0.11119999999999997
   folgas:

@@ -47,7 +47,6 @@ def main():
     t_par = v(cad["mav"]["espessura_parede_m"])
     p086 = v(cad["mav"]["comprimento_nao_tanque_m"]["motores_estagio_1"])
     varredura = [c["diametro_m"] for c in ma["casos"]]
-    catal_mav = {x["combinacao"]: x for x in q["mav"] if x["estagio"] == "mav_1"}
 
     def r4d(k):
         return {"motor": "R-4D-11", "variante": k, "saida_m": rd[k]["diametro_saida_pol"] * POL, "comprimento_motor_m": (rd[k]["flange_a_saida_pol"] + frente) * POL, "fonte": rd[k]["fonte"]}
@@ -55,12 +54,12 @@ def main():
     def outro(m):
         x = ge[m]
         return {"motor": m, "variante": x["expansao"], "saida_m": x["diametro_saida_pol"] * POL, "comprimento_motor_m": sum(x["comprimento_pol"]) * POL, "fonte": x["fonte"]}
-    alts = [("A", "4 × R-4D-11 164:1, Ø maior (a combinação atual)", r4d("164:1"), 4, 310, "M2"), ("B", "4 × R-4D-11 44:1", r4d("44:1"), 4, None, "M2"),
-            ("C", "2 × R-4D-11 164:1", r4d("164:1"), 2, 310, None), ("D", "3 × R-4D-11 164:1", r4d("164:1"), 3, 310, None),
-            ("E", "2 × R-42 (M1)", outro("R-42"), 2, cat["R-42"]["isp_s"], "M1"), ("F", "1 × R-40B (M3)", outro("R-40B"), 1, cat["R-40B"]["isp_s"], "M3")]
+    alts = [("A", "4 × R-4D-11 164:1, Ø maior (a combinação atual)", r4d("164:1"), 4, cat["R-4D-11"]["isp_s"]), ("B", "4 × R-4D-11 44:1", r4d("44:1"), 4, None),
+            ("C", "2 × R-4D-11 164:1", r4d("164:1"), 2, cat["R-4D-11"]["isp_s"]), ("D", "3 × R-4D-11 164:1", r4d("164:1"), 3, cat["R-4D-11"]["isp_s"]),
+            ("E", "2 × R-42 (M1)", outro("R-42"), 2, cat["R-42"]["isp_s"]), ("F", "1 × R-40B (M3)", outro("R-40B"), 1, cat["R-40B"]["isp_s"])]
     empuxo_cat = {"R-4D-11": cat["R-4D-11"]["empuxo_n"], "R-42": cat["R-42"]["empuxo_n"], "R-40B": cat["R-40B"]["empuxo_n"]}
     linhas = []
-    for id_, nome, m, n, isp, comb in alts:
+    for id_, nome, m, n, isp in alts:
         minimo = FATOR[n] * m["saida_m"]
         empuxo = n * empuxo_cat[m["motor"]]
         de_sweep = next((d for d in varredura if d >= minimo), None)
@@ -77,10 +76,10 @@ def main():
                        "circulo_minimo_m": minimo, "cabe_em_d_mav": minimo <= d_mav, "cabe_em_d_mav_com_parede": minimo <= d_mav - 2 * t_par,
                        "menor_d_varredura_m": de_sweep, "menor_d_varredura_com_parede_m": de_parede, "empuxo_n": empuxo, "empuxo_peso_marte": empuxo / (est["massa_inicial_kg"] * g),
                        "isp_s": isp, "variacao_dv_estagio_m_s": (1e3 * est["dv_km_s"] * (isp / est["isp_s"] - 1)) if isp else None,
-                       "duracao_s": catal_mav[comb]["duracao_s"] if comb else None, "excesso_sobre_p086_m": delta_l, "sobra_na_p086_m": p086 - m["comprimento_motor_m"], "folgas": fol})
+                       "excesso_sobre_p086_m": delta_l, "sobra_na_p086_m": p086 - m["comprimento_motor_m"], "folgas": fol})
     fontes_massa = {m: {"catalogo_massa_kg": cat[m]["massa_kg"], "f228_massa_kg": ge[m]["massa_kg"], "catalogo_isp_s": cat[m]["isp_s"], "f228_isp_s": ge[m]["isp_s"], "producao": ge[m]["producao"]} for m in ge}
     out = nativo({"gerado_por": "tools/bocais_estagio1.py", "diametro_mav_m": d_mav, "espessura_parede_m": t_par, "p086_motores_estagio_1_m": p086, "g_marte_m_s2": g,
-                  "isp_dimensionamento_s": est["isp_s"], "dv_estagio_1_m_s": 1e3 * est["dv_km_s"], "m0_kg": est["massa_inicial_kg"], "maior_d_varredura_m": varredura[-1], "decisoes": cad["bocais_decisoes"], "alternativas": linhas, "motores": fontes_massa})
+                  "isp_dimensionamento_s": est["isp_s"], "dv_estagio_1_m_s": 1e3 * est["dv_km_s"], "m0_kg": est["massa_inicial_kg"], "maior_d_varredura_m": varredura[-1], "aeroshell": {k: por["aeroshell"][k]["rotulo"] for k in ("msl_m2020", "srl_a")}, "decisoes": cad["bocais_decisoes"], "alternativas": linhas, "motores": fontes_massa})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "bocais_alternativas.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -95,7 +94,7 @@ def escreve_md(o):
           f"- **C: {dec['C']['situacao']}.** Empuxo/peso de {br(next(a['empuxo_peso_marte'] for a in o['alternativas'] if a['id'] == 'C'), 2)}, abaixo de 1 em Marte.",
           f"- **F: {dec['F']['situacao']}.** {dec['F']['motivo']}: {dec['F']['fonte']}.", "",
           "## 1. Cabe, e sobe?", "",
-          f"Saídas em círculo mínimo, sem folga entre elas. \"Com parede\" desconta {br(t, 2)} m de cada lado (P-085). Empuxo/peso em Marte com {br(o['m0_kg'], 1)} kg e g = {br(o['g_marte_m_s2'], 3)} m/s². "
+          f"Saídas em círculo mínimo, sem folga entre elas. \"Com parede\" desconta {br(t, 2)} m de cada lado, a parede que a P-085 define para os tanques, aqui estendida à região dos motores. Empuxo/peso em Marte com {br(o['m0_kg'], 1)} kg e g = {br(o['g_marte_m_s2'], 3)} m/s². "
           f"Δv: efeito só do Isp no estágio 1 ({br(o['dv_estagio_1_m_s'], 0)} m/s a {br(o['isp_dimensionamento_s'], 0)} s), com as mesmas massas.", "",
           "| Opção | Variante | Saída (m) | Círculo mínimo (m) | " + f"Cabe em Ø {br(d, 2)} m? | Empuxo/peso | Isp do catálogo (s) | Variação do Δv (m/s) | Motor (m) | Além da P-086 (m) |", "| :- | :- | -: | -: | :- | -: | -: | -: | -: | -: |"]
     for a in o["alternativas"]:
@@ -104,8 +103,9 @@ def escreve_md(o):
         dv = sg(a["variacao_dv_estagio_m_s"], 0) if a["isp_s"] else "não calculável"
         md.append(f"| {a['id']}{rot(a['id'])}: {a['nome']} | {a['variante']} | {br(a['saida_m'])} | {br(a['circulo_minimo_m'])} | {cabe} | {br(a['empuxo_peso_marte'], 2)} | {isp} | {dv} | {br(a['comprimento_motor_m'])} | {br(a['excesso_sobre_p086_m'])} |")
     md += ["", "## 2. Folga do MAV deitado, com a base no ombro", "",
-           "Mesma conta de results/etapa7.2/portao_decisao.md, menos a metade do que o motor passa da P-086. Folga em m; positivo = cabe.", "",
-           "| Opção | Ø (m) | Comprimento (m) | Tanques, variação de massa (kg) | Aeroshell 4,5 m | Aeroshell 4,65 m |", "| :- | -: | -: | -: | -: | -: |"]
+           "Mesma conta de results/etapa7.2/portao_decisao.md, menos a metade do que o motor passa da P-086. Motor mais curto que a P-086 não dá crédito, porque ela não muda aqui. "
+           "Folga em m; positivo = cabe nesta estação, a mais favorável; nas outras estações ela é menor (portao_decisao.md). Os diâmetros são pontos da varredura.", "",
+           "| Opção | Ø (m) | Comprimento (m) | Tanques, variação de massa (kg) | " + f"{o['aeroshell']['msl_m2020']} | {o['aeroshell']['srl_a']} |", "| :- | -: | -: | -: | -: | -: |"]
     for a in o["alternativas"]:
         if not a["folgas"]:
             md.append(f"| {a['id']} | fora da varredura (até {br(o['maior_d_varredura_m'], 2)} m) | — | — | — | — |")
@@ -114,13 +114,13 @@ def escreve_md(o):
     al = {a["id"]: a for a in o["alternativas"]}
     A, B, C, D, E, F = (al[k] for k in "ABCDEF")
     md += ["", "## 3. Prós e contras", "", "| Opção | Prós | Contras |", "| :- | :- | :- |",
-           f"| A | mantém o motor, o Isp e o histórico do Orion | muda o Ø do ADR 0022: {br(A['menor_d_varredura_m'], 2)} m sem parede, {br(A['menor_d_varredura_com_parede_m'], 2)} m com parede |",
-           f"| B | cabe em Ø {br(d, 2)} m, e o motor é {br(B['sobra_na_p086_m'])} m mais curto que a P-086 | [F228] não dá Isp nem massa do 44:1, então a perda não é calculável (na folha, o Isp sobe do 164:1 para o 300:1); o empuxo/peso supõe o mesmo empuxo das outras variantes (não conferido) |",
+           f"| A | mantém o motor e o Isp da variante do Orion ([F107] p. 5, motor \"modified\") | muda o Ø do ADR 0022: mínimo de {br(A['circulo_minimo_m'])} m sem parede, {br(A['circulo_minimo_m'] + 2 * t)} m com parede; {br(A['menor_d_varredura_m'], 2)} e {br(A['menor_d_varredura_com_parede_m'], 2)} m pela varredura |",
+           f"| B | cabe em Ø {br(d, 2)} m, e o motor é {br(B['sobra_na_p086_m'])} m mais curto que a P-086 | [F228] não dá Isp nem massa do 44:1, então a perda não é calculável (na folha, o Isp sobe do 164:1 para o 300:1); disponibilidade não conferida: a folha só cita o 44:1 no desenho, e \"Expansion Ratio\" lista 164:1 e 300:1; o empuxo/peso supõe o mesmo empuxo das outras variantes (não conferido) |",
            f"| C ({dec['C']['situacao']}) | cabe em Ø {br(d, 2)} m, por {br(d - C['circulo_minimo_m'])} m, só sem parede | **empuxo/peso de {br(C['empuxo_peso_marte'], 2)}, abaixo de 1: não decola na vertical** |",
            f"| D | empuxo/peso de {br(D['empuxo_peso_marte'], 2)} | não cabe; o empuxo quase não vence o peso; Ø de {br(D['menor_d_varredura_m'], 2)} m pela varredura |",
            f"| E | em produção, combinação já no catálogo | pior no diâmetro: pede {br(E['circulo_minimo_m'])} m, além da varredura; motor {br(E['excesso_sobre_p086_m'])} m além da P-086 |",
            f"| F ({dec['F']['situacao']}) | cabe em Ø {br(d, 2)} m com sobra de {br(d - F['circulo_minimo_m'])} m; maior empuxo/peso, {br(F['empuxo_peso_marte'], 2)} | fora de produção; {sg(F['variacao_dv_estagio_m_s'], 0)} m/s pelo Isp; motor {br(F['excesso_sobre_p086_m'])} m além da P-086; um só motor, sem redundância e com controle de atitude a definir |",
-           "", "## 4. Diferenças entre fontes (nada foi trocado)", "", "| Motor | Massa no catálogo [F106] (kg) | Massa em [F228] (kg) | Isp no catálogo (s) | Isp em [F228] (s) | Situação em [F228] |", "| :- | -: | -: | -: | -: | :- |"]
+           "", "## 4. Diferenças entre fontes (nada foi trocado)", "", "O R-4D-11 está em portao_decisao.md, seção 7.", "", "| Motor | Massa no catálogo [F106] (kg) | Massa em [F228] (kg) | Isp no catálogo (s) | Isp em [F228] (s) | Situação em [F228] |", "| :- | -: | -: | -: | -: | :- |"]
     for k, m in o["motores"].items():
         md.append(f"| {k} | {br(m['catalogo_massa_kg'], 2)} | {br(m['f228_massa_kg'], 2)} | {br(m['catalogo_isp_s'], 0)} | {br(m['f228_isp_s'], 0)} | {m['producao']} |")
     md += ["", "## 5. Não calculado", "",
