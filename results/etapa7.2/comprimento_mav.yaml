@@ -1,0 +1,463 @@
+gerado_por: tools/comprimento_mav.py
+natureza: investigação para o portão; não muda premissa nem arquitetura
+p086_m: 1.5
+p086_itens_m:
+  motores_estagio_1: 0.6
+  motor_estagio_2: 0.45
+  interestagio: 0.1
+  carga_os: 0.35
+diametro_m: 0.57
+comprimento_base_m: 3.5609947218243874
+tanques_nosso_m: 2.0609947218243874
+figura_msr:
+  fonte: '[F237] PDF p. 4, figura "MAS Overview": "<3 m" (o rótulo "~0.5 m" é o diâmetro)'
+  limite_m: 2.99
+  diametro_m: 0.5
+  trechos:
+  - item: 'Carga: coifa e carga útil (MPA)'
+    fracao: 0.13404605263157895
+    comprimento_m: 0.4007976973684211
+    equivale_a: carga_os
+  - item: '2º estágio: motor sólido'
+    fracao: 0.09868421052631579
+    comprimento_m: 0.2950657894736842
+    equivale_a: null
+  - item: Interestágio, com o bocal do 2º estágio aninhado
+    fracao: 0.22203947368421054
+    comprimento_m: 0.6638980263157895
+    equivale_a: interestagio_e_motor_2
+  - item: '1º estágio: motor sólido e rampa'
+    fracao: 0.3824013157894737
+    comprimento_m: 1.1433799342105264
+    equivale_a: null
+  - item: TVC e bocal do 1º estágio
+    fracao: 0.16282894736842105
+    comprimento_m: 0.486858552631579
+    equivale_a: motores_estagio_1
+  nao_propelente_m: 1.5515542763157897
+  motores_solidos_m: 1.4384457236842105
+fontes_p086:
+- item: Comprimento total do MAV do MSR
+  achado: limite de 2,99 m com Ø 0,5 m (SRC); 3,0 m com Ø 0,57 m (DAC-0.0); 2,8 m
+    com Ø 0,57 m (2019). Nenhuma traz a divisão por elemento
+  fonte: '[F35] p. 3; [F236] PDF p. 2; [F238] PDF p. 15'
+- item: Divisão por elemento
+  achado: não achada com cotas em nenhuma das fontes consultadas; só a figura, sem
+    cotas por trecho
+  fonte: '[F237] PDF p. 4; [F35]; [F236]; [F238]'
+- item: Bocal aninhado
+  achado: o 2º estágio tem o bocal dentro do interestágio, e isso aparece como risco
+    na separação; a fonte não dá o comprimento aninhado
+  fonte: '[F35] PDF p. 15: "the small clearances of the interstage hardware and the
+    nested SRM2 nozzle"; [F236] PDF p. 13: "clearance of the nested second stage nozzle
+    hardware"'
+- item: Encurtar bocal e interestágio
+  achado: 'o estudo troca Isp por comprimento: cerca de 10 s a menos, com ganho de
+    massa, num bocal de expansão 81 e Isp 293 s. Motor sólido, sem o comprimento resultante'
+  fonte: '[F238] PDF p. 10: "trading I sp for nozzle length"; "a significantly shorter
+    inter-stage and nozzle"'
+variante_44_1:
+  motor_44_1_m: 0.316738
+  motor_164_1_m: 0.5542279999999999
+  analogos:
+  - nome: 440 N, Re
+    isp_s: 308
+    fonte: '[F239] PDF p. 7: "Performance of 308 seconds at 44:1 area ratio was achieved"'
+  - nome: 440 N, Nb ("similar Nb engines")
+    isp_s: 304
+    fonte: '[F239] PDF p. 7: "This performance is about 4 seconds higher than similar
+      Nb engines" (308 − 4, calculado)'
+  - nome: 490 N, três injetores
+    isp_s: 309
+    fonte: '[F240] resumo no NTRS: "Three injectors with 44:1 area ratios are capable
+      of nominal specific impulse values of 309 sec" (só o resumo; artigo não obtido)'
+  onde_procurou:
+  - '[F228] PDF p. 22: 44:1 só nas cotas do desenho; sem Isp, massa ou empuxo próprios'
+  - '[F106] e [F107]: não citam 44:1 (conferido nas citações do repositório; [F106]
+    sem cópia local)'
+  - 'Busca no NTRS e na web por R-4D-11 com 44:1: [F239] e [F240] são os mais próximos
+    e não nomeiam o R-4D-11'
+  - Páginas de terceiros (Wikipedia, Astronautix e catálogos) não contam como fonte
+    primária e não dão o 44:1
+  sensibilidade:
+  - isp_s: 304
+    glom_kg: 425.00186013137534
+    comprimento_m: 3.2596759969908713
+    comprimento_sem_mudar_p086_m: 3.676199996990872
+  - isp_s: 308
+    glom_kg: 398.8367236355515
+    comprimento_m: 3.180902215281914
+    comprimento_sem_mudar_p086_m: 3.597426215281914
+  - isp_s: 309
+    glom_kg: 392.7253618642498
+    comprimento_m: 3.1624548812839532
+    comprimento_sem_mudar_p086_m: 3.578978881283953
+origem_dv:
+  dv_100x100_m_s: 4027.8999999999996
+  transferencia_m_s: 1192.8814797664074
+  deficit_rotacao_m_s: 26.813102672316134
+  sem_margem_m_s: 5247.594582438723
+  margem_fracao: 0.1
+  margem_m_s: 524.7594582438722
+  com_margem_m_s: 5772.354040682595
+  orbita_km:
+  - 300
+  - 25952.4
+  inclinacao_graus: 27.3
+  perdas_100x100_m_s: 524.8999999999996
+  modelo_100x500_m_s: 4121.344736554453
+  bowles_tabela_100x500_m_s: 4115.5
+  bowles_m_s: 4150.0
+  diferenca_para_bowles_m_s: 1622.354040682595
+limites_apoapse_km:
+  margem_zero_falcon_heavy: 10824.0
+  orbitador_fecha: 594.0
+bowles:
+  dv_m_s:
+    valor: 4150
+    fonte: '[F46] PDF p. 10: "orbital at 4150 m/sec"'
+  orbita_tabela:
+    valor: 100 × 500 km, 4115,5 m/s
+    fonte: '[F46] Tab. 1, PDF p. 21: "(100, 500) (3597,3227) 4115.5"; a fonte não
+      diz de onde vem a diferença até o valor do texto (não conferido)'
+  perdas:
+    fonte: '[F46] PDF p. 20: "the drag, thrust vectoring and atmospheric losses are
+      all small"; Tab. 1, PDF p. 21: "(100,100) 3503 4027.9"'
+orbitas:
+- periapse_km: 300
+  apoapse_km: 25952.4
+  fonte: ''
+  base: true
+  rotulo: ''
+  dv_mav_com_margem_m_s: 5772.354040682595
+  glom_kg: 386.77369250546496
+  propelente_mav_kg: 285.49574322920796
+  comprimento_m: 3.5609947218243874
+  comprimento_aninhado_m: 3.0703976475535146
+  empuxo_peso_4_motores: 1.3628076997021517
+  empuxo_peso_2_motores: 0.6814038498510758
+  descer_de_1_sol_m_s: 57.64795409929413
+  partir_direto_extra_m_s: 62.13468712640147
+  voltar_a_1_sol_extra_m_s: 57.27797792034806
+  extra_orbitador_regra_iii_m_s: 114.92593201964229
+  extra_orbitador_missao_a_m_s: 114.92593201964219
+  orbitador_injetado_kg: 7796.395336836866
+  lander_injetado_kg: 4614.7885791407525
+  margem_falcon_heavy: 0.43967248514669066
+  margem_vulcan_vc4: 0.405756166948366
+- periapse_km: 300
+  apoapse_km: 10824.0
+  fonte: ''
+  base: false
+  rotulo: margem zero no Falcon Heavy
+  dv_mav_com_margem_m_s: 5515.099499750771
+  glom_kg: 315.54892343716523
+  propelente_mav_kg: 230.65267104661723
+  comprimento_m: 3.356796777302738
+  comprimento_aninhado_m: 2.8654487853634474
+  empuxo_peso_4_motores: 1.670416620177886
+  empuxo_peso_2_motores: 0.835208310088943
+  descer_de_1_sol_m_s: 307.3393812725487
+  partir_direto_extra_m_s: 310.1402300814291
+  voltar_a_1_sol_extra_m_s: 305.2835208753757
+  extra_orbitador_regra_iii_m_s: 612.6229021479244
+  extra_orbitador_missao_a_m_s: 612.6229021479244
+  orbitador_injetado_kg: 11223.692144514109
+  lander_injetado_kg: 4463.680055739652
+  margem_falcon_heavy: 5.022458284087428e-05
+  margem_vulcan_vc4: 0.45334509267712986
+- periapse_km: 300
+  apoapse_km: 10000
+  fonte: ''
+  base: false
+  rotulo: ''
+  dv_mav_com_margem_m_s: 5486.892603679395
+  glom_kg: 308.80736549056735
+  propelente_mav_kg: 225.46167142773686
+  comprimento_m: 3.3444520834376346
+  comprimento_aninhado_m: 2.8459725871270263
+  empuxo_peso_4_motores: 1.706883400761309
+  empuxo_peso_2_motores: 0.8534417003806545
+  descer_de_1_sol_m_s: 334.4778602140186
+  partir_direto_extra_m_s: 337.0953776115835
+  voltar_a_1_sol_extra_m_s: 332.23866840553006
+  extra_orbitador_regra_iii_m_s: 666.7165286195486
+  extra_orbitador_missao_a_m_s: 666.7165286195486
+  orbitador_injetado_kg: 11730.228606045439
+  lander_injetado_kg: 4449.352055232572
+  margem_falcon_heavy: -0.04313409169320648
+  margem_vulcan_vc4: 0.4580252188991829
+- periapse_km: 300
+  apoapse_km: 5000
+  fonte: ''
+  base: false
+  rotulo: ''
+  dv_mav_com_margem_m_s: 5222.558495297447
+  glom_kg: 253.79141901510542
+  propelente_mav_kg: 183.09939264163117
+  comprimento_m: 3.2352466470015178
+  comprimento_aninhado_m: 2.6863020867633307
+  empuxo_peso_4_motores: 2.076895145762622
+  empuxo_peso_2_motores: 1.038447572881311
+  descer_de_1_sol_m_s: 586.6473151663716
+  partir_direto_extra_m_s: 587.5604614767055
+  voltar_a_1_sol_extra_m_s: 582.7037522706522
+  extra_orbitador_regra_iii_m_s: 1169.3510674370239
+  extra_orbitador_missao_a_m_s: 1169.3510674370239
+  orbitador_injetado_kg: 18910.283397965315
+  lander_injetado_kg: 4332.226067577248
+  margem_falcon_heavy: -0.4064469784213972
+  margem_vulcan_vc4: 0.4974443630357306
+- periapse_km: 300
+  apoapse_km: 1000
+  fonte: ''
+  base: false
+  rotulo: ''
+  dv_mav_com_margem_m_s: 4723.606125680334
+  glom_kg: 179.90260696204507
+  propelente_mav_kg: 126.2050073607747
+  comprimento_m: 3.055467045136169
+  comprimento_aninhado_m: 2.4694860965050007
+  empuxo_peso_4_motores: 2.929908438180023
+  empuxo_peso_2_motores: 1.4649542190900116
+  descer_de_1_sol_m_s: 1052.9730970417709
+  partir_direto_extra_m_s: 1050.7305489285127
+  voltar_a_1_sol_extra_m_s: 1045.873839722459
+  extra_orbitador_regra_iii_m_s: 2098.8469367642297
+  extra_orbitador_missao_a_m_s: 2098.8469367642297
+  orbitador_injetado_kg: 153085.9930851314
+  lander_injetado_kg: 4174.199998348585
+  margem_falcon_heavy: -0.9266800598567618
+  margem_vulcan_vc4: 0.5541343267827419
+- periapse_km: 300
+  apoapse_km: 594.0
+  fonte: ''
+  base: false
+  rotulo: menor apoapse em que o orbitador fecha
+  dv_mav_com_margem_m_s: 4636.515904595977
+  glom_kg: 169.92728457201895
+  propelente_mav_kg: 118.52400912045458
+  comprimento_m: 3.0269661653490565
+  comprimento_aninhado_m: 2.451531665338538
+  empuxo_peso_4_motores: 3.101904249904518
+  empuxo_peso_2_motores: 1.550952124952259
+  descer_de_1_sol_m_s: 1133.1984019104477
+  partir_direto_extra_m_s: 1130.412483277168
+  voltar_a_1_sol_extra_m_s: 1125.5557740711142
+  extra_orbitador_regra_iii_m_s: 2258.7541759815617
+  extra_orbitador_missao_a_m_s: 2258.754175981562
+  orbitador_injetado_kg: 67656573.1969822
+  lander_injetado_kg: 4152.7810376747975
+  margem_falcon_heavy: -0.9998340995513164
+  margem_vulcan_vc4: 0.5621501459952523
+- periapse_km: 380
+  apoapse_km: 380
+  fonte: '[F35] p. 3: "nominal injection orbit of 380km"'
+  base: false
+  rotulo: ''
+  dv_mav_com_margem_m_s: 4605.615838777636
+  glom_kg: 166.55478053684573
+  propelente_mav_kg: 115.92718101337121
+  comprimento_m: 3.017031821230914
+  comprimento_aninhado_m: 2.4452734200146944
+  empuxo_peso_4_motores: 3.1647135224201737
+  empuxo_peso_2_motores: 1.5823567612100868
+  descer_de_1_sol_m_s: 1197.9068627952684
+  partir_direto_extra_m_s: 1189.940097872605
+  voltar_a_1_sol_extra_m_s: 1177.4258913584745
+  extra_orbitador_regra_iii_m_s: 2375.332754153743
+  extra_orbitador_missao_a_m_s: 2375.3327541537433
+  orbitador_injetado_kg: null
+  lander_injetado_kg: 4145.5339727593
+  margem_falcon_heavy: null
+  margem_vulcan_vc4: 0.5648810375016717
+em_pe_na_varredura:
+- diametro_m: 0.57
+  em_pe_4_5_m: -1.7797941215242377
+  em_pe_4_65_m: -0.7710997743506507
+  disponivel_4_5_m: 1.7812006003001497
+  disponivel_4_65_m: 2.7898949474737367
+- diametro_m: 0.6
+  em_pe_4_5_m: -1.7373163047833096
+  em_pe_4_65_m: -0.7252152542580466
+  disponivel_4_5_m: 1.7537818909454725
+  disponivel_4_65_m: 2.7658829414707355
+- diametro_m: 0.69
+  em_pe_4_5_m: -1.8059918303790945
+  em_pe_4_65_m: -0.7811544116697395
+  disponivel_4_5_m: 1.6705102551275637
+  disponivel_4_65_m: 2.6953476738369186
+comprimento_maximo:
+  msl_m2020:
+    deitado_comprimento_max_m: 3.1839999999999997
+    em_pe_comprimento_max_m: 1.7812006003001497
+  srl_a:
+    deitado_comprimento_max_m: 3.5951304347826083
+    em_pe_comprimento_max_m: 2.7898949474737367
+alavancas:
+- alavanca: 'Base: Ø 0,57 m, P-086 de 1,5 m, órbita de base'
+  grupo: base
+  diametro_m: 0.57
+  comprimento_m: 3.5609947218243874
+  delta_comprimento_m: 0.0
+  deitado_4_5_m: -0.18849736091219382
+  deitado_4_65_m: 0.017067856479110466
+  em_pe_4_5_m: -1.7797941215242377
+  em_pe_4_65_m: -0.7710997743506507
+- alavanca: P-086 pelo motor real 164:1 nos dois estágios ([F228])
+  grupo: p086
+  diametro_m: 0.57
+  comprimento_m: 3.619450721824387
+  delta_comprimento_m: 0.05845599999999962
+  deitado_4_5_m: -0.21772536091219363
+  deitado_4_65_m: -0.012160143520889344
+  em_pe_4_5_m: -1.8382501215242373
+  em_pe_4_65_m: -0.8295557743506503
+- alavanca: P-086 pela leitura da figura do MSR (NÃO VALIDADO)
+  grupo: p086
+  diametro_m: 0.57
+  comprimento_m: 3.612548998140177
+  delta_comprimento_m: 0.05155427631578968
+  deitado_4_5_m: -0.21427449907008866
+  deitado_4_65_m: -0.008709281678784375
+  em_pe_4_5_m: -1.8313483978400273
+  em_pe_4_65_m: -0.8226540506664404
+- alavanca: Cada 0,10 m a menos na P-086, por qualquer meio, inclusive bocal aninhado
+  grupo: p086
+  diametro_m: 0.57
+  comprimento_m: 3.4609947218243873
+  delta_comprimento_m: -0.10000000000000009
+  deitado_4_5_m: -0.13849736091219378
+  deitado_4_65_m: 0.06706785647911051
+  em_pe_4_5_m: -1.6797941215242376
+  em_pe_4_65_m: -0.6710997743506506
+  exemplo: true
+- alavanca: R-4D-11 44:1 nos dois estágios, P-086 pelo motor, Isp mantido
+  grupo: variante
+  diametro_m: 0.57
+  comprimento_m: 3.1444707218243875
+  delta_comprimento_m: -0.4165239999999999
+  deitado_4_5_m: 0.019764639087806124
+  deitado_4_65_m: 0.2253298564791104
+  em_pe_4_5_m: -1.3632701215242378
+  em_pe_4_65_m: -0.3545757743506508
+- alavanca: Idem, com o pior análogo (304 s; NÃO VALIDADO)
+  grupo: variante
+  diametro_m: 0.57
+  comprimento_m: 3.2596759969908713
+  delta_comprimento_m: -0.30131872483351607
+  deitado_4_5_m: -0.03783799849543579
+  deitado_4_65_m: 0.1677272188958685
+  em_pe_4_5_m: -1.4784753966907216
+  em_pe_4_65_m: -0.4697810495171346
+- alavanca: Tanques aninhados, antepara comum (limite otimista)
+  grupo: tanques
+  diametro_m: 0.57
+  comprimento_m: 3.0703976475535146
+  delta_comprimento_m: -0.49059707427087274
+  deitado_4_5_m: 0.056801176223242544
+  deitado_4_65_m: 0.26236639361454683
+  em_pe_4_5_m: -1.289197047253365
+  em_pe_4_65_m: -0.28050270007977796
+- alavanca: Ø 0,6 m
+  grupo: diametro
+  diametro_m: 0.6
+  comprimento_m: 3.491098195728782
+  delta_comprimento_m: -0.06989652609560526
+  deitado_4_5_m: -0.1755490978643912
+  deitado_4_65_m: 0.03662481517908733
+  em_pe_4_5_m: -1.7373163047833096
+  em_pe_4_65_m: -0.7252152542580466
+- alavanca: Ø 0,69 m
+  grupo: diametro
+  diametro_m: 0.69
+  comprimento_m: 3.476502085506658
+  delta_comprimento_m: -0.08449263631772919
+  deitado_4_5_m: -0.2342510427533293
+  deitado_4_65_m: -0.0022510427533293242
+  em_pe_4_5_m: -1.8059918303790945
+  em_pe_4_65_m: -0.7811544116697395
+- alavanca: Órbita 300 × 10824 km (margem zero no Falcon Heavy)
+  grupo: orbita
+  diametro_m: 0.57
+  comprimento_m: 3.356796777302738
+  delta_comprimento_m: -0.20419794452164952
+  deitado_4_5_m: -0.08639838865136906
+  deitado_4_65_m: 0.11916682873993523
+  em_pe_4_5_m: -1.5755961770025881
+  em_pe_4_65_m: -0.5669018298290012
+  extra_orbitador_m_s: 497.6969701282821
+  orbitador_fecha: true
+  margem_falcon_heavy: 5.022458284087428e-05
+- alavanca: Órbita 300 × 10000 km
+  grupo: orbita
+  diametro_m: 0.57
+  comprimento_m: 3.3444520834376346
+  delta_comprimento_m: -0.2165426383867528
+  deitado_4_5_m: -0.08022604171881742
+  deitado_4_65_m: 0.12533917567248687
+  em_pe_4_5_m: -1.5632514831374849
+  em_pe_4_65_m: -0.5545571359638979
+  extra_orbitador_m_s: 551.7905965999064
+  orbitador_fecha: true
+  margem_falcon_heavy: -0.04313409169320648
+- alavanca: Órbita 300 × 5000 km
+  grupo: orbita
+  diametro_m: 0.57
+  comprimento_m: 3.2352466470015178
+  delta_comprimento_m: -0.3257480748228696
+  deitado_4_5_m: -0.02562332350075902
+  deitado_4_65_m: 0.17994189389054527
+  em_pe_4_5_m: -1.454046046701368
+  em_pe_4_65_m: -0.4453516995277811
+  extra_orbitador_m_s: 1054.4251354173816
+  orbitador_fecha: true
+  margem_falcon_heavy: -0.4064469784213972
+- alavanca: Órbita 300 × 1000 km
+  grupo: orbita
+  diametro_m: 0.57
+  comprimento_m: 3.055467045136169
+  delta_comprimento_m: -0.5055276766882182
+  deitado_4_5_m: 0.06426647743191527
+  deitado_4_65_m: 0.26983169482321956
+  em_pe_4_5_m: -1.2742664448360195
+  em_pe_4_65_m: -0.2655720976624325
+  extra_orbitador_m_s: 1983.9210047445874
+  orbitador_fecha: true
+  margem_falcon_heavy: -0.9266800598567618
+- alavanca: Órbita 300 × 594 km (menor apoapse em que o orbitador fecha)
+  grupo: orbita
+  diametro_m: 0.57
+  comprimento_m: 3.0269661653490565
+  delta_comprimento_m: -0.5340285564753309
+  deitado_4_5_m: 0.07851691732547161
+  deitado_4_65_m: 0.2840821347167759
+  em_pe_4_5_m: -1.2457655650489068
+  em_pe_4_65_m: -0.23707121787531982
+  extra_orbitador_m_s: 2143.8282439619193
+  orbitador_fecha: true
+  margem_falcon_heavy: -0.9998340995513164
+- alavanca: Órbita 380 × 380 km
+  grupo: orbita
+  diametro_m: 0.57
+  comprimento_m: 3.017031821230914
+  delta_comprimento_m: -0.5439629005934732
+  deitado_4_5_m: 0.08348408938454277
+  deitado_4_65_m: 0.28904930677584706
+  em_pe_4_5_m: -1.2358312209307645
+  em_pe_4_65_m: -0.2271368737571775
+  extra_orbitador_m_s: 2260.4068221341004
+  orbitador_fecha: false
+  margem_falcon_heavy: null
+- alavanca: Órbita de margem zero + tanques aninhados
+  grupo: combinada
+  diametro_m: 0.57
+  comprimento_m: 2.8654487853634474
+  delta_comprimento_m: -0.69554593646094
+  deitado_4_5_m: 0.15927560731827617
+  deitado_4_65_m: 0.36484082470958046
+  em_pe_4_5_m: -1.0842481850632977
+  em_pe_4_65_m: -0.0755538378897107
+  extra_orbitador_m_s: 497.6969701282821
+  orbitador_fecha: true
+  margem_falcon_heavy: 5.022458284087428e-05

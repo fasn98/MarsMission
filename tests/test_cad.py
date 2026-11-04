@@ -393,3 +393,46 @@ def test_encaixe_coifas():
     # as premissas propostas não entraram
     ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
     assert not ({p["id"] for p in r["premissas_propostas"]} & ids)
+
+
+def test_comprimento_mav():
+    """Investigação do comprimento: a base reproduz o estudo; a folga segue o comprimento; o trade usa as funções do estudo."""
+    r = ler("results/etapa7.2/comprimento_mav.yaml")
+    arq = ler("results/etapa2.5/arquitetura.yaml")
+    ma = ler("results/etapa7.2/mav_arranjo.yaml")
+    b = next(o for o in r["orbitas"] if o["base"])
+    # a órbita de base devolve os números vigentes, então o parâmetro `orbita` de veiculos não muda nada
+    assert b["dv_mav_com_margem_m_s"] == pytest.approx(1e3 * arq["lander"]["mav"]["dv_com_margem_km_s"], rel=1e-12)
+    assert b["glom_kg"] == pytest.approx(arq["lander"]["mav"]["estagios"][0]["massa_inicial_kg"], rel=1e-12)
+    assert b["orbitador_injetado_kg"] == pytest.approx(arq["orbitador"]["injetado_kg"], rel=1e-12)
+    assert b["lander_injetado_kg"] == pytest.approx(arq["lander"]["injetado_kg"], rel=1e-12)
+    caso = next(c for c in ma["casos"] if c["diametro_m"] == r["diametro_m"])
+    assert b["comprimento_m"] == pytest.approx(caso["comprimento_m"], rel=1e-12) and r["comprimento_base_m"] == pytest.approx(caso["comprimento_m"], rel=1e-12)
+    od = r["origem_dv"]
+    assert od["dv_100x100_m_s"] + od["transferencia_m_s"] + od["deficit_rotacao_m_s"] == pytest.approx(od["sem_margem_m_s"])
+    assert od["com_margem_m_s"] == pytest.approx(b["dv_mav_com_margem_m_s"], rel=1e-12)
+    # folga: a de mav_arranjo menos a metade da variação, nos dois aeroshells; em pé, disponível menos comprimento
+    fo = {k: next(e for e in caso["formas"][k] if e["estacao"] == "ombro") for k in ("msl_m2020", "srl_a")}
+    al = {x["alavanca"]: x for x in r["alavancas"]}
+    a0 = r["alavancas"][0]
+    assert a0["deitado_4_5_m"] == pytest.approx(fo["msl_m2020"]["deitado_folga_m"]) and a0["deitado_4_65_m"] == pytest.approx(fo["srl_a"]["deitado_folga_m"])
+    assert a0["em_pe_4_65_m"] == pytest.approx(fo["srl_a"]["em_pe_folga_m"])
+    ex = next(x for k, x in al.items() if k.startswith("Cada 0,10"))
+    assert ex["deitado_4_5_m"] == pytest.approx(a0["deitado_4_5_m"] + 0.05) and ex["em_pe_4_65_m"] == pytest.approx(a0["em_pe_4_65_m"] + 0.10)
+    # motor real 164:1 nos dois estágios: 2 × 0,55423 m contra 0,60 + 0,45 m da P-086
+    real = next(x for k, x in al.items() if k.startswith("P-086 pelo motor real"))
+    assert real["delta_comprimento_m"] == pytest.approx(2 * 21.82 * 0.0254 - 1.05)
+    # trade: órbita mais baixa encurta o MAV e custa Δv ao orbitador; margem zero de fato perto de zero, e 380 km não fecha
+    orb = sorted(r["orbitas"], key=lambda o: -o["apoapse_km"])
+    assert all(a["comprimento_m"] > c["comprimento_m"] for a, c in zip(orb, orb[1:]))
+    assert all(a["extra_orbitador_regra_iii_m_s"] < c["extra_orbitador_regra_iii_m_s"] for a, c in zip(orb, orb[1:]))
+    zero = next(o for o in orb if o["rotulo"].startswith("margem zero"))
+    assert abs(zero["margem_falcon_heavy"]) < 1e-3
+    assert next(o for o in orb if o["apoapse_km"] == 380)["orbitador_injetado_kg"] is None
+    # tanques aninhados: um tampo a menos por estágio, com o volume somado
+    assert r["alavancas"][0]["comprimento_m"] > next(x for k, x in al.items() if k.startswith("Tanques aninhados"))["comprimento_m"]
+    # a opinião é a última seção
+    md = (RAIZ / "results/etapa7.2/comprimento_mav.md").read_text(encoding="utf-8")
+    assert md.rindex("## ") == md.index("## Opinião do agente")
+    assert "NÃO VALIDADO" in md
+
