@@ -69,14 +69,16 @@
 | A5 | Orbitador | Falcon Heavy |
 
 49. Crie uma Assembly para cada linha da tabela (A1, A2, A3, A4, A5). Repita os passos abaixo em cada uma.
-50. Clique em Insert e insira o Part Studio do envelope. Clique com o botão direito nele e escolha Fix.
-51. Insira o Part Studio do veículo, inteiro.
-52. Arraste uma peça do veículo. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
-53. Escolha o mate Fastened.
-54. Clique no mate connector do envelope, no plano da interface.
-55. Clique no mate connector do veículo, no plano da interface.
-56. Confirme. O veículo deve ficar dentro do envelope, com o topo para cima.
-57. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.
+50. Clique em Insert e insira o Part Studio do envelope.
+51. Clique com o botão direito no envelope e escolha Fix.
+52. Insira o Part Studio do veículo, inteiro.
+53. Arraste uma peça do veículo.
+54. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
+55. Escolha o mate Fastened.
+56. Clique no mate connector do envelope, no plano da interface.
+57. Clique no mate connector do veículo, no plano da interface.
+58. Confirme. O veículo deve ficar dentro do envelope, com o topo para cima.
+59. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.
 
 ## D. Medir as folgas (ferramenta Measure)
 
@@ -101,8 +103,8 @@ O valor esperado é a menor distância entre as superfícies, um pouco menor que
 
 ## E. Rodar Check interference
 
-58. Em cada Assembly, use o comando de interferência (Check interference ou o nome equivalente no menu).
-59. Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo não são conferidos nesta etapa (P-095).
+60. Em cada Assembly, use o comando de interferência (Check interference ou o nome equivalente no menu).
+61. Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo vão aparecer, como helicópteros e tanques de descida (folgas.md), e não têm valor esperado aqui (P-095).
 
 | Assembly | Esperado com a peça Envelope |
 | :- | :- |
@@ -114,5 +116,5 @@ O valor esperado é a menor distância entre as superfícies, um pouco menor que
 
 ## F. Anotar
 
-60. Para cada Assembly, anote o valor lido no Measure e o resultado do Check interference.
-61. Mande os valores para registro. O estudo compara cada um com o esperado desta página.
+62. Para cada Assembly, anote o valor lido no Measure e o resultado do Check interference.
+63. Mande os valores para registro. O estudo compara cada um com o esperado desta página.

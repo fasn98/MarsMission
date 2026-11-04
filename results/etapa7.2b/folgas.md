@@ -39,7 +39,7 @@ A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/confe
 | lander_4_5.fs | lander_4_5 | 33 | 3 154,718 | 0,0259, −0,0266, 2,0985 | Circuito de fluido de cruzeiro (P-077) |
 | orbitador.fs | orbitador | 20 | 6 506,245 | 0,0000, 0,0000, 1,3928 | Cilindro central |
 
-**O que mudou em relação a `results/etapa7.2/orbitador.fs` e `lander.fs`:** a versão do cabeçalho, de 2737 para 3112; a constante `DONO_INTERFACE`; e o bloco `opMateConnector` no fim da feature. A lista CORPOS é a mesma (`tests/test_cad.py` confere), então massa e CG não mudam. O `mav.fs` não muda: o MAV não tem interface com o adaptador.
+**O que mudou em relação a `results/etapa7.2/orbitador.fs` e `lander.fs`:** a versão do cabeçalho, de 2737 para 3112; a linha de comentário com o rótulo de verificação; a constante `DONO_INTERFACE`; e o bloco `opMateConnector` no fim da feature. A lista CORPOS é a mesma (`tests/test_cad.py` confere), então massa e CG não mudam. O `mav.fs` não muda: o MAV não tem interface com o adaptador.
 
 **`lander_4_5.fs` é um modelo novo:** cápsula MSL/M2020 e o resto do arranjo igual, com a massa acima. O MAV deitado viola a folga interna de 0,25 m da P-087 (folga de −0,188 m com a base na estação 0,85 m), mas não toca a casca. As peças que atravessam a face externa da cápsula são outras:
 

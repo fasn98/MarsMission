@@ -356,6 +356,10 @@ def test_encaixe_coifas():
     # o MAV deitado do 4,5 m não atravessa a cápsula; os helicópteros e os tanques de descida, sim
     pc = {x["corpo"]: x["folga_m"] for x in r["pecas_contra_a_capsula"]["lander_4_5"]}
     assert next(v_ for k, v_ in pc.items() if k.startswith("MAV")) > 0 and pc["Helicóptero 1"] < 0 and pc["Tanque descida 1"] < 0
+    # texto gerado: rótulo, lista de interferências em A4 e aviso da face interna
+    assert "VERIFICACAO geometrica" in t45
+    rot = (RAIZ / "results/etapa7.2b/roteiro_onshape.md").read_text(encoding="utf-8")
+    assert "| A4 | interferência com `Escudo termico (PICA)` e `Casca traseira 1 (SLA-561V)`, no ombro |" in rot and "face INTERNA" in rot
     # as premissas propostas não entraram
     ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
     assert not ({p["id"] for p in r["premissas_propostas"]} & ids)

@@ -33,6 +33,7 @@ SAIDA = RAIZ / "results" / "etapa7.2b"
 MODELO = RAIZ / "cad" / "featurescript" / "envelope.fs"
 # amostragem da superfície dos corpos (escolha numérica, não premissa): os vértices dos perfis entram exatos
 N_EIXO, N_ANGULO = 401, 720
+EMPATE_M = 1e-9   # peças simétricas empatam: o desempate não pode depender do ruído entre CPUs (o texto vai para results/)
 
 
 # ------------------------------------------------------------------------------------------------- envelopes
@@ -142,11 +143,11 @@ def folgas(corpos, perfil):
         i = int(np.argmin(fol))
         if fol[i] < 0:
             negativos.append({"corpo": c["nome"], "folga_radial_m": float(fol[i])})
-        if rad is None or fol[i] < rad["folga_radial_m"]:
+        if rad is None or fol[i] < rad["folga_radial_m"] - EMPATE_M:
             rad = {"folga_radial_m": float(fol[i]), "corpo": c["nome"], "z_m": float(P[i, 2]), "raio_do_corpo_m": float(rr[i]),
                    "distancia_measure_m": distancia_ao_perfil(float(rr[i]), float(P[i, 2]), perfil), "tipo": c["tipo"]}
         j = int(np.argmax(P[:, 2]))
-        if axi is None or topo - P[j, 2] < axi["folga_axial_m"]:
+        if axi is None or topo - P[j, 2] < axi["folga_axial_m"] - EMPATE_M:
             axi = {"folga_axial_m": float(topo - P[j, 2]), "corpo": c["nome"], "z_m": float(P[j, 2]), "topo_envelope_m": float(topo)}
     rad["corpos_com_folga_negativa"] = negativos
     return rad, axi
@@ -169,7 +170,7 @@ def fora_da_capsula(corpos, perfil, h_cz):
     # o MAV entra como um só: a peça dele mais próxima da casca
     mav = min((x for x in linhas if x["corpo"].startswith("MAV")), key=lambda x: x["folga_m"])
     linhas = [x for x in linhas if not x["corpo"].startswith("MAV")] + [{**mav, "corpo": "MAV (peça mais próxima: " + mav["corpo"] + ")"}]
-    return sorted(linhas, key=lambda x: x["folga_m"])
+    return sorted(linhas, key=lambda x: (round(x["folga_m"], 6), x["corpo"]))
 
 
 # ------------------------------------------------------------------------------------------------- principal
@@ -278,7 +279,7 @@ def escreve_md(o):
     for k, x in o["veiculos"].items():
         md.append(f"| {k}.fs | {k} | {x['corpos']} | {br(x['massa_kg'], 3)} | " + ", ".join(br(c, 4) for c in x["cg_m"]) + f" | {x['dono_do_conector']} |")
     mv = o["mav_na_capsula_4_5"]
-    md += ["", "**O que mudou em relação a `results/etapa7.2/orbitador.fs` e `lander.fs`:** a versão do cabeçalho, de 2737 para 3112; a constante `DONO_INTERFACE`; e o bloco `opMateConnector` no fim da feature. "
+    md += ["", "**O que mudou em relação a `results/etapa7.2/orbitador.fs` e `lander.fs`:** a versão do cabeçalho, de 2737 para 3112; a linha de comentário com o rótulo de verificação; a constante `DONO_INTERFACE`; e o bloco `opMateConnector` no fim da feature. "
            "A lista CORPOS é a mesma (`tests/test_cad.py` confere), então massa e CG não mudam. O `mav.fs` não muda: o MAV não tem interface com o adaptador.", "",
            f"**`lander_4_5.fs` é um modelo novo:** cápsula MSL/M2020 e o resto do arranjo igual, com a massa acima. O MAV deitado viola a folga interna de {br(o['folga_interna_m'], 2)} m da P-087 "
            f"(folga de {sg(mv['folga_m'])} m com a base na estação {br(mv['estacao_base_m'], 2)} m), mas não toca a casca. As peças que atravessam a face externa da cápsula são outras:", "",
@@ -344,9 +345,11 @@ def escreve_roteiro(o):
         md.append(f"| A{i + 1} | {nomes_ps[li['veiculo']]} | {e} |")
     md.append("")
     passo(f"Crie uma Assembly para cada linha da tabela ({', '.join(amb)}). Repita os passos abaixo em cada uma.")
-    passo("Clique em Insert e insira o Part Studio do envelope. Clique com o botão direito nele e escolha Fix.")
+    passo("Clique em Insert e insira o Part Studio do envelope.")
+    passo("Clique com o botão direito no envelope e escolha Fix.")
     passo("Insira o Part Studio do veículo, inteiro.")
-    passo("Arraste uma peça do veículo. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.")
+    passo("Arraste uma peça do veículo.")
+    passo("Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.")
     passo("Escolha o mate Fastened.")
     passo("Clique no mate connector do envelope, no plano da interface.")
     passo("Clique no mate connector do veículo, no plano da interface.")
@@ -364,7 +367,7 @@ def escreve_roteiro(o):
     md += ["", "O valor esperado é a menor distância entre as superfícies, um pouco menor que a folga horizontal onde o envelope é inclinado. O Measure não mostra o sinal (não conferido): uma folga negativa aparece como valor positivo, e quem diz que há interferência é a seção E.", "",
            "## E. Rodar Check interference", ""]
     passo("Em cada Assembly, use o comando de interferência (Check interference ou o nome equivalente no menu).")
-    passo("Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo não são conferidos nesta etapa (P-095).")
+    passo("Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo vão aparecer, como helicópteros e tanques de descida (folgas.md), e não têm valor esperado aqui (P-095).")
     md += ["", "| Assembly | Esperado com a peça Envelope |", "| :- | :- |"]
     for i, li in enumerate(cfg):
         neg = li["radial"]["corpos_com_folga_negativa"]
