@@ -177,90 +177,30 @@ def capsula_raio(perfil, x):
     return float(np.interp(x, perfil[0], perfil[1]))
 
 
-# ------------------------------------------------------------------------------------------------- principal
-def main():
-    cad, env = ler("config/cad.yaml"), ler("results/etapa7.1/envelope.yaml")
-    arq, mot = ler("results/etapa2.5/arquitetura.yaml"), ler("config/motores.yaml")
-    esc, mats, cons, pr = cad["escolha"], cad["materiais"], cad["construcao"], cad["propelentes"]
+def densidades(cad):
+    """Densidades dos propelentes e de todos os materiais (kg/m³)."""
+    pr = cad["propelentes"]
     rho = {"mmh": v(pr["densidade_mmh_kg_m3"]), "mon3": v(pr["densidade_oxidante_kg_m3"]), "hidrazina": v(pr["densidade_hidrazina_kg_m3"])}
-    dens = {k: (rho[k] if k in rho else v(m)) for k, m in mats.items()}
+    return rho, {k: (rho[k] if k in rho else v(m)) for k, m in cad["materiais"].items()}
+
+
+def monta_lander(cad, env, arq, mot, forma):
+    """Lander em configuração de lançamento com a cápsula da forma dada: perfil real (P-089), frente para cima (P-091),
+    MAV deitado ao longo de y."""
+    esc, cons = cad["escolha"], cad["construcao"]
+    rho, dens = densidades(cad)
     t_tq = v(cons["tanques"]["espessura_m"])
-    f_ent, f_rad = v(cad["tanques"]["folga_entre_conjuntos_m"]), v(cad["tanques"]["folga_radial_m"])
-    comp_o = {x["item"]: x for x in arq["orbitador"]["composicao"]}
+    of = v(cad["propelentes"]["razao_mistura_r4d11"])
+    eqv = cons["equivalentes"]
     comp_l = {x["item"]: x for x in arq["lander"]["composicao"]}
     pega = lambda comp, ini: next(x for k, x in comp.items() if k.startswith(ini))  # noqa: E731
-    of = v(pr["razao_mistura_r4d11"])
-
-    # ---------------- orbitador (eixo z a partir do plano do PAF)
-    eo = env["orbitador"]
-    orb = Veiculo("orbitador")
-    rc = eo["raio_cilindro_central_m"]
-    z, topo_ret = 0.0, 0.0
-    for k, rot in (("insercao_marte", "insercao"), ("retorno", "retorno")):
-        t = eo["tanques"][k]
-        d = t["diametro_esfera_m"]
-        rq = rc + f_rad + d / 2
-        zc = z + d / 2
-        n = t["pares"]
-        for i in range(2 * n):   # em quadrado: oxidante e combustível alternados
-            a = 2 * math.pi * i / (2 * n)
-            ox = i % 2 == 0
-            m = (t["oxidante_kg"] if ox else t["combustivel_kg"]) / n
-            esfera_tanque(orb, f"{rot} {'MON-3' if ox else 'MMH'} {i // 2 + 1}", (rq * math.cos(a), rq * math.sin(a), zc), d / 2 + t_tq,
-                          t_tq, cons["tanques"]["material"], m, rho["mon3" if ox else "mmh"], "mon3" if ox else "mmh")
-        topo_ret = z + d
-        z += d + f_ent
-    orb.add("Cilindro central", cons["cilindro_central"]["material"], "geometria (P-093)", tipo="tubo",
-            p0=[0, 0, 0], p1=[0, 0, topo_ret], r=rc, t=v(cons["cilindro_central"]["espessura_m"]))
-    eqv = cons["equivalentes"]
-    r_plat = eo["conjuntos"][1]["raio_m"]
-    h_plat = v(eqv["plataforma_orbitador_altura_m"])
-    z_plat = topo_ret + f_ent
-    orb.equivalente("Plataforma (P-016)", pega(comp_o, "Plataforma")["massa_kg"], "massa do orçamento (P-094)",
-                    tipo="cilindro", p0=[0, 0, z_plat], p1=[0, 0, z_plat + h_plat], r=r_plat)
-    cc = eo["ccrs_m"]
-    z_cc = z_plat + h_plat + f_ent
-    orb.equivalente("CCRS", pega(comp_o, "Carga útil CU-2: CCRS")["massa_kg"], "massa do orçamento (P-094)",
-                    tipo="caixa", c1=[-cc[0] / 2, -cc[1] / 2, z_cc], c2=[cc[0] / 2, cc[1] / 2, z_cc + cc[2]])
-    r_ees = eo["ees_diametro_m"] / 2
-    ang_ees = math.radians(v(cad["orbitador"]["ees_semiangulo_graus"]))
-    h_ees = r_ees / math.tan(ang_ees)
-    z_ees = z_cc + cc[2]
-    orb.equivalente("EES com o contêiner de amostras", pega(comp_o, "Carga útil CU-2: EEV")["massa_kg"], "massa do orçamento (P-094)",
-                    tipo="tronco", p0=[0, 0, z_ees], p1=[0, 0, z_ees + h_ees], r0=r_ees, r1=v(eqv["ees_raio_ponta_m"]), ri0=0.0, ri1=0.0)
-    perf_f = (env["coifas"]["falcon"]["altura_m"], env["coifas"]["falcon"]["raio_m"])
-    conj_orb = [("Tanques de inserção", 0.0, eo["tanques"]["insercao_marte"]["diametro_esfera_m"], eo["conjuntos"][0]["raio_m"] + t_tq),
-                ("Tanques de retorno", eo["conjuntos"][1]["h0_m"], topo_ret, eo["conjuntos"][1]["raio_m"] + t_tq),
-                ("Plataforma", z_plat, z_plat + h_plat, r_plat),
-                ("CCRS", z_cc, z_cc + cc[2], math.hypot(cc[0] / 2, cc[1] / 2)),
-                ("EES", z_ees, z_ees + h_ees, r_ees)]
-    folga_orb = [{"conjunto": a, "h0_m": b, "h1_m": c, "raio_m": r, "folga_radial_m": ea.margem_conjunto(perf_f, b, c, r)} for a, b, c, r in conj_orb]
-
-    # ---------------- lander: cápsula real (P-089), frente para cima (P-091), MAV deitado ao longo de y
     capsulas = cad["capsulas"]
-    perfis = {k: ([float(x) for x in c["x_m"]], [float(x) for x in c["r_m"]]) for k, c in capsulas.items() if isinstance(c, dict) and "x_m" in c}
-    forma = capsulas["forma_da_opcao"][esc["aeroshell"]]
-    px, prr = perfis[forma]
+    px, prr = [[float(x) for x in capsulas[forma][k]] for k in ("x_m", "r_m")]
     L = px[-1]
     al = cad["arranjo_lander"]
-    msl_conj = v(cad["aeroshell"]["msl_conjunto"]["altura_m"])
-    h_cz = msl_conj - perfis["msl_m2020"][0][-1]   # P-091
+    h_cz = v(cad["aeroshell"]["msl_conjunto"]["altura_m"]) - float(capsulas["msl_m2020"]["x_m"][-1])   # P-091
     z_aft = h_cz
     zst = lambda x: z_aft + (L - x)  # noqa: E731   estação (distância ao nariz) → altura acima do PAF
-    perf_v = (env["coifas"]["vulcan"]["altura_m"], env["coifas"]["vulcan"]["raio_m"])
-
-    def folga_vulcan(perfil, h_aft):
-        """Menor folga radial (m) do perfil da cápsula, com a frente para cima e a base a h_aft do PAF, contra o Vulcan."""
-        xs = np.linspace(0, perfil[0][-1], 400)
-        Lc = perfil[0][-1]
-        return min(ea.raio_envelope(perf_v, h_aft + (Lc - x)) - capsula_raio(perfil, x) for x in xs)
-    fol_v = {k: {"folga_radial_m": folga_vulcan(p, h_cz), "raio_max_m": max(p[1]), "comprimento_m": p[0][-1]} for k, p in perfis.items()}
-    # sensibilidade: envelope sem o afunilamento linear entre as cotas (o diâmetro menor, da estação de cima, desde o PAF)
-    perf_v_ref = perf_v
-    perf_v = ([perf_v_ref[0][0], perf_v_ref[0][1]] + list(perf_v_ref[0][2:]), [perf_v_ref[1][1], perf_v_ref[1][1]] + list(perf_v_ref[1][2:]))
-    for k, p in perfis.items():
-        fol_v[k]["folga_sem_afunilamento_m"] = folga_vulcan(p, h_cz)
-    perf_v = perf_v_ref
 
     lan = Veiculo("lander")
     t_pica = v(capsulas["espessura_pica_m"])
@@ -328,6 +268,91 @@ def main():
     for s in (-1, 1):
         lan.equivalente(f"Helicóptero {'1' if s < 0 else '2'}", heli / 2, "massa do orçamento (P-094)", tipo="cilindro",
                         p0=[0, s * hy, zst(x_hel)], p1=[0, s * hy, zst(x_hel + hel["altura_m"])], r=hel["diametro_rotor_m"] / 2)
+    return lan
+
+
+# ------------------------------------------------------------------------------------------------- principal
+def main():
+    cad, env = ler("config/cad.yaml"), ler("results/etapa7.1/envelope.yaml")
+    arq, mot = ler("results/etapa2.5/arquitetura.yaml"), ler("config/motores.yaml")
+    esc, mats, cons, pr = cad["escolha"], cad["materiais"], cad["construcao"], cad["propelentes"]
+    rho, dens = densidades(cad)
+    t_tq = v(cons["tanques"]["espessura_m"])
+    f_ent, f_rad = v(cad["tanques"]["folga_entre_conjuntos_m"]), v(cad["tanques"]["folga_radial_m"])
+    comp_o = {x["item"]: x for x in arq["orbitador"]["composicao"]}
+    pega = lambda comp, ini: next(x for k, x in comp.items() if k.startswith(ini))  # noqa: E731
+    of = v(pr["razao_mistura_r4d11"])
+
+    # ---------------- orbitador (eixo z a partir do plano do PAF)
+    eo = env["orbitador"]
+    orb = Veiculo("orbitador")
+    rc = eo["raio_cilindro_central_m"]
+    z, topo_ret = 0.0, 0.0
+    for k, rot in (("insercao_marte", "insercao"), ("retorno", "retorno")):
+        t = eo["tanques"][k]
+        d = t["diametro_esfera_m"]
+        rq = rc + f_rad + d / 2
+        zc = z + d / 2
+        n = t["pares"]
+        for i in range(2 * n):   # em quadrado: oxidante e combustível alternados
+            a = 2 * math.pi * i / (2 * n)
+            ox = i % 2 == 0
+            m = (t["oxidante_kg"] if ox else t["combustivel_kg"]) / n
+            esfera_tanque(orb, f"{rot} {'MON-3' if ox else 'MMH'} {i // 2 + 1}", (rq * math.cos(a), rq * math.sin(a), zc), d / 2 + t_tq,
+                          t_tq, cons["tanques"]["material"], m, rho["mon3" if ox else "mmh"], "mon3" if ox else "mmh")
+        topo_ret = z + d
+        z += d + f_ent
+    orb.add("Cilindro central", cons["cilindro_central"]["material"], "geometria (P-093)", tipo="tubo",
+            p0=[0, 0, 0], p1=[0, 0, topo_ret], r=rc, t=v(cons["cilindro_central"]["espessura_m"]))
+    eqv = cons["equivalentes"]
+    r_plat = eo["conjuntos"][1]["raio_m"]
+    h_plat = v(eqv["plataforma_orbitador_altura_m"])
+    z_plat = topo_ret + f_ent
+    orb.equivalente("Plataforma (P-016)", pega(comp_o, "Plataforma")["massa_kg"], "massa do orçamento (P-094)",
+                    tipo="cilindro", p0=[0, 0, z_plat], p1=[0, 0, z_plat + h_plat], r=r_plat)
+    cc = eo["ccrs_m"]
+    z_cc = z_plat + h_plat + f_ent
+    orb.equivalente("CCRS", pega(comp_o, "Carga útil CU-2: CCRS")["massa_kg"], "massa do orçamento (P-094)",
+                    tipo="caixa", c1=[-cc[0] / 2, -cc[1] / 2, z_cc], c2=[cc[0] / 2, cc[1] / 2, z_cc + cc[2]])
+    r_ees = eo["ees_diametro_m"] / 2
+    ang_ees = math.radians(v(cad["orbitador"]["ees_semiangulo_graus"]))
+    h_ees = r_ees / math.tan(ang_ees)
+    z_ees = z_cc + cc[2]
+    orb.equivalente("EES com o contêiner de amostras", pega(comp_o, "Carga útil CU-2: EEV")["massa_kg"], "massa do orçamento (P-094)",
+                    tipo="tronco", p0=[0, 0, z_ees], p1=[0, 0, z_ees + h_ees], r0=r_ees, r1=v(eqv["ees_raio_ponta_m"]), ri0=0.0, ri1=0.0)
+    perf_f = (env["coifas"]["falcon"]["altura_m"], env["coifas"]["falcon"]["raio_m"])
+    conj_orb = [("Tanques de inserção", 0.0, eo["tanques"]["insercao_marte"]["diametro_esfera_m"], eo["conjuntos"][0]["raio_m"] + t_tq),
+                ("Tanques de retorno", eo["conjuntos"][1]["h0_m"], topo_ret, eo["conjuntos"][1]["raio_m"] + t_tq),
+                ("Plataforma", z_plat, z_plat + h_plat, r_plat),
+                ("CCRS", z_cc, z_cc + cc[2], math.hypot(cc[0] / 2, cc[1] / 2)),
+                ("EES", z_ees, z_ees + h_ees, r_ees)]
+    folga_orb = [{"conjunto": a, "h0_m": b, "h1_m": c, "raio_m": r, "folga_radial_m": ea.margem_conjunto(perf_f, b, c, r)} for a, b, c, r in conj_orb]
+
+    # ---------------- lander: cápsula real (P-089), frente para cima (P-091), MAV deitado ao longo de y
+    capsulas = cad["capsulas"]
+    perfis = {k: ([float(x) for x in c["x_m"]], [float(x) for x in c["r_m"]]) for k, c in capsulas.items() if isinstance(c, dict) and "x_m" in c}
+    forma = capsulas["forma_da_opcao"][esc["aeroshell"]]
+    msl_conj = v(cad["aeroshell"]["msl_conjunto"]["altura_m"])
+    h_cz = msl_conj - perfis["msl_m2020"][0][-1]   # P-091
+    perf_v = (env["coifas"]["vulcan"]["altura_m"], env["coifas"]["vulcan"]["raio_m"])
+
+    def folga_vulcan(perfil, h_aft):
+        """Menor folga radial (m) do perfil da cápsula, com a frente para cima e a base a h_aft do PAF, contra o Vulcan."""
+        xs = np.linspace(0, perfil[0][-1], 400)
+        Lc = perfil[0][-1]
+        return min(ea.raio_envelope(perf_v, h_aft + (Lc - x)) - capsula_raio(perfil, x) for x in xs)
+    fol_v = {k: {"folga_radial_m": folga_vulcan(p, h_cz), "raio_max_m": max(p[1]), "comprimento_m": p[0][-1]} for k, p in perfis.items()}
+    # sensibilidade: envelope sem o afunilamento linear entre as cotas (o diâmetro menor, da estação de cima, desde o PAF)
+    perf_v_ref = perf_v
+    perf_v = ([perf_v_ref[0][0], perf_v_ref[0][1]] + list(perf_v_ref[0][2:]), [perf_v_ref[1][1], perf_v_ref[1][1]] + list(perf_v_ref[1][2:]))
+    for k, p in perfis.items():
+        fol_v[k]["folga_sem_afunilamento_m"] = folga_vulcan(p, h_cz)
+    perf_v = perf_v_ref
+
+    lan = monta_lander(cad, env, arq, mot, forma)
+    mv_esc = env["mav"][esc["mav_diametro"]]
+    d_mav = mv_esc["diametro_m"]
+    fi = v(cad["aeroshell"]["folga_interna_m"])
 
     # MAV deitado contra a casca traseira (estações da base varridas, P-092)
     est = [float(x) for x in cad["mav_no_aeroshell"]["estacao_base_m"]]

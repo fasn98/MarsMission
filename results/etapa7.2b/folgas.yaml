@@ -1,0 +1,155 @@
+gerado_por: tools/encaixe_coifas.py
+natureza: VERIFICAÇÃO geométrica do modelo, não validação
+veiculos:
+  lander_4_65:
+    massa_kg: 3190.406282097587
+    cg_m:
+    - 0.02560650161180367
+    - -0.026256892276789314
+    - 3.0031885372363116
+    corpos: 33
+    dono_do_conector: Circuito de fluido de cruzeiro (P-077)
+  lander_4_5:
+    massa_kg: 3154.718438192364
+    cg_m:
+    - 0.025896175904576536
+    - -0.026553924132838958
+    - 2.0985438052044367
+    corpos: 33
+    dono_do_conector: Circuito de fluido de cruzeiro (P-077)
+  orbitador:
+    massa_kg: 6506.245401470078
+    cg_m:
+    - -2.985534334243933e-17
+    - 4.368373413025915e-17
+    - 1.3928028268488128
+    corpos: 20
+    dono_do_conector: Cilindro central
+configuracoes:
+- veiculo: lander_4_5
+  rotulo: Lander, aeroshell 4,5 m
+  envelope: envelope_vulcan.fs
+  leitura: Contorno reto entre as cotas
+  radial:
+    folga_radial_m: 0.14122334948516002
+    corpo: Escudo térmico (PICA)
+    z_m: 2.15
+    raio_do_corpo_m: 2.2600000000000002
+    distancia_measure_m: 0.1412021280155367
+    tipo: tronco_oco
+  axial:
+    folga_axial_m: 9.8016
+    corpo: Nariz do escudo (PICA)
+    z_m: 3.0
+    topo_envelope_m: 12.8016
+  referencia_7_2_m: 0.14252150287894194
+  reproducao_grade_400_m: 0.14252150287894194
+  diferenca_m: -0.00129815339378192
+- veiculo: lander_4_5
+  rotulo: Lander, aeroshell 4,5 m
+  envelope: envelope_vulcan.fs
+  leitura: Diametro menor desde o plano da interface
+  radial:
+    folga_radial_m: 0.06399999999999961
+    corpo: Escudo térmico (PICA)
+    z_m: 2.15
+    raio_do_corpo_m: 2.2600000000000002
+    distancia_measure_m: 0.06399999999999961
+    tipo: tronco_oco
+  axial:
+    folga_axial_m: 9.8016
+    corpo: Nariz do escudo (PICA)
+    z_m: 3.0
+    topo_envelope_m: 12.8016
+  referencia_7_2_m: 0.06526817042606536
+  reproducao_grade_400_m: 0.06526817042606536
+  diferenca_m: -0.0012681704260657511
+- veiculo: lander_4_65
+  rotulo: Lander, aeroshell 4,65 m
+  envelope: envelope_vulcan.fs
+  leitura: Contorno reto entre as cotas
+  radial:
+    folga_radial_m: 0.044405511811023146
+    corpo: Escudo térmico (PICA)
+    z_m: 3.12
+    raio_do_corpo_m: 2.3400000000000003
+    distancia_measure_m: 0.04439883904604878
+    tipo: tronco_oco
+  axial:
+    folga_axial_m: 8.8316
+    corpo: Nariz do escudo (PICA)
+    z_m: 3.97
+    topo_envelope_m: 12.8016
+  referencia_7_2_m: 0.046599138400648776
+  reproducao_grade_400_m: 0.046599138400648776
+  diferenca_m: -0.00219362658962563
+- veiculo: lander_4_65
+  rotulo: Lander, aeroshell 4,65 m
+  envelope: envelope_vulcan.fs
+  leitura: Diametro menor desde o plano da interface
+  radial:
+    folga_radial_m: -0.01600000000000046
+    corpo: Escudo térmico (PICA)
+    z_m: 3.12
+    raio_do_corpo_m: 2.3400000000000003
+    distancia_measure_m: 0.01600000000000046
+    tipo: tronco_oco
+  axial:
+    folga_axial_m: 8.8316
+    corpo: Nariz do escudo (PICA)
+    z_m: 3.97
+    topo_envelope_m: 12.8016
+  referencia_7_2_m: -0.013791164658634614
+  reproducao_grade_400_m: -0.013791164658634614
+  diferenca_m: -0.0022088353413658446
+- veiculo: orbitador
+  rotulo: Orbitador
+  envelope: envelope_falcon_heavy.fs
+  leitura: Keep-in do fabricante, faixas de 500 mm
+  radial:
+    folga_radial_m: 0.36080905372458894
+    corpo: Tanque insercao MON-3 1
+    z_m: 0.5643001092738147
+    raio_do_corpo_m: 1.958763685379366
+    distancia_measure_m: 0.36079692393590435
+    tipo: esfera_oca
+  axial:
+    folga_axial_m: 6.23193
+    corpo: EES com o contêiner de amostras
+    z_m: 5.11567
+    topo_envelope_m: 11.3476
+  referencia_7_2_m: 0.35621222920797546
+  referencia_7_2_conjunto: Tanques de inserção
+  diferenca_m: 0.004596824516613474
+srl_c_so_perfil:
+  folga_radial_m:
+    vertice_m: 0.029606904906117393
+    referencia_7_2_m: 0.03187213060367977
+  folga_sem_afunilamento_m:
+    vertice_m: -0.03600000000000003
+    referencia_7_2_m: -0.0338064727034979
+reducao_de_folga_por_metro_de_adaptador_vulcan: 0.01733797698364628
+mav_na_capsula_4_5:
+  estacao_base_m: 0.85
+  comprimento_max_m: 3.1839999999999997
+  folga_m: -0.18849736091219382
+espessura_casca_m: 0.01
+premissas_propostas:
+- id: P-096
+  nome: origem_do_step_do_falcon
+  texto: A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm,
+    com o eixo x axial.
+  evidencia: '[F82] PDF p. 26 define a origem do sistema da carga útil no plano de
+    separação; o topo do arquivo, em 446,76 pol, é coerente com o guia. O arquivo
+    não declara o sistema, e separação e interface podem não coincidir.'
+- id: P-097
+  nome: veiculo_sobre_o_plano_da_interface
+  texto: A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura
+    de adaptador nem de sistema de separação.
+  evidencia: Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso.
+    Um adaptador real sobe o veículo, e o envelope afunila com a altura.
+planos:
+  vulcan: '[F80] Fig. 4.3.1-1, p. 4-8: "LV STA 2596.66 (1575 Interface)"'
+  falcon: '[F82] PDF p. 26: "The origin of the payload coordinate system is fixed
+    at the center of the separation plane"; o arquivo STEP não declara que usa esse
+    sistema (P-096 proposta)'

@@ -293,3 +293,44 @@ def test_bocais_estagio1():
     # decisões do Fabio na página
     md = (RAIZ / "results/etapa7.2/bocais_alternativas.md").read_text(encoding="utf-8")
     assert "**C: DESCARTADA.**" in md and "**F: REFERÊNCIA APENAS.**" in md and "Not in Production" in md
+
+
+def test_encaixe_coifas():
+    """Etapa 7.2b: os veículos têm os mesmos corpos da 7.2, e as folgas no vértice do ombro saem do perfil e do envelope."""
+    from conferencia_onshape import _bloco
+    r = ler("results/etapa7.2b/folgas.yaml")
+    par = ler("results/etapa7.2/parametros.yaml")
+    for novo, antigo, chave in (("lander_4_65", "lander", "lander"), ("orbitador", "orbitador", "orbitador")):
+        a = (RAIZ / f"results/etapa7.2b/{novo}.fs").read_text(encoding="utf-8")
+        b = (RAIZ / f"results/etapa7.2/{antigo}.fs").read_text(encoding="utf-8")
+        assert _bloco(a, "CORPOS") == _bloco(b, "CORPOS") and _bloco(a, "MATERIAIS") == _bloco(b, "MATERIAIS")
+        assert r["veiculos"][novo]["massa_kg"] == pytest.approx(par["resumo"][chave]["massa_kg"], rel=1e-12)
+        assert r["veiculos"][novo]["cg_m"] == pytest.approx(par["resumo"][chave]["cg_m"], rel=1e-12, abs=1e-12)
+    for arq in ("envelope_vulcan", "envelope_falcon_heavy", "lander_4_65", "lander_4_5", "orbitador"):
+        t = (RAIZ / f"results/etapa7.2b/{arq}.fs").read_text(encoding="utf-8")
+        assert t.startswith('FeatureScript 3112;\nimport(path : "onshape/std/geometry.fs", version : "3112.0");')
+        assert t.count("opMateConnector(context") == 1
+    # o modelo do envelope não tem dimensão
+    modelo = (RAIZ / "cad/featurescript/envelope.fs").read_text(encoding="utf-8")
+    assert not re.search(r"\d\.\d", re.sub(r"//.*", "", modelo))
+    # a casca: a face interna é o envelope, e o envelope do Vulcan traz as duas leituras
+    seg = _bloco((RAIZ / "results/etapa7.2b/envelope_vulcan.fs").read_text(encoding="utf-8"), "SEGMENTOS")
+    assert len(seg) == 2 and seg[0]["interno"][1][2:] == [2.4385, 2.324] and seg[1]["interno"][1][2:] == [2.324, 2.324]
+    # folga no vértice do ombro, à mão, com o perfil de [F41] e o envelope de [F80]
+    cad = ler("config/cad.yaml")
+    h_cz = par["conferencias"]["lander_vulcan"]["altura_estagio_cruzeiro_m"]
+    li = {(x["veiculo"], x["leitura"][:8]): x for x in r["configuracoes"]}
+    for veic, forma in (("lander_4_5", "msl_m2020"), ("lander_4_65", "srl_a")):
+        p = cad["capsulas"][forma]
+        r_o = max(float(x) for x in p["r_m"])
+        z_o = h_cz + float(p["x_m"][-1]) - float(p["x_m"][[float(x) for x in p["r_m"]].index(r_o)])
+        linear = 2.4385 + (2.324 - 2.4385) * z_o / 6.604
+        assert li[(veic, "Contorno")]["radial"]["folga_radial_m"] == pytest.approx(linear - r_o, abs=1e-9)
+        assert li[(veic, "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(2.324 - r_o, abs=1e-9)
+        # a conta da 7.2, repetida, dá o valor publicado: a diferença é só a amostragem
+        for x in (li[(veic, "Contorno")], li[(veic, "Diametro")]):
+            assert x["reproducao_grade_400_m"] == pytest.approx(x["referencia_7_2_m"], abs=1e-12)
+            assert x["diferenca_m"] < 0
+    # as premissas propostas não entraram
+    ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
+    assert not ({p["id"] for p in r["premissas_propostas"]} & ids)
