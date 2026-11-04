@@ -2,29 +2,61 @@
 
 **VERIFICAÇÃO geométrica do modelo, não validação.** O envelope do Vulcan é leitura de figura do guia, e o do Falcon é o STEP do fabricante amostrado.
 
-**Não conferido:** os arquivos não foram compilados aqui, e as páginas de ajuda do Onshape não abriram na consulta. Os nomes de botões da Assembly vêm de memória e podem variar. Se algo não bater, anote o que apareceu.
+**Não conferido:** os arquivos não foram compilados aqui, e as páginas de ajuda do Onshape não abriram na consulta. Os nomes de comandos (Commit, Mass Properties, Insert, Group, Measure e os da Assembly) vêm de memória e podem variar. Se algo não bater, anote o que apareceu.
 
 ## A. Colar os Feature Studios
 
 1. Abra o documento "MarsMission Fase 7", ou crie um documento novo só para esta etapa.
-2. Crie um Feature Studio chamado `envelope_vulcan`, apague o conteúdo e cole `results/etapa7.2b/envelope_vulcan.fs`. Clique em Commit e confira se não há erro.
-3. Crie um Feature Studio chamado `envelope_falcon_heavy`, apague o conteúdo e cole `results/etapa7.2b/envelope_falcon_heavy.fs`. Clique em Commit e confira se não há erro.
-4. Crie um Feature Studio chamado `lander_4_65`, apague o conteúdo e cole `results/etapa7.2b/lander_4_65.fs`. Clique em Commit e confira se não há erro.
-5. Crie um Feature Studio chamado `lander_4_5`, apague o conteúdo e cole `results/etapa7.2b/lander_4_5.fs`. Clique em Commit e confira se não há erro.
-6. Crie um Feature Studio chamado `orbitador`, apague o conteúdo e cole `results/etapa7.2b/orbitador.fs`. Clique em Commit e confira se não há erro.
+2. Crie um Feature Studio chamado `envelope_vulcan`.
+3. Apague o conteúdo que ele já traz.
+4. Cole o conteúdo de `results/etapa7.2b/envelope_vulcan.fs`.
+5. Clique em Commit e confira se não há erro.
+6. Crie um Feature Studio chamado `envelope_falcon_heavy`.
+7. Apague o conteúdo que ele já traz.
+8. Cole o conteúdo de `results/etapa7.2b/envelope_falcon_heavy.fs`.
+9. Clique em Commit e confira se não há erro.
+10. Crie um Feature Studio chamado `lander_4_65`.
+11. Apague o conteúdo que ele já traz.
+12. Cole o conteúdo de `results/etapa7.2b/lander_4_65.fs`.
+13. Clique em Commit e confira se não há erro.
+14. Crie um Feature Studio chamado `lander_4_5`.
+15. Apague o conteúdo que ele já traz.
+16. Cole o conteúdo de `results/etapa7.2b/lander_4_5.fs`.
+17. Clique em Commit e confira se não há erro.
+18. Crie um Feature Studio chamado `orbitador`.
+19. Apague o conteúdo que ele já traz.
+20. Cole o conteúdo de `results/etapa7.2b/orbitador.fs`.
+21. Clique em Commit e confira se não há erro.
 
 ## B. Criar os Part Studios
 
-7. Crie um Part Studio chamado `Vulcan leitura 1` e adicione a feature "MarsMission envelope Vulcan". Em "Leitura do envelope", escolha "Contorno reto entre as cotas".
-8. Crie um Part Studio chamado `Vulcan leitura 2` e adicione a feature "MarsMission envelope Vulcan". Em "Leitura do envelope", escolha "Diametro menor desde o plano da interface".
-9. Crie um Part Studio chamado `Falcon Heavy` e adicione a feature "MarsMission envelope Falcon Heavy".
-10. Crie um Part Studio chamado `Lander 4,65` e adicione a feature "MarsMission lander_4_65". Marque "Assign materials".
-11. Crie um Part Studio chamado `Lander 4,5` e adicione a feature "MarsMission lander_4_5". Marque "Assign materials".
-12. Crie um Part Studio chamado `Orbitador` e adicione a feature "MarsMission orbitador". Marque "Assign materials".
-13. Em `Lander 4,65`, selecione todas as peças e abra Mass Properties. Esperado: 3 190,4 kg e CG em 0,026, −0,026, 3,003 m.
-14. Em `Lander 4,5`, selecione todas as peças e abra Mass Properties. Esperado: 3 154,7 kg e CG em 0,026, −0,027, 2,099 m.
-15. Em `Orbitador`, selecione todas as peças e abra Mass Properties. Esperado: 6 506,2 kg e CG em 0,000, 0,000, 1,393 m.
-16. Confira se cada envelope aparece transparente. Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.
+22. Crie um Part Studio chamado `Vulcan leitura 1`.
+23. Adicione a feature "MarsMission envelope Vulcan".
+24. Em "Leitura do envelope", escolha "Contorno reto entre as cotas".
+25. Crie um Part Studio chamado `Vulcan leitura 2`.
+26. Adicione a feature "MarsMission envelope Vulcan".
+27. Em "Leitura do envelope", escolha "Diametro menor desde o plano da interface".
+28. Crie um Part Studio chamado `Falcon Heavy`.
+29. Adicione a feature "MarsMission envelope Falcon Heavy".
+30. Crie um Part Studio chamado `Lander 4,65`.
+31. Adicione a feature "MarsMission lander_4_65".
+32. Marque "Assign materials".
+33. Crie um Part Studio chamado `Lander 4,5`.
+34. Adicione a feature "MarsMission lander_4_5".
+35. Marque "Assign materials".
+36. Crie um Part Studio chamado `Orbitador`.
+37. Adicione a feature "MarsMission orbitador".
+38. Marque "Assign materials".
+39. Abra `Lander 4,65`.
+40. Selecione todas as peças.
+41. Abra Mass Properties. Esperado: 3 190,4 kg e CG em 0,026, −0,026, 3,003 m.
+42. Abra `Lander 4,5`.
+43. Selecione todas as peças.
+44. Abra Mass Properties. Esperado: 3 154,7 kg e CG em 0,026, −0,027, 2,099 m.
+45. Abra `Orbitador`.
+46. Selecione todas as peças.
+47. Abra Mass Properties. Esperado: 6 506,2 kg e CG em 0,000, 0,000, 1,393 m.
+48. Confira se cada envelope aparece transparente. Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.
 
 ## C. Montar uma Assembly para cada configuração
 
@@ -36,19 +68,21 @@
 | A4 | Lander 4,65 | Vulcan leitura 2 |
 | A5 | Orbitador | Falcon Heavy |
 
-17. Crie uma Assembly para cada linha da tabela (A1, A2, A3, A4, A5). Repita os passos abaixo em cada uma.
-18. Clique em Insert e insira o Part Studio do envelope. Clique com o botão direito nele e escolha Fix.
-19. Insira o Part Studio do veículo, inteiro.
-20. Arraste uma peça do veículo. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
-21. Escolha o mate Fastened.
-22. Clique no mate connector do envelope, no plano da interface.
-23. Clique no mate connector do veículo, no plano da interface.
-24. Confirme. O veículo deve ficar dentro do envelope, com o topo para cima.
-25. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.
+49. Crie uma Assembly para cada linha da tabela (A1, A2, A3, A4, A5). Repita os passos abaixo em cada uma.
+50. Clique em Insert e insira o Part Studio do envelope. Clique com o botão direito nele e escolha Fix.
+51. Insira o Part Studio do veículo, inteiro.
+52. Arraste uma peça do veículo. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
+53. Escolha o mate Fastened.
+54. Clique no mate connector do envelope, no plano da interface.
+55. Clique no mate connector do veículo, no plano da interface.
+56. Confirme. O veículo deve ficar dentro do envelope, com o topo para cima.
+57. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.
 
 ## D. Medir as folgas (ferramenta Measure)
 
 Selecione as duas entidades da tabela e leia a distância mínima. A leitura deve bater com o valor esperado na terceira casa.
+
+**Cuidado:** o envelope é uma casca de 0,01 m, e a medida vale na face INTERNA, que fica atrás da externa. Use uma vista em corte (Section view) para selecionar. Medir na externa soma cerca de 0,01 m na leitura. As faces do topo são pequenas: aproxime bem a vista.
 
 | Assembly | Medida | Selecione no veículo | Selecione no envelope | Esperado (m) | Folga com sinal (m) |
 | :- | :- | :- | :- | -: | -: |
@@ -67,18 +101,18 @@ O valor esperado é a menor distância entre as superfícies, um pouco menor que
 
 ## E. Rodar Check interference
 
-26. Em cada Assembly, use o comando de interferência (Check interference ou o nome equivalente no menu).
-27. Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo não são conferidos nesta etapa (P-095).
+58. Em cada Assembly, use o comando de interferência (Check interference ou o nome equivalente no menu).
+59. Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo não são conferidos nesta etapa (P-095).
 
 | Assembly | Esperado com a peça Envelope |
 | :- | :- |
 | A1 | nenhuma |
 | A2 | nenhuma |
 | A3 | nenhuma |
-| A4 | interferência com `Escudo termico (PICA)`, no ombro |
+| A4 | interferência com `Escudo termico (PICA)` e `Casca traseira 1 (SLA-561V)`, no ombro |
 | A5 | nenhuma |
 
 ## F. Anotar
 
-28. Para cada Assembly, anote o valor lido no Measure e o resultado do Check interference.
-29. Mande os valores para registro. O estudo compara cada um com o esperado desta página.
+60. Para cada Assembly, anote o valor lido no Measure e o resultado do Check interference.
+61. Mande os valores para registro. O estudo compara cada um com o esperado desta página.

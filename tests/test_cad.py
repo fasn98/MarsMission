@@ -339,6 +339,23 @@ def test_encaixe_coifas():
     assert li[("lander_4_5", "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(fv["msl_m2020"]["folga_sem_afunilamento_vertice_m"], abs=1e-9)
     assert "Errata (2026-11-04" in (RAIZ / "results/etapa7.2/conferencias.md").read_text(encoding="utf-8")
     assert "Errata (2026-11-04" in (RAIZ / "results/etapa7.2/portao_decisao.md").read_text(encoding="utf-8")
+    # o 4,5 m: arquivo igual ao modelo montado, e todos os corpos que cruzam o envelope listados
+    import encaixe_coifas as ec
+    t45 = (RAIZ / "results/etapa7.2b/lander_4_5.fs").read_text(encoding="utf-8")
+    assert [c["nome"] for c in _bloco(t45, "CORPOS")] == [cp.ascii_(c["nome"]) for c in cp.monta_lander(cad, ler("results/etapa7.1/envelope.yaml"), ler("results/etapa2.5/arquitetura.yaml"), ler("config/motores.yaml"), "msl_m2020").corpos]
+    neg = {x["corpo"] for x in li[("lander_4_65", "Diametro")]["radial"]["corpos_com_folga_negativa"]}
+    assert neg == {"Escudo térmico (PICA)", "Casca traseira 1 (SLA-561V)"}
+    assert not li[("lander_4_65", "Contorno")]["radial"]["corpos_com_folga_negativa"]
+    # corpo fora do eixo, à mão: esfera em (x, 0, z), com o envelope reto de raio 2
+    perfil = ([0.0, 10.0], [2.0, 2.0])
+    rad, ax = ec.folgas([{"nome": "e", "tipo": "esfera", "c": [1.0, 0.0, 3.0], "r": 0.5}], perfil)
+    assert rad["folga_radial_m"] == pytest.approx(0.5, abs=1e-4) and ax["folga_axial_m"] == pytest.approx(6.5, abs=1e-4)
+    # cilindro deitado ao longo de y, centrado: a ponta define a folga radial
+    rad, _ = ec.folgas([{"nome": "m", "tipo": "cilindro", "p0": [0.0, -1.0, 3.0], "p1": [0.0, 1.0, 3.0], "r": 0.2}], perfil)
+    assert rad["folga_radial_m"] == pytest.approx(2 - math.hypot(1.0, 0.2), abs=1e-3)
+    # o MAV deitado do 4,5 m não atravessa a cápsula; os helicópteros e os tanques de descida, sim
+    pc = {x["corpo"]: x["folga_m"] for x in r["pecas_contra_a_capsula"]["lander_4_5"]}
+    assert next(v_ for k, v_ in pc.items() if k.startswith("MAV")) > 0 and pc["Helicóptero 1"] < 0 and pc["Tanque descida 1"] < 0
     # as premissas propostas não entraram
     ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
     assert not ({p["id"] for p in r["premissas_propostas"]} & ids)

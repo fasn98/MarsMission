@@ -41,7 +41,18 @@ A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/confe
 
 **O que mudou em relação a `results/etapa7.2/orbitador.fs` e `lander.fs`:** a versão do cabeçalho, de 2737 para 3112; a constante `DONO_INTERFACE`; e o bloco `opMateConnector` no fim da feature. A lista CORPOS é a mesma (`tests/test_cad.py` confere), então massa e CG não mudam. O `mav.fs` não muda: o MAV não tem interface com o adaptador.
 
-**`lander_4_5.fs` é um modelo novo:** cápsula MSL/M2020 e o resto do arranjo igual, com a massa acima. O MAV deitado não cabe nesta cápsula (folga de −0,188 m com a base na estação 0,85 m), então ele atravessa a casca traseira no modelo. Isso é o conflito do aeroshell, visível no Onshape, e não um erro do arquivo.
+**`lander_4_5.fs` é um modelo novo:** cápsula MSL/M2020 e o resto do arranjo igual, com a massa acima. O MAV deitado viola a folga interna de 0,25 m da P-087 (folga de −0,188 m com a base na estação 0,85 m), mas não toca a casca. As peças que atravessam a face externa da cápsula são outras:
+
+| Peça | Lander 4,5 m: folga até a face externa (m) | z (m) | Lander 4,65 m: folga até a face externa (m) | z (m) |
+| :- | -: | -: | -: | -: |
+| Tanque descida 2 | −0,079 | 2,481 | −0,031 | 3,453 |
+| Tanque descida 3 | −0,079 | 2,481 | −0,031 | 3,453 |
+| Tanque descida 1 | −0,079 | 2,481 | −0,031 | 3,453 |
+| Helicóptero 1 | −0,060 | 1,040 | +0,321 | 2,010 |
+| Helicóptero 2 | −0,060 | 1,040 | +0,321 | 2,010 |
+| MAV (peça mais próxima: MAV motores do estágio 1 (4 x R-4D-11)) | +0,069 | 1,590 | +0,272 | 2,560 |
+
+Essas interferências entre peças não são corrigidas aqui (P-095): são o conflito do arranjo, e o Onshape vai mostrá-las.
 
 ## Planos da interface
 
@@ -53,7 +64,7 @@ A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/confe
 
 | Id | Texto | Evidência |
 | :- | :- | :- |
-| P-096 | A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm, com o eixo x axial. | [F82] PDF p. 26 define a origem do sistema da carga útil no plano de separação; o topo do arquivo, em 446,76 pol, é coerente com o guia. O arquivo não declara o sistema, e separação e interface podem não coincidir. |
-| P-097 | A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação. | Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura. |
+| P-096 | A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm, com o eixo x axial. | [F82] PDF p. 26 define a origem do sistema da carga útil no plano de separação; o eixo axial do arquivo vai a 446,76 pol (lido no STEP), abaixo da altura da coifa de [F82] p. 16. O arquivo não declara o sistema, e separação e interface podem não coincidir. |
+| P-097 | A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação. | Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura; [F82] PDF p. 27: "Any payload adapters required ... must also fit within the keep-in volumes". |
 
 A espessura de 0,01 m da casca é escolha de construção, sem efeito nas folgas. Os arquivos .fs não foram compilados nesta máquina: a compilação é o primeiro passo do roteiro.

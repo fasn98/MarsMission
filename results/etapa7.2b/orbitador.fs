@@ -1,6 +1,7 @@
 FeatureScript 3112;
 import(path : "onshape/std/geometry.fs", version : "3112.0");
 
+// VERIFICACAO geometrica do modelo (Etapa 7.2b), nao validacao: novos dados e conector por tools/encaixe_coifas.py.
 // MarsMission - CAD parametrico (Fase 7, Etapa 7.2). ARQUIVO GERADO por tools/cad_parametros.py a partir de
 // cad/featurescript/modelo.fs e de results/: nao editar a mao. Este modelo nao tem nenhuma dimensao; ele so constroi os
 // corpos da lista CORPOS (metros, kg/m^3), gerada pela ferramenta a partir de results/ e config/.

@@ -67,7 +67,12 @@ def perfil_lido(arq, i):
 # ------------------------------------------------------------------------------------------------- veículos
 def veiculo_fs(nome, corpos, materiais, dono, versao):
     """Mesmos corpos da Etapa 7.2, mais o mate connector no plano da interface e a versão do FeatureScript."""
-    t = cp.featurescript(nome, corpos, materiais).replace("2737", str(versao))
+    t = cp.featurescript(nome, corpos, materiais)
+    cab, resto = t.split("\n", 2)[:2], t.split("\n", 2)[2]
+    t = "\n".join(x.replace("2737", str(versao)) for x in cab) + "\n" + resto
+    marca = "// MarsMission - CAD parametrico (Fase 7, Etapa 7.2). ARQUIVO GERADO por tools/cad_parametros.py"
+    assert t.count(marca) == 1
+    t = t.replace(marca, "// VERIFICACAO geometrica do modelo (Etapa 7.2b), nao validacao: novos dados e conector por tools/encaixe_coifas.py.\n" + marca)
     marca = "    });\n\nfunction vec"
     assert t.count(marca) == 1
     conector = ('        // Etapa 7.2b: mate connector no plano da interface (z = 0 do modelo), preso ao corpo DONO_INTERFACE.\n'
@@ -129,18 +134,42 @@ def folgas(corpos, perfil):
     """Menor folga radial e axial dos corpos contra o envelope, e onde ocorrem."""
     rad, axi = None, None
     topo = perfil[0][-1]
+    negativos = []
     for c in corpos:
         P = pontos(c)
         rr = np.hypot(P[:, 0], P[:, 1])
         fol = np.interp(P[:, 2], perfil[0], perfil[1], right=0.0) - rr
         i = int(np.argmin(fol))
+        if fol[i] < 0:
+            negativos.append({"corpo": c["nome"], "folga_radial_m": float(fol[i])})
         if rad is None or fol[i] < rad["folga_radial_m"]:
             rad = {"folga_radial_m": float(fol[i]), "corpo": c["nome"], "z_m": float(P[i, 2]), "raio_do_corpo_m": float(rr[i]),
                    "distancia_measure_m": distancia_ao_perfil(float(rr[i]), float(P[i, 2]), perfil), "tipo": c["tipo"]}
         j = int(np.argmax(P[:, 2]))
         if axi is None or topo - P[j, 2] < axi["folga_axial_m"]:
             axi = {"folga_axial_m": float(topo - P[j, 2]), "corpo": c["nome"], "z_m": float(P[j, 2]), "topo_envelope_m": float(topo)}
+    rad["corpos_com_folga_negativa"] = negativos
     return rad, axi
+
+
+def fora_da_capsula(corpos, perfil, h_cz):
+    """Peças internas que passam da face externa da cápsula (m; negativo = atravessa). O estágio de cruzeiro fica fora por
+    arranjo (P-095) e os propelentes estão dentro dos tanques, então não entram."""
+    L = perfil[0][-1]
+    fora = ("Nariz", "Escudo", "Casca", "Tampa", "Propelente", "Tanque cruzeiro", "Circuito", "MAV propelente")
+    linhas = []
+    for c in corpos:
+        if c["nome"].startswith(fora):
+            continue
+        P = pontos(c)
+        P = P[P[:, 2] >= h_cz]
+        fol = np.interp(L - (P[:, 2] - h_cz), perfil[0], perfil[1], left=0.0, right=0.0) - np.hypot(P[:, 0], P[:, 1])
+        i = int(np.argmin(fol))
+        linhas.append({"corpo": c["nome"], "folga_m": float(fol[i]), "z_m": float(P[i, 2])})
+    # o MAV entra como um só: a peça dele mais próxima da casca
+    mav = min((x for x in linhas if x["corpo"].startswith("MAV")), key=lambda x: x["folga_m"])
+    linhas = [x for x in linhas if not x["corpo"].startswith("MAV")] + [{**mav, "corpo": "MAV (peça mais próxima: " + mav["corpo"] + ")"}]
+    return sorted(linhas, key=lambda x: x["folga_m"])
 
 
 # ------------------------------------------------------------------------------------------------- principal
@@ -204,8 +233,9 @@ def main():
         srlc[chave] = {"vertice_m": min(float(np.interp(h_cz + L - x, perf[0], perf[1])) - r_ for x, r_ in zip(*perfis["srl_c"])), "referencia_7_2_m": conf["srl_c"][chave]}
     inclinacao = (cv["raio_m"][0] - cv["raio_m"][1]) / (cv["altura_m"][1] - cv["altura_m"][0])
     mav45 = par["conferencias"]["mav_deitado"]["por_forma"]["msl_m2020"][0]
+    capsula = {k: fora_da_capsula(corpos[k], perfis[f], h_cz) for k, f in (("lander_4_5", "msl_m2020"), ("lander_4_65", "srl_a"))}
     out = nativo({"gerado_por": "tools/encaixe_coifas.py", "natureza": "VERIFICAÇÃO geométrica do modelo, não validação", "veiculos": veic, "configuracoes": linhas, "srl_c_so_perfil": srlc,
-                  "reducao_de_folga_por_metro_de_adaptador_vulcan": inclinacao, "mav_na_capsula_4_5": mav45, "espessura_casca_m": t_casca,
+                  "reducao_de_folga_por_metro_de_adaptador_vulcan": inclinacao, "mav_na_capsula_4_5": mav45, "pecas_contra_a_capsula": capsula, "folga_interna_m": par["conferencias"]["mav_deitado"]["folga_interna_m"], "espessura_casca_m": t_casca,
                   "premissas_propostas": enc["premissas_propostas"], "planos": {"vulcan": enc["plano_vulcan"]["fonte"], "falcon": enc["plano_falcon"]["fonte"]}})
     (SAIDA / "folgas.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -250,8 +280,15 @@ def escreve_md(o):
     mv = o["mav_na_capsula_4_5"]
     md += ["", "**O que mudou em relação a `results/etapa7.2/orbitador.fs` e `lander.fs`:** a versão do cabeçalho, de 2737 para 3112; a constante `DONO_INTERFACE`; e o bloco `opMateConnector` no fim da feature. "
            "A lista CORPOS é a mesma (`tests/test_cad.py` confere), então massa e CG não mudam. O `mav.fs` não muda: o MAV não tem interface com o adaptador.", "",
-           f"**`lander_4_5.fs` é um modelo novo:** cápsula MSL/M2020 e o resto do arranjo igual, com a massa acima. O MAV deitado não cabe nesta cápsula (folga de {sg(mv['folga_m'])} m com a base na estação {br(mv['estacao_base_m'], 2)} m), então ele "
-           "atravessa a casca traseira no modelo. Isso é o conflito do aeroshell, visível no Onshape, e não um erro do arquivo.", "",
+           f"**`lander_4_5.fs` é um modelo novo:** cápsula MSL/M2020 e o resto do arranjo igual, com a massa acima. O MAV deitado viola a folga interna de {br(o['folga_interna_m'], 2)} m da P-087 "
+           f"(folga de {sg(mv['folga_m'])} m com a base na estação {br(mv['estacao_base_m'], 2)} m), mas não toca a casca. As peças que atravessam a face externa da cápsula são outras:", "",
+           "| Peça | Lander 4,5 m: folga até a face externa (m) | z (m) | Lander 4,65 m: folga até a face externa (m) | z (m) |", "| :- | -: | -: | -: | -: |"]
+    p465 = {x["corpo"].split(" (")[0]: x for x in o["pecas_contra_a_capsula"]["lander_4_65"]}
+    for x in o["pecas_contra_a_capsula"]["lander_4_5"]:
+        y = p465[x["corpo"].split(" (")[0]]
+        if x["folga_m"] < 0 or y["folga_m"] < 0 or x["corpo"].startswith("MAV"):
+            md.append(f"| {x['corpo']} | {sg(x['folga_m'])} | {br(x['z_m'])} | {sg(y['folga_m'])} | {br(y['z_m'])} |")
+    md += ["", "Essas interferências entre peças não são corrigidas aqui (P-095): são o conflito do arranjo, e o Onshape vai mostrá-las.", "",
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",
@@ -268,7 +305,7 @@ def escreve_roteiro(o):
     cfg = o["configuracoes"]
     md = ["# Roteiro no Onshape: veículos dentro das coifas (gerado por tools/encaixe_coifas.py)", "",
           "**VERIFICAÇÃO geométrica do modelo, não validação.** O envelope do Vulcan é leitura de figura do guia, e o do Falcon é o STEP do fabricante amostrado.", "",
-          "**Não conferido:** os arquivos não foram compilados aqui, e as páginas de ajuda do Onshape não abriram na consulta. Os nomes de botões da Assembly vêm de memória e podem variar. Se algo não bater, anote o que apareceu.", "",
+          "**Não conferido:** os arquivos não foram compilados aqui, e as páginas de ajuda do Onshape não abriram na consulta. Os nomes de comandos (Commit, Mass Properties, Insert, Group, Measure e os da Assembly) vêm de memória e podem variar. Se algo não bater, anote o que apareceu.", "",
           "## A. Colar os Feature Studios", ""]
     n = 0
 
@@ -279,15 +316,24 @@ def escreve_roteiro(o):
     arqs = ["envelope_vulcan.fs", "envelope_falcon_heavy.fs", "lander_4_65.fs", "lander_4_5.fs", "orbitador.fs"]
     passo("Abra o documento \"MarsMission Fase 7\", ou crie um documento novo só para esta etapa.")
     for a in arqs:
-        passo(f"Crie um Feature Studio chamado `{a[:-3]}`, apague o conteúdo e cole `results/etapa7.2b/{a}`. Clique em Commit e confira se não há erro.")
+        passo(f"Crie um Feature Studio chamado `{a[:-3]}`.")
+        passo("Apague o conteúdo que ele já traz.")
+        passo(f"Cole o conteúdo de `results/etapa7.2b/{a}`.")
+        passo("Clique em Commit e confira se não há erro.")
     md += ["", "## B. Criar os Part Studios", ""]
     ps = [("Vulcan leitura 1", "MarsMission envelope Vulcan", "Contorno reto entre as cotas"), ("Vulcan leitura 2", "MarsMission envelope Vulcan", "Diametro menor desde o plano da interface"),
           ("Falcon Heavy", "MarsMission envelope Falcon Heavy", None), ("Lander 4,65", "MarsMission lander_4_65", None), ("Lander 4,5", "MarsMission lander_4_5", None), ("Orbitador", "MarsMission orbitador", None)]
     for nome, feat, opc in ps:
-        extra = f" Em \"Leitura do envelope\", escolha \"{opc}\"." if opc else (" Marque \"Assign materials\"." if "envelope" not in feat else "")
-        passo(f"Crie um Part Studio chamado `{nome}` e adicione a feature \"{feat}\".{extra}")
+        passo(f"Crie um Part Studio chamado `{nome}`.")
+        passo(f"Adicione a feature \"{feat}\".")
+        if opc:
+            passo(f"Em \"Leitura do envelope\", escolha \"{opc}\".")
+        elif "envelope" not in feat:
+            passo("Marque \"Assign materials\".")
     for k, x in o["veiculos"].items():
-        passo(f"Em `{'Orbitador' if k == 'orbitador' else 'Lander ' + k.split('_', 1)[1].replace('_', ',')}`, selecione todas as peças e abra Mass Properties. Esperado: {br(x['massa_kg'], 1)} kg e CG em " + ", ".join(br(c, 3) for c in x["cg_m"]) + " m.")
+        passo(f"Abra `{'Orbitador' if k == 'orbitador' else 'Lander ' + k.split('_', 1)[1].replace('_', ',')}`.")
+        passo("Selecione todas as peças.")
+        passo(f"Abra Mass Properties. Esperado: {br(x['massa_kg'], 1)} kg e CG em " + ", ".join(br(c, 3) for c in x["cg_m"]) + " m.")
     passo("Confira se cada envelope aparece transparente. Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.")
     md += ["", "## C. Montar uma Assembly para cada configuração", "", "| Assembly | Veículo | Envelope |", "| :- | :- | :- |"]
     nomes_ps = {"lander_4_65": "Lander 4,65", "lander_4_5": "Lander 4,5", "orbitador": "Orbitador"}
@@ -308,6 +354,7 @@ def escreve_roteiro(o):
     passo("Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.")
     md += ["", "## D. Medir as folgas (ferramenta Measure)", "",
            "Selecione as duas entidades da tabela e leia a distância mínima. A leitura deve bater com o valor esperado na terceira casa.", "",
+           f"**Cuidado:** o envelope é uma casca de {br(o['espessura_casca_m'], 2)} m, e a medida vale na face INTERNA, que fica atrás da externa. Use uma vista em corte (Section view) para selecionar. Medir na externa soma cerca de {br(o['espessura_casca_m'], 2)} m na leitura. As faces do topo são pequenas: aproxime bem a vista.", "",
            "| Assembly | Medida | Selecione no veículo | Selecione no envelope | Esperado (m) | Folga com sinal (m) |", "| :- | :- | :- | :- | -: | -: |"]
     for i, li in enumerate(cfg):
         r, a = li["radial"], li["axial"]
@@ -320,8 +367,8 @@ def escreve_roteiro(o):
     passo("Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo não são conferidos nesta etapa (P-095).")
     md += ["", "| Assembly | Esperado com a peça Envelope |", "| :- | :- |"]
     for i, li in enumerate(cfg):
-        r = li["radial"]
-        md.append(f"| A{i + 1} | " + (f"interferência com `{cp.ascii_(r['corpo'])}`, no ombro" if r["folga_radial_m"] < 0 else "nenhuma") + " |")
+        neg = li["radial"]["corpos_com_folga_negativa"]
+        md.append(f"| A{i + 1} | " + ("interferência com " + " e ".join(f"`{cp.ascii_(x['corpo'])}`" for x in neg) + ", no ombro" if neg else "nenhuma") + " |")
     md += ["", "## F. Anotar", ""]
     passo("Para cada Assembly, anote o valor lido no Measure e o resultado do Check interference.")
     passo("Mande os valores para registro. O estudo compara cada um com o esperado desta página.")
