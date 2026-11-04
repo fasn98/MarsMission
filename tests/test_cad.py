@@ -284,6 +284,12 @@ def test_bocais_estagio1():
     assert f["folga_4_5_m"] == pytest.approx(base("msl_m2020") - a["F"]["excesso_sobre_p086_m"] / 2)
     assert f["folga_4_65_m"] == pytest.approx(base("srl_a") - a["F"]["excesso_sobre_p086_m"] / 2)
     assert a["A"]["excesso_sobre_p086_m"] == 0
+    # comprimento com o excesso, parede nos dois lugares e rótulos dos aeroshells
+    compr = next(c["comprimento_m"] for c in ler("results/etapa7.2/mav_arranjo.yaml")["casos"] if c["diametro_m"] == 0.57)
+    assert f["comprimento_m"] == pytest.approx(compr + a["F"]["excesso_sobre_p086_m"])
+    assert a["C"]["cabe_em_d_mav"] and not a["C"]["cabe_em_d_mav_com_parede"]
+    rot = ler("results/etapa7.2/portao_decisao.yaml")["aeroshell"]
+    assert r["aeroshell"] == {k: rot[k]["rotulo"] for k in ("msl_m2020", "srl_a")}
     # decisões do Fabio na página
     md = (RAIZ / "results/etapa7.2/bocais_alternativas.md").read_text(encoding="utf-8")
     assert "**C: DESCARTADA.**" in md and "**F: REFERÊNCIA APENAS.**" in md and "Not in Production" in md

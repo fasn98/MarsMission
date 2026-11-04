@@ -114,7 +114,7 @@ def escreve_md(o):
     al = {a["id"]: a for a in o["alternativas"]}
     A, B, C, D, E, F = (al[k] for k in "ABCDEF")
     md += ["", "## 3. Prós e contras", "", "| Opção | Prós | Contras |", "| :- | :- | :- |",
-           f"| A | mantém o motor e o Isp da variante do Orion ([F107] p. 5, motor \"modified\") | muda o Ø do ADR 0022: mínimo de {br(A['circulo_minimo_m'])} m sem parede, {br(A['circulo_minimo_m'] + 2 * t)} m com parede; {br(A['menor_d_varredura_m'], 2)} e {br(A['menor_d_varredura_com_parede_m'], 2)} m pela varredura |",
+           f"| A | mantém o motor e o Isp da variante do Orion ([F107] p. 5, motor \"modified\"; não conferido se é o mesmo 164:1 da folha [F228]) | muda o Ø do ADR 0022: mínimo de {br(A['circulo_minimo_m'])} m sem parede, {br(A['circulo_minimo_m'] + 2 * t)} m com parede; {br(A['menor_d_varredura_m'], 2)} e {br(A['menor_d_varredura_com_parede_m'], 2)} m pela varredura |",
            f"| B | cabe em Ø {br(d, 2)} m, e o motor é {br(B['sobra_na_p086_m'])} m mais curto que a P-086 | [F228] não dá Isp nem massa do 44:1, então a perda não é calculável (na folha, o Isp sobe do 164:1 para o 300:1); disponibilidade não conferida: a folha só cita o 44:1 no desenho, e \"Expansion Ratio\" lista 164:1 e 300:1; o empuxo/peso supõe o mesmo empuxo das outras variantes (não conferido) |",
            f"| C ({dec['C']['situacao']}) | cabe em Ø {br(d, 2)} m, por {br(d - C['circulo_minimo_m'])} m, só sem parede | **empuxo/peso de {br(C['empuxo_peso_marte'], 2)}, abaixo de 1: não decola na vertical** |",
            f"| D | empuxo/peso de {br(D['empuxo_peso_marte'], 2)} | não cabe; o empuxo quase não vence o peso; Ø de {br(D['menor_d_varredura_m'], 2)} m pela varredura |",

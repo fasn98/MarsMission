@@ -38,7 +38,7 @@ Mesma conta de results/etapa7.2/portao_decisao.md, menos a metade do que o motor
 
 | Opção | Prós | Contras |
 | :- | :- | :- |
-| A | mantém o motor e o Isp da variante do Orion ([F107] p. 5, motor "modified") | muda o Ø do ADR 0022: mínimo de 0,675 m sem parede, 0,695 m com parede; 0,69 e 0,72 m pela varredura |
+| A | mantém o motor e o Isp da variante do Orion ([F107] p. 5, motor "modified"; não conferido se é o mesmo 164:1 da folha [F228]) | muda o Ø do ADR 0022: mínimo de 0,675 m sem parede, 0,695 m com parede; 0,69 e 0,72 m pela varredura |
 | B | cabe em Ø 0,57 m, e o motor é 0,283 m mais curto que a P-086 | [F228] não dá Isp nem massa do 44:1, então a perda não é calculável (na folha, o Isp sobe do 164:1 para o 300:1); disponibilidade não conferida: a folha só cita o 44:1 no desenho, e "Expansion Ratio" lista 164:1 e 300:1; o empuxo/peso supõe o mesmo empuxo das outras variantes (não conferido) |
 | C (DESCARTADA) | cabe em Ø 0,57 m, por 0,011 m, só sem parede | **empuxo/peso de 0,68, abaixo de 1: não decola na vertical** |
 | D | empuxo/peso de 1,02 | não cabe; o empuxo quase não vence o peso; Ø de 0,63 m pela varredura |
