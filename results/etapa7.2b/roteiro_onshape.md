@@ -49,14 +49,18 @@
 38. Marque "Assign materials".
 39. Abra `Lander 4,65`.
 40. Selecione todas as peças.
-41. Abra Mass Properties. Esperado: 3 190,4 kg e CG em 0,026, −0,026, 3,003 m.
-42. Abra `Lander 4,5`.
-43. Selecione todas as peças.
-44. Abra Mass Properties. Esperado: 3 154,7 kg e CG em 0,026, −0,027, 2,099 m.
-45. Abra `Orbitador`.
-46. Selecione todas as peças.
-47. Abra Mass Properties. Esperado: 6 506,2 kg e CG em 0,000, 0,000, 1,393 m.
-48. Confira se cada envelope aparece transparente. Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.
+41. Abra Mass Properties.
+42. Confira: 3 190,4 kg e CG em 0,026, −0,026, 3,003 m.
+43. Abra `Lander 4,5`.
+44. Selecione todas as peças.
+45. Abra Mass Properties.
+46. Confira: 3 154,7 kg e CG em 0,026, −0,027, 2,099 m.
+47. Abra `Orbitador`.
+48. Selecione todas as peças.
+49. Abra Mass Properties.
+50. Confira: 6 506,2 kg e CG em 0,000, 0,000, 1,393 m.
+51. Confira se cada envelope aparece transparente.
+52. Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.
 
 ## C. Montar uma Assembly para cada configuração
 
@@ -68,17 +72,19 @@
 | A4 | Lander 4,65 | Vulcan leitura 2 |
 | A5 | Orbitador | Falcon Heavy |
 
-49. Crie uma Assembly para cada linha da tabela (A1, A2, A3, A4, A5). Repita os passos abaixo em cada uma.
-50. Clique em Insert e insira o Part Studio do envelope.
-51. Clique com o botão direito no envelope e escolha Fix.
-52. Insira o Part Studio do veículo, inteiro.
-53. Arraste uma peça do veículo.
-54. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
-55. Escolha o mate Fastened.
-56. Clique no mate connector do envelope, no plano da interface.
-57. Clique no mate connector do veículo, no plano da interface.
-58. Confirme. O veículo deve ficar dentro do envelope, com o topo para cima.
-59. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.
+53. Crie uma Assembly para cada linha da tabela (A1, A2, A3, A4, A5).
+54. Repita os próximos passos em cada Assembly.
+55. Clique em Insert e insira o Part Studio do envelope.
+56. Clique com o botão direito no envelope e escolha Fix.
+57. Insira o Part Studio do veículo, inteiro.
+58. Arraste uma peça do veículo.
+59. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
+60. Escolha o mate Fastened.
+61. Clique no mate connector do envelope, no plano da interface.
+62. Clique no mate connector do veículo, no plano da interface.
+63. Confirme o mate.
+64. Confira se o veículo ficou dentro do envelope, com o topo para cima.
+65. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.
 
 ## D. Medir as folgas (ferramenta Measure)
 
@@ -103,8 +109,8 @@ O valor esperado é a menor distância entre as superfícies, um pouco menor que
 
 ## E. Rodar Check interference
 
-60. Em cada Assembly, use o comando de interferência (Check interference ou o nome equivalente no menu).
-61. Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo vão aparecer, como helicópteros e tanques de descida (folgas.md), e não têm valor esperado aqui (P-095).
+66. Em cada Assembly, use o comando de interferência (Check interference ou o nome equivalente no menu).
+67. Só importam os pares que incluem a peça Envelope. Pares entre peças do próprio veículo vão aparecer, como helicópteros e tanques de descida (folgas.md), e não têm valor esperado aqui (P-095).
 
 | Assembly | Esperado com a peça Envelope |
 | :- | :- |
@@ -116,5 +122,5 @@ O valor esperado é a menor distância entre as superfícies, um pouco menor que
 
 ## F. Anotar
 
-62. Para cada Assembly, anote o valor lido no Measure e o resultado do Check interference.
-63. Mande os valores para registro. O estudo compara cada um com o esperado desta página.
+68. Para cada Assembly, anote o valor lido no Measure e o resultado do Check interference.
+69. Mande os valores para registro. O estudo compara cada um com o esperado desta página.

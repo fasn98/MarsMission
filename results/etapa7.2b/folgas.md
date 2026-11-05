@@ -50,7 +50,7 @@ A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/confe
 | Tanque descida 1 | −0,079 | 2,481 | −0,031 | 3,453 |
 | Helicóptero 1 | −0,060 | 1,040 | +0,321 | 2,010 |
 | Helicóptero 2 | −0,060 | 1,040 | +0,321 | 2,010 |
-| MAV (peça mais próxima: MAV motores do estágio 1 (4 x R-4D-11)) | +0,069 | 1,590 | +0,272 | 2,560 |
+| MAV (mais próximas: MAV carga (contêiner de amostras); MAV motores do estágio 1 (4 x R-4D-11)) | +0,069 | 1,590 | +0,272 | 2,560 |
 
 Essas interferências entre peças não são corrigidas aqui (P-095): são o conflito do arranjo, e o Onshape vai mostrá-las.
 

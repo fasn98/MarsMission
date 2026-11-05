@@ -33,7 +33,10 @@ SAIDA = RAIZ / "results" / "etapa7.2b"
 MODELO = RAIZ / "cad" / "featurescript" / "envelope.fs"
 # amostragem da superfície dos corpos (escolha numérica, não premissa): os vértices dos perfis entram exatos
 N_EIXO, N_ANGULO = 401, 720
-EMPATE_M = 1e-9   # peças simétricas empatam: o desempate não pode depender do ruído entre CPUs (o texto vai para results/)
+# escolhas numéricas, não premissas (a confirmar pelo Fabio): peças simétricas empatam, e o desempate não pode depender do
+# ruído entre CPUs, porque o texto vai para results/. O corte só decide qual nome aparece; o valor gravado é o do corpo.
+EMPATE_M = 1e-9
+CASAS_DE_ORDEM = 6
 
 
 # ------------------------------------------------------------------------------------------------- envelopes
@@ -168,9 +171,12 @@ def fora_da_capsula(corpos, perfil, h_cz):
         i = int(np.argmin(fol))
         linhas.append({"corpo": c["nome"], "folga_m": float(fol[i]), "z_m": float(P[i, 2])})
     # o MAV entra como um só: a peça dele mais próxima da casca
-    mav = min((x for x in linhas if x["corpo"].startswith("MAV")), key=lambda x: x["folga_m"])
-    linhas = [x for x in linhas if not x["corpo"].startswith("MAV")] + [{**mav, "corpo": "MAV (peça mais próxima: " + mav["corpo"] + ")"}]
-    return sorted(linhas, key=lambda x: (round(x["folga_m"], 6), x["corpo"]))
+    pecas_mav = [x for x in linhas if x["corpo"].startswith("MAV")]
+    menor = min(round(x["folga_m"], CASAS_DE_ORDEM) for x in pecas_mav)
+    empatadas = sorted((x for x in pecas_mav if round(x["folga_m"], CASAS_DE_ORDEM) == menor), key=lambda x: x["corpo"])
+    mav = {**empatadas[0], "corpo": "MAV (mais próximas: " + "; ".join(x["corpo"] for x in empatadas) + ")"}
+    linhas = [x for x in linhas if not x["corpo"].startswith("MAV")] + [mav]
+    return sorted(linhas, key=lambda x: (round(x["folga_m"], CASAS_DE_ORDEM), x["corpo"]))
 
 
 # ------------------------------------------------------------------------------------------------- principal
@@ -334,8 +340,10 @@ def escreve_roteiro(o):
     for k, x in o["veiculos"].items():
         passo(f"Abra `{'Orbitador' if k == 'orbitador' else 'Lander ' + k.split('_', 1)[1].replace('_', ',')}`.")
         passo("Selecione todas as peças.")
-        passo(f"Abra Mass Properties. Esperado: {br(x['massa_kg'], 1)} kg e CG em " + ", ".join(br(c, 3) for c in x["cg_m"]) + " m.")
-    passo("Confira se cada envelope aparece transparente. Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.")
+        passo("Abra Mass Properties.")
+        passo(f"Confira: {br(x['massa_kg'], 1)} kg e CG em " + ", ".join(br(c, 3) for c in x["cg_m"]) + " m.")
+    passo("Confira se cada envelope aparece transparente.")
+    passo("Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.")
     md += ["", "## C. Montar uma Assembly para cada configuração", "", "| Assembly | Veículo | Envelope |", "| :- | :- | :- |"]
     nomes_ps = {"lander_4_65": "Lander 4,65", "lander_4_5": "Lander 4,5", "orbitador": "Orbitador"}
     amb = []
@@ -344,7 +352,8 @@ def escreve_roteiro(o):
         amb.append(f"A{i + 1}")
         md.append(f"| A{i + 1} | {nomes_ps[li['veiculo']]} | {e} |")
     md.append("")
-    passo(f"Crie uma Assembly para cada linha da tabela ({', '.join(amb)}). Repita os passos abaixo em cada uma.")
+    passo(f"Crie uma Assembly para cada linha da tabela ({', '.join(amb)}).")
+    passo("Repita os próximos passos em cada Assembly.")
     passo("Clique em Insert e insira o Part Studio do envelope.")
     passo("Clique com o botão direito no envelope e escolha Fix.")
     passo("Insira o Part Studio do veículo, inteiro.")
@@ -353,7 +362,8 @@ def escreve_roteiro(o):
     passo("Escolha o mate Fastened.")
     passo("Clique no mate connector do envelope, no plano da interface.")
     passo("Clique no mate connector do veículo, no plano da interface.")
-    passo("Confirme. O veículo deve ficar dentro do envelope, com o topo para cima.")
+    passo("Confirme o mate.")
+    passo("Confira se o veículo ficou dentro do envelope, com o topo para cima.")
     passo("Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.")
     md += ["", "## D. Medir as folgas (ferramenta Measure)", "",
            "Selecione as duas entidades da tabela e leia a distância mínima. A leitura deve bater com o valor esperado na terceira casa.", "",

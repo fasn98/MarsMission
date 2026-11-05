@@ -356,6 +356,15 @@ def test_encaixe_coifas():
     # o MAV deitado do 4,5 m não atravessa a cápsula; os helicópteros e os tanques de descida, sim
     pc = {x["corpo"]: x["folga_m"] for x in r["pecas_contra_a_capsula"]["lander_4_5"]}
     assert next(v_ for k, v_ in pc.items() if k.startswith("MAV")) > 0 and pc["Helicóptero 1"] < 0 and pc["Tanque descida 1"] < 0
+    # desempate: corpos iguais a menos de ruído mantêm o primeiro da lista, nos dois sentidos do ruído
+    for ruido in (1e-13, -1e-13):
+        par_ = [{"nome": "a", "tipo": "cilindro", "p0": [0.0, 0.0, 0.0], "p1": [0.0, 0.0, 1.0], "r": 1.0},
+                {"nome": "b", "tipo": "cilindro", "p0": [0.0, 0.0, 0.0], "p1": [0.0, 0.0, 1.0 + ruido], "r": 1.0 + ruido}]
+        rad, ax = ec.folgas(par_, perfil)
+        assert rad["corpo"] == "a" and ax["corpo"] == "a"
+    # o MAV empatado cita as peças empatadas, em ordem de nome, e a ordem da lista não depende de ruído
+    mavs = [x["corpo"] for x in r["pecas_contra_a_capsula"]["lander_4_5"] if x["corpo"].startswith("MAV")]
+    assert len(mavs) == 1 and "MAV carga" in mavs[0] and "MAV motores" in mavs[0] and mavs[0].index("MAV carga") < mavs[0].index("MAV motores")
     # texto gerado: rótulo, lista de interferências em A4 e aviso da face interna
     assert "VERIFICACAO geometrica" in t45
     rot = (RAIZ / "results/etapa7.2b/roteiro_onshape.md").read_text(encoding="utf-8")
