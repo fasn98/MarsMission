@@ -9,8 +9,8 @@ Investigação. Nenhuma premissa muda, a arquitetura não muda, e a decisão é 
 | Comprimento total do MAV do MSR | limite de 2,99 m com Ø 0,5 m (SRC); 3,0 m com Ø 0,57 m (DAC-0.0); 2,8 m com Ø 0,57 m (2019). Nenhuma traz a divisão por elemento | [F35] p. 3; [F236] PDF p. 2; [F238] PDF p. 15 |
 | Divisão por elemento | não há divisão completa em nenhuma das fontes consultadas; há uma figura sem cotas por trecho e cotas soltas, nas linhas abaixo | [F237] PDF p. 4; [F35]; [F236]; [F238] |
 | Bocal aninhado | o 2º estágio tem o bocal dentro do interestágio, e isso aparece como risco na separação; a fonte não dá o comprimento aninhado | [F35] PDF p. 15: "the small clearances of the interstage hardware and the nested SRM2 nozzle"; [F236] PDF p. 13: "clearance of the nested second stage nozzle hardware" |
-| Encurtar bocal e interestágio | o estudo troca Isp por comprimento no 2º estágio: cerca de 10 s a menos, num bocal de expansão 81 e Isp 293 s. A Fig. 10 tem o melhor ponto perto de −0,15 m no bocal, com GLOM cerca de 8 a 14 kg menor (leitura da figura, NÃO VALIDADO). Motor sólido, com o bocal aninhado desenhado no interestágio | [F238] PDF p. 10: "trading I sp for nozzle length"; "a significantly shorter inter-stage and nozzle"; Fig. 10, eixo "Nozzle Length change, m" |
-| Motor do 1º estágio (MSR de 2019) | envelope em três níveis de propelente, de 30,5 a 31,7 pol; é cota de um elemento, de motor sólido, e não a divisão do veículo | [F238] PDF p. 12, Fig. 11: "525-lb prop, 31.7 inch case"; "475-lb prop, 30.5 inch case" |
+| Encurtar bocal e interestágio | o estudo troca Isp por comprimento no 2º estágio: cerca de 10 s a menos, num bocal de expansão 81 e Isp 293 s. A Fig. 10 tem o melhor ponto perto de −0,15 m no bocal, com GLOM cerca de 8 kg menor com o plano de separação na saída do bocal e 14 kg menor perto da flange, mas nesta segunda curva quase 12 kg já existem sem encurtar o bocal (leitura da figura, NÃO VALIDADO). Motor sólido, com o bocal aninhado desenhado no interestágio | [F238] PDF p. 10: "trading I sp for nozzle length"; "a significantly shorter inter-stage and nozzle"; Fig. 10, eixo "Nozzle Length change, m" |
+| Motor do 1º estágio (MSR de 2019) | caixa do motor em três níveis de propelente, de 30,5 a 31,7 pol; é cota de um elemento, de motor sólido, sem o bocal completo, e não a divisão do veículo | [F238] PDF p. 12, Fig. 11: "525-lb prop, 31.7 inch case"; "475-lb prop, 30.5 inch case" |
 
 **Não há fonte primária com a divisão por elemento.** A P-086 (1,50 m: motores_estagio_1 0,60, motor_estagio_2 0,45, interestagio 0,10, carga_os 0,35) continua sem fonte.
 
@@ -60,7 +60,7 @@ Massa do 44:1 sem fonte: fica a do catálogo.
 
 | Parcela | m/s | Origem |
 | :- | -: | :- |
-| Subida a 100 × 100 km | 4 027,9 | [F37] Tab. 1, p. 17; 524,9 m/s acima da velocidade circular da mesma linha: inclui as perdas, já líquidas do ganho de rotação, porque o caso sai do equador rumo leste |
+| Subida a 100 × 100 km | 4 027,9 | [F37] Tab. 1, p. 17; 524,9 m/s acima da velocidade circular da mesma linha: inclui a subida a 100 km e as perdas, já líquidas do ganho de rotação, porque o caso sai do equador rumo leste |
 | Transferência até 300 × 25 952 km | 1 192,9 | órbita do ADR 0005 (regra dos 5 %), coaxial ideal |
 | Rotação perdida a 27,3° | 26,8 | inclinação de [F35] p. 3, v_eq·(1 − cos i) |
 | Soma sem margem | 5 247,6 | |
@@ -124,4 +124,4 @@ Folga em m, com a base no ombro, a estação mais favorável; positivo = cabe. N
 
 ## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)
 
-Opinião: três alavancas têm tamanho parecido: tanques aninhados (−0,49 m, limite otimista), R-4D-11 44:1 (−0,30 a −0,42 m, com Isp e massa sem fonte) e órbita de encontro. A órbita é a única que reduz o propelente, mas sozinha não basta: na margem zero do Falcon Heavy (300 × 10 824 km) a folga deitado é −0,09 m no 4,5 m e +0,12 m no 4,65 m, e margem zero não é ponto de projeto. Ela também não resolve os bocais: ali o empuxo/peso com dois motores é 0,84, abaixo de 1, o motivo por que a opção C foi descartada. O 44:1 é a única das três que também resolveria os bocais, então eu buscaria primeiro o Isp e a massa dele. Eu não gastaria mais esforço em órbita antes disso, e a P-086 pesa pelo motor, não pela busca de mais cotas do MSR. A decisão é do Fabio.
+Opinião: as duas maiores alavancas são tanques aninhados (−0,49 m, limite otimista) e R-4D-11 44:1 (−0,30 a −0,42 m, com Isp e massa sem fonte). A órbita de encontro dá −0,20 m até o limite do lançador. A órbita é a única que reduz o propelente, mas sozinha não basta: na margem zero do Falcon Heavy (300 × 10 824 km) a folga deitado é −0,09 m no 4,5 m e +0,12 m no 4,65 m, e margem zero não é ponto de projeto. Ela também não resolve os bocais: ali o empuxo/peso com dois motores é 0,84, abaixo de 1, o motivo por que a opção C foi descartada. O 44:1 é a única das três alavancas que também resolveria os bocais, então eu buscaria primeiro o Isp e a massa dele. Eu não gastaria mais esforço em órbita antes disso, e a P-086 pesa pelo motor, não pela busca de mais cotas do MSR. A decisão é do Fabio.

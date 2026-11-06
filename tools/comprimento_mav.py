@@ -234,7 +234,7 @@ def escreve_md(o):
     md += [f"| {br(s['isp_s'], 0)} | {br(s['glom_kg'], 1)} | {br(s['comprimento_m'])} | {br(s['comprimento_sem_mudar_p086_m'])} |" for s in va["sensibilidade"]]
     md += ["", "Massa do 44:1 sem fonte: fica a do catálogo.", "",
            f"## (c) De onde vêm os {br(od['com_margem_m_s'], 0)} m/s", "", "| Parcela | m/s | Origem |", "| :- | -: | :- |",
-           f"| Subida a 100 × 100 km | {br(od['dv_100x100_m_s'], 1)} | [F37] Tab. 1, p. 17; {br(od['acima_da_velocidade_circular_m_s'], 1)} m/s acima da velocidade circular da mesma linha: inclui as perdas, já líquidas do ganho de rotação, porque o caso sai do equador rumo leste |",
+           f"| Subida a 100 × 100 km | {br(od['dv_100x100_m_s'], 1)} | [F37] Tab. 1, p. 17; {br(od['acima_da_velocidade_circular_m_s'], 1)} m/s acima da velocidade circular da mesma linha: inclui a subida a 100 km e as perdas, já líquidas do ganho de rotação, porque o caso sai do equador rumo leste |",
            f"| Transferência até {br(od['orbita_km'][0], 0)} × {br(od['orbita_km'][1], 0)} km | {br(od['transferencia_m_s'], 1)} | órbita do ADR 0005 (regra dos 5 %), coaxial ideal |",
            f"| Rotação perdida a {br(od['inclinacao_graus'], 1)}° | {br(od['deficit_rotacao_m_s'], 1)} | inclinação de [F35] p. 3, v_eq·(1 − cos i) |",
            f"| Soma sem margem | {br(od['sem_margem_m_s'], 1)} | |",
@@ -270,10 +270,10 @@ def escreve_md(o):
     li_fh = next(x for x in al if x["grupo"] == "orbita" and x["comprimento_m"] == fh["comprimento_m"])
     ani = next(x for x in al if x["grupo"] == "tanques")
     v44 = [x for x in al if x["grupo"] == "variante"]
-    md += [f"Opinião: três alavancas têm tamanho parecido: tanques aninhados ({sg(ani['delta_comprimento_m'], 2)} m, limite otimista), R-4D-11 44:1 ({sg(v44[1]['delta_comprimento_m'], 2)} a {sg(v44[0]['delta_comprimento_m'], 2)} m, com Isp e massa sem fonte) e órbita de encontro. "
+    md += [f"Opinião: as duas maiores alavancas são tanques aninhados ({sg(ani['delta_comprimento_m'], 2)} m, limite otimista) e R-4D-11 44:1 ({sg(v44[1]['delta_comprimento_m'], 2)} a {sg(v44[0]['delta_comprimento_m'], 2)} m, com Isp e massa sem fonte). A órbita de encontro dá {sg(li_fh['delta_comprimento_m'], 2)} m até o limite do lançador. "
            f"A órbita é a única que reduz o propelente, mas sozinha não basta: na margem zero do Falcon Heavy ({br(fh['periapse_km'], 0)} × {br(fh['apoapse_km'], 0)} km) a folga deitado é {sg(li_fh['deitado_4_5_m'], 2)} m no 4,5 m e {sg(li_fh['deitado_4_65_m'], 2)} m no 4,65 m, e margem zero não é ponto de projeto. "
            f"Ela também não resolve os bocais: ali o empuxo/peso com dois motores é {br(fh['empuxo_peso_2_motores'], 2)}, abaixo de 1, o motivo por que a opção C foi descartada. "
-           "O 44:1 é a única das três que também resolveria os bocais, então eu buscaria primeiro o Isp e a massa dele. Eu não gastaria mais esforço em órbita antes disso, e a P-086 pesa pelo motor, não pela busca de mais cotas do MSR. A decisão é do Fabio."]
+           "O 44:1 é a única das três alavancas que também resolveria os bocais, então eu buscaria primeiro o Isp e a massa dele. Eu não gastaria mais esforço em órbita antes disso, e a P-086 pesa pelo motor, não pela busca de mais cotas do MSR. A decisão é do Fabio."]
     (SAIDA / "comprimento_mav.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 
