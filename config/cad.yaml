@@ -263,3 +263,48 @@ motores_geometria_mav:   # alternativas do estágio 1 do MAV: folhas de [F228], 
 bocais_decisoes:   # decisões do Fabio sobre as alternativas (2026-11-04)
   C: {situacao: "DESCARTADA", motivo: "empuxo/peso abaixo de 1 em Marte"}
   F: {situacao: "REFERÊNCIA APENAS", motivo: "R-40B fora de produção", fonte: "[F228] PDF p. 30: \"Not in Production; Requires component obsolescence update\"; [F106] p. 3: \"NIP=Not In Production\""}
+
+comprimento_mav:   # investigação do que define o comprimento do MAV (portão da 7.2); nenhum valor aqui muda o projeto
+  # parâmetros de amostragem, sem fonte e sem efeito no projeto (classificação a confirmar pelo Fabio; regra 2)
+  amostragem: {diametros_m: [0.60, 0.69], exemplo_p086_m: 0.10, passos_bissecao: 16}
+  altitudes_tabela_bowles_km: {periapse: 100, apoapse: 500, fonte: "[F46] Tab. 1, PDF p. 21"}
+  orbitas_amostra:   # altitudes (periapse, apoapse) em km, só para mostrar a tendência; dentro da varredura de config/superficie.yaml
+    - {rp: 300, ra: 10000}
+    - {rp: 300, ra: 5000}
+    - {rp: 300, ra: 1000}
+    - {rp: 380, ra: 380, fonte: "[F35] p. 3: \"nominal injection orbit of 380km\""}
+  figura_msr:
+    # Leitura de pixels da figura em 200 dpi (origem: topo da seta de \"<3 m\"; altura total em pixels). A figura não declara
+    # escala, e \"<3 m\" é limite, não medida; o limite usado para escalar é o de [F35]. Leitura: NÃO VALIDADA.
+    fonte: "[F237] PDF p. 4, figura \"MAS Overview\": \"<3 m\" (o rótulo \"~0.5 m\" é o diâmetro)"
+    pixels_total: 1216
+    trechos_px:
+      - {item: "Carga: coifa e carga útil (MPA)", px: 163, equivale_a: carga_os}
+      - {item: "2º estágio: motor sólido", px: 120, equivale_a: null}
+      - {item: "Interestágio, com o bocal do 2º estágio aninhado", px: 270, equivale_a: interestagio_e_motor_2}
+      - {item: "1º estágio: motor sólido e rampa", px: 465, equivale_a: null}
+      - {item: "TVC e bocal do 1º estágio", px: 198, equivale_a: motores_estagio_1}
+  fontes_p086:
+    - {item: "Comprimento total do MAV do MSR", achado: "limite de 2,99 m com Ø 0,5 m (SRC); 3,0 m com Ø 0,57 m (DAC-0.0); 2,8 m com Ø 0,57 m (2019). Nenhuma traz a divisão por elemento", fonte: "[F35] p. 3; [F236] PDF p. 2; [F238] PDF p. 15"}
+    - {item: "Divisão por elemento", achado: "não há divisão completa em nenhuma das fontes consultadas; há uma figura sem cotas por trecho e cotas soltas, nas linhas abaixo", fonte: "[F237] PDF p. 4; [F35]; [F236]; [F238]"}
+    - {item: "Bocal aninhado", achado: "o 2º estágio tem o bocal dentro do interestágio, e isso aparece como risco na separação; a fonte não dá o comprimento aninhado", fonte: "[F35] PDF p. 15: \"the small clearances of the interstage hardware and the nested SRM2 nozzle\"; [F236] PDF p. 13: \"clearance of the nested second stage nozzle hardware\""}
+    - {item: "Encurtar bocal e interestágio", achado: "o estudo troca Isp por comprimento no 2º estágio: cerca de 10 s a menos, num bocal de expansão 81 e Isp 293 s. A Fig. 10 tem o melhor ponto perto de −0,15 m no bocal, com GLOM cerca de 8 kg menor com o plano de separação na saída do bocal e 14 kg menor perto da flange, mas nesta segunda curva quase 12 kg já existem sem encurtar o bocal (leitura da figura, NÃO VALIDADO). Motor sólido, com o bocal aninhado desenhado no interestágio", fonte: "[F238] PDF p. 10: \"trading I sp for nozzle length\"; \"a significantly shorter inter-stage and nozzle\"; Fig. 10, eixo \"Nozzle Length change, m\""}
+    - {item: "Motor do 1º estágio (MSR de 2019)", achado: "caixa do motor em três níveis de propelente, de 30,5 a 31,7 pol; é cota de um elemento, de motor sólido, sem o bocal completo, e não a divisão do veículo", fonte: "[F238] PDF p. 12, Fig. 11: \"525-lb prop, 31.7 inch case\"; \"475-lb prop, 30.5 inch case\""}
+  variante_44_1:
+    analogos_isp:   # NÃO são o R-4D-11: mesma classe e mesma expansão; valores só para a sensibilidade
+      - {nome: "440 N, Re", isp_s: 308, fonte: "[F239] PDF p. 7: \"Performance of 308 seconds at 44:1 area ratio was achieved\""}
+      - {nome: "440 N, Nb (\"similar Nb engines\", \"the Nb engine\")", isp_s: 304, fonte: "[F239] PDF p. 7: \"about 4 seconds higher than similar Nb engines\" (308 − 4) e \"about 10 seconds higher than the Nb engine\" (314 − 10); calculado"}
+      - {nome: "440 N, Re, injetor de programa anterior", isp_s: 314, fonte: "[F239] PDF p. 7: \"Performance of 314 seconds at an area ratio of 44:1 was measured. This performance is about 10 seconds higher than the Nb engine\""}
+      - {nome: "490 N, três injetores", isp_s: 309, fonte: "[F240] resumo no NTRS: \"Three injectors with 44:1 area ratios are capable of nominal specific impulse values of 309 sec\" (só o resumo; artigo não obtido)"}
+    onde_procurou:
+      - "[F228] PDF p. 22: 44:1 só nas cotas do desenho; sem Isp, massa ou empuxo próprios"
+      - "[F106] e [F107]: não citam 44:1 (conferido nas citações do repositório; [F106] sem cópia local)"
+      - "Busca no NTRS e na web por R-4D-11 com 44:1: [F239] e [F240] são os mais próximos e não nomeiam o R-4D-11"
+      - "Páginas de terceiros (Wikipedia, Astronautix e catálogos) não contam como fonte primária e não dão o 44:1"
+  bowles:
+    dv_m_s: {valor: 4150, fonte: "[F46] PDF p. 10: \"orbital at 4150 m/sec\""}
+    orbita_tabela: {valor: "100 × 500 km, 4115,5 m/s", fonte: "[F46] Tab. 1, PDF p. 21: \"(100, 500) (3597,3227) 4115.5\"; a fonte não diz de onde vem a diferença até o valor do texto (não conferido)"}
+    dv_100x500_m_s: 4115.5
+    perdas: {fonte: "[F46] PDF p. 20: \"the drag, thrust vectoring and atmospheric losses are all small\" (dito para 100 × 500 km e escape); PDF p. 20: \"heading due East\"; Tab. 1, PDF p. 21: \"(100,100) 3503 4027.9\""}
+    velocidade_100x100_m_s: 3503
+

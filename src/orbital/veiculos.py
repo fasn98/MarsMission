@@ -63,12 +63,12 @@ def dv_extra_orbitador(mu, um_sol, rp, ra, c3l, descer):
     return descer + min(tei_alvo, voltar) - tei_1sol
 
 
-def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None, detalhe=False, mcfg=None):
+def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None, detalhe=False, mcfg=None, orbita=None):
     """Massas injetadas (sem estágio de saída) do orbitador (iii e A) e do lander, no caso de base da Etapa 2.3.
 
     `plataforma_lander_kg` substitui a plataforma do lander do config (opções de coleta, Etapa 2.5); `dcfg` e `scfg`
     substituem config/dimensionamento.yaml e config/superficie.yaml (sensibilidade da Etapa 2.5); `mcfg`, o
-    config/mav_propulsao.yaml. Cada veículo traz
+    config/mav_propulsao.yaml; `orbita`, a órbita de encontro de results/etapa2.3 (raios rp, ra em km). Cada veículo traz
     também o detalhe por estágio ("estagios") e, no lander, as massas de chegada, pouso e MAV. Com `detalhe=True`
     (Etapa 3.1), cada estágio traz as queimas (massa antes e propelente) e o lander traz os estágios do MAV."""
     dcfg = ler("config/dimensionamento.yaml") if dcfg is None else dcfg
@@ -84,7 +84,7 @@ def veiculos(plataforma_lander_kg=None, dcfg=None, scfg=None, detalhe=False, mcf
     op_mav = mp["melhor_opcao"]
     fonte_mav = min((x for x in mp["opcoes"] if x["opcao"] == op_mav), key=lambda x: x["total_regra_iii_kg"])["energia"]
     R, mu, um = v(po["raio_marte_km"]), p.mu_marte, p.orbitas_marte["eliptica_alta"]
-    rp, ra = R + pl["orbita_encontro"]["periapse_alt_km"], R + pl["orbita_encontro"]["apoapse_regra_5pct_km"]
+    rp, ra = (R + pl["orbita_encontro"]["periapse_alt_km"], R + pl["orbita_encontro"]["apoapse_regra_5pct_km"]) if orbita is None else orbita
     ms = ler("results/etapa1.3/missoes.yaml")
     cand = {c["id"]: c for c in ms["candidatas"]}
     ref = ler("config/missao_referencia.yaml")["missao_referencia"]["id"]
