@@ -45,7 +45,7 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 
 ## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos .fs
 
-**O que muda:** toda a geometria e as densidades vão para os .fs com 12 algarismos significativos, antes 6. Massa, CG e inércia desta página mudam por isso; os valores vigentes são os mostrados aqui, e a comparação 6 × 12 algarismos está em results/etapa7.2b/folgas.md. A conferência no Onshape continua valendo para o commit 32cb41d: ela lê as cópias em tests/data/onshape/, que não mudam.
+**O que muda:** toda a geometria e as densidades vão para os .fs com 12 algarismos significativos, antes 6. Massa, CG e inércia desta página mudam por isso; os valores vigentes são os mostrados aqui, e a comparação 6 × 12 algarismos está em results/etapa7.2b/folgas.md. A conferência no Onshape continua valendo para o commit 32cb41d: ela lê as cópias em tests/data/onshape/, que não mudam. Outros arquivos com números afetados, com errata própria ou nota: results/etapa7.2/cg_lateral.md, conferencia_onshape.md e portao_decisao.yaml; results/etapa7.2b/roteiro_onshape.md.
 
 ## Orbitador no Falcon (com a plataforma e o EES no arranjo do CAD)
 

@@ -69,3 +69,7 @@ Arquivo tests/data/onshape/compilados_32cb41d/mav.fs; compilou: sim; peças: 12 
 
 Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa −6,3e−04 kg; CG +0,0e+00, +0,0e+00, +6,8e−06 m.
 
+
+## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos atuais
+
+Com 6 algarismos, o modelo atual menos o compilado era Orbitador +0,6 g; Lander −0,027 kg; MAV sem diferença. Os valores vigentes são os do início desta página. A conferência contra o Onshape não muda: ela vale para os arquivos do commit 32cb41d, copiados em tests/data/onshape/.

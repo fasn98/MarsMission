@@ -54,3 +54,7 @@ Tanques em lados opostos, a 1,50 m do eixo (P-095): MON-3 com 70,9 kg em +x e MM
 ## Achado para o portão da 7.3
 
 Na configuração de entrada, o deslocamento radial do CG do lander é 0,0065 do diâmetro da cápsula (perfil lido), contra 0,0215 do dref no MSL: 30 % do valor do MSL (diâmetros de referência diferentes: o do perfil lido e o dref do MSL). No MSL o deslocamento era intencional, para trimar e gerar sustentação; aqui ele sai do arranjo (braço e MAV), num azimute de −65° (atan2(y, x) nos eixos do Part Studio, de +x para +y) que não foi escolhido. Não é desprezível para a trimagem e o L/D da entrada; a ordem de grandeza da trimagem não foi calculada (aerodinâmica não modelada). Nenhuma peça foi movida.
+
+## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos .fs
+
+Nas duas tabelas por conjunto, a massa da descida era 576,1 kg e a da cápsula era 263,9 kg, com 6 algarismos. Os valores vigentes são os das tabelas acima (results/etapa7.2b/folgas.md, comparação 6 × 12 algarismos).

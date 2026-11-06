@@ -2,6 +2,8 @@
 
 **VERIFICAÇÃO geométrica do modelo, não validação.** O envelope do Vulcan é leitura de figura do guia, e o do Falcon é o STEP do fabricante amostrado.
 
+**Nota (2026-11-06):** os arquivos desta página têm 12 algarismos; as massas esperadas abaixo já são as vigentes (results/etapa7.2b/folgas.md).
+
 **Não conferido:** os arquivos não foram compilados aqui, e as páginas de ajuda do Onshape não abriram na consulta. Os nomes de comandos (Commit, Mass Properties, Insert, Group, Measure e os da Assembly) vêm de memória e podem variar. Se algo não bater, anote o que apareceu.
 
 ## A. Colar os Feature Studios

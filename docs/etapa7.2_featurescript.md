@@ -205,8 +205,7 @@ menos. O cálculo amostrava o perfil da cápsula em 400 pontos, e nenhum caía n
 
 ## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos .fs
 Os arquivos `results/etapa7.2/orbitador.fs`, `lander.fs` e `mav.fs` passam a ter toda a geometria e as densidades com 12
-algarismos significativos, antes 6. O que muda é só a precisão dos números das listas `CORPOS` e `MATERIAIS`; a lista de peças e o
-modelo não mudam. Massa, CG e inércia mudam além da tolerância da P-039: a tabela 6 × 12 algarismos está em
+algarismos significativos, antes 6. O que muda é só a precisão dos números da lista `CORPOS`; a lista de peças e o modelo não mudam. Massa, CG e inércia mudam além da tolerância da P-039: a tabela 6 × 12 algarismos está em
 `results/etapa7.2b/folgas.md`. A conferência no Onshape continua válida para o commit 32cb41d, porque lê as cópias em
 `tests/data/onshape/compilados_32cb41d/`. Os valores desta página anteriores a esta errata ficam como registro; os vigentes estão
-em `results/etapa7.2/conferencias.md`.
+em `results/etapa7.2/conferencias.md`, `cg_lateral.md`, `conferencia_onshape.md` e `results/etapa7.2b/roteiro_onshape.md`.

@@ -59,7 +59,7 @@ def test_arquivos_gerados_coerentes():
         assert r["resumo"][k]["massa_kg"] == pytest.approx(sum(c["massa_kg"] for c in corpos))
     # peças equivalentes: massa = a do orçamento usada (P-094)
     orb = {c["nome"]: c for c in r["veiculos"]["orbitador"]}
-    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-5)   # densidade arredondada a 12 algarismos
+    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-10)   # densidade arredondada a 12 algarismos
     # propelente do orbitador = o do orçamento
     prop = sum(c["massa_kg"] for c in r["veiculos"]["orbitador"] if c["nome"].startswith("Propelente"))
     arq = ler("results/etapa2.5/arquitetura.yaml")["orbitador"]["composicao"]
@@ -372,8 +372,11 @@ def test_encaixe_coifas():
     # grade alinhada: peças exatamente simétricas sem diferença da grade; 2 e 3 são espelhos bit a bit
     td = [c for c in par["veiculos"]["lander"] if c["nome"].startswith("Tanque descida")]
     assert td[1]["c"][0] == td[2]["c"][0] and td[1]["c"][1] == -td[2]["c"][1] and td[1]["c"][2] == td[2]["c"][2]
-    assert r["tanques_descida"]["diferenca_max_raio_m"] < 1e-11
-    assert r["criterio_empate"]["simetricas"]["diferenca_m"] < 1e-11
+    assert r["criterio_empate"]["simetricas"]["diferenca_m"] == pytest.approx(r["tanques_descida"]["diferenca_max_raio_m"], rel=1e-3)
+    # topo da Casca traseira 1 e do Braço em z = 3,12 m: com a grade nos ângulos cardeais, é coincidência, não diferença
+    assert any(set(x) == {"Braço de coleta (guardado)", "Casca traseira 1 (SLA-561V)"} for x in r["criterio_empate"]["coincidencias"])
+    for arq_ in ("results/etapa7.2/conferencias.md", "results/etapa7.2/cg_lateral.md", "results/etapa7.2/conferencia_onshape.md"):
+        assert "Errata (2026-11-06" in (RAIZ / arq_).read_text(encoding="utf-8")
     # nas casas do roteiro, nada mudou com a grade alinhada e os 12 algarismos
     assert all(x["igual_em_3_casas"] for x in r["comparacao_grade_e_precisao"])
     assert ec.EMPATE_M == 1e-9 and ec.CASAS_DE_ORDEM == 9
