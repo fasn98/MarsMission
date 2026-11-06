@@ -6,6 +6,8 @@ Medição: Fabio, 2026-11-03, conta real do Onshape, FeatureScript versão 3112,
 
 Documento no Onshape: "MarsMission Fase 7", gerado com os arquivos do commit 32cb41d e versionado no Onshape como "etapa7.2-32cb41d". Os arquivos atuais (results/etapa7.2/*.fs) diferem dos compilados: modelo atual menos compilado, Orbitador +6,8 g; Lander −0,015 kg; MAV −0,6 g. Os previstos dos arquivos atuais estão em results/etapa7.2/parametros.yaml.
 
+**Pendência (decisão do Fabio, 2026-11-06):** os três arquivos atuais, com 13 algarismos, não foram compilados no Onshape. A recompilação fica para depois da decisão do portão dos bocais e do aeroshell. Até lá, esta conferência vale só para o commit 32cb41d.
+
 Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. O script calcula CG em x, y e z e o tensor de inércia completo; os produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.
 
 Tolerância: meia unidade da última casa decimal mostrada em cada valor, lido manualmente na tela do Onshape (Mass properties, workspace units em SI). Cada linha mostra as casas decimais lidas; um CG mostrado como "0" usa as casas da coordenada z do mesmo veículo.

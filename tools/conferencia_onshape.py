@@ -149,6 +149,7 @@ def escreve_md(o):
           f"\"{c['versao_no_onshape']}\". Os arquivos atuais (results/etapa7.2/*.fs) diferem dos compilados: modelo atual menos compilado, "
           + "; ".join(f"{NOMES[k]} {ex_kg(x['modelo_atual']['diferenca_massa_kg'])}" for k, x in o["veiculos"].items() if x["situacao"] == "conferido")
           + ". Os previstos dos arquivos atuais estão em results/etapa7.2/parametros.yaml.", "",
+          "**Pendência (decisão do Fabio, 2026-11-06):** os três arquivos atuais, com 13 algarismos, não foram compilados no Onshape. A recompilação fica para depois da decisão do portão dos bocais e do aeroshell. Até lá, esta conferência vale só para o commit " + f"{c['commit_dos_arquivos']}.", "",
           "Previsto: tools/cad_parametros.py (volume, centro e inercia) sobre os dados do próprio arquivo compilado. O script calcula CG em "
           "x, y e z e o tensor de inércia completo; os produtos de inércia são comparados na forma de tensor (−∫ x y dm), com os sinais do Onshape.", "",
           f"Tolerância: {c['origem_da_tolerancia']}. Cada linha mostra as casas decimais lidas; um CG mostrado como \"0\" usa as casas da "

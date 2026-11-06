@@ -240,7 +240,7 @@ def escreve_md(out):
             c = r["conferencia_descida"]
             e = next(x for x in r["por_n"] if x["n_ativos"] == r["n_minimo"])["escolha"]
             md += [f"Conferência da descida no ponto de {r['n_minimo']} ativos: Δv quase circular {br(c['dv_quase_circular_km_s'], 4)} km/s, numérico "
-                   f"{br(c['dv_numerico_km_s'], 4)} km/s ({c['diferenca_relativa']:+.1e}); tempo de empuxo {br(c['tempo_empuxo_quase_circular_dias'], 1)} × "
+                   f"{br(c['dv_numerico_km_s'], 4)} km/s ({c['diferenca_relativa']:+.3e}); tempo de empuxo {br(c['tempo_empuxo_quase_circular_dias'], 1)} × "
                    f"{br(c['tempo_empuxo_numerico_dias'], 1)} d; {br(c['voltas'])} voltas; excentricidade final {br(c['excentricidade_final'], 4)}.", "",
                    "Margens dos lançadores (injeção direta, pior janela): " + "; ".join(
                        f"{v_}: " + ", ".join(f"{k} {pc(m)}" for k, m in d.items()) for v_, d in e["margens"].items()), ""]
@@ -263,6 +263,7 @@ def escreve_md(out):
            f"{br(el['ida_referencia_dias'])} d, volta {br(el['volta_referencia_dias'])} d.", "",
            "| Propulsor | Ativos | Massa inicial (kg) | Tempo de empuxo só da ida (d) |", "| :- | -: | -: | -: |"]
     md += [f"| {c['propulsor']} | {c['n_ativos']} | {br(c['massa_inicial_kg'])} | {br(c['tempo_empuxo_ida_dias'])} |" for c in el["casos"]]
+    md += ["", "**Nota (2026-11-06, decisão do Fabio):** o resíduo da conferência da descida passou a 4 algarismos, para o arredondamento ficar bem abaixo da tolerância da P-039. Antes, com 2 algarismos: −2,1e-09 e −3,4e-09. Nenhum valor calculado mudou."]
     (SAIDA / "orbitador_eletrico.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 
