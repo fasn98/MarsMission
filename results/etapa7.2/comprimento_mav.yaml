@@ -504,3 +504,42 @@ alavancas:
   extra_orbitador_m_s: 497.6969701282821
   orbitador_fecha: true
   margem_falcon_heavy: 5.022458284087428e-05
+resolucao_amostragem:
+  passos_bissecao:
+    passos: 16
+    dobrado: 32
+    limite_fh_km: 10824.0
+    limite_fh_dobrado_km: 10824.0
+    limite_fecha_km: 594.0
+    limite_fecha_dobrado_km: 594.0
+  orbitas_amostra:
+    pontos_novos_km:
+    - 2236.06797749979
+    - 7071.067811865475
+    - 10403.845442911963
+    - 16760.333457303288
+    comprimento_monotono: true
+    comprimentos_novos_m:
+    - 3.127057956339089
+    - 3.2894639239815113
+    - 3.350641988369917
+    - 3.4572539357345984
+  diametros_m:
+    pontos: 7
+    dobrado: 13
+    por_forma:
+      msl_m2020:
+        melhor_d_grade_m: 0.6
+        melhor_folga_grade_m: -0.1755490978643912
+        melhor_d_fina_m: 0.6
+        melhor_folga_fina_m: -0.1755490978643912
+      srl_a:
+        melhor_d_grade_m: 0.6
+        melhor_folga_grade_m: 0.03662481517908733
+        melhor_d_fina_m: 0.6
+        melhor_folga_fina_m: 0.03662481517908733
+  exemplo_p086_m:
+    valor: 0.1
+    metade: 0.05
+    folga_por_metro_valor: 0.5000000000000004
+    folga_por_metro_metade: 0.4999999999999982

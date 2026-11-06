@@ -265,7 +265,9 @@ bocais_decisoes:   # decisões do Fabio sobre as alternativas (2026-11-04)
   F: {situacao: "REFERÊNCIA APENAS", motivo: "R-40B fora de produção", fonte: "[F228] PDF p. 30: \"Not in Production; Requires component obsolescence update\"; [F106] p. 3: \"NIP=Not In Production\""}
 
 comprimento_mav:   # investigação do que define o comprimento do MAV (portão da 7.2); nenhum valor aqui muda o projeto
-  # parâmetros de amostragem, sem fonte e sem efeito no projeto (classificação a confirmar pelo Fabio; regra 2)
+  # parâmetros de amostragem, não premissas (decisão do Fabio, 2026-11-06, condicionada ao teste de resolução):
+  # sem fonte e sem efeito no projeto; as conclusões não mudam nas casas mostradas ao dobrar a resolução de cada um
+  # (results/etapa7.2/comprimento_mav.md, seção "Resolução da amostragem"). orbitas_amostra, logo abaixo, entra no mesmo teste.
   amostragem: {diametros_m: [0.60, 0.69], exemplo_p086_m: 0.10, passos_bissecao: 16}
   altitudes_tabela_bowles_km: {periapse: 100, apoapse: 500, fonte: "[F46] Tab. 1, PDF p. 21"}
   orbitas_amostra:   # altitudes (periapse, apoapse) em km, só para mostrar a tendência; dentro da varredura de config/superficie.yaml
@@ -307,4 +309,15 @@ comprimento_mav:   # investigação do que define o comprimento do MAV (portão 
     dv_100x500_m_s: 4115.5
     perdas: {fonte: "[F46] PDF p. 20: \"the drag, thrust vectoring and atmospheric losses are all small\" (dito para 100 × 500 km e escape); PDF p. 20: \"heading due East\"; Tab. 1, PDF p. 21: \"(100,100) 3503 4027.9\""}
     velocidade_100x100_m_s: 3503
+
+rotas_mav:   # Portão da 7.2: alvo e rotas A e B pedidos pelo Fabio (2026-11-06). Não muda premissa nem ADR.
+  alvo: {aeroshell: msl_m2020, descricao: "aeroshell de 4,5 m, MAV deitado, Ø que contenha as saídas dos bocais com parede"}
+  rota_a:
+    isp_s: [304, 308, 309, 314]   # faixa do Fabio, 304 a 314 s; valores dos análogos de comprimento_mav.variante_44_1 (NÃO VALIDADO)
+    tanques_aninhados: {fonte: "[F46] §5.4, PDF p. 17: \"Similar to a common bulkhead design, the forward tank aft dome is accommodated within a recessed aft tank forward dome but with a purge gap between the two tanks. The inter-tank section is eliminated\"", ressalva: "a conta não desconta o vão de purga nem muda a massa dos tanques"}
+  rota_b:
+    n_motores_mav: 2    # os únicos que cabem com parede até Ø 0,60 m; empuxo/peso conferido em cada órbita
+    orbita_baixa: {fonte: "[F35] p. 3: \"nominal injection orbit of 380km\""}
+    motivo_segunda_orbita: "a maior altitude circular em que o MAV com 2 motores R-4D-11 164:1, em Ø 0,60 m, ainda cabe deitado no aeroshell de 4,5 m: o menor Δv do orbitador que cumpre o alvo"
+    bowles_empuxo_peso: {valor: 2.5, fonte: "[F46] PDF p. 9: \"a liftoff thrust-to-weight ratio of 2.5 was used\""}
 

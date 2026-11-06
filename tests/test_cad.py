@@ -463,3 +463,40 @@ def test_comprimento_mav():
     assert md.rindex("## ") == md.index("## Opinião do agente")
     assert "NÃO VALIDADO" in md
 
+
+def test_rotas_mav():
+    """Rotas do portão: a base reproduz o estudo; rota A e rota B conferidas por fora da ferramenta."""
+    r = ler("results/etapa7.2/rotas_mav.yaml")
+    arq = ler("results/etapa2.5/arquitetura.yaml")
+    b = r["base"]
+    assert b["glom_kg"] == pytest.approx(arq["lander"]["mav"]["estagios"][0]["massa_inicial_kg"], rel=1e-12)
+    assert b["orbitador_injetado_kg"] == pytest.approx(arq["orbitador"]["injetado_kg"], rel=1e-12)
+    assert b["circulo_saidas_m"] == pytest.approx(11.0 * 0.0254 * (1 + math.sqrt(2)))
+    # rota A: 4 saídas de 44:1 em Ø 0,57 m com parede de 0,01 m
+    a = r["rota_a"][0]["com_aninhados"]
+    assert a["circulo_saidas_m"] == pytest.approx(6.01 * 0.0254 * (1 + math.sqrt(2)))
+    assert a["folga_radial_bocais_m"] == pytest.approx((0.57 - 0.02 - a["circulo_saidas_m"]) / 2)
+    # folga = (disponível − comprimento) / 2, e o 4,5 m com Ø 0,57 m é o limite da varredura
+    assert a["folga_deitado_m"] == pytest.approx((a["disponivel_m"] - a["comprimento_m"]) / 2)
+    # aninhar encurta, e Isp maior encurta e reduz a massa
+    for x in r["rota_a"]:
+        assert x["com_aninhados"]["comprimento_m"] < x["so_44"]["comprimento_m"]
+    glom = [x["com_aninhados"]["glom_kg"] for x in r["rota_a"]]
+    assert glom == sorted(glom, reverse=True)
+    # rota B: 2 saídas de 164:1 com parede exigem Ø 0,60 m; a segunda órbita está no limite do alvo
+    assert r["diametro_b_m"] == 0.60 and r["rota_b"][0]["altitude_km"] == 380
+    bx = r["rota_b"][1]["mav"]
+    assert 0 <= bx["folga_deitado_m"] < 1e-3
+    # o híbrido c2 reproduz o estudo: fica muito acima do Falcon Heavy, e o XIPS cabe no tempo na segunda órbita
+    for rota in r["rota_b"]:
+        for q in rota["propulsores"].values():
+            assert q["c2_mais_leve"]["margem_falcon_heavy"] < -0.5
+    # a opinião é a última seção
+    md = (RAIZ / "results/etapa7.2/rotas_mav.md").read_text(encoding="utf-8")
+    assert md.rindex("## ") == md.index("## Opinião do agente")
+    # resolução da amostragem
+    rs = ler("results/etapa7.2/comprimento_mav.yaml")["resolucao_amostragem"]
+    assert rs["passos_bissecao"]["limite_fh_km"] == rs["passos_bissecao"]["limite_fh_dobrado_km"]
+    assert rs["orbitas_amostra"]["comprimento_monotono"]
+    assert rs["exemplo_p086_m"]["folga_por_metro_valor"] == pytest.approx(0.5)
+

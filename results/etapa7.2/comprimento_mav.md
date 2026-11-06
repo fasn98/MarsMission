@@ -122,6 +122,20 @@ Folga em m, com a base no ombro, a estação mais favorável; positivo = cabe. N
 
 **Comprimento máximo com Ø 0,57 m:** deitado, 3,18 m no 4,5 m e 3,60 m no 4,65 m; em pé, 1,78 m e 2,79 m.
 
+## Resolução da amostragem
+
+Teste pedido pelo Fabio para aceitar os parâmetros de amostragem como tais, não como premissas: dobrar a resolução de cada um e olhar as conclusões, nas casas mostradas.
+
+| Parâmetro | Como dobrei | Resultado | Muda nas casas mostradas? |
+| :- | :- | :- | :- |
+| passos_bissecao | 16 para 32 passos | margem zero em 10 824 e 10 824 km; deixa de fechar em 594 e 594 km | não |
+| orbitas_amostra | ponto médio geométrico entre as órbitas: 2 236, 7 071, 10 404, 16 760 km | comprimentos novos 3,127, 3,289, 3,351, 3,457 m, em ordem entre os vizinhos; os pontos existentes são recalculados iguais | não |
+| diametros_m, 4,5 m | 7 para 13 diâmetros | melhor folga deitado na grade: −0,176 m em Ø 0,600 m; na fina: −0,176 m em Ø 0,600 m | não |
+| diametros_m, 4,65 m | 7 para 13 diâmetros | melhor folga deitado na grade: +0,037 m em Ø 0,600 m; na fina: +0,037 m em Ø 0,600 m | não |
+| exemplo_p086_m | 0,10 para 0,05 m | folga por metro: 0,500 e 0,500 m/m | não |
+
+**Nota sobre os diâmetros:** a tabela de alavancas mostra só os pontos da varredura, cujos valores não dependem da grade. O que a grade fina muda é onde cai o melhor diâmetro; a conclusão de que o diâmetro não faz o MAV caber no 4,5 m se mantém enquanto a folga máxima seguir negativa.
+
 ## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)
 
 Opinião: as duas maiores alavancas são tanques aninhados (−0,49 m, limite otimista) e R-4D-11 44:1 (−0,30 a −0,42 m, com Isp e massa sem fonte). A órbita de encontro dá −0,20 m até o limite do lançador. A órbita é a única que reduz o propelente, mas sozinha não basta: na margem zero do Falcon Heavy (300 × 10 824 km) a folga deitado é −0,09 m no 4,5 m e +0,12 m no 4,65 m, e margem zero não é ponto de projeto. Ela também não resolve os bocais: ali o empuxo/peso com dois motores é 0,84, abaixo de 1, o motivo por que a opção C foi descartada. O 44:1 é a única das três alavancas que também resolveria os bocais, então eu buscaria primeiro o Isp e a massa dele. Eu não gastaria mais esforço em órbita antes disso, e a P-086 pesa pelo motor, não pela busca de mais cotas do MSR. A decisão é do Fabio.
