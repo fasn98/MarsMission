@@ -358,6 +358,7 @@ rota_a_dimensionamento:   # Portão do comprimento do MAV (Fabio, 2026-11-06). R
     recesso_hemisferio: "esfera em recesso de outra, recesso de até um hemisfério"
     recesso_livre: "esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera)"
     antepara_assimetrica: "esfera de volume somado, dividida no equador por antepara de calota (lente e tigela)"
+    lente_mesmo_raio: "esfera de volume somado, com antepara do mesmo raio e borda fora do equador (lente e crescente, com canto vivo na borda)"
   arranjo_msl:
     - {item: "Ordem axial do MSL", achado: "de cima para baixo: estágio de cruzeiro, casca traseira, paraquedas, estágio de descida, BUD, rover, escudo", fonte: "[F244] Fig. 1, PDF p. 2; [F214] PDF p. 35, vista expandida"}
     - {item: "Rover e estágio de descida no aeroshell", achado: "o aeroshell contém os dois", fonte: "[F244] PDF p. 1: \"The 4.5 m aeroshell is composed of a heatshield and backshell, and contains the DS and rover.\""}

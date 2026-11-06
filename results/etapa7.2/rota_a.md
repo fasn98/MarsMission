@@ -35,22 +35,22 @@ Com as 4 saídas de 44:1 (0,369 m, com parede de 0,01 m de cada lado), o menor �
 
 Comprimento máximo: 2,644 m, em Ø 0,57 m. MAV redimensionado para cada Isp, nos dois estágios.
 
-Colunas: a geometria do estágio 2 (seção 4), que é uma escolha do Fabio. **recesso_hemisferio**: esfera em recesso de outra, recesso de até um hemisfério; **recesso_livre**: esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera); **antepara_assimetrica**: esfera de volume somado, dividida no equador por antepara de calota (lente e tigela).
+Colunas: a geometria do estágio 2 (seção 4), que é uma escolha do Fabio. **recesso_hemisferio**: esfera em recesso de outra, recesso de até um hemisfério; **recesso_livre**: esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera); **antepara_assimetrica**: esfera de volume somado, dividida no equador por antepara de calota (lente e tigela); **lente_mesmo_raio**: esfera de volume somado, com antepara do mesmo raio e borda fora do equador (lente e crescente, com canto vivo na borda).
 
 Limite otimista, sem tanques dimensionados: 310,6 s.
 
-| Vão (m) | Fator de flambagem (NÃO VALIDADO) | recesso_hemisferio | recesso_livre | antepara_assimetrica |
-| -: | -: | -: | -: | -: |
-| 0,020 | 1,00 | 316,1 | 313,7 | 313,5 |
-| 0,020 | 0,50 | 316,1 | 313,8 | 313,5 |
-| 0,020 | 0,25 | 316,2 | 313,9 | 313,6 |
-| 0,020 | 0,14 | 316,3 | 314,0 | 313,7 |
-| 0,005 | 0,14 | 315,1 | 311,9 | 311,8 |
-| 0,050 | 0,14 | 319,0 | 318,3 | 317,8 |
+| Vão (m) | Fator de flambagem (NÃO VALIDADO) | recesso_hemisferio | recesso_livre | antepara_assimetrica | lente_mesmo_raio |
+| -: | -: | -: | -: | -: | -: |
+| 0,020 | 1,00 | 316,13 | 313,73 | 313,46 | 313,46 |
+| 0,020 | 0,50 | 316,15 | 313,76 | 313,50 | 313,50 |
+| 0,020 | 0,25 | 316,21 | 313,86 | 313,59 | 313,59 |
+| 0,020 | 0,14 | 316,27 | 313,98 | 313,70 | 313,70 |
+| 0,005 | 0,14 | 315,11 | 311,92 | 311,79 | 311,79 |
+| 0,050 | 0,14 | 318,97 | 318,25 | 317,81 | 317,81 |
 
-Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte. Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em [F240], só o resumo cita essa tecnologia. Na faixa de 306 a 314 s: esfera em recesso de outra, recesso de até um hemisfério: 0 de 6 linhas dentro da faixa; esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera): 5 de 6 linhas dentro da faixa; esfera de volume somado, dividida no equador por antepara de calota (lente e tigela): 5 de 6 linhas dentro da faixa.
+Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte. Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em [F240], só o resumo cita essa tecnologia. Na faixa de 306 a 314 s: esfera em recesso de outra, recesso de até um hemisfério: 0 de 6 linhas dentro da faixa; esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera): 5 de 6 linhas dentro da faixa; esfera de volume somado, dividida no equador por antepara de calota (lente e tigela): 5 de 6 linhas dentro da faixa; esfera de volume somado, com antepara do mesmo raio e borda fora do equador (lente e crescente, com canto vivo na borda): 5 de 6 linhas dentro da faixa.
 
-**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda o valor para os dois lados, e por isso a conclusão depende dela.
+**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda em que lado da faixa dos análogos o valor cai, e por isso a conclusão depende dela.
 
 ## 4. Tanques aninhados dimensionados
 
@@ -65,22 +65,26 @@ Ti-6Al-4V recozido, base A: Ftu 924 MPa, Fty 869 MPa ([F219]). Fator de 2,0: [F4
 | bowles_20_kg | 1,30 | 0,77 | 0,39 | 1,19 | 1,68 | 2,38 | 3,18 | [F46] Tab. 5, PDF p. 34: "Tank Pressure ... 1.30 MPa (188 psi)" |
 | entrada_maxima_r4d11 | 2,93 | 1,74 | 0,87 | 1,79 | 2,53 | 3,57 | 4,77 | [F228] PDF p. 22: "Inlet Pressure Range ... 4.1 – 29.3 bar (60 – 425 psia)" |
 
-**Comprimento e massa,** em Ø 0,57 m, com o piso de entrada do motor, vão de 0,02 m (NÃO VALIDADO: [F46] §5.4, PDF p. 17: "with a purge gap between the two tanks"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO) e fator de flambagem 0,14. O estágio 1 soma ao limite o vão e as duas paredes da antepara. No estágio 2, o volume cabe numa esfera menor que o diâmetro interno: uma antepara do mesmo raio dessa esfera não deixa volume para o segundo tanque, e por isso há três geometrias, sem fonte e NÃO VALIDADAS.
+**Comprimento e massa,** em Ø 0,57 m, com o piso de entrada do motor, vão de 0,02 m (NÃO VALIDADO: [F46] §5.4, PDF p. 17: "with a purge gap between the two tanks"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO) e fator de flambagem 0,14. O estágio 1 soma ao limite o vão e as duas paredes da antepara. No estágio 2, o volume cabe numa esfera menor que o diâmetro interno: uma antepara do mesmo raio dessa esfera, com a borda no equador, não deixa volume para o segundo tanque, e por isso há quatro geometrias, sem fonte e NÃO VALIDADAS.
 
 | Isp (s) | Geometria do estágio 2 | Só 44:1 (m) | Limite otimista (m) | Real (m) | Redução no limite (m) | Redução real (m) | Sobra da redução | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) |
 | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
 | 304 | recesso_hemisferio | 3,260 | 2,763 | 2,854 | 0,496 | 0,406 | 82 % | −0,055 | +0,165 | 33,8 |
 | 304 | recesso_livre | 3,260 | 2,763 | 2,817 | 0,496 | 0,442 | 89 % | −0,037 | +0,183 | 36,7 |
 | 304 | antepara_assimetrica | 3,260 | 2,763 | 2,813 | 0,496 | 0,447 | 90 % | −0,035 | +0,185 | 31,7 |
+| 304 | lente_mesmo_raio | 3,260 | 2,763 | 2,813 | 0,496 | 0,447 | 90 % | −0,035 | +0,185 | 32,8 |
 | 308 | recesso_hemisferio | 3,181 | 2,688 | 2,778 | 0,492 | 0,403 | 82 % | −0,017 | +0,203 | 32,8 |
 | 308 | recesso_livre | 3,181 | 2,688 | 2,742 | 0,492 | 0,439 | 89 % | +0,001 | +0,221 | 35,6 |
 | 308 | antepara_assimetrica | 3,181 | 2,688 | 2,738 | 0,492 | 0,443 | 90 % | +0,003 | +0,223 | 30,7 |
+| 308 | lente_mesmo_raio | 3,181 | 2,688 | 2,738 | 0,492 | 0,443 | 90 % | +0,003 | +0,223 | 31,7 |
 | 309 | recesso_hemisferio | 3,162 | 2,671 | 2,760 | 0,492 | 0,402 | 82 % | −0,008 | +0,212 | 32,5 |
 | 309 | recesso_livre | 3,162 | 2,671 | 2,725 | 0,492 | 0,438 | 89 % | +0,010 | +0,230 | 35,3 |
 | 309 | antepara_assimetrica | 3,162 | 2,671 | 2,721 | 0,492 | 0,442 | 90 % | +0,012 | +0,232 | 30,4 |
+| 309 | lente_mesmo_raio | 3,162 | 2,671 | 2,721 | 0,492 | 0,442 | 90 % | +0,012 | +0,232 | 31,5 |
 | 314 | recesso_hemisferio | 3,077 | 2,590 | 2,678 | 0,487 | 0,399 | 82 % | +0,033 | +0,253 | 31,4 |
 | 314 | recesso_livre | 3,077 | 2,590 | 2,644 | 0,487 | 0,433 | 89 % | +0,050 | +0,270 | 34,0 |
 | 314 | antepara_assimetrica | 3,077 | 2,590 | 2,639 | 0,487 | 0,437 | 90 % | +0,052 | +0,272 | 29,3 |
+| 314 | lente_mesmo_raio | 3,077 | 2,590 | 2,639 | 0,487 | 0,437 | 90 % | +0,052 | +0,272 | 30,3 |
 
 Massa dos tanques em série hoje: 19,9 kg, na espessura da P-093. A massa do orçamento do MAV vem da fração estrutural, então esta conta não muda o GLOM; por isso o confronto abaixo.
 
@@ -92,27 +96,31 @@ Massa dos tanques em série hoje: 19,9 kg, na espessura da P-093. A massa do or�
 | 304 | 2 | recesso_hemisferio | 17,1 | 10,3 | 60 % | 3,8 | +3,1 |
 | 304 | 2 | recesso_livre | 17,1 | 13,2 | 77 % | 3,8 | +0,2 |
 | 304 | 2 | antepara_assimetrica | 17,1 | 8,1 | 47 % | 3,8 | +5,3 |
+| 304 | 2 | lente_mesmo_raio | 17,1 | 9,2 | 54 % | 3,8 | +4,2 |
 | 308 | 1 | todas | 71,6 | 22,8 | 32 % | 15,0 | +33,8 |
 | 308 | 2 | recesso_hemisferio | 16,4 | 10,0 | 61 % | 3,8 | +2,7 |
 | 308 | 2 | recesso_livre | 16,4 | 12,8 | 78 % | 3,8 | −0,1 |
 | 308 | 2 | antepara_assimetrica | 16,4 | 7,9 | 48 % | 3,8 | +4,8 |
+| 308 | 2 | lente_mesmo_raio | 16,4 | 8,9 | 54 % | 3,8 | +3,7 |
 | 309 | 1 | todas | 70,4 | 22,6 | 32 % | 15,0 | +32,7 |
 | 309 | 2 | recesso_hemisferio | 16,3 | 9,9 | 61 % | 3,8 | +2,6 |
 | 309 | 2 | recesso_livre | 16,3 | 12,7 | 78 % | 3,8 | −0,2 |
 | 309 | 2 | antepara_assimetrica | 16,3 | 7,8 | 48 % | 3,8 | +4,7 |
+| 309 | 2 | lente_mesmo_raio | 16,3 | 8,9 | 55 % | 3,8 | +3,6 |
 | 314 | 1 | todas | 64,7 | 21,8 | 34 % | 15,0 | +27,9 |
 | 314 | 2 | recesso_hemisferio | 15,5 | 9,6 | 62 % | 3,8 | +2,1 |
 | 314 | 2 | recesso_livre | 15,5 | 12,3 | 79 % | 3,8 | −0,6 |
 | 314 | 2 | antepara_assimetrica | 15,5 | 7,6 | 49 % | 3,8 | +4,1 |
+| 314 | 2 | lente_mesmo_raio | 15,5 | 8,6 | 56 % | 3,8 | +3,1 |
 
-**As três geometrias do estágio 2.** **recesso_hemisferio**: esfera em recesso de outra, recesso de até um hemisfério; **recesso_livre**: esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera); **antepara_assimetrica**: esfera de volume somado, dividida no equador por antepara de calota (lente e tigela). As espessuras seguem as do raio interno, e nenhuma é um dimensionamento. Com recesso, o fundo do recesso não foi analisado. Com antepara, o vão zera na borda, como no estágio 1, e a tabela mostra o que falta: a lente fica quase plana, e a espessura de flambagem no raio real da calota é muito maior que a usada no comprimento.
+**As quatro geometrias do estágio 2.** **recesso_hemisferio**: esfera em recesso de outra, recesso de até um hemisfério; **recesso_livre**: esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera); **antepara_assimetrica**: esfera de volume somado, dividida no equador por antepara de calota (lente e tigela); **lente_mesmo_raio**: esfera de volume somado, com antepara do mesmo raio e borda fora do equador (lente e crescente, com canto vivo na borda). As espessuras seguem as do raio interno, e nenhuma é um dimensionamento. Com recesso, o fundo do recesso não foi analisado. Em **antepara_assimetrica**, a calota fica quase plana, com o vão praticamente constante: a espessura de flambagem no raio da calota, na tabela, está fora do domínio da fórmula da casca esférica, uma calota tão rasa trabalha como placa, e a flexão de placa não foi calculada. O comprimento e a massa dessa coluna usam a espessura do raio interno, então são otimistas. Em **lente_mesmo_raio**, a antepara tem o raio da esfera e o canto vivo na borda não foi analisado.
 
-| Isp (s) | Tanque único (m) | Comprimento: recesso_hemisferio (m) | recesso_livre (m) | antepara_assimetrica (m) | Raio da calota (m) | Flambagem no raio da calota (mm) |
-| -: | -: | -: | -: | -: | -: | -: |
-| 304 | 0,465 | 0,530 | 0,494 | 0,489 | 87,57 | 1 050,7 |
-| 308 | 0,458 | 0,523 | 0,487 | 0,483 | 86,35 | 1 035,9 |
-| 309 | 0,457 | 0,521 | 0,486 | 0,481 | 86,05 | 1 032,4 |
-| 314 | 0,449 | 0,513 | 0,478 | 0,474 | 84,62 | 1 015,3 |
+| Isp (s) | Tanque único (m) | recesso_hemisferio (m) | recesso_livre (m) | antepara_assimetrica (m) | lente_mesmo_raio (m) | Raio da calota, antepara (m) | Flambagem nesse raio, fora do domínio (mm) | Raio da esfera e raio da borda, lente (m) |
+| -: | -: | -: | -: | -: | -: | -: | -: | -: |
+| 304 | 0,465 | 0,530 | 0,494 | 0,489 | 0,489 | 87,57 | 1 050,7 | 0,232 e 0,218 |
+| 308 | 0,458 | 0,523 | 0,487 | 0,483 | 0,483 | 86,35 | 1 035,9 | 0,229 e 0,215 |
+| 309 | 0,457 | 0,521 | 0,486 | 0,481 | 0,481 | 86,05 | 1 032,4 | 0,228 e 0,214 |
+| 314 | 0,449 | 0,513 | 0,478 | 0,474 | 0,474 | 84,62 | 1 015,3 | 0,224 e 0,210 |
 
 **Sensibilidade do comprimento real (m) ao vão de purga:**
 
@@ -121,15 +129,19 @@ Massa dos tanques em série hoje: 19,9 kg, na espessura da P-093. A massa do or�
 | 304 | recesso_hemisferio | 2,837 | 2,842 | 2,854 | 2,892 |
 | 304 | recesso_livre | 2,785 | 2,796 | 2,817 | 2,879 |
 | 304 | antepara_assimetrica | 2,783 | 2,793 | 2,813 | 2,873 |
+| 304 | lente_mesmo_raio | 2,783 | 2,793 | 2,813 | 2,873 |
 | 308 | recesso_hemisferio | 2,761 | 2,766 | 2,778 | 2,816 |
 | 308 | recesso_livre | 2,710 | 2,721 | 2,742 | 2,804 |
 | 308 | antepara_assimetrica | 2,708 | 2,718 | 2,738 | 2,798 |
+| 308 | lente_mesmo_raio | 2,708 | 2,718 | 2,738 | 2,798 |
 | 309 | recesso_hemisferio | 2,743 | 2,749 | 2,760 | 2,798 |
 | 309 | recesso_livre | 2,693 | 2,704 | 2,725 | 2,787 |
 | 309 | antepara_assimetrica | 2,691 | 2,701 | 2,721 | 2,781 |
+| 309 | lente_mesmo_raio | 2,691 | 2,701 | 2,721 | 2,781 |
 | 314 | recesso_hemisferio | 2,661 | 2,666 | 2,678 | 2,716 |
 | 314 | recesso_livre | 2,612 | 2,622 | 2,644 | 2,706 |
 | 314 | antepara_assimetrica | 2,609 | 2,619 | 2,639 | 2,699 |
+| 314 | lente_mesmo_raio | 2,609 | 2,619 | 2,639 | 2,699 |
 
 **Não dimensionado:** cargas de lançamento e de subida, fadiga e fratura, soldas, espessura mínima de fabricação, e o vão como peça. A fonte tem cúpula de excentricidade 0,707 em tanques de alta pressão ([F46] PDF p. 9), que encurtaria mais; aqui seguem os hemisférios da P-085.
 
