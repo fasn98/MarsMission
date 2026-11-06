@@ -194,7 +194,7 @@ Os três compilaram e geraram as peças: 20 no orbitador, 33 no lander e 12 no M
   validação.
 - **Inércias:** o script passou a calcular as inércias no CG pela mesma geometria (`tools/cad_parametros.py`).
 - **Arredondamento corrigido:** o cone interno do escudo estava escrito com 6 algarismos, o que acrescentava 0,027 kg ao
-  lander compilado. O gerador agora escreve esses parâmetros com 13 algarismos.
+  lander compilado. O gerador agora escreve esses parâmetros com 12 algarismos.
 - **CG lateral do lander:** a análise peça a peça está em `results/etapa7.2/cg_lateral.md`, como achado para o portão da
   7.3. Nenhuma peça foi movida.
 
@@ -204,7 +204,7 @@ menos. O cálculo amostrava o perfil da cápsula em 400 pontos, e nenhum caía n
 `results/etapa7.2/conferencias.md`, seção "Errata", ao lado dos antigos.
 
 ## Errata (2026-11-06, decisão do Fabio): 13 algarismos nos arquivos .fs
-Os arquivos `results/etapa7.2/orbitador.fs`, `lander.fs` e `mav.fs` passam a ter toda a geometria e as densidades com 12
+Os arquivos `results/etapa7.2/orbitador.fs`, `lander.fs` e `mav.fs` passam a ter toda a geometria e as densidades com 13
 algarismos significativos, antes 6. O que muda é só a precisão dos números da lista `CORPOS`; a lista de peças e o modelo não mudam. Massa, CG e inércia mudam além da tolerância da P-039: a tabela 6 × 13 algarismos está em
 `results/etapa7.2b/folgas.md`. A conferência no Onshape continua válida para o commit 32cb41d, porque lê as cópias em
 `tests/data/onshape/compilados_32cb41d/`. Os valores desta página anteriores a esta errata ficam como registro; os vigentes estão
