@@ -275,7 +275,7 @@ def main():
                 "Envelope: leitura da figura \"Simplified\" [F80] Fig. 4.3.1-1, p. 4-8, nao e dado do fabricante em CAD. Plano: \"LV STA 2596.66 (1575 Interface)\".",
                 "Envelope Vulcan VC4 (referencia, sem material)", cor, op_v, versao)
     envelope_fs("envelope_falcon_heavy.fs", "MarsMission envelope Falcon Heavy", "marsMissionEnvelopeFalconHeavy",
-                "Envelope: perfil amostrado do STEP de keep-in do fabricante [F82] p. 16, Tab. 4-1. Plano: origem do arquivo, premissa proposta P-096, pendente.",
+                "Envelope: perfil amostrado do STEP de keep-in do fabricante [F82] p. 16, Tab. 4-1. Plano: origem do arquivo, premissa P-096.",
                 "Envelope Falcon Heavy (referencia, sem material)", cor, op_f, versao)
     ve = par["veiculos"]
     _, dens = cp.densidades(cad)

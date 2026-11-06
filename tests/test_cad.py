@@ -528,3 +528,37 @@ def test_pendencia_recompilar_onshape():
     # resíduo da descida com 4 algarismos: o passo de impressão fica em 1 % do piso da P-039
     el = (RAIZ / "results/etapa3.3/orbitador_eletrico.md").read_text(encoding="utf-8")
     assert "(-2.105e-09)" in el and "(-3.350e-09)" in el
+
+
+def test_rota_a_dimensiona():
+    """Rota A provisória: limites com deck, espessuras por fora da ferramenta, comprimento real e folgas com adaptador."""
+    r = ler("results/etapa7.2/rota_a.yaml")
+    al, dm, im = r["alvo"], r["dimensionamento"], r["isp_minimo"]
+    # alvo: 4 saídas de 44:1 cabem em Ø 0,57 m com parede; com deck, o limite é o de mav_arranjo
+    assert al["diametro_m"] == 0.57 and al["circulo_44_m"] == pytest.approx(6.01 * 0.0254 * (1 + math.sqrt(2)))
+    c = next(x for x in ler("results/etapa7.2/mav_arranjo.yaml")["casos"] if x["diametro_m"] == 0.57)
+    dk = next(e for e in c["formas"]["msl_m2020"] if "P-094" in e["estacao"])
+    assert al["limite_com_deck_m"] == pytest.approx(c["comprimento_m"] + 2 * dk["deitado_folga_m"])
+    # espessuras à mão: σ = Ftu / 2; cilindro p R / σ; cúpula p R / (2 σ); flambagem clássica com o fator de redução
+    sig = 134 * 6.894757 / 2
+    p = dm["pressoes"]["entrada_nominal_r4d11"]
+    assert dm["tensao_admissivel_mpa"] == pytest.approx(sig)
+    assert p["t_cilindro_m"] == pytest.approx(1.40 * 0.275 / sig) and p["t_cupula_m"] == pytest.approx(1.40 * 0.275 / (2 * sig))
+    tf = 0.275 * math.sqrt(2 * 1.40 * math.sqrt(3 * (1 - 0.342 ** 2)) / (2 * 16400 * 6.894757 * 0.25))
+    assert p["t_cupula_invertida_m"]["0.25"] == pytest.approx(tf)
+    # real = limite + 2 estágios × (vão + cúpula normal + cúpula invertida), com a P-093 como piso
+    x = dm["casos"][0]
+    t_d, t_i = max(p["t_cupula_m"], dm["t_p093_m"]), max(p["t_cupula_invertida_m"][str(dm["fator_base"])], dm["t_p093_m"])
+    assert x["real_m"] == pytest.approx(x["limite_otimista_m"] + 2 * (dm["vao_base_m"] + t_d + t_i))
+    assert x["folga_deck_real_m"] == pytest.approx((al["limite_com_deck_m"] - x["real_m"]) / 2)
+    # Isp mínimo: o comprimento real pede mais Isp que o limite otimista, e a folga pedida bate no alvo
+    assert im["real_por_fator_s"][str(dm["fator_base"])] > im["limite_otimista_s"]
+    assert im["comprimento_max_m"] == pytest.approx(al["limite_com_deck_m"] - 2 * im["alvo_folga_m"])
+    # adaptador: a folga axial cai a altura; a leitura cilíndrica do Vulcan não muda a folga radial
+    ad = r["adaptador"]["linhas"]
+    assert ad[0]["por_altura"][0]["axial_m"] == pytest.approx(ad[0]["sem_adaptador"]["axial_m"] - 0.127, abs=1e-9)
+    assert ad[1]["por_altura"][-1]["radial_m"] == pytest.approx(ad[1]["sem_adaptador"]["radial_m"], abs=1e-9)
+    # P-096 entrou; P-097 não
+    ids = {q["id"] for q in ler("config/premissas.yaml")["premissas"]}
+    assert "P-096" in ids and "P-097" not in ids
+

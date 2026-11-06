@@ -74,3 +74,11 @@ Valores de `results/etapa7.2/cg_lateral.md`, com a tabela completa.
 | :- | :- | :- |
 | (a) deslocamento intencional, com valor e direção escolhidos | permitiria entrada guiada com sustentação, como no MSL (NÃO VALIDADO para o nosso veículo) | valor pedido para o nosso L/D, massas de balanço, arranjo; aerodinâmica não modelada |
 | (b) anular pelo arranjo | CG no eixo, sem assimetria acidental | sem sustentação, os valores de elipse e de erro de entrega da Fase 4 ficam sem referência (NÃO VALIDADO) |
+
+## Risco aberto (registrado pelo Fabio em 2026-11-06): massa por área na entrada
+- **O risco:** a massa por área do lander no aeroshell de 4,5 m fica em 276 a 283 kg/m² na rota A, contra 211 kg/m² do Mars 2020
+  (`results/etapa7.2/rotas_mav.md`).
+- **Efeito a estudar:** entrada, descida e pouso, em particular a altitude de abertura do paraquedas e a margem de tempo.
+- **Situação:** nenhuma rota resolve isso, e o efeito não foi calculado (NÃO VALIDADO). A aerodinâmica e a trajetória de entrada não
+  estão modeladas.
+

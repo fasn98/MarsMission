@@ -3,7 +3,7 @@ import(path : "onshape/std/geometry.fs", version : "3112.0");
 
 // MarsMission - VERIFICACAO geometrica do modelo (Etapa 7.2b), nao validacao. ARQUIVO GERADO por tools/encaixe_coifas.py a
 // partir de cad/featurescript/envelope.fs e de results/: nao editar a mao. Este modelo nao tem nenhuma dimensao.
-// Envelope: perfil amostrado do STEP de keep-in do fabricante [F82] p. 16, Tab. 4-1. Plano: origem do arquivo, premissa proposta P-096, pendente.
+// Envelope: perfil amostrado do STEP de keep-in do fabricante [F82] p. 16, Tab. 4-1. Plano: origem do arquivo, premissa P-096.
 // O envelope e uma casca fina e sem material: a face INTERNA e o limite do volume utilizavel, e a espessura nao tem sentido
 // fisico. Com uma casca, Check interference so acusa o que atravessa o limite; um solido acusaria o veiculo inteiro.
 // Eixos: z = altura acima do plano da interface. Segmentos em metros: [z0, z1, r0, r1].

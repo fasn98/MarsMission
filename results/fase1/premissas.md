@@ -97,5 +97,6 @@
 | P-093 | materiais_e_espessuras_das_pecas_modeladas | tanques_espessura_m: 0.0015; cilindro_central_espessura_m: 0.003; raio_minimo_m: 0.005 | m | NÃO VALIDADA | config/cad.yaml (construcao, Etapa 7.2) |
 | P-094 | pecas_com_densidade_equivalente | plataforma_orbitador_altura_m: 0.3; deck_lander_altura_m: 0.3; ees_raio_ponta_m: 0.0064 | m | NÃO VALIDADA | config/cad.yaml (construcao.equivalentes, Etapa 7.2) |
 | P-095 | arranjo_interno_do_lander | raio_tanques_cruzeiro_m: 1.5; raio_tanques_descida_m: 1.4; angulos_tanques_descida_graus: [0, 120, 240]; braco_posicao_x_m: 0.45; braco_raio_m: 0.05; helicopteros_posicao_y_m: 0.75; folga_entre_pecas_m: 0.05 | m (ângulos em graus) | NÃO VALIDADA | config/cad.yaml (arranjo_lander, Etapa 7.2) |
+| P-096 | origem_do_step_do_falcon | plano: origem do arquivo STEP de keep-in = plano da interface de 1575 mm; eixo_axial: x | — | NÃO VALIDADA | config/cad.yaml (coifas.falcon_padrao, encaixe.plano_falcon), results/etapa7.2b/envelope_falcon_heavy.fs |
 
-Total: 95 premissas, 95 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 96 premissas, 96 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

@@ -1,0 +1,448 @@
+gerado_por: tools/rota_a_dimensiona.py
+natureza: dados para o portão; nada entra no CAD nem nas premissas
+alvo:
+  diametro_m: 0.57
+  limite_com_deck_m: 2.7439999999999998
+  limite_sem_deck_m: 3.1839999999999997
+  por_diametro:
+  - diametro_m: 0.57
+    limite_com_deck_m: 2.7439999999999998
+    limite_sem_deck_m: 3.1839999999999997
+  - diametro_m: 0.6
+    limite_com_deck_m: 2.6999999999999997
+    limite_sem_deck_m: 3.1399999999999997
+  - diametro_m: 0.63
+    limite_com_deck_m: 2.6559999999999997
+    limite_sem_deck_m: 3.0959999999999996
+  - diametro_m: 0.66
+    limite_com_deck_m: 2.6119999999999997
+    limite_sem_deck_m: 3.0519999999999996
+  - diametro_m: 0.69
+    limite_com_deck_m: 2.5679999999999996
+    limite_sem_deck_m: 3.0079999999999996
+  - diametro_m: 0.72
+    limite_com_deck_m: 2.5239999999999996
+    limite_sem_deck_m: 2.9639999999999995
+  - diametro_m: 0.75
+    limite_com_deck_m: 2.48
+    limite_sem_deck_m: 2.9199999999999995
+  circulo_44_m: 0.3685393571505024
+  circulo_164_m: 0.6745312693270427
+  parede_m: 0.01
+nucleo_cad:
+  estacao_de_m: 0.5500000000000003
+  estacao_ate_m: 0.8500000000000001
+  raio_m: 1.334578313253
+  raio_externo_na_frente_m: 1.5845783132530125
+  folga_a_face_externa_m: 0.25000000000001243
+  espessura_pica_m: 0.03175
+arranjo_msl:
+- item: Ordem axial do MSL
+  achado: 'de cima para baixo: estágio de cruzeiro, casca traseira, paraquedas, estágio
+    de descida, BUD, rover, escudo'
+  fonte: '[F244] Fig. 1, PDF p. 2; [F214] PDF p. 35, vista expandida'
+- item: Rover e estágio de descida no aeroshell
+  achado: o aeroshell contém os dois
+  fonte: '[F244] PDF p. 1: "The 4.5 m aeroshell is composed of a heatshield and backshell,
+    and contains the DS and rover."'
+- item: Separação do escudo
+  achado: sem o escudo, rover e estágio de descida ficam expostos
+  fonte: '[F244] PDF p. 2: "the heatshield is jettisoned to expose the both the DS
+    and rover"; [F227] PDF p. 6: "exposes the stowed rover and descent stage to free-stream
+    conditions"'
+- item: Estágio de descida e casca
+  achado: o estágio de descida fica aninhado na casca traseira
+  fonte: '[F244] PDF p. 9: "with the PDV nested inside the backshell"'
+- item: Mars 2020
+  achado: '"quase idêntico" ao MSL na viagem, sem cotas nem corte; não prova o arranjo
+    interno'
+  fonte: '[F245] PDF p. 37: "Perseverance is traveling to Mars in an almost identical
+    way to NASA''s Curiosity rover"'
+- item: Cotas internas
+  achado: 'não achadas: corte, altura da pilha, distância ao ombro, ou se o rover
+    entra na parte cônica do escudo'
+  fonte: procurado em [F244], [F214], [F245], [F227], [F226], [F215] e [F232]
+isp_minimo:
+  limite_otimista_s: 310.59038711624453
+  real_por_fator_s:
+    '1.0': 313.46437670334126
+    '0.5': 313.4962477811314
+    '0.25': 313.5901441703936
+    '0.14': 313.6982295425332
+  vao_menor_m: 0.005
+  real_vao_menor_s: 311.7894011244607
+  alvo_folga_m: 0.05
+  comprimento_max_m: 2.6439999999999997
+dimensionamento:
+  tensao_admissivel_mpa: 461.94871900000004
+  ftu_mpa: 923.8974380000001
+  fty_mpa: 868.739382
+  fator_seguranca: 2.0
+  fator_fonte: '[F46] PDF p. 9: "A factor of safety of 2.0 was used for tank internal
+    pressure." (tanque compósito; ANSI/AIAA S-080 não aberta)'
+  ec_mpa: 113074.0148
+  raio_interno_m: 0.27499999999999997
+  t_p093_m: 0.0015
+  pressoes:
+    entrada_nominal_r4d11:
+      mpa: 1.4
+      fonte: '[F228] PDF p. 22: "Inlet Pressure* ... >14 bar (>205 psia)"'
+      t_cilindro_m: 0.0008334258417978206
+      t_cupula_m: 0.0004167129208989103
+      t_cupula_invertida_m:
+        '1.0': 0.0012344975190412384
+        '0.5': 0.0017458431341440574
+        '0.25': 0.0024689950380824767
+        '0.14': 0.003299333400767681
+    bowles_20_kg:
+      mpa: 1.3
+      fonte: '[F46] Tab. 5, PDF p. 34: "Tank Pressure ... 1.30 MPa (188 psi)"'
+      t_cilindro_m: 0.0007738954245265478
+      t_cupula_m: 0.0003869477122632739
+      t_cupula_invertida_m:
+        '1.0': 0.0011895915751318855
+        '0.5': 0.0016823365392362852
+        '0.25': 0.002379183150263771
+        '0.14': 0.0031793172173830483
+    entrada_maxima_r4d11:
+      mpa: 2.93
+      fonte: '[F228] PDF p. 22: "Inlet Pressure Range ... 4.1 – 29.3 bar (60 – 425
+        psia)"'
+      t_cilindro_m: 0.0017442412260482963
+      t_cupula_m: 0.0008721206130241481
+      t_cupula_invertida_m:
+        '1.0': 0.0017859118288987344
+        '0.5': 0.0025256607296311284
+        '0.25': 0.003571823657797469
+        '0.14': 0.004773050133375649
+  nota_flambagem: fórmula clássica da casca esférica sob pressão externa, p = 2 E
+    (t/R)² / √(3(1 − ν²)); NASA SP-8032 não pôde ser aberta. Fórmula e fatores NÃO
+    VALIDADOS
+  vao_base_m: 0.02
+  vao_fonte: '[F46] §5.4, PDF p. 17: "with a purge gap between the two tanks"; a fonte
+    não dá o valor: varredura sem fonte, NÃO VALIDADO'
+  fator_base: 0.14
+  casos:
+  - isp_s: 304
+    glom_kg: 425.00186013137534
+    so_44_m: 3.2596759969908713
+    limite_otimista_m: 2.7634166600478256
+    real_m: 2.813015326849361
+    reducao_limite_m: 0.4962593369430457
+    reducao_real_m: 0.44666067014151034
+    fracao_que_sobra: 0.9000549448458485
+    folga_deck_real_m: -0.03450766342468059
+    folga_ombro_real_m: 0.18549233657531938
+    massa_tanques_kg: 35.265867623211186
+    por_fator:
+      '1.0':
+        comprimento_m: 2.809416660047826
+        massa_tanques_kg: 28.784027626257753
+      '0.5':
+        comprimento_m: 2.8099083463161136
+        massa_tanques_kg: 29.669642187289895
+      '0.25':
+        comprimento_m: 2.8113546501239908
+        massa_tanques_kg: 32.27469299822978
+      '0.14':
+        comprimento_m: 2.813015326849361
+        massa_tanques_kg: 35.265867623211186
+    por_vao:
+      '0.005': 2.7830153268493607
+      '0.01': 2.7930153268493614
+      '0.02': 2.813015326849361
+      '0.05': 2.8730153268493606
+  - isp_s: 308
+    glom_kg: 398.8367236355515
+    so_44_m: 3.180902215281914
+    limite_otimista_m: 2.6884680801610057
+    real_m: 2.738066746962541
+    reducao_limite_m: 0.4924341351209085
+    reducao_real_m: 0.44283546831937315
+    fracao_que_sobra: 0.8992785770438979
+    folga_deck_real_m: 0.002966626518729365
+    folga_ombro_real_m: 0.22296662651872934
+    massa_tanques_kg: 34.15547657431565
+    por_fator:
+      '1.0':
+        comprimento_m: 2.734468080161006
+        massa_tanques_kg: 27.748773356426497
+      '0.5':
+        comprimento_m: 2.7349597664292937
+        massa_tanques_kg: 28.624121970499182
+      '0.25':
+        comprimento_m: 2.736406070237171
+        massa_tanques_kg: 31.198975317860086
+      '0.14':
+        comprimento_m: 2.738066746962541
+        massa_tanques_kg: 34.15547657431565
+    por_vao:
+      '0.005': 2.708066746962541
+      '0.01': 2.7180667469625415
+      '0.02': 2.738066746962541
+      '0.05': 2.7980667469625407
+  - isp_s: 309
+    glom_kg: 392.7253618642498
+    so_44_m: 3.1624548812839532
+    limite_otimista_m: 2.6709453301947645
+    real_m: 2.7205439969963
+    reducao_limite_m: 0.4915095510891887
+    reducao_real_m: 0.44191088428765335
+    fracao_que_sobra: 0.8990891088654852
+    folga_deck_real_m: 0.011728001501849938
+    folga_ombro_real_m: 0.2317280015018499
+    massa_tanques_kg: 33.894574412373984
+    por_fator:
+      '1.0':
+        comprimento_m: 2.716945330194765
+        massa_tanques_kg: 27.505873250517972
+      '0.5':
+        comprimento_m: 2.7174370164630526
+        massa_tanques_kg: 28.378762241557848
+      '0.25':
+        comprimento_m: 2.7188833202709297
+        massa_tanques_kg: 30.94638056449826
+      '0.14':
+        comprimento_m: 2.7205439969963
+        massa_tanques_kg: 33.894574412373984
+    por_vao:
+      '0.005': 2.6905439969962996
+      '0.01': 2.7005439969963003
+      '0.02': 2.7205439969963
+      '0.05': 2.7805439969962995
+  - isp_s: 314
+    glom_kg: 364.4544701939408
+    so_44_m: 3.076851244779724
+    limite_otimista_m: 2.589788342603091
+    real_m: 2.6393870094046266
+    reducao_limite_m: 0.48706290217663284
+    reducao_real_m: 0.4374642353750975
+    fracao_que_sobra: 0.8981678411969293
+    folga_deck_real_m: 0.052306495297686606
+    folga_ombro_real_m: 0.2723064952976866
+    massa_tanques_kg: 32.67928547681937
+    por_fator:
+      '1.0':
+        comprimento_m: 2.6357883426030915
+        massa_tanques_kg: 26.37629698246653
+      '0.5':
+        comprimento_m: 2.6362800288713792
+        massa_tanques_kg: 27.23747504166586
+      '0.25':
+        comprimento_m: 2.6377263326792564
+        massa_tanques_kg: 29.770645452579444
+      '0.14':
+        comprimento_m: 2.6393870094046266
+        massa_tanques_kg: 32.67928547681937
+    por_vao:
+      '0.005': 2.6093870094046263
+      '0.01': 2.619387009404627
+      '0.02': 2.6393870094046266
+      '0.05': 2.699387009404626
+  massa_tanques_atual_kg: 19.8705533692267
+  fatores:
+  - 1.0
+  - 0.5
+  - 0.25
+  - 0.14
+  vaos:
+  - 0.005
+  - 0.01
+  - 0.02
+  - 0.05
+adaptador:
+  casos:
+  - nome: 1575 mm, clampband
+    altura_m: 0.127
+    massa_kg: 43
+    fonte: '[F80] Tab. 4.2.2-1a, PDF p. 41: "1575 mm Payload Adapter and Separation
+      System", "43 kg", "Height: 127 mm (5.00 in.)"'
+  - nome: 1194 mm, clampband
+    altura_m: 0.254
+    massa_kg: 38.1
+    fonte: '[F80] Tab. 4.2.2-1a, PDF p. 41: "Height: 254.0 mm (10.00 in.)", "38.1
+      kg"'
+  - nome: 1666 mm, clampband
+    altura_m: 0.3302
+    massa_kg: 48.7
+    fonte: '[F80] Tab. 4.2.2-1a, PDF p. 41: "Height: 330.2 mm (13.00 in.)", "48.7
+      kg"'
+  - nome: 937 mm, clampband
+    altura_m: 0.4064
+    massa_kg: 46.4
+    fonte: '[F80] Tab. 4.2.2-1a, PDF p. 41: "Height: 406.4 mm (16.00 in.)", "46.4
+      kg"'
+  - nome: 1663 mm, parafusos
+    altura_m: 0.562
+    massa_kg: 89.6
+    fonte: '[F80] Tab. 4.2.2-1a, PDF p. 41: "Height: 562 mm (22.126 in)", "89.6 kg"'
+  linhas:
+  - veiculo: Lander 4,5 m
+    leitura: contorno reto
+    por_altura:
+    - nome: 1575 mm, clampband
+      altura_m: 0.127
+      radial_m: 0.13902142640823723
+      axial_m: 9.674599999999998
+      corpo: Escudo térmico (PICA)
+    - nome: 1194 mm, clampband
+      altura_m: 0.254
+      radial_m: 0.13681950333131399
+      axial_m: 9.5476
+      corpo: Escudo térmico (PICA)
+    - nome: 1666 mm, clampband
+      altura_m: 0.3302
+      radial_m: 0.13549834948516004
+      axial_m: 9.4714
+      corpo: Escudo térmico (PICA)
+    - nome: 937 mm, clampband
+      altura_m: 0.4064
+      radial_m: 0.1341771956390061
+      axial_m: 9.395199999999999
+      corpo: Escudo térmico (PICA)
+    - nome: 1663 mm, parafusos
+      altura_m: 0.562
+      radial_m: 0.13147940642035083
+      axial_m: 9.2396
+      corpo: Escudo térmico (PICA)
+    sem_adaptador:
+      radial_m: 0.14122334948516002
+      axial_m: 9.801599999999999
+  - veiculo: Lander 4,5 m
+    leitura: Ø menor
+    por_altura:
+    - nome: 1575 mm, clampband
+      altura_m: 0.127
+      radial_m: 0.06399999999999961
+      axial_m: 9.674599999999998
+      corpo: Escudo térmico (PICA)
+    - nome: 1194 mm, clampband
+      altura_m: 0.254
+      radial_m: 0.06399999999999961
+      axial_m: 9.5476
+      corpo: Escudo térmico (PICA)
+    - nome: 1666 mm, clampband
+      altura_m: 0.3302
+      radial_m: 0.06399999999999961
+      axial_m: 9.4714
+      corpo: Escudo térmico (PICA)
+    - nome: 937 mm, clampband
+      altura_m: 0.4064
+      radial_m: 0.06399999999999961
+      axial_m: 9.395199999999999
+      corpo: Escudo térmico (PICA)
+    - nome: 1663 mm, parafusos
+      altura_m: 0.562
+      radial_m: 0.06399999999999961
+      axial_m: 9.2396
+      corpo: Escudo térmico (PICA)
+    sem_adaptador:
+      radial_m: 0.06399999999999961
+      axial_m: 9.801599999999999
+  - veiculo: Lander 4,65 m
+    leitura: contorno reto
+    por_altura:
+    - nome: 1575 mm, clampband
+      altura_m: 0.127
+      radial_m: 0.042203588734099906
+      axial_m: 8.704599999999997
+      corpo: Escudo térmico (PICA)
+    - nome: 1194 mm, clampband
+      altura_m: 0.254
+      radial_m: 0.04000166565717711
+      axial_m: 8.577599999999999
+      corpo: Escudo térmico (PICA)
+    - nome: 1666 mm, clampband
+      altura_m: 0.3302
+      radial_m: 0.038680511811023166
+      axial_m: 8.501399999999999
+      corpo: Escudo térmico (PICA)
+    - nome: 937 mm, clampband
+      altura_m: 0.4064
+      radial_m: 0.03735935796486922
+      axial_m: 8.425199999999998
+      corpo: Escudo térmico (PICA)
+    - nome: 1663 mm, parafusos
+      altura_m: 0.562
+      radial_m: 0.034661568746213955
+      axial_m: 8.269599999999999
+      corpo: Escudo térmico (PICA)
+    sem_adaptador:
+      radial_m: 0.044405511811023146
+      axial_m: 8.831599999999998
+  - veiculo: Lander 4,65 m
+    leitura: Ø menor
+    por_altura:
+    - nome: 1575 mm, clampband
+      altura_m: 0.127
+      radial_m: -0.01600000000000046
+      axial_m: 8.704599999999997
+      corpo: Escudo térmico (PICA)
+    - nome: 1194 mm, clampband
+      altura_m: 0.254
+      radial_m: -0.01600000000000046
+      axial_m: 8.577599999999999
+      corpo: Escudo térmico (PICA)
+    - nome: 1666 mm, clampband
+      altura_m: 0.3302
+      radial_m: -0.01600000000000046
+      axial_m: 8.501399999999999
+      corpo: Escudo térmico (PICA)
+    - nome: 937 mm, clampband
+      altura_m: 0.4064
+      radial_m: -0.01600000000000046
+      axial_m: 8.425199999999998
+      corpo: Escudo térmico (PICA)
+    - nome: 1663 mm, parafusos
+      altura_m: 0.562
+      radial_m: -0.01600000000000046
+      axial_m: 8.269599999999999
+      corpo: Escudo térmico (PICA)
+    sem_adaptador:
+      radial_m: -0.01600000000000046
+      axial_m: 8.831599999999998
+  - veiculo: Orbitador no Falcon Heavy
+    leitura: keep-in
+    por_altura:
+    - nome: 1575 mm, clampband
+      altura_m: 0.127
+      radial_m: 0.35976705004175114
+      axial_m: 6.104927774190999
+      corpo: Tanque insercao MON-3 1
+    - nome: 1194 mm, clampband
+      altura_m: 0.254
+      radial_m: 0.35872565004175105
+      axial_m: 5.977927774191
+      corpo: Tanque insercao MON-3 1
+    - nome: 1666 mm, clampband
+      altura_m: 0.3302
+      radial_m: 0.3581008100417511
+      axial_m: 5.901727774191
+      corpo: Tanque insercao MON-3 1
+    - nome: 937 mm, clampband
+      altura_m: 0.4064
+      radial_m: 0.3574759700417507
+      axial_m: 5.825527774191
+      corpo: Tanque insercao MON-3 1
+    - nome: 1663 mm, parafusos
+      altura_m: 0.562
+      radial_m: 0.35617479005967545
+      axial_m: 5.669927774191001
+      corpo: Tanque insercao MON-3 1
+    sem_adaptador:
+      radial_m: 0.3608084500417512
+      axial_m: 6.231927774191
+  ressalva_vulcan: '[F80] PDF p. 40: "should be used only as a guideline"; a tabela
+    não dá capacidade por massa, e há envelope específico por adaptador (PDF p. 38-39:
+    "Static payload envelopes specific to each payload adapter and separation system
+    are available")'
+  ressalva_falcon: '[F82] não publica altura de adaptador: PDF p. 27: "Any payload
+    adapters required ... must also fit within the keep-in volumes"; aqui entra a
+    mesma altura, por análogo. Limite do PAF de 1575 mm: PDF p. 28, "up to 10,885
+    kg"'
+  p097_proposta: 'Entre o plano da interface de 1575 mm e a base dos veículos há um
+    adaptador com sistema de separação, de altura 0,127 m, e os veículos sobem essa
+    altura em relação ao envelope. Fonte da altura: [F80] Tab. 4.2.2-1a. Falcon: sem
+    altura publicada, mesma altura por análogo. A capacidade para as massas dos veículos
+    não foi conferida, e os 43 kg do adaptador não estão no orçamento.'
+  base_proposta: 1575 mm, clampband
