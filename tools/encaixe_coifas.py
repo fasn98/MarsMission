@@ -33,20 +33,19 @@ SAIDA = RAIZ / "results" / "etapa7.2b"
 MODELO = RAIZ / "cad" / "featurescript" / "envelope.fs"
 # amostragem da superfície dos corpos (escolha numérica, não premissa): os vértices dos perfis entram exatos
 N_EIXO, N_ANGULO = 401, 720
-# escolhas numéricas, não premissas (a confirmar pelo Fabio): peças simétricas empatam, e o desempate não pode depender do
-# ruído entre CPUs, porque o texto vai para results/. O corte só decide qual nome aparece; o valor gravado é o do corpo.
-EMPATE_M = 1e-9
-CASAS_DE_ORDEM = 6
+_ENC = ler("config/cad.yaml")["encaixe"]
+# parâmetros numéricos de implementação; valor e justificativa em config/cad.yaml
+EMPATE_M, CASAS_DE_ORDEM = v(_ENC["empate_m"]), int(v(_ENC["casas_de_ordem"]))
 
 
 # ------------------------------------------------------------------------------------------------- envelopes
 def segmentos(alturas, raios, t):
     """Pilhas interna e externa da casca: a face interna é o envelope; a interna passa do plano da interface, para não
     haver faces coplanares, e a externa fecha o topo."""
-    z, r = cp.r6(list(alturas)), cp.r6(list(raios))
+    z, r = cp.r12(list(alturas)), cp.r12(list(raios))
     interno = [[z[i], z[i + 1], r[i], r[i + 1]] for i in range(len(z) - 1)]
-    externo = [[a, b, cp.r6(c + t), cp.r6(d + t)] for a, b, c, d in interno]
-    externo.append([z[-1], cp.r6(z[-1] + t), cp.r6(r[-1] + t), cp.r6(r[-1] + t)])
+    externo = [[a, b, cp.r12(c + t), cp.r12(d + t)] for a, b, c, d in interno]
+    externo.append([z[-1], cp.r12(z[-1] + t), cp.r12(r[-1] + t), cp.r12(r[-1] + t)])
     return {"interno": [[-t, z[0], r[0], r[0]]] + interno, "externo": externo}
 
 
@@ -99,14 +98,17 @@ def massa_cg(corpos, dens):
     return m, (mom / m).tolist()
 
 
-def pontos(c):
-    """Pontos da superfície externa de um corpo (m)."""
+def pontos(c, alinhar=True):
+    """Pontos da superfície externa de um corpo (m). A grade angular parte da direção radial do corpo (decisão do Fabio,
+    2026-11-06): peças simétricas têm a mesma amostragem, e a diferença entre elas não sai da grade. `alinhar=False`
+    repete a grade antiga, só para a comparação de results/etapa7.2b/folgas.md."""
     t = c["tipo"]
     if t in ("esfera", "esfera_oca"):
-        a = np.linspace(0, 2 * np.pi, N_ANGULO)
+        C = np.array(c["c"], float)
+        a = np.linspace(0, 2 * np.pi, N_ANGULO) + (np.arctan2(C[1], C[0]) if alinhar else 0.0)
         b = np.linspace(-np.pi / 2, np.pi / 2, N_EIXO)
         A, B = np.meshgrid(a, b)
-        return np.array(c["c"]) + c["r"] * np.stack([np.cos(B) * np.cos(A), np.cos(B) * np.sin(A), np.sin(B)], axis=-1).reshape(-1, 3)
+        return C + c["r"] * np.stack([np.cos(B) * np.cos(A), np.cos(B) * np.sin(A), np.sin(B)], axis=-1).reshape(-1, 3)
     if t == "caixa":
         c1, c2 = np.array(c["c1"], float), np.array(c["c2"], float)
         zs = np.linspace(c1[2], c2[2], N_EIXO)
@@ -114,8 +116,13 @@ def pontos(c):
     p0, p1 = np.array(c["p0"], float), np.array(c["p1"], float)
     r0, r1 = (c["r"], c["r"]) if t in ("cilindro", "tubo") else (c["r0"], c["r1"])
     u = (p1 - p0) / np.linalg.norm(p1 - p0)
-    e1 = np.cross(u, [1.0, 0.0, 0.0] if abs(u[0]) < 0.9 else [0.0, 1.0, 0.0])
-    e1 /= np.linalg.norm(e1)
+    meio = np.array([(p0 + p1)[0] / 2, (p0 + p1)[1] / 2, 0.0])
+    radial = meio - u * np.dot(meio, u)
+    if alinhar and np.linalg.norm(radial) > 1e-12:
+        e1 = radial / np.linalg.norm(radial)
+    else:
+        e1 = np.cross(u, [1.0, 0.0, 0.0] if abs(u[0]) < 0.9 else [0.0, 1.0, 0.0])
+        e1 /= np.linalg.norm(e1)
     e2 = np.cross(u, e1)
     s = np.linspace(0, 1, N_EIXO)[:, None, None]
     a = np.linspace(0, 2 * np.pi, N_ANGULO)[None, :, None]
@@ -134,13 +141,13 @@ def distancia_ao_perfil(rp, zp, perfil):
     return d
 
 
-def folgas(corpos, perfil):
+def folgas(corpos, perfil, alinhar=True):
     """Menor folga radial e axial dos corpos contra o envelope, e onde ocorrem."""
     rad, axi = None, None
     topo = perfil[0][-1]
     negativos = []
     for c in corpos:
-        P = pontos(c)
+        P = pontos(c, alinhar)
         rr = np.hypot(P[:, 0], P[:, 1])
         fol = np.interp(P[:, 2], perfil[0], perfil[1], right=0.0) - rr
         i = int(np.argmin(fol))
@@ -177,6 +184,74 @@ def fora_da_capsula(corpos, perfil, h_cz):
     mav = {**empatadas[0], "corpo": "MAV (mais próximas: " + "; ".join(x["corpo"] for x in empatadas) + ")"}
     linhas = [x for x in linhas if not x["corpo"].startswith("MAV")] + [mav]
     return sorted(linhas, key=lambda x: (round(x["folga_m"], CASAS_DE_ORDEM), x["corpo"]))
+
+
+def com_6_algarismos(corpos):
+    """Os corpos como a Etapa 7.2 os exportava, com 6 algarismos: só para a comparação em results/etapa7.2b/folgas.md."""
+    r6 = lambda x: [r6(y) for y in x] if isinstance(x, list) else float(f"{float(x):.6g}")  # noqa: E731
+    fora = []
+    for c in corpos:
+        d = {k: (r6(x) if k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1") else x) for k, x in c.items()}
+        if c["material"] == "equivalente":
+            d["densidade"] = r6(c["densidade"] * cp.volume(c) / cp.volume(d))
+        fora.append(d)
+    return fora
+
+
+def propriedades(corpos, dens):
+    """Massa (kg), CG (m) e tensor de inércia no CG (kg·m²), pelas fórmulas de tools/cad_parametros.py."""
+    m, cg = massa_cg(corpos, dens)
+    t = np.zeros((3, 3))
+    for c in corpos:
+        rho = c["densidade"] if c["material"] == "equivalente" else dens[c["material"]]
+        d = cp.centro(c) - np.array(cg)
+        t += cp.inercia(c, rho) + rho * cp.volume(c) * (np.dot(d, d) * np.eye(3) - np.outer(d, d))
+    return m, cg, t.tolist()
+
+
+def chave_de_simetria(c):
+    """Invariante à rotação em torno do eixo z: peças com a mesma chave são exatamente simétricas."""
+    t = c["tipo"]
+    raio = lambda p: round(float(np.hypot(p[0], p[1])), CASAS_DE_ORDEM)  # noqa: E731
+    if t.startswith("esfera"):
+        return (t, raio(c["c"]), c["c"][2], c["r"])
+    if t == "caixa":
+        return (t, tuple(c["c1"]), tuple(c["c2"]))
+    return (t, raio(c["p0"]), c["p0"][2], raio(c["p1"]), c["p1"][2], c.get("r", c.get("r0")), c.get("r1"))
+
+
+def criterio_de_empate(listas):
+    """(a) maior diferença dentro de um grupo de peças simétricas; (b) menor diferença não nula entre grupos distintos;
+    e os pares de grupos com diferença zero (peças distintas que têm a mesma cota, como o ombro compartilhado)."""
+    sim, dist, coin = {"diferenca_m": 0.0, "pecas": [], "onde": ""}, {"diferenca_m": float("inf"), "pecas": [], "onde": ""}, set()
+    for onde, lin in listas:
+        grupos = {}
+        for val, nome, ch in lin:
+            grupos.setdefault(ch, []).append((val, nome))
+        for g in grupos.values():
+            d = max(x[0] for x in g) - min(x[0] for x in g)
+            if len(g) > 1 and (d > sim["diferenca_m"] or not sim["pecas"]):
+                sim = {"diferenca_m": d, "pecas": sorted(x[1] for x in g)[:2], "onde": onde}
+        rep = sorted((min(x[0] for x in g), g[0][1]) for g in grupos.values())
+        for (a, na), (b, nb) in zip(rep, rep[1:]):
+            if b == a:
+                coin.add(tuple(sorted((na, nb))))
+            elif b - a < dist["diferenca_m"]:
+                dist = {"diferenca_m": b - a, "pecas": [na, nb], "onde": onde}
+    # só os pares que decidem texto: o limitador contra o grupo seguinte, e toda a lista ordenada de peças contra a cápsula
+    dec = {"diferenca_m": float("inf"), "pecas": [], "onde": ""}
+    for onde, lin in listas:
+        grupos = {}
+        for val, nome, ch in lin:
+            grupos.setdefault(ch, []).append((val, nome))
+        rep = sorted((min(x[0] for x in g), g[0][1]) for g in grupos.values())
+        pares = list(zip(rep, rep[1:]))
+        if "cápsula" not in onde:
+            pares = [p_ for p_ in pares[:1]]
+        for (a, na), (b, nb) in pares:
+            if b != a and b - a < dec["diferenca_m"]:
+                dec = {"diferenca_m": b - a, "pecas": [na, nb], "onde": onde}
+    return sim, dist, dec, sorted(list(x) for x in coin)
 
 
 # ------------------------------------------------------------------------------------------------- principal
@@ -238,11 +313,63 @@ def main():
         perf = perfil_lido(a, i)
         L = perfis["srl_c"][0][-1]
         srlc[chave] = {"vertice_m": min(float(np.interp(h_cz + L - x, perf[0], perf[1])) - r_ for x, r_ in zip(*perfis["srl_c"])), "referencia_7_2_m": conf["srl_c"][chave]}
+    # comparação com a grade antiga e os 6 algarismos antigos
+    antes = {}
+    for li in linhas:
+        a_ = li["envelope"]
+        i_ = next((i for i, o_ in enumerate(op_v) if o_["rotulo"] == li["leitura"]), 0)
+        r_a, ax_a = folgas(com_6_algarismos(corpos[li["veiculo"]]), perfil_lido(a_, i_), alinhar=False)
+        antes[(li["veiculo"], li["leitura"])] = {"radial_m": r_a["folga_radial_m"], "measure_m": r_a["distancia_measure_m"], "z_m": r_a["z_m"], "raio_m": r_a["raio_do_corpo_m"], "axial_m": ax_a["folga_axial_m"], "corpo": r_a["corpo"], "z_axial_m": ax_a["z_m"]}
+    compara = []
+    for li in linhas:
+        ant, ra, axx = antes[(li["veiculo"], li["leitura"])], li["radial"], li["axial"]
+        for nome, x, y in (("folga radial", ant["radial_m"], ra["folga_radial_m"]), ("distância no Measure", ant["measure_m"], ra["distancia_measure_m"]), ("z da folga radial", ant["z_m"], ra["z_m"]), ("raio do corpo", ant["raio_m"], ra["raio_do_corpo_m"]), ("folga axial", ant["axial_m"], axx["folga_axial_m"]), ("z do topo", ant["z_axial_m"], axx["z_m"])):
+            compara.append({"veiculo": li["veiculo"], "leitura": li["leitura"], "grandeza": nome, "antes": x, "agora": y, "diferenca_m": y - x, "igual_em_3_casas": br(x) == br(y), "corpo_antes": ant["corpo"], "corpo_agora": ra["corpo"]})
+    compara.sort(key=lambda x: (-round(abs(x["diferenca_m"]), 14), x["veiculo"], x["leitura"], x["grandeza"]))
+    props = {}
+    for k, cs in {"lander": ve["lander"], "orbitador": ve["orbitador"], "mav": ve["mav"], "lander_4_5": lan45}.items():
+        m6, cg6, i6 = propriedades(com_6_algarismos(cs), dens)
+        m12, cg12, i12 = propriedades(cs, dens)
+        props[k] = {"massa_6_kg": m6, "massa_12_kg": m12, "dif_massa_kg": m12 - m6, "dif_cg_max_m": max(abs(a - b) for a, b in zip(cg6, cg12)),
+                    "dif_inercia_max_kg_m2": max(abs(a - b) for x, y in zip(i6, i12) for a, b in zip(x, y)),
+                    "acima_p039": any(abs(a - b) > max(1e-9 * abs(b), 1e-10) for a, b in [(m6, m12)] + list(zip(cg6, cg12)) + [(a, b) for x, y in zip(i6, i12) for a, b in zip(x, y)])}
+    # tanques de descida: posições gravadas no .fs e diferença entre eles
+    td = [c for c in corpos["lander_4_65"] if c["nome"].startswith("Tanque descida")]
+    tanques = {"centros_m": [c["c"] for c in td], "raios_do_centro_m": [float(np.hypot(c["c"][0], c["c"][1])) for c in td], "z_iguais": len({c["c"][2] for c in td}) == 1, "r_iguais": len({c["r"] for c in td}) == 1}
+    tanques["diferenca_max_raio_m"] = max(tanques["raios_do_centro_m"]) - min(tanques["raios_do_centro_m"])
+    # critério de empate: todas as listas que EMPATE_M e CASAS_DE_ORDEM comparam
+    listas = []
+    for li_cfg in [(v_, a_, i_) for v_ in ("lander_4_5", "lander_4_65") for a_, i_, _ in leituras] + [("orbitador", "envelope_falcon_heavy.fs", 0)]:
+        k, a_, i_ = li_cfg
+        perf = perfil_lido(a_, i_)
+        rad_l, axi_l = [], []
+        for c in corpos[k]:
+            P = pontos(c)
+            f = np.interp(P[:, 2], perf[0], perf[1], right=0.0) - np.hypot(P[:, 0], P[:, 1])
+            rad_l.append((float(f.min()), c["nome"], chave_de_simetria(c)))
+            axi_l.append((float(perf[0][-1] - P[:, 2].max()), c["nome"], chave_de_simetria(c)))
+        listas += [(f"{k}, {a_}, leitura {i_ + 1}, radial", rad_l), (f"{k}, {a_}, leitura {i_ + 1}, axial", axi_l)]
+    for k, f_ in (("lander_4_5", "msl_m2020"), ("lander_4_65", "srl_a")):
+        L = perfis[f_][0][-1]
+        fora = ("Nariz", "Escudo", "Casca", "Tampa", "Propelente", "Tanque cruzeiro", "Circuito", "MAV propelente")
+        lin = []
+        for c in corpos[k]:
+            if c["nome"].startswith(fora):
+                continue
+            P = pontos(c)
+            P = P[P[:, 2] >= h_cz]
+            lin.append((float((np.interp(L - (P[:, 2] - h_cz), perfis[f_][0], perfis[f_][1], left=0.0, right=0.0) - np.hypot(P[:, 0], P[:, 1])).min()), c["nome"], chave_de_simetria(c)))
+        listas.append((f"{k}, peças contra a cápsula", lin))
+    sim, dist, dec, coin = criterio_de_empate(listas)
+    crit = enc["criterio_empate"]
+    empate = {"simetricas": sim, "distintas": dist, "distintas_que_decidem_texto": dec, "coincidencias": coin, "limite_simetricas_m": crit["simetricas_max_m"], "limite_distintas_m": crit["distintas_min_m"],
+              "passa": sim["diferenca_m"] <= crit["simetricas_max_m"] and dist["diferenca_m"] >= crit["distintas_min_m"], "empate_m": EMPATE_M, "casas_de_ordem": CASAS_DE_ORDEM}
     inclinacao = (cv["raio_m"][0] - cv["raio_m"][1]) / (cv["altura_m"][1] - cv["altura_m"][0])
     mav45 = par["conferencias"]["mav_deitado"]["por_forma"]["msl_m2020"][0]
     capsula = {k: fora_da_capsula(corpos[k], perfis[f], h_cz) for k, f in (("lander_4_5", "msl_m2020"), ("lander_4_65", "srl_a"))}
     out = nativo({"gerado_por": "tools/encaixe_coifas.py", "natureza": "VERIFICAÇÃO geométrica do modelo, não validação", "veiculos": veic, "configuracoes": linhas, "srl_c_so_perfil": srlc,
                   "reducao_de_folga_por_metro_de_adaptador_vulcan": inclinacao, "mav_na_capsula_4_5": mav45, "pecas_contra_a_capsula": capsula, "folga_interna_m": par["conferencias"]["mav_deitado"]["folga_interna_m"], "espessura_casca_m": t_casca,
+                  "comparacao_grade_e_precisao": compara, "propriedades_6_e_12_algarismos": props, "tanques_descida": tanques, "criterio_empate": empate,
                   "premissas_propostas": enc["premissas_propostas"], "planos": {"vulcan": enc["plano_vulcan"]["fonte"], "falcon": enc["plano_falcon"]["fonte"]}})
     (SAIDA / "folgas.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -296,6 +423,23 @@ def escreve_md(o):
         if x["folga_m"] < 0 or y["folga_m"] < 0 or x["corpo"].startswith("MAV"):
             md.append(f"| {x['corpo']} | {sg(x['folga_m'])} | {br(x['z_m'])} | {sg(y['folga_m'])} | {br(y['z_m'])} |")
     md += ["", "Essas interferências entre peças não são corrigidas aqui (P-095): são o conflito do arranjo, e o Onshape vai mostrá-las.", "",
+           "## Grade alinhada e 12 algarismos: o que mudou", "",
+           "Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora: grade alinhada à direção radial de cada peça e 12 algarismos.", "",
+           f"**Nas casas mostradas no roteiro (3):** {'nenhuma folga ou posição mudou' if all(x['igual_em_3_casas'] for x in o['comparacao_grade_e_precisao']) else 'mudaram ' + ', '.join(sorted({x['grandeza'] for x in o['comparacao_grade_e_precisao'] if not x['igual_em_3_casas']}))}. **Maiores diferenças nos valores completos:**", "",
+           "| Veículo | Leitura | Grandeza | Antes | Agora | Diferença (m) |", "| :- | :- | :- | -: | -: | -: |"]
+    md += [f"| {x['veiculo']} | {x['leitura']} | {x['grandeza']} | {x['antes']:.9f} | {x['agora']:.9f} | {x['diferenca_m']:+.2e} |".replace(".", ",") for x in o["comparacao_grade_e_precisao"][:6]]
+    md += ["", "**Massa, CG e inércia (6 × 12 algarismos), contra a tolerância da P-039:**", "", "| Veículo | Massa com 6 (kg) | Massa com 12 (kg) | Diferença (kg) | Maior diferença no CG (m) | Maior diferença na inércia (kg·m²) | Passa da P-039? |", "| :- | -: | -: | -: | -: | -: | :- |"]
+    md += [f"| {k} | {br(x['massa_6_kg'], 4)} | {br(x['massa_12_kg'], 4)} | {x['dif_massa_kg']:+.2e} | {x['dif_cg_max_m']:.2e} | {x['dif_inercia_max_kg_m2']:.2e} | {'sim' if x['acima_p039'] else 'não'} |" for k, x in o["propriedades_6_e_12_algarismos"].items()]
+    td, em = o["tanques_descida"], o["criterio_empate"]
+    md += ["", f"**Tanques de descida:** distância do centro ao eixo: " + "; ".join(f"{r_:.15f}" for r_ in td["raios_do_centro_m"]).replace(".", ",") + f" m; maior diferença de {td['diferenca_max_raio_m']:.2e} m. z e raio {'iguais' if td['z_iguais'] and td['r_iguais'] else 'diferentes'}. "
+           "Os tanques 2 e 3 são espelhos, bit a bit. O tanque 1 não fica igual a eles bit a bit: a posição dos outros dois sai de sen 120° e cos 120° arredondados a 12 algarismos decimais.", "",
+           "## Parâmetros de desempate", "",
+           f"`empate_m` = {em['empate_m']:.0e} m; `casas_de_ordem` = {em['casas_de_ordem']}, em casas decimais de metro. Valor e justificativa em config/cad.yaml.", "",
+           "| Item | Valor (m) | Limite (m) | Onde |", "| :- | -: | -: | :- |",
+           f"| (a) maior diferença entre peças exatamente simétricas | {em['simetricas']['diferenca_m']:.2e} | ≤ {em['limite_simetricas_m']:.0e} | {'; '.join(em['simetricas']['pecas'])} ({em['simetricas']['onde']}) |",
+           f"| (b) menor diferença real entre peças distintas | {em['distintas']['diferenca_m']:.2e} | ≥ {em['limite_distintas_m']:.0e} | {'; '.join(em['distintas']['pecas'])} ({em['distintas']['onde']}) |",
+           f"| (b'), só os pares que decidem texto gerado: o limitador contra o seguinte, e a lista de peças contra a cápsula | {em['distintas_que_decidem_texto']['diferenca_m']:.2e} | ≥ {em['limite_distintas_m']:.0e} | {'; '.join(em['distintas_que_decidem_texto']['pecas'])} ({em['distintas_que_decidem_texto']['onde']}) |", "",
+           f"**Resultado, com (a) e (b) literais: {'passa nos dois; aprovados' if em['passa'] else 'NÃO passa; os parâmetros seguem sem aprovação, com decisão pendente do Fabio'}.** Peças distintas com a mesma cota, diferença zero: " + "; ".join(" × ".join(p_) for p_ in em["coincidencias"]) + ".", "",
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",

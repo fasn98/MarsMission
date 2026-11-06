@@ -1090,7 +1090,7 @@ nosso_mav:
   carga_kg: 16.0
   propelente_kg: 285.49574322920796
   glom_orcamento_kg: 386.77369250546496
-  massa_cad_kg: 348.12696494567564
+  massa_cad_kg: 348.12633164648145
   n_motores:
   - 4
   - 1

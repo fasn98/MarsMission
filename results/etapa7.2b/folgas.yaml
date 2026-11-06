@@ -2,27 +2,27 @@ gerado_por: tools/encaixe_coifas.py
 natureza: VERIFICAÇÃO geométrica do modelo, não validação
 veiculos:
   lander_4_65:
-    massa_kg: 3190.406282097587
+    massa_kg: 3190.418654393851
     cg_m:
-    - 0.02560650161180367
-    - -0.026256892276789314
-    - 3.0031885372363116
+    - 0.02560633977358108
+    - -0.026257049487338664
+    - 3.0031844304135498
     corpos: 33
     dono_do_conector: Circuito de fluido de cruzeiro (P-077)
   lander_4_5:
-    massa_kg: 3154.718438192364
+    massa_kg: 3154.7032144392538
     cg_m:
-    - 0.025896175904576536
-    - -0.026553924132838958
-    - 2.0985438052044367
+    - 0.025896237627190396
+    - -0.026554314241137893
+    - 2.0985459579361643
     corpos: 33
     dono_do_conector: Circuito de fluido de cruzeiro (P-077)
   orbitador:
-    massa_kg: 6506.245401470078
+    massa_kg: 6506.251549725522
     cg_m:
-    - -2.985534334243933e-17
-    - 4.368373413025915e-17
-    - 1.3928028268488128
+    - -2.985527209661341e-17
+    - 3.494695428012221e-17
+    - 1.3928001899155327
     corpos: 20
     dono_do_conector: Cilindro central
 configuracoes:
@@ -115,21 +115,21 @@ configuracoes:
   envelope: envelope_falcon_heavy.fs
   leitura: Keep-in do fabricante, faixas de 500 mm
   radial:
-    folga_radial_m: 0.36080905372458894
+    folga_radial_m: 0.3608084500454487
     corpo: Tanque insercao MON-3 1
-    z_m: 0.5643001092738147
-    raio_do_corpo_m: 1.958763685379366
-    distancia_measure_m: 0.36079692393590435
+    z_m: 0.5642999103778787
+    raio_do_corpo_m: 1.9587642906894527
+    distancia_measure_m: 0.36079632027705905
     tipo: esfera_oca
     corpos_com_folga_negativa: []
   axial:
-    folga_axial_m: 6.23193
+    folga_axial_m: 6.23192777419
     corpo: EES com o contêiner de amostras
-    z_m: 5.11567
+    z_m: 5.11567222581
     topo_envelope_m: 11.3476
   referencia_7_2_m: 0.35621222920797546
   referencia_7_2_conjunto: Tanques de inserção
-  diferenca_m: 0.004596824516613474
+  diferenca_m: 0.004596220837473242
 srl_c_so_perfil:
   folga_radial_m:
     vertice_m: 0.029606904906117393
@@ -144,59 +144,420 @@ mav_na_capsula_4_5:
   folga_m: -0.18849736091219382
 pecas_contra_a_capsula:
   lander_4_5:
-  - corpo: Tanque descida 2
-    folga_m: -0.07861604788266652
-    z_m: 2.480975223124506
-  - corpo: Tanque descida 3
-    folga_m: -0.07861604788266652
-    z_m: 2.480975223124506
   - corpo: Tanque descida 1
-    folga_m: -0.07861273764962773
-    z_m: 2.480975223124506
+    folga_m: -0.07861249873954912
+    z_m: 2.480975138879627
+  - corpo: Tanque descida 2
+    folga_m: -0.07861249874109588
+    z_m: 2.480975138879627
+  - corpo: Tanque descida 3
+    folga_m: -0.0786124987410961
+    z_m: 2.480975138879627
   - corpo: Helicóptero 1
     folga_m: -0.0596000000000001
     z_m: 1.04
   - corpo: Helicóptero 2
-    folga_m: -0.0595965437663295
+    folga_m: -0.0596000000000001
     z_m: 1.04
   - corpo: 'MAV (mais próximas: MAV carga (contêiner de amostras); MAV motores do
       estágio 1 (4 x R-4D-11))'
-    folga_m: 0.06883333333333308
+    folga_m: 0.06883597242333295
     z_m: 1.5899999999999999
   - corpo: Nucleo do lander (P-017 sem braço e helicópteros)
-    folga_m: 0.2500039759036137
+    folga_m: 0.2500000000036138
     z_m: 2.45
   - corpo: Braço de coleta (guardado)
-    folga_m: 0.9241443268340468
-    z_m: 2.0554645608255613
+    folga_m: 0.9241443234940954
+    z_m: 2.0554150118085905
   lander_4_65:
-  - corpo: Tanque descida 2
-    folga_m: -0.03062121064016221
-    z_m: 3.4530877771870365
-  - corpo: Tanque descida 3
-    folga_m: -0.03062121064016221
-    z_m: 3.4530877771870365
   - corpo: Tanque descida 1
-    folga_m: -0.030617881967975435
-    z_m: 3.4530877771870365
+    folga_m: -0.030617634911458413
+    z_m: 3.4530876924044382
+  - corpo: Tanque descida 2
+    folga_m: -0.030617634913005176
+    z_m: 3.4530876924044382
+  - corpo: Tanque descida 3
+    folga_m: -0.030617634913005176
+    z_m: 3.4530876924044382
   - corpo: Nucleo do lander (P-017 sem braço e helicópteros)
-    folga_m: 0.24999831325301214
+    folga_m: 0.25000000000301226
     z_m: 3.42
   - corpo: 'MAV (mais próximas: MAV carga (contêiner de amostras); MAV motores do
       estágio 1 (4 x R-4D-11))'
-    folga_m: 0.27219565217391306
+    folga_m: 0.27219829126391293
     z_m: 2.56
   - corpo: Helicóptero 1
     folga_m: 0.3205217391304347
     z_m: 2.01
   - corpo: Helicóptero 2
-    folga_m: 0.3205251953641053
+    folga_m: 0.3205217391304347
     z_m: 2.01
   - corpo: Braço de coleta (guardado)
-    folga_m: 1.0245634954107787
-    z_m: 3.0298335238536387
+    folga_m: 1.0245633657681499
+    z_m: 3.029768566641683
 folga_interna_m: 0.25
 espessura_casca_m: 0.01
+comparacao_grade_e_precisao:
+- veiculo: orbitador
+  leitura: Keep-in do fabricante, faixas de 500 mm
+  grandeza: folga axial
+  antes: 6.23193
+  agora: 6.23192777419
+  diferenca_m: -2.2258100003114123e-06
+  igual_em_3_casas: true
+  corpo_antes: Tanque insercao MON-3 1
+  corpo_agora: Tanque insercao MON-3 1
+- veiculo: orbitador
+  leitura: Keep-in do fabricante, faixas de 500 mm
+  grandeza: z do topo
+  antes: 5.11567
+  agora: 5.11567222581
+  diferenca_m: 2.2258100003114123e-06
+  igual_em_3_casas: true
+  corpo_antes: Tanque insercao MON-3 1
+  corpo_agora: Tanque insercao MON-3 1
+- veiculo: orbitador
+  leitura: Keep-in do fabricante, faixas de 500 mm
+  grandeza: raio do corpo
+  antes: 1.958763685379366
+  agora: 1.9587642906894527
+  diferenca_m: 6.053100867209338e-07
+  igual_em_3_casas: true
+  corpo_antes: Tanque insercao MON-3 1
+  corpo_agora: Tanque insercao MON-3 1
+- veiculo: orbitador
+  leitura: Keep-in do fabricante, faixas de 500 mm
+  grandeza: folga radial
+  antes: 0.36080905372458894
+  agora: 0.3608084500454487
+  diferenca_m: -6.036791402319608e-07
+  igual_em_3_casas: true
+  corpo_antes: Tanque insercao MON-3 1
+  corpo_agora: Tanque insercao MON-3 1
+- veiculo: orbitador
+  leitura: Keep-in do fabricante, faixas de 500 mm
+  grandeza: distância no Measure
+  antes: 0.36079692393590435
+  agora: 0.36079632027705905
+  diferenca_m: -6.036588452995595e-07
+  igual_em_3_casas: true
+  corpo_antes: Tanque insercao MON-3 1
+  corpo_agora: Tanque insercao MON-3 1
+- veiculo: orbitador
+  leitura: Keep-in do fabricante, faixas de 500 mm
+  grandeza: z da folga radial
+  antes: 0.5643001092738147
+  agora: 0.5642999103778787
+  diferenca_m: -1.9889593594335508e-07
+  igual_em_3_casas: true
+  corpo_antes: Tanque insercao MON-3 1
+  corpo_agora: Tanque insercao MON-3 1
+- veiculo: lander_4_5
+  leitura: Contorno reto entre as cotas
+  grandeza: distância no Measure
+  antes: 0.1412021280155367
+  agora: 0.1412021280155367
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Contorno reto entre as cotas
+  grandeza: folga axial
+  antes: 9.8016
+  agora: 9.8016
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Contorno reto entre as cotas
+  grandeza: folga radial
+  antes: 0.14122334948516002
+  agora: 0.14122334948516002
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Contorno reto entre as cotas
+  grandeza: raio do corpo
+  antes: 2.2600000000000002
+  agora: 2.2600000000000002
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Contorno reto entre as cotas
+  grandeza: z da folga radial
+  antes: 2.15
+  agora: 2.15
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Contorno reto entre as cotas
+  grandeza: z do topo
+  antes: 3.0
+  agora: 3.0
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Diametro menor desde o plano da interface
+  grandeza: distância no Measure
+  antes: 0.06399999999999961
+  agora: 0.06399999999999961
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Diametro menor desde o plano da interface
+  grandeza: folga axial
+  antes: 9.8016
+  agora: 9.8016
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Diametro menor desde o plano da interface
+  grandeza: folga radial
+  antes: 0.06399999999999961
+  agora: 0.06399999999999961
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Diametro menor desde o plano da interface
+  grandeza: raio do corpo
+  antes: 2.2600000000000002
+  agora: 2.2600000000000002
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Diametro menor desde o plano da interface
+  grandeza: z da folga radial
+  antes: 2.15
+  agora: 2.15
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_5
+  leitura: Diametro menor desde o plano da interface
+  grandeza: z do topo
+  antes: 3.0
+  agora: 3.0
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Contorno reto entre as cotas
+  grandeza: distância no Measure
+  antes: 0.04439883904604878
+  agora: 0.04439883904604878
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Contorno reto entre as cotas
+  grandeza: folga axial
+  antes: 8.8316
+  agora: 8.8316
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Contorno reto entre as cotas
+  grandeza: folga radial
+  antes: 0.044405511811023146
+  agora: 0.044405511811023146
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Contorno reto entre as cotas
+  grandeza: raio do corpo
+  antes: 2.3400000000000003
+  agora: 2.3400000000000003
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Contorno reto entre as cotas
+  grandeza: z da folga radial
+  antes: 3.12
+  agora: 3.12
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Contorno reto entre as cotas
+  grandeza: z do topo
+  antes: 3.97
+  agora: 3.97
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Diametro menor desde o plano da interface
+  grandeza: distância no Measure
+  antes: 0.01600000000000046
+  agora: 0.01600000000000046
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Diametro menor desde o plano da interface
+  grandeza: folga axial
+  antes: 8.8316
+  agora: 8.8316
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Diametro menor desde o plano da interface
+  grandeza: folga radial
+  antes: -0.01600000000000046
+  agora: -0.01600000000000046
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Diametro menor desde o plano da interface
+  grandeza: raio do corpo
+  antes: 2.3400000000000003
+  agora: 2.3400000000000003
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Diametro menor desde o plano da interface
+  grandeza: z da folga radial
+  antes: 3.12
+  agora: 3.12
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+- veiculo: lander_4_65
+  leitura: Diametro menor desde o plano da interface
+  grandeza: z do topo
+  antes: 3.97
+  agora: 3.97
+  diferenca_m: 0.0
+  igual_em_3_casas: true
+  corpo_antes: Escudo térmico (PICA)
+  corpo_agora: Escudo térmico (PICA)
+propriedades_6_e_12_algarismos:
+  lander:
+    massa_6_kg: 3190.406282097587
+    massa_12_kg: 3190.418654393851
+    dif_massa_kg: 0.012372296263947646
+    dif_cg_max_m: 4.106822761862361e-06
+    dif_inercia_max_kg_m2: 0.0459358295202037
+    acima_p039: true
+  orbitador:
+    massa_6_kg: 6506.245401470078
+    massa_12_kg: 6506.251549725522
+    dif_massa_kg: 0.0061482554438043735
+    dif_cg_max_m: 2.6369332801756684e-06
+    dif_inercia_max_kg_m2: 0.03399337948212633
+    acima_p039: true
+  mav:
+    massa_6_kg: 348.12696494567564
+    massa_12_kg: 348.12633164648145
+    dif_massa_kg: -0.0006332991941917498
+    dif_cg_max_m: 6.788617096242788e-06
+    dif_inercia_max_kg_m2: 0.002933181271913554
+    acima_p039: true
+  lander_4_5:
+    massa_6_kg: 3154.718438192364
+    massa_12_kg: 3154.7032144392538
+    dif_massa_kg: -0.015223753110149119
+    dif_cg_max_m: 2.152731727544932e-06
+    dif_inercia_max_kg_m2: 0.04045698122399699
+    acima_p039: true
+tanques_descida:
+  centros_m:
+  - - 1.4
+    - 0.0
+    - 3.12
+  - - -0.7
+    - 1.2124355653
+    - 3.12
+  - - -0.7
+    - -1.2124355653
+    - 3.12
+  raios_do_centro_m:
+  - 1.4
+  - 1.4000000000015467
+  - 1.4000000000015467
+  z_iguais: true
+  r_iguais: true
+  diferenca_max_raio_m: 1.546762717907768e-12
+criterio_empate:
+  simetricas:
+    diferenca_m: 1.5469847625126931e-12
+    pecas:
+    - Tanque descida 1
+    - Tanque descida 2
+    onde: lander_4_5, peças contra a cápsula
+  distintas:
+    diferenca_m: 1.1932235288725224e-07
+    pecas:
+    - Casca traseira 1 (SLA-561V)
+    - Braço de coleta (guardado)
+    onde: lander_4_5, envelope_vulcan.fs, leitura 1, axial
+  distintas_que_decidem_texto:
+    diferenca_m: 0.010991877115972715
+    pecas:
+    - Tanque insercao MON-3 1
+    - Propelente insercao MON-3 1
+    onde: orbitador, envelope_falcon_heavy.fs, leitura 1, radial
+  coincidencias:
+  - - Casca traseira 1 (SLA-561V)
+    - Escudo térmico (PICA)
+  - - MAV Tanque de combustível do estágio 1
+    - MAV Tanque de combustível do estágio 2
+  - - MAV Tanque de combustível do estágio 2
+    - MAV Tanque de oxidante do estágio 1
+  - - MAV Tanque de oxidante do estágio 1
+    - MAV Tanque de oxidante do estágio 2
+  - - MAV Tanque de oxidante do estágio 2
+    - MAV carga (contêiner de amostras)
+  - - MAV carga (contêiner de amostras)
+    - MAV motores do estágio 1 (4 x R-4D-11)
+  - - MAV propelente combustível do estágio 1
+    - MAV propelente combustível do estágio 2
+  - - MAV propelente combustível do estágio 2
+    - MAV propelente oxidante do estágio 1
+  - - MAV propelente oxidante do estágio 1
+    - MAV propelente oxidante do estágio 2
+  limite_simetricas_m: 1.0e-12
+  limite_distintas_m: 1.0e-06
+  passa: false
+  empate_m: 1.0e-09
+  casas_de_ordem: 9
 premissas_propostas:
 - id: P-096
   nome: origem_do_step_do_falcon

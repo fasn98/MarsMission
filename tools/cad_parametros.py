@@ -132,12 +132,12 @@ def ascii_(s):
 
 
 # ------------------------------------------------------------------------------------------------- construtores
-def r6(x):
-    """Arredonda como o FeatureScript recebe (6 algarismos significativos, _num): massa, CG e inércias do script saem da
-    mesma geometria que o Onshape constrói."""
+def r12(x):
+    """Arredonda como o FeatureScript recebe (12 algarismos significativos, _num; decisão do Fabio, 2026-11-06): massa, CG e
+    inércias do script saem da mesma geometria que o Onshape constrói."""
     if isinstance(x, (list, tuple)):
-        return [r6(y) for y in x]
-    return float(f"{float(x):.6g}")
+        return [r12(y) for y in x]
+    return float(f"{float(x):.12g}")
 
 
 class Veiculo:
@@ -145,12 +145,12 @@ class Veiculo:
         self.nome, self.corpos = nome, []
 
     def add(self, nome, mat, origem, **g):
-        self.corpos.append({"nome": nome, "material": mat, "origem": origem, **{k: r6(x) for k, x in g.items() if k != "tipo"}, "tipo": g["tipo"]})
+        self.corpos.append({"nome": nome, "material": mat, "origem": origem, **{k: r12(x) for k, x in g.items() if k != "tipo"}, "tipo": g["tipo"]})
 
     def equivalente(self, nome, massa, origem, **g):
         """Corpo de densidade equivalente: massa do orçamento / volume do primitivo (P-094)."""
-        c = {"nome": nome, "material": "equivalente", "origem": origem, **{k: r6(x) for k, x in g.items() if k != "tipo"}, "tipo": g["tipo"]}
-        c["densidade"] = r6(massa / volume(c))
+        c = {"nome": nome, "material": "equivalente", "origem": origem, **{k: r12(x) for k, x in g.items() if k != "tipo"}, "tipo": g["tipo"]}
+        c["densidade"] = r12(massa / volume(c))
         self.corpos.append(c)
 
 
@@ -457,7 +457,7 @@ def monta_mav(veic, mv_esc, env, arq, mot, cad, dens, rho, of, t_tq, eixo, orige
 
 # ------------------------------------------------------------------------------------------------- FeatureScript
 def _num(x):
-    return f"{float(x):.6g}"
+    return f"{float(x):.12g}"
 
 
 def _vec(p):
@@ -499,8 +499,8 @@ def featurescript(nome, corpos, materiais):
         g = {k: c[k] for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1") if k in c}
         campos = ", ".join(f'"{k}" : ' + (_vec(x) if isinstance(x, list) else _num(x)) for k, x in g.items())
         if c["tipo"] == "tronco_oco":
-            # parâmetros de construção do cone interno com 12 algarismos: com 6, a reta deslocava a superfície interna da
-            # casca de PICA em ~1e-5 m (conferência no Onshape, 2026-11-03, +0,027 kg no lander)
+            # parâmetros de construção do cone interno: com 6 algarismos, a reta deslocava a superfície interna da casca de
+            # PICA em ~1e-5 m (conferência no Onshape, 2026-11-03, +0,027 kg no lander)
             ext = extensao_interna(c)
             campos += ", " + ", ".join(f'"{k}" : ' + ("[" + ", ".join(f"{float(y):.12g}" for y in x) + "]" if isinstance(x, list) else f"{float(x):.12g}")
                                        for k, x in ext.items())
@@ -543,6 +543,9 @@ def escreve_md(o):
     for k, x in cf["lander_vulcan"]["por_forma"].items():
         for rot, a, b in (("contorno reto", "folga_radial_m", "folga_radial_vertice_m"), ("Ø menor desde o PAF", "folga_sem_afunilamento_m", "folga_sem_afunilamento_vertice_m")):
             md.append(f"| {nomes.get(k, k)} | {rot} | {br(x[a], 4)} | {br(x[b], 4)} | {br(1e3 * (x[b] - x[a]), 1)} |")
+    md += ["", "## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos .fs", "",
+           "**O que muda:** toda a geometria e as densidades vão para os .fs com 12 algarismos significativos, antes 6. Massa, CG e inércia desta página mudam por isso; os valores vigentes são os mostrados aqui, e a comparação 6 × 12 algarismos está em results/etapa7.2b/folgas.md. "
+           "A conferência no Onshape continua valendo para o commit 32cb41d: ela lê as cópias em tests/data/onshape/, que não mudam."]
     md += ["", "## Orbitador no Falcon (com a plataforma e o EES no arranjo do CAD)", "",
            "| Conjunto | Base | Topo | Raio | Folga radial |", "| :- | -: | -: | -: | -: |"]
     for c in cf["orbitador_falcon"]:

@@ -43,6 +43,10 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 | SRL-C | contorno reto | 0,0319 | 0,0296 | −2,3 |
 | SRL-C | Ø menor desde o PAF | −0,0338 | −0,0360 | −2,2 |
 
+## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos .fs
+
+**O que muda:** toda a geometria e as densidades vão para os .fs com 12 algarismos significativos, antes 6. Massa, CG e inércia desta página mudam por isso; os valores vigentes são os mostrados aqui, e a comparação 6 × 12 algarismos está em results/etapa7.2b/folgas.md. A conferência no Onshape continua valendo para o commit 32cb41d: ela lê as cópias em tests/data/onshape/, que não mudam.
+
 ## Orbitador no Falcon (com a plataforma e o EES no arranjo do CAD)
 
 | Conjunto | Base | Topo | Raio | Folga radial |
@@ -57,7 +61,7 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 
 | Veículo | Corpos | Massa do CAD | Geometria modelada | Propelente | Densidade equivalente (orçamento) | CG (x, y, z) |
 | :- | -: | -: | -: | -: | -: | :- |
-| orbitador | 20 | 6 506,2 | 263,3 | 4 919,1 | 1 323,9 | 0,000, 0,000, 1,393 |
+| orbitador | 20 | 6 506,3 | 263,3 | 4 919,1 | 1 323,9 | 0,000, 0,000, 1,393 |
 | lander | 33 | 3 190,4 | 330,0 | 943,5 | 1 916,9 | 0,026, −0,026, 3,003 |
 | mav | 12 | 348,1 | 25,1 | 285,5 | 37,5 | 0,000, 0,000, 1,540 |
 

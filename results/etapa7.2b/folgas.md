@@ -35,9 +35,9 @@ A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/confe
 
 | Arquivo | Veículo | Corpos | Massa (kg) | CG x, y, z (m) | Mate connector preso a |
 | :- | :- | -: | -: | :- | :- |
-| lander_4_65.fs | lander_4_65 | 33 | 3 190,406 | 0,0256, −0,0263, 3,0032 | Circuito de fluido de cruzeiro (P-077) |
-| lander_4_5.fs | lander_4_5 | 33 | 3 154,718 | 0,0259, −0,0266, 2,0985 | Circuito de fluido de cruzeiro (P-077) |
-| orbitador.fs | orbitador | 20 | 6 506,245 | 0,0000, 0,0000, 1,3928 | Cilindro central |
+| lander_4_65.fs | lander_4_65 | 33 | 3 190,419 | 0,0256, −0,0263, 3,0032 | Circuito de fluido de cruzeiro (P-077) |
+| lander_4_5.fs | lander_4_5 | 33 | 3 154,703 | 0,0259, −0,0266, 2,0985 | Circuito de fluido de cruzeiro (P-077) |
+| orbitador.fs | orbitador | 20 | 6 506,252 | 0,0000, 0,0000, 1,3928 | Cilindro central |
 
 **O que mudou em relação a `results/etapa7.2/orbitador.fs` e `lander.fs`:** a versão do cabeçalho, de 2737 para 3112; a linha de comentário com o rótulo de verificação; a constante `DONO_INTERFACE`; e o bloco `opMateConnector` no fim da feature. A lista CORPOS é a mesma (`tests/test_cad.py` confere), então massa e CG não mudam. O `mav.fs` não muda: o MAV não tem interface com o adaptador.
 
@@ -45,14 +45,52 @@ A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/confe
 
 | Peça | Lander 4,5 m: folga até a face externa (m) | z (m) | Lander 4,65 m: folga até a face externa (m) | z (m) |
 | :- | -: | -: | -: | -: |
+| Tanque descida 1 | −0,079 | 2,481 | −0,031 | 3,453 |
 | Tanque descida 2 | −0,079 | 2,481 | −0,031 | 3,453 |
 | Tanque descida 3 | −0,079 | 2,481 | −0,031 | 3,453 |
-| Tanque descida 1 | −0,079 | 2,481 | −0,031 | 3,453 |
 | Helicóptero 1 | −0,060 | 1,040 | +0,321 | 2,010 |
 | Helicóptero 2 | −0,060 | 1,040 | +0,321 | 2,010 |
 | MAV (mais próximas: MAV carga (contêiner de amostras); MAV motores do estágio 1 (4 x R-4D-11)) | +0,069 | 1,590 | +0,272 | 2,560 |
 
 Essas interferências entre peças não são corrigidas aqui (P-095): são o conflito do arranjo, e o Onshape vai mostrá-las.
+
+## Grade alinhada e 12 algarismos: o que mudou
+
+Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora: grade alinhada à direção radial de cada peça e 12 algarismos.
+
+**Nas casas mostradas no roteiro (3):** nenhuma folga ou posição mudou. **Maiores diferenças nos valores completos:**
+
+| Veículo | Leitura | Grandeza | Antes | Agora | Diferença (m) |
+| :- | :- | :- | -: | -: | -: |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | folga axial | 6,231930000 | 6,231927774 | -2,23e-06 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | z do topo | 5,115670000 | 5,115672226 | +2,23e-06 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | raio do corpo | 1,958763685 | 1,958764291 | +6,05e-07 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | folga radial | 0,360809054 | 0,360808450 | -6,04e-07 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | distância no Measure | 0,360796924 | 0,360796320 | -6,04e-07 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | z da folga radial | 0,564300109 | 0,564299910 | -1,99e-07 |
+
+**Massa, CG e inércia (6 × 12 algarismos), contra a tolerância da P-039:**
+
+| Veículo | Massa com 6 (kg) | Massa com 12 (kg) | Diferença (kg) | Maior diferença no CG (m) | Maior diferença na inércia (kg·m²) | Passa da P-039? |
+| :- | -: | -: | -: | -: | -: | :- |
+| lander | 3 190,4063 | 3 190,4187 | +1.24e-02 | 4.11e-06 | 4.59e-02 | sim |
+| orbitador | 6 506,2454 | 6 506,2515 | +6.15e-03 | 2.64e-06 | 3.40e-02 | sim |
+| mav | 348,1270 | 348,1263 | -6.33e-04 | 6.79e-06 | 2.93e-03 | sim |
+| lander_4_5 | 3 154,7184 | 3 154,7032 | -1.52e-02 | 2.15e-06 | 4.05e-02 | sim |
+
+**Tanques de descida:** distância do centro ao eixo: 1,400000000000000; 1,400000000001547; 1,400000000001547 m; maior diferença de 1.55e-12 m. z e raio iguais. Os tanques 2 e 3 são espelhos, bit a bit. O tanque 1 não fica igual a eles bit a bit: a posição dos outros dois sai de sen 120° e cos 120° arredondados a 12 algarismos decimais.
+
+## Parâmetros de desempate
+
+`empate_m` = 1e-09 m; `casas_de_ordem` = 9, em casas decimais de metro. Valor e justificativa em config/cad.yaml.
+
+| Item | Valor (m) | Limite (m) | Onde |
+| :- | -: | -: | :- |
+| (a) maior diferença entre peças exatamente simétricas | 1.55e-12 | ≤ 1e-12 | Tanque descida 1; Tanque descida 2 (lander_4_5, peças contra a cápsula) |
+| (b) menor diferença real entre peças distintas | 1.19e-07 | ≥ 1e-06 | Casca traseira 1 (SLA-561V); Braço de coleta (guardado) (lander_4_5, envelope_vulcan.fs, leitura 1, axial) |
+| (b'), só os pares que decidem texto gerado: o limitador contra o seguinte, e a lista de peças contra a cápsula | 1.10e-02 | ≥ 1e-06 | Tanque insercao MON-3 1; Propelente insercao MON-3 1 (orbitador, envelope_falcon_heavy.fs, leitura 1, radial) |
+
+**Resultado, com (a) e (b) literais: NÃO passa; os parâmetros seguem sem aprovação, com decisão pendente do Fabio.** Peças distintas com a mesma cota, diferença zero: Casca traseira 1 (SLA-561V) × Escudo térmico (PICA); MAV Tanque de combustível do estágio 1 × MAV Tanque de combustível do estágio 2; MAV Tanque de combustível do estágio 2 × MAV Tanque de oxidante do estágio 1; MAV Tanque de oxidante do estágio 1 × MAV Tanque de oxidante do estágio 2; MAV Tanque de oxidante do estágio 2 × MAV carga (contêiner de amostras); MAV carga (contêiner de amostras) × MAV motores do estágio 1 (4 x R-4D-11); MAV propelente combustível do estágio 1 × MAV propelente combustível do estágio 2; MAV propelente combustível do estágio 2 × MAV propelente oxidante do estágio 1; MAV propelente oxidante do estágio 1 × MAV propelente oxidante do estágio 2.
 
 ## Planos da interface
 

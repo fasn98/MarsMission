@@ -157,70 +157,70 @@ conferencias:
         folga_m: -0.2958306942455271
 resumo:
   orbitador:
-    massa_kg: 6506.245401470078
+    massa_kg: 6506.251549725522
     cg_m:
-    - -2.985534334243933e-17
-    - 4.368373413025915e-17
-    - 1.3928028268488128
+    - -2.985527209661341e-17
+    - 3.494695428012221e-17
+    - 1.3928001899155327
     inercia_cg_kg_m2:
-    - - 12069.915079680859
-      - -8.352478253692152e-14
-      - -1.6145802743950625e-13
-    - - -8.352478253692152e-14
-      - 14890.708868767731
-      - 1.9829897903064447e-13
-    - - -1.6145802743950625e-13
-      - 1.9829897903064447e-13
-      - 11604.863063782157
-    volume_m3: 10.826365796210773
+    - - 12069.917534379856
+      - -8.352409925344746e-14
+      - -1.61458094678508e-13
+    - - -8.352409925344746e-14
+      - 14890.725336180882
+      - 1.7853430773683573e-13
+    - - -1.61458094678508e-13
+      - 1.7853430773683573e-13
+      - 11604.89705716164
+    volume_m3: 10.826363407142264
     por_origem_kg:
-      geometria modelada: 263.2550760529966
-      propelente: 4919.088780612104
-      densidade equivalente (massa do orçamento): 1323.9015448049765
+      geometria modelada: 263.2550937366241
+      propelente: 4919.096455991099
+      densidade equivalente (massa do orçamento): 1323.8999999977968
     corpos: 20
   lander:
-    massa_kg: 3190.406282097587
+    massa_kg: 3190.418654393851
     cg_m:
-    - 0.02560650161180367
-    - -0.026256892276789314
-    - 3.0031885372363116
+    - 0.02560633977358108
+    - -0.026257049487338664
+    - 3.0031844304135498
     inercia_cg_kg_m2:
-    - - 3647.9893772264027
-      - -2.1450605851691242
-      - 108.35621727460902
-    - - -2.1450605851691242
-      - 3639.167512167565
-      - -14.089179676795741
-    - - 108.35621727460902
-      - -14.089179676795741
-      - 4131.24914511398
-    volume_m3: 6.999202185745185
+    - - 3648.022699592084
+      - -2.1450681896889465
+      - 108.35544471504389
+    - - -2.1450681896889465
+      - 3639.2043055873582
+      - -14.088974639525592
+    - - 108.35544471504389
+      - -14.088974639525592
+      - 4131.295080943501
+    volume_m3: 6.9992569567828955
     por_origem_kg:
-      geometria modelada: 330.0108161809555
-      propelente: 943.4730824202659
-      densidade equivalente (massa do orçamento): 1916.922383496366
+      geometria modelada: 330.0255032584599
+      propelente: 943.47354486353
+      densidade equivalente (massa do orçamento): 1916.9196062718602
     corpos: 33
   mav:
-    massa_kg: 348.12696494567564
+    massa_kg: 348.12633164648145
     cg_m:
     - 0.0
     - 0.0
-    - 1.5398567193604524
+    - 1.5398635079775487
     inercia_cg_kg_m2:
-    - - 252.62895337685165
+    - - 252.63188655812357
       - 0.0
       - 0.0
     - - 0.0
-      - 252.62895337685165
+      - 252.63188655812357
       - 0.0
     - - 0.0
       - 0.0
-      - 13.869936333858373
-    volume_m3: 0.5064900356202316
+      - 13.869914679795459
+    volume_m3: 0.5064902459286507
     por_origem_kg:
-      densidade equivalente (massa do orçamento): 37.54567520614788
-      geometria modelada: 25.08489542461023
-      propelente: 285.4963943149176
+      densidade equivalente (massa do orçamento): 37.54563899991779
+      geometria modelada: 25.084949418213284
+      propelente: 285.4957432283503
     corpos: 12
   orcamento:
     orbitador_injetado_kg: 7796.395336836866
@@ -232,170 +232,170 @@ veiculos:
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - 1.39739
+    - 1.39739080265
     - 0.0
-    - 0.559891
-    r: 0.561391
+    - 0.559890802654
+    r: 0.561390802654
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 26.211158101094906
+    massa_kg: 26.211139648419717
   - nome: Propelente insercao MON-3 1
     material: mon3
     origem: massa do orçamento / densidade
     c:
-    - 1.39739
+    - 1.39739080265
     - 0.0
-    - 0.559891
-    r: 0.550399
+    - 0.559890802654
+    r: 0.550399294409
     tipo: esfera
-    massa_kg: 999.4501824052583
+    massa_kg: 999.4517862269561
   - nome: Tanque insercao MMH 1
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - 8.55655e-17
-    - 1.39739
-    - 0.559891
-    r: 0.561391
+    - 8.55655086814e-17
+    - 1.39739080265
+    - 0.559890802654
+    r: 0.561390802654
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 26.211158101094906
+    massa_kg: 26.211139648419717
   - nome: Propelente insercao MMH 1
     material: mmh
     origem: massa do orçamento / densidade
     c:
-    - 8.55655e-17
-    - 1.39739
-    - 0.559891
-    r: 0.550034
+    - 8.55655086814e-17
+    - 1.39739080265
+    - 0.559890802654
+    r: 0.550034384448
     tipo: esfera
-    massa_kg: 605.7270851632488
+    massa_kg: 605.7283552887094
   - nome: Tanque insercao MON-3 2
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - -1.39739
-    - 1.71131e-16
-    - 0.559891
-    r: 0.561391
+    - -1.39739080265
+    - 1.71131017363e-16
+    - 0.559890802654
+    r: 0.561390802654
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 26.211158101094906
+    massa_kg: 26.211139648419717
   - nome: Propelente insercao MON-3 2
     material: mon3
     origem: massa do orçamento / densidade
     c:
-    - -1.39739
-    - 1.71131e-16
-    - 0.559891
-    r: 0.550399
+    - -1.39739080265
+    - 1.71131017363e-16
+    - 0.559890802654
+    r: 0.550399294409
     tipo: esfera
-    massa_kg: 999.4501824052583
+    massa_kg: 999.4517862269561
   - nome: Tanque insercao MMH 2
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - -2.56697e-16
-    - -1.39739
-    - 0.559891
-    r: 0.561391
+    - -2.56696526044e-16
+    - -1.39739080265
+    - 0.559890802654
+    r: 0.561390802654
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 26.211158101094906
+    massa_kg: 26.211139648419717
   - nome: Propelente insercao MMH 2
     material: mmh
     origem: massa do orçamento / densidade
     c:
-    - -2.56697e-16
-    - -1.39739
-    - 0.559891
-    r: 0.550034
+    - -2.56696526044e-16
+    - -1.39739080265
+    - 0.559890802654
+    r: 0.550034384448
     tipo: esfera
-    massa_kg: 605.7270851632488
+    massa_kg: 605.7283552887094
   - nome: Tanque retorno MON-3 1
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - 1.29124
+    - 1.29124349633
     - 0.0
-    - 1.67353
-    r: 0.455243
+    - 1.67352510163
+    r: 0.455243496326
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 17.225468113996342
+    massa_kg: 17.22550573589397
   - nome: Propelente retorno MON-3 1
     material: mon3
     origem: massa do orçamento / densidade
     c:
-    - 1.29124
+    - 1.29124349633
     - 0.0
-    - 1.67353
-    r: 0.446051
+    - 1.67352510163
+    r: 0.446051442597
     tipo: esfera
-    massa_kg: 531.9634514429453
+    massa_kg: 531.9650349770795
   - nome: Tanque retorno MMH 1
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - 7.90659e-17
-    - 1.29124
-    - 1.67353
-    r: 0.455243
+    - 7.90658607348e-17
+    - 1.29124349633
+    - 1.67352510163
+    r: 0.455243496326
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 17.225468113996342
+    massa_kg: 17.22550573589397
   - nome: Propelente retorno MMH 1
     material: mmh
     origem: massa do orçamento / densidade
     c:
-    - 7.90659e-17
-    - 1.29124
-    - 1.67353
-    r: 0.445756
+    - 7.90658607348e-17
+    - 1.29124349633
+    - 1.67352510163
+    r: 0.445755714358
     tipo: esfera
-    massa_kg: 322.40367129459963
+    massa_kg: 322.40305150280454
   - nome: Tanque retorno MON-3 2
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - -1.29124
-    - 1.58132e-16
-    - 1.67353
-    r: 0.455243
+    - -1.29124349633
+    - 1.5813172147e-16
+    - 1.67352510163
+    r: 0.455243496326
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 17.225468113996342
+    massa_kg: 17.22550573589397
   - nome: Propelente retorno MON-3 2
     material: mon3
     origem: massa do orçamento / densidade
     c:
-    - -1.29124
-    - 1.58132e-16
-    - 1.67353
-    r: 0.446051
+    - -1.29124349633
+    - 1.5813172147e-16
+    - 1.67352510163
+    r: 0.446051442597
     tipo: esfera
-    massa_kg: 531.9634514429453
+    massa_kg: 531.9650349770795
   - nome: Tanque retorno MMH 2
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
-    - -2.37198e-16
-    - -1.29124
-    - 1.67353
-    r: 0.455243
+    - -2.37197582204e-16
+    - -1.29124349633
+    - 1.67352510163
+    r: 0.455243496326
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 17.225468113996342
+    massa_kg: 17.22550573589397
   - nome: Propelente retorno MMH 2
     material: mmh
     origem: massa do orçamento / densidade
     c:
-    - -2.37198e-16
-    - -1.29124
-    - 1.67353
-    r: 0.445756
+    - -2.37197582204e-16
+    - -1.29124349633
+    - 1.67352510163
+    r: 0.445755714358
     tipo: esfera
-    massa_kg: 322.40367129459963
+    massa_kg: 322.40305150280454
   - nome: Cilindro central
     material: al_2219
     origem: geometria (P-093)
@@ -406,58 +406,58 @@ veiculos:
     p1:
     - 0.0
     - 0.0
-    - 2.12727
+    - 2.12726859796
     r: 0.7875
     t: 0.003
     tipo: tubo
-    massa_kg: 89.5085711926317
+    massa_kg: 89.50851219936936
   - nome: Plataforma (P-016)
     material: equivalente
     origem: massa do orçamento (P-094)
     p0:
     - 0.0
     - 0.0
-    - 2.22727
+    - 2.22726859796
     p1:
     - 0.0
     - 0.0
-    - 2.52727
-    r: 1.74499
+    - 2.52726859796
+    r: 1.74498699265
     tipo: cilindro
-    densidade: 213.95
-    massa_kg: 614.001317766395
+    densidade: 213.950278273
+    massa_kg: 613.9999999993819
   - nome: CCRS
     material: equivalente
     origem: massa do orçamento (P-094)
     c1:
     - -1.7
     - -0.25
-    - 2.62727
+    - 2.62726859796
     c2:
     - 1.7
     - 0.25
-    - 4.62727
+    - 4.62726859796
     tipo: caixa
-    densidade: 182.353
-    massa_kg: 620.0002000000001
+    densidade: 182.352941176
+    massa_kg: 619.9999999983999
   - nome: EES com o contêiner de amostras
     material: equivalente
     origem: massa do orçamento (P-094)
     p0:
     - 0.0
     - 0.0
-    - 4.62727
+    - 4.62726859796
     p1:
     - 0.0
     - 0.0
-    - 5.11567
+    - 5.11567222581
     r0: 0.6365
     r1: 0.0064
     ri0: 0.0
     ri1: 0.0
     tipo: tronco
-    densidade: 429.507
-    massa_kg: 89.90002703858167
+    densidade: 429.503680454
+    massa_kg: 89.90000000001508
   lander:
   - nome: Nariz do escudo (PICA)
     material: pica
@@ -489,10 +489,10 @@ veiculos:
     - 3.12
     r0: 0.25
     r1: 2.34
-    ri0: 0.160913
-    ri1: 2.25091
+    ri0: 0.160913221269
+    ri1: 2.25091322127
     tipo: tronco_oco
-    massa_kg: 159.1844111034063
+    massa_kg: 159.1806984783093
   - nome: Casca traseira 1 (SLA-561V)
     material: sla_561v
     origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
@@ -506,10 +506,10 @@ veiculos:
     - 1.97
     r0: 2.34
     r1: 1.75
-    ri0: 2.32568
-    ri1: 1.73568
+    ri0: 2.32567595158
+    ri1: 1.73567595158
     tipo: tronco_oco
-    massa_kg: 53.97973828409067
+    massa_kg: 53.99494531029541
   - nome: Casca traseira 2 (SLA-561V)
     material: sla_561v
     origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
@@ -523,10 +523,10 @@ veiculos:
     - 1.37
     r0: 1.75
     r1: 1.2
-    ri0: 1.73267
-    ri1: 1.18267
+    ri0: 1.73266977246
+    ri1: 1.18266977246
     tipo: tronco_oco
-    massa_kg: 24.52465166744014
+    massa_kg: 24.524971769168815
   - nome: Casca traseira 3 (SLA-561V)
     material: sla_561v
     origem: 'geometria: perfil de [F41], espessura de [F215]/[F225]'
@@ -540,10 +540,10 @@ veiculos:
     - 0.12
     r0: 1.2
     r1: 0.4
-    ri0: 1.18478
-    ri1: 0.384777
+    ri0: 1.18477688525
+    ri1: 0.384776885253
     tipo: tronco_oco
-    massa_kg: 24.25038691818395
+    massa_kg: 24.253336937376048
   - nome: Tampa traseira (SLA-561V)
     material: sla_561v
     origem: geometria (P-090)
@@ -564,42 +564,42 @@ veiculos:
     c:
     - 1.5
     - 0.0
-    - 0.351727
-    r: 0.233227
+    - 0.35172698996
+    r: 0.23322698996
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 4.506898042536611
+    massa_kg: 4.5068976532585365
   - nome: Propelente cruzeiro MON-3
     material: mon3
     origem: massa do orçamento / densidade
     c:
     - 1.5
     - 0.0
-    - 0.351727
-    r: 0.227799
+    - 0.35172698996
+    r: 0.227798654961
     tipo: esfera
-    massa_kg: 70.85715042504485
+    massa_kg: 70.85682845115609
   - nome: Tanque cruzeiro MMH
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
     - -1.5
     - 0.0
-    - 0.351727
-    r: 0.233227
+    - 0.35172698996
+    r: 0.23322698996
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 4.506898042536611
+    massa_kg: 4.5068976532585365
   - nome: Propelente cruzeiro MMH
     material: mmh
     origem: massa do orçamento / densidade
     c:
     - -1.5
     - 0.0
-    - 0.351727
-    r: 0.227648
+    - 0.35172698996
+    r: 0.227647626428
     tipo: esfera
-    massa_kg: 42.9437438075496
+    massa_kg: 42.94353239492218
   - nome: Circuito de fluido de cruzeiro (P-077)
     material: equivalente
     origem: massa do orçamento (P-094)
@@ -613,8 +613,8 @@ veiculos:
     - 0.12
     r: 2.09
     tipo: cilindro
-    densidade: 21.6793
-    massa_kg: 35.70006001333763
+    densidade: 21.6792635562
+    massa_kg: 35.700000000060115
   - nome: Tanque descida 1
     material: ti_6al_4v
     origem: geometria (P-093)
@@ -622,10 +622,10 @@ veiculos:
     - 1.4
     - 0.0
     - 3.12
-    r: 0.358245
+    r: 0.358244908814
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 10.657536350928423
+    massa_kg: 10.657530914116242
   - nome: Propelente descida 1
     material: hidrazina
     origem: massa do orçamento / densidade
@@ -633,51 +633,51 @@ veiculos:
     - 1.4
     - 0.0
     - 3.12
-    r: 0.350697
+    r: 0.350697216608
     tipo: esfera
-    massa_kg: 181.3921441522867
+    massa_kg: 181.39248026306467
   - nome: Tanque descida 2
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
     - -0.7
-    - 1.21244
+    - 1.2124355653
     - 3.12
-    r: 0.358245
+    r: 0.358244908814
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 10.657536350928423
+    massa_kg: 10.657530914116242
   - nome: Propelente descida 2
     material: hidrazina
     origem: massa do orçamento / densidade
     c:
     - -0.7
-    - 1.21244
+    - 1.2124355653
     - 3.12
-    r: 0.350697
+    r: 0.350697216608
     tipo: esfera
-    massa_kg: 181.3921441522867
+    massa_kg: 181.39248026306467
   - nome: Tanque descida 3
     material: ti_6al_4v
     origem: geometria (P-093)
     c:
     - -0.7
-    - -1.21244
+    - -1.2124355653
     - 3.12
-    r: 0.358245
+    r: 0.358244908814
     t: 0.0015
     tipo: esfera_oca
-    massa_kg: 10.657536350928423
+    massa_kg: 10.657530914116242
   - nome: Propelente descida 3
     material: hidrazina
     origem: massa do orçamento / densidade
     c:
     - -0.7
-    - -1.21244
+    - -1.2124355653
     - 3.12
-    r: 0.350697
+    r: 0.350697216608
     tipo: esfera
-    massa_kg: 181.3921441522867
+    massa_kg: 181.39248026306467
   - nome: Nucleo do lander (P-017 sem braço e helicópteros)
     material: equivalente
     origem: massa do orçamento (P-094)
@@ -689,186 +689,186 @@ veiculos:
     - 0.0
     - 0.0
     - 3.12
-    r: 1.33458
+    r: 1.33457831325
     tipo: cilindro
-    densidade: 1041.79
-    massa_kg: 1748.8015770999743
+    densidade: 1041.79107868
+    massa_kg: 1748.7989672718218
   - nome: MAV motores do estágio 1 (4 x R-4D-11)
     material: equivalente
     origem: massa de [F106] (P-094)
     p0:
     - 0.0
-    - -1.7805
+    - -1.78049736091
     - 2.835
     p1:
     - 0.0
-    - -1.1805
+    - -1.18049736091
     - 2.835
     r: 0.275
     tipo: cilindro
-    densidade: 120.916
-    massa_kg: 17.236547585053902
+    densidade: 120.915744755
+    massa_kg: 17.236511199938718
   - nome: MAV Tanque de oxidante do estágio 1
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
     p0:
     - 0.0
-    - -1.1805
+    - -1.18049736091
     - 2.835
     p1:
     - 0.0
-    - -0.530685
+    - -0.530685033269
     - 2.835
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 7.430578285979849
+    massa_kg: 7.4305477277859655
   - nome: MAV propelente oxidante do estágio 1
     material: mon3
     origem: massa do orçamento / densidade
     p0:
     - 0.0
-    - -1.07
+    - -1.0700013602
     - 2.835
     p1:
     - 0.0
-    - -0.641181
+    - -0.641181033978
     - 2.835
     r: 0.2735
     tipo: cilindro
-    massa_kg: 144.20429229355403
+    massa_kg: 144.20473827870146
   - nome: MAV Tanque de combustível do estágio 1
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
     p0:
     - 0.0
-    - -0.530685
+    - -0.530685033269
     - 2.835
     p1:
     - 0.0
-    - 0.11824
+    - 0.118239847895
     - 2.835
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 7.420401213005967
+    massa_kg: 7.420399854126591
   - nome: MAV propelente combustível do estágio 1
     material: mmh
     origem: massa do orçamento / densidade
     p0:
     - 0.0
-    - -0.420207
+    - -0.420206582236
     - 2.835
     p1:
     - 0.0
-    - 0.0077614
+    - 0.00776139686178
     - 2.835
     r: 0.2735
     tipo: cilindro
-    massa_kg: 87.39689703269651
+    massa_kg: 87.3968110788084
   - nome: MAV interestágio
     material: al_2219
     origem: geometria (P-093)
     p0:
     - 0.0
-    - 0.11824
+    - 0.118239847895
     - 2.835
     p1:
     - 0.0
-    - 0.21824
+    - 0.218239847895
     - 2.835
     r: 0.285
     t: 0.003
     tipo: tubo
-    massa_kg: 1.5176531454667785
+    massa_kg: 1.517653145466779
   - nome: MAV motor do estágio 2 (1 x R-4D-11)
     material: equivalente
     origem: massa de [F106] (P-094)
     p0:
     - 0.0
-    - 0.21824
+    - 0.218239847895
     - 2.835
     p1:
     - 0.0
-    - 0.66824
+    - 0.668239847895
     - 2.835
     r: 0.1375
     tipo: cilindro
-    densidade: 161.221
-    massa_kg: 4.30912798690306
+    densidade: 161.220993007
+    massa_kg: 4.309127799993589
   - nome: MAV Tanque de oxidante do estágio 2
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
     p0:
     - 0.0
-    - 0.66824
+    - 0.668239847895
     - 2.835
     p1:
     - 0.0
-    - 1.04949
+    - 1.04948835672
     - 2.835
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 4.3595607542605475
+    massa_kg: 4.359543702803476
   - nome: MAV propelente oxidante do estágio 2
     material: mon3
     origem: massa do orçamento / densidade
     p0:
     - 0.0
-    - 0.80897
+    - 0.80897038212
     - 2.835
     p1:
     - 0.0
-    - 0.908758
+    - 0.908757822494
     - 2.835
     r: 0.2735
     tipo: cilindro
-    massa_kg: 33.55695041355249
+    massa_kg: 33.55676222116528
   - nome: MAV Tanque de combustível do estágio 2
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
     p0:
     - 0.0
-    - 1.04949
+    - 1.04948835672
     - 2.835
     p1:
     - 0.0
-    - 1.4305
+    - 1.43049736091
     - 2.835
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 4.356816375031636
+    massa_kg: 4.356804988030469
   - nome: MAV propelente combustível do estágio 2
     material: mmh
     origem: massa do orçamento / densidade
     p0:
     - 0.0
-    - 1.1902
+    - 1.19019831016
     - 2.835
     p1:
     - 0.0
-    - 1.28979
+    - 1.28978740747
     - 2.835
     r: 0.2735
     tipo: cilindro
-    massa_kg: 20.33761599100834
+    massa_kg: 20.337431649582687
   - nome: MAV carga (contêiner de amostras)
     material: equivalente
     origem: massa de [F34] (P-094)
     p0:
     - 0.0
-    - 1.4305
+    - 1.43049736091
     - 2.835
     p1:
     - 0.0
-    - 1.7805
+    - 1.78049736091
     - 2.835
     r: 0.275
     tipo: cilindro
-    densidade: 192.414
-    massa_kg: 15.999999634190903
+    densidade: 192.414004399
+    massa_kg: 15.999999999985492
   - nome: Braço de coleta (guardado)
     material: equivalente
     origem: massa do orçamento (P-094)
@@ -882,8 +882,8 @@ veiculos:
     - 3.07
     r: 0.05
     tipo: cilindro
-    densidade: 4794.97
-    massa_kg: 88.50007484132779
+    densidade: 4794.96594507
+    massa_kg: 88.50000000006528
   - nome: Helicóptero 1
     material: equivalente
     origem: massa do orçamento (P-094)
@@ -897,8 +897,8 @@ veiculos:
     - 2.01
     r: 0.7
     tipo: cilindro
-    densidade: 4.22579
-    massa_kg: 3.187498167789133
+    densidade: 4.22579242903
+    massa_kg: 3.1874999999977085
   - nome: Helicóptero 2
     material: equivalente
     origem: massa do orçamento (P-094)
@@ -912,8 +912,8 @@ veiculos:
     - 2.01
     r: 0.7
     tipo: cilindro
-    densidade: 4.22579
-    massa_kg: 3.187498167789133
+    densidade: 4.22579242903
+    massa_kg: 3.1874999999977085
   mav:
   - nome: MAV motores do estágio 1 (4 x R-4D-11)
     material: equivalente
@@ -928,8 +928,8 @@ veiculos:
     - 0.6
     r: 0.275
     tipo: cilindro
-    densidade: 120.916
-    massa_kg: 17.236547585053906
+    densidade: 120.915744755
+    massa_kg: 17.236511199938715
   - nome: MAV Tanque de oxidante do estágio 1
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
@@ -940,65 +940,65 @@ veiculos:
     p1:
     - 0.0
     - 0.0
-    - 1.24981
+    - 1.24981232764
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 7.430521111412579
+    massa_kg: 7.43054772777453
   - nome: MAV propelente oxidante do estágio 1
     material: mon3
     origem: massa do orçamento / densidade
     p0:
     - 0.0
     - 0.0
-    - 0.710496
+    - 0.710496000709
     p1:
     - 0.0
     - 0.0
-    - 1.13932
+    - 1.13931632693
     r: 0.2735
     tipo: cilindro
-    massa_kg: 144.2059737056684
+    massa_kg: 144.20473827836514
   - nome: MAV Tanque de combustível do estágio 1
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
     p0:
     - 0.0
     - 0.0
-    - 1.24981
+    - 1.24981232764
     p1:
     - 0.0
     - 0.0
-    - 1.89874
+    - 1.89873720881
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 7.420458387573237
+    massa_kg: 7.420399854195203
   - nome: MAV propelente combustível do estágio 1
     material: mmh
     origem: massa do orçamento / densidade
     p0:
     - 0.0
     - 0.0
-    - 1.36029
+    - 1.36029077868
     p1:
     - 0.0
     - 0.0
-    - 1.78826
+    - 1.78825875777
     r: 0.2735
     tipo: cilindro
-    massa_kg: 87.39722377419251
+    massa_kg: 87.3968110772196
   - nome: MAV interestágio
     material: al_2219
     origem: geometria (P-093)
     p0:
     - 0.0
     - 0.0
-    - 1.89874
+    - 1.89873720881
     p1:
     - 0.0
     - 0.0
-    - 1.99874
+    - 1.99873720881
     r: 0.285
     t: 0.003
     tipo: tubo
@@ -1009,85 +1009,85 @@ veiculos:
     p0:
     - 0.0
     - 0.0
-    - 1.99874
+    - 1.99873720881
     p1:
     - 0.0
     - 0.0
-    - 2.44874
+    - 2.44873720881
     r: 0.1375
     tipo: cilindro
-    densidade: 161.221
-    massa_kg: 4.30912798690306
+    densidade: 161.220993007
+    massa_kg: 4.309127799993588
   - nome: MAV Tanque de oxidante do estágio 2
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
     p0:
     - 0.0
     - 0.0
-    - 2.44874
+    - 2.44873720881
     p1:
     - 0.0
     - 0.0
-    - 2.82999
+    - 2.82998571763
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 4.3595607542605475
+    massa_kg: 4.359543702746304
   - nome: MAV propelente oxidante do estágio 2
     material: mon3
     origem: massa do orçamento / densidade
     p0:
     - 0.0
     - 0.0
-    - 2.58947
+    - 2.58946774303
     p1:
     - 0.0
     - 0.0
-    - 2.68926
+    - 2.68925518341
     r: 0.2735
     tipo: cilindro
-    massa_kg: 33.55762297839826
+    massa_kg: 33.556762223182886
   - nome: MAV Tanque de combustível do estágio 2
     material: ti_6al_4v
     origem: geometria (P-085, P-093)
     p0:
     - 0.0
     - 0.0
-    - 2.82999
+    - 2.82998571763
     p1:
     - 0.0
     - 0.0
-    - 3.21099
+    - 3.21099472182
     r: 0.275
     t: 0.0015
     tipo: tubo
-    massa_kg: 4.3567020258970945
+    massa_kg: 4.356804988030469
   - nome: MAV propelente combustível do estágio 2
     material: mmh
     origem: massa do orçamento / densidade
     p0:
     - 0.0
     - 0.0
-    - 2.9707
+    - 2.97069567107
     p1:
     - 0.0
     - 0.0
-    - 3.07028
+    - 3.07028476838
     r: 0.2735
     tipo: cilindro
-    massa_kg: 20.33557385665839
+    massa_kg: 20.337431649582687
   - nome: MAV carga (contêiner de amostras)
     material: equivalente
     origem: massa de [F34] (P-094)
     p0:
     - 0.0
     - 0.0
-    - 3.21099
+    - 3.21099472182
     p1:
     - 0.0
     - 0.0
-    - 3.56099
+    - 3.56099472182
     r: 0.275
     tipo: cilindro
-    densidade: 192.414
-    massa_kg: 15.999999634190912
+    densidade: 192.414004399
+    massa_kg: 15.999999999985492

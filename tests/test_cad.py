@@ -59,11 +59,11 @@ def test_arquivos_gerados_coerentes():
         assert r["resumo"][k]["massa_kg"] == pytest.approx(sum(c["massa_kg"] for c in corpos))
     # peças equivalentes: massa = a do orçamento usada (P-094)
     orb = {c["nome"]: c for c in r["veiculos"]["orbitador"]}
-    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-5)   # densidade arredondada a 6 algarismos
+    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-5)   # densidade arredondada a 12 algarismos
     # propelente do orbitador = o do orçamento
     prop = sum(c["massa_kg"] for c in r["veiculos"]["orbitador"] if c["nome"].startswith("Propelente"))
     arq = ler("results/etapa2.5/arquitetura.yaml")["orbitador"]["composicao"]
-    # raio arredondado a 6 algarismos (como no FeatureScript): o volume triplica o erro relativo, até ~1,5e-5
+    # raio arredondado a 12 algarismos (como no FeatureScript): o volume triplica o erro relativo
     assert prop == pytest.approx(sum(x.get("propelente_kg", 0) for x in arq), rel=2e-5)
 
 
@@ -205,7 +205,7 @@ def test_previsto_e_a_geometria_do_featurescript():
         for c in corpos:
             for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1", "densidade"):
                 if k in c:
-                    assert c[k] == cp.r6(c[k])
+                    assert c[k] == cp.r12(c[k])
 
 
 def test_cg_lateral_achado_e_produtos_no_eixo():
@@ -369,6 +369,14 @@ def test_encaixe_coifas():
     assert "VERIFICACAO geometrica" in t45
     rot = (RAIZ / "results/etapa7.2b/roteiro_onshape.md").read_text(encoding="utf-8")
     assert "| A4 | interferência com `Escudo termico (PICA)` e `Casca traseira 1 (SLA-561V)`, no ombro |" in rot and "face INTERNA" in rot
+    # grade alinhada: peças exatamente simétricas sem diferença da grade; 2 e 3 são espelhos bit a bit
+    td = [c for c in par["veiculos"]["lander"] if c["nome"].startswith("Tanque descida")]
+    assert td[1]["c"][0] == td[2]["c"][0] and td[1]["c"][1] == -td[2]["c"][1] and td[1]["c"][2] == td[2]["c"][2]
+    assert r["tanques_descida"]["diferenca_max_raio_m"] < 1e-11
+    assert r["criterio_empate"]["simetricas"]["diferenca_m"] < 1e-11
+    # nas casas do roteiro, nada mudou com a grade alinhada e os 12 algarismos
+    assert all(x["igual_em_3_casas"] for x in r["comparacao_grade_e_precisao"])
+    assert ec.EMPATE_M == 1e-9 and ec.CASAS_DE_ORDEM == 9
     # as premissas propostas não entraram
     ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
     assert not ({p["id"] for p in r["premissas_propostas"]} & ids)

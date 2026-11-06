@@ -58,7 +58,7 @@
 47. Abra `Orbitador`.
 48. Selecione todas as peças.
 49. Abra Mass Properties.
-50. Confira: 6 506,2 kg e CG em 0,000, 0,000, 1,393 m.
+50. Confira: 6 506,3 kg e CG em 0,000, 0,000, 1,393 m.
 51. Confira se cada envelope aparece transparente.
 52. Se não aparecer, ajuste a aparência à mão; isso não muda nenhum número.
 
