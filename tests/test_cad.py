@@ -59,11 +59,11 @@ def test_arquivos_gerados_coerentes():
         assert r["resumo"][k]["massa_kg"] == pytest.approx(sum(c["massa_kg"] for c in corpos))
     # peças equivalentes: massa = a do orçamento usada (P-094)
     orb = {c["nome"]: c for c in r["veiculos"]["orbitador"]}
-    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-5)   # densidade arredondada a 6 algarismos
+    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-10)   # densidade arredondada a 13 algarismos
     # propelente do orbitador = o do orçamento
     prop = sum(c["massa_kg"] for c in r["veiculos"]["orbitador"] if c["nome"].startswith("Propelente"))
     arq = ler("results/etapa2.5/arquitetura.yaml")["orbitador"]["composicao"]
-    # raio arredondado a 6 algarismos (como no FeatureScript): o volume triplica o erro relativo, até ~1,5e-5
+    # raio arredondado a 13 algarismos (como no FeatureScript): o volume triplica o erro relativo
     assert prop == pytest.approx(sum(x.get("propelente_kg", 0) for x in arq), rel=2e-5)
 
 
@@ -181,7 +181,7 @@ def test_conferencia_onshape():
     assert mav["massa"]["meia_resolucao"] == pytest.approx(5e-4)
     lan = {y["grandeza"]: y for y in r["veiculos"]["lander"]["linhas"]}
     assert lan["massa"]["meia_resolucao"] == pytest.approx(5e-5) and lan["CG x"]["meia_resolucao"] == pytest.approx(5e-5)
-    # o arquivo atual do lander (cone interno com 12 algarismos) reproduz o modelo atual
+    # o arquivo atual do lander (geometria com 13 algarismos) reproduz o modelo atual
     m = ler("results/etapa7.2/parametros.yaml")["resumo"]["lander"]
     assert co.previsto_do_arquivo("results/etapa7.2/lander.fs")["massa_kg"] == pytest.approx(m["massa_kg"], rel=1e-9)
 
@@ -205,7 +205,7 @@ def test_previsto_e_a_geometria_do_featurescript():
         for c in corpos:
             for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1", "densidade"):
                 if k in c:
-                    assert c[k] == cp.r6(c[k])
+                    assert c[k] == cp.r13(c[k])
 
 
 def test_cg_lateral_achado_e_produtos_no_eixo():
@@ -293,3 +293,103 @@ def test_bocais_estagio1():
     # decisões do Fabio na página
     md = (RAIZ / "results/etapa7.2/bocais_alternativas.md").read_text(encoding="utf-8")
     assert "**C: DESCARTADA.**" in md and "**F: REFERÊNCIA APENAS.**" in md and "Not in Production" in md
+
+
+def test_encaixe_coifas():
+    """Etapa 7.2b: os veículos têm os mesmos corpos da 7.2, e as folgas no vértice do ombro saem do perfil e do envelope."""
+    from conferencia_onshape import _bloco
+    r = ler("results/etapa7.2b/folgas.yaml")
+    par = ler("results/etapa7.2/parametros.yaml")
+    for novo, antigo, chave in (("lander_4_65", "lander", "lander"), ("orbitador", "orbitador", "orbitador")):
+        a = (RAIZ / f"results/etapa7.2b/{novo}.fs").read_text(encoding="utf-8")
+        b = (RAIZ / f"results/etapa7.2/{antigo}.fs").read_text(encoding="utf-8")
+        assert _bloco(a, "CORPOS") == _bloco(b, "CORPOS") and _bloco(a, "MATERIAIS") == _bloco(b, "MATERIAIS")
+        assert r["veiculos"][novo]["massa_kg"] == pytest.approx(par["resumo"][chave]["massa_kg"], rel=1e-12)
+        assert r["veiculos"][novo]["cg_m"] == pytest.approx(par["resumo"][chave]["cg_m"], rel=1e-12, abs=1e-12)
+    for arq in ("envelope_vulcan", "envelope_falcon_heavy", "lander_4_65", "lander_4_5", "orbitador"):
+        t = (RAIZ / f"results/etapa7.2b/{arq}.fs").read_text(encoding="utf-8")
+        assert t.startswith('FeatureScript 3112;\nimport(path : "onshape/std/geometry.fs", version : "3112.0");')
+        assert t.count("opMateConnector(context") == 1
+    # o modelo do envelope não tem dimensão
+    modelo = (RAIZ / "cad/featurescript/envelope.fs").read_text(encoding="utf-8")
+    assert not re.search(r"\d\.\d", re.sub(r"//.*", "", modelo))
+    # a casca: a face interna é o envelope, e o envelope do Vulcan traz as duas leituras
+    seg = _bloco((RAIZ / "results/etapa7.2b/envelope_vulcan.fs").read_text(encoding="utf-8"), "SEGMENTOS")
+    assert len(seg) == 2 and seg[0]["interno"][1][2:] == [2.4385, 2.324] and seg[1]["interno"][1][2:] == [2.324, 2.324]
+    # folga no vértice do ombro, à mão, com o perfil de [F41] e o envelope de [F80]
+    cad = ler("config/cad.yaml")
+    h_cz = par["conferencias"]["lander_vulcan"]["altura_estagio_cruzeiro_m"]
+    li = {(x["veiculo"], x["leitura"][:8]): x for x in r["configuracoes"]}
+    for veic, forma in (("lander_4_5", "msl_m2020"), ("lander_4_65", "srl_a")):
+        p = cad["capsulas"][forma]
+        r_o = max(float(x) for x in p["r_m"])
+        z_o = h_cz + float(p["x_m"][-1]) - float(p["x_m"][[float(x) for x in p["r_m"]].index(r_o)])
+        linear = 2.4385 + (2.324 - 2.4385) * z_o / 6.604
+        assert li[(veic, "Contorno")]["radial"]["folga_radial_m"] == pytest.approx(linear - r_o, abs=1e-9)
+        assert li[(veic, "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(2.324 - r_o, abs=1e-9)
+        # a conta da 7.2, repetida, dá o valor publicado: a diferença é só a amostragem
+        for x in (li[(veic, "Contorno")], li[(veic, "Diametro")]):
+            assert x["reproducao_grade_400_m"] == pytest.approx(x["referencia_7_2_m"], abs=1e-12)
+            assert x["diferenca_m"] < 0
+    # errata: os valores vigentes de parametros.yaml são os da geometria
+    fv = par["conferencias"]["lander_vulcan"]["por_forma"]
+    assert li[("lander_4_65", "Contorno")]["radial"]["folga_radial_m"] == pytest.approx(fv["srl_a"]["folga_radial_vertice_m"], abs=1e-9)
+    assert li[("lander_4_65", "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(fv["srl_a"]["folga_sem_afunilamento_vertice_m"], abs=1e-9)
+    assert li[("lander_4_5", "Contorno")]["radial"]["folga_radial_m"] == pytest.approx(fv["msl_m2020"]["folga_radial_vertice_m"], abs=1e-9)
+    assert li[("lander_4_5", "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(fv["msl_m2020"]["folga_sem_afunilamento_vertice_m"], abs=1e-9)
+    assert "Errata (2026-11-04" in (RAIZ / "results/etapa7.2/conferencias.md").read_text(encoding="utf-8")
+    assert "Errata (2026-11-04" in (RAIZ / "results/etapa7.2/portao_decisao.md").read_text(encoding="utf-8")
+    # o 4,5 m: arquivo igual ao modelo montado, e todos os corpos que cruzam o envelope listados
+    import encaixe_coifas as ec
+    t45 = (RAIZ / "results/etapa7.2b/lander_4_5.fs").read_text(encoding="utf-8")
+    assert [c["nome"] for c in _bloco(t45, "CORPOS")] == [cp.ascii_(c["nome"]) for c in cp.monta_lander(cad, ler("results/etapa7.1/envelope.yaml"), ler("results/etapa2.5/arquitetura.yaml"), ler("config/motores.yaml"), "msl_m2020").corpos]
+    neg = {x["corpo"] for x in li[("lander_4_65", "Diametro")]["radial"]["corpos_com_folga_negativa"]}
+    assert neg == {"Escudo térmico (PICA)", "Casca traseira 1 (SLA-561V)"}
+    assert not li[("lander_4_65", "Contorno")]["radial"]["corpos_com_folga_negativa"]
+    # corpo fora do eixo, à mão: esfera em (x, 0, z), com o envelope reto de raio 2
+    perfil = ([0.0, 10.0], [2.0, 2.0])
+    rad, ax = ec.folgas([{"nome": "e", "tipo": "esfera", "c": [1.0, 0.0, 3.0], "r": 0.5}], perfil)
+    assert rad["folga_radial_m"] == pytest.approx(0.5, abs=1e-4) and ax["folga_axial_m"] == pytest.approx(6.5, abs=1e-4)
+    # cilindro deitado ao longo de y, centrado: a ponta define a folga radial
+    rad, _ = ec.folgas([{"nome": "m", "tipo": "cilindro", "p0": [0.0, -1.0, 3.0], "p1": [0.0, 1.0, 3.0], "r": 0.2}], perfil)
+    assert rad["folga_radial_m"] == pytest.approx(2 - math.hypot(1.0, 0.2), abs=1e-3)
+    # o MAV deitado do 4,5 m não atravessa a cápsula; os helicópteros e os tanques de descida, sim
+    pc = {x["corpo"]: x["folga_m"] for x in r["pecas_contra_a_capsula"]["lander_4_5"]}
+    assert next(v_ for k, v_ in pc.items() if k.startswith("MAV")) > 0 and pc["Helicóptero 1"] < 0 and pc["Tanque descida 1"] < 0
+    # desempate: corpos iguais a menos de ruído mantêm o primeiro da lista, nos dois sentidos do ruído
+    for ruido in (1e-13, -1e-13):
+        par_ = [{"nome": "a", "tipo": "cilindro", "p0": [0.0, 0.0, 0.0], "p1": [0.0, 0.0, 1.0], "r": 1.0},
+                {"nome": "b", "tipo": "cilindro", "p0": [0.0, 0.0, 0.0], "p1": [0.0, 0.0, 1.0 + ruido], "r": 1.0 + ruido}]
+        rad, ax = ec.folgas(par_, perfil)
+        assert rad["corpo"] == "a" and ax["corpo"] == "a"
+    # o MAV empatado cita as peças empatadas, em ordem de nome, e a ordem da lista não depende de ruído
+    mavs = [x["corpo"] for x in r["pecas_contra_a_capsula"]["lander_4_5"] if x["corpo"].startswith("MAV")]
+    assert len(mavs) == 1 and "MAV carga" in mavs[0] and "MAV motores" in mavs[0] and mavs[0].index("MAV carga") < mavs[0].index("MAV motores")
+    # texto gerado: rótulo, lista de interferências em A4 e aviso da face interna
+    assert "VERIFICACAO geometrica" in t45
+    rot = (RAIZ / "results/etapa7.2b/roteiro_onshape.md").read_text(encoding="utf-8")
+    assert "| A4 | interferência com `Escudo termico (PICA)` e `Casca traseira 1 (SLA-561V)`, no ombro |" in rot and "face INTERNA" in rot
+    # grade alinhada: peças exatamente simétricas sem diferença da grade; 2 e 3 são espelhos bit a bit
+    td = [c for c in par["veiculos"]["lander"] if c["nome"].startswith("Tanque descida")]
+    assert td[1]["c"][0] == td[2]["c"][0] and td[1]["c"][1] == -td[2]["c"][1] and td[1]["c"][2] == td[2]["c"][2]
+    assert r["criterio_empate"]["simetricas"]["diferenca_m"] == pytest.approx(r["tanques_descida"]["diferenca_max_raio_m"], rel=1e-3)
+    # topo da Casca traseira 1 e do Braço em z = 3,12 m: com a grade nos ângulos cardeais, é coincidência, não diferença
+    assert any({"Braço de coleta (guardado)", "Casca traseira 1 (SLA-561V)"} <= set(x) for x in r["criterio_empate"]["coincidencias"])
+    for arq_ in ("results/etapa7.2/conferencias.md", "results/etapa7.2/cg_lateral.md", "results/etapa7.2/conferencia_onshape.md"):
+        assert "Errata (2026-11-06" in (RAIZ / arq_).read_text(encoding="utf-8")
+    # nas casas do roteiro, nada mudou com a grade alinhada e os 13 algarismos
+    assert all(x["igual_em_3_casas"] for x in r["comparacao_grade_e_precisao"])
+    assert ec.EMPATE_M == 1e-9 and ec.CASAS_DE_ORDEM == 9
+    # critério do Fabio para aprovar os dois parâmetros
+    crit = r["criterio_empate"]
+    assert crit["passa"] and crit["simetricas"]["diferenca_m"] <= 1e-12 and crit["distintas"]["diferenca_m"] >= 1e-6
+    # coincidências não dependem do último bit: ruído que inverte a ordem de valores empatados dá a mesma saída
+    chaves = [("a",), ("b",), ("c",), ("d",)]
+    base = [(1.0, "a", chaves[0]), (1.0 + 1e-15, "b", chaves[1]), (1.0 + 2e-15, "c", chaves[2]), (2.0, "d", chaves[3])]
+    invertido = [(1.0 + 2e-15, "a", chaves[0]), (1.0 + 1e-15, "b", chaves[1]), (1.0, "c", chaves[2]), (2.0, "d", chaves[3])]
+    r0, r1 = ec.criterio_de_empate([("x", base + [(9.0, "e", ("e",)), (9.0, "f", ("e",))])]), ec.criterio_de_empate([("x", invertido + [(9.0, "e", ("e",)), (9.0, "f", ("e",))])])
+    assert r0[3] == r1[3] == [["a", "b", "c"]]
+    assert r0[1]["pecas"] == r1[1]["pecas"] and r0[2]["pecas"] == r1[2]["pecas"]
+    # as premissas propostas não entraram
+    ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
+    assert not ({p["id"] for p in r["premissas_propostas"]} & ids)

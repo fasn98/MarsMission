@@ -49,6 +49,27 @@ coifas:
       fonte: "[F80] Fig. 4.3.1-1, p. 4-8 (PDF p. 44), \"Vulcan Centaur 15.5-m (51-ft.) PLF Simplified Static Payload Envelope\": Ø 4877 em \"LV STA 2596.66 (1575 Interface)\", Ø 4648 em \"LV STA 2856.66\", Ø 3632 em \"LV STA 2966.66\", Ø 838 em \"LV STA 3100.66\" (leitura da figura)"
   vulcan_reserva: "VC6 usa a mesma coifa (lançador de reserva, ADR 0020)"
 
+encaixe:   # Etapa 7.2b: verificação geométrica do modelo nas coifas, no Onshape
+  versao_featurescript: {valor: 3112, fonte: "observação de ambiente: conta do Fabio no Onshape, docs/etapa7.2_featurescript.md; não é dado científico"}
+  espessura_casca_envelope_m: {valor: 0.01, natureza: "escolha de construção, não premissa: só desenha a casca; as folgas são medidas na face interna e não dependem dela"}
+  cor_envelope: {valor: [0.15, 0.55, 0.85, 0.25], natureza: "aparência (r, g, b, alpha: 1 é opaco), sem efeito em nenhum número"}
+  # parâmetros numéricos de implementação. APROVADOS pelo Fabio (2026-11-06), com a exportação em 13 algarismos: (a) e (b) de
+  # results/etapa7.2b/folgas.md passam no critério abaixo. A aprovação fica registrada aqui, não sai do script.
+  empate_m: {valor: 1.0e-9, justificativa: "peças simétricas empatam; quem tira o posto de limitadora precisa ser menor por mais que isto, para o texto de results/ não depender do ruído entre CPUs. Fica acima da maior diferença entre peças exatamente simétricas e abaixo da menor diferença real entre peças distintas (valores em results/etapa7.2b/folgas.md)"}
+  casas_de_ordem: {valor: 9, justificativa: "casas decimais em metros (1e-9 m, a mesma escala de empate_m), usadas para agrupar peças empatadas e ordenar listas do texto gerado; não muda nenhum valor gravado"}
+  criterio_empate: {simetricas_max_m: 1.0e-12, distintas_min_m: 1.0e-6, fonte: "decisão do Fabio, 2026-11-06"}
+  plano_vulcan: {fonte: "[F80] Fig. 4.3.1-1, p. 4-8: \"LV STA 2596.66 (1575 Interface)\""}
+  plano_falcon: {fonte: "[F82] PDF p. 26: \"The origin of the payload coordinate system is fixed at the center of the separation plane\"; o arquivo STEP não declara que usa esse sistema (P-096 proposta)"}
+  premissas_propostas:   # NÃO estão em config/premissas.yaml: só entram com a aprovação do Fabio
+    - id: P-096
+      nome: origem_do_step_do_falcon
+      texto: "A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm, com o eixo x axial."
+      evidencia: "[F82] PDF p. 26 define a origem do sistema da carga útil no plano de separação; o eixo axial do arquivo vai a 446,76 pol (lido no STEP), abaixo da altura da coifa de [F82] p. 16. O arquivo não declara o sistema, e separação e interface podem não coincidir."
+    - id: P-097
+      nome: veiculo_sobre_o_plano_da_interface
+      texto: "A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação."
+      evidencia: "Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura; [F82] PDF p. 27: \"Any payload adapters required ... must also fit within the keep-in volumes\"."
+
 aeroshell:
   # Opções de diâmetro (decisão do Fabio no portão da 7.1): a massa de entrada do lander fica entre a do Mars 2020 e a
   # do SRL de lançamento duplo.

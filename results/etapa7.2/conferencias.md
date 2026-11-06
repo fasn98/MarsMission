@@ -30,6 +30,23 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 | 1,35 | 2,41 (não cabe) | 3,08 (não cabe) | 3,08 (não cabe) |
 | 1,45 | 2,08 (não cabe) | 2,96 (não cabe) | 2,97 (não cabe) |
 
+## Errata (2026-11-04, aprovada pelo Fabio): folgas do lander no Vulcan
+
+**O que muda:** as folgas da primeira tabela valem menos do que está escrito. **Causa:** o cálculo amostra o perfil da cápsula em 400 pontos, e nenhum cai no vértice do ombro, onde o raio é máximo. Os valores vigentes são os da coluna "Vigente", calculados nos vértices do perfil. Os antigos ficam como registro.
+
+| Forma | Leitura do envelope | Publicado (grade de 400 pontos) | Vigente (vértices) | Diferença (mm) |
+| :- | :- | -: | -: | -: |
+| MSL/M2020 (Ø 4,5 m) | contorno reto | 0,1425 | 0,1412 | −1,3 |
+| MSL/M2020 (Ø 4,5 m) | Ø menor desde o PAF | 0,0653 | 0,0640 | −1,3 |
+| SRL-A | contorno reto | 0,0466 | 0,0444 | −2,2 |
+| SRL-A | Ø menor desde o PAF | −0,0138 | −0,0160 | −2,2 |
+| SRL-C | contorno reto | 0,0319 | 0,0296 | −2,3 |
+| SRL-C | Ø menor desde o PAF | −0,0338 | −0,0360 | −2,2 |
+
+## Errata (2026-11-06, decisão do Fabio): 13 algarismos nos arquivos .fs
+
+**O que muda:** toda a geometria e as densidades vão para os .fs com 13 algarismos significativos, antes 6. Massa, CG e inércia desta página mudam por isso; os valores vigentes são os mostrados aqui, e a comparação 6 × 13 algarismos está em results/etapa7.2b/folgas.md. A conferência no Onshape continua valendo para o commit 32cb41d: ela lê as cópias em tests/data/onshape/, que não mudam. Com 6 algarismos, a massa do CAD era 6 506,2 kg no orbitador, 3 190,4 kg no lander e 348,1 kg no MAV. Outros arquivos com números afetados: results/etapa7.2/cg_lateral.md e conferencia_onshape.md, com errata própria; results/etapa7.2b/roteiro_onshape.md, com nota; results/etapa7.2/portao_decisao.md, com nota.
+
 ## Orbitador no Falcon (com a plataforma e o EES no arranjo do CAD)
 
 | Conjunto | Base | Topo | Raio | Folga radial |
@@ -44,7 +61,7 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 
 | Veículo | Corpos | Massa do CAD | Geometria modelada | Propelente | Densidade equivalente (orçamento) | CG (x, y, z) |
 | :- | -: | -: | -: | -: | -: | :- |
-| orbitador | 20 | 6 506,2 | 263,3 | 4 919,1 | 1 323,9 | 0,000, 0,000, 1,393 |
+| orbitador | 20 | 6 506,3 | 263,3 | 4 919,1 | 1 323,9 | 0,000, 0,000, 1,393 |
 | lander | 33 | 3 190,4 | 330,0 | 943,5 | 1 916,9 | 0,026, −0,026, 3,003 |
 | mav | 12 | 348,1 | 25,1 | 285,5 | 37,5 | 0,000, 0,000, 1,540 |
 

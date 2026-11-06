@@ -154,6 +154,8 @@ def escreve_md(o):
            f"referência diferentes: o do perfil lido e o dref do MSL). No MSL o deslocamento era intencional, para trimar e gerar sustentação; aqui ele "
            f"sai do arranjo (braço e MAV), num azimute de {br(ce['azimute_graus'], 0)}° (atan2(y, x) nos eixos do Part Studio, de +x para +y) que não foi escolhido. Não é desprezível para a trimagem e o "
            "L/D da entrada; a ordem de grandeza da trimagem não foi calculada (aerodinâmica não modelada). Nenhuma peça foi movida."]
+    md += ["", "## Errata (2026-11-06, decisão do Fabio): 13 algarismos nos arquivos .fs", "",
+           "Nas duas tabelas por conjunto, a massa da descida era 576,1 kg e a da cápsula era 263,9 kg, com 6 algarismos. Os valores vigentes são os das tabelas acima (results/etapa7.2b/folgas.md, comparação 6 × 13 algarismos)."]
     (SAIDA / "cg_lateral.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

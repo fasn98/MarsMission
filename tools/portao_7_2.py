@@ -53,6 +53,7 @@ def main():
         e = env["opcoes_aeroshell"][op]
         rotulo = f"{e['diametro_m']:g} m (forma {rot})".replace(".", ",")
         aero[k] = {"rotulo": rotulo, "folga_vulcan_linear_m": par[k]["folga_radial_m"], "folga_vulcan_sem_afunilamento_m": par[k]["folga_sem_afunilamento_m"],
+                   "folga_vulcan_linear_vertice_m": par[k]["folga_radial_vertice_m"], "folga_vulcan_sem_afunilamento_vertice_m": par[k]["folga_sem_afunilamento_vertice_m"],
                    "massa_por_area_lander_kg_m2": e["massa_por_area_lander_kg_m2"]}
     m2020 = env["opcoes_aeroshell"]["m2020"]["massa_por_area_referencia_kg_m2"]
     srl_c = par["srl_c"]
@@ -169,6 +170,14 @@ def escreve_md(o):
     md += ["", f"Duas leituras do envelope do Vulcan, [F80] Fig. 4.3.1-1 (\"Simplified\"), p. 4-8: a primeira interpola em linha reta entre Ø {o['vulcan_diametros_mm'][0]} mm e Ø {o['vulcan_diametros_mm'][1]} mm; a segunda "
            f"usa Ø {o['vulcan_diametros_mm'][1]} mm desde o plano do PAF. Com a forma SRL-C, as folgas são {sg(o['srl_c']['folga_radial_m'], 3)} e {sg(o['srl_c']['folga_sem_afunilamento_m'], 3)} m. "
            "A massa por área usa os diâmetros nominais. Comprimentos e folgas em m; folga positiva = cabe.", "",
+           "**Errata (2026-11-04, aprovada pelo Fabio):** as folgas no Vulcan da tabela acima valem um pouco menos. A conta amostrou o perfil em 400 pontos, e nenhum caiu no vértice do ombro. Os valores vigentes são os dos vértices; os antigos ficam como registro.", "",
+           "| Aeroshell | Leitura do envelope | Publicado | Vigente |", "| :- | :- | -: | -: |"]
+    for k_ in o["aeroshell"]:
+        ae = o["aeroshell"][k_]
+        md.append(f"| {ae['rotulo']} | contorno reto | {sg(ae['folga_vulcan_linear_m'], 4)} | {sg(ae['folga_vulcan_linear_vertice_m'], 4)} |")
+        md.append(f"| {ae['rotulo']} | Ø menor desde o PAF | {sg(ae['folga_vulcan_sem_afunilamento_m'], 4)} | {sg(ae['folga_vulcan_sem_afunilamento_vertice_m'], 4)} |")
+    md += ["", f"SRL-C, publicado e vigente: {sg(o['srl_c']['folga_radial_m'], 4)} e {sg(o['srl_c']['folga_radial_vertice_m'], 4)} m (contorno reto); {sg(o['srl_c']['folga_sem_afunilamento_m'], 4)} e {sg(o['srl_c']['folga_sem_afunilamento_vertice_m'], 4)} m (Ø menor).", "",
+           "**Nota (2026-11-06):** a massa do MAV no CAD vem agora dos arquivos com 13 algarismos; a mudança, abaixo da casa mostrada nesta página, está em results/etapa7.2b/folgas.md.", "",
            "## 2. Piso do comprimento do MAV", "",
            f"**Confirmado:** com o arranjo atual (P-085), o comprimento para de cair em {br(pi['comprimento_m'])} m a partir de Ø {br(pi['diametro_saturacao_m'])} m.", "",
            f"**A origem é só em parte a P-086:** {br(pi['fora_dos_tanques_m'])} m ({br(100 * pi['fracao_p086'], 0)} %) vêm da P-086, sem fonte. Os outros "

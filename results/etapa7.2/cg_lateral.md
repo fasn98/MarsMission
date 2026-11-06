@@ -9,12 +9,12 @@ Massa 3 190,4 kg; CG (0,0256; −0,0263; 3,0032) m; deslocamento radial 0,0367 m
 | Conjunto | Massa (kg) | m·x (kg·m) | m·y (kg·m) | Contribuição ao CG x (m) | Contribuição ao CG y (m) | Ixy, Ixz, Iyz no eixo (kg·m²) | Ixy, Ixz, Iyz no CG (kg·m²) |
 | :- | -: | -: | -: | -: | -: | -: | -: |
 | Estágio de cruzeiro | 158,5 | 41,87 | 0,00 | 0,0131 | 0,0000 | 0,00; 111,02; 0,00 | −0,99; 99,99; 11,31 |
-| Descida (3 tanques a 120°) | 576,1 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,39; 1,72; −1,77 |
+| Descida (3 tanques a 120°) | 576,2 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,39; 1,72; −1,77 |
 | MAV (deitado ao longo de y) | 348,1 | 0,00 | −83,77 | 0,0000 | −0,0263 | 0,00; 0,00; −14,09 | −1,91; −1,50; −12,55 |
-| Braço (guardado em x = +0,45 m) | 88,5 | 39,83 | 0,00 | 0,0125 | 0,0000 | 0,00; −2,66; 0,00 | −0,99; −2,51; −0,16 |
+| Braço (guardado em x = +0,45 m) | 88,5 | 39,82 | 0,00 | 0,0125 | 0,0000 | 0,00; −2,66; 0,00 | −0,99; −2,51; −0,16 |
 | Helicópteros | 6,4 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,00; −0,12; 0,13 |
 | Núcleo do lander | 1 748,8 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 1,18; 11,95; −12,25 |
-| Cápsula (escudo e casca) | 263,9 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,18; −1,17; 1,20 |
+| Cápsula (escudo e casca) | 264,0 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,18; −1,17; 1,20 |
 
 Produtos na forma de tensor (−∫ x y dm). "No eixo": em torno do ponto do eixo do veículo na altura do CG, (0, 0, z do CG), e mostra quem causa a assimetria (peças no eixo ou simétricas dão zero). "No CG": em torno do CG composto, e a soma dá o tensor total; aí até peças no eixo aparecem.
 
@@ -24,12 +24,12 @@ Massa 3 031,9 kg; CG (0,0131; −0,0276; 3,1452) m; deslocamento radial 0,0306 m
 
 | Conjunto | Massa (kg) | m·x (kg·m) | m·y (kg·m) | Contribuição ao CG x (m) | Contribuição ao CG y (m) | Ixy, Ixz, Iyz no eixo (kg·m²) | Ixy, Ixz, Iyz no CG (kg·m²) |
 | :- | -: | -: | -: | -: | -: | -: | -: |
-| Descida (3 tanques a 120°) | 576,1 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,21; −0,19; 0,40 |
+| Descida (3 tanques a 120°) | 576,2 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,21; −0,19; 0,40 |
 | MAV (deitado ao longo de y) | 348,1 | 0,00 | −83,77 | 0,0000 | −0,0276 | 0,00; 0,00; −25,99 | −0,97; −1,42; −23,01 |
-| Braço (guardado em x = +0,45 m) | 88,5 | 39,83 | 0,00 | 0,0131 | 0,0000 | 0,00; 3,00; 0,00 | −1,07; 2,91; 0,18 |
+| Braço (guardado em x = +0,45 m) | 88,5 | 39,82 | 0,00 | 0,0131 | 0,0000 | 0,00; 3,00; 0,00 | −1,07; 2,91; 0,18 |
 | Helicópteros | 6,4 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,00; −0,07; 0,16 |
 | Núcleo do lander | 1 748,8 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,63; 2,87; −6,03 |
-| Cápsula (escudo e casca) | 263,9 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,10; −1,09; 2,30 |
+| Cápsula (escudo e casca) | 264,0 | 0,00 | 0,00 | 0,0000 | 0,0000 | 0,00; 0,00; 0,00 | 0,10; −1,09; 2,30 |
 
 Produtos na forma de tensor (−∫ x y dm). "No eixo": em torno do ponto do eixo do veículo na altura do CG, (0, 0, z do CG), e mostra quem causa a assimetria (peças no eixo ou simétricas dão zero). "No CG": em torno do CG composto, e a soma dá o tensor total; aí até peças no eixo aparecem.
 
@@ -54,3 +54,7 @@ Tanques em lados opostos, a 1,50 m do eixo (P-095): MON-3 com 70,9 kg em +x e MM
 ## Achado para o portão da 7.3
 
 Na configuração de entrada, o deslocamento radial do CG do lander é 0,0065 do diâmetro da cápsula (perfil lido), contra 0,0215 do dref no MSL: 30 % do valor do MSL (diâmetros de referência diferentes: o do perfil lido e o dref do MSL). No MSL o deslocamento era intencional, para trimar e gerar sustentação; aqui ele sai do arranjo (braço e MAV), num azimute de −65° (atan2(y, x) nos eixos do Part Studio, de +x para +y) que não foi escolhido. Não é desprezível para a trimagem e o L/D da entrada; a ordem de grandeza da trimagem não foi calculada (aerodinâmica não modelada). Nenhuma peça foi movida.
+
+## Errata (2026-11-06, decisão do Fabio): 13 algarismos nos arquivos .fs
+
+Nas duas tabelas por conjunto, a massa da descida era 576,1 kg e a da cápsula era 263,9 kg, com 6 algarismos. Os valores vigentes são os das tabelas acima (results/etapa7.2b/folgas.md, comparação 6 × 13 algarismos).
