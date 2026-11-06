@@ -164,7 +164,7 @@ def main():
             lo, hi = (mid, hi) if lente(rs, rs, mid) > alvo_v else (lo, mid)
         c = hi
         area_cal = 2 * math.pi * rs * (rs - c / 2)
-        return {"comprimento_m": lt + g + t_d + t_i, "massa_kg": rho_ti * (4 * math.pi * rs ** 2 * t_d + area_cal * (t_d + t_i)), "raio_m": rs, "distancia_centros_m": c, "raio_borda_m": math.sqrt(rs ** 2 - (c / 2) ** 2)}
+        return {"comprimento_m": lt + g + t_d + t_i, "massa_kg": rho_ti * (4 * math.pi * rs ** 2 * t_d + area_cal * (t_d + t_i)), "raio_m": rs, "distancia_centros_m": c, "raio_borda_m": math.sqrt(rs ** 2 - (c / 2) ** 2), "cos_borda": (c / 2) / rs, "paredes_m": t_d + t_i}
 
     def real(est_m, d, g, k, fam):
         """Comprimento real e massa dos tanques aninhados: tanque único com o volume somado, mais o vão de purga e as duas
@@ -286,6 +286,14 @@ def compara_analogos(o):
     return "Na faixa de " + br(base, 0) + " a " + br(topo, 0) + " s: " + "; ".join(frases) + "."
 
 
+def folga_borda_lente(dm):
+    """O deslocamento axial da lente vira, na borda, separação normal menor; descontadas as paredes, é o vão que sobra ali."""
+    g_ = dm["casos"][0]["por_geometria"]["lente_mesmo_raio"]["por_estagio"][1]["geometria"]
+    pares = [(g, (g + g_["paredes_m"]) * g_["cos_borda"] - g_["paredes_m"]) for g in dm["vaos"]]
+    return ("Na borda, o vão efetivo é menor que o nominal, no caso de menor Isp: " + "; ".join(f"{br(1e3 * g, 0)} mm nominais dão {sg(1e3 * f, 1)} mm" for g, f in pares)
+            + ". Valor negativo é interferência: esse vão pediria mais comprimento que o da tabela, e a coluna fica otimista nessa linha. A banda de ligação na borda também não entra na massa.")
+
+
 def escreve_md(o):
     al, dm, im, nu, ad = o["alvo"], o["dimensionamento"], o["isp_minimo"], o["nucleo_cad"], o["adaptador"]
     md = ["# Portão do comprimento do MAV: rota A provisória (gerado por tools/rota_a_dimensiona.py)", "",
@@ -306,13 +314,13 @@ def escreve_md(o):
     for li in im["linhas"]:
         md.append(f"| {br(li['vao_m'], 3)} | {br(li['fator'], 2)} | " + " | ".join(br(li["por_geometria"][f], 2) if li["por_geometria"][f] else "não fecha na faixa" for f in dm["geometrias"]) + " |")
     md += ["", f"Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte. {o['ressalva_analogos']}. {compara_analogos(o)}", "",
-           "**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda em que lado da faixa dos análogos o valor cai, e por isso a conclusão depende dela.", "",
+           "**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda se o valor cai dentro ou acima da faixa dos análogos, e por isso a conclusão depende dela.", "",
            "## 4. Tanques aninhados dimensionados", "",
            f"Ti-6Al-4V recozido, base A: Ftu {br(dm['ftu_mpa'], 0)} MPa, Fty {br(dm['fty_mpa'], 0)} MPa ([F219]). Fator de {br(dm['fator_seguranca'], 1)}: {dm['fator_fonte']}. Tensão admissível: {br(dm['tensao_admissivel_mpa'], 0)} MPa. Na flambagem, fator de {br(dm['fator_flambagem'], 1)}: {dm['fator_flambagem_fonte']}; t varia com a raiz do fator. Raio interno {br(dm['raio_interno_m'], 3)} m. A P-093 usa {br(1e3 * dm['t_p093_m'], 1)} mm. **{dm['nota_flambagem']}.**", "",
            "**Pressão e espessura mínima (mm):**", "", "| Pressão | MPa | Cilindro | Cúpula normal | " + " | ".join(f"Cúpula invertida, fator {br(k, 2)}" for k in dm["fatores"]) + " | Fonte |", "| :- | -: | -: | -: |" + " -: |" * len(dm["fatores"]) + " :- |"]
     for n, p_ in dm["pressoes"].items():
         md.append(f"| {n} | {br(p_['mpa'], 2)} | {br(1e3 * p_['t_cilindro_m'], 2)} | {br(1e3 * p_['t_cupula_m'], 2)} | " + " | ".join(br(1e3 * p_["t_cupula_invertida_m"][str(k)], 2) for k in dm["fatores"]) + f" | {p_['fonte']} |")
-    md += ["", f"**Comprimento e massa,** em Ø {br(al['diametro_m'], 2)} m, com o piso de entrada do motor, vão de {br(dm['vao_base_m'], 2)} m (NÃO VALIDADO: {dm['vao_fonte']}) e fator de flambagem {br(dm['fator_base'], 2)}. O estágio 1 soma ao limite o vão e as duas paredes da antepara. No estágio 2, o volume cabe numa esfera menor que o diâmetro interno: uma antepara do mesmo raio dessa esfera, com a borda no equador, não deixa volume para o segundo tanque, e por isso há quatro geometrias, sem fonte e NÃO VALIDADAS.", "",
+    md += ["", f"**Comprimento e massa,** em Ø {br(al['diametro_m'], 2)} m, com o piso de entrada do motor, vão de {br(dm['vao_base_m'], 2)} m (NÃO VALIDADO: {dm['vao_fonte']}) e fator de flambagem {br(dm['fator_base'], 2)}. O estágio 1 soma ao limite o vão e as duas paredes da antepara; com cúpulas hemisféricas deslocadas, o vão zera na borda, e a ligação ali não foi analisada. No estágio 2, o volume cabe numa esfera menor que o diâmetro interno: uma antepara do mesmo raio dessa esfera, com a borda no equador, não deixa volume para o segundo tanque, e por isso há quatro geometrias, sem fonte e NÃO VALIDADAS.", "",
            "| Isp (s) | Geometria do estágio 2 | Só 44:1 (m) | Limite otimista (m) | Real (m) | Redução no limite (m) | Redução real (m) | Sobra da redução | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) |", "| -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
         for f, x in c["por_geometria"].items():
@@ -326,7 +334,7 @@ def escreve_md(o):
         for f, x in c["por_geometria"].items():
             e2 = x["por_estagio"][1]
             md.append(f"| {br(c['isp_s'], 0)} | 2 | {f} | {br(e2['inerte_kg'], 1)} | {br(e2['tanques_kg'], 1)} | {br(100 * e2['parcela_do_inerte'], 0)} % | {br(e2['motores_164_kg'], 1)} | {sg(e2['sobra_kg'], 1)} |")
-    md += ["", "**As quatro geometrias do estágio 2.** " + "; ".join(f"**{f}**: {n}" for f, n in dm["geometrias"].items()) + ". As espessuras seguem as do raio interno, e nenhuma é um dimensionamento. Com recesso, o fundo do recesso não foi analisado. Em **antepara_assimetrica**, a calota fica quase plana, com o vão praticamente constante: a espessura de flambagem no raio da calota, na tabela, está fora do domínio da fórmula da casca esférica, uma calota tão rasa trabalha como placa, e a flexão de placa não foi calculada. O comprimento e a massa dessa coluna usam a espessura do raio interno, então são otimistas. Em **lente_mesmo_raio**, a antepara tem o raio da esfera e o canto vivo na borda não foi analisado.", "",
+    md += ["", "**As quatro geometrias do estágio 2.** " + "; ".join(f"**{f}**: {n}" for f, n in dm["geometrias"].items()) + ". As espessuras seguem as do raio interno, e nenhuma é um dimensionamento. Com recesso, o fundo do recesso não foi analisado. Em **antepara_assimetrica**, a calota fica quase plana, com o vão praticamente constante: a espessura de flambagem no raio da calota, na tabela, está fora do domínio da fórmula da casca esférica, uma calota tão rasa trabalha como placa, e a flexão de placa não foi calculada. O comprimento e a massa dessa coluna usam a espessura do raio interno, então são otimistas. Em **lente_mesmo_raio**, a antepara tem o raio da esfera e o canto vivo na borda não foi analisado. " + folga_borda_lente(dm), "",
            "| Isp (s) | Tanque único (m) | recesso_hemisferio (m) | recesso_livre (m) | antepara_assimetrica (m) | lente_mesmo_raio (m) | Raio da calota, antepara (m) | Flambagem nesse raio, fora do domínio (mm) | Raio da esfera e raio da borda, lente (m) |", "| -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
         ge = {f: x["por_estagio"][1]["geometria"] for f, x in c["por_geometria"].items()}
