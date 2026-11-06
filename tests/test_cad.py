@@ -464,6 +464,62 @@ def test_comprimento_mav():
     assert "NÃO VALIDADO" in md
 
 
+def test_rotas_mav():
+    """Rotas do portão: a base reproduz o estudo; rota A e rota B conferidas por fora da ferramenta."""
+    r = ler("results/etapa7.2/rotas_mav.yaml")
+    arq = ler("results/etapa2.5/arquitetura.yaml")
+    b = r["base"]
+    assert b["glom_kg"] == pytest.approx(arq["lander"]["mav"]["estagios"][0]["massa_inicial_kg"], rel=1e-12)
+    assert b["orbitador_injetado_kg"] == pytest.approx(arq["orbitador"]["injetado_kg"], rel=1e-12)
+    assert b["circulo_saidas_m"] == pytest.approx(11.0 * 0.0254 * (1 + math.sqrt(2)))
+    # rota A: 4 saídas de 44:1 em Ø 0,57 m com parede de 0,01 m
+    a = r["rota_a"][0]["com_aninhados"]
+    assert a["circulo_saidas_m"] == pytest.approx(6.01 * 0.0254 * (1 + math.sqrt(2)))
+    assert a["folga_radial_bocais_m"] == pytest.approx((0.57 - 0.02 - a["circulo_saidas_m"]) / 2)
+    # folga = (disponível − comprimento) / 2, e o 4,5 m com Ø 0,57 m é o limite da varredura
+    assert a["folga_deitado_m"] == pytest.approx((a["disponivel_m"] - a["comprimento_m"]) / 2)
+    # aninhar encurta, e Isp maior encurta e reduz a massa
+    for x in r["rota_a"]:
+        assert x["com_aninhados"]["comprimento_m"] < x["so_44"]["comprimento_m"]
+    glom = [x["com_aninhados"]["glom_kg"] for x in r["rota_a"]]
+    assert glom == sorted(glom, reverse=True)
+    # rota A e rota B na mesma base: o motor real nos dois estágios (2 × 0,55423 m no lugar de 0,60 + 0,45 m)
+    assert r["base_real"]["comprimento_m"] - b["comprimento_m"] == pytest.approx(2 * 21.82 * 0.0254 - 1.05)
+    assert r["base_real"]["folga_deitado_m"] == pytest.approx(b["folga_deitado_m"] - (2 * 21.82 * 0.0254 - 1.05) / 2)
+    # deck, área e empuxo/peso por fora da ferramenta
+    from orbital import veiculos as ve
+    from orbital.config import v as v_
+    R = v_(ler("config/parametros_orbitais.yaml")["raio_marte_km"])
+    ma = next(c for c in ler("results/etapa7.2/mav_arranjo.yaml")["casos"] if c["diametro_m"] == 0.57)
+    dk = next(e for e in ma["formas"]["msl_m2020"] if "P-094" in e["estacao"])
+    assert b["folga_deitado_com_deck_m"] == pytest.approx(dk["deitado_folga_m"])
+    assert a["empuxo_peso"] == pytest.approx(4 * 110 * 4.448222 / (a["glom_kg"] * ler("results/etapa3.1/queima_finita.yaml")["g_marte_m_s2"]))
+    pl = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
+    lan = ve.lander(R + pl["periapse_alt_km"], R + pl["apoapse_regra_5pct_km"])
+    assert b["massa_por_area_kg_m2"] == pytest.approx(lan["massa_entrada_kg"] / (math.pi * 4.5 ** 2 / 4))
+    # rota B: 2 saídas de 164:1 com parede exigem Ø 0,60 m; a segunda órbita está no limite do alvo
+    assert r["diametro_b_m"] == 0.60 and r["rota_b"][0]["altitude_km"] == 380
+    bx = r["rota_b"][1]["mav"]
+    assert 0 <= bx["folga_deitado_m"] < 2e-3   # a segunda órbita é a maior que cumpre o alvo, com o motor real
+    assert bx["com_p086_atual"]["comprimento_m"] == pytest.approx(bx["comprimento_m"] - (2 * 21.82 * 0.0254 - 1.05))
+    assert r["rota_a_referencia"]["so_44"]["glom_kg"] > 450   # Isp de 297 s, o do caso de referência
+    assert bx["empuxo_peso"] == pytest.approx(2 * 110 * 4.448222 / (bx["glom_kg"] * ler("results/etapa3.1/queima_finita.yaml")["g_marte_m_s2"]))
+    # o híbrido reproduz a Etapa 3.3 na altitude dela
+    c33 = r["conferencia_etapa_3_3"]
+    assert c33["aqui_kg"] == pytest.approx(c33["etapa_3_3_kg"], rel=1e-9) and c33["aqui_descida_dias"] == pytest.approx(c33["etapa_3_3_descida_dias"], rel=1e-9)
+    # a opção C e o caso de referência aparecem na página
+    assert "opção C, descartada" in (RAIZ / "results/etapa7.2/rotas_mav.md").read_text(encoding="utf-8")
+    assert r["rota_a_referencia"]["com_aninhados"]["glom_kg"] > r["rota_a"][0]["com_aninhados"]["glom_kg"]
+    # a opinião é a última seção
+    md = (RAIZ / "results/etapa7.2/rotas_mav.md").read_text(encoding="utf-8")
+    assert md.rindex("## ") == md.index("## Opinião do agente")
+    # resolução da amostragem
+    rs = ler("results/etapa7.2/comprimento_mav.yaml")["resolucao_amostragem"]
+    assert rs["passos_bissecao"]["limite_fh_km"] == rs["passos_bissecao"]["limite_fh_dobrado_km"]
+    assert rs["orbitas_amostra"]["comprimento_monotono"]
+    assert rs["exemplo_p086_m"]["folga_por_metro_valor"] == pytest.approx(0.5)
+
+
 def test_pendencia_recompilar_onshape():
     """A conferência registra que os arquivos atuais ainda não foram compilados, com as diferenças por veículo."""
     md = (RAIZ / "results/etapa7.2/conferencia_onshape.md").read_text(encoding="utf-8")

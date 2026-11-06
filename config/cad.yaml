@@ -265,7 +265,9 @@ bocais_decisoes:   # decisões do Fabio sobre as alternativas (2026-11-04)
   F: {situacao: "REFERÊNCIA APENAS", motivo: "R-40B fora de produção", fonte: "[F228] PDF p. 30: \"Not in Production; Requires component obsolescence update\"; [F106] p. 3: \"NIP=Not In Production\""}
 
 comprimento_mav:   # investigação do que define o comprimento do MAV (portão da 7.2); nenhum valor aqui muda o projeto
-  # parâmetros de amostragem, sem fonte e sem efeito no projeto (classificação a confirmar pelo Fabio; regra 2)
+  # parâmetros de amostragem, não premissas (decisão do Fabio, 2026-11-06, condicionada ao teste de resolução):
+  # sem fonte e sem efeito no projeto; as conclusões não mudam nas casas mostradas ao dobrar a resolução de cada um
+  # (results/etapa7.2/comprimento_mav.md, seção "Resolução da amostragem"). orbitas_amostra, logo abaixo, entra no mesmo teste.
   amostragem: {diametros_m: [0.60, 0.69], exemplo_p086_m: 0.10, passos_bissecao: 16}
   altitudes_tabela_bowles_km: {periapse: 100, apoapse: 500, fonte: "[F46] Tab. 1, PDF p. 21"}
   orbitas_amostra:   # altitudes (periapse, apoapse) em km, só para mostrar a tendência; dentro da varredura de config/superficie.yaml
@@ -295,11 +297,16 @@ comprimento_mav:   # investigação do que define o comprimento do MAV (portão 
       - {nome: "440 N, Re", isp_s: 308, fonte: "[F239] PDF p. 7: \"Performance of 308 seconds at 44:1 area ratio was achieved\""}
       - {nome: "440 N, Nb (\"similar Nb engines\", \"the Nb engine\")", isp_s: 304, fonte: "[F239] PDF p. 7: \"about 4 seconds higher than similar Nb engines\" (308 − 4) e \"about 10 seconds higher than the Nb engine\" (314 − 10); calculado"}
       - {nome: "440 N, Re, injetor de programa anterior", isp_s: 314, fonte: "[F239] PDF p. 7: \"Performance of 314 seconds at an area ratio of 44:1 was measured. This performance is about 10 seconds higher than the Nb engine\""}
+      - {nome: "AJ10-221, 110 lbf, Ir-Re, testes", isp_s: 310.4, fonte: "[F241] PDF p. 42, Tab. 2.2-3, \"44:1 Performance for Injectors SN 6-1 and SN 6-2\": de 306,4 a 310,4 s; aqui, o maior"}
+      - {nome: "445 N, Ir-Re, sem filme de combustível", isp_s: 309.5, fonte: "[F243] PDF p. 8: \"3033 ± 1.5 N-s/kg (309.5 ± 0.15 lbf sec/lbm) at E = 44:1\""}
       - {nome: "490 N, três injetores", isp_s: 309, fonte: "[F240] resumo no NTRS: \"Three injectors with 44:1 area ratios are capable of nominal specific impulse values of 309 sec\" (só o resumo; artigo não obtido)"}
     onde_procurou:
       - "[F228] PDF p. 22: 44:1 só nas cotas do desenho; sem Isp, massa ou empuxo próprios"
       - "[F106] e [F107]: não citam 44:1 (conferido nas citações do repositório; [F106] sem cópia local)"
-      - "Busca no NTRS e na web por R-4D-11 com 44:1: [F239] e [F240] são os mais próximos e não nomeiam o R-4D-11"
+      - "NTRS, cerca de 45 buscas (2026-11-06): só análogos de Ir-Re a 44:1, [F239], [F240], [F241] e [F243]; \"R-4D-11\" não retorna nada. R-4D do Apollo é de 40:1 [F242]"
+      - "AIAA: arc.aiaa.org recusa o acesso (403); AIAA 92-3800 e AIAA 2010-6884 não lidos; IAC-10.C4.1.6, só o resumo, sem 44:1"
+      - "Fichas do fabricante: rocket.com e l3harris.com recusam ou não acham (403 e 404); três PDFs arquivados no Internet Archive não abertos"
+      - "Missões: nenhuma com 44:1 documentado. Apollo, 40:1; Orion, 164:1 [F107]; Cassini, ATV, Galileo e outras: sem razão de expansão em fonte primária lida"
       - "Páginas de terceiros (Wikipedia, Astronautix e catálogos) não contam como fonte primária e não dão o 44:1"
   bowles:
     dv_m_s: {valor: 4150, fonte: "[F46] PDF p. 10: \"orbital at 4150 m/sec\""}
@@ -307,4 +314,22 @@ comprimento_mav:   # investigação do que define o comprimento do MAV (portão 
     dv_100x500_m_s: 4115.5
     perdas: {fonte: "[F46] PDF p. 20: \"the drag, thrust vectoring and atmospheric losses are all small\" (dito para 100 × 500 km e escape); PDF p. 20: \"heading due East\"; Tab. 1, PDF p. 21: \"(100,100) 3503 4027.9\""}
     velocidade_100x100_m_s: 3503
+
+rotas_mav:   # Portão da 7.2: alvo e rotas A e B pedidos pelo Fabio (2026-11-06). Não muda premissa nem ADR.
+  alvo: {aeroshell: msl_m2020, descricao: "aeroshell de 4,5 m, MAV deitado, Ø que contenha as saídas dos bocais com parede"}
+  rota_a:
+    isp_s: [304, 308, 309, 314]   # faixa do Fabio, 304 a 314 s; valores dos análogos de comprimento_mav.variante_44_1 (NÃO VALIDADO)
+    # caso de referência, fora da faixa: R-4D do Apollo, de 40:1 e câmara de molibdênio; não é 44:1 nem o R-4D-11
+    isp_referencia: {valor: 297, fonte: "[F242] PDF p. 15: \"This prototype engine demonstrated good performance Isp's of 295 and 297\"; \"maximum performance\" de pouco mais de 310 s, em outra razão de mistura; câmara inicial \"with an expansion ratio equal to 40\""}
+    ressalva_analogos: "Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em [F240], só o resumo cita essa tecnologia. Os motores convencionais de 110 lbf são outros: [F241] PDF p. 18: \"Conventional 110 lbf engines use up to ~40% fuel film cooling\"; \"may produce a performance loss of up to 25 sec\"; \"10 sec higher than conventional 110 lbf silicide coated Cb chambers now in use\", a 286:1. Aplicar isso ao R-4D-11 e ao 44:1 é inferência (NÃO VALIDADO): nenhuma fonte lida diz a construção da câmara do R-4D-11."
+    tanques_aninhados: {fonte: "[F46] §5.4, PDF p. 17: \"Similar to a common bulkhead design, the forward tank aft dome is accommodated within a recessed aft tank forward dome but with a purge gap between the two tanks. The inter-tank section is eliminated\"", ressalva: "a conta não desconta o vão de purga nem muda a massa dos tanques"}
+  rota_b:
+    n_motores_mav: 2    # os únicos que cabem com parede até Ø 0,60 m; empuxo/peso conferido em cada órbita
+    # A base da comparação é o motor real nos dois estágios, a mesma da rota A; a P-086 atual fica como referência.
+    passos_h_max: 40    # parâmetro de amostragem da bisseção de h_max (mesma classificação de comprimento_mav.amostragem)
+    fase_raan_dias: {valor: 24, fonte: "ADR 0013, item 6: a fase de RAAN de [F121] não está no tempo de encontro"}
+    motivo_segunda_orbita_fim: "a altitude da segunda órbita depende da grade de diâmetros; com um Ø menor que 0,60 m que ainda contenha as saídas, ela seria mais alta"
+    orbita_baixa: {fonte: "[F35] p. 3: \"nominal injection orbit of 380km\""}
+    motivo_segunda_orbita: "a maior altitude circular em que o MAV com 2 motores R-4D-11 164:1, com o motor real, ainda cabe deitado no aeroshell de 4,5 m: o menor Δv do orbitador que cumpre o alvo"
+    bowles_empuxo_peso: {valor: 2.5, fonte: "[F46] PDF p. 9: \"a liftoff thrust-to-weight ratio of 2.5 was used\""}
 

@@ -13,6 +13,7 @@ Uso: python tools/comprimento_mav.py
 from __future__ import annotations
 
 import copy
+import math
 import sys
 from pathlib import Path
 
@@ -191,6 +192,33 @@ def main():
         lin.append(linha(f"Órbita {o['periapse_km']:.0f} × {o['apoapse_km']:.0f} km{extra_}", o["comprimento_m"], grupo="orbita", extra_orbitador_m_s=o["extra_orbitador_regra_iii_m_s"] - base["extra_orbitador_regra_iii_m_s"], orbitador_fecha=o["orbitador_injetado_kg"] is not None or o["diverge"], diverge=o["diverge"], margem_falcon_heavy=o["margem_falcon_heavy"]))
     fh = next(o for o in orbitas if o["rotulo"].startswith("margem zero"))
     lin.append(linha("Órbita de margem zero + tanques aninhados (limite otimista)", fh["comprimento_aninhado_m"], grupo="combinada", extra_orbitador_m_s=fh["extra_orbitador_regra_iii_m_s"] - base["extra_orbitador_regra_iii_m_s"], orbitador_fecha=True, margem_falcon_heavy=fh["margem_falcon_heavy"]))
+    # teste de resolução: dobrar cada parâmetro de amostragem e olhar as conclusões, nas casas mostradas
+    def perfil(k):
+        return [float(x) for x in cad["capsulas"][k]["x_m"]], [float(x) for x in cad["capsulas"][k]["r_m"]]
+
+    def folga_em(d, forma):
+        xs, rs = perfil(forma)
+        x0 = xs[int(np.argmax(rs))]
+        return float(np.interp(x0 + d, xs, rs)) - v(cad["aeroshell"]["folga_interna_m"]) - comprimento(d, est0, nt, cad) / 2
+    diam = [float(x) for x in cad["mav_alternativas"]["diametros_m"]]
+    finos = sorted(set(diam + [(a + b) / 2 for a, b in zip(diam, diam[1:])]))
+    res = {}
+    for forma in ("msl_m2020", "srl_a"):
+        g1, g2 = max(diam, key=lambda d: folga_em(d, forma)), max(finos, key=lambda d: folga_em(d, forma))
+        res[forma] = {"melhor_d_grade_m": g1, "melhor_folga_grade_m": folga_em(g1, forma), "melhor_d_fina_m": g2, "melhor_folga_fina_m": folga_em(g2, forma)}
+    fino_passos = amostra["passos_bissecao"] * 2
+    lim_fh2 = bissecao(fh_ok, h_baixa, float(ha0), passos=fino_passos)
+    lim_v2 = bissecao(lambda ha: orbitador(R + hp0, R + ha)[0] is not None, h_baixa, float(ha0), passos=fino_passos)
+    ras = sorted(x["apoapse_km"] for x in orbitas if x["periapse_km"] == hp0)
+    meios = [math.sqrt(a * b) for a, b in zip(ras, ras[1:])]
+    pts = [ponto(hp0, h) for h in meios]
+    ref_l = {x["apoapse_km"]: x["comprimento_m"] for x in orbitas if x["periapse_km"] == hp0}
+    todos = sorted(list(ref_l.items()) + [(x["apoapse_km"], x["comprimento_m"]) for x in pts])
+    ex1, ex2 = amostra["exemplo_p086_m"], amostra["exemplo_p086_m"] / 2
+    resolucao = {"passos_bissecao": {"passos": amostra["passos_bissecao"], "dobrado": fino_passos, "limite_fh_km": limite_fh, "limite_fh_dobrado_km": lim_fh2, "limite_fecha_km": limite_viavel, "limite_fecha_dobrado_km": lim_v2},
+                 "orbitas_amostra": {"pontos_novos_km": meios, "comprimento_monotono": all(a[1] < b[1] for a, b in zip(todos, todos[1:])), "comprimentos_novos_m": [x["comprimento_m"] for x in pts]},
+                 "diametros_m": {"pontos": len(diam), "dobrado": len(finos), "por_forma": res},
+                 "exemplo_p086_m": {"valor": ex1, "metade": ex2, "folga_por_metro_valor": (linha("", L0 - ex1)["deitado_4_5_m"] - lin[0]["deitado_4_5_m"]) / ex1, "folga_por_metro_metade": (linha("", L0 - ex2)["deitado_4_5_m"] - lin[0]["deitado_4_5_m"]) / ex2}}
     # o que cada aeroshell pede, e a estação mais favorável
     ped = {k: {"deitado_comprimento_max_m": L0 + 2 * ombro[d0][k]["deitado_folga_m"], "em_pe_comprimento_max_m": ombro[d0][k]["em_pe_comprimento_disponivel_m"]} for k in ("msl_m2020", "srl_a")}
     out = nativo({"gerado_por": "tools/comprimento_mav.py", "natureza": "investigação para o portão; não muda premissa nem arquitetura", "p086_m": p086, "p086_itens_m": nt, "diametro_m": d0, "comprimento_base_m": L0,
@@ -198,7 +226,7 @@ def main():
                   "variante_44_1": {"motor_44_1_m": motor_m["44:1"], "motor_164_1_m": motor_m["164:1"], "analogos": cm["variante_44_1"]["analogos_isp"], "onde_procurou": cm["variante_44_1"]["onde_procurou"], "sensibilidade": sens44},
                   "origem_dv": origem_dv, "aerofrenagem": {"walk_out_m_s": 1e3 * v(scfg["aerofrenagem"]["dv_saida_aerofrenagem_km_s"]), "dias": v(scfg["aerofrenagem"]["duracao_dias"])}, "limites_apoapse_km": {"margem_zero_falcon_heavy": limite_fh, "orbitador_fecha": limite_viavel}, "bowles": {k: bw[k] for k in ("dv_m_s", "orbita_tabela", "perdas")}, "orbitas": orbitas,
                   "em_pe_na_varredura": [{"diametro_m": d, "em_pe_4_5_m": ombro[d]["msl_m2020"]["em_pe_folga_m"], "em_pe_4_65_m": ombro[d]["srl_a"]["em_pe_folga_m"], "disponivel_4_5_m": ombro[d]["msl_m2020"]["em_pe_comprimento_disponivel_m"], "disponivel_4_65_m": ombro[d]["srl_a"]["em_pe_comprimento_disponivel_m"]} for d in (d0, 0.60, 0.69)],
-                  "comprimento_maximo": ped, "alavancas": lin})
+                  "comprimento_maximo": ped, "alavancas": lin, "resolucao_amostragem": resolucao})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "comprimento_mav.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -229,9 +257,9 @@ def escreve_md(o):
            "**Onde se procurou:**"]
     md += [f"- {x}" for x in va["onde_procurou"]]
     md += ["", "**Análogos da mesma classe e expansão (NÃO VALIDADO: não são o R-4D-11):**", "", "| Motor | Isp (s) | Fonte |", "| :- | -: | :- |"]
-    md += [f"| {a['nome']} | {br(a['isp_s'], 0)} | {a['fonte']} |" for a in va["analogos"]]
+    md += [f"| {a['nome']} | {br(a['isp_s'], 1)} | {a['fonte']} |" for a in va["analogos"]]
     md += ["", "Sensibilidade, com o MAV redimensionado para o mesmo Isp nos dois estágios e o comprimento do motor 44:1 nos dois:", "", "| Isp (s) | GLOM (kg) | Comprimento (m) | Sem mudar a P-086 (m) |", "| -: | -: | -: | -: |"]
-    md += [f"| {br(s['isp_s'], 0)} | {br(s['glom_kg'], 1)} | {br(s['comprimento_m'])} | {br(s['comprimento_sem_mudar_p086_m'])} |" for s in va["sensibilidade"]]
+    md += [f"| {br(s['isp_s'], 1)} | {br(s['glom_kg'], 1)} | {br(s['comprimento_m'])} | {br(s['comprimento_sem_mudar_p086_m'])} |" for s in va["sensibilidade"]]
     md += ["", "Massa do 44:1 sem fonte: fica a do catálogo.", "",
            f"## (c) De onde vêm os {br(od['com_margem_m_s'], 0)} m/s", "", "| Parcela | m/s | Origem |", "| :- | -: | :- |",
            f"| Subida a 100 × 100 km | {br(od['dv_100x100_m_s'], 1)} | [F37] Tab. 1, p. 17; {br(od['acima_da_velocidade_circular_m_s'], 1)} m/s acima da velocidade circular da mesma linha: inclui a subida a 100 km e as perdas, já líquidas do ganho de rotação, porque o caso sai do equador rumo leste |",
@@ -264,6 +292,18 @@ def escreve_md(o):
         md.append(f"| {li['alavanca']} | {br(li['diametro_m'], 2)} | {br(li['comprimento_m'])} | {sg(li['delta_comprimento_m'])} | {sg(li['deitado_4_5_m'])} | {sg(li['deitado_4_65_m'])} | {sg(li['em_pe_4_5_m'])} | {sg(li['em_pe_4_65_m'])} | {ex} |")
     cm_ = o["comprimento_maximo"]
     md += ["", f"**Comprimento máximo com Ø {br(o['diametro_m'], 2)} m:** deitado, {br(cm_['msl_m2020']['deitado_comprimento_max_m'], 2)} m no 4,5 m e {br(cm_['srl_a']['deitado_comprimento_max_m'], 2)} m no 4,65 m; em pé, {br(cm_['msl_m2020']['em_pe_comprimento_max_m'], 2)} m e {br(cm_['srl_a']['em_pe_comprimento_max_m'], 2)} m.", "",
+           "## Resolução da amostragem", "",
+           "Teste pedido pelo Fabio para aceitar os parâmetros de amostragem como tais, não como premissas: dobrar a resolução de cada um e olhar as conclusões, nas casas mostradas.", "",
+           "| Parâmetro | Como dobrei | Resultado | Muda nas casas mostradas? |", "| :- | :- | :- | :- |"]
+    rs = o["resolucao_amostragem"]
+    pb, oa, dm_, ep = rs["passos_bissecao"], rs["orbitas_amostra"], rs["diametros_m"], rs["exemplo_p086_m"]
+    md.append(f"| passos_bissecao | {pb['passos']} para {pb['dobrado']} passos | margem zero em {br(pb['limite_fh_km'], 0)} e {br(pb['limite_fh_dobrado_km'], 0)} km; deixa de fechar em {br(pb['limite_fecha_km'], 0)} e {br(pb['limite_fecha_dobrado_km'], 0)} km | {'não' if pb['limite_fh_km'] == pb['limite_fh_dobrado_km'] and pb['limite_fecha_km'] == pb['limite_fecha_dobrado_km'] else '**sim**'} |")
+    md.append(f"| orbitas_amostra | ponto médio geométrico entre as órbitas: {', '.join(br(x, 0) for x in oa['pontos_novos_km'])} km | comprimentos novos {', '.join(br(x) for x in oa['comprimentos_novos_m'])} m, {'em ordem entre os vizinhos' if oa['comprimento_monotono'] else 'FORA de ordem'} | {'não' if oa['comprimento_monotono'] else '**sim**'} |")
+    for k, x in dm_["por_forma"].items():
+        igual = br(x["melhor_folga_grade_m"]) == br(x["melhor_folga_fina_m"])
+        md.append(f"| grade de diâmetros (mav_alternativas; amostragem.diametros_m é parte dela), {'4,5 m' if k == 'msl_m2020' else '4,65 m'} | {dm_['pontos']} para {dm_['dobrado']} diâmetros | melhor folga deitado na grade: {sg(x['melhor_folga_grade_m'])} m em Ø {br(x['melhor_d_grade_m'])} m; na fina: {sg(x['melhor_folga_fina_m'])} m em Ø {br(x['melhor_d_fina_m'])} m | {'não' if igual else '**sim, na folga máxima**; veja a nota'} |")
+    md.append(f"| exemplo_p086_m | {br(ep['valor'], 2)} para {br(ep['metade'], 2)} m | folga por metro: {br(ep['folga_por_metro_valor'], 3)} e {br(ep['folga_por_metro_metade'], 3)} m/m | {'não' if br(ep['folga_por_metro_valor'], 3) == br(ep['folga_por_metro_metade'], 3) else '**sim**'} |")
+    md += ["", "**Nota sobre os diâmetros:** a tabela de alavancas mostra só os pontos da varredura, cujos valores não dependem da grade. O que a grade fina muda é onde cai o melhor diâmetro; a conclusão de que o diâmetro não faz o MAV caber no 4,5 m se mantém enquanto a folga máxima seguir negativa.", "",
            "## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", ""]
     fh = next(x for x in o["orbitas"] if x["rotulo"].startswith("margem zero"))
     al = o["alavancas"]
