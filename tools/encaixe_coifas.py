@@ -448,7 +448,7 @@ def escreve_md(o):
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",
-           "- **Veículos, sem fonte:** z = 0 do modelo. Um adaptador real subiria o veículo; não há altura com fonte para ele. "
+           "- **Veículos, sem fonte:** z = 0 do modelo. Um adaptador real subiria o veículo; as alturas com fonte e as folgas estão em results/etapa7.2/rota_a.md, seção 5. "
            f"Na primeira leitura do Vulcan, cada metro de altura tira {br(o['reducao_de_folga_por_metro_de_adaptador_vulcan'], 4)} m de folga radial.", "",
            "## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)", "", "| Id | Texto | Evidência |", "| :- | :- | :- |"]
     for p in o["premissas_propostas"]:

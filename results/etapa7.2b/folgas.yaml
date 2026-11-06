@@ -505,7 +505,8 @@ premissas_propostas:
   evidencia: 'Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata
     disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura; [F82]
     PDF p. 27: "Any payload adapters required ... must also fit within the keep-in
-    volumes".'
+    volumes". Texto NÃO aprovado pelo Fabio (2026-11-06); a reformulação proposta
+    está em results/etapa7.2/rota_a.md, seção 5.'
 planos:
   vulcan: '[F80] Fig. 4.3.1-1, p. 4-8: "LV STA 2596.66 (1575 Interface)"'
   falcon: '[F82] PDF p. 26: "The origin of the payload coordinate system is fixed

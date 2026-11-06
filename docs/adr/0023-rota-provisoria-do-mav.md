@@ -19,5 +19,7 @@ A Etapa 7.2 mostrou que o MAV de Ø 0,57 m não cabe deitado no aeroshell de 4,5
 ## Consequências
 - O arranjo do CAD atual e a P-086 continuam como estão até o portão seguinte.
 - O ADR 0022 segue em vigor no CAD.
+- A condição (ii) ainda não foi cumprida: `results/etapa7.2/rota_a.md` traz o primeiro dimensionamento, com o estágio 2 só em
+  esboço, a massa dos tanques não acoplada ao GLOM e o Isp mínimo como piso, acima da faixa dos análogos.
 - Risco aberto para a Etapa 7.3: a massa por área de 276 a 283 kg/m², contra 211 do Mars 2020. Nenhuma rota resolve isso
   (`docs/etapa7.3_portao_perguntas.md`).

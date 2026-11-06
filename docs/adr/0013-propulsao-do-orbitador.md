@@ -45,7 +45,8 @@ errata de 2026-10-31 de `docs/fase3_relatorio.md`.**
 
 ## Adendo (2026-11-06): Trade reaberto na Etapa 7.2 (PR #52): conclusão mantida
 O Fabio pediu para reabrir o trade como rota B do portão do comprimento do MAV, com encontro em órbita baixa, e o rejeitou. A
-decisão deste ADR não muda. Números de `results/etapa7.2/rotas_mav.md`; o "só elétrico" é calculado, não verificado.
+decisão deste ADR não muda. Números de [`results/etapa7.2/rotas_mav.md`](../../results/etapa7.2/rotas_mav.md); a órbita do químico atual é a de
+`results/etapa2.3/plataformas.md`; o "só elétrico" é calculado, não verificado.
 
 | Opção | Órbita (km) | Orbitador (kg) | Margem no Falcon Heavy | Linha do tempo |
 | :- | -: | -: | -: | :- |
