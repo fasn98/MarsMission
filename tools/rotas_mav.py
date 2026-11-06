@@ -18,7 +18,6 @@ import math
 import sys
 from pathlib import Path
 
-import numpy as np
 import yaml
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -26,7 +25,6 @@ sys.path.insert(0, str(RAIZ / "src"))
 sys.path.insert(0, str(RAIZ / "tools"))
 
 import comprimento_mav as cmv  # noqa: E402
-import envelope_arranjo as ea  # noqa: E402
 import orbitador_eletrico as oe  # noqa: E402
 from orbital import dimensionamento as dm  # noqa: E402
 from orbital import foguete as fg  # noqa: E402
@@ -93,10 +91,12 @@ def main():
                 "lander_injetado_kg": lan["injetada_kg"], "margem_vulcan_vc4": margem_vc4(lan["injetada_kg"]), "massa_por_area_kg_m2": lan["massa_entrada_kg"] / area}
 
     # ---------------- base
-    lan0 = ve.lander(R + arq_alt(arq)[0], R + arq_alt(arq)[1], detalhe=True)
+    h0p, h0a = arq_alt()
+    lan0 = ve.lander(R + h0p, R + h0a, detalhe=True)
     base = linha_mav("Base: 4 × 164:1, Ø atual", lan0["mav_estagios"], d0, 4, "164:1", nt, False, lan0)
-    h0p, h0a = arq_alt(arq)
     base.update(_orbitador_base(arq, margem_fh, h0p, h0a, lan0, f))
+    nt_real = {**nt, "motores_estagio_1": motor["164:1"], "motor_estagio_2": motor["164:1"]}
+    base_real = linha_mav("Base com o motor real 164:1", lan0["mav_estagios"], d0, 4, "164:1", nt_real, False, lan0)
 
     # ---------------- rota A
     nt44 = {**nt, "motores_estagio_1": motor["44:1"], "motor_estagio_2": motor["44:1"]}
@@ -109,18 +109,25 @@ def main():
         rota_a.append({"isp_s": isp, "so_44": linha_mav(f"44:1, Isp {isp} s", lan["mav_estagios"], d0, 4, "44:1", nt44, False, lan),
                        "com_aninhados": linha_mav(f"44:1 e aninhados, Isp {isp} s", lan["mav_estagios"], d0, 4, "44:1", nt44, True, lan)})
 
+    m3 = copy.deepcopy(mcfg)
+    isp_ref = v(ro["rota_a"]["isp_referencia"])
+    m3["opcoes"][op]["isp_s"] = [isp_ref, isp_ref]
+    lan_ref = ve.lander(R + h0p, R + h0a, mcfg=m3, detalhe=True)
+    ref_a = {"so_44": linha_mav(f"Referência, Isp {isp_ref:g} s: só 44:1", lan_ref["mav_estagios"], d0, 4, "44:1", nt44, False, lan_ref),
+             "com_aninhados": linha_mav(f"Referência, Isp {isp_ref:g} s: 44:1 e aninhados", lan_ref["mav_estagios"], d0, 4, "44:1", nt44, True, lan_ref)}
+
     # ---------------- rota B: órbitas e MAV
     n_b = int(ro["rota_b"]["n_motores_mav"])
     d_b = min(d for d in caso if d - 2 * t_par >= FATOR[n_b] * saida["164:1"])
 
     def mav_circular(h):
         lan = ve.lander(R + h, R + h, detalhe=True)
-        return lan, cmv.comprimento(d_b, lan["mav_estagios"], nt, cad)
+        return lan, cmv.comprimento(d_b, lan["mav_estagios"], nt_real, cad)
     h_baixa = v(scfg["sitio_e_encontro"]["orbita_baixa_alt_km"])
     lo, hi = h_baixa, float(h0a)
     if mav_circular(lo)[1] > disponivel[d_b]:
         raise ValueError("o MAV da rota B não cabe nem na órbita baixa")
-    for _ in range(40):
+    for _ in range(int(ro["rota_b"]["passos_h_max"])):
         mid = (lo + hi) / 2
         lo, hi = (mid, hi) if mav_circular(mid)[1] <= disponivel[d_b] else (lo, mid)
     h_max = math.floor(lo)
@@ -128,7 +135,8 @@ def main():
     mav_b = {}
     for rot, h, _ in orbitas_b:
         lan, _ = mav_circular(h)
-        mav_b[h] = {**linha_mav(f"{n_b} × 164:1, Ø {br(d_b, 2)} m, {br(h, 0)} × {br(h, 0)} km", lan["mav_estagios"], d_b, n_b, "164:1", nt, False, lan), "dv_mav_com_margem_m_s": 1e3 * f * lan["dv_subida_mav_km_s"]}
+        mav_b[h] = {**linha_mav(f"{n_b} × 164:1, Ø {br(d_b, 2)} m, {br(h, 0)} × {br(h, 0)} km", lan["mav_estagios"], d_b, n_b, "164:1", nt_real, False, lan), "dv_mav_com_margem_m_s": 1e3 * f * lan["dv_subida_mav_km_s"],
+                    "com_p086_atual": linha_mav(f"Idem, com a P-086 atual", lan["mav_estagios"], d_b, n_b, "164:1", nt, False, lan)}
 
     # ---------------- rota B: orbitador
     a_caso, jan, piores = dm.casos(dcfg, p)
@@ -203,15 +211,23 @@ def main():
             b_ida = b_desc * math.exp(dv_h / cx)
             nr = (b_desv - mf) + (b_enc - b_sub)
             nx = (b_volta - a_cap) + (b_sub - b_volta) + (b_desc - a_desc) + (b_ida - b_desc)
-            if abs(nr - pr) < 1e-9 and abs(nx - px) < 1e-9:
+            if abs(nr - pr) < v(vz["convergencia_massas_kg"]) and abs(nx - px) < v(vz["convergencia_massas_kg"]):
                 break
             pr, px = nr, nx
+        else:
+            raise RuntimeError("massas do orbitador elétrico não convergiram")
         _, t_d, _, _ = hb.tempos_espiral(mu, R, hill, r_e, b_desc, se, fator_dv=f)
         _, t_s, _, _ = hb.tempos_espiral(mu, R, r_e, hill, b_sub, se, fator_dv=f)
         t_ida = b_ida / se.vazao_kg_s * (1 - math.exp(-dv_h / cx)) / DIA
         t_volta = b_volta / se.vazao_kg_s * (1 - math.exp(-dv_h / cx)) / DIA
         return {"orbitador_injetado_kg": b_ida, "xenonio_kg": px, "xenonio_por_propulsor_kg": px / se.n_ativos, "descida_dias": t_d / DIA, "subida_dias": t_s / DIA, "empuxo_ida_dias": t_ida, "empuxo_volta_dias": t_volta,
                 "folga_estada_dias": min(w["em_marte_dias"] for w in janelas) - (t_d + t_enc + t_s) / DIA, "dv_espiral_km_s": dv_e, "dv_heliocentrico_km_s": dv_h, "total_empuxo_dias": t_ida + t_volta + (t_d + t_s) / DIA}
+
+    # o híbrido reproduz a Etapa 3.3 na altitude que ela escolheu
+    esc33 = ler("results/etapa3.3/orbitador_eletrico.yaml")["hibrido_c2"]["NSTAR"]
+    e33 = next(x for x in esc33["por_n"] if x["n_ativos"] == esc33["n_minimo"])["escolha"]
+    x33 = c2(oe.sistema("NSTAR", esc33["n_minimo"], ecfg, pcfg), "NSTAR", e33["encontro_alt_km"], e33["plataforma_orbitador_kg"])
+    conf33 = {"etapa_3_3_kg": e33["orbitador_injetado_kg"], "aqui_kg": x33["orbitador_injetado_kg"], "etapa_3_3_descida_dias": e33["tempo_descida_dias"], "aqui_descida_dias": x33["descida_dias"]}
 
     rota_b = []
     for rot, h, justif in orbitas_b:
@@ -242,7 +258,8 @@ def main():
         rota_b.append({"rotulo": rot, "altitude_km": h, "justificativa": justif, "plataforma_kg": plat, "mav": mav_b[h], "propulsores": por_prop})
 
     out = nativo({"gerado_por": "tools/rotas_mav.py", "natureza": "dados para o portão; não muda premissa nem ADR", "alvo": ro["alvo"], "disponivel_deitado_m": {str(d): disponivel[d] for d in caso},
-                  "base": base, "rota_a": rota_a, "rota_a_fonte": ro["rota_a"]["tanques_aninhados"], "rota_b": rota_b, "diametro_b_m": d_b, "n_motores_b": n_b, "bowles_empuxo_peso": ro["rota_b"]["bowles_empuxo_peso"],
+                  "base": base, "base_real": base_real, "rota_a": rota_a, "rota_a_referencia": ref_a, "rota_a_ressalva": ro["rota_a"]["ressalva_analogos"], "isp_referencia_fonte": ro["rota_a"]["isp_referencia"]["fonte"], "conferencia_etapa_3_3": conf33,
+                  "empuxo_peso_opcao_c": next(a["empuxo_peso_marte"] for a in ler("results/etapa7.2/bocais_alternativas.yaml")["alternativas"] if a["id"] == "C"), "fase_raan_dias": v(ro["rota_b"]["fase_raan_dias"]), "motivo_fim": ro["rota_b"]["motivo_segunda_orbita_fim"], "folga_min_conjuncao_dias": v(ler("config/operacao_superficie.yaml")[next(k for k, x in ler("config/operacao_superficie.yaml").items() if isinstance(x, dict) and "folga_min_conjuncao_dias" in x)]["folga_min_conjuncao_dias"]), "rota_a_fonte": ro["rota_a"]["tanques_aninhados"], "rota_b": rota_b, "diametro_b_m": d_b, "n_motores_b": n_b, "bowles_empuxo_peso": ro["rota_b"]["bowles_empuxo_peso"],
                   "missao": {"chegada": chegada.isoformat(), "partida": partida.isoformat(), "conjuncao_inicio": conj_ini.isoformat(), "conjuncao_fim": conj_fim.isoformat(), "lancamento_mav_mais_cedo": lanc_cedo.isoformat(), "lancamento_mav_mais_tarde": lanc_tarde.isoformat(), "encontro_dias": t_enc / DIA, "estada_minima_dias": min(w["em_marte_dias"] for w in janelas), "partida_terra": ref["partida_terra"], "ida_dias": ref["ida_dias"], "volta_dias": ref["volta_dias"]},
                   "referencia_m2020_kg_m2": v(cad["aeroshell"]["opcoes"]["m2020"]["massa_entrada_kg"]) / area, "folgas_coifa_vulcan_m": ler("results/etapa7.2/parametros.yaml")["conferencias"]["lander_vulcan"]["por_forma"][forma],
                   "adr_0013": "Na missão de referência (414 dias em Marte) e com as leis de guiagem verificadas, nenhuma opção elétrica fecha massa e tempo. Uma missão de estada longa, como a do ERO, poderia mudar isso, mas exigiria outra missão de referência e uma guiagem otimizada, não estudadas."})
@@ -268,22 +285,27 @@ def escreve_md(o):
           "## Rota A: MAV melhorado, arquitetura atual", "",
           f"R-4D-11 44:1 nos dois estágios; a P-086 segue o motor do [F228]; o MAV é redimensionado para cada Isp. **Tanques aninhados:** {o['rota_a_fonte']['fonte']}. Ressalva: {o['rota_a_fonte']['ressalva']}. Massa e empuxo do 44:1 são os do catálogo (NÃO VALIDADO). Isp NÃO VALIDADO: análogos.", ""] + CAB
     md.append(lin_mav(b))
+    md.append(lin_mav(o["base_real"]))
     for x in o["rota_a"]:
         md.append(lin_mav(x["so_44"]))
     for x in o["rota_a"]:
         md.append(lin_mav(x["com_aninhados"]))
-    md += ["", "O Δv de subida vem de [F46], calculado com empuxo/peso de " + br(o["bowles_empuxo_peso"]["valor"], 1) + f" na decolagem ({o['bowles_empuxo_peso']['fonte']}). Todos os casos aqui têm empuxo/peso menor, e a perda gravitacional maior disso não está modelada, nem na base.", "",
+    md.append(lin_mav(o["rota_a_referencia"]["so_44"]))
+    md.append(lin_mav(o["rota_a_referencia"]["com_aninhados"]))
+    md += ["", f"**Ressalva sobre a faixa:** {o['rota_a_ressalva']} O caso de referência usa o R-4D do Apollo ({o['isp_referencia_fonte']}), fora da faixa pedida, para mostrar o efeito de um Isp menor. Isp {br(o['rota_a'][-1]['isp_s'], 0)} s fica acima do 164:1 do mesmo motor, por isso o GLOM dele sai menor que o da base.", "",
+           "O Δv de subida vem de [F46], calculado com empuxo/peso de " + br(o["bowles_empuxo_peso"]["valor"], 1) + f" na decolagem ({o['bowles_empuxo_peso']['fonte']}). Todos os casos aqui têm empuxo/peso menor, e a perda gravitacional maior disso não está modelada, nem na base.", "",
            "## Rota B: orbitador elétrico e encontro em órbita baixa", "",
            "### MAV", "",
-           f"{o['n_motores_b']} × R-4D-11 164:1, Ø {br(o['diametro_b_m'], 2)} m, o menor da varredura que contém as saídas com parede. Comprimento com a P-086 atual."]
+           f"{o['n_motores_b']} × R-4D-11 164:1, Ø {br(o['diametro_b_m'], 2)} m, o menor da varredura que contém as saídas com parede. Comprimento com o motor real nos dois estágios, a mesma base da rota A. **Esta é a configuração da opção C, descartada pelo Fabio** " + f"por empuxo/peso de {br(o['empuxo_peso_opcao_c'], 2)} no GLOM atual. Ela só passa de 1 aqui porque o GLOM cai, o que depende de reabrir o ADR 0013. O maior diâmetro admissível varia com a grade: {o['motivo_fim']}."]
     md += [""] + CAB
     for r in o["rota_b"]:
         md.append(lin_mav(r["mav"]))
+        md.append(lin_mav(r["mav"]["com_p086_atual"]))
     md += ["", "| Órbita | Altitude (km) | Δv do MAV, com margem (m/s) | Por que esta órbita |", "| :- | -: | -: | :- |"]
     for r in o["rota_b"]:
         md.append(f"| {r['rotulo']} | {br(r['altitude_km'], 0)} | {br(r['mav']['dv_mav_com_margem_m_s'], 0)} | {r['justificativa']} |")
     md += ["", "### Orbitador híbrido (c2 do ADR 0013): captura e saída químicas, espiral elétrica verificada", "",
-           "O mais leve que cabe na menor estada das quatro janelas, varrendo a altitude de captura e o número de propulsores. Massa e margem pela regra (iii).", "",
+           f"O mais leve que cabe na menor estada das quatro janelas, varrendo a altitude de captura e o número de propulsores. Massa e margem pela regra (iii). A folga não inclui a fase de RAAN de {br(o['fase_raan_dias'], 0)} d (ADR 0013, item 6). Conferência com a Etapa 3.3, na altitude dela: {br(o['conferencia_etapa_3_3']['etapa_3_3_kg'], 0)} e {br(o['conferencia_etapa_3_3']['aqui_kg'], 0)} kg.", "",
            "| Órbita (km) | Propulsor | Ativos | Potência (kW) | Captura (km) | Orbitador (kg) | Xenônio (kg) | Descida (d) | Subida (d) | Folga na estada (d) | Margem no Falcon Heavy | Em órbita de encontro | Chega antes do último lançamento? | Subida cruza a conjunção? |", "| -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | :- | :- |"]
     for r in o["rota_b"]:
         for nome, q in r["propulsores"].items():
@@ -294,7 +316,7 @@ def escreve_md(o):
             t = x["tempo"]
             md.append(f"| {br(r['altitude_km'], 0)} | {nome} | {x['n_ativos']} | {br(x['potencia_kw'], 1)} | {br(x['captura_alt_km'], 0)} | {br(x['orbitador_injetado_kg'], 0)} | {br(x['xenonio_kg'], 0)} | {br(x['descida_dias'], 0)} | {br(x['subida_dias'], 0)} | {br(x['folga_estada_dias'], 0)} | {sg(100 * x['margem_falcon_heavy'], 1)} % | {t['pronto_no_encontro']} | {'sim' if t['pronto_antes_do_ultimo_lancamento'] else '**não**'} ({t['folga_ao_ultimo_lancamento_dias']} d) | {'sim' if t['subida_cruza_conjuncao'] else 'não'} |")
     md += ["", "### Orbitador só elétrico (opção b do ADR 0013): calculado, NÃO verificado", "",
-           "Massas fechadas aqui, sem estágio químico de captura. Trecho heliocêntrico quase circular, com a margem de Δv, e motor de potência constante: não é trajetória otimizada nem traz janela nova. A margem usa os C3 das janelas atuais. Primeiro número de propulsores que fecha estada, lançador e vida, e o maior da varredura.", "",
+           f"Massas fechadas aqui, sem estágio químico de captura. Trecho heliocêntrico quase circular, com a margem de Δv: não é trajetória otimizada nem traz janela nova. **A conta é de ordem de grandeza e o sentido do erro é desconhecido:** a margem cobra os C3 das janelas atuais, mas o Δv não dá crédito a esse v∞ (o que piora o tempo), e não há fasagem, ciclo de trabalho nem correções (o que melhora). As datas valem para crédito zero de C3 e partida em {mi['partida_terra']}, e não decidem o trade. A folga conta a estada de outra chegada, então pode não bater com as datas, e não inclui a fase de RAAN. Primeiro número de propulsores que fecha estada e lançador, e o maior da varredura. Vida do XIPS-25 não achada: conta como não limitante.", "",
            "| Órbita (km) | Propulsor | Caso | Ativos | Potência (kW) | Orbitador (kg) | Xenônio por propulsor (kg) | Vida (kg) | Empuxo na ida (d) | Empuxo na volta (d) | Descida (d) | Subida (d) | Folga na estada (d) | Margem no Falcon Heavy | Em órbita de encontro, partindo em " + mi["partida_terra"] + " | Chega antes do último lançamento? |", "| -: | :- | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | :- |"]
     for r in o["rota_b"]:
         for nome, q in r["propulsores"].items():
@@ -302,14 +324,14 @@ def escreve_md(o):
             for rot, e in casos:
                 md.append(f"| {br(r['altitude_km'], 0)} | {nome} | {rot} | {e['n_ativos']} | {br(e['potencia_kw'], 1)} | {br(e['orbitador_injetado_kg'], 0)} | {br(e['xenonio_por_propulsor_kg'], 0)} | {br(e['vida_kg'], 0) if e['vida_kg'] else 'não achada'} | {br(e['empuxo_ida_dias'], 0)} | {br(e['empuxo_volta_dias'], 0)} | {br(e['descida_dias'], 0)} | {br(e['subida_dias'], 0)} | {br(e['folga_estada_dias'], 0)} | {sg(100 * e['margem_falcon_heavy'], 1)} % | {e['pronto_no_encontro']} | {'sim' if e['pronto_antes_do_ultimo_lancamento'] else '**não**'} |")
     md += ["", "### Linha do tempo da missão de referência", "",
-           f"Chegada {mi['chegada']}; partida {mi['partida']}; viagens de {br(mi['ida_dias'], 0)} e {br(mi['volta_dias'], 0)} d; encontro de {br(mi['encontro_dias'], 0)} d. Conjunção de {mi['conjuncao_inicio']} a {mi['conjuncao_fim']}. Lançamento do MAV, dentro da folga mínima de 60 d do ADR 0018: de {mi['lancamento_mav_mais_cedo']} a {mi['lancamento_mav_mais_tarde']}. "
-           "O orbitador precisa estar em órbita antes desse lançamento. Hoje, com o químico, ele já chega pronto.", "",
+           f"Chegada {mi['chegada']}; partida {mi['partida']}; viagens de {br(mi['ida_dias'], 0)} e {br(mi['volta_dias'], 0)} d; encontro de {br(mi['encontro_dias'], 0)} d. Conjunção de {mi['conjuncao_inicio']} a {mi['conjuncao_fim']}. Lançamento do MAV, dentro da folga mínima de {br(o['folga_min_conjuncao_dias'], 0)} d do ADR 0018: de {mi['lancamento_mav_mais_cedo']} a {mi['lancamento_mav_mais_tarde']}. "
+           "O orbitador precisa estar em órbita antes desse lançamento. Hoje, com o químico, ele já chega pronto. Cruzar a conjunção significa operar a espiral sem o enlace normal com a Terra no período.", "",
            "### Por que o ADR 0013 rejeitou o elétrico, e se ainda vale", "",
            f"**Conclusão do ADR:** \"{o['adr_0013']}\"", "",
            "- **Híbrido c2:** continua valendo. A captura química em órbita baixa custa caro, e o orbitador fica muitas vezes acima do lançador.",
-           "- **Só elétrico:** o ADR só o estimou em ordem de grandeza. Com as massas fechadas, a massa pode caber, mas pede dezenas de kW, xenônio além da vida conhecida no NSTAR e sem vida publicada no XIPS-25, e não chega a tempo do lançamento do MAV na missão de referência. A outra parte da conclusão do ADR continua: exigiria outra missão de referência e outra guiagem.", "",
+           "- **Só elétrico:** o ADR só o estimou em ordem de grandeza. Com as massas fechadas, a massa pode caber, mas pede dezenas de kW, xenônio além da vida conhecida no NSTAR e sem vida publicada no XIPS-25. Nesta conta não chega a tempo do lançamento do MAV, com crédito zero de C3 e a partida atual; isso é ordem de grandeza e não decide. O que continua de pé é a outra parte do ADR: exigiria outra missão de referência e outra guiagem, não estudadas.", "",
            "## Tabela final: A × B × base", "",
-           "| Grandeza | Base | A: 44:1 e aninhados, 304 a 314 s | B: híbrido c2, " + br(o["rota_b"][0]["altitude_km"], 0) + " a " + br(o["rota_b"][1]["altitude_km"], 0) + " km | B: só elétrico, NÃO verificado |", "| :- | :- | :- | :- | :- |"]
+           "| Grandeza | Base | A: 44:1 e aninhados, 304 a 314 s | B: híbrido c2, " + br(o["rota_b"][0]["altitude_km"], 0) + " a " + br(o["rota_b"][1]["altitude_km"], 0) + " km | B: só elétrico, só XIPS-25, sem vida conhecida, NÃO verificado |", "| :- | :- | :- | :- | :- |"]
     an = [x["com_aninhados"] for x in o["rota_a"]]
     rb = o["rota_b"]
     faixa = lambda vals, n=3, f_=br: f"{f_(min(vals), n)} a {f_(max(vals), n)}"  # noqa: E731
@@ -319,9 +341,9 @@ def escreve_md(o):
     el_txt = lambda k, n=0, f_=br: faixa([x[k] for x in els], n, f_) if els else "nenhum fecha"  # noqa: E731
     md += [f"| Δv do MAV (m/s) | {br(b['dv_mav_com_margem_m_s'], 0)} | {br(b['dv_mav_com_margem_m_s'], 0)} | {faixa([x['dv_mav_com_margem_m_s'] for x in mavs], 0)} | a mesma do híbrido |",
            f"| GLOM (kg) | {br(b['glom_kg'], 1)} | {faixa([x['glom_kg'] for x in an], 1)} | {faixa([x['glom_kg'] for x in mavs], 1)} | a mesma do híbrido |",
-           f"| Comprimento (m) | {br(b['comprimento_m'])} | {faixa([x['comprimento_m'] for x in an])} | {faixa([x['comprimento_m'] for x in mavs])} | a mesma do híbrido |",
-           f"| Folga deitado, ombro (m) | {sg(b['folga_deitado_m'])} | {faixa([x['folga_deitado_m'] for x in an], 3, sg)} | {faixa([x['folga_deitado_m'] for x in mavs], 3, sg)} | a mesma do híbrido |",
-           f"| Folga deitado, ombro + deck (m) | {sg(b['folga_deitado_com_deck_m'])} | {faixa([x['folga_deitado_com_deck_m'] for x in an], 3, sg)} | {faixa([x['folga_deitado_com_deck_m'] for x in mavs], 3, sg)} | a mesma do híbrido |",
+           f"| Comprimento, com o motor real (m) | {br(o['base_real']['comprimento_m'])} | {faixa([x['comprimento_m'] for x in an])} | {faixa([x['comprimento_m'] for x in mavs])} | a mesma do híbrido |",
+           f"| Folga deitado, ombro, com o motor real (m) | {sg(o['base_real']['folga_deitado_m'])} | {faixa([x['folga_deitado_m'] for x in an], 3, sg)} | {faixa([x['folga_deitado_m'] for x in mavs], 3, sg)} | a mesma do híbrido |",
+           f"| Folga deitado, ombro + deck, com o motor real (m) | {sg(o['base_real']['folga_deitado_com_deck_m'])} | {faixa([x['folga_deitado_com_deck_m'] for x in an], 3, sg)} | {faixa([x['folga_deitado_com_deck_m'] for x in mavs], 3, sg)} | a mesma do híbrido |",
            f"| Folga radial dos bocais, com parede (m) | {sg(b['folga_radial_bocais_m'])} | {sg(an[0]['folga_radial_bocais_m'])} | {sg(mavs[0]['folga_radial_bocais_m'])} | a mesma do híbrido |",
            f"| Empuxo/peso em Marte | {br(b['empuxo_peso'], 2)} | {faixa([x['empuxo_peso'] for x in an], 2)} | {faixa([x['empuxo_peso'] for x in mavs], 2)} | a mesma do híbrido |",
            f"| Massa por área, 4,5 m (kg/m²; Mars 2020: {br(o['referencia_m2020_kg_m2'], 0)}) | {br(b['massa_por_area_kg_m2'], 0)} | {faixa([x['massa_por_area_kg_m2'] for x in an], 0)} | {faixa([x['massa_por_area_kg_m2'] for x in mavs], 0)} | a mesma do híbrido |",
@@ -329,15 +351,17 @@ def escreve_md(o):
            f"| Potência elétrica (kW) | — | — | {faixa([x['potencia_kw'] for x in c2s], 1)} | {el_txt('potencia_kw', 1)} |",
            f"| Margem no Falcon Heavy | {sg(100 * b['margem_falcon_heavy'], 1)} % | {sg(100 * b['margem_falcon_heavy'], 1)} % | {faixa([100 * x['margem_falcon_heavy'] for x in c2s], 1, sg)} % | {el_txt('margem_falcon_heavy') if not els else faixa([100 * x['margem_falcon_heavy'] for x in els], 1, sg) + ' %'} |",
            f"| Espiral de descida e de subida (d) | — | — | {faixa([x['descida_dias'] for x in c2s], 0)} e {faixa([x['subida_dias'] for x in c2s], 0)} | {el_txt('descida_dias')} e {el_txt('subida_dias')} |",
-           f"| Efeito na linha do tempo | nenhum | nenhum | pede o lançamento do MAV perto do limite do ADR 0018, ou depois | outra missão de referência |",
-           "| Muda o quê | — | motor sem Isp e massa de fonte, e arranjo dos tanques | reabre o ADR 0013 | reabre os ADRs 0003 e 0013 |", "",
+           f"| Efeito na linha do tempo | nenhum | nenhum | em órbita em {min(x['tempo']['pronto_no_encontro'] for x in c2s)} a {max(x['tempo']['pronto_no_encontro'] for x in c2s)}, {'depois' if not any(x['tempo']['pronto_antes_do_ultimo_lancamento'] for x in c2s) else 'em parte antes'} do último lançamento do MAV ({mi['lancamento_mav_mais_tarde']}); {'a subida cruza a conjunção' if all(x['tempo']['subida_cruza_conjuncao'] for x in c2s) else 'a subida cruza a conjunção em parte dos casos'} | outra missão de referência |",
+           "| Muda o quê | — | motor sem Isp e massa de fonte, e arranjo dos tanques | reabre os ADRs 0005 e 0013 e usa a opção C | reabre os ADRs 0003, 0005 e 0013 e usa a opção C |", "",
            "## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", "",
-           f"Opinião: a rota A é a única que cumpre o alvo sem mudar a arquitetura: mesmo no pior Isp ela cabe no ombro com {sg(an[0]['folga_deitado_m'], 2)} m, e a massa por área fica na mesma faixa da base. O que a sustenta é ainda não verificado: Isp e massa do 44:1 e a soma das duas mudanças no arranjo. "
-           f"A rota B reduz bem o MAV e a massa por área, mas o híbrido fica {faixa([-100 * x['margem_falcon_heavy'] for x in c2s], 0)} % acima do Falcon Heavy, então os motivos do ADR 0013 continuam, e o só elétrico pede outra missão. Se eu fosse testar um próximo passo, seria fechar os dados do 44:1 e dimensionar o tanque aninhado na pressão real. A decisão é do Fabio."]
+           f"Opinião: a rota A é a única que cumpre o alvo sem mudar a arquitetura: no ombro, cabe com {sg(an[0]['folga_deitado_m'], 2)} m no pior Isp da faixa e com {sg(o['rota_a_referencia']['com_aninhados']['folga_deitado_m'], 2)} m no caso de referência, mas com o deck sob o MAV ela fica entre {sg(o['rota_a_referencia']['com_aninhados']['folga_deitado_com_deck_m'], 2)} e {sg(an[-1]['folga_deitado_com_deck_m'], 2)} m. "
+           "Só o 44:1, sem aninhar, não basta nesses Isp. O que sustenta a rota não está verificado: Isp e massa do 44:1 e o tanque aninhado na pressão real. "
+           f"A rota B reduz bem o MAV e a massa por área, mas o híbrido pede de {br(min(1 / (1 + x['margem_falcon_heavy']) for x in c2s), 1)} a {br(max(1 / (1 + x['margem_falcon_heavy']) for x in c2s), 1)} vezes a capacidade do Falcon Heavy, e, com o deck, o MAV dela também não cabe. Os motivos de massa do ADR 0013 continuam. O só elétrico merece no máximo uma conta melhor, se a missão de referência mudar. "
+           "Meu próximo passo seria fechar os dados do 44:1 e dimensionar o tanque aninhado. A decisão é do Fabio."]
     (SAIDA / "rotas_mav.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 
-def arq_alt(arq):
+def arq_alt():
     pl = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
     return pl["periapse_alt_km"], pl["apoapse_regra_5pct_km"]
 

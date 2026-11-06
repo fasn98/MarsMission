@@ -80,6 +80,14 @@ variante_44_1:
     isp_s: 314
     fonte: '[F239] PDF p. 7: "Performance of 314 seconds at an area ratio of 44:1
       was measured. This performance is about 10 seconds higher than the Nb engine"'
+  - nome: AJ10-221, 110 lbf, Ir-Re, testes
+    isp_s: 310.3
+    fonte: '[F241] PDF p. 42, Tab. 2.2-3, "44:1 Performance for Injectors SN 6-1 and
+      SN 6-2": de 308,1 a 310,3 s'
+  - nome: 445 N, Ir-Re, sem filme de combustível
+    isp_s: 309.5
+    fonte: '[F243] PDF p. 8: "3033 ± 1.5 N-s/kg (309.5 ± 0.15 lbf sec/lbm) at E =
+      44:1"'
   - nome: 490 N, três injetores
     isp_s: 309
     fonte: '[F240] resumo no NTRS: "Three injectors with 44:1 area ratios are capable
@@ -88,8 +96,14 @@ variante_44_1:
   - '[F228] PDF p. 22: 44:1 só nas cotas do desenho; sem Isp, massa ou empuxo próprios'
   - '[F106] e [F107]: não citam 44:1 (conferido nas citações do repositório; [F106]
     sem cópia local)'
-  - 'Busca no NTRS e na web por R-4D-11 com 44:1: [F239] e [F240] são os mais próximos
-    e não nomeiam o R-4D-11'
+  - 'NTRS, cerca de 45 buscas (2026-11-06): só análogos de Ir-Re a 44:1, [F239], [F240],
+    [F241] e [F243]; "R-4D-11" não retorna nada. R-4D do Apollo é de 40:1 [F242]'
+  - 'AIAA: arc.aiaa.org recusa o acesso (403); AIAA 92-3800 e AIAA 2010-6884 não lidos;
+    IAC-10.C4.1.6, só o resumo, sem 44:1'
+  - 'Fichas do fabricante: rocket.com e l3harris.com recusam ou não acham (403 e 404);
+    três PDFs arquivados no Internet Archive não abertos'
+  - 'Missões: nenhuma com 44:1 documentado. Apollo, 40:1; Orion, 164:1 [F107]; Cassini,
+    ATV, Galileo e outras: sem razão de expansão em fonte primária lida'
   - Páginas de terceiros (Wikipedia, Astronautix e catálogos) não contam como fonte
     primária e não dão o 44:1
   sensibilidade:
@@ -105,6 +119,14 @@ variante_44_1:
     glom_kg: 392.7253618642498
     comprimento_m: 3.1624548812839532
     comprimento_sem_mudar_p086_m: 3.578978881283953
+  - isp_s: 309.5
+    glom_kg: 389.72992529029403
+    comprimento_m: 3.153405938171195
+    comprimento_sem_mudar_p086_m: 3.569929938171195
+  - isp_s: 310.3
+    glom_kg: 385.0184791906961
+    comprimento_m: 3.139163343326219
+    comprimento_sem_mudar_p086_m: 3.555687343326219
   - isp_s: 314
     glom_kg: 364.4544701939408
     comprimento_m: 3.076851244779724
@@ -514,12 +536,14 @@ resolucao_amostragem:
     limite_fecha_dobrado_km: 594.0
   orbitas_amostra:
     pontos_novos_km:
+    - 770.7139547199077
     - 2236.06797749979
     - 7071.067811865475
     - 10403.845442911963
     - 16760.333457303288
     comprimento_monotono: true
     comprimentos_novos_m:
+    - 3.039734427250282
     - 3.127057956339089
     - 3.2894639239815113
     - 3.350641988369917

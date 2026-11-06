@@ -36,6 +36,24 @@ base:
   - 300
   - 25952.4
   dv_mav_com_margem_m_s: 5772.354040682595
+base_real:
+  rotulo: Base com o motor real 164:1
+  diametro_m: 0.57
+  n_motores: 4
+  variante: '164:1'
+  aninhado: false
+  glom_kg: 386.77369250546496
+  propelente_kg: 285.49574322920796
+  comprimento_m: 3.619450721824387
+  disponivel_m: 3.1839999999999997
+  folga_deitado_m: -0.21772536091219363
+  folga_deitado_com_deck_m: -0.4377253609121936
+  circulo_saidas_m: 0.6745312693270427
+  folga_radial_bocais_m: -0.06226563466352136
+  empuxo_peso: 1.3628076997021517
+  lander_injetado_kg: 4614.7885791407525
+  margem_vulcan_vc4: 0.405756166948366
+  massa_por_area_kg_m2: 278.50000911622186
 rota_a:
 - isp_s: 304
   so_44:
@@ -185,6 +203,59 @@ rota_a:
     lander_injetado_kg: 4567.485393253433
     margem_vulcan_vc4: 0.4203148878970142
     massa_por_area_kg_m2: 275.62227859570885
+rota_a_referencia:
+  so_44:
+    rotulo: 'Referência, Isp 297 s: só 44:1'
+    diametro_m: 0.57
+    n_motores: 4
+    variante: '44:1'
+    aninhado: false
+    glom_kg: 478.51878846561124
+    propelente_kg: 356.13946711852066
+    comprimento_m: 3.419899950729502
+    disponivel_m: 3.1839999999999997
+    folga_deitado_m: -0.11794997536475105
+    folga_deitado_com_deck_m: -0.337949975364751
+    circulo_saidas_m: 0.3685393571505024
+    folga_radial_bocais_m: 0.09073032142474877
+    empuxo_peso: 1.1015203141319496
+    lander_injetado_kg: 4808.8484849300075
+    margem_vulcan_vc4: 0.349027220262778
+    massa_por_area_kg_m2: 290.30581253563423
+  com_aninhados:
+    rotulo: 'Referência, Isp 297 s: 44:1 e aninhados'
+    diametro_m: 0.57
+    n_motores: 4
+    variante: '44:1'
+    aninhado: true
+    glom_kg: 478.51878846561124
+    propelente_kg: 356.13946711852066
+    comprimento_m: 2.9164081542012696
+    disponivel_m: 3.1839999999999997
+    folga_deitado_m: 0.13379592289936504
+    folga_deitado_com_deck_m: -0.08620407710063493
+    circulo_saidas_m: 0.3685393571505024
+    folga_radial_bocais_m: 0.09073032142474877
+    empuxo_peso: 1.1015203141319496
+    lander_injetado_kg: 4808.8484849300075
+    margem_vulcan_vc4: 0.349027220262778
+    massa_por_area_kg_m2: 290.30581253563423
+rota_a_ressalva: 'Os análogos de 308 a 314 s têm câmara de irídio e rênio. O R-4D-11
+  tem câmara de Cb com filme de combustível, que perde Isp: [F241] PDF p. 18: "Conventional
+  110 lbf engines use up to ~40% fuel film cooling"; "a performance loss of up to
+  25 sec"; "10 sec higher than conventional 110 lbf silicide coated Cb chambers now
+  in use", a 286:1. Aplicar esses 10 s ao 44:1 é inferência (NÃO VALIDADO).'
+isp_referencia_fonte: '[F242] PDF p. 15: "This prototype engine demonstrated good
+  performance Isp''s of 295 and 297"; "with an expansion ratio equal to 40"'
+conferencia_etapa_3_3:
+  etapa_3_3_kg: 47447.3710277748
+  aqui_kg: 47447.3710277748
+  etapa_3_3_descida_dias: 131.96325263994893
+  aqui_descida_dias: 131.96325263994893
+empuxo_peso_opcao_c: 0.6814038498510758
+fase_raan_dias: 24.0
+motivo_fim: 'em Ø 0,60 m. Depende da grade de diâmetros: com Ø exato, seria mais alta'
+folga_min_conjuncao_dias: 60.0
 rota_a_fonte:
   fonte: '[F46] §5.4, PDF p. 17: "Similar to a common bulkhead design, the forward
     tank aft dome is accommodated within a recessed aft tank forward dome but with
@@ -203,10 +274,10 @@ rota_b:
     aninhado: false
     glom_kg: 166.55478053684573
     propelente_kg: 115.92718101337121
-    comprimento_m: 3.017031821230914
+    comprimento_m: 3.0754878212309142
     disponivel_m: 3.1399999999999997
-    folga_deitado_m: 0.06148408938454275
-    folga_deitado_com_deck_m: -0.15851591061545722
+    folga_deitado_m: 0.03225608938454272
+    folga_deitado_com_deck_m: -0.18774391061545725
     circulo_saidas_m: 0.5588
     folga_radial_bocais_m: 0.010599999999999998
     empuxo_peso: 1.5823567612100868
@@ -214,6 +285,24 @@ rota_b:
     margem_vulcan_vc4: 0.5648810375016717
     massa_por_area_kg_m2: 249.95249635689157
     dv_mav_com_margem_m_s: 4605.615838777636
+    com_p086_atual:
+      rotulo: Idem, com a P-086 atual
+      diametro_m: 0.6
+      n_motores: 2
+      variante: '164:1'
+      aninhado: false
+      glom_kg: 166.55478053684573
+      propelente_kg: 115.92718101337121
+      comprimento_m: 3.017031821230914
+      disponivel_m: 3.1399999999999997
+      folga_deitado_m: 0.06148408938454275
+      folga_deitado_com_deck_m: -0.15851591061545722
+      circulo_saidas_m: 0.5588
+      folga_radial_bocais_m: 0.010599999999999998
+      empuxo_peso: 1.5823567612100868
+      lander_injetado_kg: 4145.5339727593
+      margem_vulcan_vc4: 0.5648810375016717
+      massa_por_area_kg_m2: 249.95249635689157
   propulsores:
     NSTAR:
       c2_mais_leve:
@@ -885,54 +974,72 @@ rota_b:
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
 - rotulo: Maior que cumpre o alvo
-  altitude_km: 1252.0
+  altitude_km: 814.0
   justificativa: 'a maior altitude circular em que o MAV com 2 motores R-4D-11 164:1,
-    em Ø 0,60 m, ainda cabe deitado no aeroshell de 4,5 m: o menor Δv do orbitador
+    com o motor real, ainda cabe deitado no aeroshell de 4,5 m: o menor Δv do orbitador
     que cumpre o alvo'
-  plataforma_kg: 505.2804370785685
+  plataforma_kg: 510.61946113786973
   mav:
-    rotulo: 2 × 164:1, Ø 0,60 m, 1 252 × 1 252 km
+    rotulo: 2 × 164:1, Ø 0,60 m, 814 × 814 km
     diametro_m: 0.6
     n_motores: 2
     variante: '164:1'
     aninhado: false
-    glom_kg: 212.1918181827389
-    propelente_kg: 151.06770000070895
-    comprimento_m: 3.1399621036243834
+    glom_kg: 189.39784695131655
+    propelente_kg: 133.51634215251374
+    comprimento_m: 3.139921418967848
     disponivel_m: 3.1399999999999997
-    folga_deitado_m: 1.894818780812102e-05
-    folga_deitado_com_deck_m: -0.21998105181219185
+    folga_deitado_m: 3.929051607576284e-05
+    folga_deitado_com_deck_m: -0.2199607094839242
     circulo_saidas_m: 0.5588
     folga_radial_bocais_m: 0.010599999999999998
-    empuxo_peso: 1.242032258130577
-    lander_injetado_kg: 4243.379571198893
-    margem_vulcan_vc4: 0.5287973643274941
-    massa_por_area_kg_m2: 255.90501857385618
-    dv_mav_com_margem_m_s: 4968.613461136116
+    empuxo_peso: 1.391510449229571
+    lander_injetado_kg: 4194.566374766621
+    margem_vulcan_vc4: 0.5465883537606293
+    massa_por_area_kg_m2: 252.93542524643087
+    dv_mav_com_margem_m_s: 4801.063300687612
+    com_p086_atual:
+      rotulo: Idem, com a P-086 atual
+      diametro_m: 0.6
+      n_motores: 2
+      variante: '164:1'
+      aninhado: false
+      glom_kg: 189.39784695131655
+      propelente_kg: 133.51634215251374
+      comprimento_m: 3.081465418967848
+      disponivel_m: 3.1399999999999997
+      folga_deitado_m: 0.029267290516075795
+      folga_deitado_com_deck_m: -0.19073270948392418
+      circulo_saidas_m: 0.5588
+      folga_radial_bocais_m: 0.010599999999999998
+      empuxo_peso: 1.391510449229571
+      lander_injetado_kg: 4194.566374766621
+      margem_vulcan_vc4: 0.5465883537606293
+      massa_por_area_kg_m2: 252.93542524643087
   propulsores:
     NSTAR:
       c2_mais_leve:
-        captura_alt_km: 1604.6942874783756
-        orbitador_injetado_kg: 47297.834935582825
-        xenonio_kg: 69.86246889416725
-        descida_dias: 184.44888176773878
-        subida_dias: 174.34836259820963
-        folga_estada_dias: 33.20275563405153
-        dv_eletrico_km_s: 0.11989644522642214
-        dv_captura_km_s: 2.795358569487339
-        dv_saida_km_s: 2.8462142680339717
+        captura_alt_km: 1099.2044080026956
+        orbitador_injetado_kg: 48852.54270351174
+        xenonio_kg: 67.13140347396984
+        descida_dias: 186.24390149076007
+        subida_dias: 176.0839877367136
+        folga_estada_dias: 29.672110772526366
+        dv_eletrico_km_s: 0.11311606466324392
+        dv_captura_km_s: 2.811875240332902
+        dv_saida_km_s: 2.861436369476887
         n_ativos: 1
         potencia_kw: 2.5556
-        margem_falcon_heavy: -0.7626898595875086
+        margem_falcon_heavy: -0.7702421362611459
         tempo:
-          pronto_no_encontro: '2030-03-24'
+          pronto_no_encontro: '2030-03-26'
           pronto_antes_do_ultimo_lancamento: false
-          folga_ao_ultimo_lancamento_dias: -18
-          inicio_subida_mais_cedo: '2030-04-15'
-          fim_subida_mais_cedo: '2030-10-07'
-          folga_a_partida_dias: 32
+          folga_ao_ultimo_lancamento_dias: -20
+          inicio_subida_mais_cedo: '2030-04-17'
+          fim_subida_mais_cedo: '2030-10-11'
+          folga_a_partida_dias: 28
           subida_cruza_conjuncao: true
-          espera_lancamento_tardio_termina: '2030-09-19'
+          espera_lancamento_tardio_termina: '2030-09-21'
       c2_n_viaveis:
       - 1
       - 2
@@ -947,218 +1054,240 @@ rota_b:
       - 11
       - 12
       eletrico:
-      - orbitador_injetado_kg: 3267.9595220351134
-        xenonio_kg: 1447.4621516561217
-        xenonio_por_propulsor_kg: 1447.4621516561217
-        descida_dias: 1086.8027023637094
-        subida_dias: 936.5287254516614
-        empuxo_ida_dias: 2292.3100559992504
-        empuxo_volta_dias: 1454.9368297949418
-        folga_estada_dias: -1631.331427815371
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 3327.5056388093076
+        xenonio_kg: 1493.3086195939597
+        xenonio_por_propulsor_kg: 1493.3086195939597
+        descida_dias: 1178.4782502761784
+        subida_dias: 1010.9282921072194
+        empuxo_ida_dias: 2334.078676863987
+        empuxo_volta_dias: 1465.3404149557086
+        folga_estada_dias: -1797.4065423833981
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 5770.578313609563
+        total_empuxo_dias: 5988.825634203094
         n_ativos: 1
         potencia_kw: 2.5556
-        margem_falcon_heavy: 2.434637355232639
+        margem_falcon_heavy: 2.3731741034063023
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2038-02-25'
+        pronto_no_encontro: '2038-07-08'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 3690.143516041741
-        xenonio_kg: 1634.4581496907158
-        xenonio_por_propulsor_kg: 817.2290748453579
-        descida_dias: 613.6027570571898
-        subida_dias: 528.7589060558676
-        empuxo_ida_dias: 1294.2254995611331
-        empuxo_volta_dias: 821.4492365215477
-        folga_estada_dias: -750.3616631130574
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 3755.794207169538
+        xenonio_kg: 1685.514758434568
+        xenonio_por_propulsor_kg: 842.757379217284
+        descida_dias: 665.0810345803618
+        subida_dias: 570.523244059584
+        empuxo_ida_dias: 1317.2508366928844
+        empuxo_volta_dias: 826.9733607410803
+        folga_estada_dias: -843.6042786399457
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 3258.0363991957383
+        total_empuxo_dias: 3379.8284760739107
         n_ativos: 2
         potencia_kw: 5.1112
-        margem_falcon_heavy: 2.0416854523343257
+        margem_falcon_heavy: 1.9885172697544804
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2034-02-14'
+        pronto_no_encontro: '2034-04-30'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 4112.327510048371
-        xenonio_kg: 1821.4541477253097
-        xenonio_por_propulsor_kg: 607.1513825751032
-        descida_dias: 455.8694419550169
-        subida_dias: 392.83563292393615
-        empuxo_ida_dias: 961.5306474150944
-        empuxo_volta_dias: 610.2867054304163
-        folga_estada_dias: -456.70507487895316
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 4184.082775529769
+        xenonio_kg: 1877.7208972751764
+        xenonio_por_propulsor_kg: 625.9069657583922
+        descida_dias: 493.94862934842286
+        subida_dias: 423.7215613770388
+        empuxo_ida_dias: 978.3082233025168
+        empuxo_volta_dias: 614.1843426695375
+        folga_estada_dias: -525.6701907254618
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 2420.5224277244643
+        total_empuxo_dias: 2510.162756697516
         n_ativos: 3
         potencia_kw: 7.666799999999999
-        margem_falcon_heavy: 1.7294168137979793
+        margem_falcon_heavy: 1.6826084597116604
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2032-10-12'
+        pronto_no_encontro: '2032-12-06'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 4534.511504054999
-        xenonio_kg: 2008.4501457599035
-        xenonio_por_propulsor_kg: 502.1125364399759
-        descida_dias: 377.00278440393043
-        subida_dias: 324.87399635797067
-        empuxo_ida_dias: 795.1832213420751
-        empuxo_volta_dias: 504.70543988485076
-        folga_estada_dias: -309.87678076190105
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 4612.371343889999
+        xenonio_kg: 2069.9270361157846
+        xenonio_por_propulsor_kg: 517.4817590289462
+        descida_dias: 408.38242673245327
+        subida_dias: 350.3207200357662
+        empuxo_ida_dias: 808.836916607333
+        empuxo_volta_dias: 507.7898336337663
+        folga_estada_dias: -366.70314676821954
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 2001.7654419888268
+        total_empuxo_dias: 2075.3298970093188
         n_ativos: 4
         potencia_kw: 10.2224
-        margem_falcon_heavy: 1.4752954843609243
+        margem_falcon_heavy: 1.4335108803931749
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2032-02-10'
+        pronto_no_encontro: '2032-03-26'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 4956.6954980616265
-        xenonio_kg: 2195.446143794497
-        xenonio_por_propulsor_kg: 439.08922875889937
-        descida_dias: 329.6827898732784
-        subida_dias: 284.0970144183912
-        empuxo_ida_dias: 695.3747656982632
-        empuxo_volta_dias: 441.35668055751125
-        folga_estada_dias: -221.77980429166962
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 5040.659912250229
+        xenonio_kg: 2262.1331749563933
+        xenonio_por_propulsor_kg: 452.42663499127866
+        descida_dias: 357.04270516287187
+        subida_dias: 306.2802152310028
+        empuxo_ida_dias: 707.1541325902227
+        empuxo_volta_dias: 443.9531282123035
+        folga_estada_dias: -271.3229203938746
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1750.511250547444
+        total_empuxo_dias: 1814.430181196401
         n_ativos: 5
         potencia_kw: 12.778
-        margem_falcon_heavy: 1.264463462433667
+        margem_falcon_heavy: 1.2267433322553432
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2031-09-16'
+        pronto_no_encontro: '2031-10-25'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 5378.879492068255
-        xenonio_kg: 2382.4421418290913
-        xenonio_por_propulsor_kg: 397.0736903048485
-        descida_dias: 298.1361268528437
-        subida_dias: 256.9123597920049
-        empuxo_ida_dias: 628.8357952690554
-        empuxo_volta_dias: 399.12417433928493
-        folga_estada_dias: -163.0484866448487
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 5468.948480610461
+        xenonio_kg: 2454.339313797002
+        xenonio_por_propulsor_kg: 409.0565522995003
+        descida_dias: 322.81622411648397
+        subida_dias: 276.9198786944939
+        empuxo_ida_dias: 639.3656099121494
+        empuxo_volta_dias: 401.395324597995
+        folga_estada_dias: -207.73610281097785
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1583.008456253189
+        total_empuxo_dias: 1640.4970373211222
         n_ativos: 6
         potencia_kw: 15.333599999999999
-        margem_falcon_heavy: 1.0867275175659525
+        margem_falcon_heavy: 1.052360867827578
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2031-06-09'
+        pronto_no_encontro: '2031-07-15'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 5801.063486074882
-        xenonio_kg: 2569.4381398636833
-        xenonio_por_propulsor_kg: 367.0625914090976
-        descida_dias: 275.60279612396187
-        subida_dias: 237.4947493445862
-        empuxo_ida_dias: 581.3079592481927
-        empuxo_volta_dias: 368.9580984691233
-        folga_estada_dias: -121.09754546854799
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 5897.237048970691
+        xenonio_kg: 2646.54545263761
+        xenonio_por_propulsor_kg: 378.0779218053729
+        descida_dias: 298.36873765477844
+        subida_dias: 255.94820973984454
+        empuxo_ida_dias: 590.9452365706682
+        empuxo_volta_dias: 370.9968934449174
+        folga_estada_dias: -162.31694739462296
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1463.3636031858641
+        total_empuxo_dias: 1516.2590774102086
         n_ativos: 7
         potencia_kw: 17.889200000000002
-        margem_falcon_heavy: 0.9348617502141079
+        margem_falcon_heavy: 0.9033075585335497
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2031-03-31'
+        pronto_no_encontro: '2031-05-03'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 6223.24748008151
-        xenonio_kg: 2756.4341378982776
-        xenonio_por_propulsor_kg: 344.5542672372847
-        descida_dias: 258.70279807730043
-        subida_dias: 222.9315415090221
-        empuxo_ida_dias: 545.6620822325457
-        empuxo_volta_dias: 346.33354156650216
-        folga_estada_dias: -89.63433958632248
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 6325.525617330921
+        xenonio_kg: 2838.751591478218
+        xenonio_por_propulsor_kg: 354.84394893477725
+        descida_dias: 280.03312280849934
+        subida_dias: 240.21945802385756
+        empuxo_ida_dias: 554.6299565645573
+        empuxo_volta_dias: 348.19807008010923
+        folga_estada_dias: -128.2525808323569
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1373.6299633853703
+        total_empuxo_dias: 1423.0806074770235
         n_ativos: 8
         potencia_kw: 20.4448
-        margem_falcon_heavy: 0.8036010757558671
+        margem_falcon_heavy: 0.7744384465090695
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2031-02-07'
+        pronto_no_encontro: '2031-03-09'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 6645.431474088141
-        xenonio_kg: 2943.43013593287
-        xenonio_por_propulsor_kg: 327.04779288143004
-        descida_dias: 245.5583551521194
-        subida_dias: 211.60460208136124
-        empuxo_ida_dias: 517.937511220376
-        empuxo_volta_dias: 328.73666397557463
-        folga_estada_dias: -65.16295723348065
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 6753.814185691152
+        xenonio_kg: 3030.9577303188266
+        xenonio_por_propulsor_kg: 336.7730811465363
+        descida_dias: 265.772089039171
+        subida_dias: 227.98598446697866
+        empuxo_ida_dias: 526.3847387820267
+        empuxo_volta_dias: 330.4656519074807
+        folga_estada_dias: -101.75807350614969
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1303.8371324294312
+        total_empuxo_dias: 1350.6084641956572
         n_ativos: 9
         potencia_kw: 23.0004
-        margem_falcon_heavy: 0.689018372025294
+        margem_falcon_heavy: 0.661913630012219
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2030-12-28'
+        pronto_no_encontro: '2031-01-26'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 7067.6154680947675
-        xenonio_kg: 3130.426133967466
-        xenonio_por_propulsor_kg: 313.04261339674656
-        descida_dias: 235.04280081197456
-        subida_dias: 202.5430505392325
-        empuxo_ida_dias: 495.75785441063994
-        empuxo_volta_dias: 314.65916190283247
-        folga_estada_dias: -45.58585135120711
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 7182.102754051382
+        xenonio_kg: 3223.1638691594353
+        xenonio_por_propulsor_kg: 322.31638691594355
+        descida_dias: 254.36326202370847
+        subida_dias: 218.19920562147573
+        empuxo_ida_dias: 503.7885645560023
+        empuxo_volta_dias: 316.2797173693779
+        folga_estada_dias: -80.56246764518426
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1248.0028676646796
+        total_empuxo_dias: 1292.6307495705646
         n_ativos: 10
         potencia_kw: 25.556
-        margem_falcon_heavy: 0.5881248633912659
+        margem_falcon_heavy: 0.5628091429683966
+        vida_kg: 135.0
+        dentro_da_vida: false
+        vida_conhecida: true
+        fecha_estada_e_lancador: false
+        pronto_no_encontro: '2030-12-23'
+        pronto_antes_do_ultimo_lancamento: false
+        ida_referencia_dias: 300.0
+        volta_referencia_dias: 319.0
+      - orbitador_injetado_kg: 7610.391322411613
+        xenonio_kg: 3415.370008000044
+        xenonio_por_propulsor_kg: 310.4881825454585
+        descida_dias: 245.0287671928755
+        subida_dias: 210.19184111151876
+        empuxo_ida_dias: 485.30078564380057
+        empuxo_volta_dias: 304.67304365638466
+        folga_estada_dias: -63.22060830439426
+        dv_espiral_km_s: 3.289747501945736
+        dv_heliocentrico_km_s: 6.220939231805356
+        total_empuxo_dias: 1245.1944376045794
+        n_ativos: 11
+        potencia_kw: 28.1116
+        margem_falcon_heavy: 0.4748592252695374
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1167,97 +1296,75 @@ rota_b:
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 7489.799462101398
-        xenonio_kg: 3317.4221320020574
-        xenonio_por_propulsor_kg: 301.5838301820052
-        descida_dias: 226.43916544276513
-        subida_dias: 195.12905382294537
-        empuxo_ida_dias: 477.6108624754016
-        empuxo_volta_dias: 303.141205661498
-        folga_estada_dias: -29.568219265710468
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 8038.679890771844
+        xenonio_kg: 3607.5761468406517
+        xenonio_por_propulsor_kg: 300.6313455700543
+        descida_dias: 237.2500215005146
+        subida_dias: 203.51903735322122
+        empuxo_ida_dias: 469.89430321696557
+        empuxo_volta_dias: 295.00081556222364
+        folga_estada_dias: -48.769058853735885
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1202.3202874026101
-        n_ativos: 11
-        potencia_kw: 28.1116
-        margem_falcon_heavy: 0.4986056578103406
-        vida_kg: 135.0
-        dentro_da_vida: false
-        vida_conhecida: true
-        fecha_estada_e_lancador: false
-        pronto_no_encontro: '2030-10-30'
-        pronto_antes_do_ultimo_lancamento: false
-        ida_referencia_dias: 300.0
-        volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 7911.983456108024
-        xenonio_kg: 3504.418130036651
-        xenonio_por_propulsor_kg: 292.0348441697209
-        descida_dias: 219.2694693017572
-        subida_dias: 188.95072322603934
-        empuxo_ida_dias: 462.48836919603605
-        empuxo_volta_dias: 293.5429087937193
-        folga_estada_dias: -16.22019252779654
-        dv_espiral_km_s: 3.1203603392907455
-        dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1164.251470517552
+        total_empuxo_dias: 1205.6641776329252
         n_ativos: 12
         potencia_kw: 30.667199999999998
-        margem_falcon_heavy: 0.4186399544484529
+        margem_falcon_heavy: 0.3962809817386932
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2030-10-07'
+        pronto_no_encontro: '2030-11-02'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
       eletrico_primeiro_que_fecha: null
       eletrico_maior_n:
-        orbitador_injetado_kg: 7911.983456108024
-        xenonio_kg: 3504.418130036651
-        xenonio_por_propulsor_kg: 292.0348441697209
-        descida_dias: 219.2694693017572
-        subida_dias: 188.95072322603934
-        empuxo_ida_dias: 462.48836919603605
-        empuxo_volta_dias: 293.5429087937193
-        folga_estada_dias: -16.22019252779654
-        dv_espiral_km_s: 3.1203603392907455
+        orbitador_injetado_kg: 8038.679890771844
+        xenonio_kg: 3607.5761468406517
+        xenonio_por_propulsor_kg: 300.6313455700543
+        descida_dias: 237.2500215005146
+        subida_dias: 203.51903735322122
+        empuxo_ida_dias: 469.89430321696557
+        empuxo_volta_dias: 295.00081556222364
+        folga_estada_dias: -48.769058853735885
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1164.251470517552
+        total_empuxo_dias: 1205.6641776329252
         n_ativos: 12
         potencia_kw: 30.667199999999998
-        margem_falcon_heavy: 0.4186399544484529
+        margem_falcon_heavy: 0.3962809817386932
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2030-10-07'
+        pronto_no_encontro: '2030-11-02'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
     XIPS-25:
       c2_mais_leve:
-        captura_alt_km: 1763.887034292977
-        orbitador_injetado_kg: 51752.545947907194
-        xenonio_kg: 96.67428135190858
-        descida_dias: 160.7050272579701
-        subida_dias: 151.75304028427624
-        folga_estada_dias: 79.54193245775366
-        dv_eletrico_km_s: 0.16994150206242434
-        dv_captura_km_s: 2.791438064489818
-        dv_saida_km_s: 2.8426713436496427
+        captura_alt_km: 1328.1140893360694
+        orbitador_injetado_kg: 53206.91276741825
+        xenonio_kg: 113.58878298281161
+        descida_dias: 197.25002923956836
+        subida_dias: 186.1245270300334
+        folga_estada_dias: 8.625443730398274
+        dv_eletrico_km_s: 0.19639399628099233
+        dv_captura_km_s: 2.803553869349997
+        dv_saida_km_s: 2.853720242456512
         n_ativos: 1
         potencia_kw: 4.5
-        margem_falcon_heavy: -0.7831168371683964
+        margem_falcon_heavy: -0.7890451584959599
         tempo:
-          pronto_no_encontro: '2030-02-28'
-          pronto_antes_do_ultimo_lancamento: true
-          folga_ao_ultimo_lancamento_dias: 6
-          inicio_subida_mais_cedo: '2030-03-22'
-          fim_subida_mais_cedo: '2030-08-21'
-          folga_a_partida_dias: 79
+          pronto_no_encontro: '2030-04-06'
+          pronto_antes_do_ultimo_lancamento: false
+          folga_ao_ultimo_lancamento_dias: -31
+          inicio_subida_mais_cedo: '2030-04-28'
+          fim_subida_mais_cedo: '2030-11-01'
+          folga_a_partida_dias: 7
           subida_cruza_conjuncao: true
-          espera_lancamento_tardio_termina: '2030-08-27'
+          espera_lancamento_tardio_termina: '2030-10-01'
       c2_n_viaveis:
       - 1
       - 2
@@ -1272,313 +1379,313 @@ rota_b:
       - 11
       - 12
       eletrico:
-      - orbitador_injetado_kg: 3291.2169670735625
-        xenonio_kg: 1336.5503253157876
-        xenonio_por_propulsor_kg: 1336.5503253157876
-        descida_dias: 634.2704056975775
-        subida_dias: 552.3849340833103
-        empuxo_ida_dias: 1315.193963787678
-        empuxo_volta_dias: 872.4625079889533
-        folga_estada_dias: -794.655339780888
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 3343.967000333528
+        xenonio_kg: 1376.5727872590785
+        xenonio_por_propulsor_kg: 1376.5727872590785
+        descida_dias: 686.5255458239415
+        subida_dias: 595.4826081425853
+        empuxo_ida_dias: 1336.2732563494183
+        empuxo_volta_dias: 877.8616653541593
+        folga_estada_dias: -890.0081539665266
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 3374.3118115575194
+        total_empuxo_dias: 3496.1430756701043
         n_ativos: 1
         potencia_kw: 4.5
-        margem_falcon_heavy: 2.410366427391818
+        margem_falcon_heavy: 2.3565689639432716
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2034-03-28'
+        pronto_no_encontro: '2034-06-09'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 3940.5746283907574
-        xenonio_kg: 1600.2519293615092
-        xenonio_por_propulsor_kg: 800.1259646807546
-        descida_dias: 379.70603172560794
-        subida_dias: 330.6852872555304
-        empuxo_ida_dias: 787.3409770554576
-        empuxo_volta_dias: 522.299753799032
-        folga_estada_dias: -318.3913189811384
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 4001.5107113197932
+        xenonio_kg: 1647.2563134083375
+        xenonio_por_propulsor_kg: 823.6281567041688
+        descida_dias: 410.7605315685186
+        subida_dias: 356.28791113212816
+        empuxo_ida_dias: 799.5162254889258
+        empuxo_volta_dias: 525.2403592232423
+        folga_estada_dias: -375.04844270064666
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 2020.0320498356282
+        total_empuxo_dias: 2091.805027412815
         n_ativos: 2
         potencia_kw: 9.0
-        margem_falcon_heavy: 1.8483804795631382
+        margem_falcon_heavy: 1.805004574401845
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2032-02-05'
+        pronto_no_encontro: '2032-03-19'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 4589.932289707952
-        xenonio_kg: 1863.9535334072307
-        xenonio_por_propulsor_kg: 621.3178444690769
-        descida_dias: 294.8512404016182
-        subida_dias: 256.78540497960387
-        empuxo_ida_dias: 611.3899814780508
-        empuxo_volta_dias: 405.578835735725
-        folga_estada_dias: -159.63664538122202
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 4659.05442230606
+        xenonio_kg: 1917.9398395575972
+        xenonio_por_propulsor_kg: 639.3132798525324
+        descida_dias: 318.8388601500445
+        subida_dias: 276.55634546197587
+        empuxo_ida_dias: 620.5972152020953
+        empuxo_volta_dias: 407.69992384627005
+        folga_estada_dias: -203.39520561202028
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1568.6054625949978
+        total_empuxo_dias: 1623.6923446603855
         n_ativos: 3
         potencia_kw: 13.5
-        margem_falcon_heavy: 1.4454077187452752
+        margem_falcon_heavy: 1.4091274392571722
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2031-05-20'
+        pronto_no_encontro: '2031-06-22'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 5239.289951025147
-        xenonio_kg: 2127.6551374529536
-        xenonio_por_propulsor_kg: 531.9137843632384
-        descida_dias: 252.42384473962312
-        subida_dias: 219.83546384164055
-        empuxo_ida_dias: 523.4144836893473
-        empuxo_volta_dias: 347.21837670407155
-        folga_estada_dias: -80.25930858126367
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 5316.598133292325
+        xenonio_kg: 2188.623365706857
+        xenonio_por_propulsor_kg: 547.1558414267142
+        descida_dias: 272.87802444080734
+        subida_dias: 236.69056262689958
+        empuxo_ida_dias: 531.13771005868
+        empuxo_volta_dias: 348.92970615778387
+        folga_estada_dias: -117.56858706770686
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1342.8921689746826
+        total_empuxo_dias: 1389.6360032841708
         n_ativos: 4
         potencia_kw: 18.0
-        margem_falcon_heavy: 1.1423238558449706
+        margem_falcon_heavy: 1.1111725145228037
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2031-01-09'
+        pronto_no_encontro: '2031-02-07'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 5888.647612342341
-        xenonio_kg: 2391.356741498676
-        xenonio_por_propulsor_kg: 478.2713482997352
-        descida_dias: 226.96740734242624
-        subida_dias: 197.6654991588625
-        empuxo_ida_dias: 470.6291850161251
-        empuxo_volta_dias: 312.2021012850793
-        folga_estada_dias: -32.63290650128869
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 5974.141844278591
+        xenonio_kg: 2459.3068918561157
+        xenonio_por_propulsor_kg: 491.86137837122317
+        descida_dias: 245.30152301526505
+        subida_dias: 212.7710929258539
+        empuxo_ida_dias: 477.4620069726307
+        empuxo_volta_dias: 313.66757554469217
+        folga_estada_dias: -66.07261594111895
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1207.4641928024932
+        total_empuxo_dias: 1249.202198458442
         n_ativos: 5
         potencia_kw: 22.5
-        margem_falcon_heavy: 0.9060838054300389
+        margem_falcon_heavy: 0.8788063863129432
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2030-10-23'
+        pronto_no_encontro: '2030-11-17'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 6538.005273659535
-        xenonio_kg: 2655.058345544398
-        xenonio_por_propulsor_kg: 442.5097242573997
-        descida_dias: 209.99644907762814
-        subida_dias: 182.88552270367722
-        empuxo_ida_dias: 435.43898590064384
-        empuxo_volta_dias: 288.8579176724179
-        folga_estada_dias: -0.8819717813053671
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 6631.685555264858
+        xenonio_kg: 2729.990418005376
+        xenonio_por_propulsor_kg: 454.99840300089596
+        descida_dias: 226.9171887315703
+        subida_dias: 196.82477979182352
+        empuxo_ida_dias: 441.67820491526464
+        empuxo_volta_dias: 290.15948846929774
+        folga_estada_dias: -31.74196852339378
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1117.1788753543672
+        total_empuxo_dias: 1155.579661907956
         n_ativos: 6
         potencia_kw: 27.0
-        margem_falcon_heavy: 0.7167706938063416
+        margem_falcon_heavy: 0.6925193084372234
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: false
-        pronto_no_encontro: '2030-09-01'
+        pronto_no_encontro: '2030-09-24'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 7187.362934976729
-        xenonio_kg: 2918.7599495901204
-        xenonio_por_propulsor_kg: 416.9657070843029
-        descida_dias: 197.87433603134386
-        subida_dias: 172.32839666425903
-        empuxo_ida_dias: 410.3031293895856
-        empuxo_volta_dias: 272.18350080623117
-        folga_estada_dias: 21.79726730439711
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 7289.229266251121
+        xenonio_kg: 3000.673944154634
+        xenonio_por_propulsor_kg: 428.66770630780485
+        descida_dias: 213.78552138607384
+        subida_dias: 185.43455612465877
+        empuxo_ida_dias: 416.1183463028602
+        empuxo_volta_dias: 273.36799770115874
+        folga_estada_dias: -7.220077510732551
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1052.6893628914197
+        total_empuxo_dias: 1088.7064215147516
         n_ativos: 7
         potencia_kw: 31.5
-        margem_falcon_heavy: 0.561665377317744
+        margem_falcon_heavy: 0.5398412424394328
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
-        fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-07-26'
+        fecha_estada_e_lancador: false
+        pronto_no_encontro: '2030-08-16'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 7836.720596293921
-        xenonio_kg: 3182.4615536358415
-        xenonio_por_propulsor_kg: 397.8076942044802
-        descida_dias: 188.7827512466306
-        subida_dias: 164.41055213469548
-        empuxo_ida_dias: 391.4512370062919
-        empuxo_volta_dias: 259.6776881565911
-        folga_estada_dias: 38.80669661867387
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 7946.772977237388
+        xenonio_kg: 3271.357470303893
+        xenonio_por_propulsor_kg: 408.9196837879866
+        descida_dias: 203.9367708769516
+        subida_dias: 176.8918883742853
+        empuxo_ida_dias: 396.94845234355694
+        empuxo_volta_dias: 260.77437962505456
+        folga_estada_dias: 11.1713407487631
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1004.3222285442091
+        total_empuxo_dias: 1038.5514912198482
         n_ativos: 8
         potencia_kw: 36.0
-        margem_falcon_heavy: 0.4322643906786834
+        margem_falcon_heavy: 0.41242940775086745
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-06-28'
+        pronto_no_encontro: '2030-07-18'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 8486.078257611116
-        xenonio_kg: 3446.1631576815635
-        xenonio_por_propulsor_kg: 382.9070175201737
-        descida_dias: 181.71151863629817
-        subida_dias: 158.25222861170153
-        empuxo_ida_dias: 376.78865404150804
-        empuxo_volta_dias: 249.95094498464886
-        folga_estada_dias: 52.03625275200028
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 8604.31668822365
+        xenonio_kg: 3542.040996453152
+        xenonio_por_propulsor_kg: 393.56011071701687
+        descida_dias: 196.2766315920786
+        subida_dias: 170.24759123510592
+        empuxo_ida_dias: 382.0385348196542
+        empuxo_volta_dias: 250.97934334364018
+        folga_estada_dias: 25.475777172815526
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 966.7033462741565
+        total_empuxo_dias: 999.542100990479
         n_ativos: 9
         potencia_kw: 40.5
-        margem_falcon_heavy: 0.32266702109458256
+        margem_falcon_heavy: 0.3044912520632983
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-06-06'
+        pronto_no_encontro: '2030-06-26'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 9135.43591892831
-        xenonio_kg: 3709.8647617272845
-        xenonio_por_propulsor_kg: 370.98647617272843
-        descida_dias: 176.05453254803214
-        subida_dias: 153.32556979330647
-        empuxo_ida_dias: 365.05858766968083
-        empuxo_volta_dias: 242.169550447095
-        folga_estada_dias: 62.61989765866144
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 9261.860399209918
+        xenonio_kg: 3812.7245226024115
+        xenonio_por_propulsor_kg: 381.27245226024115
+        descida_dias: 190.14852016418044
+        subida_dias: 164.93215352376245
+        empuxo_ida_dias: 370.11060080053227
+        empuxo_volta_dias: 243.14331431850874
+        folga_estada_dias: 36.91932631205714
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 936.6082404581144
+        total_empuxo_dias: 968.3345888069839
         n_ativos: 10
         potencia_kw: 45.0
-        margem_falcon_heavy: 0.22865027453301145
+        margem_falcon_heavy: 0.21187918689937124
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-05-20'
+        pronto_no_encontro: '2030-06-08'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 9784.793580245505
-        xenonio_kg: 3973.5663657730056
-        xenonio_por_propulsor_kg: 361.23330597936416
-        descida_dias: 171.4260893849054
-        subida_dias: 149.29466712371047
-        empuxo_ida_dias: 355.461260638186
-        empuxo_volta_dias: 235.80295491636912
-        folga_estada_dias: 71.27924349138408
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 9919.404110196509
+        xenonio_kg: 4083.408048752721
+        xenonio_por_propulsor_kg: 371.2189135229746
+        descida_dias: 185.13461081408792
+        subida_dias: 160.58315903266848
+        empuxo_ida_dias: 360.35138205762604
+        empuxo_volta_dias: 236.7320178434089
+        folga_estada_dias: 46.282230153243574
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 911.984972063171
+        total_empuxo_dias: 942.8011697477914
         n_ativos: 11
         potencia_kw: 49.5
-        margem_falcon_heavy: 0.1471121754096707
+        margem_falcon_heavy: 0.13154537561708857
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-05-05'
+        pronto_no_encontro: '2030-05-24'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
-      - orbitador_injetado_kg: 10434.1512415627
-        xenonio_kg: 4237.267969818729
-        xenonio_por_propulsor_kg: 353.1056641515608
-        descida_dias: 167.56905341563322
-        subida_dias: 145.93558156571382
-        empuxo_ida_dias: 347.4634881119403
-        empuxo_volta_dias: 230.49745864076436
-        folga_estada_dias: 78.49536501865299
-        dv_espiral_km_s: 3.1203603392907455
+      - orbitador_injetado_kg: 10576.947821182795
+        xenonio_kg: 4354.091574902049
+        xenonio_por_propulsor_kg: 362.84096457517074
+        descida_dias: 180.9563530223389
+        subida_dias: 156.95899695675232
+        empuxo_ida_dias: 352.21869977186077
+        empuxo_volta_dias: 231.38927078081906
+        folga_estada_dias: 54.08465002090878
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 891.4655817340517
+        total_empuxo_dias: 921.5233205317711
         n_ativos: 12
         potencia_kw: 54.0
-        margem_falcon_heavy: 0.07572293998001967
+        margem_falcon_heavy: 0.06119988861917425
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-04-24'
+        pronto_no_encontro: '2030-05-12'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
       eletrico_primeiro_que_fecha:
-        orbitador_injetado_kg: 7187.362934976729
-        xenonio_kg: 2918.7599495901204
-        xenonio_por_propulsor_kg: 416.9657070843029
-        descida_dias: 197.87433603134386
-        subida_dias: 172.32839666425903
-        empuxo_ida_dias: 410.3031293895856
-        empuxo_volta_dias: 272.18350080623117
-        folga_estada_dias: 21.79726730439711
-        dv_espiral_km_s: 3.1203603392907455
+        orbitador_injetado_kg: 7946.772977237388
+        xenonio_kg: 3271.357470303893
+        xenonio_por_propulsor_kg: 408.9196837879866
+        descida_dias: 203.9367708769516
+        subida_dias: 176.8918883742853
+        empuxo_ida_dias: 396.94845234355694
+        empuxo_volta_dias: 260.77437962505456
+        folga_estada_dias: 11.1713407487631
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 1052.6893628914197
-        n_ativos: 7
-        potencia_kw: 31.5
-        margem_falcon_heavy: 0.561665377317744
+        total_empuxo_dias: 1038.5514912198482
+        n_ativos: 8
+        potencia_kw: 36.0
+        margem_falcon_heavy: 0.41242940775086745
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-07-26'
+        pronto_no_encontro: '2030-07-18'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0
       eletrico_maior_n:
-        orbitador_injetado_kg: 10434.1512415627
-        xenonio_kg: 4237.267969818729
-        xenonio_por_propulsor_kg: 353.1056641515608
-        descida_dias: 167.56905341563322
-        subida_dias: 145.93558156571382
-        empuxo_ida_dias: 347.4634881119403
-        empuxo_volta_dias: 230.49745864076436
-        folga_estada_dias: 78.49536501865299
-        dv_espiral_km_s: 3.1203603392907455
+        orbitador_injetado_kg: 10576.947821182795
+        xenonio_kg: 4354.091574902049
+        xenonio_por_propulsor_kg: 362.84096457517074
+        descida_dias: 180.9563530223389
+        subida_dias: 156.95899695675232
+        empuxo_ida_dias: 352.21869977186077
+        empuxo_volta_dias: 231.38927078081906
+        folga_estada_dias: 54.08465002090878
+        dv_espiral_km_s: 3.289747501945736
         dv_heliocentrico_km_s: 6.220939231805356
-        total_empuxo_dias: 891.4655817340517
+        total_empuxo_dias: 921.5233205317711
         n_ativos: 12
         potencia_kw: 54.0
-        margem_falcon_heavy: 0.07572293998001967
+        margem_falcon_heavy: 0.06119988861917425
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
         fecha_estada_e_lancador: true
-        pronto_no_encontro: '2030-04-24'
+        pronto_no_encontro: '2030-05-12'
         pronto_antes_do_ultimo_lancamento: false
         ida_referencia_dias: 300.0
         volta_referencia_dias: 319.0

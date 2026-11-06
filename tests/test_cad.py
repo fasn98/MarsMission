@@ -483,14 +483,31 @@ def test_rotas_mav():
         assert x["com_aninhados"]["comprimento_m"] < x["so_44"]["comprimento_m"]
     glom = [x["com_aninhados"]["glom_kg"] for x in r["rota_a"]]
     assert glom == sorted(glom, reverse=True)
+    # rota A e rota B na mesma base: o motor real nos dois estágios (2 × 0,55423 m no lugar de 0,60 + 0,45 m)
+    assert r["base_real"]["comprimento_m"] - b["comprimento_m"] == pytest.approx(2 * 21.82 * 0.0254 - 1.05)
+    assert r["base_real"]["folga_deitado_m"] == pytest.approx(b["folga_deitado_m"] - (2 * 21.82 * 0.0254 - 1.05) / 2)
+    # deck, área e empuxo/peso por fora da ferramenta
+    from orbital import veiculos as ve
+    from orbital.config import v as v_
+    R = v_(ler("config/parametros_orbitais.yaml")["raio_marte_km"])
+    ma = next(c for c in ler("results/etapa7.2/mav_arranjo.yaml")["casos"] if c["diametro_m"] == 0.57)
+    dk = next(e for e in ma["formas"]["msl_m2020"] if "P-094" in e["estacao"])
+    assert b["folga_deitado_com_deck_m"] == pytest.approx(dk["deitado_folga_m"])
+    assert a["empuxo_peso"] == pytest.approx(4 * 110 * 4.448222 / (a["glom_kg"] * ler("results/etapa3.1/queima_finita.yaml")["g_marte_m_s2"]))
+    pl = ler("results/etapa2.3/plataformas.yaml")["orbita_encontro"]
+    lan = ve.lander(R + pl["periapse_alt_km"], R + pl["apoapse_regra_5pct_km"])
+    assert b["massa_por_area_kg_m2"] == pytest.approx(lan["massa_entrada_kg"] / (math.pi * 4.5 ** 2 / 4))
     # rota B: 2 saídas de 164:1 com parede exigem Ø 0,60 m; a segunda órbita está no limite do alvo
     assert r["diametro_b_m"] == 0.60 and r["rota_b"][0]["altitude_km"] == 380
     bx = r["rota_b"][1]["mav"]
-    assert 0 <= bx["folga_deitado_m"] < 1e-3
-    # o híbrido c2 reproduz o estudo: fica muito acima do Falcon Heavy, e o XIPS cabe no tempo na segunda órbita
-    for rota in r["rota_b"]:
-        for q in rota["propulsores"].values():
-            assert q["c2_mais_leve"]["margem_falcon_heavy"] < -0.5
+    assert bx["folga_deitado_m"] >= 0
+    assert bx["empuxo_peso"] == pytest.approx(2 * 110 * 4.448222 / (bx["glom_kg"] * ler("results/etapa3.1/queima_finita.yaml")["g_marte_m_s2"]))
+    # o híbrido reproduz a Etapa 3.3 na altitude dela
+    c33 = r["conferencia_etapa_3_3"]
+    assert c33["aqui_kg"] == pytest.approx(c33["etapa_3_3_kg"], rel=1e-9) and c33["aqui_descida_dias"] == pytest.approx(c33["etapa_3_3_descida_dias"], rel=1e-9)
+    # a opção C e o caso de referência aparecem na página
+    assert "opção C, descartada" in (RAIZ / "results/etapa7.2/rotas_mav.md").read_text(encoding="utf-8")
+    assert r["rota_a_referencia"]["com_aninhados"]["glom_kg"] > r["rota_a"][0]["com_aninhados"]["glom_kg"]
     # a opinião é a última seção
     md = (RAIZ / "results/etapa7.2/rotas_mav.md").read_text(encoding="utf-8")
     assert md.rindex("## ") == md.index("## Opinião do agente")

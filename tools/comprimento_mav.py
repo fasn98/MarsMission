@@ -209,10 +209,10 @@ def main():
     fino_passos = amostra["passos_bissecao"] * 2
     lim_fh2 = bissecao(fh_ok, h_baixa, float(ha0), passos=fino_passos)
     lim_v2 = bissecao(lambda ha: orbitador(R + hp0, R + ha)[0] is not None, h_baixa, float(ha0), passos=fino_passos)
-    ras = sorted(x["apoapse_km"] for x in orbitas if x["periapse_km"] == hp0 and not x["diverge"])
+    ras = sorted(x["apoapse_km"] for x in orbitas if x["periapse_km"] == hp0)
     meios = [math.sqrt(a * b) for a, b in zip(ras, ras[1:])]
     pts = [ponto(hp0, h) for h in meios]
-    ref_l = {x["apoapse_km"]: x["comprimento_m"] for x in orbitas if x["periapse_km"] == hp0 and not x["diverge"]}
+    ref_l = {x["apoapse_km"]: x["comprimento_m"] for x in orbitas if x["periapse_km"] == hp0}
     todos = sorted(list(ref_l.items()) + [(x["apoapse_km"], x["comprimento_m"]) for x in pts])
     ex1, ex2 = amostra["exemplo_p086_m"], amostra["exemplo_p086_m"] / 2
     resolucao = {"passos_bissecao": {"passos": amostra["passos_bissecao"], "dobrado": fino_passos, "limite_fh_km": limite_fh, "limite_fh_dobrado_km": lim_fh2, "limite_fecha_km": limite_viavel, "limite_fecha_dobrado_km": lim_v2},
@@ -298,10 +298,10 @@ def escreve_md(o):
     rs = o["resolucao_amostragem"]
     pb, oa, dm_, ep = rs["passos_bissecao"], rs["orbitas_amostra"], rs["diametros_m"], rs["exemplo_p086_m"]
     md.append(f"| passos_bissecao | {pb['passos']} para {pb['dobrado']} passos | margem zero em {br(pb['limite_fh_km'], 0)} e {br(pb['limite_fh_dobrado_km'], 0)} km; deixa de fechar em {br(pb['limite_fecha_km'], 0)} e {br(pb['limite_fecha_dobrado_km'], 0)} km | {'não' if pb['limite_fh_km'] == pb['limite_fh_dobrado_km'] and pb['limite_fecha_km'] == pb['limite_fecha_dobrado_km'] else '**sim**'} |")
-    md.append(f"| orbitas_amostra | ponto médio geométrico entre as órbitas: {', '.join(br(x, 0) for x in oa['pontos_novos_km'])} km | comprimentos novos {', '.join(br(x) for x in oa['comprimentos_novos_m'])} m, {'em ordem entre os vizinhos' if oa['comprimento_monotono'] else 'FORA de ordem'}; os pontos existentes são recalculados iguais | {'não' if oa['comprimento_monotono'] else '**sim**'} |")
+    md.append(f"| orbitas_amostra | ponto médio geométrico entre as órbitas: {', '.join(br(x, 0) for x in oa['pontos_novos_km'])} km | comprimentos novos {', '.join(br(x) for x in oa['comprimentos_novos_m'])} m, {'em ordem entre os vizinhos' if oa['comprimento_monotono'] else 'FORA de ordem'} | {'não' if oa['comprimento_monotono'] else '**sim**'} |")
     for k, x in dm_["por_forma"].items():
         igual = br(x["melhor_folga_grade_m"]) == br(x["melhor_folga_fina_m"])
-        md.append(f"| diametros_m, {'4,5 m' if k == 'msl_m2020' else '4,65 m'} | {dm_['pontos']} para {dm_['dobrado']} diâmetros | melhor folga deitado na grade: {sg(x['melhor_folga_grade_m'])} m em Ø {br(x['melhor_d_grade_m'])} m; na fina: {sg(x['melhor_folga_fina_m'])} m em Ø {br(x['melhor_d_fina_m'])} m | {'não' if igual else '**sim, na folga máxima**; veja a nota'} |")
+        md.append(f"| grade de diâmetros (mav_alternativas; amostragem.diametros_m é parte dela), {'4,5 m' if k == 'msl_m2020' else '4,65 m'} | {dm_['pontos']} para {dm_['dobrado']} diâmetros | melhor folga deitado na grade: {sg(x['melhor_folga_grade_m'])} m em Ø {br(x['melhor_d_grade_m'])} m; na fina: {sg(x['melhor_folga_fina_m'])} m em Ø {br(x['melhor_d_fina_m'])} m | {'não' if igual else '**sim, na folga máxima**; veja a nota'} |")
     md.append(f"| exemplo_p086_m | {br(ep['valor'], 2)} para {br(ep['metade'], 2)} m | folga por metro: {br(ep['folga_por_metro_valor'], 3)} e {br(ep['folga_por_metro_metade'], 3)} m/m | {'não' if br(ep['folga_por_metro_valor'], 3) == br(ep['folga_por_metro_metade'], 3) else '**sim**'} |")
     md += ["", "**Nota sobre os diâmetros:** a tabela de alavancas mostra só os pontos da varredura, cujos valores não dependem da grade. O que a grade fina muda é onde cai o melhor diâmetro; a conclusão de que o diâmetro não faz o MAV caber no 4,5 m se mantém enquanto a folga máxima seguir negativa.", "",
            "## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", ""]

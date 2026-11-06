@@ -33,7 +33,10 @@ Investigação. Nenhuma premissa muda, a arquitetura não muda, e a decisão é 
 **Onde se procurou:**
 - [F228] PDF p. 22: 44:1 só nas cotas do desenho; sem Isp, massa ou empuxo próprios
 - [F106] e [F107]: não citam 44:1 (conferido nas citações do repositório; [F106] sem cópia local)
-- Busca no NTRS e na web por R-4D-11 com 44:1: [F239] e [F240] são os mais próximos e não nomeiam o R-4D-11
+- NTRS, cerca de 45 buscas (2026-11-06): só análogos de Ir-Re a 44:1, [F239], [F240], [F241] e [F243]; "R-4D-11" não retorna nada. R-4D do Apollo é de 40:1 [F242]
+- AIAA: arc.aiaa.org recusa o acesso (403); AIAA 92-3800 e AIAA 2010-6884 não lidos; IAC-10.C4.1.6, só o resumo, sem 44:1
+- Fichas do fabricante: rocket.com e l3harris.com recusam ou não acham (403 e 404); três PDFs arquivados no Internet Archive não abertos
+- Missões: nenhuma com 44:1 documentado. Apollo, 40:1; Orion, 164:1 [F107]; Cassini, ATV, Galileo e outras: sem razão de expansão em fonte primária lida
 - Páginas de terceiros (Wikipedia, Astronautix e catálogos) não contam como fonte primária e não dão o 44:1
 
 **Análogos da mesma classe e expansão (NÃO VALIDADO: não são o R-4D-11):**
@@ -43,6 +46,8 @@ Investigação. Nenhuma premissa muda, a arquitetura não muda, e a decisão é 
 | 440 N, Re | 308 | [F239] PDF p. 7: "Performance of 308 seconds at 44:1 area ratio was achieved" |
 | 440 N, Nb ("similar Nb engines", "the Nb engine") | 304 | [F239] PDF p. 7: "about 4 seconds higher than similar Nb engines" (308 − 4) e "about 10 seconds higher than the Nb engine" (314 − 10); calculado |
 | 440 N, Re, injetor de programa anterior | 314 | [F239] PDF p. 7: "Performance of 314 seconds at an area ratio of 44:1 was measured. This performance is about 10 seconds higher than the Nb engine" |
+| AJ10-221, 110 lbf, Ir-Re, testes | 310 | [F241] PDF p. 42, Tab. 2.2-3, "44:1 Performance for Injectors SN 6-1 and SN 6-2": de 308,1 a 310,3 s |
+| 445 N, Ir-Re, sem filme de combustível | 310 | [F243] PDF p. 8: "3033 ± 1.5 N-s/kg (309.5 ± 0.15 lbf sec/lbm) at E = 44:1" |
 | 490 N, três injetores | 309 | [F240] resumo no NTRS: "Three injectors with 44:1 area ratios are capable of nominal specific impulse values of 309 sec" (só o resumo; artigo não obtido) |
 
 Sensibilidade, com o MAV redimensionado para o mesmo Isp nos dois estágios e o comprimento do motor 44:1 nos dois:
@@ -52,6 +57,8 @@ Sensibilidade, com o MAV redimensionado para o mesmo Isp nos dois estágios e o 
 | 304 | 425,0 | 3,260 | 3,676 |
 | 308 | 398,8 | 3,181 | 3,597 |
 | 309 | 392,7 | 3,162 | 3,579 |
+| 310 | 389,7 | 3,153 | 3,570 |
+| 310 | 385,0 | 3,139 | 3,556 |
 | 314 | 364,5 | 3,077 | 3,493 |
 
 Massa do 44:1 sem fonte: fica a do catálogo.
@@ -129,9 +136,9 @@ Teste pedido pelo Fabio para aceitar os parâmetros de amostragem como tais, nã
 | Parâmetro | Como dobrei | Resultado | Muda nas casas mostradas? |
 | :- | :- | :- | :- |
 | passos_bissecao | 16 para 32 passos | margem zero em 10 824 e 10 824 km; deixa de fechar em 594 e 594 km | não |
-| orbitas_amostra | ponto médio geométrico entre as órbitas: 2 236, 7 071, 10 404, 16 760 km | comprimentos novos 3,127, 3,289, 3,351, 3,457 m, em ordem entre os vizinhos; os pontos existentes são recalculados iguais | não |
-| diametros_m, 4,5 m | 7 para 13 diâmetros | melhor folga deitado na grade: −0,176 m em Ø 0,600 m; na fina: −0,176 m em Ø 0,600 m | não |
-| diametros_m, 4,65 m | 7 para 13 diâmetros | melhor folga deitado na grade: +0,037 m em Ø 0,600 m; na fina: +0,037 m em Ø 0,600 m | não |
+| orbitas_amostra | ponto médio geométrico entre as órbitas: 771, 2 236, 7 071, 10 404, 16 760 km | comprimentos novos 3,040, 3,127, 3,289, 3,351, 3,457 m, em ordem entre os vizinhos | não |
+| grade de diâmetros (mav_alternativas; amostragem.diametros_m é parte dela), 4,5 m | 7 para 13 diâmetros | melhor folga deitado na grade: −0,176 m em Ø 0,600 m; na fina: −0,176 m em Ø 0,600 m | não |
+| grade de diâmetros (mav_alternativas; amostragem.diametros_m é parte dela), 4,65 m | 7 para 13 diâmetros | melhor folga deitado na grade: +0,037 m em Ø 0,600 m; na fina: +0,037 m em Ø 0,600 m | não |
 | exemplo_p086_m | 0,10 para 0,05 m | folga por metro: 0,500 e 0,500 m/m | não |
 
 **Nota sobre os diâmetros:** a tabela de alavancas mostra só os pontos da varredura, cujos valores não dependem da grade. O que a grade fina muda é onde cai o melhor diâmetro; a conclusão de que o diâmetro não faz o MAV caber no 4,5 m se mantém enquanto a folga máxima seguir negativa.
