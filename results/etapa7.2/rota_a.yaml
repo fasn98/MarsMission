@@ -71,15 +71,43 @@ arranjo_msl:
   fonte: procurado em [F244], [F214], [F45], [F227], [F226], [F215] e [F232]
 isp_minimo:
   limite_otimista_s: 310.59038711624453
-  real_por_fator_s:
-    '1.0': 316.19591385249805
-    '0.5': 316.1566586751178
-    '0.25': 316.2180966628148
-    '0.14': 316.282147912807
-  vao_menor_m: 0.005
-  real_vao_menor_s: 315.15927603479213
-  vao_maior_m: 0.05
-  real_vao_maior_s: 318.989494433863
+  linhas:
+  - fator: 1.0
+    vao_m: 0.02
+    por_geometria:
+      recesso_hemisferio: 316.12840493058684
+      recesso_livre: 313.7267688036627
+      antepara_assimetrica: 313.46437670334126
+  - fator: 0.5
+    vao_m: 0.02
+    por_geometria:
+      recesso_hemisferio: 316.14815699264
+      recesso_livre: 313.7608184583587
+      antepara_assimetrica: 313.4962477811314
+  - fator: 0.25
+    vao_m: 0.02
+    por_geometria:
+      recesso_hemisferio: 316.20678489895
+      recesso_livre: 313.86057864328905
+      antepara_assimetrica: 313.5901441703936
+  - fator: 0.14
+    vao_m: 0.02
+    por_geometria:
+      recesso_hemisferio: 316.274201268825
+      recesso_livre: 313.9753161922272
+      antepara_assimetrica: 313.6982295425332
+  - fator: 0.14
+    vao_m: 0.005
+    por_geometria:
+      recesso_hemisferio: 315.1065155138531
+      recesso_livre: 311.92220373321106
+      antepara_assimetrica: 311.7894011244607
+  - fator: 0.14
+    vao_m: 0.05
+    por_geometria:
+      recesso_hemisferio: 318.9670775054765
+      recesso_livre: 318.25285841783625
+      antepara_assimetrica: 317.8093156959221
   alvo_folga_m: 0.05
   comprimento_max_m: 2.6439999999999997
 ressalva_analogos: Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em
@@ -155,226 +183,490 @@ dimensionamento:
     glom_kg: 425.00186013137534
     so_44_m: 3.2596759969908713
     limite_otimista_m: 2.7634166600478256
-    real_m: 2.8547015943520235
     reducao_limite_m: 0.4962593369430457
-    reducao_real_m: 0.40497440263884776
-    fracao_que_sobra: 0.8160539711625124
-    folga_deck_real_m: -0.05535079717601188
-    folga_ombro_real_m: 0.1646492028239881
-    massa_tanques_kg: 33.767079611332825
-    por_fator:
-      '1.0':
-        comprimento_m: 2.8518226703107663
-        massa_tanques_kg: 27.791309725655932
-      '0.5':
-        comprimento_m: 2.85255859151639
-        massa_tanques_kg: 28.592497885219075
-      '0.25':
-        comprimento_m: 2.8534664461591177
-        massa_tanques_kg: 30.999934517935248
-      '0.14':
-        comprimento_m: 2.8547015943520235
-        massa_tanques_kg: 33.767079611332825
-    por_estagio:
-    - estagio: 1
-      inerte_kg: 76.9271560588966
-      tanques_kg: 23.565132955692054
-      parcela_do_inerte: 0.3063304840965423
-      motores_164_kg: 15.04
-      sobra_kg: 38.32202310320455
-      esfera_equivalente_m: 1.2001067010857245
-      volume_m3: 0.23567611187711096
-      vao_e_paredes_m: 0.024799333400767683
-      esboco: null
-    - estagio: 2
-      inerte_kg: 17.14327177131974
-      tanques_kg: 10.20194665564077
-      parcela_do_inerte: 0.5950991614511046
-      motores_164_kg: 3.76
-      sobra_kg: 3.1813251156789697
-      esfera_equivalente_m: 0.48943262576363616
-      volume_m3: 0.052520590164856544
-      vao_e_paredes_m: 0.024799333400767683
-      esboco:
-        comprimento_m: 0.5311188932662989
-        massa_kg: 10.20194665564077
-        raio_tanque_ao_redor_m: 0.23586825782573484
-        raio_esfera_m: 0.18432867929650879
-        raio_recesso_m: 0.20912801269727646
-        distancia_centros_m: 0.11092195614405534
-    por_vao:
-      '0.005': 2.8377733857028464
-      '0.01': 2.842980925765018
-      '0.02': 2.8547015943520235
-      '0.05': 2.891607229430312
+    por_geometria:
+      recesso_hemisferio:
+        real_m: 2.8537925308527705
+        reducao_real_m: 0.4058834661381008
+        fracao_que_sobra: 0.8178858026900618
+        folga_deck_real_m: -0.05489626542638537
+        folga_ombro_real_m: 0.1651037345736146
+        massa_tanques_kg: 33.822904496867075
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 76.9271560588966
+          tanques_kg: 23.565132955692054
+          parcela_do_inerte: 0.3063304840965423
+          motores_164_kg: 15.04
+          sobra_kg: 38.32202310320455
+          tanque_unico_m: 1.1753073676849568
+          volume_m3: 0.23567611187711096
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 17.14327177131974
+          tanques_kg: 10.257771541175021
+          parcela_do_inerte: 0.5983555343464843
+          motores_164_kg: 3.76
+          sobra_kg: 3.125500230144718
+          tanque_unico_m: 0.4646332923628685
+          volume_m3: 0.052520590164856544
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.5302098297670457
+            massa_kg: 10.257771541175021
+            raio_tanque_ao_redor_m: 0.2361965449960581
+            raio_esfera_m: 0.18445096868978184
+            raio_recesso_m: 0.2092503020905495
+            distancia_centros_m: 0.10956231608120573
+        por_vao:
+          '0.005': 2.836561650046022
+          '0.01': 2.8421836273882177
+          '0.02': 2.8537925308527705
+          '0.05': 2.89155303293787
+      recesso_livre:
+        real_m: 2.817307635958489
+        reducao_real_m: 0.4423683610323823
+        fracao_que_sobra: 0.8914056181942461
+        folga_deck_real_m: -0.03665381797924461
+        folga_ombro_real_m: 0.18334618202075537
+        massa_tanques_kg: 36.729124248441586
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 76.9271560588966
+          tanques_kg: 23.565132955692054
+          parcela_do_inerte: 0.3063304840965423
+          motores_164_kg: 15.04
+          sobra_kg: 38.32202310320455
+          tanque_unico_m: 1.1753073676849568
+          volume_m3: 0.23567611187711096
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 17.14327177131974
+          tanques_kg: 13.16399129274953
+          parcela_do_inerte: 0.7678809196020888
+          motores_164_kg: 3.76
+          sobra_kg: 0.21928047857020871
+          tanque_unico_m: 0.4646332923628685
+          volume_m3: 0.052520590164856544
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.49372493487276414
+            massa_kg: 13.16399129274953
+            raio_tanque_ao_redor_m: 0.24686246743638207
+            raio_esfera_m: 0.18432867929650879
+            raio_recesso_m: 0.20912801269727646
+            distancia_centros_m: 0.06250712284093413
+        por_vao:
+          '0.005': 2.7851561513447627
+          '0.01': 2.7959964486153326
+          '0.02': 2.817307635958489
+          '0.05': 2.8793483677173093
+      antepara_assimetrica:
+        real_m: 2.813015326849361
+        reducao_real_m: 0.44666067014151034
+        fracao_que_sobra: 0.9000549448458485
+        folga_deck_real_m: -0.03450766342468059
+        folga_ombro_real_m: 0.18549233657531938
+        massa_tanques_kg: 31.665840222291642
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 76.9271560588966
+          tanques_kg: 23.565132955692054
+          parcela_do_inerte: 0.3063304840965423
+          motores_164_kg: 15.04
+          sobra_kg: 38.32202310320455
+          tanque_unico_m: 1.1753073676849568
+          volume_m3: 0.23567611187711096
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 17.14327177131974
+          tanques_kg: 8.100707266599589
+          parcela_do_inerte: 0.47252982829986206
+          motores_164_kg: 3.76
+          sobra_kg: 5.282564504720151
+          tanque_unico_m: 0.4646332923628685
+          volume_m3: 0.052520590164856544
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.48943262576363616
+            massa_kg: 8.100707266599589
+            altura_calota_m: 0.0003081497244540078
+            raio_calota_m: 87.57288221638134
+            t_flambagem_no_raio_da_calota_m: 1.0506623101745494
+        por_vao:
+          '0.005': 2.7830153268493607
+          '0.01': 2.7930153268493614
+          '0.02': 2.813015326849361
+          '0.05': 2.8730153268493606
   - isp_s: 308
     glom_kg: 398.8367236355515
     so_44_m: 3.180902215281914
     limite_otimista_m: 2.6884680801610057
-    real_m: 2.7786503641852587
     reducao_limite_m: 0.4924341351209085
-    reducao_real_m: 0.4022518510966555
-    fracao_que_sobra: 0.8168642716002815
-    folga_deck_real_m: -0.017325182092629454
-    folga_ombro_real_m: 0.20267481790737052
-    massa_tanques_kg: 32.728613109637806
-    por_fator:
-      '1.0':
-        comprimento_m: 2.7759670810733534
-        massa_tanques_kg: 26.79649002350978
-      '0.5':
-        comprimento_m: 2.776567990677382
-        massa_tanques_kg: 27.593502975717215
-      '0.25':
-        comprimento_m: 2.777445021522843
-        massa_tanques_kg: 29.982405575532646
-      '0.14':
-        comprimento_m: 2.7786503641852587
-        massa_tanques_kg: 32.728613109637806
-    por_estagio:
-    - estagio: 1
-      inerte_kg: 71.61993522127702
-      tanques_kg: 22.780427402509606
-      parcela_do_inerte: 0.3180738342212566
-      motores_164_kg: 15.04
-      sobra_kg: 33.79950781876742
-      esfera_equivalente_m: 1.1316702017374602
-      volume_m3: 0.21941676685562406
-      vao_e_paredes_m: 0.024799333400767683
-      esboco: null
-    - estagio: 2
-      inerte_kg: 16.43251121489984
-      tanques_kg: 9.948185707128204
-      parcela_do_inerte: 0.6053965566813605
-      motores_164_kg: 3.76
-      sobra_kg: 2.7243255077716366
-      esfera_equivalente_m: 0.4829205452250807
-      volume_m3: 0.05034308493790642
-      vao_e_paredes_m: 0.024799333400767683
-      esboco:
-        comprimento_m: 0.5235041624477985
-        massa_kg: 9.948185707128204
-        raio_tanque_ao_redor_m: 0.23287900101105807
-        raio_esfera_m: 0.18174521568149307
-        raio_recesso_m: 0.20654454908226075
-        distancia_centros_m: 0.10887994575524737
-    por_vao:
-      '0.005': 2.761013418227833
-      '0.01': 2.767400946936093
-      '0.02': 2.7786503641852587
-      '0.05': 2.8163614787614986
+    por_geometria:
+      recesso_hemisferio:
+        real_m: 2.778005094689221
+        reducao_real_m: 0.402897120592693
+        fracao_que_sobra: 0.8181746387133961
+        folga_deck_real_m: -0.017002547344610708
+        folga_ombro_real_m: 0.20299745265538927
+        massa_tanques_kg: 32.76888896594318
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 71.61993522127702
+          tanques_kg: 22.780427402509606
+          parcela_do_inerte: 0.3180738342212566
+          motores_164_kg: 15.04
+          sobra_kg: 33.79950781876742
+          tanque_unico_m: 1.1068708683366926
+          volume_m3: 0.21941676685562406
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 16.43251121489984
+          tanques_kg: 9.988461563433567
+          parcela_do_inerte: 0.6078475427649023
+          motores_164_kg: 3.76
+          sobra_kg: 2.684049651466273
+          tanque_unico_m: 0.45812121182431303
+          volume_m3: 0.05034308493790642
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.5228588929517607
+            massa_kg: 9.988461563433567
+            raio_tanque_ao_redor_m: 0.2331116720078454
+            raio_esfera_m: 0.1818657911244507
+            raio_recesso_m: 0.20666512452521837
+            distancia_centros_m: 0.10788142981946464
+        por_vao:
+          '0.005': 2.7607441261825376
+          '0.01': 2.7663733744867227
+          '0.02': 2.778005094689221
+          '0.05': 2.8158213013195557
+      recesso_livre:
+        real_m: 2.7423376430655764
+        reducao_real_m: 0.4385645722163378
+        fracao_que_sobra: 0.890605546889344
+        folga_deck_real_m: 0.0008311784672117017
+        folga_ombro_real_m: 0.22083117846721168
+        massa_tanques_kg: 35.575104201377954
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 71.61993522127702
+          tanques_kg: 22.780427402509606
+          parcela_do_inerte: 0.3180738342212566
+          motores_164_kg: 15.04
+          sobra_kg: 33.79950781876742
+          tanque_unico_m: 1.1068708683366926
+          volume_m3: 0.21941676685562406
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 16.43251121489984
+          tanques_kg: 12.794676798868348
+          parcela_do_inerte: 0.7786196906573257
+          motores_164_kg: 3.76
+          sobra_kg: -0.12216558396850807
+          tanque_unico_m: 0.45812121182431303
+          volume_m3: 0.05034308493790642
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.4871914413281162
+            massa_kg: 12.794676798868348
+            raio_tanque_ao_redor_m: 0.2435957206640581
+            raio_esfera_m: 0.18174521568149307
+            raio_recesso_m: 0.20654454908226075
+            distancia_centros_m: 0.06182205778971459
+        por_vao:
+          '0.005': 2.7102051815060424
+          '0.01': 2.721036373059572
+          '0.02': 2.7423376430655764
+          '0.05': 2.804338544046736
+      antepara_assimetrica:
+        real_m: 2.738066746962541
+        reducao_real_m: 0.44283546831937315
+        fracao_que_sobra: 0.8992785770438979
+        folga_deck_real_m: 0.002966626518729365
+        folga_ombro_real_m: 0.22296662651872934
+        massa_tanques_kg: 30.655654565789455
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 71.61993522127702
+          tanques_kg: 22.780427402509606
+          parcela_do_inerte: 0.3180738342212566
+          motores_164_kg: 15.04
+          sobra_kg: 33.79950781876742
+          tanque_unico_m: 1.1068708683366926
+          volume_m3: 0.21941676685562406
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 16.43251121489984
+          tanques_kg: 7.875227163279847
+          parcela_do_inerte: 0.47924672378371164
+          motores_164_kg: 3.76
+          sobra_kg: 4.797284051619993
+          tanque_unico_m: 0.45812121182431303
+          volume_m3: 0.05034308493790642
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.4829205452250807
+            massa_kg: 7.875227163279847
+            altura_calota_m: 0.000303830843614942
+            raio_calota_m: 86.34550210531268
+            t_flambagem_no_raio_da_calota_m: 1.0359367240076882
+        por_vao:
+          '0.005': 2.708066746962541
+          '0.01': 2.7180667469625415
+          '0.02': 2.738066746962541
+          '0.05': 2.7980667469625407
   - isp_s: 309
     glom_kg: 392.7253618642498
     so_44_m: 3.1624548812839532
     limite_otimista_m: 2.6709453301947645
-    real_m: 2.760946323688275
     reducao_limite_m: 0.4915095510891887
-    reducao_real_m: 0.4015085575956783
-    fracao_que_sobra: 0.8168886173339509
-    folga_deck_real_m: -0.0084731618441376
-    folga_ombro_real_m: 0.21152683815586237
-    massa_tanques_kg: 32.48008365897388
-    por_fator:
-      '1.0':
-        comprimento_m: 2.7582803672119294
-        massa_tanques_kg: 26.560852517021154
-      '0.5':
-        comprimento_m: 2.7588798210888963
-        massa_tanques_kg: 27.356071714405672
-      '0.25':
-        comprimento_m: 2.7597488846049263
-        massa_tanques_kg: 29.739762194742482
-      '0.14':
-        comprimento_m: 2.760946323688275
-        massa_tanques_kg: 32.48008365897388
-    por_estagio:
-    - estagio: 1
-      inerte_kg: 70.383118566762
-      tanques_kg: 22.59755638079011
-      parcela_do_inerte: 0.3210650059410932
-      motores_164_kg: 15.04
-      sobra_kg: 32.745562185971885
-      esfera_equivalente_m: 1.115721477393703
-      volume_m3: 0.21562762196616803
-      vao_e_paredes_m: 0.024799333400767683
-      esboco: null
-    - estagio: 2
-      inerte_kg: 16.26371466201546
-      tanques_kg: 9.882527278183773
-      parcela_do_inerte: 0.6076426870218524
-      motores_164_kg: 3.76
-      sobra_kg: 2.6211873838316873
-      esfera_equivalente_m: 0.4813465196025966
-      volume_m3: 0.049825955261988165
-      vao_e_paredes_m: 0.024799333400767683
-      esboco:
-        comprimento_m: 0.5217488462945715
-        massa_kg: 9.882527278183773
-        raio_tanque_ao_redor_m: 0.2321252501161441
-        raio_esfera_m: 0.18112077040617525
-        raio_recesso_m: 0.20592010380694292
-        distancia_centros_m: 0.10850282577225218
-    por_vao:
-      '0.005': 2.743494005510495
-      '0.01': 2.7498180506169594
-      '0.02': 2.760946323688275
-      '0.05': 2.7983887833332624
+    por_geometria:
+      recesso_hemisferio:
+        real_m: 2.760263016334913
+        reducao_real_m: 0.40219186494904013
+        fracao_que_sobra: 0.8182788392571011
+        folga_deck_real_m: -0.00813150816745667
+        folga_ombro_real_m: 0.2118684918325433
+        massa_tanques_kg: 32.52241854158553
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 70.383118566762
+          tanques_kg: 22.59755638079011
+          parcela_do_inerte: 0.3210650059410932
+          motores_164_kg: 15.04
+          sobra_kg: 32.745562185971885
+          tanque_unico_m: 1.0909221439929353
+          volume_m3: 0.21562762196616803
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 16.26371466201546
+          tanques_kg: 9.924862160795422
+          parcela_do_inerte: 0.6102457136668369
+          motores_164_kg: 3.76
+          sobra_kg: 2.5788525012200374
+          tanque_unico_m: 0.45654718620182894
+          volume_m3: 0.049825955261988165
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.52106553894121
+            massa_kg: 9.924862160795422
+            raio_tanque_ao_redor_m: 0.2323722239230319
+            raio_esfera_m: 0.1812409315726668
+            raio_recesso_m: 0.20604026497343447
+            distancia_centros_m: 0.10745238344551139
+        por_vao:
+          '0.005': 2.7430155467347888
+          '0.01': 2.7486341434027417
+          '0.02': 2.760263016334913
+          '0.05': 2.798120030371704
+      recesso_livre:
+        real_m: 2.72481052866807
+        reducao_real_m: 0.4376443526158833
+        fracao_que_sobra: 0.8904086434252605
+        folga_deck_real_m: 0.009594735665964915
+        folga_ombro_real_m: 0.2295947356659649
+        massa_tanques_kg: 35.30400961797762
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 70.383118566762
+          tanques_kg: 22.59755638079011
+          parcela_do_inerte: 0.3210650059410932
+          motores_164_kg: 15.04
+          sobra_kg: 32.745562185971885
+          tanque_unico_m: 1.0909221439929353
+          volume_m3: 0.21562762196616803
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 16.26371466201546
+          tanques_kg: 12.706453237187512
+          parcela_do_inerte: 0.7812762029614261
+          motores_164_kg: 3.76
+          sobra_kg: -0.2027385751720523
+          tanque_unico_m: 0.45654718620182894
+          volume_m3: 0.049825955261988165
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.4856130512743666
+            massa_kg: 12.706453237187512
+            raio_tanque_ao_redor_m: 0.2428065256371833
+            raio_esfera_m: 0.18112077040617525
+            raio_recesso_m: 0.20592010380694292
+            distancia_centros_m: 0.06165369576029564
+        por_vao:
+          '0.005': 2.6926832462547017
+          '0.01': 2.7035156264785236
+          '0.02': 2.72481052866807
+          '0.05': 2.7868012083949205
+      antepara_assimetrica:
+        real_m: 2.7205439969963
+        reducao_real_m: 0.44191088428765335
+        fracao_que_sobra: 0.8990891088654852
+        folga_deck_real_m: 0.011728001501849938
+        folga_ombro_real_m: 0.2317280015018499
+        massa_tanques_kg: 30.418760660671577
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 70.383118566762
+          tanques_kg: 22.59755638079011
+          parcela_do_inerte: 0.3210650059410932
+          motores_164_kg: 15.04
+          sobra_kg: 32.745562185971885
+          tanque_unico_m: 1.0909221439929353
+          volume_m3: 0.21562762196616803
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 16.26371466201546
+          tanques_kg: 7.821204279881466
+          parcela_do_inerte: 0.4808990099997385
+          motores_164_kg: 3.76
+          sobra_kg: 4.682510382133993
+          tanque_unico_m: 0.45654718620182894
+          volume_m3: 0.049825955261988165
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.4813465196025966
+            massa_kg: 7.821204279881466
+            altura_calota_m: 0.00030278693313796033
+            raio_calota_m: 86.04883382366124
+            t_flambagem_no_raio_da_calota_m: 1.0323774237509575
+        por_vao:
+          '0.005': 2.6905439969962996
+          '0.01': 2.7005439969963003
+          '0.02': 2.7205439969963
+          '0.05': 2.7805439969962995
   - isp_s: 314
     glom_kg: 364.4544701939408
     so_44_m: 3.076851244779724
     limite_otimista_m: 2.589788342603091
-    real_m: 2.6782328673759284
     reducao_limite_m: 0.48706290217663284
-    reducao_real_m: 0.3986183774037957
-    fracao_que_sobra: 0.8184125204822871
-    folga_deck_real_m: 0.032883566312035706
-    folga_ombro_real_m: 0.2528835663120357
-    massa_tanques_kg: 31.365396380334403
-    por_fator:
-      '1.0':
-        comprimento_m: 2.6766887153597416
-        massa_tanques_kg: 25.451913418648655
-      '0.5':
-        comprimento_m: 2.6774217391401227
-        massa_tanques_kg: 26.234545108323438
-      '0.25':
-        comprimento_m: 2.6782496835668903
-        massa_tanques_kg: 28.589065164945236
-      '0.14':
-        comprimento_m: 2.6782328673759284
-        massa_tanques_kg: 31.365396380334403
-    por_estagio:
-    - estagio: 1
-      inerte_kg: 64.67648280431189
-      tanques_kg: 21.753794851018785
-      parcela_do_inerte: 0.3363478332122366
-      motores_164_kg: 15.04
-      sobra_kg: 27.882687953293107
-      esfera_equivalente_m: 1.042134531120545
-      volume_m3: 0.19814461859914612
-      vao_e_paredes_m: 0.024799333400767683
-      esboco: null
-    - estagio: 2
-      inerte_kg: 15.46804534029446
-      tanques_kg: 9.611601529315617
-      parcela_do_inerte: 0.6213843648542502
-      motores_164_kg: 3.76
-      sobra_kg: 2.096443810978842
-      esfera_equivalente_m: 0.47377647828408176
-      volume_m3: 0.04738832124963066
-      vao_e_paredes_m: 0.024799333400767683
-      esboco:
-        comprimento_m: 0.5126223362553837
-        massa_kg: 9.611601529315617
-        raio_tanque_ao_redor_m: 0.2287496051991879
-        raio_esfera_m: 0.1782357628144814
-        raio_recesso_m: 0.20303509621524907
-        distancia_centros_m: 0.10563696824171434
-    por_vao:
-      '0.005': 2.66139736196657
-      '0.01': 2.6674657376910043
-      '0.02': 2.6782328673759284
-      '0.05': 2.716517418291718
+    por_geometria:
+      recesso_hemisferio:
+        real_m: 2.67811731140702
+        reducao_real_m: 0.398733933372704
+        fracao_que_sobra: 0.8186497710887116
+        folga_deck_real_m: 0.03294134429648987
+        folga_ombro_real_m: 0.25294134429648985
+        massa_tanques_kg: 31.371940636951614
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 64.67648280431189
+          tanques_kg: 21.753794851018785
+          parcela_do_inerte: 0.3363478332122366
+          motores_164_kg: 15.04
+          sobra_kg: 27.882687953293107
+          tanque_unico_m: 1.0173351977197773
+          volume_m3: 0.19814461859914612
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 15.46804534029446
+          tanques_kg: 9.61814578593283
+          parcela_do_inerte: 0.6218074471812826
+          motores_164_kg: 3.76
+          sobra_kg: 2.0898995543616294
+          tanque_unico_m: 0.4489771448833141
+          volume_m3: 0.04738832124963066
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.5125067802864751
+            massa_kg: 9.61814578593283
+            raio_tanque_ao_redor_m: 0.22879225831233438
+            raio_esfera_m: 0.1782357628144814
+            raio_recesso_m: 0.20303509621524907
+            distancia_centros_m: 0.10547875915965942
+        por_vao:
+          '0.005': 2.6608378854321804
+          '0.01': 2.66647367218068
+          '0.02': 2.67811731140702
+          '0.05': 2.716071417600403
+      recesso_livre:
+        real_m: 2.6436233805111797
+        reducao_real_m: 0.4332278642685443
+        fracao_que_sobra: 0.8894700506495046
+        folga_deck_real_m: 0.05018830974441002
+        folga_ombro_real_m: 0.27018830974441
+        massa_tanques_kg: 34.0378336550878
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 64.67648280431189
+          tanques_kg: 21.753794851018785
+          parcela_do_inerte: 0.3363478332122366
+          motores_164_kg: 15.04
+          sobra_kg: 27.882687953293107
+          tanque_unico_m: 1.0173351977197773
+          volume_m3: 0.19814461859914612
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 15.46804534029446
+          tanques_kg: 12.284038804069018
+          parcela_do_inerte: 0.7941558570473631
+          motores_164_kg: 3.76
+          sobra_kg: -0.5759934637745587
+          tanque_unico_m: 0.4489771448833141
+          volume_m3: 0.04738832124963066
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.4780128493906347
+            massa_kg: 12.284038804069018
+            raio_tanque_ao_redor_m: 0.23900642469531735
+            raio_esfera_m: 0.17811759404882527
+            raio_recesso_m: 0.20291692744959294
+            distancia_centros_m: 0.06087111859632906
+        por_vao:
+          '0.005': 2.6115213345789656
+          '0.01': 2.62234207356045
+          '0.02': 2.6436233805111797
+          '0.05': 2.705565687527445
+      antepara_assimetrica:
+        real_m: 2.6393870094046266
+        reducao_real_m: 0.4374642353750975
+        fracao_que_sobra: 0.8981678411969293
+        folga_deck_real_m: 0.052306495297686606
+        folga_ombro_real_m: 0.2723064952976866
+        massa_tanques_kg: 29.31778154232231
+        por_estagio:
+        - estagio: 1
+          inerte_kg: 64.67648280431189
+          tanques_kg: 21.753794851018785
+          parcela_do_inerte: 0.3363478332122366
+          motores_164_kg: 15.04
+          sobra_kg: 27.882687953293107
+          tanque_unico_m: 1.0173351977197773
+          volume_m3: 0.19814461859914612
+          vao_e_paredes_m: 0.024799333400767683
+          geometria: null
+        - estagio: 2
+          inerte_kg: 15.46804534029446
+          tanques_kg: 7.563986691303526
+          parcela_do_inerte: 0.4890072743450811
+          motores_164_kg: 3.76
+          sobra_kg: 4.144058648990933
+          tanque_unico_m: 0.4489771448833141
+          volume_m3: 0.04738832124963066
+          vao_e_paredes_m: 0.024799333400767683
+          geometria:
+            comprimento_m: 0.47377647828408176
+            massa_kg: 7.563986691303526
+            altura_calota_m: 0.0002977664014955916
+            raio_calota_m: 84.62205199882006
+            t_flambagem_no_raio_da_calota_m: 1.0152595003680238
+        por_vao:
+          '0.005': 2.6093870094046263
+          '0.01': 2.619387009404627
+          '0.02': 2.6393870094046266
+          '0.05': 2.699387009404626
   massa_tanques_atual_kg: 19.8705533692267
   fatores:
   - 1.0
@@ -386,6 +678,12 @@ dimensionamento:
   - 0.01
   - 0.02
   - 0.05
+  geometrias:
+    recesso_hemisferio: esfera em recesso de outra, recesso de até um hemisfério
+    recesso_livre: esfera em recesso de outra, sem limite de recesso (um recesso além
+      do hemisfério prende a esfera)
+    antepara_assimetrica: esfera de volume somado, dividida no equador por antepara
+      de calota (lente e tigela)
 adaptador:
   casos:
   - nome: 1575 mm, clampband

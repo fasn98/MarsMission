@@ -35,19 +35,22 @@ Com as 4 saídas de 44:1 (0,369 m, com parede de 0,01 m de cada lado), o menor �
 
 Comprimento máximo: 2,644 m, em Ø 0,57 m. MAV redimensionado para cada Isp, nos dois estágios.
 
-| Comprimento usado | Isp mínimo (s) |
-| :- | -: |
-| Tanques aninhados, limite otimista | 310,6 |
-| Tanques dimensionados, vão de 0,02 m, fator de flambagem 1,00 (NÃO VALIDADO) | 316,2 |
-| Tanques dimensionados, vão de 0,02 m, fator de flambagem 0,50 (NÃO VALIDADO) | 316,2 |
-| Tanques dimensionados, vão de 0,02 m, fator de flambagem 0,25 (NÃO VALIDADO) | 316,2 |
-| Tanques dimensionados, vão de 0,02 m, fator de flambagem 0,14 (NÃO VALIDADO) | 316,3 |
-| Tanques dimensionados, vão de 0,005 m, fator de flambagem 0,14 (NÃO VALIDADO) | 315,2 |
-| Tanques dimensionados, vão de 0,050 m, fator de flambagem 0,14 (NÃO VALIDADO) | 319,0 |
+Colunas: a geometria do estágio 2 (seção 4), que é uma escolha do Fabio. **recesso_hemisferio**: esfera em recesso de outra, recesso de até um hemisfério; **recesso_livre**: esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera); **antepara_assimetrica**: esfera de volume somado, dividida no equador por antepara de calota (lente e tigela).
 
-Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte. Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em [F240], só o resumo cita essa tecnologia. Com os tanques dimensionados, todos os valores da tabela ficam acima do topo dessa faixa; só o limite otimista fica dentro.
+Limite otimista, sem tanques dimensionados: 310,6 s.
 
-**Estes valores são um piso.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe.
+| Vão (m) | Fator de flambagem (NÃO VALIDADO) | recesso_hemisferio | recesso_livre | antepara_assimetrica |
+| -: | -: | -: | -: | -: |
+| 0,020 | 1,00 | 316,1 | 313,7 | 313,5 |
+| 0,020 | 0,50 | 316,1 | 313,8 | 313,5 |
+| 0,020 | 0,25 | 316,2 | 313,9 | 313,6 |
+| 0,020 | 0,14 | 316,3 | 314,0 | 313,7 |
+| 0,005 | 0,14 | 315,1 | 311,9 | 311,8 |
+| 0,050 | 0,14 | 319,0 | 318,3 | 317,8 |
+
+Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte. Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em [F240], só o resumo cita essa tecnologia. Na faixa de 306 a 314 s: esfera em recesso de outra, recesso de até um hemisfério: 0 de 6 linhas dentro da faixa; esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera): 5 de 6 linhas dentro da faixa; esfera de volume somado, dividida no equador por antepara de calota (lente e tigela): 5 de 6 linhas dentro da faixa.
+
+**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda o valor para os dois lados, e por isso a conclusão depende dela.
 
 ## 4. Tanques aninhados dimensionados
 
@@ -62,47 +65,71 @@ Ti-6Al-4V recozido, base A: Ftu 924 MPa, Fty 869 MPa ([F219]). Fator de 2,0: [F4
 | bowles_20_kg | 1,30 | 0,77 | 0,39 | 1,19 | 1,68 | 2,38 | 3,18 | [F46] Tab. 5, PDF p. 34: "Tank Pressure ... 1.30 MPa (188 psi)" |
 | entrada_maxima_r4d11 | 2,93 | 1,74 | 0,87 | 1,79 | 2,53 | 3,57 | 4,77 | [F228] PDF p. 22: "Inlet Pressure Range ... 4.1 – 29.3 bar (60 – 425 psia)" |
 
-**Comprimento e massa,** em Ø 0,57 m, com o piso de entrada do motor, vão de 0,02 m (NÃO VALIDADO: [F46] §5.4, PDF p. 17: "with a purge gap between the two tanks"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO) e fator de flambagem 0,14. O comprimento real soma, no estágio 1, o vão e as duas paredes da antepara, e usa o esboço abaixo no estágio 2.
+**Comprimento e massa,** em Ø 0,57 m, com o piso de entrada do motor, vão de 0,02 m (NÃO VALIDADO: [F46] §5.4, PDF p. 17: "with a purge gap between the two tanks"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO) e fator de flambagem 0,14. O estágio 1 soma ao limite o vão e as duas paredes da antepara. No estágio 2, o volume cabe numa esfera menor que o diâmetro interno: uma antepara do mesmo raio dessa esfera não deixa volume para o segundo tanque, e por isso há três geometrias, sem fonte e NÃO VALIDADAS.
 
-| Isp (s) | Só 44:1 (m) | Limite otimista (m) | Real (m) | Redução no limite (m) | Redução real (m) | Sobra da redução | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) |
-| -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
-| 304 | 3,260 | 2,763 | 2,855 | 0,496 | 0,405 | 82 % | −0,055 | +0,165 | 33,8 |
-| 308 | 3,181 | 2,688 | 2,779 | 0,492 | 0,402 | 82 % | −0,017 | +0,203 | 32,7 |
-| 309 | 3,162 | 2,671 | 2,761 | 0,492 | 0,402 | 82 % | −0,008 | +0,212 | 32,5 |
-| 314 | 3,077 | 2,590 | 2,678 | 0,487 | 0,399 | 82 % | +0,033 | +0,253 | 31,4 |
+| Isp (s) | Geometria do estágio 2 | Só 44:1 (m) | Limite otimista (m) | Real (m) | Redução no limite (m) | Redução real (m) | Sobra da redução | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) |
+| -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
+| 304 | recesso_hemisferio | 3,260 | 2,763 | 2,854 | 0,496 | 0,406 | 82 % | −0,055 | +0,165 | 33,8 |
+| 304 | recesso_livre | 3,260 | 2,763 | 2,817 | 0,496 | 0,442 | 89 % | −0,037 | +0,183 | 36,7 |
+| 304 | antepara_assimetrica | 3,260 | 2,763 | 2,813 | 0,496 | 0,447 | 90 % | −0,035 | +0,185 | 31,7 |
+| 308 | recesso_hemisferio | 3,181 | 2,688 | 2,778 | 0,492 | 0,403 | 82 % | −0,017 | +0,203 | 32,8 |
+| 308 | recesso_livre | 3,181 | 2,688 | 2,742 | 0,492 | 0,439 | 89 % | +0,001 | +0,221 | 35,6 |
+| 308 | antepara_assimetrica | 3,181 | 2,688 | 2,738 | 0,492 | 0,443 | 90 % | +0,003 | +0,223 | 30,7 |
+| 309 | recesso_hemisferio | 3,162 | 2,671 | 2,760 | 0,492 | 0,402 | 82 % | −0,008 | +0,212 | 32,5 |
+| 309 | recesso_livre | 3,162 | 2,671 | 2,725 | 0,492 | 0,438 | 89 % | +0,010 | +0,230 | 35,3 |
+| 309 | antepara_assimetrica | 3,162 | 2,671 | 2,721 | 0,492 | 0,442 | 90 % | +0,012 | +0,232 | 30,4 |
+| 314 | recesso_hemisferio | 3,077 | 2,590 | 2,678 | 0,487 | 0,399 | 82 % | +0,033 | +0,253 | 31,4 |
+| 314 | recesso_livre | 3,077 | 2,590 | 2,644 | 0,487 | 0,433 | 89 % | +0,050 | +0,270 | 34,0 |
+| 314 | antepara_assimetrica | 3,077 | 2,590 | 2,639 | 0,487 | 0,437 | 90 % | +0,052 | +0,272 | 29,3 |
 
 Massa dos tanques em série hoje: 19,9 kg, na espessura da P-093. A massa do orçamento do MAV vem da fração estrutural, então esta conta não muda o GLOM; por isso o confronto abaixo.
 
-**Tanques contra o inerte, por estágio.** A sobra é o que resta no inerte para estrutura, pressurização e o resto. O motor é o de 164:1, porque o 44:1 não tem massa com fonte.
+**Tanques contra o inerte, por estágio.** A sobra é o que resta no inerte para estrutura, pressurização e o resto. O motor é o de 164:1, porque o 44:1 não tem massa com fonte. O estágio 1 não depende da geometria.
 
-| Isp (s) | Estágio | Inerte (kg) | Tanques (kg) | Parcela | Motores 164:1 (kg) | Sobra (kg) |
+| Isp (s) | Estágio | Geometria | Inerte (kg) | Tanques (kg) | Parcela | Motores 164:1 (kg) | Sobra (kg) |
+| -: | -: | :- | -: | -: | -: | -: | -: |
+| 304 | 1 | todas | 76,9 | 23,6 | 31 % | 15,0 | +38,3 |
+| 304 | 2 | recesso_hemisferio | 17,1 | 10,3 | 60 % | 3,8 | +3,1 |
+| 304 | 2 | recesso_livre | 17,1 | 13,2 | 77 % | 3,8 | +0,2 |
+| 304 | 2 | antepara_assimetrica | 17,1 | 8,1 | 47 % | 3,8 | +5,3 |
+| 308 | 1 | todas | 71,6 | 22,8 | 32 % | 15,0 | +33,8 |
+| 308 | 2 | recesso_hemisferio | 16,4 | 10,0 | 61 % | 3,8 | +2,7 |
+| 308 | 2 | recesso_livre | 16,4 | 12,8 | 78 % | 3,8 | −0,1 |
+| 308 | 2 | antepara_assimetrica | 16,4 | 7,9 | 48 % | 3,8 | +4,8 |
+| 309 | 1 | todas | 70,4 | 22,6 | 32 % | 15,0 | +32,7 |
+| 309 | 2 | recesso_hemisferio | 16,3 | 9,9 | 61 % | 3,8 | +2,6 |
+| 309 | 2 | recesso_livre | 16,3 | 12,7 | 78 % | 3,8 | −0,2 |
+| 309 | 2 | antepara_assimetrica | 16,3 | 7,8 | 48 % | 3,8 | +4,7 |
+| 314 | 1 | todas | 64,7 | 21,8 | 34 % | 15,0 | +27,9 |
+| 314 | 2 | recesso_hemisferio | 15,5 | 9,6 | 62 % | 3,8 | +2,1 |
+| 314 | 2 | recesso_livre | 15,5 | 12,3 | 79 % | 3,8 | −0,6 |
+| 314 | 2 | antepara_assimetrica | 15,5 | 7,6 | 49 % | 3,8 | +4,1 |
+
+**As três geometrias do estágio 2.** **recesso_hemisferio**: esfera em recesso de outra, recesso de até um hemisfério; **recesso_livre**: esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera); **antepara_assimetrica**: esfera de volume somado, dividida no equador por antepara de calota (lente e tigela). As espessuras seguem as do raio interno, e nenhuma é um dimensionamento. Com recesso, o fundo do recesso não foi analisado. Com antepara, o vão zera na borda, como no estágio 1, e a tabela mostra o que falta: a lente fica quase plana, e a espessura de flambagem no raio real da calota é muito maior que a usada no comprimento.
+
+| Isp (s) | Tanque único (m) | Comprimento: recesso_hemisferio (m) | recesso_livre (m) | antepara_assimetrica (m) | Raio da calota (m) | Flambagem no raio da calota (mm) |
 | -: | -: | -: | -: | -: | -: | -: |
-| 304 | 1 | 76,9 | 23,6 | 31 % | 15,0 | +38,3 |
-| 304 | 2 | 17,1 | 10,2 | 60 % | 3,8 | +3,2 |
-| 308 | 1 | 71,6 | 22,8 | 32 % | 15,0 | +33,8 |
-| 308 | 2 | 16,4 | 9,9 | 61 % | 3,8 | +2,7 |
-| 309 | 1 | 70,4 | 22,6 | 32 % | 15,0 | +32,7 |
-| 309 | 2 | 16,3 | 9,9 | 61 % | 3,8 | +2,6 |
-| 314 | 1 | 64,7 | 21,8 | 34 % | 15,0 | +27,9 |
-| 314 | 2 | 15,5 | 9,6 | 62 % | 3,8 | +2,1 |
-
-**O estágio 2 usa um esboço, NÃO VALIDADO.** O volume somado cabe numa esfera menor que o diâmetro interno. Tanque único com antepara do mesmo raio não deixaria volume para o segundo tanque, então essa geometria não é realizável. O real põe uma esfera num recesso da outra, com o mesmo vão e as mesmas paredes, com recesso de, no máximo, um hemisfério (escolha do esboço, sem fonte; relaxá-la só pode encurtar, mas um recesso mais fundo prende a esfera), e procura o menor comprimento. Não é um dimensionamento: as espessuras seguem calculadas com o raio interno, e o fundo do recesso não foi analisado.
-
-| Isp (s) | Esfera equivalente, irrealizável (m) | Esboço (m) | Raios: tanque ao redor e esfera (m) |
-| -: | -: | -: | -: |
-| 304 | 0,489 | 0,531 | 0,236 e 0,184 |
-| 308 | 0,483 | 0,524 | 0,233 e 0,182 |
-| 309 | 0,481 | 0,522 | 0,232 e 0,181 |
-| 314 | 0,474 | 0,513 | 0,229 e 0,178 |
+| 304 | 0,465 | 0,530 | 0,494 | 0,489 | 87,57 | 1 050,7 |
+| 308 | 0,458 | 0,523 | 0,487 | 0,483 | 86,35 | 1 035,9 |
+| 309 | 0,457 | 0,521 | 0,486 | 0,481 | 86,05 | 1 032,4 |
+| 314 | 0,449 | 0,513 | 0,478 | 0,474 | 84,62 | 1 015,3 |
 
 **Sensibilidade do comprimento real (m) ao vão de purga:**
 
-| Isp (s) | 0,005 m | 0,010 m | 0,020 m | 0,050 m |
-| -: | -: | -: | -: | -: |
-| 304 | 2,838 | 2,843 | 2,855 | 2,892 |
-| 308 | 2,761 | 2,767 | 2,779 | 2,816 |
-| 309 | 2,743 | 2,750 | 2,761 | 2,798 |
-| 314 | 2,661 | 2,667 | 2,678 | 2,717 |
+| Isp (s) | Geometria | 0,005 m | 0,010 m | 0,020 m | 0,050 m |
+| -: | :- | -: | -: | -: | -: |
+| 304 | recesso_hemisferio | 2,837 | 2,842 | 2,854 | 2,892 |
+| 304 | recesso_livre | 2,785 | 2,796 | 2,817 | 2,879 |
+| 304 | antepara_assimetrica | 2,783 | 2,793 | 2,813 | 2,873 |
+| 308 | recesso_hemisferio | 2,761 | 2,766 | 2,778 | 2,816 |
+| 308 | recesso_livre | 2,710 | 2,721 | 2,742 | 2,804 |
+| 308 | antepara_assimetrica | 2,708 | 2,718 | 2,738 | 2,798 |
+| 309 | recesso_hemisferio | 2,743 | 2,749 | 2,760 | 2,798 |
+| 309 | recesso_livre | 2,693 | 2,704 | 2,725 | 2,787 |
+| 309 | antepara_assimetrica | 2,691 | 2,701 | 2,721 | 2,781 |
+| 314 | recesso_hemisferio | 2,661 | 2,666 | 2,678 | 2,716 |
+| 314 | recesso_livre | 2,612 | 2,622 | 2,644 | 2,706 |
+| 314 | antepara_assimetrica | 2,609 | 2,619 | 2,639 | 2,699 |
 
 **Não dimensionado:** cargas de lançamento e de subida, fadiga e fratura, soldas, espessura mínima de fabricação, e o vão como peça. A fonte tem cúpula de excentricidade 0,707 em tanques de alta pressão ([F46] PDF p. 9), que encurtaria mais; aqui seguem os hemisférios da P-085.
 

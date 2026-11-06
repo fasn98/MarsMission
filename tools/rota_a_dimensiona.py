@@ -1,7 +1,8 @@
 """Portão do comprimento do MAV (ADR 0023): dados pedidos pelo Fabio para decidir a rota A provisória e a P-097.
 
 - Item 2: alvo com deck, por Ø; núcleo do lander no CAD atual; arranjo do MSL e do Mars 2020 nas fontes; Isp mínimo do 44:1.
-- Item 3: tanques aninhados dimensionados: pressão, cúpulas, vão de purga, massa e comprimento real.
+- Item 3: tanques aninhados dimensionados: pressão, cúpulas, vão de purga, massa e comprimento real, com o estágio 2 em
+  três geometrias lado a lado (a escolha é do Fabio).
 - Item 5: folgas nas coifas com a altura dos adaptadores do guia do Vulcan.
 Nada disso entra no CAD nem nas premissas. O que não tem fonte fica em varredura e está marcado NÃO VALIDADO.
 Saída: results/etapa7.2/rota_a.yaml e .md
@@ -108,35 +109,55 @@ def main():
         """Volume comum a duas esferas de raios ra_ e rr, com centros à distância c."""
         return math.pi * (ra_ + rr - c) ** 2 * (c ** 2 + 2 * c * (rr + ra_) - 3 * (rr - ra_) ** 2) / (12 * c)
 
-    def esboco(v1, v2, g, t_d, t_i, r_max):
-        """Estágio cujo volume cabe numa esfera menor que o diâmetro interno: uma esfera entra num recesso da outra. Recesso de,
-        no máximo, um hemisfério; procura o menor comprimento, nas duas ordens. Comprimento e massa com vão e paredes."""
+    def esboco(v1, v2, g, t_d, t_i, r_max, hemi):
+        """Esfera num recesso de outra, nas duas ordens, com o menor comprimento; `hemi` limita o recesso a um hemisfério.
+        Comprimento e massa com vão e paredes."""
         melhor = None
         for va, vb in ((v1, v2), (v2, v1)):
             r1 = (3 * vb / (4 * math.pi)) ** (1 / 3)
             rr = r1 + g + t_d + t_i
-            for ra_ in np.linspace((3 * va / (4 * math.pi)) ** (1 / 3), r_max, int(ra["grade_esboco"])):
-                falta = 4 / 3 * math.pi * ra_ ** 3 - va
-                lo = max(abs(ra_ - rr), math.sqrt(max(ra_ ** 2 - rr ** 2, 0.0)), 1e-9)
-                hi = ra_ + rr
-                if lente(ra_, rr, lo) < falta:
-                    continue
-                for _ in range(PASSOS):
-                    mid = (lo + hi) / 2
-                    lo, hi = (mid, hi) if lente(ra_, rr, mid) > falta else (lo, mid)
-                c = hi
-                d1 = (c ** 2 + ra_ ** 2 - rr ** 2) / (2 * c)
-                area_ext = 4 * math.pi * ra_ ** 2 - 2 * math.pi * ra_ * (ra_ - d1) + 4 * math.pi * r1 ** 2
-                area_rec = 2 * math.pi * rr * (rr - (c - d1))
-                x = {"comprimento_m": ra_ + c + r1, "massa_kg": rho_ti * (area_ext * t_d + area_rec * t_i), "raio_tanque_ao_redor_m": ra_, "raio_esfera_m": r1, "raio_recesso_m": rr, "distancia_centros_m": c}
-                if melhor is None or x["comprimento_m"] < melhor["comprimento_m"]:
-                    melhor = x
+            a_, b_ = (3 * va / (4 * math.pi)) ** (1 / 3), r_max
+            for _ in range(3):   # passes de refino da grade em torno do melhor raio da ordem
+                grade, Ls = np.linspace(a_, b_, int(ra["grade_esboco"])), []
+                for ra_ in grade:
+                    falta = 4 / 3 * math.pi * ra_ ** 3 - va
+                    lo = max(abs(ra_ - rr), math.sqrt(max(ra_ ** 2 - rr ** 2, 0.0)) if hemi else 0.0, 1e-9)
+                    hi = ra_ + rr
+                    if lente(ra_, rr, lo) < falta:
+                        Ls.append(math.inf)
+                        continue
+                    for _ in range(PASSOS):
+                        mid = (lo + hi) / 2
+                        lo, hi = (mid, hi) if lente(ra_, rr, mid) > falta else (lo, mid)
+                    c = hi
+                    d1 = (c ** 2 + ra_ ** 2 - rr ** 2) / (2 * c)
+                    area_ext = 4 * math.pi * ra_ ** 2 - 2 * math.pi * ra_ * (ra_ - d1) + 4 * math.pi * r1 ** 2
+                    area_rec = 2 * math.pi * rr * (rr - (c - d1))
+                    x = {"comprimento_m": max(ra_ + c + r1, 2 * ra_), "massa_kg": rho_ti * (area_ext * t_d + area_rec * t_i), "raio_tanque_ao_redor_m": ra_, "raio_esfera_m": r1, "raio_recesso_m": rr, "distancia_centros_m": c}
+                    Ls.append(x["comprimento_m"])
+                    if melhor is None or x["comprimento_m"] < melhor["comprimento_m"]:
+                        melhor = x
+                i_ = int(np.argmin(Ls))
+                a_, b_ = grade[max(i_ - 1, 0)], grade[min(i_ + 1, len(grade) - 1)]
         return melhor
 
-    def real(est_m, d, g, k):
+    def antepara(v1, v2, g, t_d, t_i, lt, k):
+        """Esfera de volume somado, dividida no equador por calota de altura h: a lente recua o vão e as paredes. O raio da
+        calota sai dos volumes; a espessura de flambagem com esse raio é informada, não aplicada: a lente fica quase plana."""
+        rs = lt / 2
+        dif = abs(v1 - v2) / 2
+        lo, hi = 0.0, rs
+        for _ in range(PASSOS):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if math.pi * mid * (3 * rs ** 2 + mid ** 2) / 6 < dif else (lo, mid)
+        h = hi
+        r_cal = (rs ** 2 + h ** 2) / (2 * h)
+        return {"comprimento_m": lt + g + t_d + t_i, "massa_kg": rho_ti * (4 * math.pi * rs ** 2 * t_d + math.pi * (rs ** 2 + h ** 2) * (t_d + t_i)), "altura_calota_m": h, "raio_calota_m": r_cal, "t_flambagem_no_raio_da_calota_m": t_flambagem(p_base, k) * r_cal / r_i}
+
+    def real(est_m, d, g, k, fam):
         """Comprimento real e massa dos tanques aninhados: tanque único com o volume somado, mais o vão de purga e as duas
-        paredes da antepara, por estágio; quando o volume cabe numa esfera menor que o diâmetro interno, o esboço realizável
-        substitui esse tanque. Espessura: a maior entre a de pressão e a de construção (P-093)."""
+        paredes da antepara, por estágio; quando o volume cabe numa esfera menor que o diâmetro interno, entra a geometria
+        `fam`. Espessura: a maior entre a de pressão e a de construção (P-093)."""
         t_c = max(t_cilindro(p_base), t_p093)
         t_d = max(t_cupula(p_base), t_p093)
         t_i = max(t_flambagem(p_base, k), t_p093)
@@ -145,43 +166,42 @@ def main():
         massa, por_est = 0.0, []
         for i, e in enumerate(est_m):
             vol = ea.volumes(e["propelente_kg"], *arg)
+            v1, v2 = vol["tanque_oxidante_m3"], vol["tanque_combustivel_m3"]
             L += g + t_d + t_i
-            lt = ea.tanque_cilindrico(vol["tanque_oxidante_m3"] + vol["tanque_combustivel_m3"], di_)
+            lt = ea.tanque_cilindrico(v1 + v2, di_)
             lc = max(lt - di_, 0.0)
-            # se o volume cabe numa esfera menor que o diâmetro interno, as cúpulas têm o raio dessa esfera
             a_hem = 2 * math.pi * (min(lt, di_) / 2) ** 2
             m_e = rho_ti * (math.pi * di_ * lc * t_c + 3 * a_hem * t_d + a_hem * t_i)   # 3 cúpulas normais e 1 invertida
-            es = esboco(vol["tanque_oxidante_m3"], vol["tanque_combustivel_m3"], g, t_d, t_i, di_ / 2) if lt < di_ else None
-            if es:   # o tanque único com antepara do mesmo raio não deixa volume para o segundo tanque
+            es = None
+            if lt < di_:
+                es = antepara(v1, v2, g, t_d, t_i, lt, k) if fam == "antepara_assimetrica" else esboco(v1, v2, g, t_d, t_i, di_ / 2, fam == "recesso_hemisferio")
                 L += es["comprimento_m"] - (lt + g + t_d + t_i)
                 m_e = es["massa_kg"]
             massa += m_e
             prox = est_m[i + 1]["massa_inicial_kg"] if i + 1 < len(est_m) else carga
             inerte = e["massa_inicial_kg"] - e["propelente_kg"] - prox
             motores = n_mot[i] * m_motor
-            x = {"estagio": i + 1, "inerte_kg": inerte, "tanques_kg": m_e, "parcela_do_inerte": m_e / inerte, "motores_164_kg": motores, "sobra_kg": inerte - m_e - motores,
-                 "esfera_equivalente_m": lt + g + t_d + t_i, "volume_m3": vol["tanque_oxidante_m3"] + vol["tanque_combustivel_m3"], "vao_e_paredes_m": g + t_d + t_i, "esboco": es}
-            por_est.append(x)
+            por_est.append({"estagio": i + 1, "inerte_kg": inerte, "tanques_kg": m_e, "parcela_do_inerte": m_e / inerte, "motores_164_kg": motores, "sobra_kg": inerte - m_e - motores,
+                            "tanque_unico_m": lt, "volume_m3": v1 + v2, "vao_e_paredes_m": g + t_d + t_i, "geometria": es})
         return L, massa, por_est
 
     gs = [float(x) for x in ra["vao_purga_m"]["valores"]]
     g0 = float(ra["vao_purga_m"]["base"])
     ks = [float(k) for k in fl["fatores_reducao"]]
     k_b = float(fl["fator_base"])
+    fams = list(ra["geometrias_estagio_2"])
     casos = []
     for isp in ra["isp_casos_s"]:
         lan = lander_isp(float(isp))
         e_ = lan["mav_estagios"]
         so = cmv.comprimento(d_alvo, e_, nt44, cad)
         lim = cmv.comprimento(d_alvo, e_, nt44, cad, aninhado=True)
-        linhas = {}
-        for k in ks:
-            L, mt, _ = real(e_, d_alvo, g0, k)
-            linhas[str(k)] = {"comprimento_m": L, "massa_tanques_kg": mt}
-        L_b, mt_b, por_est = real(e_, d_alvo, g0, k_b)
-        casos.append({"isp_s": isp, "glom_kg": e_[0]["massa_inicial_kg"], "so_44_m": so, "limite_otimista_m": lim, "real_m": L_b, "reducao_limite_m": so - lim, "reducao_real_m": so - L_b, "fracao_que_sobra": (so - L_b) / (so - lim),
-                      "folga_deck_real_m": (lim_deck[d_alvo] - L_b) / 2, "folga_ombro_real_m": (lim_ombro[d_alvo] - L_b) / 2, "massa_tanques_kg": mt_b, "por_fator": linhas, "por_estagio": por_est,
-                      "por_vao": {str(g): real(e_, d_alvo, g, k_b)[0] for g in gs}})
+        por_fam = {}
+        for f in fams:
+            L_b, mt_b, por_est = real(e_, d_alvo, g0, k_b, f)
+            por_fam[f] = {"real_m": L_b, "reducao_real_m": so - L_b, "fracao_que_sobra": (so - L_b) / (so - lim), "folga_deck_real_m": (lim_deck[d_alvo] - L_b) / 2, "folga_ombro_real_m": (lim_ombro[d_alvo] - L_b) / 2,
+                          "massa_tanques_kg": mt_b, "por_estagio": por_est, "por_vao": {str(g): real(e_, d_alvo, g, k_b, f)[0] for g in gs}}
+        casos.append({"isp_s": isp, "glom_kg": e_[0]["massa_inicial_kg"], "so_44_m": so, "limite_otimista_m": lim, "reducao_limite_m": so - lim, "por_geometria": por_fam})
 
     # Isp mínimo com deck e folga ≥ alvo, para o limite otimista e para o comprimento real
     def isp_min(f):
@@ -196,11 +216,12 @@ def main():
     def l_lim(isp):
         return cmv.comprimento(d_alvo, lander_isp(isp)["mav_estagios"], nt44, cad, aninhado=True)
 
-    def l_real(k, g=g0):
-        return lambda isp: real(lander_isp(isp)["mav_estagios"], d_alvo, g, k)[0]
+    def l_real(k, g, f):
+        return lambda isp: real(lander_isp(isp)["mav_estagios"], d_alvo, g, k, f)[0]
     g_menor = float(ra["vao_purga_m"]["menor"])
-    isp_minimo = {"limite_otimista_s": isp_min(l_lim), "real_por_fator_s": {str(k): isp_min(l_real(k)) for k in ks}, "vao_menor_m": g_menor, "real_vao_menor_s": isp_min(l_real(k_b, g_menor)), "vao_maior_m": max(gs), "real_vao_maior_s": isp_min(l_real(k_b, max(gs))),
-                  "alvo_folga_m": alvo, "comprimento_max_m": lim_deck[d_alvo] - 2 * alvo}
+    linhas_isp = [{"fator": k, "vao_m": g0, "por_geometria": {f: isp_min(l_real(k, g0, f)) for f in fams}} for k in ks]
+    linhas_isp += [{"fator": k_b, "vao_m": g, "por_geometria": {f: isp_min(l_real(k_b, g, f)) for f in fams}} for g in (g_menor, max(gs))]
+    isp_minimo = {"limite_otimista_s": isp_min(l_lim), "linhas": linhas_isp, "alvo_folga_m": alvo, "comprimento_max_m": lim_deck[d_alvo] - 2 * alvo}
 
     # ---------------- item 2: núcleo do lander no CAD atual
     ve_ = par["veiculos"]
@@ -235,7 +256,7 @@ def main():
                   "por_diametro": [{"diametro_m": d, "limite_com_deck_m": lim_deck[d], "limite_sem_deck_m": lim_ombro[d]} for d in sorted(caso)], "circulo_44_m": saidas["44:1"], "circulo_164_m": saidas["164:1"], "parede_m": t_par},
                   "nucleo_cad": nucleo, "arranjo_msl": ra["arranjo_msl"], "isp_minimo": isp_minimo, "ressalva_analogos": ler("results/etapa7.2/rotas_mav.yaml")["rota_a_ressalva"].split(". ")[0],
                   "dimensionamento": {"tensao_admissivel_mpa": sigma, "ftu_mpa": ftu, "fty_mpa": fty, "fator_seguranca": fs, "fator_fonte": ra["fator_seguranca_pressao"]["fonte"], "fator_flambagem": fs_fl, "fator_flambagem_fonte": ra["fator_seguranca_flambagem"]["fonte"], "ec_mpa": ec_, "raio_interno_m": r_i, "t_p093_m": t_p093, "pressoes": pressoes,
-                                      "nota_flambagem": fl["nota"], "vao_base_m": g0, "vao_fonte": ra["vao_purga_m"]["fonte"], "fator_base": k_b, "casos": casos, "massa_tanques_atual_kg": caso[d0]["massa_tanques_kg"], "fatores": ks, "vaos": gs},
+                                      "nota_flambagem": fl["nota"], "vao_base_m": g0, "vao_fonte": ra["vao_purga_m"]["fonte"], "fator_base": k_b, "casos": casos, "massa_tanques_atual_kg": caso[d0]["massa_tanques_kg"], "fatores": ks, "vaos": gs, "geometrias": ra["geometrias_estagio_2"]},
                   "adaptador": {"casos": ad["casos"], "linhas": adapt, "ressalva_vulcan": ad["ressalva_vulcan"], "ressalva_falcon": ad["ressalva_falcon"], "p097_proposta": ad["p097_proposta"], "base_proposta": ad["base_proposta"]}})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "rota_a.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -243,13 +264,14 @@ def main():
 
 
 def compara_analogos(o):
-    """Compara os Isp mínimos com a faixa dos análogos, lida da ressalva de results/etapa7.2/rotas_mav.yaml."""
-    topo = float(re.search(r"de \d+ a (\d+) s", o["ressalva_analogos"]).group(1))
-    im = o["isp_minimo"]
-    reais = [*im["real_por_fator_s"].values(), im["real_vao_menor_s"], im["real_vao_maior_s"]]
-    if all(x is not None and x > topo for x in reais):
-        return f"Com os tanques dimensionados, todos os valores da tabela ficam acima do topo dessa faixa; só o limite otimista fica dentro." if im["limite_otimista_s"] <= topo else "Todos os valores da tabela ficam acima do topo dessa faixa."
-    return "Nem todos os valores com os tanques dimensionados ficam acima do topo dessa faixa."
+    """Compara os Isp mínimos, por geometria, com a faixa dos análogos, lida da ressalva de results/etapa7.2/rotas_mav.yaml."""
+    base, topo = (float(x) for x in re.search(r"de (\d+) a (\d+) s", o["ressalva_analogos"]).groups())
+    frases = []
+    for f, nome in o["dimensionamento"]["geometrias"].items():
+        xs = [li["por_geometria"][f] for li in o["isp_minimo"]["linhas"]]
+        dentro = sum(1 for x in xs if x is not None and base <= x <= topo)
+        frases.append(f"{nome}: {dentro} de {len(xs)} linhas dentro da faixa")
+    return "Na faixa de " + br(base, 0) + " a " + br(topo, 0) + " s: " + "; ".join(frases) + "."
 
 
 def escreve_md(o):
@@ -266,39 +288,41 @@ def escreve_md(o):
     md += ["", "**O que dá para dizer:** no MSL, o que vai à superfície fica do lado do escudo, e o estágio de descida do lado da casca traseira, então ter o conjunto do lander à frente do ombro não contraria a ordem do MSL. **O que não dá:** confirmar a viabilidade. Não há cota interna nas fontes lidas, e o nosso arranjo é outro: o MAV deitado fica atrás do núcleo, e os tanques de descida atravessam a casca (results/etapa7.2b/folgas.md). Viabilidade funcional não conferida: abertura e separação do escudo, propulsão de descida e pernas.", "",
            "## 3. Isp mínimo do 44:1, com deck e folga de ao menos " + sg(im["alvo_folga_m"], 2) + " m", "",
            f"Comprimento máximo: {br(im['comprimento_max_m'])} m, em Ø {br(al['diametro_m'], 2)} m. MAV redimensionado para cada Isp, nos dois estágios.", "",
-           "| Comprimento usado | Isp mínimo (s) |", "| :- | -: |",
-           f"| Tanques aninhados, limite otimista | {br(im['limite_otimista_s'], 1) if im['limite_otimista_s'] else 'não fecha na faixa'} |"]
-    for k, x in im["real_por_fator_s"].items():
-        md.append(f"| Tanques dimensionados, vão de {br(dm['vao_base_m'], 2)} m, fator de flambagem {br(float(k), 2)} (NÃO VALIDADO) | {br(x, 1) if x else 'não fecha na faixa'} |")
-    md.append(f"| Tanques dimensionados, vão de {br(im['vao_menor_m'], 3)} m, fator de flambagem {br(dm['fator_base'], 2)} (NÃO VALIDADO) | {br(im['real_vao_menor_s'], 1) if im['real_vao_menor_s'] else 'não fecha na faixa'} |")
-    md.append(f"| Tanques dimensionados, vão de {br(im['vao_maior_m'], 3)} m, fator de flambagem {br(dm['fator_base'], 2)} (NÃO VALIDADO) | {br(im['real_vao_maior_s'], 1) if im['real_vao_maior_s'] else 'não fecha na faixa'} |")
+           "Colunas: a geometria do estágio 2 (seção 4), que é uma escolha do Fabio. " + "; ".join(f"**{f}**: {n}" for f, n in dm["geometrias"].items()) + ".", "",
+           f"Limite otimista, sem tanques dimensionados: {br(im['limite_otimista_s'], 1)} s.", "",
+           "| Vão (m) | Fator de flambagem (NÃO VALIDADO) | " + " | ".join(dm["geometrias"]) + " |", "| -: | -: |" + " -: |" * len(dm["geometrias"])]
+    for li in im["linhas"]:
+        md.append(f"| {br(li['vao_m'], 3)} | {br(li['fator'], 2)} | " + " | ".join(br(li["por_geometria"][f], 1) if li["por_geometria"][f] else "não fecha na faixa" for f in dm["geometrias"]) + " |")
     md += ["", f"Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte. {o['ressalva_analogos']}. {compara_analogos(o)}", "",
-           "**Estes valores são um piso.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe.", "",
+           "**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda o valor para os dois lados, e por isso a conclusão depende dela.", "",
            "## 4. Tanques aninhados dimensionados", "",
            f"Ti-6Al-4V recozido, base A: Ftu {br(dm['ftu_mpa'], 0)} MPa, Fty {br(dm['fty_mpa'], 0)} MPa ([F219]). Fator de {br(dm['fator_seguranca'], 1)}: {dm['fator_fonte']}. Tensão admissível: {br(dm['tensao_admissivel_mpa'], 0)} MPa. Na flambagem, fator de {br(dm['fator_flambagem'], 1)}: {dm['fator_flambagem_fonte']}; t varia com a raiz do fator. Raio interno {br(dm['raio_interno_m'], 3)} m. A P-093 usa {br(1e3 * dm['t_p093_m'], 1)} mm. **{dm['nota_flambagem']}.**", "",
            "**Pressão e espessura mínima (mm):**", "", "| Pressão | MPa | Cilindro | Cúpula normal | " + " | ".join(f"Cúpula invertida, fator {br(k, 2)}" for k in dm["fatores"]) + " | Fonte |", "| :- | -: | -: | -: |" + " -: |" * len(dm["fatores"]) + " :- |"]
     for n, p_ in dm["pressoes"].items():
         md.append(f"| {n} | {br(p_['mpa'], 2)} | {br(1e3 * p_['t_cilindro_m'], 2)} | {br(1e3 * p_['t_cupula_m'], 2)} | " + " | ".join(br(1e3 * p_["t_cupula_invertida_m"][str(k)], 2) for k in dm["fatores"]) + f" | {p_['fonte']} |")
-    md += ["", f"**Comprimento e massa,** em Ø {br(al['diametro_m'], 2)} m, com o piso de entrada do motor, vão de {br(dm['vao_base_m'], 2)} m (NÃO VALIDADO: {dm['vao_fonte']}) e fator de flambagem {br(dm['fator_base'], 2)}. O comprimento real soma, no estágio 1, o vão e as duas paredes da antepara, e usa o esboço abaixo no estágio 2.", "",
-           "| Isp (s) | Só 44:1 (m) | Limite otimista (m) | Real (m) | Redução no limite (m) | Redução real (m) | Sobra da redução | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) |", "| -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
+    md += ["", f"**Comprimento e massa,** em Ø {br(al['diametro_m'], 2)} m, com o piso de entrada do motor, vão de {br(dm['vao_base_m'], 2)} m (NÃO VALIDADO: {dm['vao_fonte']}) e fator de flambagem {br(dm['fator_base'], 2)}. O estágio 1 soma ao limite o vão e as duas paredes da antepara. No estágio 2, o volume cabe numa esfera menor que o diâmetro interno: uma antepara do mesmo raio dessa esfera não deixa volume para o segundo tanque, e por isso há três geometrias, sem fonte e NÃO VALIDADAS.", "",
+           "| Isp (s) | Geometria do estágio 2 | Só 44:1 (m) | Limite otimista (m) | Real (m) | Redução no limite (m) | Redução real (m) | Sobra da redução | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) |", "| -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
-        md.append(f"| {br(c['isp_s'], 0)} | {br(c['so_44_m'])} | {br(c['limite_otimista_m'])} | {br(c['real_m'])} | {br(c['reducao_limite_m'])} | {br(c['reducao_real_m'])} | {br(100 * c['fracao_que_sobra'], 0)} % | {sg(c['folga_deck_real_m'])} | {sg(c['folga_ombro_real_m'])} | {br(c['massa_tanques_kg'], 1)} |")
+        for f, x in c["por_geometria"].items():
+            md.append(f"| {br(c['isp_s'], 0)} | {f} | {br(c['so_44_m'])} | {br(c['limite_otimista_m'])} | {br(x['real_m'])} | {br(c['reducao_limite_m'])} | {br(x['reducao_real_m'])} | {br(100 * x['fracao_que_sobra'], 0)} % | {sg(x['folga_deck_real_m'])} | {sg(x['folga_ombro_real_m'])} | {br(x['massa_tanques_kg'], 1)} |")
     md += ["", f"Massa dos tanques em série hoje: {br(dm['massa_tanques_atual_kg'], 1)} kg, na espessura da P-093. A massa do orçamento do MAV vem da fração estrutural, então esta conta não muda o GLOM; por isso o confronto abaixo.", "",
-           "**Tanques contra o inerte, por estágio.** A sobra é o que resta no inerte para estrutura, pressurização e o resto. O motor é o de 164:1, porque o 44:1 não tem massa com fonte.", "",
-           "| Isp (s) | Estágio | Inerte (kg) | Tanques (kg) | Parcela | Motores 164:1 (kg) | Sobra (kg) |", "| -: | -: | -: | -: | -: | -: | -: |"]
+           "**Tanques contra o inerte, por estágio.** A sobra é o que resta no inerte para estrutura, pressurização e o resto. O motor é o de 164:1, porque o 44:1 não tem massa com fonte. O estágio 1 não depende da geometria.", "",
+           "| Isp (s) | Estágio | Geometria | Inerte (kg) | Tanques (kg) | Parcela | Motores 164:1 (kg) | Sobra (kg) |", "| -: | -: | :- | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
-        md += [f"| {br(c['isp_s'], 0)} | {x['estagio']} | {br(x['inerte_kg'], 1)} | {br(x['tanques_kg'], 1)} | {br(100 * x['parcela_do_inerte'], 0)} % | {br(x['motores_164_kg'], 1)} | {sg(x['sobra_kg'], 1)} |" for x in c["por_estagio"]]
-    md += ["", "**O estágio 2 usa um esboço, NÃO VALIDADO.** O volume somado cabe numa esfera menor que o diâmetro interno. Tanque único com antepara do mesmo raio não deixaria volume para o segundo tanque, então essa geometria não é realizável. O real põe uma esfera num recesso da outra, com o mesmo vão e as mesmas paredes, com recesso de, no máximo, um hemisfério (escolha do esboço, sem fonte; relaxá-la só pode encurtar, mas um recesso mais fundo prende a esfera), e procura o menor comprimento. Não é um dimensionamento: as espessuras seguem calculadas com o raio interno, e o fundo do recesso não foi analisado.", "",
-           "| Isp (s) | Esfera equivalente, irrealizável (m) | Esboço (m) | Raios: tanque ao redor e esfera (m) |", "| -: | -: | -: | -: |"]
+        p0 = next(iter(c["por_geometria"].values()))["por_estagio"][0]
+        md.append(f"| {br(c['isp_s'], 0)} | 1 | todas | {br(p0['inerte_kg'], 1)} | {br(p0['tanques_kg'], 1)} | {br(100 * p0['parcela_do_inerte'], 0)} % | {br(p0['motores_164_kg'], 1)} | {sg(p0['sobra_kg'], 1)} |")
+        for f, x in c["por_geometria"].items():
+            e2 = x["por_estagio"][1]
+            md.append(f"| {br(c['isp_s'], 0)} | 2 | {f} | {br(e2['inerte_kg'], 1)} | {br(e2['tanques_kg'], 1)} | {br(100 * e2['parcela_do_inerte'], 0)} % | {br(e2['motores_164_kg'], 1)} | {sg(e2['sobra_kg'], 1)} |")
+    md += ["", "**As três geometrias do estágio 2.** " + "; ".join(f"**{f}**: {n}" for f, n in dm["geometrias"].items()) + ". As espessuras seguem as do raio interno, e nenhuma é um dimensionamento. Com recesso, o fundo do recesso não foi analisado. Com antepara, o vão zera na borda, como no estágio 1, e a tabela mostra o que falta: a lente fica quase plana, e a espessura de flambagem no raio real da calota é muito maior que a usada no comprimento.", "",
+           "| Isp (s) | Tanque único (m) | Comprimento: recesso_hemisferio (m) | recesso_livre (m) | antepara_assimetrica (m) | Raio da calota (m) | Flambagem no raio da calota (mm) |", "| -: | -: | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
-        for x in c["por_estagio"]:
-            if x["esboco"]:
-                es = x["esboco"]
-                md.append(f"| {br(c['isp_s'], 0)} | {br(x['esfera_equivalente_m'])} | {br(es['comprimento_m'])} | {br(es['raio_tanque_ao_redor_m'])} e {br(es['raio_esfera_m'])} |")
-    md += ["",
-           "**Sensibilidade do comprimento real (m) ao vão de purga:**", "", "| Isp (s) | " + " | ".join(f"{br(g, 3)} m" for g in dm["vaos"]) + " |", "| -: |" + " -: |" * len(dm["vaos"])]
+        ge = {f: x["por_estagio"][1]["geometria"] for f, x in c["por_geometria"].items()}
+        md.append(f"| {br(c['isp_s'], 0)} | {br(c['por_geometria']['antepara_assimetrica']['por_estagio'][1]['tanque_unico_m'])} | {br(ge['recesso_hemisferio']['comprimento_m'])} | {br(ge['recesso_livre']['comprimento_m'])} | {br(ge['antepara_assimetrica']['comprimento_m'])} | {br(ge['antepara_assimetrica']['raio_calota_m'], 2)} | {br(1e3 * ge['antepara_assimetrica']['t_flambagem_no_raio_da_calota_m'], 1)} |")
+    md += ["", "**Sensibilidade do comprimento real (m) ao vão de purga:**", "", "| Isp (s) | Geometria | " + " | ".join(f"{br(g, 3)} m" for g in dm["vaos"]) + " |", "| -: | :- |" + " -: |" * len(dm["vaos"])]
     for c in dm["casos"]:
-        md.append(f"| {br(c['isp_s'], 0)} | " + " | ".join(br(c["por_vao"][str(g)]) for g in dm["vaos"]) + " |")
+        for f, x in c["por_geometria"].items():
+            md.append(f"| {br(c['isp_s'], 0)} | {f} | " + " | ".join(br(x["por_vao"][str(g)]) for g in dm["vaos"]) + " |")
     md += ["", "**Não dimensionado:** cargas de lançamento e de subida, fadiga e fratura, soldas, espessura mínima de fabricação, e o vão como peça. A fonte tem cúpula de excentricidade 0,707 em tanques de alta pressão ([F46] PDF p. 9), que encurtaria mais; aqui seguem os hemisférios da P-085.", "",
            "## 5. P-097: folgas nas coifas com a altura do adaptador", "",
            f"Ressalvas: {ad['ressalva_vulcan']}. {ad['ressalva_falcon']}.", "",

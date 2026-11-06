@@ -353,7 +353,11 @@ rota_a_dimensionamento:   # Portão do comprimento do MAV (Fabio, 2026-11-06). R
   vao_purga_m: {valores: [0.005, 0.01, 0.02, 0.05], base: 0.02, menor: 0.005, fonte: "[F46] §5.4, PDF p. 17: \"with a purge gap between the two tanks\"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO"}
   isp_casos_s: [304, 308, 309, 314]
   motores_por_estagio: [4, 1]   # as 4 saídas de 44:1 do estágio 1 (results/etapa7.2/rotas_mav.yaml) e o motor do estágio 2 (P-086)
-  grade_esboco: 200   # parâmetro de amostragem do raio no esboço do estágio 2 (escolha numérica)
+  grade_esboco: 40   # parâmetro de amostragem do raio no esboço do estágio 2, em 3 passes de refino (escolha numérica)
+  geometrias_estagio_2:   # o volume cabe numa esfera menor que o diâmetro interno; sem fonte, NÃO VALIDADAS; a escolha é do Fabio
+    recesso_hemisferio: "esfera em recesso de outra, recesso de até um hemisfério"
+    recesso_livre: "esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera)"
+    antepara_assimetrica: "esfera de volume somado, dividida no equador por antepara de calota (lente e tigela)"
   arranjo_msl:
     - {item: "Ordem axial do MSL", achado: "de cima para baixo: estágio de cruzeiro, casca traseira, paraquedas, estágio de descida, BUD, rover, escudo", fonte: "[F244] Fig. 1, PDF p. 2; [F214] PDF p. 35, vista expandida"}
     - {item: "Rover e estágio de descida no aeroshell", achado: "o aeroshell contém os dois", fonte: "[F244] PDF p. 1: \"The 4.5 m aeroshell is composed of a heatshield and backshell, and contains the DS and rover.\""}
