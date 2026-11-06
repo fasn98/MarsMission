@@ -42,8 +42,8 @@ fontes_p086:
     com Ø 0,57 m (2019). Nenhuma traz a divisão por elemento
   fonte: '[F35] p. 3; [F236] PDF p. 2; [F238] PDF p. 15'
 - item: Divisão por elemento
-  achado: não achada com cotas em nenhuma das fontes consultadas; só a figura, sem
-    cotas por trecho
+  achado: não há divisão completa em nenhuma das fontes consultadas; há uma figura
+    sem cotas por trecho e cotas soltas, nas linhas abaixo
   fonte: '[F237] PDF p. 4; [F35]; [F236]; [F238]'
 - item: Bocal aninhado
   achado: o 2º estágio tem o bocal dentro do interestágio, e isso aparece como risco
@@ -52,10 +52,17 @@ fontes_p086:
     nested SRM2 nozzle"; [F236] PDF p. 13: "clearance of the nested second stage nozzle
     hardware"'
 - item: Encurtar bocal e interestágio
-  achado: 'o estudo troca Isp por comprimento: cerca de 10 s a menos, com ganho de
-    massa, num bocal de expansão 81 e Isp 293 s. Motor sólido, sem o comprimento resultante'
+  achado: 'o estudo troca Isp por comprimento no 2º estágio: cerca de 10 s a menos,
+    num bocal de expansão 81 e Isp 293 s. A Fig. 10 tem o melhor ponto perto de −0,15
+    m no bocal, com GLOM cerca de 8 a 14 kg menor (leitura da figura, NÃO VALIDADO).
+    Motor sólido, com o bocal aninhado desenhado no interestágio'
   fonte: '[F238] PDF p. 10: "trading I sp for nozzle length"; "a significantly shorter
-    inter-stage and nozzle"'
+    inter-stage and nozzle"; Fig. 10, eixo "Nozzle Length change, m"'
+- item: Motor do 1º estágio (MSR de 2019)
+  achado: envelope em três níveis de propelente, de 30,5 a 31,7 pol; é cota de um
+    elemento, de motor sólido, e não a divisão do veículo
+  fonte: '[F238] PDF p. 12, Fig. 11: "525-lb prop, 31.7 inch case"; "475-lb prop,
+    30.5 inch case"'
 variante_44_1:
   motor_44_1_m: 0.316738
   motor_164_1_m: 0.5542279999999999
@@ -63,10 +70,14 @@ variante_44_1:
   - nome: 440 N, Re
     isp_s: 308
     fonte: '[F239] PDF p. 7: "Performance of 308 seconds at 44:1 area ratio was achieved"'
-  - nome: 440 N, Nb ("similar Nb engines")
+  - nome: 440 N, Nb ("similar Nb engines", "the Nb engine")
     isp_s: 304
-    fonte: '[F239] PDF p. 7: "This performance is about 4 seconds higher than similar
-      Nb engines" (308 − 4, calculado)'
+    fonte: '[F239] PDF p. 7: "about 4 seconds higher than similar Nb engines" (308
+      − 4) e "about 10 seconds higher than the Nb engine" (314 − 10); calculado'
+  - nome: 440 N, Re, injetor de programa anterior
+    isp_s: 314
+    fonte: '[F239] PDF p. 7: "Performance of 314 seconds at an area ratio of 44:1
+      was measured. This performance is about 10 seconds higher than the Nb engine"'
   - nome: 490 N, três injetores
     isp_s: 309
     fonte: '[F240] resumo no NTRS: "Three injectors with 44:1 area ratios are capable
@@ -92,6 +103,10 @@ variante_44_1:
     glom_kg: 392.7253618642498
     comprimento_m: 3.1624548812839532
     comprimento_sem_mudar_p086_m: 3.578978881283953
+  - isp_s: 314
+    glom_kg: 364.4544701939408
+    comprimento_m: 3.076851244779724
+    comprimento_sem_mudar_p086_m: 3.4933752447797244
 origem_dv:
   dv_100x100_m_s: 4027.8999999999996
   transferencia_m_s: 1192.8814797664074
@@ -104,11 +119,14 @@ origem_dv:
   - 300
   - 25952.4
   inclinacao_graus: 27.3
-  perdas_100x100_m_s: 524.8999999999996
+  acima_da_velocidade_circular_m_s: 524.8999999999996
   modelo_100x500_m_s: 4121.344736554453
   bowles_tabela_100x500_m_s: 4115.5
   bowles_m_s: 4150.0
   diferenca_para_bowles_m_s: 1622.354040682595
+aerofrenagem:
+  walk_out_m_s: 90.0
+  dias: 205.0
 limites_apoapse_km:
   margem_zero_falcon_heavy: 10824.0
   orbitador_fecha: 594.0
@@ -122,13 +140,15 @@ bowles:
       diz de onde vem a diferença até o valor do texto (não conferido)'
   perdas:
     fonte: '[F46] PDF p. 20: "the drag, thrust vectoring and atmospheric losses are
-      all small"; Tab. 1, PDF p. 21: "(100,100) 3503 4027.9"'
+      all small" (dito para 100 × 500 km e escape); PDF p. 20: "heading due East";
+      Tab. 1, PDF p. 21: "(100,100) 3503 4027.9"'
 orbitas:
 - periapse_km: 300
   apoapse_km: 25952.4
   fonte: ''
   base: true
   rotulo: ''
+  diverge: false
   dv_mav_com_margem_m_s: 5772.354040682595
   glom_kg: 386.77369250546496
   propelente_mav_kg: 285.49574322920796
@@ -145,11 +165,13 @@ orbitas:
   lander_injetado_kg: 4614.7885791407525
   margem_falcon_heavy: 0.43967248514669066
   margem_vulcan_vc4: 0.405756166948366
+  margem_vulcan_vc6_orbitador: 0.06364270969286756
 - periapse_km: 300
   apoapse_km: 10824.0
   fonte: ''
   base: false
   rotulo: margem zero no Falcon Heavy
+  diverge: false
   dv_mav_com_margem_m_s: 5515.099499750771
   glom_kg: 315.54892343716523
   propelente_mav_kg: 230.65267104661723
@@ -166,11 +188,13 @@ orbitas:
   lander_injetado_kg: 4463.680055739652
   margem_falcon_heavy: 5.022458284087428e-05
   margem_vulcan_vc4: 0.45334509267712986
+  margem_vulcan_vc6_orbitador: -0.2611540876980283
 - periapse_km: 300
   apoapse_km: 10000
   fonte: ''
   base: false
   rotulo: ''
+  diverge: false
   dv_mav_com_margem_m_s: 5486.892603679395
   glom_kg: 308.80736549056735
   propelente_mav_kg: 225.46167142773686
@@ -187,11 +211,13 @@ orbitas:
   lander_injetado_kg: 4449.352055232572
   margem_falcon_heavy: -0.04313409169320648
   margem_vulcan_vc4: 0.4580252188991829
+  margem_vulcan_vc6_orbitador: -0.2930590408411792
 - periapse_km: 300
   apoapse_km: 5000
   fonte: ''
   base: false
   rotulo: ''
+  diverge: false
   dv_mav_com_margem_m_s: 5222.558495297447
   glom_kg: 253.79141901510542
   propelente_mav_kg: 183.09939264163117
@@ -208,11 +234,13 @@ orbitas:
   lander_injetado_kg: 4332.226067577248
   margem_falcon_heavy: -0.4064469784213972
   margem_vulcan_vc4: 0.4974443630357306
+  margem_vulcan_vc6_orbitador: -0.5614778008666832
 - periapse_km: 300
   apoapse_km: 1000
   fonte: ''
   base: false
   rotulo: ''
+  diverge: false
   dv_mav_com_margem_m_s: 4723.606125680334
   glom_kg: 179.90260696204507
   propelente_mav_kg: 126.2050073607747
@@ -229,11 +257,13 @@ orbitas:
   lander_injetado_kg: 4174.199998348585
   margem_falcon_heavy: -0.9266800598567618
   margem_vulcan_vc4: 0.5541343267827419
+  margem_vulcan_vc6_orbitador: -0.9458305825713363
 - periapse_km: 300
   apoapse_km: 594.0
   fonte: ''
   base: false
-  rotulo: menor apoapse em que o orbitador fecha
+  rotulo: limite em que o orbitador deixa de fechar
+  diverge: true
   dv_mav_com_margem_m_s: 4636.515904595977
   glom_kg: 169.92728457201895
   propelente_mav_kg: 118.52400912045458
@@ -246,15 +276,17 @@ orbitas:
   voltar_a_1_sol_extra_m_s: 1125.5557740711142
   extra_orbitador_regra_iii_m_s: 2258.7541759815617
   extra_orbitador_missao_a_m_s: 2258.754175981562
-  orbitador_injetado_kg: 67656573.1969822
+  orbitador_injetado_kg: null
   lander_injetado_kg: 4152.7810376747975
-  margem_falcon_heavy: -0.9998340995513164
+  margem_falcon_heavy: null
   margem_vulcan_vc4: 0.5621501459952523
+  margem_vulcan_vc6_orbitador: null
 - periapse_km: 380
   apoapse_km: 380
   fonte: '[F35] p. 3: "nominal injection orbit of 380km"'
   base: false
   rotulo: ''
+  diverge: false
   dv_mav_com_margem_m_s: 4605.615838777636
   glom_kg: 166.55478053684573
   propelente_mav_kg: 115.92718101337121
@@ -271,6 +303,7 @@ orbitas:
   lander_injetado_kg: 4145.5339727593
   margem_falcon_heavy: null
   margem_vulcan_vc4: 0.5648810375016717
+  margem_vulcan_vc6_orbitador: null
 em_pe_na_varredura:
 - diametro_m: 0.57
   em_pe_4_5_m: -1.7797941215242377
@@ -322,7 +355,8 @@ alavancas:
   deitado_4_65_m: -0.008709281678784375
   em_pe_4_5_m: -1.8313483978400273
   em_pe_4_65_m: -0.8226540506664404
-- alavanca: Cada 0,10 m a menos na P-086, por qualquer meio, inclusive bocal aninhado
+- alavanca: Cada 0,1 m a menos na P-086, por qualquer meio, inclusive bocal aninhado
+    (NÃO VALIDADO)
   grupo: p086
   diametro_m: 0.57
   comprimento_m: 3.4609947218243873
@@ -332,7 +366,8 @@ alavancas:
   em_pe_4_5_m: -1.6797941215242376
   em_pe_4_65_m: -0.6710997743506506
   exemplo: true
-- alavanca: R-4D-11 44:1 nos dois estágios, P-086 pelo motor, Isp mantido
+- alavanca: R-4D-11 44:1 nos dois estágios, P-086 pelo motor, Isp do 164:1 mantido
+    (NÃO VALIDADO)
   grupo: variante
   diametro_m: 0.57
   comprimento_m: 3.1444707218243875
@@ -388,6 +423,7 @@ alavancas:
   em_pe_4_65_m: -0.5669018298290012
   extra_orbitador_m_s: 497.6969701282821
   orbitador_fecha: true
+  diverge: false
   margem_falcon_heavy: 5.022458284087428e-05
 - alavanca: Órbita 300 × 10000 km
   grupo: orbita
@@ -400,6 +436,7 @@ alavancas:
   em_pe_4_65_m: -0.5545571359638979
   extra_orbitador_m_s: 551.7905965999064
   orbitador_fecha: true
+  diverge: false
   margem_falcon_heavy: -0.04313409169320648
 - alavanca: Órbita 300 × 5000 km
   grupo: orbita
@@ -412,6 +449,7 @@ alavancas:
   em_pe_4_65_m: -0.4453516995277811
   extra_orbitador_m_s: 1054.4251354173816
   orbitador_fecha: true
+  diverge: false
   margem_falcon_heavy: -0.4064469784213972
 - alavanca: Órbita 300 × 1000 km
   grupo: orbita
@@ -424,8 +462,9 @@ alavancas:
   em_pe_4_65_m: -0.2655720976624325
   extra_orbitador_m_s: 1983.9210047445874
   orbitador_fecha: true
+  diverge: false
   margem_falcon_heavy: -0.9266800598567618
-- alavanca: Órbita 300 × 594 km (menor apoapse em que o orbitador fecha)
+- alavanca: Órbita 300 × 594 km (limite em que o orbitador deixa de fechar)
   grupo: orbita
   diametro_m: 0.57
   comprimento_m: 3.0269661653490565
@@ -436,7 +475,8 @@ alavancas:
   em_pe_4_65_m: -0.23707121787531982
   extra_orbitador_m_s: 2143.8282439619193
   orbitador_fecha: true
-  margem_falcon_heavy: -0.9998340995513164
+  diverge: true
+  margem_falcon_heavy: null
 - alavanca: Órbita 380 × 380 km
   grupo: orbita
   diametro_m: 0.57
@@ -448,8 +488,9 @@ alavancas:
   em_pe_4_65_m: -0.2271368737571775
   extra_orbitador_m_s: 2260.4068221341004
   orbitador_fecha: false
+  diverge: false
   margem_falcon_heavy: null
-- alavanca: Órbita de margem zero + tanques aninhados
+- alavanca: Órbita de margem zero + tanques aninhados (limite otimista)
   grupo: combinada
   diametro_m: 0.57
   comprimento_m: 2.8654487853634474
