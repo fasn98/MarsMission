@@ -374,12 +374,19 @@ def test_encaixe_coifas():
     assert td[1]["c"][0] == td[2]["c"][0] and td[1]["c"][1] == -td[2]["c"][1] and td[1]["c"][2] == td[2]["c"][2]
     assert r["criterio_empate"]["simetricas"]["diferenca_m"] == pytest.approx(r["tanques_descida"]["diferenca_max_raio_m"], rel=1e-3)
     # topo da Casca traseira 1 e do Braço em z = 3,12 m: com a grade nos ângulos cardeais, é coincidência, não diferença
-    assert any(set(x) == {"Braço de coleta (guardado)", "Casca traseira 1 (SLA-561V)"} for x in r["criterio_empate"]["coincidencias"])
+    assert any({"Braço de coleta (guardado)", "Casca traseira 1 (SLA-561V)"} <= set(x) for x in r["criterio_empate"]["coincidencias"])
     for arq_ in ("results/etapa7.2/conferencias.md", "results/etapa7.2/cg_lateral.md", "results/etapa7.2/conferencia_onshape.md"):
         assert "Errata (2026-11-06" in (RAIZ / arq_).read_text(encoding="utf-8")
     # nas casas do roteiro, nada mudou com a grade alinhada e os 12 algarismos
     assert all(x["igual_em_3_casas"] for x in r["comparacao_grade_e_precisao"])
     assert ec.EMPATE_M == 1e-9 and ec.CASAS_DE_ORDEM == 9
+    # coincidências não dependem do último bit: ruído que inverte a ordem de valores empatados dá a mesma saída
+    chaves = [("a",), ("b",), ("c",), ("d",)]
+    base = [(1.0, "a", chaves[0]), (1.0 + 1e-15, "b", chaves[1]), (1.0 + 2e-15, "c", chaves[2]), (2.0, "d", chaves[3])]
+    invertido = [(1.0 + 2e-15, "a", chaves[0]), (1.0 + 1e-15, "b", chaves[1]), (1.0, "c", chaves[2]), (2.0, "d", chaves[3])]
+    r0, r1 = ec.criterio_de_empate([("x", base + [(9.0, "e", ("e",)), (9.0, "f", ("e",))])]), ec.criterio_de_empate([("x", invertido + [(9.0, "e", ("e",)), (9.0, "f", ("e",))])])
+    assert r0[3] == r1[3] == [["a", "b", "c"]]
+    assert r0[1]["pecas"] == r1[1]["pecas"] and r0[2]["pecas"] == r1[2]["pecas"]
     # as premissas propostas não entraram
     ids = {p["id"] for p in ler("config/premissas.yaml")["premissas"]}
     assert not ({p["id"] for p in r["premissas_propostas"]} & ids)

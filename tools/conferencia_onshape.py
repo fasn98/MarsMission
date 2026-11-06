@@ -173,7 +173,7 @@ def escreve_md(o):
                f"Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa {ex(ma['diferenca_massa_kg'])} kg; CG "
                + ", ".join(ex(d) for d in ma["diferenca_cg_m"]) + " m.", ""]
     md += ["", "## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos atuais", "",
-           "Com 6 algarismos, o modelo atual menos o compilado era Orbitador +0,6 g; Lander −0,027 kg; MAV sem diferença. Os valores vigentes são os do início desta página. "
+           "Com 6 algarismos, o modelo atual menos o compilado era: Orbitador +0,6 g, CG z +3,2e−07 m; Lander −0,027 kg, CG z +1,8e−06 m; MAV sem diferença. Os valores vigentes são os da linha \"Modelo atual\" de cada veículo. "
            "A conferência contra o Onshape não muda: ela vale para os arquivos do commit 32cb41d, copiados em tests/data/onshape/."]
     (SAIDA / "conferencia_onshape.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))

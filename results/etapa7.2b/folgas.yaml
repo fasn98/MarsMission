@@ -477,27 +477,20 @@ criterio_empate:
   coincidencias:
   - - Braço de coleta (guardado)
     - Casca traseira 1 (SLA-561V)
-  - - Braço de coleta (guardado)
     - MAV interestágio
   - - Casca traseira 1 (SLA-561V)
     - Escudo térmico (PICA)
-  - - Casca traseira 1 (SLA-561V)
-    - MAV interestágio
   - - MAV Tanque de combustível do estágio 1
     - MAV Tanque de combustível do estágio 2
-  - - MAV Tanque de combustível do estágio 2
     - MAV Tanque de oxidante do estágio 1
-  - - MAV Tanque de oxidante do estágio 1
     - MAV Tanque de oxidante do estágio 2
-  - - MAV Tanque de oxidante do estágio 2
     - MAV carga (contêiner de amostras)
+    - MAV motores do estágio 1 (4 x R-4D-11)
   - - MAV carga (contêiner de amostras)
     - MAV motores do estágio 1 (4 x R-4D-11)
   - - MAV propelente combustível do estágio 1
     - MAV propelente combustível do estágio 2
-  - - MAV propelente combustível do estágio 2
     - MAV propelente oxidante do estágio 1
-  - - MAV propelente oxidante do estágio 1
     - MAV propelente oxidante do estágio 2
   limite_simetricas_m: 1.0e-12
   limite_distintas_m: 1.0e-06

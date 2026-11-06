@@ -232,13 +232,18 @@ def criterio_de_empate(listas):
         for g in grupos.values():
             if len(g) > 1:
                 sims.append((max(x[0] for x in g) - min(x[0] for x in g), onde, sorted(x[1] for x in g)[:2]))
-        rep = sorted((round(min(x[0] for x in g), CASAS_DE_ORDEM), min(x[0] for x in g), min(x[1] for x in g)) for g in grupos.values())
-        distintos = []
-        for (_, a, na), (_, b, nb) in zip(rep, rep[1:]):
-            if b - a <= EMPATE_M:
-                coin.add(tuple(sorted((na, nb))))
+        # grupos distintos em ordem de valor; vão até EMPATE_M é coincidência, e a coincidência é listada pelos nomes
+        rep = sorted((min(x[0] for x in g), min(x[1] for x in g)) for g in grupos.values())
+        blocos = [[rep[0]]]
+        for item in rep[1:]:
+            if item[0] - blocos[-1][-1][0] <= EMPATE_M:
+                blocos[-1].append(item)
             else:
-                distintos.append((b - a, onde, [na, nb]))
+                blocos.append([item])
+        coin.update(tuple(sorted(n for _, n in b_)) for b_ in blocos if len(b_) > 1)
+        distintos = []
+        for b0, b1 in zip(blocos, blocos[1:]):
+            distintos.append((min(x[0] for x in b1) - max(x[0] for x in b0), onde, [min(n for _, n in b0), min(n for _, n in b1)]))
         dists += distintos
         decs += distintos if "cápsula" in onde else distintos[:1]
 
@@ -439,7 +444,7 @@ def escreve_md(o):
            f"| (a) maior diferença entre peças exatamente simétricas | {ex(em['simetricas']['diferenca_m'])} | ≤ {ex(em['limite_simetricas_m'])} | {'; '.join(em['simetricas']['pecas'])} ({em['simetricas']['onde']}) |",
            f"| (b) menor diferença real entre peças distintas | {ex(em['distintas']['diferenca_m'])} | ≥ {ex(em['limite_distintas_m'])} | {'; '.join(em['distintas']['pecas'])} ({em['distintas']['onde']}) |",
            f"| (b'), só os pares que decidem texto gerado: o limitador contra o seguinte, e a lista de peças contra a cápsula | {ex(em['distintas_que_decidem_texto']['diferenca_m'])} | ≥ {ex(em['limite_distintas_m'])} | {'; '.join(em['distintas_que_decidem_texto']['pecas'])} ({em['distintas_que_decidem_texto']['onde']}) |", "",
-           f"**Resultado, com (a) e (b) literais: {'passa nos dois' if em['passa'] else 'NÃO passa; os parâmetros seguem sem aprovação, com decisão pendente do Fabio'}.** Peças distintas com a mesma cota, até `empate_m`: " + "; ".join(" × ".join(p_) for p_ in em["coincidencias"]) + ".", "",
+           f"**Resultado, com (a) e (b) literais: {'passa nos dois' if em['passa'] else 'NÃO passa; os parâmetros seguem sem aprovação, com decisão pendente do Fabio'}.** Grupos de peças distintas com a mesma cota, até `empate_m`: " + "; ".join(" × ".join(p_) for p_ in em["coincidencias"]) + ".", "",
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",
@@ -456,7 +461,7 @@ def escreve_roteiro(o):
     cfg = o["configuracoes"]
     md = ["# Roteiro no Onshape: veículos dentro das coifas (gerado por tools/encaixe_coifas.py)", "",
           "**VERIFICAÇÃO geométrica do modelo, não validação.** O envelope do Vulcan é leitura de figura do guia, e o do Falcon é o STEP do fabricante amostrado.", "",
-          "**Nota (2026-11-06):** os arquivos desta página têm 12 algarismos; as massas esperadas abaixo já são as vigentes (results/etapa7.2b/folgas.md).", "",
+          "**Nota (2026-11-06):** os arquivos desta página têm 12 algarismos; as massas esperadas abaixo já são as vigentes, e o orbitador passou de 6 506,2 para o valor do passo correspondente (results/etapa7.2b/folgas.md).", "",
           "**Não conferido:** os arquivos não foram compilados aqui, e as páginas de ajuda do Onshape não abriram na consulta. Os nomes de comandos (Commit, Mass Properties, Insert, Group, Measure e os da Assembly) vêm de memória e podem variar. Se algo não bater, anote o que apareceu.", "",
           "## A. Colar os Feature Studios", ""]
     n = 0

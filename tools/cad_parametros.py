@@ -546,7 +546,8 @@ def escreve_md(o):
     md += ["", "## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos .fs", "",
            "**O que muda:** toda a geometria e as densidades vão para os .fs com 12 algarismos significativos, antes 6. Massa, CG e inércia desta página mudam por isso; os valores vigentes são os mostrados aqui, e a comparação 6 × 12 algarismos está em results/etapa7.2b/folgas.md. "
            "A conferência no Onshape continua valendo para o commit 32cb41d: ela lê as cópias em tests/data/onshape/, que não mudam. "
-           "Outros arquivos com números afetados, com errata própria ou nota: results/etapa7.2/cg_lateral.md, conferencia_onshape.md e portao_decisao.yaml; results/etapa7.2b/roteiro_onshape.md."]
+           "Com 6 algarismos, a massa do CAD era 6 506,2 kg no orbitador, 3 190,4 kg no lander e 348,1 kg no MAV. "
+           "Outros arquivos com números afetados: results/etapa7.2/cg_lateral.md e conferencia_onshape.md, com errata própria; results/etapa7.2b/roteiro_onshape.md, com nota; results/etapa7.2/portao_decisao.md, com nota."]
     md += ["", "## Orbitador no Falcon (com a plataforma e o EES no arranjo do CAD)", "",
            "| Conjunto | Base | Topo | Raio | Folga radial |", "| :- | -: | -: | -: | -: |"]
     for c in cf["orbitador_falcon"]:
