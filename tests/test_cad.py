@@ -59,11 +59,11 @@ def test_arquivos_gerados_coerentes():
         assert r["resumo"][k]["massa_kg"] == pytest.approx(sum(c["massa_kg"] for c in corpos))
     # peças equivalentes: massa = a do orçamento usada (P-094)
     orb = {c["nome"]: c for c in r["veiculos"]["orbitador"]}
-    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-10)   # densidade arredondada a 12 algarismos
+    assert orb["CCRS"]["massa_kg"] == pytest.approx(620.0, rel=1e-10)   # densidade arredondada a 13 algarismos
     # propelente do orbitador = o do orçamento
     prop = sum(c["massa_kg"] for c in r["veiculos"]["orbitador"] if c["nome"].startswith("Propelente"))
     arq = ler("results/etapa2.5/arquitetura.yaml")["orbitador"]["composicao"]
-    # raio arredondado a 12 algarismos (como no FeatureScript): o volume triplica o erro relativo
+    # raio arredondado a 13 algarismos (como no FeatureScript): o volume triplica o erro relativo
     assert prop == pytest.approx(sum(x.get("propelente_kg", 0) for x in arq), rel=2e-5)
 
 
@@ -181,7 +181,7 @@ def test_conferencia_onshape():
     assert mav["massa"]["meia_resolucao"] == pytest.approx(5e-4)
     lan = {y["grandeza"]: y for y in r["veiculos"]["lander"]["linhas"]}
     assert lan["massa"]["meia_resolucao"] == pytest.approx(5e-5) and lan["CG x"]["meia_resolucao"] == pytest.approx(5e-5)
-    # o arquivo atual do lander (cone interno com 12 algarismos) reproduz o modelo atual
+    # o arquivo atual do lander (geometria com 13 algarismos) reproduz o modelo atual
     m = ler("results/etapa7.2/parametros.yaml")["resumo"]["lander"]
     assert co.previsto_do_arquivo("results/etapa7.2/lander.fs")["massa_kg"] == pytest.approx(m["massa_kg"], rel=1e-9)
 
@@ -205,7 +205,7 @@ def test_previsto_e_a_geometria_do_featurescript():
         for c in corpos:
             for k in ("p0", "p1", "c", "c1", "c2", "r", "t", "r0", "r1", "ri0", "ri1", "densidade"):
                 if k in c:
-                    assert c[k] == cp.r12(c[k])
+                    assert c[k] == cp.r13(c[k])
 
 
 def test_cg_lateral_achado_e_produtos_no_eixo():
@@ -377,9 +377,12 @@ def test_encaixe_coifas():
     assert any({"Braço de coleta (guardado)", "Casca traseira 1 (SLA-561V)"} <= set(x) for x in r["criterio_empate"]["coincidencias"])
     for arq_ in ("results/etapa7.2/conferencias.md", "results/etapa7.2/cg_lateral.md", "results/etapa7.2/conferencia_onshape.md"):
         assert "Errata (2026-11-06" in (RAIZ / arq_).read_text(encoding="utf-8")
-    # nas casas do roteiro, nada mudou com a grade alinhada e os 12 algarismos
+    # nas casas do roteiro, nada mudou com a grade alinhada e os 13 algarismos
     assert all(x["igual_em_3_casas"] for x in r["comparacao_grade_e_precisao"])
     assert ec.EMPATE_M == 1e-9 and ec.CASAS_DE_ORDEM == 9
+    # critério do Fabio para aprovar os dois parâmetros
+    crit = r["criterio_empate"]
+    assert crit["passa"] and crit["simetricas"]["diferenca_m"] <= 1e-12 and crit["distintas"]["diferenca_m"] >= 1e-6
     # coincidências não dependem do último bit: ruído que inverte a ordem de valores empatados dá a mesma saída
     chaves = [("a",), ("b",), ("c",), ("d",)]
     base = [(1.0, "a", chaves[0]), (1.0 + 1e-15, "b", chaves[1]), (1.0 + 2e-15, "c", chaves[2]), (2.0, "d", chaves[3])]

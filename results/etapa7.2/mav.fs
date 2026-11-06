@@ -21,18 +21,18 @@ const MATERIAIS = [
     ["Hidrazina", 1004]
 ];
 const CORPOS = [
-    { "tipo" : "cilindro", "nome" : "MAV motores do estagio 1 (4 x R-4D-11)", "mat" : -1, "densidade" : 120.915744755, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 0], "p1" : [0, 0, 0.6], "r" : 0.275 },
-    { "tipo" : "tubo", "nome" : "MAV Tanque de oxidante do estagio 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 0.6], "p1" : [0, 0, 1.24981232764], "r" : 0.275, "t" : 0.0015 },
-    { "tipo" : "cilindro", "nome" : "MAV propelente oxidante do estagio 1", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "p0" : [0, 0, 0.710496000709], "p1" : [0, 0, 1.13931632693], "r" : 0.2735 },
-    { "tipo" : "tubo", "nome" : "MAV Tanque de combustivel do estagio 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 1.24981232764], "p1" : [0, 0, 1.89873720881], "r" : 0.275, "t" : 0.0015 },
-    { "tipo" : "cilindro", "nome" : "MAV propelente combustivel do estagio 1", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "p0" : [0, 0, 1.36029077868], "p1" : [0, 0, 1.78825875777], "r" : 0.2735 },
-    { "tipo" : "tubo", "nome" : "MAV interestagio", "mat" : 1, "densidade" : 0, "cor" : [0.78, 0.79, 0.81], "p0" : [0, 0, 1.89873720881], "p1" : [0, 0, 1.99873720881], "r" : 0.285, "t" : 0.003 },
-    { "tipo" : "cilindro", "nome" : "MAV motor do estagio 2 (1 x R-4D-11)", "mat" : -1, "densidade" : 161.220993007, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 1.99873720881], "p1" : [0, 0, 2.44873720881], "r" : 0.1375 },
-    { "tipo" : "tubo", "nome" : "MAV Tanque de oxidante do estagio 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 2.44873720881], "p1" : [0, 0, 2.82998571763], "r" : 0.275, "t" : 0.0015 },
-    { "tipo" : "cilindro", "nome" : "MAV propelente oxidante do estagio 2", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "p0" : [0, 0, 2.58946774303], "p1" : [0, 0, 2.68925518341], "r" : 0.2735 },
-    { "tipo" : "tubo", "nome" : "MAV Tanque de combustivel do estagio 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 2.82998571763], "p1" : [0, 0, 3.21099472182], "r" : 0.275, "t" : 0.0015 },
-    { "tipo" : "cilindro", "nome" : "MAV propelente combustivel do estagio 2", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "p0" : [0, 0, 2.97069567107], "p1" : [0, 0, 3.07028476838], "r" : 0.2735 },
-    { "tipo" : "cilindro", "nome" : "MAV carga (conteiner de amostras)", "mat" : -1, "densidade" : 192.414004399, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 3.21099472182], "p1" : [0, 0, 3.56099472182], "r" : 0.275 }
+    { "tipo" : "cilindro", "nome" : "MAV motores do estagio 1 (4 x R-4D-11)", "mat" : -1, "densidade" : 120.9157447554, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 0], "p1" : [0, 0, 0.6], "r" : 0.275 },
+    { "tipo" : "tubo", "nome" : "MAV Tanque de oxidante do estagio 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 0.6], "p1" : [0, 0, 1.249812327643], "r" : 0.275, "t" : 0.0015 },
+    { "tipo" : "cilindro", "nome" : "MAV propelente oxidante do estagio 1", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "p0" : [0, 0, 0.7104960007085], "p1" : [0, 0, 1.139316326934], "r" : 0.2735 },
+    { "tipo" : "tubo", "nome" : "MAV Tanque de combustivel do estagio 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 1.249812327643], "p1" : [0, 0, 1.898737208807], "r" : 0.275, "t" : 0.0015 },
+    { "tipo" : "cilindro", "nome" : "MAV propelente combustivel do estagio 1", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "p0" : [0, 0, 1.360290778676], "p1" : [0, 0, 1.788258757774], "r" : 0.2735 },
+    { "tipo" : "tubo", "nome" : "MAV interestagio", "mat" : 1, "densidade" : 0, "cor" : [0.78, 0.79, 0.81], "p0" : [0, 0, 1.898737208807], "p1" : [0, 0, 1.998737208807], "r" : 0.285, "t" : 0.003 },
+    { "tipo" : "cilindro", "nome" : "MAV motor do estagio 2 (1 x R-4D-11)", "mat" : -1, "densidade" : 161.2209930072, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 1.998737208807], "p1" : [0, 0, 2.448737208807], "r" : 0.1375 },
+    { "tipo" : "tubo", "nome" : "MAV Tanque de oxidante do estagio 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 2.448737208807], "p1" : [0, 0, 2.829985717631], "r" : 0.275, "t" : 0.0015 },
+    { "tipo" : "cilindro", "nome" : "MAV propelente oxidante do estagio 2", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "p0" : [0, 0, 2.589467743032], "p1" : [0, 0, 2.689255183406], "r" : 0.2735 },
+    { "tipo" : "tubo", "nome" : "MAV Tanque de combustivel do estagio 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "p0" : [0, 0, 2.829985717631], "p1" : [0, 0, 3.210994721824], "r" : 0.275, "t" : 0.0015 },
+    { "tipo" : "cilindro", "nome" : "MAV propelente combustivel do estagio 2", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "p0" : [0, 0, 2.970695671073], "p1" : [0, 0, 3.070284768382], "r" : 0.2735 },
+    { "tipo" : "cilindro", "nome" : "MAV carga (conteiner de amostras)", "mat" : -1, "densidade" : 192.4140043992, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 3.210994721824], "p1" : [0, 0, 3.560994721824], "r" : 0.275 }
 ];
 
 annotation { "Feature Type Name" : "MarsMission mav" }

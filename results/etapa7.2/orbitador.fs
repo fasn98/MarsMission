@@ -21,26 +21,26 @@ const MATERIAIS = [
     ["Hidrazina", 1004]
 ];
 const CORPOS = [
-    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MON-3 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [1.39739080265, 0, 0.559890802654], "r" : 0.561390802654, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente insercao MON-3 1", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [1.39739080265, 0, 0.559890802654], "r" : 0.550399294409 },
-    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MMH 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [8.55655086814e-17, 1.39739080265, 0.559890802654], "r" : 0.561390802654, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente insercao MMH 1", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [8.55655086814e-17, 1.39739080265, 0.559890802654], "r" : 0.550034384448 },
-    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MON-3 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-1.39739080265, 1.71131017363e-16, 0.559890802654], "r" : 0.561390802654, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente insercao MON-3 2", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [-1.39739080265, 1.71131017363e-16, 0.559890802654], "r" : 0.550399294409 },
-    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MMH 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-2.56696526044e-16, -1.39739080265, 0.559890802654], "r" : 0.561390802654, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente insercao MMH 2", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [-2.56696526044e-16, -1.39739080265, 0.559890802654], "r" : 0.550034384448 },
-    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MON-3 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [1.29124349633, 0, 1.67352510163], "r" : 0.455243496326, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente retorno MON-3 1", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [1.29124349633, 0, 1.67352510163], "r" : 0.446051442597 },
-    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MMH 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [7.90658607348e-17, 1.29124349633, 1.67352510163], "r" : 0.455243496326, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente retorno MMH 1", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [7.90658607348e-17, 1.29124349633, 1.67352510163], "r" : 0.445755714358 },
-    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MON-3 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-1.29124349633, 1.5813172147e-16, 1.67352510163], "r" : 0.455243496326, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente retorno MON-3 2", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [-1.29124349633, 1.5813172147e-16, 1.67352510163], "r" : 0.446051442597 },
-    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MMH 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-2.37197582204e-16, -1.29124349633, 1.67352510163], "r" : 0.455243496326, "t" : 0.0015 },
-    { "tipo" : "esfera", "nome" : "Propelente retorno MMH 2", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [-2.37197582204e-16, -1.29124349633, 1.67352510163], "r" : 0.445755714358 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MON-3 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [1.397390802654, 0, 0.5598908026537], "r" : 0.5613908026537, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente insercao MON-3 1", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [1.397390802654, 0, 0.5598908026537], "r" : 0.5503992944091 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MMH 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [8.556550868139e-17, 1.397390802654, 0.5598908026537], "r" : 0.5613908026537, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente insercao MMH 1", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [8.556550868139e-17, 1.397390802654, 0.5598908026537], "r" : 0.5500343844482 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MON-3 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-1.397390802654, 1.711310173628e-16, 0.5598908026537], "r" : 0.5613908026537, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente insercao MON-3 2", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [-1.397390802654, 1.711310173628e-16, 0.5598908026537], "r" : 0.5503992944091 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque insercao MMH 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-2.566965260442e-16, -1.397390802654, 0.5598908026537], "r" : 0.5613908026537, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente insercao MMH 2", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [-2.566965260442e-16, -1.397390802654, 0.5598908026537], "r" : 0.5500343844482 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MON-3 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [1.291243496326, 0, 1.673525101634], "r" : 0.4552434963264, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente retorno MON-3 1", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [1.291243496326, 0, 1.673525101634], "r" : 0.4460514425975 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MMH 1", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [7.90658607348e-17, 1.291243496326, 1.673525101634], "r" : 0.4552434963264, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente retorno MMH 1", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [7.90658607348e-17, 1.291243496326, 1.673525101634], "r" : 0.4457557143578 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MON-3 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-1.291243496326, 1.581317214696e-16, 1.673525101634], "r" : 0.4552434963264, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente retorno MON-3 2", "mat" : 7, "densidade" : 0, "cor" : [0.92, 0.41, 0.2], "c" : [-1.291243496326, 1.581317214696e-16, 1.673525101634], "r" : 0.4460514425975 },
+    { "tipo" : "esfera_oca", "nome" : "Tanque retorno MMH 2", "mat" : 0, "densidade" : 0, "cor" : [0.62, 0.63, 0.66], "c" : [-2.371975822044e-16, -1.291243496326, 1.673525101634], "r" : 0.4552434963264, "t" : 0.0015 },
+    { "tipo" : "esfera", "nome" : "Propelente retorno MMH 2", "mat" : 6, "densidade" : 0, "cor" : [0.16, 0.47, 0.84], "c" : [-2.371975822044e-16, -1.291243496326, 1.673525101634], "r" : 0.4457557143578 },
     { "tipo" : "tubo", "nome" : "Cilindro central", "mat" : 1, "densidade" : 0, "cor" : [0.78, 0.79, 0.81], "p0" : [0, 0, 0], "p1" : [0, 0, 2.12726859796], "r" : 0.7875, "t" : 0.003 },
-    { "tipo" : "cilindro", "nome" : "Plataforma (P-016)", "mat" : -1, "densidade" : 213.950278273, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 2.22726859796], "p1" : [0, 0, 2.52726859796], "r" : 1.74498699265 },
-    { "tipo" : "caixa", "nome" : "CCRS", "mat" : -1, "densidade" : 182.352941176, "cor" : [0.48, 0.37, 0.65], "c1" : [-1.7, -0.25, 2.62726859796], "c2" : [1.7, 0.25, 4.62726859796] },
-    { "tipo" : "tronco", "nome" : "EES com o conteiner de amostras", "mat" : -1, "densidade" : 429.503680454, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 4.62726859796], "p1" : [0, 0, 5.11567222581], "r0" : 0.6365, "r1" : 0.0064, "ri0" : 0, "ri1" : 0 }
+    { "tipo" : "cilindro", "nome" : "Plataforma (P-016)", "mat" : -1, "densidade" : 213.9502782725, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 2.22726859796], "p1" : [0, 0, 2.52726859796], "r" : 1.744986992653 },
+    { "tipo" : "caixa", "nome" : "CCRS", "mat" : -1, "densidade" : 182.3529411765, "cor" : [0.48, 0.37, 0.65], "c1" : [-1.7, -0.25, 2.62726859796], "c2" : [1.7, 0.25, 4.62726859796] },
+    { "tipo" : "tronco", "nome" : "EES com o conteiner de amostras", "mat" : -1, "densidade" : 429.5036804548, "cor" : [0.48, 0.37, 0.65], "p0" : [0, 0, 4.62726859796], "p1" : [0, 0, 5.115672225809], "r0" : 0.6365, "r1" : 0.0064, "ri0" : 0, "ri1" : 0 }
 ];
 
 annotation { "Feature Type Name" : "MarsMission orbitador" }

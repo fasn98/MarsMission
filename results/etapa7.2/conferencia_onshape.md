@@ -27,7 +27,7 @@ Arquivo tests/data/onshape/compilados_32cb41d/orbitador.fs; compilou: sim; peça
 | produtos de inércia | ~1e-13 (zero numérico) | — | maior valor absoluto +2,1e−13 | — | — | — |
 | área (m²) | 142,922 | 3 | não calculada pelo script | — | — | — |
 
-Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa +6,8e−03 kg; CG +7,4e−23, −8,7e−18, −2,3e−06 m.
+Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa +6,8e−03 kg; CG −1,7e−17, −4,5e−23, −2,3e−06 m.
 
 ## Lander
 
@@ -70,6 +70,6 @@ Arquivo tests/data/onshape/compilados_32cb41d/mav.fs; compilou: sim; peças: 12 
 Modelo atual (results/etapa7.2/parametros.yaml) contra o arquivo compilado: massa −6,3e−04 kg; CG +0,0e+00, +0,0e+00, +6,8e−06 m.
 
 
-## Errata (2026-11-06, decisão do Fabio): 12 algarismos nos arquivos atuais
+## Errata (2026-11-06, decisão do Fabio): 13 algarismos nos arquivos atuais
 
 Com 6 algarismos, o modelo atual menos o compilado era: Orbitador +0,6 g, CG z +3,2e−07 m; Lander −0,027 kg, CG z +1,8e−06 m; MAV sem diferença. Os valores vigentes são os da linha "Modelo atual" de cada veículo. A conferência contra o Onshape não muda: ela vale para os arquivos do commit 32cb41d, copiados em tests/data/onshape/.

@@ -110,12 +110,12 @@ veiculos:
     area_m2_medida: 142.922
     area_texto: '142.922'
     modelo_atual:
-      massa_kg: 6506.251549725522
-      diferenca_massa_kg: 0.006776184863156232
+      massa_kg: 6506.2515497330105
+      diferenca_massa_kg: 0.006776192351935606
       diferenca_cg_m:
-      - 7.412721895500581e-23
-      - -8.736784066132921e-18
-      - -2.3128652710813213e-06
+      - -1.7473403012793837e-17
+      - -4.549615265307841e-23
+      - -2.3128638289016124e-06
   lander:
     situacao: conferido
     arquivo: tests/data/onshape/compilados_32cb41d/lander.fs
@@ -238,12 +238,12 @@ veiculos:
     area_m2_medida: 188.407
     area_texto: '188.407'
     modelo_atual:
-      massa_kg: 3190.418654393851
-      diferenca_massa_kg: -0.015031124324650591
+      massa_kg: 3190.4186543770033
+      diferenca_massa_kg: -0.015031141172130447
       diferenca_cg_m:
-      - 5.8102325509873376e-08
-      - -3.8273746303524314e-07
-      - -2.2745226297971044e-06
+      - 5.8102652394226295e-08
+      - -3.8273825131093786e-07
+      - -2.2745220040754077e-06
   mav:
     situacao: conferido
     arquivo: tests/data/onshape/compilados_32cb41d/mav.fs
@@ -336,9 +336,9 @@ veiculos:
     area_m2_medida: 14.2848
     area_texto: '14.2848'
     modelo_atual:
-      massa_kg: 348.12633164648145
-      diferenca_massa_kg: -0.0006332991941917498
+      massa_kg: 348.1263316475313
+      diferenca_massa_kg: -0.0006332981443506469
       diferenca_cg_m:
       - 0.0
       - 0.0
-      - 6.788617096242788e-06
+      - 6.788608421848252e-06

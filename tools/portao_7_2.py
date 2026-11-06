@@ -177,7 +177,7 @@ def escreve_md(o):
         md.append(f"| {ae['rotulo']} | contorno reto | {sg(ae['folga_vulcan_linear_m'], 4)} | {sg(ae['folga_vulcan_linear_vertice_m'], 4)} |")
         md.append(f"| {ae['rotulo']} | Ø menor desde o PAF | {sg(ae['folga_vulcan_sem_afunilamento_m'], 4)} | {sg(ae['folga_vulcan_sem_afunilamento_vertice_m'], 4)} |")
     md += ["", f"SRL-C, publicado e vigente: {sg(o['srl_c']['folga_radial_m'], 4)} e {sg(o['srl_c']['folga_radial_vertice_m'], 4)} m (contorno reto); {sg(o['srl_c']['folga_sem_afunilamento_m'], 4)} e {sg(o['srl_c']['folga_sem_afunilamento_vertice_m'], 4)} m (Ø menor).", "",
-           "**Nota (2026-11-06):** a massa do MAV no CAD vem agora dos arquivos com 12 algarismos; a mudança, abaixo da casa mostrada nesta página, está em results/etapa7.2b/folgas.md.", "",
+           "**Nota (2026-11-06):** a massa do MAV no CAD vem agora dos arquivos com 13 algarismos; a mudança, abaixo da casa mostrada nesta página, está em results/etapa7.2b/folgas.md.", "",
            "## 2. Piso do comprimento do MAV", "",
            f"**Confirmado:** com o arranjo atual (P-085), o comprimento para de cair em {br(pi['comprimento_m'])} m a partir de Ø {br(pi['diametro_saturacao_m'])} m.", "",
            f"**A origem é só em parte a P-086:** {br(pi['fora_dos_tanques_m'])} m ({br(100 * pi['fracao_p086'], 0)} %) vêm da P-086, sem fonte. Os outros "

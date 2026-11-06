@@ -36,7 +36,7 @@ Duas leituras do envelope do Vulcan, [F80] Fig. 4.3.1-1 ("Simplified"), p. 4-8: 
 
 SRL-C, publicado e vigente: +0,0319 e +0,0296 m (contorno reto); −0,0338 e −0,0360 m (Ø menor).
 
-**Nota (2026-11-06):** a massa do MAV no CAD vem agora dos arquivos com 12 algarismos; a mudança, abaixo da casa mostrada nesta página, está em results/etapa7.2b/folgas.md.
+**Nota (2026-11-06):** a massa do MAV no CAD vem agora dos arquivos com 13 algarismos; a mudança, abaixo da casa mostrada nesta página, está em results/etapa7.2b/folgas.md.
 
 ## 2. Piso do comprimento do MAV
 

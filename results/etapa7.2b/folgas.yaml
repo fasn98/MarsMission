@@ -2,27 +2,27 @@ gerado_por: tools/encaixe_coifas.py
 natureza: VERIFICAÇÃO geométrica do modelo, não validação
 veiculos:
   lander_4_65:
-    massa_kg: 3190.418654393851
+    massa_kg: 3190.4186543770033
     cg_m:
-    - 0.02560633977358108
-    - -0.026257049487338664
-    - 3.0031844304135498
+    - 0.025606339773907964
+    - -0.02625704948812694
+    - 3.0031844304141755
     corpos: 33
     dono_do_conector: Circuito de fluido de cruzeiro (P-077)
   lander_4_5:
-    massa_kg: 3154.7032144392538
+    massa_kg: 3154.7032144462405
     cg_m:
-    - 0.025896237627190396
-    - -0.026554314241137893
-    - 2.0985459579361643
+    - 0.02589623762732688
+    - -0.02655431424173606
+    - 2.0985459579348524
     corpos: 33
     dono_do_conector: Circuito de fluido de cruzeiro (P-077)
   orbitador:
-    massa_kg: 6506.251549725522
+    massa_kg: 6506.2515497330105
     cg_m:
-    - -2.985527209661341e-17
-    - 3.494695428012221e-17
-    - 1.3928001899155327
+    - -4.7328749236626205e-17
+    - 4.3683692850102475e-17
+    - 1.3928001899169749
     corpos: 20
     dono_do_conector: Cilindro central
 configuracoes:
@@ -115,21 +115,21 @@ configuracoes:
   envelope: envelope_falcon_heavy.fs
   leitura: Keep-in do fabricante, faixas de 500 mm
   radial:
-    folga_radial_m: 0.3608084500454487
+    folga_radial_m: 0.3608084500417512
     corpo: Tanque insercao MON-3 1
-    z_m: 0.5642999103778787
-    raio_do_corpo_m: 1.9587642906894527
-    distancia_measure_m: 0.36079632027705905
+    z_m: 0.5642999103775763
+    raio_do_corpo_m: 1.9587642906931528
+    distancia_measure_m: 0.3607963202733614
     tipo: esfera_oca
     corpos_com_folga_negativa: []
   axial:
-    folga_axial_m: 6.23192777419
+    folga_axial_m: 6.231927774191
     corpo: EES com o contêiner de amostras
-    z_m: 5.11567222581
+    z_m: 5.115672225809
     topo_envelope_m: 11.3476
   referencia_7_2_m: 0.35621222920797546
   referencia_7_2_conjunto: Tanques de inserção
-  diferenca_m: 0.004596220837473242
+  diferenca_m: 0.004596220833775755
 srl_c_so_perfil:
   folga_radial_m:
     vertice_m: 0.029606904906117393
@@ -145,14 +145,14 @@ mav_na_capsula_4_5:
 pecas_contra_a_capsula:
   lander_4_5:
   - corpo: Tanque descida 1
-    folga_m: -0.07861249873954912
-    z_m: 2.480975138879627
+    folga_m: -0.0786124987387633
+    z_m: 2.4809751388793497
   - corpo: Tanque descida 2
-    folga_m: -0.07861249874109588
-    z_m: 2.480975138879627
+    folga_m: -0.0786124987385779
+    z_m: 2.4809751388793497
   - corpo: Tanque descida 3
-    folga_m: -0.0786124987410961
-    z_m: 2.480975138879627
+    folga_m: -0.0786124987385779
+    z_m: 2.4809751388793497
   - corpo: Helicóptero 1
     folga_m: -0.0596000000000001
     z_m: 1.04
@@ -161,30 +161,30 @@ pecas_contra_a_capsula:
     z_m: 1.04
   - corpo: 'MAV (mais próximas: MAV carga (contêiner de amostras); MAV motores do
       estágio 1 (4 x R-4D-11))'
-    folga_m: 0.06883597242333295
+    folga_m: 0.06883597242133299
     z_m: 1.5899999999999999
   - corpo: Nucleo do lander (P-017 sem braço e helicópteros)
-    folga_m: 0.2500000000036138
+    folga_m: 0.24999999999961364
     z_m: 2.45
   - corpo: Braço de coleta (guardado)
     folga_m: 0.9241443058896754
     z_m: 2.055449673790582
   lander_4_65:
   - corpo: Tanque descida 1
-    folga_m: -0.030617634911458413
-    z_m: 3.4530876924044382
+    folga_m: -0.030617634910645952
+    z_m: 3.4530876924041594
   - corpo: Tanque descida 2
-    folga_m: -0.030617634913005176
-    z_m: 3.4530876924044382
+    folga_m: -0.030617634910460545
+    z_m: 3.4530876924041594
   - corpo: Tanque descida 3
-    folga_m: -0.030617634913005176
-    z_m: 3.4530876924044382
+    folga_m: -0.030617634910460545
+    z_m: 3.4530876924041594
   - corpo: Nucleo do lander (P-017 sem braço e helicópteros)
-    folga_m: 0.25000000000301226
+    folga_m: 0.2500000000000122
     z_m: 3.42
   - corpo: 'MAV (mais próximas: MAV carga (contêiner de amostras); MAV motores do
       estágio 1 (4 x R-4D-11))'
-    folga_m: 0.27219829126391293
+    folga_m: 0.272198291261913
     z_m: 2.56
   - corpo: Helicóptero 1
     folga_m: 0.3205217391304347
@@ -202,43 +202,43 @@ comparacao_grade_e_precisao:
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: folga axial
   antes: 6.23193
-  agora: 6.23192777419
-  diferenca_m: -2.2258100003114123e-06
+  agora: 6.231927774191
+  diferenca_m: -2.2258090002225117e-06
   igual_em_3_casas: true
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: z do topo
   antes: 5.11567
-  agora: 5.11567222581
-  diferenca_m: 2.2258100003114123e-06
+  agora: 5.115672225809
+  diferenca_m: 2.2258090002225117e-06
   igual_em_3_casas: true
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: raio do corpo
   antes: 1.958763685379366
-  agora: 1.9587642906894527
-  diferenca_m: 6.053100867209338e-07
+  agora: 1.9587642906931528
+  diferenca_m: 6.053137868722303e-07
   igual_em_3_casas: true
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: distância no Measure
   antes: 0.36079692393590435
-  agora: 0.36079632027705905
-  diferenca_m: -6.036588452995595e-07
+  agora: 0.3607963202733614
+  diferenca_m: -6.036625429528542e-07
   igual_em_3_casas: true
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: folga radial
   antes: 0.36080905372458894
-  agora: 0.3608084500454487
-  diferenca_m: -6.036791402319608e-07
+  agora: 0.3608084500417512
+  diferenca_m: -6.03682837718722e-07
   igual_em_3_casas: true
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: z da folga radial
   antes: 0.5643001092738147
-  agora: 0.5642999103778787
-  diferenca_m: -1.9889593594335508e-07
+  agora: 0.5642999103775763
+  diferenca_m: -1.98896238368107e-07
   igual_em_3_casas: true
 - veiculo: lander_4_5
   leitura: Contorno reto entre as cotas
@@ -408,34 +408,34 @@ comparacao_grade_e_precisao:
   agora: 3.97
   diferenca_m: 0.0
   igual_em_3_casas: true
-propriedades_6_e_12_algarismos:
+propriedades_6_e_13_algarismos:
   lander:
     massa_6_kg: 3190.406282097587
-    massa_12_kg: 3190.418654393851
-    dif_massa_kg: 0.012372296263947646
-    dif_cg_max_m: 4.106822761862361e-06
-    dif_inercia_max_kg_m2: 0.0459358295202037
+    massa_13_kg: 3190.4186543770033
+    dif_massa_kg: 0.01237227941646779
+    dif_cg_max_m: 4.106822136140664e-06
+    dif_inercia_max_kg_m2: 0.04593578003641596
     acima_p039: true
   orbitador:
     massa_6_kg: 6506.245401470078
-    massa_12_kg: 6506.251549725522
-    dif_massa_kg: 0.0061482554438043735
-    dif_cg_max_m: 2.6369332801756684e-06
-    dif_inercia_max_kg_m2: 0.03399337948212633
+    massa_13_kg: 6506.2515497330105
+    dif_massa_kg: 0.006148262932583748
+    dif_cg_max_m: 2.6369318379959594e-06
+    dif_inercia_max_kg_m2: 0.033993414141150424
     acima_p039: true
   mav:
     massa_6_kg: 348.12696494567564
-    massa_12_kg: 348.12633164648145
-    dif_massa_kg: -0.0006332991941917498
-    dif_cg_max_m: 6.788617096242788e-06
-    dif_inercia_max_kg_m2: 0.002933181271913554
+    massa_13_kg: 348.1263316475313
+    dif_massa_kg: -0.0006332981443506469
+    dif_cg_max_m: 6.788608421848252e-06
+    dif_inercia_max_kg_m2: 0.0029331794003155665
     acima_p039: true
   lander_4_5:
     massa_6_kg: 3154.718438192364
-    massa_12_kg: 3154.7032144392538
-    dif_massa_kg: -0.015223753110149119
-    dif_cg_max_m: 2.152731727544932e-06
-    dif_inercia_max_kg_m2: 0.04045698122399699
+    massa_13_kg: 3154.7032144462405
+    dif_massa_kg: -0.01522374612341082
+    dif_cg_max_m: 2.152730415705406e-06
+    dif_inercia_max_kg_m2: 0.04045695474042077
     acima_p039: true
 tanques_descida:
   centros_m:
@@ -443,33 +443,33 @@ tanques_descida:
     - 0.0
     - 3.12
   - - -0.7
-    - 1.2124355653
+    - 1.212435565298
     - 3.12
   - - -0.7
-    - -1.2124355653
+    - -1.212435565298
     - 3.12
   raios_do_centro_m:
   - 1.4
-  - 1.4000000000015467
-  - 1.4000000000015467
+  - 1.3999999999998145
+  - 1.3999999999998145
   z_iguais: true
   r_iguais: true
-  diferenca_max_raio_m: 1.546762717907768e-12
+  diferenca_max_raio_m: 1.8540724511240114e-13
 criterio_empate:
   simetricas:
-    diferenca_m: 1.546762717907768e-12
+    diferenca_m: 1.8540724511240114e-13
     pecas:
     - Propelente descida 1
     - Propelente descida 2
     onde: lander_4_5, envelope_vulcan.fs, leitura 1, radial
   distintas:
-    diferenca_m: 0.00015102853300064112
+    diferenca_m: 0.0001510285334997974
     pecas:
     - Propelente cruzeiro MON-3
     - Propelente cruzeiro MMH
     onde: lander_4_5, envelope_vulcan.fs, leitura 1, axial
   distintas_que_decidem_texto:
-    diferenca_m: 0.010991877115972715
+    diferenca_m: 0.01099187711557259
     pecas:
     - Tanque insercao MMH 1
     - Propelente insercao MON-3 1
@@ -494,7 +494,7 @@ criterio_empate:
     - MAV propelente oxidante do estágio 2
   limite_simetricas_m: 1.0e-12
   limite_distintas_m: 1.0e-06
-  passa: false
+  passa: true
   empate_m: 1.0e-09
   casas_de_ordem: 9
 premissas_propostas:

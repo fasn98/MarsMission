@@ -42,10 +42,10 @@ EMPATE_M, CASAS_DE_ORDEM = v(_ENC["empate_m"]), int(v(_ENC["casas_de_ordem"]))
 def segmentos(alturas, raios, t):
     """Pilhas interna e externa da casca: a face interna é o envelope; a interna passa do plano da interface, para não
     haver faces coplanares, e a externa fecha o topo."""
-    z, r = cp.r12(list(alturas)), cp.r12(list(raios))
+    z, r = cp.r13(list(alturas)), cp.r13(list(raios))
     interno = [[z[i], z[i + 1], r[i], r[i + 1]] for i in range(len(z) - 1)]
-    externo = [[a, b, cp.r12(c + t), cp.r12(d + t)] for a, b, c, d in interno]
-    externo.append([z[-1], cp.r12(z[-1] + t), cp.r12(r[-1] + t), cp.r12(r[-1] + t)])
+    externo = [[a, b, cp.r13(c + t), cp.r13(d + t)] for a, b, c, d in interno]
+    externo.append([z[-1], cp.r13(z[-1] + t), cp.r13(r[-1] + t), cp.r13(r[-1] + t)])
     return {"interno": [[-t, z[0], r[0], r[0]]] + interno, "externo": externo}
 
 
@@ -330,10 +330,10 @@ def main():
     props = {}
     for k, cs in {"lander": ve["lander"], "orbitador": ve["orbitador"], "mav": ve["mav"], "lander_4_5": lan45}.items():
         m6, cg6, i6 = propriedades(com_6_algarismos(cs), dens)
-        m12, cg12, i12 = propriedades(cs, dens)
-        props[k] = {"massa_6_kg": m6, "massa_12_kg": m12, "dif_massa_kg": m12 - m6, "dif_cg_max_m": max(abs(a - b) for a, b in zip(cg6, cg12)),
-                    "dif_inercia_max_kg_m2": max(abs(a - b) for x, y in zip(i6, i12) for a, b in zip(x, y)),
-                    "acima_p039": any(abs(a - b) > max(1e-9 * abs(b), 1e-10) for a, b in [(m6, m12)] + list(zip(cg6, cg12)) + [(a, b) for x, y in zip(i6, i12) for a, b in zip(x, y)])}
+        m13, cg13, i13 = propriedades(cs, dens)
+        props[k] = {"massa_6_kg": m6, "massa_13_kg": m13, "dif_massa_kg": m13 - m6, "dif_cg_max_m": max(abs(a - b) for a, b in zip(cg6, cg13)),
+                    "dif_inercia_max_kg_m2": max(abs(a - b) for x, y in zip(i6, i13) for a, b in zip(x, y)),
+                    "acima_p039": any(abs(a - b) > max(1e-9 * abs(b), 1e-10) for a, b in [(m6, m13)] + list(zip(cg6, cg13)) + [(a, b) for x, y in zip(i6, i13) for a, b in zip(x, y)])}
     # tanques de descida: posições gravadas no .fs e diferença entre eles
     td = [c for c in corpos["lander_4_65"] if c["nome"].startswith("Tanque descida")]
     tanques = {"centros_m": [c["c"] for c in td], "raios_do_centro_m": [float(np.hypot(c["c"][0], c["c"][1])) for c in td], "z_iguais": len({c["c"][2] for c in td}) == 1, "r_iguais": len({c["r"] for c in td}) == 1}
@@ -370,7 +370,7 @@ def main():
     capsula = {k: fora_da_capsula(corpos[k], perfis[f], h_cz) for k, f in (("lander_4_5", "msl_m2020"), ("lander_4_65", "srl_a"))}
     out = nativo({"gerado_por": "tools/encaixe_coifas.py", "natureza": "VERIFICAÇÃO geométrica do modelo, não validação", "veiculos": veic, "configuracoes": linhas, "srl_c_so_perfil": srlc,
                   "reducao_de_folga_por_metro_de_adaptador_vulcan": inclinacao, "mav_na_capsula_4_5": mav45, "pecas_contra_a_capsula": capsula, "folga_interna_m": par["conferencias"]["mav_deitado"]["folga_interna_m"], "espessura_casca_m": t_casca,
-                  "comparacao_grade_e_precisao": compara, "propriedades_6_e_12_algarismos": props, "tanques_descida": tanques, "criterio_empate": empate,
+                  "comparacao_grade_e_precisao": compara, "propriedades_6_e_13_algarismos": props, "tanques_descida": tanques, "criterio_empate": empate,
                   "premissas_propostas": enc["premissas_propostas"], "planos": {"vulcan": enc["plano_vulcan"]["fonte"], "falcon": enc["plano_falcon"]["fonte"]}})
     (SAIDA / "folgas.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -428,23 +428,23 @@ def escreve_md(o):
         if x["folga_m"] < 0 or y["folga_m"] < 0 or x["corpo"].startswith("MAV"):
             md.append(f"| {x['corpo']} | {sg(x['folga_m'])} | {br(x['z_m'])} | {sg(y['folga_m'])} | {br(y['z_m'])} |")
     md += ["", "Essas interferências entre peças não são corrigidas aqui (P-095): são o conflito do arranjo, e o Onshape vai mostrá-las.", "",
-           "## Grade alinhada e 12 algarismos: o que mudou", "",
-           "Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora: grade alinhada à direção radial de cada peça, com 721 pontos, e 12 algarismos. A comparação junta os dois efeitos e cobre as folgas e posições do roteiro; a tabela de peças contra a cápsula não entra nela.", "",
+           "## Grade alinhada e 13 algarismos: o que mudou", "",
+           "Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora: grade alinhada à direção radial de cada peça, com 721 pontos, e 13 algarismos. A comparação junta os dois efeitos e cobre as folgas e posições do roteiro; a tabela de peças contra a cápsula não entra nela.", "",
            f"**Nas casas mostradas no roteiro (3):** {'nenhuma folga ou posição mudou' if all(x['igual_em_3_casas'] for x in o['comparacao_grade_e_precisao']) else 'mudaram ' + ', '.join(sorted({x['grandeza'] for x in o['comparacao_grade_e_precisao'] if not x['igual_em_3_casas']}))}. **Maiores diferenças nos valores completos:**", "",
            "| Veículo | Leitura | Grandeza | Antes | Agora | Diferença (m) |", "| :- | :- | :- | -: | -: | -: |"]
     md += [f"| {x['veiculo']} | {x['leitura']} | {x['grandeza']} | {br(x['antes'], 9)} | {br(x['agora'], 9)} | " + f"{x['diferenca_m']:+.2e}".replace(".", ",").replace("-", "−") + " |" for x in o["comparacao_grade_e_precisao"][:6]]
-    md += ["", "**Massa, CG e inércia (6 × 12 algarismos), contra a tolerância da P-039:**", "", "| Veículo | Massa com 6 (kg) | Massa com 12 (kg) | Diferença (kg) | Maior diferença no CG (m) | Maior diferença na inércia (kg·m²) | Acima da P-039? |", "| :- | -: | -: | -: | -: | -: | :- |"]
-    md += [f"| {k} | {br(x['massa_6_kg'], 4)} | {br(x['massa_12_kg'], 4)} | {ex(x['dif_massa_kg'])} | {ex(x['dif_cg_max_m'])} | {ex(x['dif_inercia_max_kg_m2'])} | {'sim' if x['acima_p039'] else 'não'} |" for k, x in o["propriedades_6_e_12_algarismos"].items()]
+    md += ["", "**Massa, CG e inércia (6 × 13 algarismos), contra a tolerância da P-039:**", "", "| Veículo | Massa com 6 (kg) | Massa com 13 (kg) | Diferença (kg) | Maior diferença no CG (m) | Maior diferença na inércia (kg·m²) | Acima da P-039? |", "| :- | -: | -: | -: | -: | -: | :- |"]
+    md += [f"| {k} | {br(x['massa_6_kg'], 4)} | {br(x['massa_13_kg'], 4)} | {ex(x['dif_massa_kg'])} | {ex(x['dif_cg_max_m'])} | {ex(x['dif_inercia_max_kg_m2'])} | {'sim' if x['acima_p039'] else 'não'} |" for k, x in o["propriedades_6_e_13_algarismos"].items()]
     td, em = o["tanques_descida"], o["criterio_empate"]
     md += ["", f"**Tanques de descida:** distância do centro ao eixo: " + "; ".join(f"{r_:.15f}" for r_ in td["raios_do_centro_m"]).replace(".", ",") + f" m; maior diferença de {ex(td['diferenca_max_raio_m'])} m. z e raio {'iguais' if td['z_iguais'] and td['r_iguais'] else 'diferentes'}. "
-           "Os tanques 2 e 3 são espelhos, bit a bit. O tanque 1 não fica igual a eles bit a bit: a coordenada y dos outros dois, 1,4 · sen 120°, é arredondada a 12 algarismos significativos em decimal.", "",
+           "Os tanques 2 e 3 são espelhos, bit a bit. O tanque 1 não fica igual a eles bit a bit: a coordenada y dos outros dois, 1,4 · sen 120°, é arredondada a 13 algarismos significativos em decimal.", "",
            "## Parâmetros de desempate", "",
            f"`empate_m` = {ex(em['empate_m'])} m; `casas_de_ordem` = {em['casas_de_ordem']}, em casas decimais de metro. Valor e justificativa em config/cad.yaml.", "",
            "| Item | Valor (m) | Limite (m) | Onde |", "| :- | -: | -: | :- |",
            f"| (a) maior diferença entre peças exatamente simétricas | {ex(em['simetricas']['diferenca_m'])} | ≤ {ex(em['limite_simetricas_m'])} | {'; '.join(em['simetricas']['pecas'])} ({em['simetricas']['onde']}) |",
            f"| (b) menor diferença real entre peças distintas | {ex(em['distintas']['diferenca_m'])} | ≥ {ex(em['limite_distintas_m'])} | {'; '.join(em['distintas']['pecas'])} ({em['distintas']['onde']}) |",
            f"| (b'), só os pares que decidem texto gerado: o limitador contra o seguinte, e a lista de peças contra a cápsula | {ex(em['distintas_que_decidem_texto']['diferenca_m'])} | ≥ {ex(em['limite_distintas_m'])} | {'; '.join(em['distintas_que_decidem_texto']['pecas'])} ({em['distintas_que_decidem_texto']['onde']}) |", "",
-           f"**Resultado, com (a) e (b) literais: {'passa nos dois' if em['passa'] else 'NÃO passa; os parâmetros seguem sem aprovação, com decisão pendente do Fabio'}.** Grupos de peças distintas com a mesma cota, até `empate_m`: " + "; ".join(" × ".join(p_) for p_ in em["coincidencias"]) + ".", "",
+           f"**Resultado, com (a) e (b) literais: {'passa nos dois, aprovação registrada em config/cad.yaml' if em['passa'] else 'NÃO passa; os parâmetros precisam de nova decisão do Fabio'}.** Grupos de peças distintas com a mesma cota, até `empate_m`: " + "; ".join(" × ".join(p_) for p_ in em["coincidencias"]) + ".", "",
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",
@@ -461,7 +461,7 @@ def escreve_roteiro(o):
     cfg = o["configuracoes"]
     md = ["# Roteiro no Onshape: veículos dentro das coifas (gerado por tools/encaixe_coifas.py)", "",
           "**VERIFICAÇÃO geométrica do modelo, não validação.** O envelope do Vulcan é leitura de figura do guia, e o do Falcon é o STEP do fabricante amostrado.", "",
-          "**Nota (2026-11-06):** os arquivos desta página têm 12 algarismos; as massas esperadas abaixo já são as vigentes, e o orbitador passou de 6 506,2 para o valor do passo correspondente (results/etapa7.2b/folgas.md).", "",
+          "**Nota (2026-11-06):** os arquivos desta página têm 13 algarismos; as massas esperadas abaixo já são as vigentes, e o orbitador passou de 6 506,2 para o valor do passo correspondente (results/etapa7.2b/folgas.md).", "",
           "**Não conferido:** os arquivos não foram compilados aqui, e as páginas de ajuda do Onshape não abriram na consulta. Os nomes de comandos (Commit, Mass Properties, Insert, Group, Measure e os da Assembly) vêm de memória e podem variar. Se algo não bater, anote o que apareceu.", "",
           "## A. Colar os Feature Studios", ""]
     n = 0

@@ -54,9 +54,9 @@ A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/confe
 
 Essas interferências entre peças não são corrigidas aqui (P-095): são o conflito do arranjo, e o Onshape vai mostrá-las.
 
-## Grade alinhada e 12 algarismos: o que mudou
+## Grade alinhada e 13 algarismos: o que mudou
 
-Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora: grade alinhada à direção radial de cada peça, com 721 pontos, e 12 algarismos. A comparação junta os dois efeitos e cobre as folgas e posições do roteiro; a tabela de peças contra a cápsula não entra nela.
+Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora: grade alinhada à direção radial de cada peça, com 721 pontos, e 13 algarismos. A comparação junta os dois efeitos e cobre as folgas e posições do roteiro; a tabela de peças contra a cápsula não entra nela.
 
 **Nas casas mostradas no roteiro (3):** nenhuma folga ou posição mudou. **Maiores diferenças nos valores completos:**
 
@@ -69,16 +69,16 @@ Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora
 | orbitador | Keep-in do fabricante, faixas de 500 mm | folga radial | 0,360809054 | 0,360808450 | −6,04e−07 |
 | orbitador | Keep-in do fabricante, faixas de 500 mm | z da folga radial | 0,564300109 | 0,564299910 | −1,99e−07 |
 
-**Massa, CG e inércia (6 × 12 algarismos), contra a tolerância da P-039:**
+**Massa, CG e inércia (6 × 13 algarismos), contra a tolerância da P-039:**
 
-| Veículo | Massa com 6 (kg) | Massa com 12 (kg) | Diferença (kg) | Maior diferença no CG (m) | Maior diferença na inércia (kg·m²) | Acima da P-039? |
+| Veículo | Massa com 6 (kg) | Massa com 13 (kg) | Diferença (kg) | Maior diferença no CG (m) | Maior diferença na inércia (kg·m²) | Acima da P-039? |
 | :- | -: | -: | -: | -: | -: | :- |
 | lander | 3 190,4063 | 3 190,4187 | 1,24e−02 | 4,11e−06 | 4,59e−02 | sim |
 | orbitador | 6 506,2454 | 6 506,2515 | 6,15e−03 | 2,64e−06 | 3,40e−02 | sim |
 | mav | 348,1270 | 348,1263 | −6,33e−04 | 6,79e−06 | 2,93e−03 | sim |
 | lander_4_5 | 3 154,7184 | 3 154,7032 | −1,52e−02 | 2,15e−06 | 4,05e−02 | sim |
 
-**Tanques de descida:** distância do centro ao eixo: 1,400000000000000; 1,400000000001547; 1,400000000001547 m; maior diferença de 1,55e−12 m. z e raio iguais. Os tanques 2 e 3 são espelhos, bit a bit. O tanque 1 não fica igual a eles bit a bit: a coordenada y dos outros dois, 1,4 · sen 120°, é arredondada a 12 algarismos significativos em decimal.
+**Tanques de descida:** distância do centro ao eixo: 1,400000000000000; 1,399999999999815; 1,399999999999815 m; maior diferença de 1,85e−13 m. z e raio iguais. Os tanques 2 e 3 são espelhos, bit a bit. O tanque 1 não fica igual a eles bit a bit: a coordenada y dos outros dois, 1,4 · sen 120°, é arredondada a 13 algarismos significativos em decimal.
 
 ## Parâmetros de desempate
 
@@ -86,11 +86,11 @@ Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora
 
 | Item | Valor (m) | Limite (m) | Onde |
 | :- | -: | -: | :- |
-| (a) maior diferença entre peças exatamente simétricas | 1,55e−12 | ≤ 1,00e−12 | Propelente descida 1; Propelente descida 2 (lander_4_5, envelope_vulcan.fs, leitura 1, radial) |
+| (a) maior diferença entre peças exatamente simétricas | 1,85e−13 | ≤ 1,00e−12 | Propelente descida 1; Propelente descida 2 (lander_4_5, envelope_vulcan.fs, leitura 1, radial) |
 | (b) menor diferença real entre peças distintas | 1,51e−04 | ≥ 1,00e−06 | Propelente cruzeiro MON-3; Propelente cruzeiro MMH (lander_4_5, envelope_vulcan.fs, leitura 1, axial) |
 | (b'), só os pares que decidem texto gerado: o limitador contra o seguinte, e a lista de peças contra a cápsula | 1,10e−02 | ≥ 1,00e−06 | Tanque insercao MMH 1; Propelente insercao MON-3 1 (orbitador, envelope_falcon_heavy.fs, leitura 1, radial) |
 
-**Resultado, com (a) e (b) literais: NÃO passa; os parâmetros seguem sem aprovação, com decisão pendente do Fabio.** Grupos de peças distintas com a mesma cota, até `empate_m`: Braço de coleta (guardado) × Casca traseira 1 (SLA-561V) × MAV interestágio; Casca traseira 1 (SLA-561V) × Escudo térmico (PICA); MAV Tanque de combustível do estágio 1 × MAV Tanque de combustível do estágio 2 × MAV Tanque de oxidante do estágio 1 × MAV Tanque de oxidante do estágio 2 × MAV carga (contêiner de amostras) × MAV motores do estágio 1 (4 x R-4D-11); MAV carga (contêiner de amostras) × MAV motores do estágio 1 (4 x R-4D-11); MAV propelente combustível do estágio 1 × MAV propelente combustível do estágio 2 × MAV propelente oxidante do estágio 1 × MAV propelente oxidante do estágio 2.
+**Resultado, com (a) e (b) literais: passa nos dois, aprovação registrada em config/cad.yaml.** Grupos de peças distintas com a mesma cota, até `empate_m`: Braço de coleta (guardado) × Casca traseira 1 (SLA-561V) × MAV interestágio; Casca traseira 1 (SLA-561V) × Escudo térmico (PICA); MAV Tanque de combustível do estágio 1 × MAV Tanque de combustível do estágio 2 × MAV Tanque de oxidante do estágio 1 × MAV Tanque de oxidante do estágio 2 × MAV carga (contêiner de amostras) × MAV motores do estágio 1 (4 x R-4D-11); MAV carga (contêiner de amostras) × MAV motores do estágio 1 (4 x R-4D-11); MAV propelente combustível do estágio 1 × MAV propelente combustível do estágio 2 × MAV propelente oxidante do estágio 1 × MAV propelente oxidante do estágio 2.
 
 ## Planos da interface
 
