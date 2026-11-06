@@ -24,7 +24,10 @@ genéricas.
 6. **Reprodutibilidade.**
    - Todo `results/` versionado precisa sair do código e do `config/` atuais.
    - `tools/confere_regeneracao.py` regenera tudo numa cópia e compara com o versionado.
-   - O CI roda essa verificação (`.github/workflows/regeneracao.yml`).
+   - **A regeneração oficial é a do CI** (`.github/workflows/regeneracao.yml`): é obrigatória quando o filtro de `paths` do workflow
+     dispara, e é a que vale. Opcional é só a conferência completa local: quem muda um resultado ainda gera os arquivos por `tools/`.
+   - Fluxo (em teste, decisão do Fabio em 2026-11-06): revisão independente antes do push; PR aberto como draft; o CI regenera; o
+     PR só sai de draft com o CI verde.
    - **"Idêntico" significa dentro das tolerâncias declaradas.**
      - Números (YAML, Markdown, NPZ): a (versionado) e b (regenerado) passam se |a − b| ≤ max(1e-9 · |b|, 1e-10) (P-039).
      - PNG: até 0,1 % dos pixels diferentes (P-040).
@@ -48,12 +51,14 @@ genéricas.
 9. **Hook de pre-commit com pytest.**
    - Ativar com `git config core.hooksPath .githooks`; o hook usa `$MARSMISSION_PYTHON` ou o `python` do ambiente.
    - Nunca usar `git commit --no-verify`. Se o hook falhar, corrigir a causa.
+   - Também é proibido qualquer outro meio de desativar ou contornar hooks: apontar `core.hooksPath` para outro lugar (inclusive
+     `git -c core.hooksPath=...`), variáveis como `HUSKY=0`, renomear ou apagar `.git/hooks` ou `.githooks`, ou similares.
 10. **Revisão independente antes de todo push.**
     - Um revisor separado, somente leitura, que não escreveu o código.
     - Se houver achado bloqueante, corrigir e fazer **segunda revisão**, limitada às correções, antes do push.
     - O revisor pode concluir "nada bloqueante".
 11. **Execuções longas em worktree.**
-    - Regenerações e conferências longas (`tools/confere_regeneracao.py`, `tools/confere_2033.py`) rodam num
+    - Quando rodadas localmente, regenerações e conferências longas (`tools/confere_regeneracao.py`, `tools/confere_2033.py`) rodam num
       `git worktree add <dir> <commit>`, fixo no commit conferido.
     - Assim, trocar de branch no diretório principal não afeta a execução.
     - Remover o worktree ao terminar (`git worktree remove`).
@@ -73,7 +78,9 @@ genéricas.
 conda env create -f environment.yml && conda activate marsmission
 git config core.hooksPath .githooks
 python tools/fetch_kernels.py                      # kernels SPICE, com conferência do MD5
+python tools/fetch_kernels.py config/kernels_verificacao.yaml  # de200.bsp, para a regeneração local; MD5 conferido contra o config
 python -m pytest                                   # suíte
-python tools/confere_regeneracao.py <rótulo> --ci  # regenera results/ e compara (rodar num worktree)
+python tools/confere_regeneracao.py <rótulo> --ci  # opcional: regenera results/ e compara (rodar num worktree)
+                                                   # sem o de200.bsp, o exit é 1 porque efeito_efemeride_de200.yaml não é regenerado
 python -m streamlit run src/painel/app.py          # painel
 ```
