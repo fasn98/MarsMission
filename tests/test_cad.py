@@ -463,3 +463,12 @@ def test_comprimento_mav():
     assert md.rindex("## ") == md.index("## Opinião do agente")
     assert "NÃO VALIDADO" in md
 
+
+def test_pendencia_recompilar_onshape():
+    """A conferência registra que os arquivos atuais ainda não foram compilados, com as diferenças por veículo."""
+    md = (RAIZ / "results/etapa7.2/conferencia_onshape.md").read_text(encoding="utf-8")
+    assert "**Pendência (decisão do Fabio, 2026-11-06):**" in md and "bocais e do aeroshell" in md
+    assert "Orbitador +6,8 g; Lander −0,015 kg; MAV −0,6 g" in md
+    # resíduo da descida com 4 algarismos: o passo de impressão fica em 1 % do piso da P-039
+    el = (RAIZ / "results/etapa3.3/orbitador_eletrico.md").read_text(encoding="utf-8")
+    assert "(-2.105e-09)" in el and "(-3.350e-09)" in el
