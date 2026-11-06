@@ -2,7 +2,7 @@
 
 Dados para o portão. Nenhuma premissa nem ADR muda, e a decisão é do Fabio. O que usa análogo ou leitura está marcado NÃO VALIDADO.
 
-**Alvo:** aeroshell de 4,5 m, MAV deitado, Ø que contenha as saídas dos bocais com parede. Coifa do Vulcan com 4,5 m: +0,141 e +0,064 m, nas duas leituras da figura. Comprimento máximo deitado por Ø, com a base no ombro: Ø 0,57 m, 3,18 m; Ø 0,60 m, 3,14 m; Ø 0,63 m, 3,10 m; Ø 0,66 m, 3,05 m; Ø 0,69 m, 3,01 m; Ø 0,72 m, 2,96 m; Ø 0,75 m, 2,92 m. Com o deck (P-094) sob o MAV, o limite em Ø 0,57 m cai 0,44 m; por isso as duas folgas aparecem.
+**Alvo:** aeroshell de 4,5 m, MAV deitado, Ø que contenha as saídas dos bocais com parede. Coifa do Vulcan com 4,5 m: +0,141 e +0,064 m, nas duas leituras da figura. Comprimento máximo deitado por Ø, com a base no ombro: Ø 0,57 m, 3,18 m; Ø 0,60 m, 3,14 m; Ø 0,63 m, 3,10 m; Ø 0,66 m, 3,05 m; Ø 0,69 m, 3,01 m; Ø 0,72 m, 2,96 m; Ø 0,75 m, 2,92 m. Com o deck (P-094) sob o MAV, o limite em Ø 0,57 m cai 0,44 m; por isso as duas folgas aparecem. A folga é por extremidade: (disponível − comprimento) / 2. "Motor real" é a P-086 só com o motor de [F228] nos dois estágios, sem estrutura de empuxo: um limite inferior do comprimento.
 
 ## Rota A: MAV melhorado, arquitetura atual
 
@@ -11,7 +11,7 @@ R-4D-11 44:1 nos dois estágios; a P-086 segue o motor do [F228]; o MAV é redim
 | Caso | GLOM (kg) | Comprimento (m) | Folga deitado, ombro (m) | Folga deitado, ombro + deck (m) | Círculo das saídas (m) | Folga radial dos bocais, com parede (m) | Empuxo/peso em Marte | Massa por área (kg/m²) | Margem no Vulcan VC4 |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
 | Base: 4 × 164:1, Ø atual | 386,8 | 3,561 | −0,188 | −0,408 | 0,675 | −0,062 | 1,36 | 279 | +40,6 % |
-| Base com o motor real 164:1 | 386,8 | 3,619 | −0,218 | −0,438 | 0,675 | −0,062 | 1,36 | 279 | +40,6 % |
+| Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a P-086 não muda) | 386,8 | 3,619 | −0,218 | −0,438 | 0,675 | −0,062 | 1,36 | 279 | +40,6 % |
 | 44:1, Isp 304 s | 425,0 | 3,260 | −0,038 | −0,258 | 0,369 | +0,091 | 1,24 | 283 | +38,2 % |
 | 44:1, Isp 308 s | 398,8 | 3,181 | +0,002 | −0,218 | 0,369 | +0,091 | 1,32 | 280 | +39,8 % |
 | 44:1, Isp 309 s | 392,7 | 3,162 | +0,011 | −0,209 | 0,369 | +0,091 | 1,34 | 279 | +40,2 % |
@@ -23,7 +23,7 @@ R-4D-11 44:1 nos dois estágios; a P-086 segue o motor do [F228]; o MAV é redim
 | Referência, Isp 297 s: só 44:1 | 478,5 | 3,420 | −0,118 | −0,338 | 0,369 | +0,091 | 1,10 | 290 | +34,9 % |
 | Referência, Isp 297 s: 44:1 e aninhados | 478,5 | 2,916 | +0,134 | −0,086 | 0,369 | +0,091 | 1,10 | 290 | +34,9 % |
 
-**Ressalva sobre a faixa:** Os análogos de 308 a 314 s têm câmara de irídio e rênio. O R-4D-11 tem câmara de Cb com filme de combustível, que perde Isp: [F241] PDF p. 18: "Conventional 110 lbf engines use up to ~40% fuel film cooling"; "a performance loss of up to 25 sec"; "10 sec higher than conventional 110 lbf silicide coated Cb chambers now in use", a 286:1. Aplicar esses 10 s ao 44:1 é inferência (NÃO VALIDADO). O caso de referência usa o R-4D do Apollo ([F242] PDF p. 15: "This prototype engine demonstrated good performance Isp's of 295 and 297"; "with an expansion ratio equal to 40"), fora da faixa pedida, para mostrar o efeito de um Isp menor. Isp 314 s fica acima do 164:1 do mesmo motor, por isso o GLOM dele sai menor que o da base.
+**Ressalva sobre a faixa:** Os análogos de 308 a 314 s têm câmara de irídio e rênio, ou, em [F240], só o resumo cita essa tecnologia. Os motores convencionais de 110 lbf são outros: [F241] PDF p. 18: "Conventional 110 lbf engines use up to ~40% fuel film cooling"; "may produce a performance loss of up to 25 sec"; "10 sec higher than conventional 110 lbf silicide coated Cb chambers now in use", a 286:1. Aplicar isso ao R-4D-11 e ao 44:1 é inferência (NÃO VALIDADO): nenhuma fonte lida diz a construção da câmara do R-4D-11. O caso de referência usa o R-4D do Apollo ([F242] PDF p. 15: "This prototype engine demonstrated good performance Isp's of 295 and 297"; "maximum performance" de pouco mais de 310 s, em outra razão de mistura; câmara inicial "with an expansion ratio equal to 40"), fora da faixa pedida, para mostrar o efeito de um Isp menor. Isp 314 s fica acima do 164:1 do mesmo motor, por isso o GLOM dele sai menor que o da base.
 
 O Δv de subida vem de [F46], calculado com empuxo/peso de 2,5 na decolagem ([F46] PDF p. 9: "a liftoff thrust-to-weight ratio of 2.5 was used"). Todos os casos aqui têm empuxo/peso menor, e a perda gravitacional maior disso não está modelada, nem na base.
 
@@ -31,7 +31,7 @@ O Δv de subida vem de [F46], calculado com empuxo/peso de 2,5 na decolagem ([F4
 
 ### MAV
 
-2 × R-4D-11 164:1, Ø 0,60 m, o menor da varredura que contém as saídas com parede. Comprimento com o motor real nos dois estágios, a mesma base da rota A. **Esta é a configuração da opção C, descartada pelo Fabio** por empuxo/peso de 0,68 no GLOM atual. Ela só passa de 1 aqui porque o GLOM cai, o que depende de reabrir o ADR 0013. O maior diâmetro admissível varia com a grade: em Ø 0,60 m. Depende da grade de diâmetros: com Ø exato, seria mais alta.
+2 × R-4D-11 164:1, Ø 0,60 m, o menor da varredura que contém as saídas com parede. Comprimento com o motor real nos dois estágios, a mesma base da rota A. **Esta é a configuração da opção C, descartada pelo Fabio** por empuxo/peso de 0,68 no GLOM atual. Ela só passa de 1 aqui porque o GLOM cai, o que depende de reabrir o ADR 0013. Além disso, a altitude da segunda órbita depende da grade de diâmetros; com um Ø menor que 0,60 m que ainda contenha as saídas, ela seria mais alta.
 
 | Caso | GLOM (kg) | Comprimento (m) | Folga deitado, ombro (m) | Folga deitado, ombro + deck (m) | Círculo das saídas (m) | Folga radial dos bocais, com parede (m) | Empuxo/peso em Marte | Massa por área (kg/m²) | Margem no Vulcan VC4 |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
@@ -101,4 +101,4 @@ Chegada 2029-09-20; partida 2030-11-08; viagens de 300 e 319 d; encontro de 22 d
 
 ## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)
 
-Opinião: a rota A é a única que cumpre o alvo sem mudar a arquitetura: no ombro, cabe com +0,21 m no pior Isp da faixa e com +0,13 m no caso de referência, mas com o deck sob o MAV ela fica entre −0,09 e +0,08 m. Só o 44:1, sem aninhar, não basta nesses Isp. O que sustenta a rota não está verificado: Isp e massa do 44:1 e o tanque aninhado na pressão real. A rota B reduz bem o MAV e a massa por área, mas o híbrido pede de 4,4 a 5,9 vezes a capacidade do Falcon Heavy, e, com o deck, o MAV dela também não cabe. Os motivos de massa do ADR 0013 continuam. O só elétrico merece no máximo uma conta melhor, se a missão de referência mudar. Meu próximo passo seria fechar os dados do 44:1 e dimensionar o tanque aninhado. A decisão é do Fabio.
+Opinião: a rota A é a única que cumpre o alvo sem mudar a arquitetura: no ombro, cabe com +0,21 m no pior Isp da faixa e com +0,13 m no caso de referência, mas com o deck sob o MAV ela fica entre −0,09 e +0,08 m. Só o 44:1, sem aninhar, cabe no ombro de 308 s para cima, com pouca folga, e não cabe com o deck. O que sustenta a rota não está verificado: Isp e massa do 44:1 e o tanque aninhado na pressão real. A rota B reduz bem o MAV e a massa por área, mas o híbrido pede de 4,4 a 5,9 vezes a capacidade do Falcon Heavy, e, com o deck, o MAV dela não cabe em nenhuma das duas órbitas. Os motivos de massa do ADR 0013 continuam. O só elétrico merece no máximo uma conta melhor, se a missão de referência mudar. Meu próximo passo seria fechar os dados do 44:1 e dimensionar o tanque aninhado. A decisão é do Fabio.

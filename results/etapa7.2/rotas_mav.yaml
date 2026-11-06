@@ -37,7 +37,8 @@ base:
   - 25952.4
   dv_mav_com_margem_m_s: 5772.354040682595
 base_real:
-  rotulo: Base com o motor real 164:1
+  rotulo: Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a
+    P-086 não muda)
   diametro_m: 0.57
   n_motores: 4
   variante: '164:1'
@@ -240,13 +241,16 @@ rota_a_referencia:
     lander_injetado_kg: 4808.8484849300075
     margem_vulcan_vc4: 0.349027220262778
     massa_por_area_kg_m2: 290.30581253563423
-rota_a_ressalva: 'Os análogos de 308 a 314 s têm câmara de irídio e rênio. O R-4D-11
-  tem câmara de Cb com filme de combustível, que perde Isp: [F241] PDF p. 18: "Conventional
-  110 lbf engines use up to ~40% fuel film cooling"; "a performance loss of up to
-  25 sec"; "10 sec higher than conventional 110 lbf silicide coated Cb chambers now
-  in use", a 286:1. Aplicar esses 10 s ao 44:1 é inferência (NÃO VALIDADO).'
+rota_a_ressalva: 'Os análogos de 308 a 314 s têm câmara de irídio e rênio, ou, em
+  [F240], só o resumo cita essa tecnologia. Os motores convencionais de 110 lbf são
+  outros: [F241] PDF p. 18: "Conventional 110 lbf engines use up to ~40% fuel film
+  cooling"; "may produce a performance loss of up to 25 sec"; "10 sec higher than
+  conventional 110 lbf silicide coated Cb chambers now in use", a 286:1. Aplicar isso
+  ao R-4D-11 e ao 44:1 é inferência (NÃO VALIDADO): nenhuma fonte lida diz a construção
+  da câmara do R-4D-11.'
 isp_referencia_fonte: '[F242] PDF p. 15: "This prototype engine demonstrated good
-  performance Isp''s of 295 and 297"; "with an expansion ratio equal to 40"'
+  performance Isp''s of 295 and 297"; "maximum performance" de pouco mais de 310 s,
+  em outra razão de mistura; câmara inicial "with an expansion ratio equal to 40"'
 conferencia_etapa_3_3:
   etapa_3_3_kg: 47447.3710277748
   aqui_kg: 47447.3710277748
@@ -254,7 +258,8 @@ conferencia_etapa_3_3:
   aqui_descida_dias: 131.96325263994893
 empuxo_peso_opcao_c: 0.6814038498510758
 fase_raan_dias: 24.0
-motivo_fim: 'em Ø 0,60 m. Depende da grade de diâmetros: com Ø exato, seria mais alta'
+motivo_fim: a altitude da segunda órbita depende da grade de diâmetros; com um Ø menor
+  que 0,60 m que ainda contenha as saídas, ela seria mais alta
 folga_min_conjuncao_dias: 60.0
 rota_a_fonte:
   fonte: '[F46] §5.4, PDF p. 17: "Similar to a common bulkhead design, the forward

@@ -96,7 +96,7 @@ def main():
     base = linha_mav("Base: 4 × 164:1, Ø atual", lan0["mav_estagios"], d0, 4, "164:1", nt, False, lan0)
     base.update(_orbitador_base(arq, margem_fh, h0p, h0a, lan0, f))
     nt_real = {**nt, "motores_estagio_1": motor["164:1"], "motor_estagio_2": motor["164:1"]}
-    base_real = linha_mav("Base com o motor real 164:1", lan0["mav_estagios"], d0, 4, "164:1", nt_real, False, lan0)
+    base_real = linha_mav("Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a P-086 não muda)", lan0["mav_estagios"], d0, 4, "164:1", nt_real, False, lan0)
 
     # ---------------- rota A
     nt44 = {**nt, "motores_estagio_1": motor["44:1"], "motor_estagio_2": motor["44:1"]}
@@ -281,7 +281,7 @@ def escreve_md(o):
     md = ["# Portão da 7.2: rotas para o alvo de aeroshell de 4,5 m (gerado por tools/rotas_mav.py)", "",
           "Dados para o portão. Nenhuma premissa nem ADR muda, e a decisão é do Fabio. O que usa análogo ou leitura está marcado NÃO VALIDADO.", "",
           f"**Alvo:** {o['alvo']['descricao']}. Coifa do Vulcan com 4,5 m: {sg(fc['folga_radial_vertice_m'])} e {sg(fc['folga_sem_afunilamento_vertice_m'])} m, nas duas leituras da figura. Comprimento máximo deitado por Ø, com a base no ombro: "
-          + "; ".join(f"Ø {br(float(k), 2)} m, {br(x, 2)} m" for k, x in o["disponivel_deitado_m"].items()) + ". Com o deck (P-094) sob o MAV, o limite em Ø " + br(b["diametro_m"], 2) + " m cai " + br(2 * (b["folga_deitado_m"] - b["folga_deitado_com_deck_m"]), 2) + " m; por isso as duas folgas aparecem.", "",
+          + "; ".join(f"Ø {br(float(k), 2)} m, {br(x, 2)} m" for k, x in o["disponivel_deitado_m"].items()) + ". Com o deck (P-094) sob o MAV, o limite em Ø " + br(b["diametro_m"], 2) + " m cai " + br(2 * (b["folga_deitado_m"] - b["folga_deitado_com_deck_m"]), 2) + " m; por isso as duas folgas aparecem. A folga é por extremidade: (disponível − comprimento) / 2. \"Motor real\" é a P-086 só com o motor de [F228] nos dois estágios, sem estrutura de empuxo: um limite inferior do comprimento.", "",
           "## Rota A: MAV melhorado, arquitetura atual", "",
           f"R-4D-11 44:1 nos dois estágios; a P-086 segue o motor do [F228]; o MAV é redimensionado para cada Isp. **Tanques aninhados:** {o['rota_a_fonte']['fonte']}. Ressalva: {o['rota_a_fonte']['ressalva']}. Massa e empuxo do 44:1 são os do catálogo (NÃO VALIDADO). Isp NÃO VALIDADO: análogos.", ""] + CAB
     md.append(lin_mav(b))
@@ -296,7 +296,7 @@ def escreve_md(o):
            "O Δv de subida vem de [F46], calculado com empuxo/peso de " + br(o["bowles_empuxo_peso"]["valor"], 1) + f" na decolagem ({o['bowles_empuxo_peso']['fonte']}). Todos os casos aqui têm empuxo/peso menor, e a perda gravitacional maior disso não está modelada, nem na base.", "",
            "## Rota B: orbitador elétrico e encontro em órbita baixa", "",
            "### MAV", "",
-           f"{o['n_motores_b']} × R-4D-11 164:1, Ø {br(o['diametro_b_m'], 2)} m, o menor da varredura que contém as saídas com parede. Comprimento com o motor real nos dois estágios, a mesma base da rota A. **Esta é a configuração da opção C, descartada pelo Fabio** " + f"por empuxo/peso de {br(o['empuxo_peso_opcao_c'], 2)} no GLOM atual. Ela só passa de 1 aqui porque o GLOM cai, o que depende de reabrir o ADR 0013. O maior diâmetro admissível varia com a grade: {o['motivo_fim']}."]
+           f"{o['n_motores_b']} × R-4D-11 164:1, Ø {br(o['diametro_b_m'], 2)} m, o menor da varredura que contém as saídas com parede. Comprimento com o motor real nos dois estágios, a mesma base da rota A. **Esta é a configuração da opção C, descartada pelo Fabio** " + f"por empuxo/peso de {br(o['empuxo_peso_opcao_c'], 2)} no GLOM atual. Ela só passa de 1 aqui porque o GLOM cai, o que depende de reabrir o ADR 0013. Além disso, {o['motivo_fim']}."]
     md += [""] + CAB
     for r in o["rota_b"]:
         md.append(lin_mav(r["mav"]))
@@ -355,8 +355,8 @@ def escreve_md(o):
            "| Muda o quê | — | motor sem Isp e massa de fonte, e arranjo dos tanques | reabre os ADRs 0005 e 0013 e usa a opção C | reabre os ADRs 0003, 0005 e 0013 e usa a opção C |", "",
            "## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", "",
            f"Opinião: a rota A é a única que cumpre o alvo sem mudar a arquitetura: no ombro, cabe com {sg(an[0]['folga_deitado_m'], 2)} m no pior Isp da faixa e com {sg(o['rota_a_referencia']['com_aninhados']['folga_deitado_m'], 2)} m no caso de referência, mas com o deck sob o MAV ela fica entre {sg(o['rota_a_referencia']['com_aninhados']['folga_deitado_com_deck_m'], 2)} e {sg(an[-1]['folga_deitado_com_deck_m'], 2)} m. "
-           "Só o 44:1, sem aninhar, não basta nesses Isp. O que sustenta a rota não está verificado: Isp e massa do 44:1 e o tanque aninhado na pressão real. "
-           f"A rota B reduz bem o MAV e a massa por área, mas o híbrido pede de {br(min(1 / (1 + x['margem_falcon_heavy']) for x in c2s), 1)} a {br(max(1 / (1 + x['margem_falcon_heavy']) for x in c2s), 1)} vezes a capacidade do Falcon Heavy, e, com o deck, o MAV dela também não cabe. Os motivos de massa do ADR 0013 continuam. O só elétrico merece no máximo uma conta melhor, se a missão de referência mudar. "
+           f"Só o 44:1, sem aninhar, cabe no ombro de {br(next(x['isp_s'] for x in o['rota_a'] if x['so_44']['folga_deitado_m'] >= 0), 0)} s para cima, com pouca folga, e não cabe com o deck. O que sustenta a rota não está verificado: Isp e massa do 44:1 e o tanque aninhado na pressão real. "
+           f"A rota B reduz bem o MAV e a massa por área, mas o híbrido pede de {br(min(1 / (1 + x['margem_falcon_heavy']) for x in c2s), 1)} a {br(max(1 / (1 + x['margem_falcon_heavy']) for x in c2s), 1)} vezes a capacidade do Falcon Heavy, e, com o deck, o MAV dela não cabe em nenhuma das duas órbitas. Os motivos de massa do ADR 0013 continuam. O só elétrico merece no máximo uma conta melhor, se a missão de referência mudar. "
            "Meu próximo passo seria fechar os dados do 44:1 e dimensionar o tanque aninhado. A decisão é do Fabio."]
     (SAIDA / "rotas_mav.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 

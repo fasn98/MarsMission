@@ -43,23 +43,23 @@ Investigação. Nenhuma premissa muda, a arquitetura não muda, e a decisão é 
 
 | Motor | Isp (s) | Fonte |
 | :- | -: | :- |
-| 440 N, Re | 308 | [F239] PDF p. 7: "Performance of 308 seconds at 44:1 area ratio was achieved" |
-| 440 N, Nb ("similar Nb engines", "the Nb engine") | 304 | [F239] PDF p. 7: "about 4 seconds higher than similar Nb engines" (308 − 4) e "about 10 seconds higher than the Nb engine" (314 − 10); calculado |
-| 440 N, Re, injetor de programa anterior | 314 | [F239] PDF p. 7: "Performance of 314 seconds at an area ratio of 44:1 was measured. This performance is about 10 seconds higher than the Nb engine" |
-| AJ10-221, 110 lbf, Ir-Re, testes | 310 | [F241] PDF p. 42, Tab. 2.2-3, "44:1 Performance for Injectors SN 6-1 and SN 6-2": de 308,1 a 310,3 s |
-| 445 N, Ir-Re, sem filme de combustível | 310 | [F243] PDF p. 8: "3033 ± 1.5 N-s/kg (309.5 ± 0.15 lbf sec/lbm) at E = 44:1" |
-| 490 N, três injetores | 309 | [F240] resumo no NTRS: "Three injectors with 44:1 area ratios are capable of nominal specific impulse values of 309 sec" (só o resumo; artigo não obtido) |
+| 440 N, Re | 308,0 | [F239] PDF p. 7: "Performance of 308 seconds at 44:1 area ratio was achieved" |
+| 440 N, Nb ("similar Nb engines", "the Nb engine") | 304,0 | [F239] PDF p. 7: "about 4 seconds higher than similar Nb engines" (308 − 4) e "about 10 seconds higher than the Nb engine" (314 − 10); calculado |
+| 440 N, Re, injetor de programa anterior | 314,0 | [F239] PDF p. 7: "Performance of 314 seconds at an area ratio of 44:1 was measured. This performance is about 10 seconds higher than the Nb engine" |
+| AJ10-221, 110 lbf, Ir-Re, testes | 310,4 | [F241] PDF p. 42, Tab. 2.2-3, "44:1 Performance for Injectors SN 6-1 and SN 6-2": de 306,4 a 310,4 s; aqui, o maior |
+| 445 N, Ir-Re, sem filme de combustível | 309,5 | [F243] PDF p. 8: "3033 ± 1.5 N-s/kg (309.5 ± 0.15 lbf sec/lbm) at E = 44:1" |
+| 490 N, três injetores | 309,0 | [F240] resumo no NTRS: "Three injectors with 44:1 area ratios are capable of nominal specific impulse values of 309 sec" (só o resumo; artigo não obtido) |
 
 Sensibilidade, com o MAV redimensionado para o mesmo Isp nos dois estágios e o comprimento do motor 44:1 nos dois:
 
 | Isp (s) | GLOM (kg) | Comprimento (m) | Sem mudar a P-086 (m) |
 | -: | -: | -: | -: |
-| 304 | 425,0 | 3,260 | 3,676 |
-| 308 | 398,8 | 3,181 | 3,597 |
-| 309 | 392,7 | 3,162 | 3,579 |
-| 310 | 389,7 | 3,153 | 3,570 |
-| 310 | 385,0 | 3,139 | 3,556 |
-| 314 | 364,5 | 3,077 | 3,493 |
+| 304,0 | 425,0 | 3,260 | 3,676 |
+| 308,0 | 398,8 | 3,181 | 3,597 |
+| 309,0 | 392,7 | 3,162 | 3,579 |
+| 309,5 | 389,7 | 3,153 | 3,570 |
+| 310,4 | 384,4 | 3,137 | 3,554 |
+| 314,0 | 364,5 | 3,077 | 3,493 |
 
 Massa do 44:1 sem fonte: fica a do catálogo.
 

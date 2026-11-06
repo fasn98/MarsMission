@@ -81,9 +81,9 @@ variante_44_1:
     fonte: '[F239] PDF p. 7: "Performance of 314 seconds at an area ratio of 44:1
       was measured. This performance is about 10 seconds higher than the Nb engine"'
   - nome: AJ10-221, 110 lbf, Ir-Re, testes
-    isp_s: 310.3
+    isp_s: 310.4
     fonte: '[F241] PDF p. 42, Tab. 2.2-3, "44:1 Performance for Injectors SN 6-1 and
-      SN 6-2": de 308,1 a 310,3 s'
+      SN 6-2": de 306,4 a 310,4 s; aqui, o maior'
   - nome: 445 N, Ir-Re, sem filme de combustível
     isp_s: 309.5
     fonte: '[F243] PDF p. 8: "3033 ± 1.5 N-s/kg (309.5 ± 0.15 lbf sec/lbm) at E =
@@ -123,10 +123,10 @@ variante_44_1:
     glom_kg: 389.72992529029403
     comprimento_m: 3.153405938171195
     comprimento_sem_mudar_p086_m: 3.569929938171195
-  - isp_s: 310.3
-    glom_kg: 385.0184791906961
-    comprimento_m: 3.139163343326219
-    comprimento_sem_mudar_p086_m: 3.555687343326219
+  - isp_s: 310.4
+    glom_kg: 384.43646271306136
+    comprimento_m: 3.1374030805966973
+    comprimento_sem_mudar_p086_m: 3.5539270805966976
   - isp_s: 314
     glom_kg: 364.4544701939408
     comprimento_m: 3.076851244779724

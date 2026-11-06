@@ -500,7 +500,9 @@ def test_rotas_mav():
     # rota B: 2 saídas de 164:1 com parede exigem Ø 0,60 m; a segunda órbita está no limite do alvo
     assert r["diametro_b_m"] == 0.60 and r["rota_b"][0]["altitude_km"] == 380
     bx = r["rota_b"][1]["mav"]
-    assert bx["folga_deitado_m"] >= 0
+    assert 0 <= bx["folga_deitado_m"] < 2e-3   # a segunda órbita é a maior que cumpre o alvo, com o motor real
+    assert bx["com_p086_atual"]["comprimento_m"] == pytest.approx(bx["comprimento_m"] - (2 * 21.82 * 0.0254 - 1.05))
+    assert r["rota_a_referencia"]["so_44"]["glom_kg"] > 450   # Isp de 297 s, o do caso de referência
     assert bx["empuxo_peso"] == pytest.approx(2 * 110 * 4.448222 / (bx["glom_kg"] * ler("results/etapa3.1/queima_finita.yaml")["g_marte_m_s2"]))
     # o híbrido reproduz a Etapa 3.3 na altitude dela
     c33 = r["conferencia_etapa_3_3"]

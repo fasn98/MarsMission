@@ -257,9 +257,9 @@ def escreve_md(o):
            "**Onde se procurou:**"]
     md += [f"- {x}" for x in va["onde_procurou"]]
     md += ["", "**Análogos da mesma classe e expansão (NÃO VALIDADO: não são o R-4D-11):**", "", "| Motor | Isp (s) | Fonte |", "| :- | -: | :- |"]
-    md += [f"| {a['nome']} | {br(a['isp_s'], 0)} | {a['fonte']} |" for a in va["analogos"]]
+    md += [f"| {a['nome']} | {br(a['isp_s'], 1)} | {a['fonte']} |" for a in va["analogos"]]
     md += ["", "Sensibilidade, com o MAV redimensionado para o mesmo Isp nos dois estágios e o comprimento do motor 44:1 nos dois:", "", "| Isp (s) | GLOM (kg) | Comprimento (m) | Sem mudar a P-086 (m) |", "| -: | -: | -: | -: |"]
-    md += [f"| {br(s['isp_s'], 0)} | {br(s['glom_kg'], 1)} | {br(s['comprimento_m'])} | {br(s['comprimento_sem_mudar_p086_m'])} |" for s in va["sensibilidade"]]
+    md += [f"| {br(s['isp_s'], 1)} | {br(s['glom_kg'], 1)} | {br(s['comprimento_m'])} | {br(s['comprimento_sem_mudar_p086_m'])} |" for s in va["sensibilidade"]]
     md += ["", "Massa do 44:1 sem fonte: fica a do catálogo.", "",
            f"## (c) De onde vêm os {br(od['com_margem_m_s'], 0)} m/s", "", "| Parcela | m/s | Origem |", "| :- | -: | :- |",
            f"| Subida a 100 × 100 km | {br(od['dv_100x100_m_s'], 1)} | [F37] Tab. 1, p. 17; {br(od['acima_da_velocidade_circular_m_s'], 1)} m/s acima da velocidade circular da mesma linha: inclui a subida a 100 km e as perdas, já líquidas do ganho de rotação, porque o caso sai do equador rumo leste |",
