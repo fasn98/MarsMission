@@ -1674,6 +1674,19 @@ adaptador:
     publicada, mesma altura por análogo, do lado seguro. A capacidade para as massas
     dos veículos não foi conferida. Os 43 kg do adaptador entram na margem do lançador
     (Vulcan e Falcon Heavy), não na massa do veículo.'
+  descartadas:
+  - alavanca: Reduzir a margem de Δv da P-014
+    motivo: a margem cobre perdas não modeladas, e o empuxo/peso baixo da rota A aumenta
+      a perda, não a reduz
+  - alavanca: Motor de 44:1 com câmara de irídio e rênio
+    motivo: no Isp do melhor análogo, o alvo com deck fecha só no limite, em três
+      das quatro geometrias (seções 3 e 4), sem folga para a incerteza do Isp
+  - alavanca: Aeroshell maior que 4,5 m
+    motivo: no Vulcan, o lander de aeroshell maior já tem folga radial negativa na
+      leitura do Ø menor (seção 5)
+  - alavanca: Carga útil menor
+    motivo: reduz o retorno científico, que é o requisito da missão, e não é decisão
+      de projeto do veículo
   base: 1575 mm, clampband
   altura_base_m: 0.127
   massa_base_kg: 43.0
