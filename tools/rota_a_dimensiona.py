@@ -284,7 +284,7 @@ def main():
                   "isp_calculado": {"s": cal["isp_44_s"], "empuxo_n": cal["empuxo_44_n"], "gama": cal["central"]["gama"], "gama_max_s": max(max(x["isp_ancora_164_s"], x["isp_ancora_300_s"]) for x in cal["varredura_gama"])}, "fecha": fecha, "margens": margens, "nucleo_cad": nucleo, "arranjo_msl": ra["arranjo_msl"], "isp_minimo": isp_minimo, "ressalva_analogos": ler("results/etapa7.2/rotas_mav.yaml")["rota_a_ressalva"].split(". ")[0],
                   "dimensionamento": {"tensao_admissivel_mpa": sigma, "ftu_mpa": ftu, "fty_mpa": fty, "fator_seguranca": fs, "fator_fonte": ra["fator_seguranca_pressao"]["fonte"], "fator_flambagem": fs_fl, "fator_flambagem_fonte": ra["fator_seguranca_flambagem"]["fonte"], "ec_mpa": ec_, "raio_interno_m": r_i, "t_p093_m": t_p093, "pressoes": pressoes,
                                       "nota_flambagem": fl["nota"], "vao_base_m": g0, "vao_fonte": ra["vao_purga_m"]["fonte"], "fator_base": k_b, "casos": casos, "massa_tanques_atual_kg": caso[d0]["massa_tanques_kg"], "fatores": ks, "vaos": gs, "geometrias": ra["geometrias_estagio_2"]},
-                  "adaptador": {"casos": ad["casos"], "linhas": adapt, "ressalva_vulcan": ad["ressalva_vulcan"], "ressalva_falcon": ad["ressalva_falcon"], "p097": ad["p097_texto"], "base": ad["base"], "altura_base_m": v(ad["altura_m"]), "massa_base_kg": m_ad}})
+                  "adaptador": {"casos": ad["casos"], "linhas": adapt, "ressalva_vulcan": ad["ressalva_vulcan"], "ressalva_falcon": ad["ressalva_falcon"], "p097": ad["p097_texto"], "descartadas": ra["alavancas_descartadas"], "base": ad["base"], "altura_base_m": v(ad["altura_m"]), "massa_base_kg": m_ad}})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "rota_a.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -403,6 +403,8 @@ def escreve_md(o):
            f"**Margens com os {br(ad['massa_base_kg'], 0)} kg do adaptador na capacidade do lançador,** sem entrar na massa do veículo: (capacidade − {br(ad['massa_base_kg'], 0)} kg) / massa − 1, na pior janela. A curva dos lançadores é de massa separada ([F79]); [F80] define a sua capacidade em PSW, com o adaptador incluído. Se a curva do [F79] já descontar o adaptador, tirar os 43 kg conta duas vezes, e a margem fica conservadora; não conferido. As etapas anteriores seguem sem o adaptador.", "",
            "| Veículo | Lançador | Injetado (kg) | Margem sem adaptador | Margem com adaptador |", "| :- | :- | -: | -: | -: |"]
     md += [f"| {x['veiculo']} | {x['lancador']} | {br(x['injetado_kg'], 0)} | {sg(100 * x['sem_adaptador'], 1)} % | {sg(100 * x['com_adaptador'], 1)} % |" for x in o["margens"]]
+    md += ["", "## 6. Alavancas descartadas por ora (Fabio, 2026-11-07)", "", "| Alavanca | Motivo |", "| :- | :- |"]
+    md += [f"| {x['alavanca']} | {x['motivo']} |" for x in ad["descartadas"]]
     (SAIDA / "rota_a.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 

@@ -347,6 +347,11 @@ rota_a_dimensionamento:   # Portão do comprimento do MAV (Fabio, 2026-11-06). R
     fatores_reducao: [1.0, 0.5, 0.25, 0.14]   # varredura sem fonte, NÃO VALIDADO: o valor da SP-8032 não foi obtido
     fator_base: {valor: 0.14, premissa: P-099}
   vao_purga_m: {valores: [0.005, 0.01, 0.02, 0.05], base: {valor: 0.02, premissa: P-098}, menor: 0.005, fonte: "[F46] §5.4, PDF p. 17: \"with a purge gap between the two tanks\"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO"}
+  alavancas_descartadas:   # Fabio, 2026-11-07: descartadas por ora; o motivo é uma linha, da análise do portão
+    - {alavanca: "Reduzir a margem de Δv da P-014", motivo: "a margem cobre perdas não modeladas, e o empuxo/peso baixo da rota A aumenta a perda, não a reduz"}
+    - {alavanca: "Motor de 44:1 com câmara de irídio e rênio", motivo: "mesmo com 314 s, o melhor análogo, o alvo com deck só fecha na geometria otimista ou no menor vão (seção 3)"}
+    - {alavanca: "Aeroshell maior que 4,5 m", motivo: "no Vulcan, o lander de 4,65 m já tem folga radial negativa na leitura do Ø menor (seção 5)"}
+    - {alavanca: "Carga útil menor", motivo: "reduz o retorno científico, que é o requisito da missão, e não é decisão de projeto do veículo"}
   isp_casos_s: [304, 308, 309, 314]   # valores dos análogos, só comparação: não coerentes com o R-4D-11 (Fabio, 2026-11-07)
   motores_por_estagio: [4, 1]   # as 4 saídas de 44:1 do estágio 1 (results/etapa7.2/rotas_mav.yaml) e o motor do estágio 2 (P-086)
   grade_esboco: 40   # parâmetro de amostragem do raio no esboço do estágio 2, em 3 passes de refino (escolha numérica)
@@ -364,9 +369,9 @@ rota_a_dimensionamento:   # Portão do comprimento do MAV (Fabio, 2026-11-06). R
     - {item: "Cotas internas", achado: "não achadas: corte, altura da pilha, distância ao ombro, ou se o rover entra na parte cônica do escudo", fonte: "procurado em [F244], [F214], [F45], [F227], [F226], [F215] e [F232]"}
 
 isp_44_calibracao:   # Fabio, 2026-11-07: Isp do 44:1 a partir do 164:1 e do 300:1 do mesmo motor; resultado NÃO VALIDADO
-  faixa_gama_busca: {valor: [1.02, 1.6], fonte: "sem fonte, NÃO VALIDADO: só delimita a busca do γ efetivo; sem efeito no valor"}
-  meia_resolucao_s: {"164:1": 0.5, "300:1": 0.25}   # sem fonte, NÃO VALIDADO: supõe resolução de 1 s no 311 e de 0,5 s no 315,5 de [F228]
-  gamas_varredura: {valor: [1.15, 1.20, 1.25, 1.30], fonte: "sem fonte, NÃO VALIDADO: varredura de sensibilidade"}
+  faixa_gama_busca: {valor: [1.02, 1.6], premissa: P-103}
+  meia_resolucao_s: {valor: {"164:1": 0.5, "300:1": 0.25}, premissa: P-101}
+  gamas_varredura: {valor: [1.15, 1.20, 1.25, 1.30], premissa: P-102}
   apollo:
     razao_expansao: 40
     fonte_razao: "[F242] PDF p. 15: \"with an expansion ratio equal to 40\", da câmara inicial; as outras páginas não repetem ε"

@@ -102,5 +102,8 @@
 | P-098 | vao_de_purga_base | 0.02 | m | NÃO VALIDADA | config/cad.yaml (rota_a_dimensionamento.vao_purga_m.base), results/etapa7.2/rota_a.md |
 | P-099 | fator_de_flambagem_base | 0.14 | fração | NÃO VALIDADA | config/cad.yaml (rota_a_dimensionamento.flambagem.fator_base), results/etapa7.2/rota_a.md |
 | P-100 | faixa_de_busca_do_isp_minimo | [280, 340] | s | NÃO VALIDADA | config/cad.yaml (rota_a_dimensionamento.faixa_isp_busca_s), results/etapa7.2/rota_a.md |
+| P-101 | meia_resolucao_do_isp_do_r4d11 | meia_resolucao_s: {'164:1': 0.5, '300:1': 0.25} | s | NÃO VALIDADA | config/cad.yaml (isp_44_calibracao.meia_resolucao_s), results/etapa7.2/isp_44.md |
+| P-102 | varredura_de_gama_efetivo | [1.15, 1.2, 1.25, 1.3] | adimensional | NÃO VALIDADA | config/cad.yaml (isp_44_calibracao.gamas_varredura), results/etapa7.2/isp_44.md |
+| P-103 | faixa_de_busca_do_gama_efetivo | [1.02, 1.6] | adimensional | NÃO VALIDADA | config/cad.yaml (isp_44_calibracao.faixa_gama_busca), results/etapa7.2/isp_44.md |
 
-Total: 100 premissas, 100 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 103 premissas, 103 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

@@ -1124,3 +1124,33 @@ premissas:
       Só delimita a busca do Isp mínimo da rota A; não entra no valor enquanto o mínimo ficar dentro dela. Sem fonte. Passou a
       premissa numerada por decisão do Fabio em 2026-11-07, sem mudar o valor.
     status: NÃO VALIDADA
+
+  - id: P-101
+    nome: meia_resolucao_do_isp_do_r4d11
+    valor: {meia_resolucao_s: {"164:1": 0.5, "300:1": 0.25}}
+    unidade: s
+    uso: config/cad.yaml (isp_44_calibracao.meia_resolucao_s), results/etapa7.2/isp_44.md
+    justificativa: >
+      Supõe resolução de 1 s no "164:1 = 311 sec" e de 0,5 s no "300:1 = 315.5 sec" de [F228] PDF p. 22. Define a faixa do Isp
+      calculado do 44:1. Sem fonte. Numerada por decisão do Fabio em 2026-11-07, com o valor atual.
+    status: NÃO VALIDADA
+
+  - id: P-102
+    nome: varredura_de_gama_efetivo
+    valor: [1.15, 1.20, 1.25, 1.30]
+    unidade: adimensional
+    uso: config/cad.yaml (isp_44_calibracao.gamas_varredura), results/etapa7.2/isp_44.md
+    justificativa: >
+      Valores de γ impostos para a sensibilidade do Isp calculado do 44:1. Sem fonte: NASA CEA não está no workspace. Numerada
+      por decisão do Fabio em 2026-11-07, com o valor atual.
+    status: NÃO VALIDADA
+
+  - id: P-103
+    nome: faixa_de_busca_do_gama_efetivo
+    valor: [1.02, 1.6]
+    unidade: adimensional
+    uso: config/cad.yaml (isp_44_calibracao.faixa_gama_busca), results/etapa7.2/isp_44.md
+    justificativa: >
+      Só delimita a busca do γ efetivo que reproduz os dois pontos de [F228]; não entra no valor enquanto o γ ficar dentro dela.
+      Sem fonte. Numerada por decisão do Fabio em 2026-11-07, com o valor atual.
+    status: NÃO VALIDADA

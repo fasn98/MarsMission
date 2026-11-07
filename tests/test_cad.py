@@ -112,11 +112,11 @@ def _itens_com_premissa(no, caminho=()):
 
 def test_config_cad_coincide_com_as_premissas():
     """Cada valor de config/cad.yaml que cita uma premissa aparece nela: valor escalar igual, ou chave de mesmo nome
-    (a do item, ou "pai_item") com o mesmo valor. Cobre P-078 a P-095, inclusive o ees_raio_ponta_m da P-094, e P-097 a P-100."""
+    (a do item, ou "pai_item") com o mesmo valor. Cobre P-078 a P-095, inclusive o ees_raio_ponta_m da P-094, e P-097 a P-103."""
     ps = {p["id"]: p["valor"] for p in ler("config/premissas.yaml")["premissas"]}
     itens = list(_itens_com_premissa(ler("config/cad.yaml")))
     assert any(c[-1] == "ees_raio_ponta_m" for c, _, _ in itens)
-    assert {"P-097", "P-098", "P-099", "P-100"} <= {pid for _, _, pid in itens}
+    assert {"P-097", "P-098", "P-099", "P-100", "P-101", "P-102", "P-103"} <= {pid for _, _, pid in itens}
     for caminho, valor, pid in itens:
         pv = ps[pid]
         if isinstance(pv, dict):
