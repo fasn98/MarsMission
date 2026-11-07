@@ -1,4 +1,4 @@
-"""Portão do comprimento do MAV (ADR 0023): dados pedidos pelo Fabio para decidir a rota A provisória e a P-097.
+"""Portão do comprimento do MAV (ADR 0023): dados pedidos pelo Fabio para a rota A provisória, com o Isp calculado do 44:1.
 
 - Item 2: alvo com deck, por Ø; núcleo do lander no CAD atual; arranjo do MSL e do Mars 2020 nas fontes; Isp mínimo do 44:1.
 - Item 3: tanques aninhados dimensionados: pressão, cúpulas, vão de purga, massa e comprimento real, com o estágio 2 em
@@ -29,6 +29,7 @@ import comprimento_mav as cmv  # noqa: E402
 import encaixe_coifas as ec  # noqa: E402
 import envelope_arranjo as ea  # noqa: E402
 import cad_parametros as cp  # noqa: E402
+from orbital import lancamento as lc  # noqa: E402
 from orbital import veiculos as ve  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
@@ -198,12 +199,16 @@ def main():
         return L, massa, por_est
 
     gs = [float(x) for x in ra["vao_purga_m"]["valores"]]
-    g0 = float(ra["vao_purga_m"]["base"])
+    g0 = float(v(ra["vao_purga_m"]["base"]))
     ks = [float(k) for k in fl["fatores_reducao"]]
-    k_b = float(fl["fator_base"])
+    k_b = float(v(fl["fator_base"]))
     fams = list(ra["geometrias_estagio_2"])
     casos = []
-    for isp in ra["isp_casos_s"]:
+    cal = ler("results/etapa7.2/isp_44.yaml")
+    area = math.pi * v(cad["aeroshell"]["opcoes"]["m2020"]["diametro_m"]) ** 2 / 4
+    g_m = ler("results/etapa3.1/queima_finita.yaml")["g_marte_m_s2"]
+    origem = [(cal["isp_44_s"][k], f"calculado, {k}") for k in ("baixo", "central", "alto")] + [(x, "análogo, só comparação") for x in ra["isp_casos_s"]]
+    for isp, ori in origem:
         lan = lander_isp(float(isp))
         e_ = lan["mav_estagios"]
         so = cmv.comprimento(d_alvo, e_, nt44, cad)
@@ -213,11 +218,11 @@ def main():
             L_b, mt_b, por_est = real(e_, d_alvo, g0, k_b, f)
             por_fam[f] = {"real_m": L_b, "reducao_real_m": so - L_b, "fracao_que_sobra": (so - L_b) / (so - lim), "folga_deck_real_m": (lim_deck[d_alvo] - L_b) / 2, "folga_ombro_real_m": (lim_ombro[d_alvo] - L_b) / 2,
                           "massa_tanques_kg": mt_b, "por_estagio": por_est, "por_vao": {str(g): real(e_, d_alvo, g, k_b, f)[0] for g in gs}}
-        casos.append({"isp_s": isp, "glom_kg": e_[0]["massa_inicial_kg"], "so_44_m": so, "limite_otimista_m": lim, "reducao_limite_m": so - lim, "por_geometria": por_fam})
+        casos.append({"isp_s": isp, "origem": ori, "empuxo_peso": n_mot[0] * cal["empuxo_44_n"] / (e_[0]["massa_inicial_kg"] * g_m) if ori.startswith("calculado") else None, "massa_por_area_kg_m2": lan["massa_entrada_kg"] / area, "lander_injetado_kg": lan["injetada_kg"], "glom_kg": e_[0]["massa_inicial_kg"], "so_44_m": so, "limite_otimista_m": lim, "reducao_limite_m": so - lim, "por_geometria": por_fam})
 
     # Isp mínimo com deck e folga ≥ alvo, para o limite otimista e para o comprimento real
     def isp_min(f):
-        lo, hi = [float(x) for x in ra["faixa_isp_busca_s"]]
+        lo, hi = [float(x) for x in ra["faixa_isp_busca_s"]["valor"]]
         if f(hi) > lim_deck[d_alvo] - 2 * alvo:
             return None
         for _ in range(PASSOS):
@@ -233,6 +238,7 @@ def main():
     g_menor = float(ra["vao_purga_m"]["menor"])
     linhas_isp = [{"fator": k, "vao_m": g0, "por_geometria": {f: isp_min(l_real(k, g0, f)) for f in fams}} for k in ks]
     linhas_isp += [{"fator": k_b, "vao_m": g, "por_geometria": {f: isp_min(l_real(k_b, g, f)) for f in fams}} for g in (g_menor, max(gs))]
+    fecha = {"alvo_m": alvo, "por_geometria": {f: {"com_deck": all(c["por_geometria"][f]["folga_deck_real_m"] >= alvo for c in casos if c["origem"] == "calculado, central"), "sem_deck": all(c["por_geometria"][f]["folga_ombro_real_m"] >= alvo for c in casos if c["origem"] == "calculado, central")} for f in fams}}
     isp_minimo = {"limite_otimista_s": isp_min(l_lim), "linhas": linhas_isp, "alvo_folga_m": alvo, "comprimento_max_m": lim_deck[d_alvo] - 2 * alvo}
 
     # ---------------- item 2: núcleo do lander no CAD atual
@@ -264,15 +270,43 @@ def main():
             linha["por_altura"].append({"nome": c["nome"], "altura_m": h, "radial_m": rr["folga_radial_m"], "axial_m": aa["folga_axial_m"], "corpo": rr["corpo"]})
         adapt.append(linha)
 
+    lcfg, ms = ler("config/lancadores.yaml"), ler("results/etapa1.3/missoes.yaml")
+    cand = {c["id"]: c for c in ms["candidatas"]}
+    janelas = [cand[w["missao"]] for w in ms["envelope_dimensionamento"]["minimo_admissivel_por_janela"].values()]
+    m_ad = v(ad["massa_kg"])
+    lan_a = next(c for c in casos if c["origem"] == "calculado, central")["lander_injetado_kg"]
+    margens = []
+    for veic, m_, lancs in (("Lander atual", arq["lander"]["injetado_kg"], ("Vulcan VC4", "Vulcan VC6")), ("Lander com a rota A, Isp calculado central", lan_a, ("Vulcan VC4", "Vulcan VC6")), ("Orbitador atual", arq["orbitador"]["injetado_kg"], ("Falcon Heavy (descartável)", "Vulcan VC6"))):
+        for nl in lancs:
+            margens.append({"veiculo": veic, "lancador": nl, "injetado_kg": m_, "sem_adaptador": lc.pior_margem_a(nl, m_, janelas, lcfg)[0], "com_adaptador": lc.pior_margem_a(nl, m_, janelas, lcfg, m_ad)[0]})
     out = nativo({"gerado_por": "tools/rota_a_dimensiona.py", "natureza": "dados para o portão; nada entra no CAD nem nas premissas", "alvo": {"diametro_m": d_alvo, "limite_com_deck_m": lim_deck[d_alvo], "limite_sem_deck_m": lim_ombro[d_alvo],
                   "por_diametro": [{"diametro_m": d, "limite_com_deck_m": lim_deck[d], "limite_sem_deck_m": lim_ombro[d]} for d in sorted(caso)], "circulo_44_m": saidas["44:1"], "circulo_164_m": saidas["164:1"], "parede_m": t_par},
-                  "nucleo_cad": nucleo, "arranjo_msl": ra["arranjo_msl"], "isp_minimo": isp_minimo, "ressalva_analogos": ler("results/etapa7.2/rotas_mav.yaml")["rota_a_ressalva"].split(". ")[0],
+                  "isp_calculado": {"s": cal["isp_44_s"], "empuxo_n": cal["empuxo_44_n"], "gama": cal["central"]["gama"]}, "fecha": fecha, "margens": margens, "nucleo_cad": nucleo, "arranjo_msl": ra["arranjo_msl"], "isp_minimo": isp_minimo, "ressalva_analogos": ler("results/etapa7.2/rotas_mav.yaml")["rota_a_ressalva"].split(". ")[0],
                   "dimensionamento": {"tensao_admissivel_mpa": sigma, "ftu_mpa": ftu, "fty_mpa": fty, "fator_seguranca": fs, "fator_fonte": ra["fator_seguranca_pressao"]["fonte"], "fator_flambagem": fs_fl, "fator_flambagem_fonte": ra["fator_seguranca_flambagem"]["fonte"], "ec_mpa": ec_, "raio_interno_m": r_i, "t_p093_m": t_p093, "pressoes": pressoes,
                                       "nota_flambagem": fl["nota"], "vao_base_m": g0, "vao_fonte": ra["vao_purga_m"]["fonte"], "fator_base": k_b, "casos": casos, "massa_tanques_atual_kg": caso[d0]["massa_tanques_kg"], "fatores": ks, "vaos": gs, "geometrias": ra["geometrias_estagio_2"]},
-                  "adaptador": {"casos": ad["casos"], "linhas": adapt, "ressalva_vulcan": ad["ressalva_vulcan"], "ressalva_falcon": ad["ressalva_falcon"], "p097_proposta": ad["p097_proposta"], "base_proposta": ad["base_proposta"]}})
+                  "adaptador": {"casos": ad["casos"], "linhas": adapt, "ressalva_vulcan": ad["ressalva_vulcan"], "ressalva_falcon": ad["ressalva_falcon"], "p097": ad["p097_texto"], "base": ad["base"], "altura_base_m": v(ad["altura_m"]), "massa_base_kg": m_ad}})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "rota_a.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
+
+
+def secao_zero(o):
+    """Resposta do portão de 2026-11-07, com o Isp de results/etapa7.2/isp_44.yaml."""
+    cal, dm, fe = o["isp_calculado"], o["dimensionamento"], o["fecha"]
+    casos = [c for c in dm["casos"] if c["origem"].startswith("calculado")]
+    com = [f for f, x in fe["por_geometria"].items() if x["com_deck"]]
+    sem = [f for f, x in fe["por_geometria"].items() if x["sem_deck"]]
+    alvo = sg(fe["alvo_m"], 2)
+    t = [f"**Isp calculado: {br(cal['s']['central'], 1)} s, de {br(cal['s']['baixo'], 1)} a {br(cal['s']['alto'], 1)} s (results/etapa7.2/isp_44.md, NÃO VALIDADO).**", "",
+         (f"**Com esse Isp central, a rota A NÃO fecha com deck em nenhuma das quatro geometrias, no alvo de {alvo} m.**" if not com else f"Com esse Isp central, fecha com deck em: {', '.join(com)}.") + " "
+         + (f"Com o mesmo critério sem deck, fecha em: {', '.join(sem)}. O arranjo sem deck segue sem fonte que prove a viabilidade." if sem else f"Com o mesmo critério sem deck, também não fecha."), "",
+         "| Isp (s) | Origem | Geometria do estágio 2 | GLOM (kg) | Real (m) | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) | Empuxo/peso em Marte, 4 motores |", "| -: | :- | :- | -: | -: | -: | -: | -: | -: |"]
+    for c in casos:
+        for f, x in c["por_geometria"].items():
+            t.append(f"| {br(c['isp_s'], 1)} | {c['origem']} | {f} | {br(c['glom_kg'], 1)} | {br(x['real_m'])} | {sg(x['folga_deck_real_m'])} | {sg(x['folga_ombro_real_m'])} | {br(x['massa_tanques_kg'], 1)} | {br(c['empuxo_peso'], 2)} |")
+    menor = min(v_ for li in o["isp_minimo"]["linhas"] for v_ in li["por_geometria"].values() if v_ is not None)
+    t += ["", f"O menor Isp mínimo da seção 3 é {br(menor, 1)} s, {br(menor - cal['s']['alto'], 1)} s acima do extremo alto do cálculo. Empuxo de {br(cal['empuxo_n'], 0)} N por motor, calculado por CF (NÃO VALIDADO). A perda gravitacional maior desse empuxo/peso não está modelada. Massa por área, de {br(casos[-1]['massa_por_area_kg_m2'], 0)} a {br(casos[0]['massa_por_area_kg_m2'], 0)} kg/m² nesses casos: é o risco aberto da Etapa 7.3."]
+    return t
 
 
 def compara_analogos(o):
@@ -298,6 +332,7 @@ def escreve_md(o):
     al, dm, im, nu, ad = o["alvo"], o["dimensionamento"], o["isp_minimo"], o["nucleo_cad"], o["adaptador"]
     md = ["# Portão do comprimento do MAV: rota A provisória (gerado por tools/rota_a_dimensiona.py)", "",
           "Dados para decisão do Fabio (ADR 0023). A rota A não está aplicada ao CAD nem às premissas. O que não tem fonte fica em varredura e está marcado NÃO VALIDADO.", "",
+          "## 0. A rota A fecha com o Isp calculado do 44:1?", "", *secao_zero(o), "",
           "## 1. Alvo com deck", "", f"Com as 4 saídas de 44:1 ({br(al['circulo_44_m'])} m, com parede de {br(al['parede_m'], 2)} m de cada lado), o menor Ø da varredura é {br(al['diametro_m'], 2)} m: limite de {br(al['limite_com_deck_m'], 2)} m com deck; {br(al['limite_sem_deck_m'], 2)} m sem deck, que fica como limite otimista. Com 164:1 ({br(al['circulo_164_m'])} m), o Ø cresce e o limite cai.", "",
           "| Ø (m) | Limite com deck (m) | Limite sem deck (m) |", "| -: | -: | -: |"]
     md += [f"| {br(x['diametro_m'], 2)} | {br(x['limite_com_deck_m'], 2)} | {br(x['limite_sem_deck_m'], 2)} |" for x in al["por_diametro"]]
@@ -313,7 +348,7 @@ def escreve_md(o):
            "| Vão (m) | Fator de flambagem (NÃO VALIDADO) | " + " | ".join(dm["geometrias"]) + " |", "| -: | -: |" + " -: |" * len(dm["geometrias"])]
     for li in im["linhas"]:
         md.append(f"| {br(li['vao_m'], 3)} | {br(li['fator'], 2)} | " + " | ".join(br(li["por_geometria"][f], 2) if li["por_geometria"][f] else "não fecha na faixa" for f in dm["geometrias"]) + " |")
-    md += ["", f"Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte. {o['ressalva_analogos']}. {compara_analogos(o)}", "",
+    md += ["", f"Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte; o valor calculado está na seção 0. {o['ressalva_analogos']}. Decisão do Fabio (2026-11-07): essa faixa não é coerente com o R-4D-11, e a contagem a seguir fica só como registro. {compara_analogos(o)}", "",
            "**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda se o valor cai dentro ou acima da faixa dos análogos, e por isso a conclusão depende dela.", "",
            "## 4. Tanques aninhados dimensionados", "",
            f"Ti-6Al-4V recozido, base A: Ftu {br(dm['ftu_mpa'], 0)} MPa, Fty {br(dm['fty_mpa'], 0)} MPa ([F219]). Fator de {br(dm['fator_seguranca'], 1)}: {dm['fator_fonte']}. Tensão admissível: {br(dm['tensao_admissivel_mpa'], 0)} MPa. Na flambagem, fator de {br(dm['fator_flambagem'], 1)}: {dm['fator_flambagem_fonte']}; t varia com a raiz do fator. Raio interno {br(dm['raio_interno_m'], 3)} m. A P-093 usa {br(1e3 * dm['t_p093_m'], 1)} mm. **{dm['nota_flambagem']}.**", "",
@@ -324,25 +359,25 @@ def escreve_md(o):
            "| Isp (s) | Geometria do estágio 2 | Só 44:1 (m) | Limite otimista (m) | Real (m) | Redução no limite (m) | Redução real (m) | Sobra da redução | Folga, com deck (m) | Folga, sem deck (m) | Tanques (kg) |", "| -: | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
         for f, x in c["por_geometria"].items():
-            md.append(f"| {br(c['isp_s'], 0)} | {f} | {br(c['so_44_m'])} | {br(c['limite_otimista_m'])} | {br(x['real_m'])} | {br(c['reducao_limite_m'])} | {br(x['reducao_real_m'])} | {br(100 * x['fracao_que_sobra'], 0)} % | {sg(x['folga_deck_real_m'])} | {sg(x['folga_ombro_real_m'])} | {br(x['massa_tanques_kg'], 1)} |")
+            md.append(f"| {br(c['isp_s'], 1)} | {f} | {br(c['so_44_m'])} | {br(c['limite_otimista_m'])} | {br(x['real_m'])} | {br(c['reducao_limite_m'])} | {br(x['reducao_real_m'])} | {br(100 * x['fracao_que_sobra'], 0)} % | {sg(x['folga_deck_real_m'])} | {sg(x['folga_ombro_real_m'])} | {br(x['massa_tanques_kg'], 1)} |")
     md += ["", f"Massa dos tanques em série hoje: {br(dm['massa_tanques_atual_kg'], 1)} kg, na espessura da P-093. A massa do orçamento do MAV vem da fração estrutural, então esta conta não muda o GLOM; por isso o confronto abaixo.", "",
            "**Tanques contra o inerte, por estágio.** A sobra é o que resta no inerte para estrutura, pressurização e o resto. O motor é o de 164:1, porque o 44:1 não tem massa com fonte. O estágio 1 não depende da geometria.", "",
            "| Isp (s) | Estágio | Geometria | Inerte (kg) | Tanques (kg) | Parcela | Motores 164:1 (kg) | Sobra (kg) |", "| -: | -: | :- | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
         p0 = next(iter(c["por_geometria"].values()))["por_estagio"][0]
-        md.append(f"| {br(c['isp_s'], 0)} | 1 | todas | {br(p0['inerte_kg'], 1)} | {br(p0['tanques_kg'], 1)} | {br(100 * p0['parcela_do_inerte'], 0)} % | {br(p0['motores_164_kg'], 1)} | {sg(p0['sobra_kg'], 1)} |")
+        md.append(f"| {br(c['isp_s'], 1)} | 1 | todas | {br(p0['inerte_kg'], 1)} | {br(p0['tanques_kg'], 1)} | {br(100 * p0['parcela_do_inerte'], 0)} % | {br(p0['motores_164_kg'], 1)} | {sg(p0['sobra_kg'], 1)} |")
         for f, x in c["por_geometria"].items():
             e2 = x["por_estagio"][1]
-            md.append(f"| {br(c['isp_s'], 0)} | 2 | {f} | {br(e2['inerte_kg'], 1)} | {br(e2['tanques_kg'], 1)} | {br(100 * e2['parcela_do_inerte'], 0)} % | {br(e2['motores_164_kg'], 1)} | {sg(e2['sobra_kg'], 1)} |")
+            md.append(f"| {br(c['isp_s'], 1)} | 2 | {f} | {br(e2['inerte_kg'], 1)} | {br(e2['tanques_kg'], 1)} | {br(100 * e2['parcela_do_inerte'], 0)} % | {br(e2['motores_164_kg'], 1)} | {sg(e2['sobra_kg'], 1)} |")
     md += ["", "**As quatro geometrias do estágio 2.** " + "; ".join(f"**{f}**: {n}" for f, n in dm["geometrias"].items()) + ". As espessuras seguem as do raio interno, e nenhuma é um dimensionamento. Com recesso, o fundo do recesso não foi analisado. Em **antepara_assimetrica**, a calota fica quase plana, com o vão praticamente constante: a espessura de flambagem no raio da calota, na tabela, está fora do domínio da fórmula da casca esférica, uma calota tão rasa trabalha como placa, e a flexão de placa não foi calculada. O comprimento e a massa dessa coluna usam a espessura do raio interno, então são otimistas. Em **lente_mesmo_raio**, a antepara tem o raio da esfera e o canto vivo na borda não foi analisado. " + folga_borda_lente(dm), "",
            "| Isp (s) | Tanque único (m) | recesso_hemisferio (m) | recesso_livre (m) | antepara_assimetrica (m) | lente_mesmo_raio (m) | Raio da calota, antepara (m) | Flambagem nesse raio, fora do domínio (mm) | Raio da esfera e raio da borda, lente (m) |", "| -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for c in dm["casos"]:
         ge = {f: x["por_estagio"][1]["geometria"] for f, x in c["por_geometria"].items()}
-        md.append(f"| {br(c['isp_s'], 0)} | {br(c['por_geometria']['antepara_assimetrica']['por_estagio'][1]['tanque_unico_m'])} | {br(ge['recesso_hemisferio']['comprimento_m'])} | {br(ge['recesso_livre']['comprimento_m'])} | {br(ge['antepara_assimetrica']['comprimento_m'])} | {br(ge['lente_mesmo_raio']['comprimento_m'])} | {br(ge['antepara_assimetrica']['raio_calota_m'], 2)} | {br(1e3 * ge['antepara_assimetrica']['t_flambagem_no_raio_da_calota_m'], 1)} | {br(ge['lente_mesmo_raio']['raio_m'])} e {br(ge['lente_mesmo_raio']['raio_borda_m'])} |")
+        md.append(f"| {br(c['isp_s'], 1)} | {br(c['por_geometria']['antepara_assimetrica']['por_estagio'][1]['tanque_unico_m'])} | {br(ge['recesso_hemisferio']['comprimento_m'])} | {br(ge['recesso_livre']['comprimento_m'])} | {br(ge['antepara_assimetrica']['comprimento_m'])} | {br(ge['lente_mesmo_raio']['comprimento_m'])} | {br(ge['antepara_assimetrica']['raio_calota_m'], 2)} | {br(1e3 * ge['antepara_assimetrica']['t_flambagem_no_raio_da_calota_m'], 1)} | {br(ge['lente_mesmo_raio']['raio_m'])} e {br(ge['lente_mesmo_raio']['raio_borda_m'])} |")
     md += ["", "**Sensibilidade do comprimento real (m) ao vão de purga:**", "", "| Isp (s) | Geometria | " + " | ".join(f"{br(g, 3)} m" for g in dm["vaos"]) + " |", "| -: | :- |" + " -: |" * len(dm["vaos"])]
     for c in dm["casos"]:
         for f, x in c["por_geometria"].items():
-            md.append(f"| {br(c['isp_s'], 0)} | {f} | " + " | ".join(br(x["por_vao"][str(g)]) for g in dm["vaos"]) + " |")
+            md.append(f"| {br(c['isp_s'], 1)} | {f} | " + " | ".join(br(x["por_vao"][str(g)]) for g in dm["vaos"]) + " |")
     md += ["", "**Não dimensionado:** cargas de lançamento e de subida, fadiga e fratura, soldas, espessura mínima de fabricação, e o vão como peça. A fonte tem cúpula de excentricidade 0,707 em tanques de alta pressão ([F46] PDF p. 9), que encurtaria mais; aqui seguem os hemisférios da P-085.", "",
            "## 5. P-097: folgas nas coifas com a altura do adaptador", "",
            f"Ressalvas: {ad['ressalva_vulcan']}. {ad['ressalva_falcon']}.", "",
@@ -355,7 +390,10 @@ def escreve_md(o):
     md += ["", "Folga axial mínima (m):", "", "| Configuração | Leitura | Sem adaptador | " + " | ".join(f"{br(c['altura_m'], 3)} m" for c in ad["casos"]) + " |", "| :- | :- | -: |" + " -: |" * len(cab)]
     for li in ad["linhas"]:
         md.append(f"| {li['veiculo']} | {li['leitura']} | {sg(li['sem_adaptador']['axial_m'])} | " + " | ".join(sg(x["axial_m"]) for x in li["por_altura"]) + " |")
-    md += ["", f"**P-097 reformulada, para nova decisão:** {ad['p097_proposta']}"]
+    md += ["", f"**P-097, aprovada pelo Fabio em 2026-11-07:** {ad['p097']}", "",
+           f"**Margens com os {br(ad['massa_base_kg'], 0)} kg do adaptador na capacidade do lançador,** sem entrar na massa do veículo: (capacidade − {br(ad['massa_base_kg'], 0)} kg) / massa − 1, na pior janela. A curva dos lançadores é de massa separada ([F79]); [F80] define a sua capacidade em PSW, com o adaptador incluído. As etapas anteriores seguem sem o adaptador.", "",
+           "| Veículo | Lançador | Injetado (kg) | Margem sem adaptador | Margem com adaptador |", "| :- | :- | -: | -: | -: |"]
+    md += [f"| {x['veiculo']} | {x['lancador']} | {br(x['injetado_kg'], 0)} | {sg(100 * x['sem_adaptador'], 1)} % | {sg(100 * x['com_adaptador'], 1)} % |" for x in o["margens"]]
     (SAIDA / "rota_a.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 

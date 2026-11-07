@@ -65,7 +65,8 @@ FASE_ATUAL = [["tools/redimensiona.py"], ["tools/plataformas.py"], ["tools/lanca
               ["tools/geometria_marte.py"], ["tools/orbitador_eletrico.py"], ["tools/energia.py"], ["tools/termico.py"], ["tools/comunicacao.py"], ["tools/operacao_superficie.py"], ["tools/lista_massas_lander.py"],
               ["tools/fase4.py"], ["tools/envelope_arranjo.py"],
               ["tools/cad_parametros.py"], ["tools/encaixe_coifas.py"], ["tools/mav_arranjo.py"],
-              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/rota_a_dimensiona.py"]]
+              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/isp_44_bocal.py",
+"tools/rota_a_dimensiona.py"]]
 _SO_NA_RAIZ = {".git", "data", "results", "hanatrial", ".venv", ".pythonlibs", ".cache", ".claude"}
 
 

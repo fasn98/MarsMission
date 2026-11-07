@@ -59,8 +59,9 @@ def interpolar(x, xs, ys):
     return float(np.interp(x, xs, ys))
 
 
-def pior_margem_a(nome, m_inj, janelas, cfg):
-    """(pior margem, janela) da injeção direta do lançador `nome` para a massa dada, entre as janelas."""
+def pior_margem_a(nome, m_inj, janelas, cfg, adaptador_kg=0.0):
+    """(pior margem, janela) da injeção direta do lançador `nome` para a massa dada, entre as janelas. `adaptador_kg` sai da
+    capacidade do lançador, sem entrar na massa do veículo (P-097)."""
     lan = cfg["lancadores"][nome]
     if lan.get("plataforma") == "ELA-4":
         return None, None
@@ -71,7 +72,7 @@ def pior_margem_a(nome, m_inj, janelas, cfg):
         cap = capacidade_direta(lan, j["c3_km2_s2"], j["dla_graus"], cfg, imax)[0]
         if cap != cap:
             return None, j["id"]
-        vals.append((cap / m_inj - 1, j["id"]))
+        vals.append(((cap - adaptador_kg) / m_inj - 1, j["id"]))
     return min(vals)
 
 

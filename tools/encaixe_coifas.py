@@ -448,9 +448,9 @@ def escreve_md(o):
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",
-           "- **Veículos, sem fonte:** z = 0 do modelo. Um adaptador real subiria o veículo; as alturas com fonte e as folgas estão em results/etapa7.2/rota_a.md, seção 5. "
+           "- **Veículos, sem fonte:** z = 0 do modelo. A P-097 (aprovada em 2026-11-07) sobe os veículos em 0,127 m; as folgas deste relatório seguem sem esse deslocamento, e as com ele estão em results/etapa7.2/rota_a.md, seção 5. "
            f"Na primeira leitura do Vulcan, cada metro de altura tira {br(o['reducao_de_folga_por_metro_de_adaptador_vulcan'], 4)} m de folga radial.", "",
-           "## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)", "", "| Id | Texto | Evidência |", "| :- | :- | :- |"]
+           "## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)", "", "Nenhuma pendente." if not o["premissas_propostas"] else "| Id | Texto | Evidência |", "" if not o["premissas_propostas"] else "| :- | :- | :- |"]
     for p in o["premissas_propostas"]:
         md.append(f"| {p['id']} | {p['texto']} | {p['evidencia']} |")
     md += ["", f"A espessura de {br(o['espessura_casca_m'], 2)} m da casca é escolha de construção, sem efeito nas folgas. Os arquivos .fs não foram compilados nesta máquina: a compilação é o primeiro passo do roteiro."]

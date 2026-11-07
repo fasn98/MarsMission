@@ -98,5 +98,9 @@
 | P-094 | pecas_com_densidade_equivalente | plataforma_orbitador_altura_m: 0.3; deck_lander_altura_m: 0.3; ees_raio_ponta_m: 0.0064 | m | NÃO VALIDADA | config/cad.yaml (construcao.equivalentes, Etapa 7.2) |
 | P-095 | arranjo_interno_do_lander | raio_tanques_cruzeiro_m: 1.5; raio_tanques_descida_m: 1.4; angulos_tanques_descida_graus: [0, 120, 240]; braco_posicao_x_m: 0.45; braco_raio_m: 0.05; helicopteros_posicao_y_m: 0.75; folga_entre_pecas_m: 0.05 | m (ângulos em graus) | NÃO VALIDADA | config/cad.yaml (arranjo_lander, Etapa 7.2) |
 | P-096 | origem_do_step_do_falcon | plano: origem do arquivo STEP de keep-in = plano da interface de 1575 mm; eixo_axial: x | — | NÃO VALIDADA | config/cad.yaml (coifas.falcon_padrao, encaixe.plano_falcon), results/etapa7.2b/envelope_falcon_heavy.fs |
+| P-097 | adaptador_entre_interface_e_veiculo | altura_m: 0.127; massa_kg: 43; massa_entra_em: margem do lançador | m; kg | NÃO VALIDADA | config/cad.yaml (adaptador_coifa), results/etapa7.2/rota_a.md |
+| P-098 | vao_de_purga_base | 0.02 | m | NÃO VALIDADA | config/cad.yaml (rota_a_dimensionamento.vao_purga_m.base), results/etapa7.2/rota_a.md |
+| P-099 | fator_de_flambagem_base | 0.14 | fração | NÃO VALIDADA | config/cad.yaml (rota_a_dimensionamento.flambagem.fator_base), results/etapa7.2/rota_a.md |
+| P-100 | faixa_de_busca_do_isp_minimo | [280, 340] | s | NÃO VALIDADA | config/cad.yaml (rota_a_dimensionamento.faixa_isp_busca_s), results/etapa7.2/rota_a.md |
 
-Total: 96 premissas, 96 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 100 premissas, 100 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

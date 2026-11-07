@@ -595,7 +595,44 @@ def test_rota_a_dimensiona():
     ad = r["adaptador"]["linhas"]
     assert ad[0]["por_altura"][0]["axial_m"] == pytest.approx(ad[0]["sem_adaptador"]["axial_m"] - 0.127, abs=1e-9)
     assert ad[1]["por_altura"][-1]["radial_m"] == pytest.approx(ad[1]["sem_adaptador"]["radial_m"], abs=1e-9)
-    # P-096 entrou; P-097 não
+    # premissas aprovadas pelo Fabio (2026-11-06 e 2026-11-07)
     ids = {q["id"] for q in ler("config/premissas.yaml")["premissas"]}
-    assert "P-096" in ids and "P-097" not in ids
+    assert {"P-096", "P-097", "P-098", "P-099", "P-100"} <= ids
+    # margens: os 43 kg saem da capacidade, não entram na massa
+    for x in r["margens"]:
+        assert 0 > x["com_adaptador"] - x["sem_adaptador"] == pytest.approx(-43 / x["injetado_kg"])
+    # o Isp calculado é o central, e a resposta de "fecha" sai das folgas
+    central = next(c for c in dm["casos"] if c["origem"] == "calculado, central")
+    assert central["isp_s"] == r["isp_calculado"]["s"]["central"]
+    for f, x in r["fecha"]["por_geometria"].items():
+        assert x["com_deck"] == (central["por_geometria"][f]["folga_deck_real_m"] >= 0.05)
+        assert x["sem_deck"] == (central["por_geometria"][f]["folga_ombro_real_m"] >= 0.05)
+
+
+def test_isp_44_bocal_ideal():
+    """CF ideal contra limites analíticos, e o Isp calculado contra os dois pontos com fonte: abaixo do 164:1."""
+    sys.path.insert(0, str(RAIZ / "tools"))
+    import isp_44_bocal as ib
+    for g in (1.15, 1.2277, 1.3):
+        gam = ib.gama_termo(g)
+        x_g = (2 / (g + 1)) ** (g / (g - 1))
+        # garganta: ε = 1 em x crítico; CF(1) = (γ + 1) · x crítico, por fora da ferramenta
+        assert ib.razao_area(x_g, g) == pytest.approx(1.0)
+        assert ib.cf_vacuo(1.0 + 1e-9, g) == pytest.approx((g + 1) * x_g, rel=1e-3)
+        # ε crescente se aproxima de CF máximo = Γ √(2γ/(γ−1)), por baixo
+        cfm = gam * math.sqrt(2 * g / (g - 1))
+        assert ib.cf_vacuo(300, g) < ib.cf_vacuo(1e7, g) < cfm
+        # a inversão de ε fecha
+        assert ib.razao_area(ib.razao_pressao(44, g), g) == pytest.approx(44)
+        # monotônico em ε
+        assert ib.cf_vacuo(40, g) < ib.cf_vacuo(44, g) < ib.cf_vacuo(164, g) < ib.cf_vacuo(300, g)
+    r = ler("results/etapa7.2/isp_44.yaml")
+    c = r["central"]
+    # os dois pontos com fonte são reproduzidos
+    assert c["k_s"] * c["cf"]["164"] == pytest.approx(311) and c["k_s"] * c["cf"]["300"] == pytest.approx(315.5)
+    assert ib.cf_vacuo(300, c["gama"]) / ib.cf_vacuo(164, c["gama"]) == pytest.approx(315.5 / 311)
+    # abaixo do 164:1, e ordem coerente
+    assert r["baixo"]["isp_s"]["44"] < c["isp_s"]["44"] < r["alto"]["isp_s"]["44"] < 311
+    assert c["isp_s"]["40"] < c["isp_s"]["44"]
+    assert r["empuxo_44_n"] == pytest.approx(r["empuxo_164_n"] * c["cf"]["44"] / c["cf"]["164"])
 

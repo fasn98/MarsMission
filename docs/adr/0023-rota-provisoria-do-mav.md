@@ -23,3 +23,9 @@ A Etapa 7.2 mostrou que o MAV de Ø 0,57 m não cabe deitado no aeroshell de 4,5
   esboço, com a geometria ainda a decidir, a massa dos tanques não acoplada ao GLOM e o Isp mínimo dependente dessa geometria.
 - Risco aberto para a Etapa 7.3: a massa por área de 276 a 283 kg/m², contra 211 do Mars 2020. Nenhuma rota resolve isso
   (`docs/etapa7.3_portao_perguntas.md`).
+
+## Nota (2026-11-07): Isp calculado do 44:1
+O Fabio rejeitou a faixa dos análogos como Isp do R-4D-11: é o mesmo motor com bocal menor, então o Isp fica abaixo do 164:1. O
+cálculo está em [`results/etapa7.2/isp_44.md`](../../results/etapa7.2/isp_44.md), NÃO VALIDADO, e a consequência para a rota A, em
+[`results/etapa7.2/rota_a.md`](../../results/etapa7.2/rota_a.md), seção 0. A geometria do estágio 2 segue não decidida. Alvo mantido:
+folga de +0,05 m com deck.

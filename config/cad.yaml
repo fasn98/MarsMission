@@ -60,11 +60,7 @@ encaixe:   # Etapa 7.2b: verificação geométrica do modelo nas coifas, no Onsh
   criterio_empate: {simetricas_max_m: 1.0e-12, distintas_min_m: 1.0e-6, fonte: "decisão do Fabio, 2026-11-06"}
   plano_vulcan: {fonte: "[F80] Fig. 4.3.1-1, p. 4-8: \"LV STA 2596.66 (1575 Interface)\""}
   plano_falcon: {fonte: "[F82] PDF p. 26: \"The origin of the payload coordinate system is fixed at the center of the separation plane\"; o arquivo STEP não declara que usa esse sistema (P-096)"}
-  premissas_propostas:   # NÃO estão em config/premissas.yaml: só entram com a aprovação do Fabio
-    - id: P-097
-      nome: veiculo_sobre_o_plano_da_interface
-      texto: "A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação."
-      evidencia: "Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura; [F82] PDF p. 27: \"Any payload adapters required ... must also fit within the keep-in volumes\". Texto NÃO aprovado pelo Fabio (2026-11-06); a reformulação proposta está em results/etapa7.2/rota_a.md, seção 5."
+  premissas_propostas: []   # só entram em config/premissas.yaml com a aprovação do Fabio; P-096 e P-097 já entraram
 
 aeroshell:
   # Opções de diâmetro (decisão do Fabio no portão da 7.1): a massa de entrada do lander fica entre a do Mars 2020 e a
@@ -331,7 +327,7 @@ rotas_mav:   # Portão da 7.2: alvo e rotas A e B pedidos pelo Fabio (2026-11-06
 
 rota_a_dimensionamento:   # Portão do comprimento do MAV (Fabio, 2026-11-06). Rota A provisória (ADR 0023); nada aqui entra no CAD nem nas premissas.
   alvo_folga_deck_m: 0.05   # pedido do Fabio: folga ≥ +0,05 m com deck
-  faixa_isp_busca_s: [280, 340]   # sem fonte, NÃO VALIDADO: só delimita a busca do Isp mínimo; sem efeito nos valores
+  faixa_isp_busca_s: {valor: [280, 340], premissa: P-100}
   pressao_tanque_mpa:
     entrada_piso_r4d11: {valor: 1.40, fonte: "[F228] PDF p. 22: \"Inlet Pressure* ... >14 bar (>205 psia)\" (piso de entrada do motor; o tanque precisa de mais, com as perdas da linha)"}
     camara_mais_25_pct: {valor: 0.93125, fonte: "[F228] PDF p. 22: \"Chamber Pressure* ... 7.45 bar (108 psia)\" × 1,25; [F46] PDF p. 9: \"tank pressure was 25% higher than the thrust chamber pressure\" (fica abaixo do piso de entrada do motor)"}
@@ -349,9 +345,9 @@ rota_a_dimensionamento:   # Portão do comprimento do MAV (Fabio, 2026-11-06). R
     nota: "fórmula clássica da casca esférica sob pressão externa, p = 2 E (t/R)² / √(3(1 − ν²)); NASA SP-8032 não pôde ser aberta. Fórmula e fatores NÃO VALIDADOS"
     poisson: {valor: 0.342, fonte: "[F219] §7.21, PDF p. 47: \"Poisson's ratio, 0.342\""}
     fatores_reducao: [1.0, 0.5, 0.25, 0.14]   # varredura sem fonte, NÃO VALIDADO: o valor da SP-8032 não foi obtido
-    fator_base: 0.14   # o mais conservador da varredura, NÃO VALIDADO
-  vao_purga_m: {valores: [0.005, 0.01, 0.02, 0.05], base: 0.02, menor: 0.005, fonte: "[F46] §5.4, PDF p. 17: \"with a purge gap between the two tanks\"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO"}
-  isp_casos_s: [304, 308, 309, 314]
+    fator_base: {valor: 0.14, premissa: P-099}
+  vao_purga_m: {valores: [0.005, 0.01, 0.02, 0.05], base: {valor: 0.02, premissa: P-098}, menor: 0.005, fonte: "[F46] §5.4, PDF p. 17: \"with a purge gap between the two tanks\"; a fonte não dá o valor: varredura sem fonte, NÃO VALIDADO"}
+  isp_casos_s: [304, 308, 309, 314]   # valores dos análogos, só comparação: não coerentes com o R-4D-11 (Fabio, 2026-11-07)
   motores_por_estagio: [4, 1]   # as 4 saídas de 44:1 do estágio 1 (results/etapa7.2/rotas_mav.yaml) e o motor do estágio 2 (P-086)
   grade_esboco: 40   # parâmetro de amostragem do raio no esboço do estágio 2, em 3 passes de refino (escolha numérica)
   geometrias_estagio_2:   # o volume cabe numa esfera menor que o diâmetro interno; sem fonte, NÃO VALIDADAS; a escolha é do Fabio
@@ -367,15 +363,26 @@ rota_a_dimensionamento:   # Portão do comprimento do MAV (Fabio, 2026-11-06). R
     - {item: "Mars 2020", achado: "\"quase idêntico\" ao MSL na viagem, sem cotas nem corte; não prova o arranjo interno", fonte: "[F45] PDF p. 37: \"Perseverance is traveling to Mars in an almost identical way to NASA's Curiosity rover\""}
     - {item: "Cotas internas", achado: "não achadas: corte, altura da pilha, distância ao ombro, ou se o rover entra na parte cônica do escudo", fonte: "procurado em [F244], [F214], [F45], [F227], [F226], [F215] e [F232]"}
 
-adaptador_coifa:   # P-097 reformulada (proposta, nova decisão do Fabio)
+isp_44_calibracao:   # Fabio, 2026-11-07: Isp do 44:1 a partir do 164:1 e do 300:1 do mesmo motor; resultado NÃO VALIDADO
+  faixa_gama_busca: {valor: [1.02, 1.6], fonte: "sem fonte, NÃO VALIDADO: só delimita a busca do γ efetivo; sem efeito no valor"}
+  meia_resolucao_s: {"164:1": 0.5, "300:1": 0.25}   # sem fonte, NÃO VALIDADO: meia unidade do último dígito publicado em [F228]
+  gamas_varredura: {valor: [1.15, 1.20, 1.25, 1.30], fonte: "sem fonte, NÃO VALIDADO: varredura de sensibilidade"}
+  apollo:
+    razao_expansao: 40
+    fonte: "[F242] PDF p. 15: \"good performance Isp's of 295 and 297\", \"with an expansion ratio equal to 40\"; PDF p. 19: \"295 to 300 seconds\"; PDF p. 62: \"a mean Isp of 300 seconds\""
+    ressalva: "O R-4D do Apollo tinha outra câmara (molibdênio com revestimento), outro injetor e O/F perto de 1,8 a 2,0 ([F242] PDF p. 15 e 19), contra 1,65 no R-4D-11 ([F228] PDF p. 22). A mesma página 15 cita \"maximum performance\" de \"slightly over 310 seconds\", sem dizer a condição; esse valor não entrou na comparação e contraria o modelo se for de 40:1 em regime permanente. Não conferido."
+
+adaptador_coifa:   # P-097 (Fabio, 2026-11-07)
+  altura_m: {valor: 0.127, premissa: P-097}
+  massa_kg: {valor: 43, premissa: P-097}
   casos:   # altura do adaptador com sistema de separação, sobre o PAF de 1575 mm
     - {nome: "1575 mm, clampband", altura_m: 0.127, massa_kg: 43, fonte: "[F80] Tab. 4.2.2-1a, PDF p. 41: \"1575 mm Payload Adapter and Separation System\", \"43 kg\", \"Height: 127 mm (5.00 in.)\""}
     - {nome: "1194 mm, clampband", altura_m: 0.254, massa_kg: 38.1, fonte: "[F80] Tab. 4.2.2-1a, PDF p. 41: \"Height: 254.0 mm (10.00 in.)\", \"38.1 kg\""}
     - {nome: "1666 mm, clampband", altura_m: 0.3302, massa_kg: 48.7, fonte: "[F80] Tab. 4.2.2-1a, PDF p. 41: \"Height: 330.2 mm (13.00 in.)\", \"48.7 kg\""}
     - {nome: "937 mm, clampband", altura_m: 0.4064, massa_kg: 46.4, fonte: "[F80] Tab. 4.2.2-1a, PDF p. 41: \"Height: 406.4 mm (16.00 in.)\", \"46.4 kg\""}
     - {nome: "1663 mm, parafusos", altura_m: 0.562, massa_kg: 89.6, fonte: "[F80] Tab. 4.2.2-1a, PDF p. 41: \"Height: 562 mm (22.126 in)\", \"89.6 kg\""}
-  base_proposta: "1575 mm, clampband"
+  base: "1575 mm, clampband"
   ressalva_vulcan: "[F80] PDF p. 40: \"should be used only as a guideline\"; a tabela não dá capacidade por massa, e há envelope específico por adaptador (PDF p. 38-39: \"Static payload envelopes specific to each payload adapter and separation system are available\")"
   ressalva_falcon: "[F82] não publica altura de adaptador. PDF p. 27: \"Any payload adapters required (e.g., to achieve a 937-mm or 1,194-mm or 1,666-mm (36.89 in. or 47.01 or 65.59 in.) interface) must also fit within the keep-in volumes\": a fonte não pede adaptador para um veículo com a própria interface de 1575 mm, então a mesma altura, por análogo, fica do lado seguro. Limite do PAF de 1575 mm: PDF p. 28, \"up to 10,885 kg\""
-  p097_proposta: "Entre o plano da interface de 1575 mm e a base dos veículos há um adaptador com sistema de separação, de altura 0,127 m, e os veículos sobem essa altura em relação ao envelope. Fonte da altura: [F80] Tab. 4.2.2-1a. Falcon: sem altura publicada, mesma altura por análogo, do lado seguro. A capacidade para as massas dos veículos não foi conferida, e os 43 kg do adaptador não estão no orçamento."
+  p097_texto: "Entre o plano da interface de 1575 mm e a base dos veículos há um adaptador com sistema de separação, de altura 0,127 m, e os veículos sobem essa altura em relação ao envelope. Fonte da altura: [F80] Tab. 4.2.2-1a. Falcon: sem altura publicada, mesma altura por análogo, do lado seguro. A capacidade para as massas dos veículos não foi conferida. Os 43 kg do adaptador entram na margem do lançador (Vulcan e Falcon Heavy), não na massa do veículo."
 

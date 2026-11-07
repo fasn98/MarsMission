@@ -1082,3 +1082,45 @@ premissas:
       com esse limite registrado.
     status: NÃO VALIDADA
 
+  - id: P-097
+    nome: adaptador_entre_interface_e_veiculo
+    valor: {altura_m: 0.127, massa_kg: 43, massa_entra_em: margem do lançador}
+    unidade: m; kg
+    uso: config/cad.yaml (adaptador_coifa), results/etapa7.2/rota_a.md
+    justificativa: >
+      Entre o plano da interface de 1575 mm e a base dos veículos há um adaptador com sistema de separação, de altura 0,127 m, e os
+      veículos sobem essa altura em relação ao envelope. Fonte da altura e da massa: [F80] Tab. 4.2.2-1a, PDF p. 41. Falcon: sem
+      altura publicada em [F82], mesma altura por análogo, do lado seguro. A capacidade para as massas dos veículos não foi
+      conferida. Os 43 kg entram na margem do lançador (Vulcan e Falcon Heavy), não na massa do veículo. Aprovada pelo Fabio em
+      2026-11-07.
+    status: NÃO VALIDADA
+
+  - id: P-098
+    nome: vao_de_purga_base
+    valor: 0.02
+    unidade: m
+    uso: config/cad.yaml (rota_a_dimensionamento.vao_purga_m.base), results/etapa7.2/rota_a.md
+    justificativa: >
+      [F46] §5.4, PDF p. 17, cita "a purge gap between the two tanks" sem dar o valor. Valor central da varredura de 0,005 a 0,05 m,
+      sem fonte. Passou a premissa numerada por decisão do Fabio em 2026-11-07, sem mudar o valor.
+    status: NÃO VALIDADA
+
+  - id: P-099
+    nome: fator_de_flambagem_base
+    valor: 0.14
+    unidade: fração
+    uso: config/cad.yaml (rota_a_dimensionamento.flambagem.fator_base), results/etapa7.2/rota_a.md
+    justificativa: >
+      Fator de redução da flambagem clássica da casca esférica, o mais conservador da varredura de 1,0 a 0,14. Sem fonte: NASA SP-8032
+      não pôde ser aberta. Passou a premissa numerada por decisão do Fabio em 2026-11-07, sem mudar o valor.
+    status: NÃO VALIDADA
+
+  - id: P-100
+    nome: faixa_de_busca_do_isp_minimo
+    valor: [280, 340]
+    unidade: s
+    uso: config/cad.yaml (rota_a_dimensionamento.faixa_isp_busca_s), results/etapa7.2/rota_a.md
+    justificativa: >
+      Só delimita a busca do Isp mínimo da rota A; não entra no valor enquanto o mínimo ficar dentro dela. Sem fonte. Passou a
+      premissa numerada por decisão do Fabio em 2026-11-07, sem mudar o valor.
+    status: NÃO VALIDADA
