@@ -82,3 +82,6 @@ Valores de `results/etapa7.2/cg_lateral.md`, com a tabela completa.
 - **Situação:** nenhuma rota resolve isso, e o efeito não foi calculado (NÃO VALIDADO). A aerodinâmica e a trajetória de entrada não
   estão modeladas.
 
+## Nota (2026-11-07): massa por área com o Isp calculado do 44:1
+A faixa de 276 a 283 kg/m² do risco aberto vem dos Isp dos análogos, rejeitados pelo Fabio. Com o Isp calculado, os valores estão em
+`results/etapa7.2/rota_a.md`, seção 0.

@@ -1,0 +1,109 @@
+gerado_por: tools/isp_44_bocal.py
+status: NÃO VALIDADO
+natureza: cálculo sobre dois pontos com fonte; não é dado do fabricante
+pontos:
+  '164:1': 311
+  '300:1': 315.5
+  fonte: '[F228] PDF p. 22: "164:1 = 311 sec"; "300:1 = 315.5 sec"'
+razao_observada_300_164: 1.0144694533762058
+central:
+  gama: 1.2277292809197347
+  k_s: 160.07335125688806
+  cf:
+    '40': 1.8558701599190626
+    '44': 1.8629077598732213
+    '164': 1.9428593051750547
+    '300': 1.9709714173078128
+  isp_s:
+    '44': 298.2018882053686
+    '40': 297.07535599590113
+baixo:
+  gama: 1.1943364347415808
+  k_s: 155.91645153324635
+  cf:
+    '40': 1.8903568699031608
+    '44': 1.8983923557532667
+    '164': 1.99145117110231
+    '300': 2.025123050806939
+  isp_s:
+    '44': 295.99059972688957
+    '40': 294.73773528679544
+alto:
+  gama: 1.2665726740900176
+  k_s: 164.57952733236223
+  cf:
+    '40': 1.8196363297347218
+    '44': 1.8256703728697283
+    '164': 1.892701996712734
+    '300': 1.9154873337518123
+  isp_s:
+    '44': 300.4679670315974
+    '40': 299.4748870645349
+isp_44_s:
+  baixo: 295.99059972688957
+  central: 298.2018882053686
+  alto: 300.4679670315974
+empuxo_164_n: 489.30442000000005
+fator_empuxo_44: 0.9588485151298026
+empuxo_44_n: 469.16881656344935
+empuxo_44_ancora_300_n: 462.47702678679155
+fator_empuxo_por_caso:
+  baixo: 0.9532708525825752
+  central: 0.9588485151298026
+  alto: 0.9645841638253528
+varredura_gama:
+- gama: 1.15
+  cf_44: 1.951130863023194
+  isp_ancora_164_s: 293.8468325510149
+  isp_ancora_300_s: 292.0479800133101
+  razao_300_164: 1.0207180189391198
+- gama: 1.2
+  cf_44: 1.8921314832213123
+  isp_ancora_164_s: 296.77530873367954
+  isp_ancora_300_s: 296.1912109760988
+  razao_300_164: 1.016470016900351
+- gama: 1.25
+  cf_44: 1.8410574197929772
+  isp_ancora_164_s: 299.25389466107504
+  isp_ancora_300_s: 299.68034870303137
+  razao_300_164: 1.0130258331965518
+- gama: 1.3
+  cf_44: 1.796735655322391
+  isp_ancora_164_s: 301.3376954570133
+  isp_ancora_300_s: 302.5952485122287
+  razao_300_164: 1.0102534282839797
+apollo:
+  razao_expansao: 40
+  fonte_razao: '[F242] PDF p. 15: "with an expansion ratio equal to 40", da câmara
+    inicial; as outras páginas não repetem ε'
+  dados:
+  - pagina: PDF p. 15
+    texto: '"good performance Isp''s of 295 and 297"; "its maximum performance, Isp
+      slightly over 310 seconds", em O/F perto de 1,9 (sem ε, pressão nem regime na
+      frase)'
+  - pagina: PDF p. 19
+    texto: '"295 to 300 seconds of impulse", em O/F de 1,8 a 1,9'
+  - pagina: PDF p. 26, Fig. 12
+    texto: cerca de 300 s em O/F de 1,6 a 1,9, pontos de 298 a 302 s perto de 1,65
+      e máximo perto de 304 s em O/F de cerca de 1,93, leitura a olho, sem ε na figura
+  - pagina: PDF p. 62
+    texto: '"maintained a mean Isp of 300 seconds"'
+  - pagina: PDF p. 66
+    texto: '"the Isp was 295 seconds" com sangria de combustível para filme; cerca
+      de 304 s sem filme'
+  - pagina: PDF p. 81
+    texto: '"Isp = 273 seconds at an O/F of 2.0"; "was 313 seconds at an O/F of 2.0"
+      (OCR corrigido), injetor triplet'
+  - pagina: PDF p. 87
+    texto: configuração PFRT, "Isp (steady state) = 286 ± 6 seconds"
+  ressalva: 'O programa relata de 273 a 313 s, conforme injetor, resfriamento e O/F,
+    então a comparação discrimina pouco. O R-4D do Apollo também teve outra câmara
+    (molibdênio com revestimento), outro injetor, O/F perto de 1,8 a 2,0 contra 1,65
+    no R-4D-11 ([F228] PDF p. 22), e passou por MMH e A-50 (PDF p. 19, que diz a diferença
+    "very small"). Na Fig. 12, perto de O/F 1,65, os pontos vão de 298 a 302 s: o
+    central calculado fica abaixo deles, e a parte de baixo cai dentro da faixa calculada.
+    O valor de pouco mais de 310 s não diz ε, pressão nem regime: se fosse de 40:1
+    em regime permanente, contrariaria o modelo. Não conferido.'
+  isp_calculado_s: 297.07535599590113
+  baixo_s: 294.73773528679544
+  alto_s: 299.4748870645349
