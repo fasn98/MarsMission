@@ -21,7 +21,7 @@ Os dois pontos fixam as duas incógnitas: Isp(300:1)/Isp(164:1) = 315,5/311 = 1,
 | Baixo: extremos do arredondamento | 310,50 | 315,75 | 1,1943 | 155,92 | 1,8984 | 1,9915 | 2,0251 | 295,99 | 294,74 |
 | Alto: extremos do arredondamento | 311,50 | 315,25 | 1,2666 | 164,58 | 1,8257 | 1,8927 | 1,9155 | 300,47 | 299,47 |
 
-A meia resolução dos dados (±0,50 s e ±0,25 s) supõe resolução de 1 s no 311 e de 0,5 s no 315,5, sem fonte, NÃO VALIDADA.
+A meia resolução dos dados (±0,50 s e ±0,25 s) supõe resolução de 1 s no 311 e de 0,5 s no 315,5, sem fonte (P-101, NÃO VALIDADA).
 
 ## Empuxo
 
@@ -29,7 +29,7 @@ Com a mesma câmara e a mesma vazão, o empuxo escala com CF: 489 N × 0,9588 = 
 
 ## Sensibilidade a γ
 
-γ imposto (NÃO VALIDADO), com K calibrado em um só ponto. A diferença entre as âncoras mostra quanto o γ imposto deixa de reproduzir os dois pontos.
+γ imposto (P-102, NÃO VALIDADA), com K calibrado em um só ponto. A diferença entre as âncoras mostra quanto o γ imposto deixa de reproduzir os dois pontos.
 
 | γ | Razão CF 300/164 | Isp 44:1, âncora 164:1 (s) | Isp 44:1, âncora 300:1 (s) |
 | -: | -: | -: | -: |

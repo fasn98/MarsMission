@@ -112,11 +112,11 @@ def _itens_com_premissa(no, caminho=()):
 
 def test_config_cad_coincide_com_as_premissas():
     """Cada valor de config/cad.yaml que cita uma premissa aparece nela: valor escalar igual, ou chave de mesmo nome
-    (a do item, ou "pai_item") com o mesmo valor. Cobre P-078 a P-095, inclusive o ees_raio_ponta_m da P-094, e P-097 a P-100."""
+    (a do item, ou "pai_item") com o mesmo valor. Cobre P-078 a P-095, inclusive o ees_raio_ponta_m da P-094, e P-097 a P-103."""
     ps = {p["id"]: p["valor"] for p in ler("config/premissas.yaml")["premissas"]}
     itens = list(_itens_com_premissa(ler("config/cad.yaml")))
     assert any(c[-1] == "ees_raio_ponta_m" for c, _, _ in itens)
-    assert {"P-097", "P-098", "P-099", "P-100"} <= {pid for _, _, pid in itens}
+    assert {"P-097", "P-098", "P-099", "P-100", "P-101", "P-102", "P-103"} <= {pid for _, _, pid in itens}
     for caminho, valor, pid in itens:
         pv = ps[pid]
         if isinstance(pv, dict):
@@ -642,3 +642,97 @@ def test_isp_44_bocal_ideal():
     assert c["isp_s"]["40"] < c["isp_s"]["44"]
     assert r["empuxo_44_n"] == pytest.approx(r["empuxo_164_n"] * c["cf"]["44"] / c["cf"]["164"])
 
+
+def test_config_subida_coincide_com_as_premissas():
+    """config/subida.yaml cita P-104 a P-107 com os valores das premissas."""
+    ps = {p["id"]: p["valor"] for p in ler("config/premissas.yaml")["premissas"]}
+    itens = list(_itens_com_premissa(ler("config/subida.yaml")))
+    assert {"P-104", "P-105", "P-106", "P-107"} <= {pid for _, _, pid in itens}
+    for caminho, valor, pid in itens:
+        pv = ps[pid]
+        assert (pv[caminho[-1]] if isinstance(pv, dict) else pv) == valor, (pid, caminho)
+
+
+def test_atmosfera_e_subida_vertical():
+    """Atmosfera de [F245] contra as equações à mão; voo vertical sem arrasto contra a solução analítica de g constante."""
+    from orbital import subida as sb
+    from orbital.config import v
+    atm = {k: v(x) for k, x in ler("config/subida.yaml")["atmosfera"].items()}
+    assert sb.atmosfera(0.0, atm) == pytest.approx(0.699 / (0.1921 * (-31 + 273.1)))
+    assert sb.atmosfera(20000.0, atm) == pytest.approx(0.699 * math.exp(-0.00009 * 20000) / (0.1921 * (-23.4 - 0.00222 * 20000 + 273.1)))
+    assert sb.atmosfera(80001.0, atm) == 0.0
+    # Marte sem rotação e quase plano (raio enorme, μ = g R²): voo vertical, sem arrasto, por 10 s
+    g, R = 3.7, 1e9
+    pl = sb.Planeta(g * R * R, R, 0.0)
+    est = [sb.Estagio(100.0, 50.0, 2 * 100.0 * g, 300.0)]
+    f = sb._deriv(pl, est[0], 0.0, atm, (1e9, 0.0, 0.0))
+    from scipy.integrate import solve_ivp
+    sol = solve_ivp(f, (0, 10), [R, 0.0, 0.0, 0.0, 100.0], rtol=1e-10, atol=1e-9)
+    mdot = 2 * 100.0 * g / (300.0 * 9.80665)
+    m = 100.0 - mdot * 10
+    v_an = 300.0 * 9.80665 * math.log(100.0 / m) - g * 10
+    assert sol.y[2, -1] == pytest.approx(v_an, rel=1e-6)
+
+
+def test_orbita_circular_em_costa():
+    """Sem empuxo e acima da atmosfera (onde a rotação não entra): a órbita circular segue circular (equações polares)."""
+    from orbital import subida as sb
+    from orbital.config import v
+    from scipy.integrate import solve_ivp
+    atm = {k: v(x) for k, x in ler("config/subida.yaml")["atmosfera"].items()}
+    pl = sb.Planeta(42828.37362069909e9, 3396.19e3, 2 * math.pi / 88642.66)
+    r0 = pl.raio + 200e3
+    f = sb._deriv(pl, sb.Estagio(100.0, 0.0, 0.0, 300.0), 1.0, atm, (1e9, 0.0, 0.0))
+    sol = solve_ivp(f, (0, 3000), [r0, 0.0, 0.0, math.sqrt(pl.mu / r0), 100.0], rtol=1e-11, atol=1e-6)
+    assert sol.y[0, -1] == pytest.approx(r0, rel=1e-8) and abs(sol.y[2, -1]) < 1e-3
+
+
+def test_subida_mav():
+    """Subida: referência perto de [F37], casos convergidos com Δv coerente, e folgas pelos limites da rota A."""
+    r = ler("results/etapa7.2/subida_mav.yaml")
+    from orbital.config import v
+    tol = v(ler("config/subida.yaml")["numerico"]["tol_glom_kg"])
+    # a referência e [F37] ficam acima do Δv ideal, sem perdas, conferido à mão (Hohmann da superfície girando)
+    from orbital import subida as sb
+    mu, R = 42828.37362069909e9, 3396.19e3
+    w = 2 * math.pi / 88642.66
+    vp = math.sqrt(mu * 2 * (R + 1e5) / (R * (2 * R + 1e5)))
+    ideal = (vp - w * R) + (math.sqrt(mu / (R + 1e5)) - vp * R / (R + 1e5))
+    assert r["referencia"]["dv_ideal_m_s"] == pytest.approx(ideal)
+    assert r["referencia"]["dv_m_s"] > ideal and r["referencia"]["f37_m_s"] > ideal
+    for c in r["casos"]:
+        h = c["historico"]
+        if not c["convergiu"]:
+            # sem ponto fixo: o Δv pedido passa do usado em toda a varredura, até o MAV não decolar
+            pf = c["ponto_fixo"]
+            assert all(x["pedido_menos_usado_m_s"] > 0 for x in pf if x.get("pedido_menos_usado_m_s") is not None)
+            continue
+        assert abs(h[-1]["glom_kg"] - h[-2]["glom_kg"]) < tol
+        # o Δv usado é o de [F37] mais a diferença simulada contra a referência
+        assert c["dv_100x100_m_s"] == pytest.approx(r["referencia"]["f37_m_s"] + h[-2]["dv_simulado_m_s"] - r["referencia"]["dv_m_s"])
+        for x in c["comprimentos"].values():
+            lim = r["limites"]["sem_deck_m"] if c["variante"] == "44:1" else None
+            if lim:
+                assert x["folga_sem_deck_m"] == pytest.approx((lim - x["comprimento_m"]) / 2)
+    # rota A: no mesmo Δv usado, o Isp menor (empuxo/peso menor) pede mais Δv; e o empuxo/peso cai com o Δv usado
+    a = {c["isp_s"]: {x["dv_100x100_usado_m_s"]: x for x in c.get("ponto_fixo", [])} for c in r["casos"] if c["variante"] == "44:1"}
+    isps = sorted(a)
+    for dv in a[isps[0]]:
+        if all(dv in a[i] and a[i][dv].get("dv_100x100_pedido_m_s") for i in isps):
+            assert a[isps[0]][dv]["dv_100x100_pedido_m_s"] >= a[isps[-1]][dv]["dv_100x100_pedido_m_s"]
+    for x in a.values():
+        tws = [y["empuxo_peso"] for _, y in sorted(x.items())]
+        assert all(t1 > t2 for t1, t2 in zip(tws, tws[1:]))
+
+
+def test_mav_solido():
+    """MAV sólido: escala do comprimento pela P-108, empuxo proporcional ao propelente e folgas pelos limites."""
+    r = ler("results/etapa7.2/mav_solido.yaml")
+    ref = r["referencia_msr"]
+    assert r["casos"][0]["glom_kg"] > r["casos"][1]["glom_kg"]   # o Δv com perdas pede mais massa
+    for x in r["casos"]:
+        mp = sum(x["propelente_kg"])
+        assert x["empuxos_n"][0] == pytest.approx(ref["empuxo_medio_n"][0] * x["propelente_kg"][0] / ref["propelente_kg"][0])
+        for c in x["comprimentos"]:
+            assert c["comprimento_m"] == pytest.approx(c["comprimento_fixo_m"] + (ref["comprimento_m"] - c["comprimento_fixo_m"]) * mp / sum(ref["propelente_kg"]))
+            assert c["folga_sem_deck_m"] == pytest.approx((r["limites"]["sem_deck_m"] - c["comprimento_m"]) / 2)

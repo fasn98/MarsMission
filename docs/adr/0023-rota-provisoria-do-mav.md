@@ -29,3 +29,9 @@ O Fabio rejeitou a faixa dos análogos como Isp do R-4D-11: é o mesmo motor com
 cálculo está em [`results/etapa7.2/isp_44.md`](../../results/etapa7.2/isp_44.md), NÃO VALIDADO, e a consequência para a rota A, em
 [`results/etapa7.2/rota_a.md`](../../results/etapa7.2/rota_a.md), seção 0. A geometria do estágio 2 segue não decidida. Alvo mantido:
 folga de +0,05 m com deck.
+
+## Nota (2026-11-07): rota A com deck não fecha (decisão do Fabio)
+Com o Isp calculado do 44:1 (NÃO VALIDADO), a rota A **com deck não fecha** no alvo de +0,05 m, em nenhuma das quatro
+geometrias do estágio 2 ([`results/etapa7.2/rota_a.md`](../../results/etapa7.2/rota_a.md), seção 0). A rota A **sem deck** fica
+pendente da perda gravitacional na subida com o empuxo/peso real e da viabilidade do arranjo sem deck, com fonte. A P-094 e a
+P-092 seguem como estão. O texto acima não muda.

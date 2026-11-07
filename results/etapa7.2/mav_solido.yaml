@@ -1,0 +1,115 @@
+gerado_por: tools/mav_solido.py
+status: NÃO VALIDADO
+referencia_msr:
+  glom_kg: 394
+  propelente_kg:
+  - 216
+  - 54.4
+  empuxo_medio_n:
+  - 9854
+  - 6937
+  tempo_queima_s:
+  - 75.9
+  - 24.5
+  isp_s:
+  - 293
+  - 282
+  comprimento_m: 2.7
+  diametro_m: 0.57
+fracao_estrutural: 0.286
+alvo_folga_m: 0.05
+limites:
+  sem_deck_m: 3.1839999999999997
+  com_deck_m: 2.7439999999999998
+casos:
+- rotulo: Δv de [F37], com perdas
+  dv_100x100_m_s: 4027.9
+  dv_subida_com_margem_km_s: 5.772354040682595
+  glom_kg: 1645.0376999869977
+  propelente_kg:
+  - 1019.1170772062976
+  - 144.0158405844187
+  empuxos_n:
+  - 46492.49851292063
+  - 18364.667024524126
+  empuxo_peso: 7.6113099126957335
+  lander_injetado_kg: 7245.593849528216
+  razao_glom_msr: 4.175222588799486
+  comprimentos:
+  - comprimento_fixo_m: 0.0
+    comprimento_m: 11.614123069655824
+    folga_sem_deck_m: -4.215061534827912
+    folga_com_deck_m: -4.435061534827912
+  - comprimento_fixo_m: 0.5
+    comprimento_m: 9.963359538238079
+    folga_sem_deck_m: -3.3896797691190397
+    folga_com_deck_m: -3.6096797691190394
+  - comprimento_fixo_m: 1.0
+    comprimento_m: 8.312596006820334
+    folga_sem_deck_m: -2.5642980034101672
+    folga_com_deck_m: -2.784298003410167
+  - comprimento_fixo_m: 1.5
+    comprimento_m: 6.661832475402589
+    folga_sem_deck_m: -1.7389162377012946
+    folga_com_deck_m: -1.9589162377012945
+- rotulo: Δv ideal, sem perdas (limite inferior)
+  dv_100x100_m_s: 3361.5788921954368
+  dv_subida_com_margem_km_s: 5.039400822097576
+  glom_kg: 552.6149110953575
+  propelente_kg:
+  - 314.9021352220697
+  - 68.24091130001553
+  empuxos_n:
+  - 14365.952039251271
+  - 8701.970619268524
+  empuxo_peso: 7.001066262013817
+  lander_injetado_kg: 4962.132912107791
+  razao_glom_msr: 1.4025759164856788
+  comprimentos:
+  - comprimento_fixo_m: 0.0
+    comprimento_m: 3.8257626686746677
+    folga_sem_deck_m: -0.320881334337334
+    folga_com_deck_m: -0.540881334337334
+  - comprimento_fixo_m: 0.5
+    comprimento_m: 3.6172881004015816
+    folga_sem_deck_m: -0.21664405020079092
+    folga_com_deck_m: -0.4366440502007909
+  - comprimento_fixo_m: 1.0
+    comprimento_m: 3.408813532128495
+    folga_sem_deck_m: -0.1124067660642476
+    folga_com_deck_m: -0.33240676606424757
+  - comprimento_fixo_m: 1.5
+    comprimento_m: 3.2003389638554083
+    folga_sem_deck_m: -0.00816948192770428
+    folga_com_deck_m: -0.22816948192770425
+contra_no_adr_0007:
+- item: Massa pela regra (iii)
+  adr: 41,3 a 41,4 t do sólido, contra 34,2 a 34,4 t do hipergólico
+  hoje: o ADR registra que a comparação não foi refeita com o Isp de voo de 310 s;
+    o GLOM do sólido para o nosso Δv está na tabela de cima
+- item: Frio extremo
+  adr: '[F58] p. 4: "Potential issues with extremely cold environments"'
+  hoje: 'o MSR mantém o MAV num recinto térmico: [F249] PDF p. 3: "the MAV is stored
+    in a thermal enclosure known as the igloo"; [F35] PDF p. 9: "the vehicle exterior
+    will be maintained at -62.5°C by the SRL igloo. Most internal components will
+    be kept at a non-operational AFT of -40°C". O grão trincou perto de −70 °C em
+    ensaio: [F248] PDF p. 14: "Data from the analog samples showed cracking at approximately
+    -70 °C"; PDF p. 13: "Current qualification minimum temperatures are -50 °C". O
+    risco segue, com mitigação de projeto, não de voo'
+- item: Aquecimento antes do voo
+  adr: não tratado no ADR
+  hoje: '[F34] PDF p. 5: "between 2 to 12 sols to warm the SRMs to flight temperatures";
+    [F249] PDF p. 4: "A solid motor temperature gradient of 10 oC/hr was desirable
+    to minimize the risk of this solid motor grain cracking", "peak power ... 288W"'
+- item: Estocagem longa
+  adr: não tratado no ADR
+  hoje: '[F250] PDF p. 2: "concerns exist with long duration aging associated with
+    baseline CTPB (cold temperature capable) propellant"'
+- item: Isp menor
+  adr: '[F58] p. 4: "Lower ISP than liquid/hybrid counterparts"'
+  hoje: 'vale: [F34] PDF p. 4 dá 293 e 282 s médios, contra o Isp de requisito do
+    R-4D-11 de 310 s ([F107] Tab. 3)'
+- item: Não estrangula nem desliga
+  adr: '[F58] p. 4: "Cannot be actively throttled or shut down"'
+  hoje: 'vale igual: o corte no alvo exige outro meio (o MSR usa costa longa e um
+    2º estágio dimensionado para a queima)'

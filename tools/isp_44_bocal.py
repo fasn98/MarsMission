@@ -74,7 +74,7 @@ def main():
     i1, i2 = rd["164:1"]["isp_s"], rd["300:1"]["isp_s"]
     e1, e2, e44, e40 = 164, 300, 44, c["apollo"]["razao_expansao"]
     faixa = c["faixa_gama_busca"]["valor"]
-    m1, m2 = c["meia_resolucao_s"]["164:1"], c["meia_resolucao_s"]["300:1"]
+    m1, m2 = c["meia_resolucao_s"]["valor"]["164:1"], c["meia_resolucao_s"]["valor"]["300:1"]
     alvos = [e44, e40]
     central = calibra(i1, e1, i2, e2, faixa, alvos)
     baixo = calibra(i1 - m1, e1, i2 + m2, e2, faixa, alvos)
@@ -104,12 +104,12 @@ def escreve_md(o, c):
           "- Isp = K · CF, com K = η c* / g0", "",
           f"Os dois pontos fixam as duas incógnitas: Isp(300:1)/Isp(164:1) = {br(o['pontos']['300:1'], 1)}/{br(o['pontos']['164:1'], 0)} = {br(o['razao_observada_300_164'], 5)} dá γ, e o 164:1 dá K. Fonte: {o['pontos']['fonte']}. γ e K são efetivos: absorvem perdas que variam com ε, e γ não é o do gás real. O γ ajustado não foi comparado com um cálculo de equilíbrio.", "",
           "## Conta", "", "| Caso | Isp 164:1 (s) | Isp 300:1 (s) | γ efetivo | K (s) | CF 44:1 | CF 164:1 | CF 300:1 | Isp 44:1 (s) | Isp 40:1 (s) |", "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
-    m1, m2 = c["meia_resolucao_s"]["164:1"], c["meia_resolucao_s"]["300:1"]
+    m1, m2 = c["meia_resolucao_s"]["valor"]["164:1"], c["meia_resolucao_s"]["valor"]["300:1"]
     for nome, x, a, b in (("Central", ce, 0, 0), ("Baixo: extremos do arredondamento", ba, -m1, m2), ("Alto: extremos do arredondamento", al, m1, -m2)):
         md.append(f"| {nome} | {br(o['pontos']['164:1'] + a, 2)} | {br(o['pontos']['300:1'] + b, 2)} | {br(x['gama'], 4)} | {br(x['k_s'], 2)} | {br(x['cf']['44'], 4)} | {br(x['cf']['164'], 4)} | {br(x['cf']['300'], 4)} | {br(x['isp_s']['44'], 2)} | {br(x['isp_s']['40'], 2)} |")
-    md += ["", f"A meia resolução dos dados (±{br(m1, 2)} s e ±{br(m2, 2)} s) supõe resolução de 1 s no 311 e de 0,5 s no 315,5, sem fonte, NÃO VALIDADA.", "",
+    md += ["", f"A meia resolução dos dados (±{br(m1, 2)} s e ±{br(m2, 2)} s) supõe resolução de 1 s no 311 e de 0,5 s no 315,5, sem fonte (P-101, NÃO VALIDADA).", "",
            "## Empuxo", "", f"Com a mesma câmara e a mesma vazão, o empuxo escala com CF: {br(o['empuxo_164_n'], 0)} N × {br(o['fator_empuxo_44'], 4)} = **{br(o['empuxo_44_n'], 0)} N** (NÃO VALIDADO). A folha dá o empuxo nominal sem separar as variantes; atribuí-lo ao 164:1 é escolha deste cálculo, e no 300:1 daria {br(o['empuxo_44_ancora_300_n'], 0)} N. O desenho de [F228] dá as cotas do 44:1, mas nenhum Isp, massa ou empuxo. A massa segue sem fonte.", "",
-           "## Sensibilidade a γ", "", "γ imposto (NÃO VALIDADO), com K calibrado em um só ponto. A diferença entre as âncoras mostra quanto o γ imposto deixa de reproduzir os dois pontos.", "",
+           "## Sensibilidade a γ", "", "γ imposto (P-102, NÃO VALIDADA), com K calibrado em um só ponto. A diferença entre as âncoras mostra quanto o γ imposto deixa de reproduzir os dois pontos.", "",
            "| γ | Razão CF 300/164 | Isp 44:1, âncora 164:1 (s) | Isp 44:1, âncora 300:1 (s) |", "| -: | -: | -: | -: |"]
     md += [f"| {br(x['gama'], 2)} | {br(x['razao_300_164'], 5)} | {br(x['isp_ancora_164_s'])} | {br(x['isp_ancora_300_s'])} |" for x in o["varredura_gama"]]
     md += ["", "## Comparação com o R-4D do Apollo", "",

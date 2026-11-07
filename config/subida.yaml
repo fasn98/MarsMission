@@ -1,0 +1,40 @@
+# Subida do MAV com o empuxo/peso real (portão da rota A, Fabio, 2026-11-07). Modelo em src/orbital/subida.py.
+# Fontes em docs/fontes.md; premissas (NÃO VALIDADAS) em config/premissas.yaml.
+
+atmosfera:   # [F245] NASA Glenn, "Mars Atmosphere Model - Metric Units" (página educacional, atualizada em 13/05/2021)
+  t0_baixa_c: {valor: -31, fonte: "[F245]: \"T = -31 - 0.000998 * h\""}
+  dtdh_baixa: {valor: -0.000998, fonte: "[F245]: \"T = -31 - 0.000998 * h\""}
+  h_troca_m: {valor: 7000, fonte: "[F245]: \"The lower atmosphere runs from the surface of Mars to 7,000 meters.\""}
+  t0_alta_c: {valor: -23.4, fonte: "[F245]: \"T = -23.4 - 0.00222 * h\""}
+  dtdh_alta: {valor: -0.00222, fonte: "[F245]: \"T = -23.4 - 0.00222 * h\""}
+  p0_kpa: {valor: 0.699, fonte: "[F245]: \"p = .699 * exp(-0.00009 * h)\""}
+  k_1_m: {valor: 0.00009, fonte: "[F245]: \"p = .699 * exp(-0.00009 * h)\""}
+  r_kpa: {valor: 0.1921, fonte: "[F245]: \"r = p / [.1921 * (T + 273.1)]\""}
+  kelvin: {valor: 273.1, fonte: "[F245]: \"r = p / [.1921 * (T + 273.1)]\""}
+  h_topo_m: {valor: 80000, premissa: P-106}
+
+arrasto:
+  cd_base: {valor: 0.5, premissa: P-104}
+  cd_varredura: {valor: [0.25, 0.5, 1.0], premissa: P-104}
+
+referencia:   # caso de [F37] Tab. 1 (100 × 100 km), para verificar o modelo
+  dv_100x100_m_s: {valor: 4027.9, fonte: "[F37] Tab. 1, PDF p. 21: \"(100,100) 3503 4027.9\""}
+  empuxo_peso: {valor: 2.5, fonte: "[F46] PDF p. 9: \"a liftoff thrust-to-weight ratio of 2.5 was used\""}
+  isp_s: {valor: 343, fonte: "[F37] PDF p. 20: \"assuming an engine specific impulse of 343 seconds\""}
+  area_m2: {valor: 1.227, fonte: "[F37] PDF p. 16 e 17, gráficos: \"Reference Area = 1.227 m 2\"; PDF p. 14: \"The reference area is the cross- sectional area of the body.\""}
+  massa_kg: {valor: 394.1, premissa: P-105}
+  estagios: {valor: 1, fonte: "[F37] PDF p. 8: \"was designed for an assumed single stage to orbit or escape C3=0\""}
+
+alvo_altitude_m: {valor: 100000, fonte: "[F37] Tab. 1, PDF p. 21: linha \"(100,100)\""}
+
+numerico:   # P-107: limites e grades do guiamento, tolerâncias e convergência (escolhas numéricas)
+  limites_guia: {valor: [[0.5, 130.0], [0.0, 1.55], [0.0, 0.1]], premissa: P-107}
+  grade_t_v_s: {valor: [1, 3, 6, 10, 15, 20, 30, 40, 60, 80, 100, 130], premissa: P-107}
+  grade_theta0_rad: {valor: [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5], premissa: P-107}
+  grade_c_1_s: {valor: [0.001, 0.002, 0.004, 0.006, 0.008, 0.012, 0.016, 0.02], premissa: P-107}
+  tol_altitude_m: {valor: 1.0, premissa: P-107}
+  tol_vr_m_s: {valor: 0.1, premissa: P-107}
+  tol_glom_kg: {valor: 0.01, premissa: P-107}
+  iteracoes_max: {valor: 30, premissa: P-107}
+  varredura_ponto_fixo_m_s: {valor: [3500, 3700, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600], premissa: P-107}
+  integrador: {valor: {rtol: 1.0e-8, atol: 1.0e-6, max_step_s: 2.0, pontos_de_partida: 3}, premissa: P-107}

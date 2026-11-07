@@ -254,3 +254,12 @@ Folga axial mínima (m):
 | Lander com a rota A, Isp calculado central | Vulcan VC6 | 4 788 | +73,2 % | +72,3 % |
 | Orbitador atual | Falcon Heavy (descartável) | 7 796 | +44,0 % | +43,4 % |
 | Orbitador atual | Vulcan VC6 | 7 796 | +6,4 % | +5,8 % |
+
+## 6. Alavancas descartadas por ora (Fabio, 2026-11-07)
+
+| Alavanca | Motivo |
+| :- | :- |
+| Reduzir a margem de Δv da P-014 | a margem cobre perdas não modeladas, e o empuxo/peso baixo da rota A aumenta a perda, não a reduz |
+| Motor de 44:1 com câmara de irídio e rênio | no Isp do melhor análogo, o alvo com deck fecha só no limite, em três das quatro geometrias (seções 3 e 4), sem folga para a incerteza do Isp |
+| Aeroshell maior que 4,5 m | no Vulcan, o lander de aeroshell maior já tem folga radial negativa na leitura do Ø menor (seção 5) |
+| Carga útil menor | reduz o retorno científico, que é o requisito da missão, e não é decisão de projeto do veículo |
