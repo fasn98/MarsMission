@@ -105,5 +105,10 @@
 | P-101 | meia_resolucao_do_isp_do_r4d11 | meia_resolucao_s: {'164:1': 0.5, '300:1': 0.25} | s | NÃO VALIDADA | config/cad.yaml (isp_44_calibracao.meia_resolucao_s), results/etapa7.2/isp_44.md |
 | P-102 | varredura_de_gama_efetivo | [1.15, 1.2, 1.25, 1.3] | adimensional | NÃO VALIDADA | config/cad.yaml (isp_44_calibracao.gamas_varredura), results/etapa7.2/isp_44.md |
 | P-103 | faixa_de_busca_do_gama_efetivo | [1.02, 1.6] | adimensional | NÃO VALIDADA | config/cad.yaml (isp_44_calibracao.faixa_gama_busca), results/etapa7.2/isp_44.md |
+| P-104 | coeficiente_de_arrasto_da_subida | cd_base: 0.5; cd_varredura: [0.25, 0.5, 1.0] | adimensional, sobre a área da seção | NÃO VALIDADA | config/subida.yaml (arrasto), results/etapa7.2/subida_mav.md |
+| P-105 | massa_do_veiculo_de_referencia_da_subida | 394.1 | kg | NÃO VALIDADA | config/subida.yaml (referencia.massa_kg), results/etapa7.2/subida_mav.md |
+| P-106 | topo_da_atmosfera_na_subida | 80000 | m | NÃO VALIDADA | config/subida.yaml (atmosfera.h_topo_m), results/etapa7.2/subida_mav.md |
+| P-107 | parametros_numericos_da_subida | limites_guia: [[0.5, 130.0], [0.0, 1.55], [0.0, 0.1]]; grade_t_v_s: [1, 3, 6, 10, 15, 20, 30, 40, 60, 80, 100, 130]; grade_theta0_rad: [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5]; grade_c_1_s: [0.001, 0.002, 0.004, 0.006, 0.008, 0.012, 0.016, 0.02]; tol_altitude_m: 1.0; tol_vr_m_s: 0.1; tol_glom_kg: 0.01; iteracoes_max: 30; varredura_ponto_fixo_m_s: [3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600] | s, rad, 1/s; m; m/s; kg; — | NÃO VALIDADA | config/subida.yaml (numerico), results/etapa7.2/subida_mav.md |
+| P-108 | escala_do_mav_solido | comprimento_fixo_m: [0.0, 0.5, 1.0, 1.5] | m | NÃO VALIDADA | config/cad.yaml (mav_solido.escala), results/etapa7.2/mav_solido.md |
 
-Total: 103 premissas, 103 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 108 premissas, 108 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

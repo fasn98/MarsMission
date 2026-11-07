@@ -13,6 +13,7 @@ Uso: python tools/rota_a_dimensiona.py
 from __future__ import annotations
 
 import copy
+from types import SimpleNamespace
 import math
 import re
 import sys
@@ -39,6 +40,11 @@ FATOR_4 = 1 + math.sqrt(2)   # círculo mínimo de 4 círculos iguais
 PASSOS = 40   # bisseção do Isp (escolha numérica)
 
 
+def modelo():
+    """Insumos e funções do dimensionamento (real, lander_isp, limites por diâmetro), sem gerar resultados."""
+    return main(so_modelo=True)
+
+
 def br(x, n=3):
     return f"{round(x, n) + 0.0:,.{n}f}".replace(",", " ").replace(".", ",").replace("-", "−")
 
@@ -47,7 +53,7 @@ def sg(x, n=3):
     return f"{round(x, n) + 0.0:+,.{n}f}".replace(",", " ").replace(".", ",").replace("-", "−")
 
 
-def main():
+def main(so_modelo=False):
     cad, ma, par = ler("config/cad.yaml"), ler("results/etapa7.2/mav_arranjo.yaml"), ler("results/etapa7.2/parametros.yaml")
     env, arq, mot = ler("results/etapa7.1/envelope.yaml"), ler("results/etapa2.5/arquitetura.yaml"), ler("config/motores.yaml")
     ra, ad = cad["rota_a_dimensionamento"], cad["adaptador_coifa"]
@@ -203,6 +209,8 @@ def main():
     ks = [float(k) for k in fl["fatores_reducao"]]
     k_b = float(v(fl["fator_base"]))
     fams = list(ra["geometrias_estagio_2"])
+    if so_modelo:   # reaproveitado por tools/subida_mav.py, sem mudar os resultados daqui
+        return SimpleNamespace(**locals())
     casos = []
     cal = ler("results/etapa7.2/isp_44.yaml")
     area = math.pi * v(cad["aeroshell"]["opcoes"]["m2020"]["diametro_m"]) ** 2 / 4

@@ -1,0 +1,232 @@
+gerado_por: tools/subida_mav.py
+status: NÃO VALIDADO
+alvo_folga_m: 0.05
+cd_base: 0.5
+referencia:
+  dv_m_s: 4094.6904224718046
+  diferenca_para_f37_m_s: 66.7904224718045
+  t_corte_s: 255.08607576865893
+  guia:
+    t_v_s: 1
+    theta0_graus: 61.67562699309984
+    c_1_s: 0.009917305859844534
+  f37_m_s: 4027.9
+limites:
+  diametro_m: 0.57
+  sem_deck_m: 3.1839999999999997
+  com_deck_m: 2.7439999999999998
+casos:
+- rotulo: 'Base: R-4D-11 164:1, sem aninhar'
+  isp_s: 310.0
+  empuxo_motor_n: 489.30442000000005
+  variante: '164:1'
+  convergiu: true
+  historico:
+  - glom_kg: 386.77369250546496
+    empuxo_peso: 1.3628076997021517
+    dv_100x100_usado_m_s: 4027.9
+    dv_simulado_m_s: 4063.811164293107
+  - glom_kg: 376.2492292403675
+    empuxo_peso: 1.400928228485333
+    dv_100x100_usado_m_s: 3997.020741821302
+    dv_simulado_m_s: 4040.492295710576
+  - glom_kg: 368.5471646633457
+    empuxo_peso: 1.430205457339944
+    dv_100x100_usado_m_s: 3973.7018732387714
+    dv_simulado_m_s: 4024.540306045736
+  - glom_kg: 363.39597284944824
+    empuxo_peso: 1.4504788318252833
+    dv_100x100_usado_m_s: 3957.7498835739316
+    dv_simulado_m_s: 4014.447227365989
+  - glom_kg: 360.18492863790675
+    empuxo_peso: 1.463409832782234
+    dv_100x100_usado_m_s: 3947.6568048941845
+    dv_simulado_m_s: 4008.341031200866
+  - glom_kg: 358.2601403412257
+    empuxo_peso: 1.4712721479052742
+    dv_100x100_usado_m_s: 3941.5506087290614
+    dv_simulado_m_s: 4004.7656009716097
+  - glom_kg: 357.1392869480968
+    empuxo_peso: 1.4758896191257822
+    dv_100x100_usado_m_s: 3937.975178499805
+    dv_simulado_m_s: 4002.709177159354
+  - glom_kg: 356.496682628151
+    empuxo_peso: 1.4785499890288667
+    dv_100x100_usado_m_s: 3935.91875468755
+    dv_simulado_m_s: 4001.5401777931593
+  - glom_kg: 356.13205454600234
+    empuxo_peso: 1.4800638118931067
+    dv_100x100_usado_m_s: 3934.749755321355
+    dv_simulado_m_s: 4000.882735859057
+  - glom_kg: 355.9272011583695
+    empuxo_peso: 1.4809156604868428
+    dv_100x100_usado_m_s: 3934.092313387252
+    dv_simulado_m_s: 4000.5121637181237
+  - glom_kg: 355.81180130846474
+    empuxo_peso: 1.4813959634006675
+    dv_100x100_usado_m_s: 3933.7217412463187
+    dv_simulado_m_s: 4000.296471373452
+  - glom_kg: 355.7446548995323
+    empuxo_peso: 1.481675575245229
+    dv_100x100_usado_m_s: 3933.506048901648
+    dv_simulado_m_s: 4000.176829158737
+  - glom_kg: 355.70741659451653
+    empuxo_peso: 1.4818306889269557
+    dv_100x100_usado_m_s: 3933.386406686933
+    dv_simulado_m_s: 4000.1104705157436
+  - glom_kg: 355.6867648309469
+    empuxo_peso: 1.481916726474775
+    dv_100x100_usado_m_s: 3933.320048043939
+    dv_simulado_m_s: 4000.0737223186534
+  - glom_kg: 355.6753289325054
+    empuxo_peso: 1.4819643739999315
+    dv_100x100_usado_m_s: 3933.2832998468484
+    dv_simulado_m_s: 4000.0533745013845
+  - glom_kg: 355.66899697459695
+    empuxo_peso: 1.4819907573398283
+    dv_100x100_usado_m_s: 3933.2629520295804
+    dv_simulado_m_s: 4000.042109780852
+  iteracoes: 16
+  glom_kg: 355.66899697459695
+  empuxo_peso: 1.4819907573398283
+  empuxo_peso_estagio_2: 1.6039853790064582
+  dv_100x100_m_s: 3933.2629520295804
+  dv_subida_com_margem_km_s: 5.668253287915134
+  voo:
+    dv_m_s: 4000.042109780852
+    t_corte_s: 501.8236355911382
+    estagio_no_corte: 2
+    guia:
+      t_v_s: 3
+      theta0_graus: 54.28079300412728
+      c_1_s: 0.0036660503935631774
+  massa_por_area_kg_m2: 274.48882074298035
+  comprimentos:
+    sem aninhar:
+      comprimento_m: 3.525131454251933
+      folga_sem_deck_m: -0.17056572712596663
+      folga_com_deck_m: -0.3905657271259666
+- rotulo: Rota A sem deck, Isp calculado baixo
+  isp_s: 295.99059972688957
+  empuxo_motor_n: 466.4396416258225
+  variante: '44:1'
+  convergiu: false
+  historico:
+  - glom_kg: 487.18374000177073
+    empuxo_peso: 1.0313712815529694
+    dv_100x100_usado_m_s: 4027.9
+    dv_simulado_m_s: 4508.215420486681
+  - glom_kg: 762.9254992842898
+    empuxo_peso: 0.6586060090385837
+    dv_100x100_usado_m_s: 4441.424998014877
+    dv_simulado_m_s: null
+  motivo: 'diverge: no passo 2, GLOM de 762,9 kg e empuxo/peso de 0,66, abaixo de
+    1: o MAV não decola'
+  ponto_fixo:
+  - dv_100x100_usado_m_s: 3900
+    glom_kg: 429.28623724018564
+    empuxo_peso: 1.1704715285253007
+    decola: true
+    dv_100x100_pedido_m_s: 4185.268963519525
+    pedido_menos_usado_m_s: 285.26896351952473
+  - dv_100x100_usado_m_s: 4000
+    glom_kg: 473.7180000289366
+    empuxo_peso: 1.0606886760619234
+    decola: true
+    dv_100x100_pedido_m_s: 4371.672859146894
+    pedido_menos_usado_m_s: 371.67285914689364
+  - dv_100x100_usado_m_s: 4100
+    glom_kg: 524.3984079031864
+    empuxo_peso: 0.95817857320833
+    decola: false
+- rotulo: Rota A sem deck, Isp calculado central
+  isp_s: 298.2018882053686
+  empuxo_motor_n: 469.16881656344935
+  variante: '44:1'
+  convergiu: false
+  historico:
+  - glom_kg: 468.5374186160989
+    empuxo_peso: 1.0786914212112664
+    dv_100x100_usado_m_s: 4027.9
+    dv_simulado_m_s: 4402.625649346574
+  - glom_kg: 645.6171408347358
+    empuxo_peso: 0.7828281840909661
+    dv_100x100_usado_m_s: 4335.83522687477
+    dv_simulado_m_s: null
+  motivo: 'diverge: no passo 2, GLOM de 645,6 kg e empuxo/peso de 0,78, abaixo de
+    1: o MAV não decola'
+  ponto_fixo:
+  - dv_100x100_usado_m_s: 3900
+    glom_kg: 413.85109567024426
+    empuxo_peso: 1.2212298076899748
+    decola: true
+    dv_100x100_pedido_m_s: 4124.10367572091
+    pedido_menos_usado_m_s: 224.10367572091036
+  - dv_100x100_usado_m_s: 4000
+    glom_kg: 455.8353071492897
+    empuxo_peso: 1.1087497744270451
+    decola: true
+    dv_100x100_pedido_m_s: 4279.451106392517
+    pedido_menos_usado_m_s: 279.45110639251743
+  - dv_100x100_usado_m_s: 4100
+    glom_kg: 503.59069621026504
+    empuxo_peso: 1.0036072901685107
+    decola: true
+    dv_100x100_pedido_m_s: 4516.960597830209
+    pedido_menos_usado_m_s: 416.9605978302088
+  - dv_100x100_usado_m_s: 4200
+    glom_kg: 558.1698524202891
+    empuxo_peso: 0.9054722174373145
+    decola: false
+- rotulo: Rota A sem deck, Isp calculado alto
+  isp_s: 300.4679670315974
+  empuxo_motor_n: 471.9752948217493
+  variante: '44:1'
+  convergiu: false
+  historico:
+  - glom_kg: 450.65350653540196
+    empuxo_peso: 1.1282072290877516
+    dv_100x100_usado_m_s: 4027.9
+    dv_simulado_m_s: 4314.318505107039
+  - glom_kg: 561.8623835221631
+    empuxo_peso: 0.9049022657465897
+    dv_100x100_usado_m_s: 4247.528082635235
+    dv_simulado_m_s: null
+  motivo: 'diverge: no passo 2, GLOM de 561,9 kg e empuxo/peso de 0,90, abaixo de
+    1: o MAV não decola'
+  ponto_fixo:
+  - dv_100x100_usado_m_s: 3900
+    glom_kg: 398.9962805697851
+    empuxo_peso: 1.2742738933829723
+    decola: true
+    dv_100x100_pedido_m_s: 4071.392971657958
+    pedido_menos_usado_m_s: 171.3929716579578
+  - dv_100x100_usado_m_s: 4000
+    glom_kg: 438.67048214600317
+    empuxo_peso: 1.1590261131765944
+    decola: true
+    dv_100x100_pedido_m_s: 4200.8769635416165
+    pedido_menos_usado_m_s: 200.87696354161653
+  - dv_100x100_usado_m_s: 4100
+    glom_kg: 483.6753896522594
+    empuxo_peso: 1.0511813393121432
+    decola: true
+    dv_100x100_pedido_m_s: 4395.584603264281
+    pedido_menos_usado_m_s: 295.5846032642812
+  - dv_100x100_usado_m_s: 4200
+    glom_kg: 534.9594058131262
+    empuxo_peso: 0.9504095794225392
+    decola: false
+sensibilidade_cd:
+- cd: 0.25
+  referencia_dv_m_s: 4013.422313159656
+  referencia_diferenca_m_s: -14.477686840344177
+  convergiu: false
+- cd: 0.5
+  referencia_dv_m_s: 4094.6904224718046
+  referencia_diferenca_m_s: 66.7904224718045
+  convergiu: false
+- cd: 1.0
+  referencia_dv_m_s: 4225.703452118246
+  referencia_diferenca_m_s: 197.8034521182458
+  convergiu: false

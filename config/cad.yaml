@@ -399,3 +399,20 @@ adaptador_coifa:   # P-097 (Fabio, 2026-11-07)
   ressalva_falcon: "[F82] não publica altura de adaptador. PDF p. 27: \"Any payload adapters required (e.g., to achieve a 937-mm or 1,194-mm or 1,666-mm (36.89 in. or 47.01 or 65.59 in.) interface) must also fit within the keep-in volumes\": a fonte não pede adaptador para um veículo com a própria interface de 1575 mm, então a mesma altura, por análogo, fica do lado seguro. Limite do PAF de 1575 mm: PDF p. 28, \"up to 10,885 kg\""
   p097_texto: "Entre o plano da interface de 1575 mm e a base dos veículos há um adaptador com sistema de separação, de altura 0,127 m, e os veículos sobem essa altura em relação ao envelope. Fonte da altura: [F80] Tab. 4.2.2-1a. Falcon: sem altura publicada, mesma altura por análogo, do lado seguro. A capacidade para as massas dos veículos não foi conferida. Os 43 kg do adaptador entram na margem do lançador (Vulcan e Falcon Heavy), não na massa do veículo."
 
+
+mav_solido:   # MAV sólido de dois estágios do MSR (versão de 2019), para a rota sólida (Fabio, 2026-11-07); não altera o ADR 0007
+  glom_kg: {valor: 394, fonte: "[F34] PDF p. 4: \"Gross lift-off mass: 394 kg\""}
+  propelente_kg: {valor: [216, 54.4], fonte: "[F249] PDF p. 5: \"SRM1 featured 216kg of propellant, while SRM2 featured 54.4kg of propellant\" ([F34] PDF p. 4 dá 54 kg)"}
+  empuxo_medio_n: {valor: [9854, 6937], fonte: "[F34] PDF p. 4: \"1st stage avg thrust: 9854 N\"; \"2nd stage avg thrust: 6937 N\""}
+  tempo_queima_s: {valor: [75.9, 24.5], fonte: "[F34] PDF p. 4: \"1st stage burn time: 75.9 s\"; \"2nd stage burn time: 24.5 s\""}
+  isp_s: {valor: [293, 282], fonte: "[F34] PDF p. 4: \"1st stage avg ISP: 293 s\"; \"2nd stage avg ISP: 282 s\""}
+  comprimento_m: {valor: 2.7, fonte: "[F247] PDF p. 2, cota da figura do veículo: \"2.7 m = 8 ft 10.25 in.\""}
+  diametro_m: {valor: 0.57, fonte: "[F248] PDF p. 4, Tab. 1 (imagem): \"Max Vehicle Diameter .57 m\" (limite; o diâmetro real não é publicado)"}
+  escala:   # P-108: o MAV sólido para o nosso Δv, a partir do de 2019
+    comprimento_fixo_m: {valor: [0.0, 0.5, 1.0, 1.5], premissa: P-108}
+  contra_no_adr_0007:
+    - {item: "Massa pela regra (iii)", adr: "41,3 a 41,4 t do sólido, contra 34,2 a 34,4 t do hipergólico", hoje: "o ADR registra que a comparação não foi refeita com o Isp de voo de 310 s; o GLOM do sólido para o nosso Δv está na tabela de cima"}
+    - {item: "Frio extremo", adr: "[F58] p. 4: \"Potential issues with extremely cold environments\"", hoje: "o MSR mantém o MAV num recinto térmico: [F249] PDF p. 3: \"the MAV is stored in a thermal enclosure known as the igloo\"; [F35] PDF p. 9: \"the vehicle exterior will be maintained at -62.5°C by the SRL igloo. Most internal components will be kept at a non-operational AFT of -40°C\". O grão trincou perto de −70 °C em ensaio: [F248] PDF p. 14: \"Data from the analog samples showed cracking at approximately -70 °C\"; PDF p. 13: \"Current qualification minimum temperatures are -50 °C\". O risco segue, com mitigação de projeto, não de voo"}
+    - {item: "Aquecimento antes do voo", adr: "não tratado no ADR", hoje: "[F34] PDF p. 5: \"between 2 to 12 sols to warm the SRMs to flight temperatures\"; [F249] PDF p. 4: \"A solid motor temperature gradient of 10 oC/hr was desirable to minimize the risk of this solid motor grain cracking\", \"peak power ... 288W\""}
+    - {item: "Estocagem longa", adr: "não tratado no ADR", hoje: "[F250] PDF p. 2: \"concerns exist with long duration aging associated with baseline CTPB (cold temperature capable) propellant\""}
+    - {item: "Não estrangula nem desliga", adr: "[F58] p. 4: \"Cannot be actively throttled or shut down\"", hoje: "vale igual: o corte no alvo exige outro meio (o MSR usa costa longa e um 2º estágio dimensionado para a queima)"}

@@ -1154,3 +1154,57 @@ premissas:
       Só delimita a busca do γ efetivo que reproduz os dois pontos de [F228]; não entra no valor enquanto o γ ficar dentro dela.
       Sem fonte. Numerada por decisão do Fabio em 2026-11-07, com o valor atual.
     status: NÃO VALIDADA
+
+  - id: P-104
+    nome: coeficiente_de_arrasto_da_subida
+    valor: {cd_base: 0.5, cd_varredura: [0.25, 0.5, 1.0]}
+    unidade: adimensional, sobre a área da seção
+    uso: config/subida.yaml (arrasto), results/etapa7.2/subida_mav.md
+    justificativa: >
+      Coeficiente constante, sem variação com o Mach. Não há tabela de CD(Mach) publicada para o MAV: [F37] e os trabalhos do
+      MSR só trazem gráficos. Varredura de 0,25 a 1,0 para a sensibilidade. Sem fonte.
+    status: NÃO VALIDADA
+
+  - id: P-105
+    nome: massa_do_veiculo_de_referencia_da_subida
+    valor: 394.1
+    unidade: kg
+    uso: config/subida.yaml (referencia.massa_kg), results/etapa7.2/subida_mav.md
+    justificativa: >
+      [F37] não dá a massa do veículo usado na trajetória do POST. Usa-se o GLOW do conceito pressurizado de [F46] (Tab. 5,
+      PDF p. 34: "GLOW ... 394.1 kg"). A massa só entra pelo arrasto (massa por área); o empuxo sai do empuxo/peso de 2,5.
+    status: NÃO VALIDADA
+
+  - id: P-106
+    nome: topo_da_atmosfera_na_subida
+    valor: 80000
+    unidade: m
+    uso: config/subida.yaml (atmosfera.h_topo_m), results/etapa7.2/subida_mav.md
+    justificativa: >
+      Acima disso a densidade é zero. O ajuste de [F245] leva a temperatura a 0 K perto de 112 km e não declara validade. 80 km
+      é o topo das tabelas de baixa atmosfera do Mars-GRAM 2001 ([F246] PDF p. 11: "MGCM data tables cover altitudes from the
+      surface to 80 kilometers"), não uma validação do ajuste. Sem fonte para a escolha.
+    status: NÃO VALIDADA
+
+  - id: P-107
+    nome: parametros_numericos_da_subida
+    valor: {limites_guia: [[0.5, 130.0], [0.0, 1.55], [0.0, 0.1]], grade_t_v_s: [1, 3, 6, 10, 15, 20, 30, 40, 60, 80, 100, 130], grade_theta0_rad: [0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5], grade_c_1_s: [0.001, 0.002, 0.004, 0.006, 0.008, 0.012, 0.016, 0.02], tol_altitude_m: 1.0, tol_vr_m_s: 0.1, tol_glom_kg: 0.01, iteracoes_max: 30, varredura_ponto_fixo_m_s: [3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600]}
+    unidade: s, rad, 1/s; m; m/s; kg; —
+    uso: config/subida.yaml (numerico), results/etapa7.2/subida_mav.md
+    justificativa: >
+      Limites e grades do guiamento (subida vertical, ângulo inicial e taxa da linear-tangente), tolerâncias do alvo de 100 km e
+      da convergência do redimensionamento, e a varredura do Δv de 100 × 100 km que procura o ponto fixo quando a iteração não
+      converge. Escolhas numéricas, sem fonte.
+    status: NÃO VALIDADA
+
+  - id: P-108
+    nome: escala_do_mav_solido
+    valor: {comprimento_fixo_m: [0.0, 0.5, 1.0, 1.5]}
+    unidade: m
+    uso: config/cad.yaml (mav_solido.escala), results/etapa7.2/mav_solido.md
+    justificativa: >
+      O MAV sólido de 2019 ([F34], [F247]) não publica o comprimento por estágio nem a densidade do propelente. Escala: o
+      comprimento total é uma parte fixa (carga, aviônica, bocais e interestágio) mais o resto proporcional à massa de
+      propelente, no mesmo diâmetro; a parte fixa vai de 0 a 1,5 m, sem fonte. Empuxo de cada estágio proporcional à massa de
+      propelente, com o mesmo tempo de queima de [F34]. Fração estrutural e divisão do Δv: as da P-019.
+    status: NÃO VALIDADA
