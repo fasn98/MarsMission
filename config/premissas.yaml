@@ -1070,3 +1070,15 @@ premissas:
       a cápsula é estreita), tanques de descida a 120° fora da faixa ocupada pelo MAV, braço guardado paralelo ao MAV e
       helicópteros acima dele. Não há conferência de interferência entre peças nesta etapa.
     status: NÃO VALIDADA
+  - id: P-096
+    nome: origem_do_step_do_falcon
+    valor: {plano: "origem do arquivo STEP de keep-in = plano da interface de 1575 mm", eixo_axial: x}
+    unidade: —
+    uso: config/cad.yaml (coifas.falcon_padrao, encaixe.plano_falcon), results/etapa7.2b/envelope_falcon_heavy.fs
+    justificativa: >
+      [F82] PDF p. 26: "The origin of the payload coordinate system is fixed at the center of the separation plane". Limite da
+      evidência: o arquivo STEP não declara usar esse sistema, e separação e interface podem não coincidir; o eixo axial do
+      arquivo vai a 446,76 pol, lido no STEP, abaixo da altura da coifa de [F82] p. 16. Aprovada pelo Fabio em 2026-11-06,
+      com esse limite registrado.
+    status: NÃO VALIDADA
+

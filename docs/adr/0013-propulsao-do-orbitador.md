@@ -42,3 +42,15 @@ A opção (b) foi estimada só em ordem de grandeza, com o rótulo "calculado, n
 A carga do orbitador passou a 1.022 W (P-028, ADR 0015), e a captura proposta passou a 10 × R-4D-11 (C4, P-055). Os
 números de massa, de órbita de encontro, de perdas e de margens deste documento mudaram. **Os números vigentes estão na
 errata de 2026-10-31 de `docs/fase3_relatorio.md`.**
+
+## Adendo (2026-11-06): Trade reaberto na Etapa 7.2 (PR #52): conclusão mantida
+O Fabio pediu para reabrir o trade como rota B do portão do comprimento do MAV, com encontro em órbita baixa, e o rejeitou. A
+decisão deste ADR não muda. Números de [`results/etapa7.2/rotas_mav.md`](../../results/etapa7.2/rotas_mav.md); a órbita do químico atual é a de
+`results/etapa2.3/plataformas.md`; o "só elétrico" é calculado, não verificado.
+
+| Opção | Órbita (km) | Orbitador (kg) | Margem no Falcon Heavy | Linha do tempo |
+| :- | -: | -: | -: | :- |
+| Químico atual | 300 × 25 952 | 7 796 | +44,0 % | chega pronto |
+| Híbrido c2 | 380 e 814 | 48 853 a 65 793 | −82,9 a −77,0 % | em órbita de 2030-03-26 a 2030-04-09, depois do último lançamento do MAV (2030-03-06); a subida cruza a conjunção |
+| Só elétrico, XIPS-25 | 380 e 814 | 7 947 a 9 420 | +19,2 a +41,2 % | exigiria outra missão de referência |
+

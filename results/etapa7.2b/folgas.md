@@ -95,14 +95,13 @@ Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora
 ## Planos da interface
 
 - **Vulcan, com fonte:** [F80] Fig. 4.3.1-1, p. 4-8: "LV STA 2596.66 (1575 Interface)".
-- **Falcon, sem fonte direta:** [F82] PDF p. 26: "The origin of the payload coordinate system is fixed at the center of the separation plane"; o arquivo STEP não declara que usa esse sistema (P-096 proposta).
-- **Veículos, sem fonte:** z = 0 do modelo. Um adaptador real subiria o veículo; não há altura com fonte para ele. Na primeira leitura do Vulcan, cada metro de altura tira 0,0173 m de folga radial.
+- **Falcon, sem fonte direta:** [F82] PDF p. 26: "The origin of the payload coordinate system is fixed at the center of the separation plane"; o arquivo STEP não declara que usa esse sistema (P-096).
+- **Veículos, sem fonte:** z = 0 do modelo. Um adaptador real subiria o veículo; as alturas com fonte e as folgas estão em results/etapa7.2/rota_a.md, seção 5. Na primeira leitura do Vulcan, cada metro de altura tira 0,0173 m de folga radial.
 
 ## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)
 
 | Id | Texto | Evidência |
 | :- | :- | :- |
-| P-096 | A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm, com o eixo x axial. | [F82] PDF p. 26 define a origem do sistema da carga útil no plano de separação; o eixo axial do arquivo vai a 446,76 pol (lido no STEP), abaixo da altura da coifa de [F82] p. 16. O arquivo não declara o sistema, e separação e interface podem não coincidir. |
-| P-097 | A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação. | Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura; [F82] PDF p. 27: "Any payload adapters required ... must also fit within the keep-in volumes". |
+| P-097 | A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura de adaptador nem de sistema de separação. | Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura; [F82] PDF p. 27: "Any payload adapters required ... must also fit within the keep-in volumes". Texto NÃO aprovado pelo Fabio (2026-11-06); a reformulação proposta está em results/etapa7.2/rota_a.md, seção 5. |
 
 A espessura de 0,01 m da casca é escolha de construção, sem efeito nas folgas. Os arquivos .fs não foram compilados nesta máquina: a compilação é o primeiro passo do roteiro.

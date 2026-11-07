@@ -498,14 +498,6 @@ criterio_empate:
   empate_m: 1.0e-09
   casas_de_ordem: 9
 premissas_propostas:
-- id: P-096
-  nome: origem_do_step_do_falcon
-  texto: A origem do STEP de keep-in do Falcon é o plano da interface de 1575 mm,
-    com o eixo x axial.
-  evidencia: '[F82] PDF p. 26 define a origem do sistema da carga útil no plano de
-    separação; o eixo axial do arquivo vai a 446,76 pol (lido no STEP), abaixo da
-    altura da coifa de [F82] p. 16. O arquivo não declara o sistema, e separação e
-    interface podem não coincidir.'
 - id: P-097
   nome: veiculo_sobre_o_plano_da_interface
   texto: A base dos veículos (z = 0 do modelo) fica no plano da interface, sem altura
@@ -513,9 +505,10 @@ premissas_propostas:
   evidencia: 'Convenção do modelo desde a Etapa 7.1, sem fonte; a P-091 não trata
     disso. Um adaptador real sobe o veículo, e o envelope afunila com a altura; [F82]
     PDF p. 27: "Any payload adapters required ... must also fit within the keep-in
-    volumes".'
+    volumes". Texto NÃO aprovado pelo Fabio (2026-11-06); a reformulação proposta
+    está em results/etapa7.2/rota_a.md, seção 5.'
 planos:
   vulcan: '[F80] Fig. 4.3.1-1, p. 4-8: "LV STA 2596.66 (1575 Interface)"'
   falcon: '[F82] PDF p. 26: "The origin of the payload coordinate system is fixed
     at the center of the separation plane"; o arquivo STEP não declara que usa esse
-    sistema (P-096 proposta)'
+    sistema (P-096)'

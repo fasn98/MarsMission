@@ -275,7 +275,7 @@ def main():
                 "Envelope: leitura da figura \"Simplified\" [F80] Fig. 4.3.1-1, p. 4-8, nao e dado do fabricante em CAD. Plano: \"LV STA 2596.66 (1575 Interface)\".",
                 "Envelope Vulcan VC4 (referencia, sem material)", cor, op_v, versao)
     envelope_fs("envelope_falcon_heavy.fs", "MarsMission envelope Falcon Heavy", "marsMissionEnvelopeFalconHeavy",
-                "Envelope: perfil amostrado do STEP de keep-in do fabricante [F82] p. 16, Tab. 4-1. Plano: origem do arquivo, premissa proposta P-096, pendente.",
+                "Envelope: perfil amostrado do STEP de keep-in do fabricante [F82] p. 16, Tab. 4-1. Plano: origem do arquivo, premissa P-096.",
                 "Envelope Falcon Heavy (referencia, sem material)", cor, op_f, versao)
     ve = par["veiculos"]
     _, dens = cp.densidades(cad)
@@ -448,7 +448,7 @@ def escreve_md(o):
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",
-           "- **Veículos, sem fonte:** z = 0 do modelo. Um adaptador real subiria o veículo; não há altura com fonte para ele. "
+           "- **Veículos, sem fonte:** z = 0 do modelo. Um adaptador real subiria o veículo; as alturas com fonte e as folgas estão em results/etapa7.2/rota_a.md, seção 5. "
            f"Na primeira leitura do Vulcan, cada metro de altura tira {br(o['reducao_de_folga_por_metro_de_adaptador_vulcan'], 4)} m de folga radial.", "",
            "## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)", "", "| Id | Texto | Evidência |", "| :- | :- | :- |"]
     for p in o["premissas_propostas"]:

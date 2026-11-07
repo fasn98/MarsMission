@@ -528,3 +528,74 @@ def test_pendencia_recompilar_onshape():
     # resíduo da descida com 4 algarismos: o passo de impressão fica em 1 % do piso da P-039
     el = (RAIZ / "results/etapa3.3/orbitador_eletrico.md").read_text(encoding="utf-8")
     assert "(-2.105e-09)" in el and "(-3.350e-09)" in el
+
+
+def test_rota_a_dimensiona():
+    """Rota A provisória: limites com deck, espessuras por fora da ferramenta, comprimento real e folgas com adaptador."""
+    r = ler("results/etapa7.2/rota_a.yaml")
+    al, dm, im = r["alvo"], r["dimensionamento"], r["isp_minimo"]
+    # alvo: 4 saídas de 44:1 cabem em Ø 0,57 m com parede; com deck, o limite é o de mav_arranjo
+    assert al["diametro_m"] == 0.57 and al["circulo_44_m"] == pytest.approx(6.01 * 0.0254 * (1 + math.sqrt(2)))
+    c = next(x for x in ler("results/etapa7.2/mav_arranjo.yaml")["casos"] if x["diametro_m"] == 0.57)
+    dk = next(e for e in c["formas"]["msl_m2020"] if "P-094" in e["estacao"])
+    assert al["limite_com_deck_m"] == pytest.approx(c["comprimento_m"] + 2 * dk["deitado_folga_m"])
+    # espessuras à mão: σ = Ftu / 2; cilindro p R / σ; cúpula p R / (2 σ); flambagem clássica com o fator de redução
+    sig = 134 * 6.894757 / 2
+    p = dm["pressoes"]["entrada_piso_r4d11"]
+    assert dm["tensao_admissivel_mpa"] == pytest.approx(sig)
+    assert p["t_cilindro_m"] == pytest.approx(1.40 * 0.275 / sig) and p["t_cupula_m"] == pytest.approx(1.40 * 0.275 / (2 * sig))
+    tf = 0.275 * math.sqrt(2 * 1.40 * math.sqrt(3 * (1 - 0.342 ** 2)) / (2 * 16400 * 6.894757 * 0.25))
+    assert p["t_cupula_invertida_m"]["0.25"] == pytest.approx(tf)
+    # real = limite + vão e paredes no estágio 1 + troca do tanque único pela geometria no estágio 2
+    t_d, t_i = max(p["t_cupula_m"], dm["t_p093_m"]), max(p["t_cupula_invertida_m"][str(dm["fator_base"])], dm["t_p093_m"])
+    assert list(dm["geometrias"]) == ["recesso_hemisferio", "recesso_livre", "antepara_assimetrica", "lente_mesmo_raio"]
+    for x_ in dm["casos"]:
+        hemi, livre, ant, len_ = (x_["por_geometria"][f] for f in dm["geometrias"])
+        assert livre["real_m"] <= hemi["real_m"]   # relaxar o recesso não alonga
+        for x in (hemi, livre, ant, len_):
+            e1, e2 = x["por_estagio"]
+            ge = e2["geometria"]
+            assert e1["geometria"] is None
+            assert e1["vao_e_paredes_m"] == pytest.approx(dm["vao_base_m"] + t_d + t_i)
+            assert x["real_m"] == pytest.approx(x_["limite_otimista_m"] + e1["vao_e_paredes_m"] + ge["comprimento_m"] - e2["tanque_unico_m"])
+            assert x["folga_deck_real_m"] == pytest.approx((al["limite_com_deck_m"] - x["real_m"]) / 2)
+            assert e1["tanques_kg"] + e2["tanques_kg"] == pytest.approx(x["massa_tanques_kg"])
+        # esboço: os volumes fecham, por fora da ferramenta; cabe no raio interno; com hemisfério, recesso de até um hemisfério
+        def lente_(a_, b_, c_):
+            return math.pi * (a_ + b_ - c_) ** 2 * (c_ ** 2 + 2 * c_ * (b_ + a_) - 3 * (b_ - a_) ** 2) / (12 * c_)
+        for q in (hemi, livre):
+            e2 = q["por_estagio"][1]
+            es = e2["geometria"]
+            ra_, r1, rr, c_ = es["raio_tanque_ao_redor_m"], es["raio_esfera_m"], es["raio_recesso_m"], es["distancia_centros_m"]
+            assert 4 / 3 * math.pi * (ra_ ** 3 + r1 ** 3) - lente_(ra_, rr, c_) == pytest.approx(e2["volume_m3"], rel=1e-6)
+            assert ra_ <= 0.275 + 1e-12
+        es = hemi["por_estagio"][1]["geometria"]
+        assert es["distancia_centros_m"] ** 2 + es["raio_recesso_m"] ** 2 >= es["raio_tanque_ao_redor_m"] ** 2 * (1 - 1e-9)
+        # antepara: comprimento = tanque único + vão e paredes; volumes pela calota; raio de calota pela geometria da calota
+        ea_ = ant["por_estagio"][1]
+        ga = ea_["geometria"]
+        assert ga["comprimento_m"] == pytest.approx(ea_["tanque_unico_m"] + ea_["vao_e_paredes_m"])
+        rs = ea_["tanque_unico_m"] / 2
+        h = ga["altura_calota_m"]
+        assert ga["raio_calota_m"] == pytest.approx((rs ** 2 + h ** 2) / (2 * h))
+        assert 2 * math.pi * h * (3 * rs ** 2 + h ** 2) / 6 == pytest.approx(ea_["volume_m3"] - 2 * ea_["volume_menor_m3"], rel=1e-6)
+        # lente: a lente tem o menor volume, e o tanque único recua só o vão e as paredes
+        el = len_["por_estagio"][1]
+        gl = el["geometria"]
+        assert lente_(gl["raio_m"], gl["raio_m"], gl["distancia_centros_m"]) == pytest.approx(el["volume_menor_m3"], rel=1e-6)
+        assert gl["comprimento_m"] == pytest.approx(el["tanque_unico_m"] + el["vao_e_paredes_m"])
+        assert gl["raio_borda_m"] ** 2 + (gl["distancia_centros_m"] / 2) ** 2 == pytest.approx(gl["raio_m"] ** 2)
+    e2 = len_["por_estagio"][1]
+    # motores [4, 1] com a massa do 164:1 de [F228]
+    assert e2["motores_164_kg"] == pytest.approx(3.76) and x_["por_geometria"]["recesso_livre"]["por_estagio"][0]["motores_164_kg"] == pytest.approx(4 * 3.76)
+    # Isp mínimo: o comprimento real pede mais Isp que o limite otimista, e a folga pedida bate no alvo
+    assert all(li["por_geometria"][f] > im["limite_otimista_s"] for li in im["linhas"] for f in dm["geometrias"])
+    assert im["comprimento_max_m"] == pytest.approx(al["limite_com_deck_m"] - 2 * im["alvo_folga_m"])
+    # adaptador: a folga axial cai a altura; a leitura cilíndrica do Vulcan não muda a folga radial
+    ad = r["adaptador"]["linhas"]
+    assert ad[0]["por_altura"][0]["axial_m"] == pytest.approx(ad[0]["sem_adaptador"]["axial_m"] - 0.127, abs=1e-9)
+    assert ad[1]["por_altura"][-1]["radial_m"] == pytest.approx(ad[1]["sem_adaptador"]["radial_m"], abs=1e-9)
+    # P-096 entrou; P-097 não
+    ids = {q["id"] for q in ler("config/premissas.yaml")["premissas"]}
+    assert "P-096" in ids and "P-097" not in ids
+
