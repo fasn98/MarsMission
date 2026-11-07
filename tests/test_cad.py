@@ -112,10 +112,11 @@ def _itens_com_premissa(no, caminho=()):
 
 def test_config_cad_coincide_com_as_premissas():
     """Cada valor de config/cad.yaml que cita uma premissa aparece nela: valor escalar igual, ou chave de mesmo nome
-    (a do item, ou "pai_item") com o mesmo valor. Cobre P-078 a P-095, inclusive o ees_raio_ponta_m da P-094."""
+    (a do item, ou "pai_item") com o mesmo valor. Cobre P-078 a P-095, inclusive o ees_raio_ponta_m da P-094, e P-097 a P-100."""
     ps = {p["id"]: p["valor"] for p in ler("config/premissas.yaml")["premissas"]}
     itens = list(_itens_com_premissa(ler("config/cad.yaml")))
     assert any(c[-1] == "ees_raio_ponta_m" for c, _, _ in itens)
+    assert {"P-097", "P-098", "P-099", "P-100"} <= {pid for _, _, pid in itens}
     for caminho, valor, pid in itens:
         pv = ps[pid]
         if isinstance(pv, dict):
@@ -622,6 +623,11 @@ def test_isp_44_bocal_ideal():
         # ε crescente se aproxima de CF máximo = Γ √(2γ/(γ−1)), por baixo
         cfm = gam * math.sqrt(2 * g / (g - 1))
         assert ib.cf_vacuo(300, g) < ib.cf_vacuo(1e7, g) < cfm
+        # ponto intermediário, na forma em Mach e sem a razão de pressão da ferramenta: CF = ε x (1 + γ M²)
+        for mach in (3.0, 4.5):
+            base = 1 + (g - 1) / 2 * mach ** 2
+            eps_m = (1 / mach) * ((2 / (g + 1)) * base) ** ((g + 1) / (2 * (g - 1)))
+            assert ib.cf_vacuo(eps_m, g) == pytest.approx(eps_m * base ** (-g / (g - 1)) * (1 + g * mach ** 2))
         # a inversão de ε fecha
         assert ib.razao_area(ib.razao_pressao(44, g), g) == pytest.approx(44)
         # monotônico em ε

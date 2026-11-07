@@ -1101,7 +1101,7 @@ premissas:
     unidade: m
     uso: config/cad.yaml (rota_a_dimensionamento.vao_purga_m.base), results/etapa7.2/rota_a.md
     justificativa: >
-      [F46] §5.4, PDF p. 17, cita "a purge gap between the two tanks" sem dar o valor. Valor central da varredura de 0,005 a 0,05 m,
+      [F46] §5.4, PDF p. 17, cita "a purge gap between the two tanks" sem dar o valor. Um dos valores da varredura de 0,005 a 0,05 m,
       sem fonte. Passou a premissa numerada por decisão do Fabio em 2026-11-07, sem mudar o valor.
     status: NÃO VALIDADA
 

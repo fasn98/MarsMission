@@ -84,9 +84,9 @@ def main():
         q = cf_vacuo(e44, g)
         varre.append({"gama": g, "cf_44": q, "isp_ancora_164_s": i1 * q / cf_vacuo(e1, g), "isp_ancora_300_s": i2 * q / cf_vacuo(e2, g), "razao_300_164": cf_vacuo(e2, g) / cf_vacuo(e1, g)})
     tm = om.catalogo()["R-4D-11"]["empuxo_n"]
-    out = nativo({"gerado_por": "tools/isp_44_bocal.py", "status": "NÃO VALIDADO", "natureza": "cálculo sobre dois pontos com fonte; não é dado do fabricante", "pontos": {"164:1": i1, "300:1": i2, "fonte": rd["164:1"]["fonte"]},
+    out = nativo({"gerado_por": "tools/isp_44_bocal.py", "status": "NÃO VALIDADO", "natureza": "cálculo sobre dois pontos com fonte; não é dado do fabricante", "pontos": {"164:1": i1, "300:1": i2, "fonte": "[F228] PDF p. 22: \"164:1 = 311 sec\"; \"300:1 = 315.5 sec\""},
                   "razao_observada_300_164": i2 / i1, "central": central, "baixo": baixo, "alto": alto, "isp_44_s": {"baixo": baixo["isp_s"]["44"], "central": central["isp_s"]["44"], "alto": alto["isp_s"]["44"]},
-                  "empuxo_164_n": tm, "fator_empuxo_44": central["cf"]["44"] / central["cf"]["164"], "empuxo_44_n": tm * central["cf"]["44"] / central["cf"]["164"],
+                  "empuxo_164_n": tm, "fator_empuxo_44": central["cf"]["44"] / central["cf"]["164"], "empuxo_44_n": tm * central["cf"]["44"] / central["cf"]["164"], "empuxo_44_ancora_300_n": tm * central["cf"]["44"] / central["cf"]["300"], "fator_empuxo_por_caso": {n: x["cf"]["44"] / x["cf"]["164"] for n, x in (("baixo", baixo), ("central", central), ("alto", alto))},
                   "varredura_gama": varre, "apollo": {**c["apollo"], "isp_calculado_s": central["isp_s"][str(e40)], "baixo_s": baixo["isp_s"][str(e40)], "alto_s": alto["isp_s"][str(e40)]}})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "isp_44.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -96,7 +96,7 @@ def main():
 def escreve_md(o, c):
     ce, ba, al, ap = o["central"], o["baixo"], o["alto"], o["apollo"]
     md = ["# Isp esperado do R-4D-11 com bocal de 44:1 (gerado por tools/isp_44_bocal.py)", "",
-          f"**NÃO VALIDADO.** Isp esperado: **{br(ce['isp_s']['44'])} s**, de {br(ba['isp_s']['44'])} a {br(al['isp_s']['44'])} s com o arredondamento dos dados. É cálculo, não dado do fabricante. NASA CEA não está no workspace.", "",
+          f"**NÃO VALIDADO.** Isp esperado: **{br(ce['isp_s']['44'])} s**, de {br(ba['isp_s']['44'])} a {br(al['isp_s']['44'])} s com o arredondamento dos dados. A faixa não inclui o erro de modelo: a conta extrapola de 164–300 para 44, sem grau de liberdade sobrando para conferi-la. É cálculo, não dado do fabricante. NASA CEA não está no workspace.", "",
           "## Modelo", "", "Mesmo motor: câmara, pressão e mistura iguais; muda só a razão de expansão ε. Com bocal ideal, para gás de γ constante:", "",
           "- Γ = √γ · (2/(γ+1))^((γ+1)/(2(γ−1)))",
           "- ε = Γ / √( 2γ/(γ−1) · x^(2/γ) · (1 − x^((γ−1)/γ)) ), com x = pe/pc",
@@ -107,13 +107,14 @@ def escreve_md(o, c):
     m1, m2 = c["meia_resolucao_s"]["164:1"], c["meia_resolucao_s"]["300:1"]
     for nome, x, a, b in (("Central", ce, 0, 0), ("Baixo: extremos do arredondamento", ba, -m1, m2), ("Alto: extremos do arredondamento", al, m1, -m2)):
         md.append(f"| {nome} | {br(o['pontos']['164:1'] + a, 2)} | {br(o['pontos']['300:1'] + b, 2)} | {br(x['gama'], 4)} | {br(x['k_s'], 2)} | {br(x['cf']['44'], 4)} | {br(x['cf']['164'], 4)} | {br(x['cf']['300'], 4)} | {br(x['isp_s']['44'], 2)} | {br(x['isp_s']['40'], 2)} |")
-    md += ["", f"A meia resolução dos dados (±{br(m1, 2)} s e ±{br(m2, 2)} s) é leitura do último dígito publicado, sem fonte, NÃO VALIDADA.", "",
-           "## Empuxo", "", f"Com a mesma câmara e a mesma vazão, o empuxo escala com CF: {br(o['empuxo_164_n'], 0)} N × {br(o['fator_empuxo_44'], 4)} = **{br(o['empuxo_44_n'], 0)} N** (NÃO VALIDADO). O desenho de [F228] dá as cotas do 44:1, mas nenhum Isp, massa ou empuxo. A massa segue sem fonte.", "",
+    md += ["", f"A meia resolução dos dados (±{br(m1, 2)} s e ±{br(m2, 2)} s) supõe resolução de 1 s no 311 e de 0,5 s no 315,5, sem fonte, NÃO VALIDADA.", "",
+           "## Empuxo", "", f"Com a mesma câmara e a mesma vazão, o empuxo escala com CF: {br(o['empuxo_164_n'], 0)} N × {br(o['fator_empuxo_44'], 4)} = **{br(o['empuxo_44_n'], 0)} N** (NÃO VALIDADO). A folha dá o empuxo nominal sem separar as variantes; atribuí-lo ao 164:1 é escolha deste cálculo, e no 300:1 daria {br(o['empuxo_44_ancora_300_n'], 0)} N. O desenho de [F228] dá as cotas do 44:1, mas nenhum Isp, massa ou empuxo. A massa segue sem fonte.", "",
            "## Sensibilidade a γ", "", "γ imposto (NÃO VALIDADO), com K calibrado em um só ponto. A diferença entre as âncoras mostra quanto o γ imposto deixa de reproduzir os dois pontos.", "",
            "| γ | Razão CF 300/164 | Isp 44:1, âncora 164:1 (s) | Isp 44:1, âncora 300:1 (s) |", "| -: | -: | -: | -: |"]
     md += [f"| {br(x['gama'], 2)} | {br(x['razao_300_164'], 5)} | {br(x['isp_ancora_164_s'])} | {br(x['isp_ancora_300_s'])} |" for x in o["varredura_gama"]]
     md += ["", "## Comparação com o R-4D do Apollo", "",
-           f"O modelo dá {br(ap['isp_calculado_s'])} s em ε = {ap['razao_expansao']}, de {br(ap['baixo_s'])} a {br(ap['alto_s'])} s. {ap['fonte']}. O valor calculado fica dentro do que a fonte relata para 295 a 300 s.", "",
+           f"O modelo dá {br(ap['isp_calculado_s'])} s em ε = {ap['razao_expansao']}, de {br(ap['baixo_s'])} a {br(ap['alto_s'])} s. Razão de expansão: {ap['fonte_razao']}.", "",
+           "| [F242] | O que relata |", "| :- | :- |", *[f"| {d['pagina']} | {d['texto']} |" for d in ap["dados"]], "",
            f"**Isto é uma comparação, não uma verificação.** {ap['ressalva']}", "",
            "## Os análogos de 304 a 314 s", "", "Decisão do Fabio (2026-11-07): não são coerentes com o R-4D-11. Têm câmara de irídio e rênio, ou só o resumo cita essa tecnologia, ou outro injetor ([F239], [F240]; results/etapa7.2/rotas_mav.md). Ficam na rota A só como comparação."]
     (SAIDA / "isp_44.md").write_text("\n".join(md) + "\n", encoding="utf-8")

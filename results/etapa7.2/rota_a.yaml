@@ -1,5 +1,5 @@
 gerado_por: tools/rota_a_dimensiona.py
-natureza: dados para o portão; nada entra no CAD nem nas premissas
+natureza: dados para o portão; a rota A não entra no CAD
 alvo:
   diametro_m: 0.57
   limite_com_deck_m: 2.7439999999999998
@@ -36,6 +36,7 @@ isp_calculado:
     alto: 300.4679670315974
   empuxo_n: 469.16881656344935
   gama: 1.2277292809197347
+  gama_max_s: 302.5952485122287
 fecha:
   alvo_m: 0.05
   por_geometria:
@@ -240,7 +241,7 @@ dimensionamento:
   casos:
   - isp_s: 295.99059972688957
     origem: calculado, baixo
-    empuxo_peso: 1.0374059158374638
+    empuxo_peso: 1.0313712815529694
     massa_por_area_kg_m2: 291.4191231047789
     lander_injetado_kg: 4827.148717153689
     glom_kg: 487.18374000177073
@@ -588,7 +589,7 @@ dimensionamento:
           '0.05': 2.997499061742202
   - isp_s: 300.4679670315974
     origem: calculado, alto
-    empuxo_peso: 1.1214986384177943
+    empuxo_peso: 1.1282072290877516
     massa_por_area_kg_m2: 286.72370189371736
     lander_injetado_kg: 4749.966930748438
     glom_kg: 450.65350653540196
