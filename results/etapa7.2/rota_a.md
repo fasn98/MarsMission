@@ -73,7 +73,7 @@ Limite otimista, sem tanques dimensionados: 310,6 s.
 
 Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte; o valor calculado está na seção 0. Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em [F240], só o resumo cita essa tecnologia. Decisão do Fabio (2026-11-07): essa faixa não é coerente com o R-4D-11, e a contagem a seguir fica só como registro. Na faixa de 306 a 314 s: esfera em recesso de outra, recesso de até um hemisfério: 0 de 6 linhas dentro da faixa; esfera em recesso de outra, sem limite de recesso (um recesso além do hemisfério prende a esfera): 5 de 6 linhas dentro da faixa; esfera de volume somado, dividida no equador por antepara de calota (lente e tigela): 5 de 6 linhas dentro da faixa; esfera de volume somado, com antepara do mesmo raio e borda fora do equador (lente e crescente, com canto vivo na borda): 5 de 6 linhas dentro da faixa.
 
-**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda o valor, de cerca de 2 a 3 s no vão de base.
+**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda o valor: no vão de base, recesso_hemisferio fica de 2,3 a 2,7 s acima das outras, e as outras diferem entre si em até 0,3 s.
 
 ## 4. Tanques aninhados dimensionados
 

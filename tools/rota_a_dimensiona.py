@@ -309,6 +309,15 @@ def secao_zero(o):
     return t
 
 
+def dif_geometria(dm, im):
+    """Quanto a geometria muda o Isp mínimo, no vão de base: recesso_hemisferio contra as outras, e entre as outras."""
+    li = [x["por_geometria"] for x in im["linhas"] if x["vao_m"] == dm["vao_base_m"]]
+    outras = [f for f in dm["geometrias"] if f != "recesso_hemisferio"]
+    d = [x["recesso_hemisferio"] - y for x in li for y in (x[f] for f in outras)]
+    e = [max(x[f] for f in outras) - min(x[f] for f in outras) for x in li]
+    return f"A geometria muda o valor: no vão de base, recesso_hemisferio fica de {br(min(d), 1)} a {br(max(d), 1)} s acima das outras, e as outras diferem entre si em até {br(max(e), 1)} s."
+
+
 def compara_analogos(o):
     """Compara os Isp mínimos, por geometria, com a faixa dos análogos, lida da ressalva de results/etapa7.2/rotas_mav.yaml."""
     base, topo = (float(x) for x in re.search(r"de (\d+) a (\d+) s", o["ressalva_analogos"]).groups())
@@ -349,7 +358,7 @@ def escreve_md(o):
     for li in im["linhas"]:
         md.append(f"| {br(li['vao_m'], 3)} | {br(li['fator'], 2)} | " + " | ".join(br(li["por_geometria"][f], 2) if li["por_geometria"][f] else "não fecha na faixa" for f in dm["geometrias"]) + " |")
     md += ["", f"Os valores de Isp conhecidos são só análogos (results/etapa7.2/rotas_mav.md). O Isp do 44:1 do R-4D-11 segue sem fonte; o valor calculado está na seção 0. {o['ressalva_analogos']}. Decisão do Fabio (2026-11-07): essa faixa não é coerente com o R-4D-11, e a contagem a seguir fica só como registro. {compara_analogos(o)}", "",
-           "**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. A geometria muda o valor, de cerca de 2 a 3 s no vão de base.", "",
+           "**Fixada a geometria, estes valores são um piso quanto à massa.** O MAV redimensionado usa a fração estrutural fixa e não recebe a massa dos tanques da seção 4; se o inerte estourar, o MAV cresce e o Isp mínimo sobe. " + dif_geometria(dm, im), "",
            "## 4. Tanques aninhados dimensionados", "",
            f"Ti-6Al-4V recozido, base A: Ftu {br(dm['ftu_mpa'], 0)} MPa, Fty {br(dm['fty_mpa'], 0)} MPa ([F219]). Fator de {br(dm['fator_seguranca'], 1)}: {dm['fator_fonte']}. Tensão admissível: {br(dm['tensao_admissivel_mpa'], 0)} MPa. Na flambagem, fator de {br(dm['fator_flambagem'], 1)}: {dm['fator_flambagem_fonte']}; t varia com a raiz do fator. Raio interno {br(dm['raio_interno_m'], 3)} m. A P-093 usa {br(1e3 * dm['t_p093_m'], 1)} mm. **{dm['nota_flambagem']}.**", "",
            "**Pressão e espessura mínima (mm):**", "", "| Pressão | MPa | Cilindro | Cúpula normal | " + " | ".join(f"Cúpula invertida, fator {br(k, 2)}" for k in dm["fatores"]) + " | Fonte |", "| :- | -: | -: | -: |" + " -: |" * len(dm["fatores"]) + " :- |"]

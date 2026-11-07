@@ -46,13 +46,13 @@ O modelo dá 297,1 s em ε = 40, de 294,7 a 299,5 s. Razão de expansão: [F242]
 | :- | :- |
 | PDF p. 15 | "good performance Isp's of 295 and 297"; "its maximum performance, Isp slightly over 310 seconds", em O/F perto de 1,9 (sem ε, pressão nem regime na frase) |
 | PDF p. 19 | "295 to 300 seconds of impulse", em O/F de 1,8 a 1,9 |
-| PDF p. 26, Fig. 12 | cerca de 300 s em O/F de 1,6 a 1,9, com máximo perto de 304 s, leitura a olho, sem ε na figura |
+| PDF p. 26, Fig. 12 | cerca de 300 s em O/F de 1,6 a 1,9, pontos de 298 a 302 s perto de 1,65 e máximo perto de 304 s em O/F de cerca de 1,93, leitura a olho, sem ε na figura |
 | PDF p. 62 | "maintained a mean Isp of 300 seconds" |
 | PDF p. 66 | "the Isp was 295 seconds" com sangria de combustível para filme; cerca de 304 s sem filme |
-| PDF p. 81 | 273 s e 313 s em O/F 2,0, com injetor triplet |
-| PDF p. 87 | configuração PFRT, Isp em regime permanente de 286 ± 6 s |
+| PDF p. 81 | "Isp = 273 seconds at an O/F of 2.0"; "was 313 seconds at an O/F of 2.0" (OCR corrigido), injetor triplet |
+| PDF p. 87 | configuração PFRT, "Isp (steady state) = 286 ± 6 seconds" |
 
-**Isto é uma comparação, não uma verificação.** O programa relata de 273 a 313 s, conforme injetor, resfriamento e O/F, então a comparação discrimina pouco. O R-4D do Apollo também teve outra câmara (molibdênio com revestimento), outro injetor, O/F perto de 1,8 a 2,0 contra 1,65 no R-4D-11 ([F228] PDF p. 22), e trocou MMH por A-50 (PDF p. 19). A Fig. 12, perto de O/F 1,65, fica acima do valor calculado. O valor de pouco mais de 310 s não diz ε, pressão nem regime: se fosse de 40:1 em regime permanente, contrariaria o modelo. Não conferido
+**Isto é uma comparação, não uma verificação.** O programa relata de 273 a 313 s, conforme injetor, resfriamento e O/F, então a comparação discrimina pouco. O R-4D do Apollo também teve outra câmara (molibdênio com revestimento), outro injetor, O/F perto de 1,8 a 2,0 contra 1,65 no R-4D-11 ([F228] PDF p. 22), e passou por MMH e A-50 (PDF p. 19, que diz a diferença "very small"). Na Fig. 12, perto de O/F 1,65, os pontos vão de 298 a 302 s: o central calculado fica abaixo deles, e a parte de baixo cai dentro da faixa calculada. O valor de pouco mais de 310 s não diz ε, pressão nem regime: se fosse de 40:1 em regime permanente, contrariaria o modelo. Não conferido.
 
 ## Os análogos de 304 a 314 s
 
