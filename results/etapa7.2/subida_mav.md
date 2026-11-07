@@ -19,7 +19,7 @@ Veículo de referência, de um estágio, com empuxo/peso 2,5 ([F46] PDF p. 9), I
 | Rota A sem deck, Isp calculado central | 298,2 | 469 | não convergiu: diverge: no passo 2, GLOM de 645,6 kg e empuxo/peso de 0,78, abaixo de 1: o MAV não decola | | | | | | |
 | Rota A sem deck, Isp calculado alto | 300,5 | 472 | não convergiu: diverge: no passo 2, GLOM de 561,9 kg e empuxo/peso de 0,90, abaixo de 1: o MAV não decola | | | | | | |
 
-Antes, todos os casos usavam 4 027,9 m/s. **A linha da base é só conferência e não foi aplicada:** o GLOM vigente segue 386,8 kg (results/etapa2.5/arquitetura.yaml). A base sai com Δv menor que o de [F37] porque a referência tem massa por área bem menor que a do nosso MAV e porque a inserção direta penaliza mais o empuxo/peso alto da referência (ver Limitações).
+Antes, todos os casos usavam 4 027,9 m/s. **A linha da base é só conferência e não foi aplicada:** o GLOM vigente segue 386,8 kg (results/etapa2.5/arquitetura.yaml). A base sai com Δv menor que o de [F37]; hipótese, não conferida: a inserção direta penaliza mais o empuxo/peso alto da referência (ver Limitações). A coluna de massa por área é a do lander na entrada, não a do MAV na subida.
 
 ## Busca do ponto fixo nos casos que não convergiram
 
@@ -70,7 +70,7 @@ A referência é simulada de novo com o mesmo CD.
 
 - **Viés:** a inserção direta penaliza mais o empuxo/peso alto da referência que o empuxo/peso baixo dos nossos casos, então o método do incremento subestima a penalidade do empuxo/peso baixo. A conclusão "sem ponto fixo" da rota A é, por isso, conservadora a favor da rota A (não conferido com outro modelo neste repositório).
 - Inserção direta, com queima contínua. Sem costa entre os estágios e sem queima de circularização separada: o MAV do MSR usa costa longa ([F57] PDF p. 2: "the MAV remains in a coast period"), que este modelo não explora.
-- Sem perda por pressão no bocal (empuxo no vácuo nos dois lados da diferença); a de [F37] está dentro dos 4.027,9 m/s.
+- Sem perda por pressão no bocal (empuxo no vácuo nos dois lados da diferença); a de [F37] está dentro dos 4 027,9 m/s.
 - Plano equatorial rumo leste, como [F37]; a latitude do sítio e a inclinação continuam no déficit de rotação de config/superficie.yaml.
 - Atmosfera de página educacional ([F245]); densidade zero acima de 80 km (P-106); CD constante (P-104).
 - A fração estrutural e a divisão de Δv entre os estágios são as de antes (P-019 e ε 0,230); a massa dos tanques da rota A não entra no GLOM.

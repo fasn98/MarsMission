@@ -675,7 +675,7 @@ def test_atmosfera_e_subida_vertical():
 
 
 def test_orbita_circular_em_costa():
-    """Sem empuxo, acima da atmosfera, com Marte girando: a órbita circular segue circular (equações polares e rotação)."""
+    """Sem empuxo e acima da atmosfera (onde a rotação não entra): a órbita circular segue circular (equações polares)."""
     from orbital import subida as sb
     from orbital.config import v
     from scipy.integrate import solve_ivp

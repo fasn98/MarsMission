@@ -107,8 +107,8 @@ contra_no_adr_0007:
     baseline CTPB (cold temperature capable) propellant"'
 - item: Isp menor
   adr: '[F58] p. 4: "Lower ISP than liquid/hybrid counterparts"'
-  hoje: 'vale: [F34] PDF p. 4 dá 293 e 282 s médios, contra o Isp de voo do R-4D-11
-    de 310 s ([F107] Tab. 3)'
+  hoje: 'vale: [F34] PDF p. 4 dá 293 e 282 s médios, contra o Isp de requisito do
+    R-4D-11 de 310 s ([F107] Tab. 3)'
 - item: Não estrangula nem desliga
   adr: '[F58] p. 4: "Cannot be actively throttled or shut down"'
   hoje: 'vale igual: o corte no alvo exige outro meio (o MSR usa costa longa e um
