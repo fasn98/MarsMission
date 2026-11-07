@@ -12,9 +12,10 @@ sem cálculo. Os números do nosso MAV vêm de `results/etapa7.2/rota_a.md` e `r
   conjunto fica dentro da casca traseira com o escudo embaixo.
 - **SRL:** o MAV vai **deitado** sobre a plataforma do lander, dentro de um recinto térmico, e há uma estrutura de ligação
   (LAS) entre a casca traseira e o lander, só desenhada, sem cota.
-- **Comparação de envelope:** o MAV do MSR tinha de caber em 2,8 m no SRL de 2019 e em 3,0 m no de 2020, com cápsula de
-  4,65 m. O nosso limite sem deck, em cápsula de 4,5 m, é maior que esses dois. É um indício de que o limite sem deck é
-  otimista, não uma prova.
+- **Comparação de envelope:** o MAV do MSR tinha de caber em 2,8 m no SRL de 2019, em 3,0 m sem a rampa aerodinâmica em 2020
+  e em 2,99 m (Ø 0,5 m) em 2022; a cápsula do SRL era de 4,65 m no seminário de 2021. O nosso limite sem deck, em cápsula de
+  4,5 m, é maior que os três. É um indício de que o limite sem deck é otimista, não uma prova: as versões, os anos e os
+  diâmetros não são os mesmos.
 
 ## MSL (Curiosity)
 
@@ -49,6 +50,7 @@ Sem cotas internas.
 | Recinto térmico | "the MAV is stored in a thermal enclosure known as the igloo" | [F249] PDF p. 3 |
 | Envelope para caber no SRL (2019) | "a maximum length of 2.8m and a maximum diameter of 0.57m was needed to fit within the SRL" | [F249] PDF p. 2 |
 | Envelope (DAC-0.0, 2020) | "a geometric length not to exceed 3.0m and a diameter not to exceed 0.57m (excluding aft aerodynamic ramp)" | [F57] PDF p. 2 |
+| Envelope (SRC, 2022) | "a geometric length not to exceed 2.99m and a diameter not to exceed 0.5m" | [F35] PDF p. 3 |
 | Diâmetro da cápsula | Tabela "Capsule diameter (m)": 4.5 (MSL), 4.5 (Mars 2020), 4.65 e >5.4 (duas colunas do SRL) | [F254] PDF p. 13 |
 | Alternativa de 2023 | "MSR MAV Lander (MML), which includes the MAV and a MAV landing/launch system using a scaled-up Skycrane EDL" | [F255] PDF p. 45 |
 
@@ -66,8 +68,9 @@ Sem cotas internas.
   pende do estágio de descida. No SRL, o MAV deitado ocupa quase todo o diâmetro do lander. Um arranjo em que a carga vai até
   perto do plano mais largo não contraria nenhuma das fontes.
 - **Contra:** o SRL tem uma estrutura de ligação (LAS) entre a casca e o lander, e um recinto térmico em volta do MAV. As duas
-  ocupam o espaço que o nosso "sem deck" dá ao MAV. O MSR limitou o MAV a 2,8 m (2019) e a 3,0 m (2020) numa cápsula de
-  4,65 m. O nosso limite sem deck, 3,184 m em 4,5 m (`results/etapa7.2/rota_a.yaml`, `alvo.limite_sem_deck_m`), passa dos dois.
+  ocupam o espaço que o nosso "sem deck" dá ao MAV. O MSR limitou o MAV a 2,8 m (2019), 3,0 m sem a rampa (2020) e 2,99 m
+  (2022), com cápsula de 4,65 m no seminário de 2021. O nosso limite sem deck, 3,184 m em 4,5 m
+  (`results/etapa7.2/rota_a.yaml`, `alvo.limite_sem_deck_m`), passa dos três.
 - **Conclusão:** as fontes não provam nem descartam o arranjo sem deck. O indício do SRL é de que o espaço real é menor que
   o nosso limite sem deck. Para provar, faltaria uma cota do SRL ou do MSL: altura da LAS, do igloo ou do estágio de descida,
   ou a folga até a casca. Não achei nenhuma.

@@ -260,6 +260,6 @@ Folga axial mínima (m):
 | Alavanca | Motivo |
 | :- | :- |
 | Reduzir a margem de Δv da P-014 | a margem cobre perdas não modeladas, e o empuxo/peso baixo da rota A aumenta a perda, não a reduz |
-| Motor de 44:1 com câmara de irídio e rênio | mesmo com 314 s, o melhor análogo, o alvo com deck só fecha na geometria otimista ou no menor vão (seção 3) |
-| Aeroshell maior que 4,5 m | no Vulcan, o lander de 4,65 m já tem folga radial negativa na leitura do Ø menor (seção 5) |
+| Motor de 44:1 com câmara de irídio e rênio | no Isp do melhor análogo, o alvo com deck fecha só no limite, em três das quatro geometrias (seções 3 e 4), sem folga para a incerteza do Isp |
+| Aeroshell maior que 4,5 m | no Vulcan, o lander de aeroshell maior já tem folga radial negativa na leitura do Ø menor (seção 5) |
 | Carga útil menor | reduz o retorno científico, que é o requisito da missão, e não é decisão de projeto do veículo |

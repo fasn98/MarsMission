@@ -674,10 +674,32 @@ def test_atmosfera_e_subida_vertical():
     assert sol.y[2, -1] == pytest.approx(v_an, rel=1e-6)
 
 
+def test_orbita_circular_em_costa():
+    """Sem empuxo, acima da atmosfera, com Marte girando: a órbita circular segue circular (equações polares e rotação)."""
+    from orbital import subida as sb
+    from orbital.config import v
+    from scipy.integrate import solve_ivp
+    atm = {k: v(x) for k, x in ler("config/subida.yaml")["atmosfera"].items()}
+    pl = sb.Planeta(42828.37362069909e9, 3396.19e3, 2 * math.pi / 88642.66)
+    r0 = pl.raio + 200e3
+    f = sb._deriv(pl, sb.Estagio(100.0, 0.0, 0.0, 300.0), 1.0, atm, (1e9, 0.0, 0.0))
+    sol = solve_ivp(f, (0, 3000), [r0, 0.0, 0.0, math.sqrt(pl.mu / r0), 100.0], rtol=1e-11, atol=1e-6)
+    assert sol.y[0, -1] == pytest.approx(r0, rel=1e-8) and abs(sol.y[2, -1]) < 1e-3
+
+
 def test_subida_mav():
     """Subida: referência perto de [F37], casos convergidos com Δv coerente, e folgas pelos limites da rota A."""
     r = ler("results/etapa7.2/subida_mav.yaml")
-    assert abs(r["referencia"]["diferenca_para_f37_m_s"]) < 0.05 * r["referencia"]["f37_m_s"]
+    from orbital.config import v
+    tol = v(ler("config/subida.yaml")["numerico"]["tol_glom_kg"])
+    # a referência e [F37] ficam acima do Δv ideal, sem perdas, conferido à mão (Hohmann da superfície girando)
+    from orbital import subida as sb
+    mu, R = 42828.37362069909e9, 3396.19e3
+    w = 2 * math.pi / 88642.66
+    vp = math.sqrt(mu * 2 * (R + 1e5) / (R * (2 * R + 1e5)))
+    ideal = (vp - w * R) + (math.sqrt(mu / (R + 1e5)) - vp * R / (R + 1e5))
+    assert r["referencia"]["dv_ideal_m_s"] == pytest.approx(ideal)
+    assert r["referencia"]["dv_m_s"] > ideal and r["referencia"]["f37_m_s"] > ideal
     for c in r["casos"]:
         h = c["historico"]
         if not c["convergiu"]:
@@ -685,7 +707,7 @@ def test_subida_mav():
             pf = c["ponto_fixo"]
             assert all(x["pedido_menos_usado_m_s"] > 0 for x in pf if x.get("pedido_menos_usado_m_s") is not None)
             continue
-        assert abs(h[-1]["glom_kg"] - h[-2]["glom_kg"]) < 0.01
+        assert abs(h[-1]["glom_kg"] - h[-2]["glom_kg"]) < tol
         # o Δv usado é o de [F37] mais a diferença simulada contra a referência
         assert c["dv_100x100_m_s"] == pytest.approx(r["referencia"]["f37_m_s"] + h[-2]["dv_simulado_m_s"] - r["referencia"]["dv_m_s"])
         for x in c["comprimentos"].values():

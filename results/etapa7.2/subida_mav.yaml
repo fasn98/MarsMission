@@ -10,7 +10,13 @@ referencia:
     t_v_s: 1
     theta0_graus: 61.67562699309984
     c_1_s: 0.009917305859844534
+  dv_ideal_m_s: 3361.5788921954368
   f37_m_s: 4027.9
+  empuxo_peso: 2.5
+  isp_s: 343.0
+  area_m2: 1.227
+  massa_kg: 394.1
+base_vigente_glom_kg: 386.77369250546496
 limites:
   diametro_m: 0.57
   sem_deck_m: 3.1839999999999997
@@ -123,6 +129,18 @@ casos:
   motivo: 'diverge: no passo 2, GLOM de 762,9 kg e empuxo/peso de 0,66, abaixo de
     1: o MAV não decola'
   ponto_fixo:
+  - dv_100x100_usado_m_s: 3500
+    glom_kg: 297.41731736794935
+    empuxo_peso: 1.6894353117164604
+    decola: true
+    dv_100x100_pedido_m_s: 3880.7835705612515
+    pedido_menos_usado_m_s: 380.7835705612515
+  - dv_100x100_usado_m_s: 3700
+    glom_kg: 355.54111153535575
+    empuxo_peso: 1.413246744117884
+    decola: true
+    dv_100x100_pedido_m_s: 3976.852098216478
+    pedido_menos_usado_m_s: 276.8520982164782
   - dv_100x100_usado_m_s: 3900
     glom_kg: 429.28623724018564
     empuxo_peso: 1.1704715285253007
@@ -156,6 +174,18 @@ casos:
   motivo: 'diverge: no passo 2, GLOM de 645,6 kg e empuxo/peso de 0,78, abaixo de
     1: o MAV não decola'
   ponto_fixo:
+  - dv_100x100_usado_m_s: 3500
+    glom_kg: 288.5364510396657
+    empuxo_peso: 1.7516237278047704
+    decola: true
+    dv_100x100_pedido_m_s: 3867.5327784353312
+    pedido_menos_usado_m_s: 367.53277843533124
+  - dv_100x100_usado_m_s: 3700
+    glom_kg: 343.9097655958943
+    empuxo_peso: 1.4695927377983462
+    decola: true
+    dv_100x100_pedido_m_s: 3948.236351444203
+    pedido_menos_usado_m_s: 248.23635144420314
   - dv_100x100_usado_m_s: 3900
     glom_kg: 413.85109567024426
     empuxo_peso: 1.2212298076899748
@@ -195,6 +225,18 @@ casos:
   motivo: 'diverge: no passo 2, GLOM de 561,9 kg e empuxo/peso de 0,90, abaixo de
     1: o MAV não decola'
   ponto_fixo:
+  - dv_100x100_usado_m_s: 3500
+    glom_kg: 279.91327153388033
+    empuxo_peso: 1.8163859866338816
+    decola: true
+    dv_100x100_pedido_m_s: 3856.190260602798
+    pedido_menos_usado_m_s: 356.19026060279793
+  - dv_100x100_usado_m_s: 3700
+    glom_kg: 332.6624965174325
+    empuxo_peso: 1.5283674871968669
+    decola: true
+    dv_100x100_pedido_m_s: 3923.2054791170212
+    pedido_menos_usado_m_s: 223.20547911702124
   - dv_100x100_usado_m_s: 3900
     glom_kg: 398.9962805697851
     empuxo_peso: 1.2742738933829723

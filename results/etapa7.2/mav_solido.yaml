@@ -21,12 +21,8 @@ alvo_folga_m: 0.05
 limites:
   sem_deck_m: 3.1839999999999997
   com_deck_m: 2.7439999999999998
-diagnostico_insercao_direta:
-  altitude_m: 95451.88574769208
-  vr_m_s: 3490.7801396932346
-  chegou: true
 casos:
-- rotulo: Δv de [F37] com perdas, empuxo/peso 2,5
+- rotulo: Δv de [F37], com perdas
   dv_100x100_m_s: 4027.9
   dv_subida_com_margem_km_s: 5.772354040682595
   glom_kg: 1645.0376999869977
@@ -56,36 +52,36 @@ casos:
     comprimento_m: 6.661832475402589
     folga_sem_deck_m: -1.7389162377012946
     folga_com_deck_m: -1.9589162377012945
-- rotulo: coluna Velocity de [F37], lida como sem perdas (limite inferior)
-  dv_100x100_m_s: 3503.0
-  dv_subida_com_margem_km_s: 5.1949640406825965
-  glom_kg: 671.8507802276358
+- rotulo: Δv ideal, sem perdas (limite inferior)
+  dv_100x100_m_s: 3361.5788921954368
+  dv_subida_com_margem_km_s: 5.039400822097576
+  glom_kg: 552.6149110953575
   propelente_kg:
-  - 390.2764043343396
-  - 78.00105274819241
+  - 314.9021352220697
+  - 68.24091130001553
   empuxos_n:
-  - 17804.55411254899
-  - 9946.568068275932
-  empuxo_peso: 7.136917083275363
-  lander_injetado_kg: 5212.763302277617
-  razao_glom_msr: 1.7052050259584666
+  - 14365.952039251271
+  - 8701.970619268524
+  empuxo_peso: 7.001066262013817
+  lander_injetado_kg: 4962.132912107791
+  razao_glom_msr: 1.4025759164856788
   comprimentos:
   - comprimento_fixo_m: 0.0
-    comprimento_m: 4.675847389507531
-    folga_sem_deck_m: -0.7459236947537657
-    folga_com_deck_m: -0.9659236947537657
+    comprimento_m: 3.8257626686746677
+    folga_sem_deck_m: -0.320881334337334
+    folga_com_deck_m: -0.540881334337334
   - comprimento_fixo_m: 0.5
-    comprimento_m: 4.309949724783915
-    folga_sem_deck_m: -0.5629748623919577
-    folga_com_deck_m: -0.7829748623919577
+    comprimento_m: 3.6172881004015816
+    folga_sem_deck_m: -0.21664405020079092
+    folga_com_deck_m: -0.4366440502007909
   - comprimento_fixo_m: 1.0
-    comprimento_m: 3.944052060060298
-    folga_sem_deck_m: -0.38002603003014923
-    folga_com_deck_m: -0.6000260300301492
+    comprimento_m: 3.408813532128495
+    folga_sem_deck_m: -0.1124067660642476
+    folga_com_deck_m: -0.33240676606424757
   - comprimento_fixo_m: 1.5
-    comprimento_m: 3.5781543953366812
-    folga_sem_deck_m: -0.19707719766834075
-    folga_com_deck_m: -0.4170771976683407
+    comprimento_m: 3.2003389638554083
+    folga_sem_deck_m: -0.00816948192770428
+    folga_com_deck_m: -0.22816948192770425
 contra_no_adr_0007:
 - item: Massa pela regra (iii)
   adr: 41,3 a 41,4 t do sólido, contra 34,2 a 34,4 t do hipergólico
@@ -109,6 +105,10 @@ contra_no_adr_0007:
   adr: não tratado no ADR
   hoje: '[F250] PDF p. 2: "concerns exist with long duration aging associated with
     baseline CTPB (cold temperature capable) propellant"'
+- item: Isp menor
+  adr: '[F58] p. 4: "Lower ISP than liquid/hybrid counterparts"'
+  hoje: 'vale: [F34] PDF p. 4 dá 293 e 282 s médios, contra o Isp de voo do R-4D-11
+    de 310 s ([F107] Tab. 3)'
 - item: Não estrangula nem desliga
   adr: '[F58] p. 4: "Cannot be actively throttled or shut down"'
   hoje: 'vale igual: o corte no alvo exige outro meio (o MSR usa costa longa e um

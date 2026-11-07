@@ -1,7 +1,7 @@
 """MAV de propelente sólido para o nosso encontro (portão da rota A, Fabio, 2026-11-07; reabre o ADR 0007 sem alterá-lo).
 
 Escala o MAV sólido de dois estágios do MSR de 2019 ([F34], [F247]) para o Δv de subida do ADR 0005, com a perda gravitacional
-da simulação de subida (src/orbital/subida.py) no empuxo/peso do sólido, iterando até convergir. Comprimento por P-108; folga
+em dois limites para o Δv de 100 × 100 km: o de [F37] e o ideal, sem perdas. Comprimento por P-108; folga
 deitado com e sem deck nos limites de results/etapa7.2/rota_a.yaml.
 Saída: results/etapa7.2/mav_solido.yaml e .md
 
@@ -11,7 +11,6 @@ Uso: python tools/mav_solido.py
 from __future__ import annotations
 
 import copy
-import math
 import sys
 from pathlib import Path
 
@@ -44,7 +43,7 @@ def dimensiona(ctx, m, m2, ms, dv100):
 
 def main():
     ctx = sm.contexto()
-    sc, _, atm, pl, _ = ctx
+    sc, _, _, pl, _ = ctx
     m = rad.modelo()
     ms = m.cad["mav_solido"]
     o1 = ler("config/mav_propulsao.yaml")["opcoes"]["O1"]
@@ -53,12 +52,8 @@ def main():
     m2 = copy.deepcopy(m.mcfg)
     m2["opcoes"][m.op] = {**m2["opcoes"][m.op], "isp_s": list(o1["isp_s"]), "fracao_estrutural": o1["fracao_estrutural"]}
     ref = sc["referencia"]
-    # a inserção direta com queima contínua não representa o sólido: diagnóstico no primeiro dimensionamento
-    lan, e_, f, tw = dimensiona(ctx, m, m2, ms, v(ref["dv_100x100_m_s"]))
-    est = [sb.Estagio(e["massa_inicial_kg"], e["propelente_kg"], fi, i_) for e, fi, i_ in zip(e_, f, ms["isp_s"]["valor"])]
-    diag = sb.voa(pl, est, v(sc["arrasto"]["cd_base"]) * math.pi * d ** 2 / 4, atm, (1.0, 1.55, 0.0), v(sc["alvo_altitude_m"]))
     casos = []
-    for rot, dv100 in (("Δv de [F37] com perdas, empuxo/peso 2,5", v(ref["dv_100x100_m_s"])), ("coluna Velocity de [F37], lida como sem perdas (limite inferior)", v(ref["velocidade_100x100_m_s"]))):
+    for rot, dv100 in (("Δv de [F37], com perdas", v(ref["dv_100x100_m_s"])), ("Δv ideal, sem perdas (limite inferior)", sb.dv_ideal(pl, v(sc["alvo_altitude_m"])))):
         lan, e_, f, tw = dimensiona(ctx, m, m2, ms, dv100)
         mp = sum(e["propelente_kg"] for e in e_)
         comps = []
@@ -70,14 +65,14 @@ def main():
                       "razao_glom_msr": e_[0]["massa_inicial_kg"] / v(ms["glom_kg"]), "comprimentos": comps})
     out = nativo({"gerado_por": "tools/mav_solido.py", "status": "NÃO VALIDADO", "referencia_msr": {k: ms[k]["valor"] for k in ("glom_kg", "propelente_kg", "empuxo_medio_n", "tempo_queima_s", "isp_s", "comprimento_m", "diametro_m")},
                   "fracao_estrutural": v(o1["fracao_estrutural"]), "alvo_folga_m": m.alvo, "limites": {"sem_deck_m": m.lim_ombro[d], "com_deck_m": m.lim_deck[d]},
-                  "diagnostico_insercao_direta": {"altitude_m": diag.get("altitude_corte_m"), "vr_m_s": diag.get("vr_corte_m_s"), "chegou": diag["chegou"]}, "casos": casos, "contra_no_adr_0007": ms["contra_no_adr_0007"]})
+                  "casos": casos, "contra_no_adr_0007": ms["contra_no_adr_0007"]})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "mav_solido.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
 
 
 def escreve_md(o):
-    r, dg = o["referencia_msr"], o["diagnostico_insercao_direta"]
+    r = o["referencia_msr"]
     todos = [c for x in o["casos"] for c in x["comprimentos"]]
     fecha = [c for c in todos if c["folga_sem_deck_m"] >= o["alvo_folga_m"]]
     md = ["# MAV de propelente sólido para o nosso encontro (gerado por tools/mav_solido.py)", "",
@@ -85,7 +80,7 @@ def escreve_md(o):
           "## Resposta", "",
           f"O MAV sólido fica entre **{br(min(x['glom_kg'] for x in o['casos']), 0)} e {br(max(x['glom_kg'] for x in o['casos']), 0)} kg** ({br(min(x['razao_glom_msr'] for x in o['casos']), 1)} a {br(max(x['razao_glom_msr'] for x in o['casos']), 1)} vezes o do MSR de 2019), com comprimento de {br(min(c['comprimento_m'] for c in todos), 2)} a {br(max(c['comprimento_m'] for c in todos), 2)} m em Ø {br(r['diametro_m'], 2)} m. "
           + (f"**Não cabe deitado, nem sem deck**, em nenhum caso: a melhor folga sem deck é {sg(max(c['folga_sem_deck_m'] for c in todos))} m." if not fecha else f"Cabe sem deck com folga ≥ {sg(o['alvo_folga_m'], 2)} m em {len(fecha)} de {len(todos)} casos."), "",
-          f"**A perda gravitacional do item 2 não foi aplicada ao sólido.** A simulação de inserção direta, com queima contínua, não representa um sólido, que não desliga: com o empuxo/peso do sólido, o veículo chega à energia da órbita de 100 km a {br(dg['altitude_m'] / 1000, 1)} km de altitude, ainda subindo a {br(dg['vr_m_s'], 0)} m/s. O MSR usa queima, costa longa e queima do 2º estágio, que o modelo não tem. No lugar, há dois limites para o Δv de 100 × 100 km: o de [F37], com perdas a empuxo/peso 2,5, e a coluna \"Velocity\" de [F37], lida como sem perdas. O empuxo/peso maior do sólido tende a reduzir a perda gravitacional; o arrasto, a aumentar.", "",
+          "**A perda gravitacional do item 2 não foi aplicada ao sólido.** A simulação de subida corta a queima quando chega à energia da órbita, como um motor que desliga; o sólido não desliga, e o MSR usa queima, costa longa e queima do 2º estágio ([F57] PDF p. 2), que o modelo não tem. No lugar, há dois limites para o Δv de 100 × 100 km: o de [F37], com as perdas do caso de [F37], e o ideal, sem perdas (src/orbital/subida.py, dv_ideal). O empuxo/peso maior do sólido tende a reduzir a perda gravitacional; o arrasto, a aumentar.", "",
           "## MAV sólido do MSR de 2019 (fonte)", "", "| Grandeza | Estágio 1 | Estágio 2 |", "| :- | -: | -: |",
           f"| Propelente (kg) | {br(r['propelente_kg'][0], 1)} | {br(r['propelente_kg'][1], 1)} |", f"| Empuxo médio (N) | {br(r['empuxo_medio_n'][0], 0)} | {br(r['empuxo_medio_n'][1], 0)} |",
           f"| Tempo de queima (s) | {br(r['tempo_queima_s'][0], 1)} | {br(r['tempo_queima_s'][1], 1)} |", f"| Isp médio (s) | {br(r['isp_s'][0], 0)} | {br(r['isp_s'][1], 0)} |", "",

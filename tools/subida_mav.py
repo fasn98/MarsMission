@@ -48,13 +48,14 @@ def contexto():
     pl = sb.Planeta(v(po["gm_marte"]) * 1e9, v(po["raio_marte_km"]) * 1e3, 2 * math.pi / v(scfg["marte"]["periodo_rotacao_s"]))
     nu = sc["numerico"]
     num = {"limites": [tuple(x) for x in nu["limites_guia"]["valor"]], "grade": {"t_v_s": nu["grade_t_v_s"]["valor"], "theta0_rad": nu["grade_theta0_rad"]["valor"], "c_1_s": nu["grade_c_1_s"]["valor"]}, "tol_m": v(nu["tol_altitude_m"]),
-           "tol_m_s": v(nu["tol_vr_m_s"]), "tol_kg": v(nu["tol_glom_kg"]), "iter": int(v(nu["iteracoes_max"])), "varredura": nu["varredura_ponto_fixo_m_s"]["valor"]}
+           "tol_m_s": v(nu["tol_vr_m_s"]), "tol_kg": v(nu["tol_glom_kg"]), "iter": int(v(nu["iteracoes_max"])), "varredura": nu["varredura_ponto_fixo_m_s"]["valor"], "integrador": nu["integrador"]["valor"]}
     return sc, scfg, atm, pl, num
 
 
 def voo(ctx, estagios, area_cd):
     sc, _, atm, pl, num = ctx
-    return sb.otimiza(pl, estagios, area_cd, atm, v(sc["alvo_altitude_m"]), num["grade"], num["limites"], num["tol_m"], num["tol_m_s"])
+    it = num["integrador"]
+    return sb.otimiza(pl, estagios, area_cd, atm, v(sc["alvo_altitude_m"]), num["grade"], num["limites"], num["tol_m"], num["tol_m_s"], it["pontos_de_partida"], it)
 
 
 def referencia(ctx, cd):
@@ -64,7 +65,7 @@ def referencia(ctx, cd):
     g = pl.mu / pl.raio ** 2
     est = [sb.Estagio(m0, m0, v(r["empuxo_peso"]) * m0 * g, v(r["isp_s"]))]
     x = voo(ctx, est, cd * v(r["area_m2"]))
-    return {**x, "diferenca_para_f37_m_s": x["dv_m_s"] - v(r["dv_100x100_m_s"])}
+    return {**x, "diferenca_para_f37_m_s": x["dv_m_s"] - v(r["dv_100x100_m_s"]), "dv_ideal_m_s": sb.dv_ideal(pl, v(sc["alvo_altitude_m"]))}
 
 
 def veiculo(ctx, m, isp, empuxo_motor, dv100):
@@ -173,7 +174,9 @@ def main():
             x.update({"glom_kg": c["glom_kg"], "dv_100x100_m_s": c["dv_100x100_m_s"], "melhor_folga_sem_deck_m": (m.lim_ombro[m.d_alvo] - min(Ls)) / 2, "pior_folga_sem_deck_m": (m.lim_ombro[m.d_alvo] - max(Ls)) / 2})
         sens.append(x)
     out = nativo({"gerado_por": "tools/subida_mav.py", "status": "NÃO VALIDADO", "alvo_folga_m": alvo, "cd_base": cd0,
-                  "referencia": {**{k: refs[cd0][k] for k in ("dv_m_s", "diferenca_para_f37_m_s", "t_corte_s", "guia")}, "f37_m_s": v(sc["referencia"]["dv_100x100_m_s"])},
+                  "referencia": {**{k: refs[cd0][k] for k in ("dv_m_s", "diferenca_para_f37_m_s", "t_corte_s", "guia", "dv_ideal_m_s")}, "f37_m_s": v(sc["referencia"]["dv_100x100_m_s"]),
+                                 **{k: v(sc["referencia"][k]) for k in ("empuxo_peso", "isp_s", "area_m2", "massa_kg")}},
+                  "base_vigente_glom_kg": ler("results/etapa2.5/arquitetura.yaml")["lander"]["mav"]["estagios"][0]["massa_inicial_kg"],
                   "limites": {"diametro_m": m.d_alvo, "sem_deck_m": m.lim_ombro[m.d_alvo], "com_deck_m": m.lim_deck[m.d_alvo]}, "casos": casos, "sensibilidade_cd": sens})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "subida_mav.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -188,21 +191,21 @@ def escreve_md(o):
     md = ["# Subida do MAV com o empuxo/peso real (gerado por tools/subida_mav.py)", "",
           "**NÃO VALIDADO.** Simulação plana da subida até 100 × 100 km, com redimensionamento do MAV até convergir. Modelo em src/orbital/subida.py; premissas P-104 a P-107.", "",
           "## Resposta", "",
-          ("**A iteração não convergiu na rota A:** ver a busca do ponto fixo abaixo. " if any(not c["convergiu"] for c in rot) else "") + (f"**A rota A sem deck continua com folga ≥ {sg(alvo, 2)} m em {len(fecha)} de {total} combinações de Isp e geometria**" if fecha else f"**A rota A sem deck NÃO fecha: nenhuma das combinações de Isp e geometria chega a folga ≥ {sg(alvo, 2)} m**")
+          ("**A iteração não convergiu na rota A:** ver a busca do ponto fixo abaixo. " if any(not c["convergiu"] for c in rot) else "") + (f"**A rota A sem deck continua com folga ≥ {sg(alvo, 2)} m em {len(fecha)} de {total} combinações de Isp e geometria**" if fecha else f"**A rota A sem deck NÃO fecha: nenhum MAV da rota A convergiu, então nenhuma geometria chega a folga ≥ {sg(alvo, 2)} m**")
           + (" (" + "; ".join(f"{br(i, 1)} s, {f}" for i, f in fecha) + ")." if fecha else ".") + " " + ("Todos os casos convergiram." if all(c["convergiu"] for c in o["casos"]) else "Há caso que não convergiu: ver a tabela."), "",
           "## Verificação do modelo contra [F37]", "",
-          f"Veículo de referência, de um estágio, com empuxo/peso 2,5, Isp 343 s e área de 1,227 m² ([F37], [F46]); massa de 394,1 kg (P-105); CD {br(o['cd_base'], 2)} (P-104). Simulado: **{br(ref['dv_m_s'], 1)} m/s**, contra {br(ref['f37_m_s'], 1)} m/s de [F37] Tab. 1: {sg(ref['diferenca_para_f37_m_s'], 1)} m/s ({sg(100 * ref['diferenca_para_f37_m_s'] / ref['f37_m_s'], 1)} %). [F37] otimizou ângulo de ataque e inclinação no POST II com Mars-GRAM 2001; aqui o guiamento é linear-tangente e a atmosfera é a de [F245], então o modelo gasta mais. Esse desvio entra só pela diferença entre casos, porque o Δv de cada caso é o de [F37] mais a diferença entre a simulação do caso e a da referência.", "",
+          f"Veículo de referência, de um estágio, com empuxo/peso {br(ref['empuxo_peso'], 1)} ([F46] PDF p. 9), Isp {br(ref['isp_s'], 0)} s e área de {br(ref['area_m2'], 3)} m² ([F37]); massa de {br(ref['massa_kg'], 1)} kg (P-105); CD {br(o['cd_base'], 2)} (P-104). Simulado: **{br(ref['dv_m_s'], 1)} m/s**, contra {br(ref['f37_m_s'], 1)} m/s de [F37] Tab. 1: {sg(ref['diferenca_para_f37_m_s'], 1)} m/s ({sg(100 * ref['diferenca_para_f37_m_s'] / ref['f37_m_s'], 1)} %). O Δv ideal, sem perdas, é {br(ref['dv_ideal_m_s'], 1)} m/s. [F37] otimizou no POST II o ângulo de ataque, a inclinação e o próprio empuxo/peso de decolagem (PDF p. 20), com Mars-GRAM 2001 e com o Isp e a área de saída do motor; aqui o guiamento é linear-tangente, o empuxo é o de vácuo e a atmosfera é a de [F245]. Esse desvio entra só pela diferença entre casos, porque o Δv de cada caso é o de [F37] mais a diferença entre a simulação do caso e a da referência.", "",
           "## Casos, convergidos", "", "| Caso | Isp (s) | Empuxo por motor (N) | Iterações | GLOM (kg) | Empuxo/peso | Empuxo/peso do estágio 2 | Δv 100 × 100 km (m/s) | Δv de subida com margem (km/s) | Massa por área (kg/m²) |", "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for c in o["casos"]:
         if c["convergiu"]:
             md.append(f"| {c['rotulo']} | {br(c['isp_s'], 1)} | {br(c['empuxo_motor_n'], 0)} | {c['iteracoes']} | {br(c['glom_kg'], 1)} | {br(c['empuxo_peso'], 2)} | {br(c['empuxo_peso_estagio_2'], 2)} | {br(c['dv_100x100_m_s'], 1)} | {br(c['dv_subida_com_margem_km_s'], 3)} | {br(c['massa_por_area_kg_m2'], 0)} |")
         else:
             md.append(f"| {c['rotulo']} | {br(c['isp_s'], 1)} | {br(c['empuxo_motor_n'], 0)} | não convergiu: {c['motivo']} | | | | | | |")
-    md += ["", f"Antes, todos os casos usavam {br(ref['f37_m_s'], 1)} m/s, de empuxo/peso 2,5.", ""]
+    md += ["", f"Antes, todos os casos usavam {br(ref['f37_m_s'], 1)} m/s. **A linha da base é só conferência e não foi aplicada:** o GLOM vigente segue {br(o['base_vigente_glom_kg'], 1)} kg (results/etapa2.5/arquitetura.yaml). A base sai com Δv menor que o de [F37] porque a referência tem massa por área bem menor que a do nosso MAV e porque a inserção direta penaliza mais o empuxo/peso alto da referência (ver Limitações).", ""]
     pfs = [c for c in o["casos"] if "ponto_fixo" in c]
     if pfs:
         md += ["## Busca do ponto fixo nos casos que não convergiram", "",
-               "Para cada Δv de 100 × 100 km usado no dimensionamento, o Δv que a simulação pede para o MAV resultante. Há ponto fixo onde a diferença troca de sinal. Se a diferença é positiva em toda a varredura e o empuxo/peso cai abaixo de 1, não existe MAV que feche.", "",
+               "Para cada Δv de 100 × 100 km usado no dimensionamento, o Δv que a simulação pede para o MAV resultante. Há ponto fixo onde a diferença troca de sinal. Se a diferença é positiva em toda a varredura, até o empuxo/peso cair abaixo de 1, não há MAV que feche dentro da varredura.", "",
                "| Caso | Δv usado (m/s) | GLOM (kg) | Empuxo/peso | Δv pedido (m/s) | Pedido − usado (m/s) |", "| :- | -: | -: | -: | -: | -: |"]
         for c in pfs:
             for x in c["ponto_fixo"]:
@@ -222,6 +225,7 @@ def escreve_md(o):
     for x in o["sensibilidade_cd"]:
         md.append(f"| {br(x['cd'], 2)} | {br(x['referencia_dv_m_s'], 1)} | {sg(x['referencia_diferenca_m_s'], 1)} | " + (f"{br(x['glom_kg'], 1)} | {br(x['dv_100x100_m_s'], 1)} | {sg(x['melhor_folga_sem_deck_m'])} e {sg(x['pior_folga_sem_deck_m'])} |" if x["convergiu"] else "não convergiu | | |"))
     md += ["", "## Limitações", "",
+           "- **Viés:** a inserção direta penaliza mais o empuxo/peso alto da referência que o empuxo/peso baixo dos nossos casos, então o método do incremento subestima a penalidade do empuxo/peso baixo. A conclusão \"sem ponto fixo\" da rota A é, por isso, conservadora a favor da rota A (não conferido com outro modelo neste repositório).",
            "- Inserção direta, com queima contínua. Sem costa entre os estágios e sem queima de circularização separada: o MAV do MSR usa costa longa ([F57] PDF p. 2: \"the MAV remains in a coast period\"), que este modelo não explora.",
            "- Sem perda por pressão no bocal (empuxo no vácuo nos dois lados da diferença); a de [F37] está dentro dos 4.027,9 m/s.",
            "- Plano equatorial rumo leste, como [F37]; a latitude do sítio e a inclinação continuam no déficit de rotação de config/superficie.yaml.",

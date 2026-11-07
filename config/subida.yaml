@@ -19,7 +19,6 @@ arrasto:
 
 referencia:   # caso de [F37] Tab. 1 (100 × 100 km), para verificar o modelo
   dv_100x100_m_s: {valor: 4027.9, fonte: "[F37] Tab. 1, PDF p. 21: \"(100,100) 3503 4027.9\""}
-  velocidade_100x100_m_s: {valor: 3503, fonte: "[F37] Tab. 1, PDF p. 21, coluna \"Velocity (m/s)\": \"(100,100) 3503\" (ler como Δv sem perdas é interpretação, não conferida)"}
   empuxo_peso: {valor: 2.5, fonte: "[F46] PDF p. 9: \"a liftoff thrust-to-weight ratio of 2.5 was used\""}
   isp_s: {valor: 343, fonte: "[F37] PDF p. 20: \"assuming an engine specific impulse of 343 seconds\""}
   area_m2: {valor: 1.227, fonte: "[F37] PDF p. 16 e 17, gráficos: \"Reference Area = 1.227 m 2\"; PDF p. 14: \"The reference area is the cross- sectional area of the body.\""}
@@ -37,4 +36,5 @@ numerico:   # P-107: limites e grades do guiamento, tolerâncias e convergência
   tol_vr_m_s: {valor: 0.1, premissa: P-107}
   tol_glom_kg: {valor: 0.01, premissa: P-107}
   iteracoes_max: {valor: 30, premissa: P-107}
-  varredura_ponto_fixo_m_s: {valor: [3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600], premissa: P-107}
+  varredura_ponto_fixo_m_s: {valor: [3500, 3700, 3900, 4000, 4100, 4200, 4300, 4400, 4500, 4600], premissa: P-107}
+  integrador: {valor: {rtol: 1.0e-8, atol: 1.0e-6, max_step_s: 2.0, pontos_de_partida: 3}, premissa: P-107}
