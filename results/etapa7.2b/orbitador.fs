@@ -71,7 +71,7 @@ export const marsMissionOrbitador = defineFeature(function(context is Context, i
             finish(context, qCreatedBy(cid + "a", EntityType.BODY), b["nome"], mat,
                 color(b["cor"][0], b["cor"][1], b["cor"][2]), definition.assignMaterials);
         }
-        // Etapa 7.2b: mate connector no plano da interface (z = 0 do modelo), preso ao corpo DONO_INTERFACE.
+        // Etapa 7.2b: mate connector na base do veiculo (z = 0 do modelo), 0,127 m acima do plano da interface (P-097), preso ao corpo DONO_INTERFACE.
         opMateConnector(context, id + "interface", {
                     "coordSystem" : coordSystem(vector(0, 0, 0) * meter, vector(1, 0, 0), vector(0, 0, 1)),
                     "owner" : qCreatedBy(id + ("c" ~ toString(DONO_INTERFACE)) + "a", EntityType.BODY) });

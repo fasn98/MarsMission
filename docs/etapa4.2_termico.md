@@ -190,3 +190,6 @@ das Fases 2 a 4 foram regenerados; os das etapas anteriores à 2.3 ficam como es
 | Orbitador injetado; Falcon Heavy descartável; Vulcan VC6 | 7.796 kg; +44 %; +6 % | sem mudança |
 
 Lançadores de base (ADR 0020): lander no Vulcan VC4, com o VC6 de reserva; orbitador no Falcon Heavy descartável.
+
+## Errata (2026-11-09): P-097 propagada à Etapa 4.2
+A P-097 (aprovada pelo Fabio em 2026-11-07) põe entre o plano da interface de 1575 mm e o veículo um adaptador com sistema de separação de 43 kg e 0,127 m: a massa sai da capacidade do lançador, sem entrar na massa do veículo. O texto acima não muda. A tabela de margens vigentes repetida aqui cai cerca de 1 ponto percentual: orbitador no Falcon Heavy descartável +44 % → +43 %; lander no Falcon Heavy com recuperação +1 % → +0 %, no descartável +143 % → +142 %, no Vulcan VC2 −6 % → −7 %, no VC4 +41 % → +40 %, no VC6 +80 % → +79 %. As massas não mudam. Vigentes: `results/etapa2.5/arquitetura.md`.

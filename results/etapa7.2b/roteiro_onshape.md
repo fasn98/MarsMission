@@ -82,8 +82,8 @@
 58. Arraste uma peça do veículo.
 59. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
 60. Escolha o mate Fastened.
-61. Clique no mate connector do envelope, no plano da interface.
-62. Clique no mate connector do veículo, no plano da interface.
+61. Clique no mate connector do envelope (z = 0, a base do veículo, 0,127 m acima do plano da interface pela P-097).
+62. Clique no mate connector do veículo, na base dele.
 63. Confirme o mate.
 64. Confira se o veículo ficou dentro do envelope, com o topo para cima.
 65. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.

@@ -203,3 +203,6 @@ Lançadores de base (ADR 0020): lander no Vulcan VC4, com o VC6 de reserva; orbi
 `tools/lista_premissas.py` passou a gravar em `results/fase3/premissas_nao_validadas.md` só as premissas que existiam ao
 fim da Fase 3 (P-001 a P-049). Antes, a lista acumulava as da Fase 4 e as marcava como "criadas na Fase 3". Vigente: 49
 premissas, todas NÃO VALIDADAS, 9 criadas na Fase 3, como na §7 acima. O texto acima fica como estava.
+
+## Errata (2026-11-09): P-097 propagada à Fase 3
+A P-097 (aprovada pelo Fabio em 2026-11-07) põe entre o plano da interface de 1575 mm e o veículo um adaptador com sistema de separação de 43 kg e 0,127 m: a massa sai da capacidade do lançador, sem entrar na massa do veículo. O texto acima não muda. A tabela de margens vigentes repetida aqui cai cerca de 1 ponto percentual: orbitador no Falcon Heavy descartável +44 % → +43 %; lander no Falcon Heavy com recuperação +1 % → +0 %, no descartável +143 % → +142 %, no Vulcan VC2 −6 % → −7 %, no VC4 +41 % → +40 %, no VC6 +80 % → +79 %. As massas não mudam. Vigentes: `results/etapa2.5/arquitetura.md`. As margens do orbitador elétrico da 3.3 seguem sem o adaptador.

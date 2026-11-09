@@ -6,7 +6,7 @@ import(path : "onshape/std/geometry.fs", version : "3112.0");
 // Envelope: perfil amostrado do STEP de keep-in do fabricante [F82] p. 16, Tab. 4-1. Plano: origem do arquivo, premissa P-096.
 // O envelope e uma casca fina e sem material: a face INTERNA e o limite do volume utilizavel, e a espessura nao tem sentido
 // fisico. Com uma casca, Check interference so acusa o que atravessa o limite; um solido acusaria o veiculo inteiro.
-// Eixos: z = altura acima do plano da interface. Segmentos em metros: [z0, z1, r0, r1].
+// Eixos: z = altura acima da base do veiculo; o plano da interface fica abaixo dela pela altura do adaptador (P-097). Segmentos em metros: [z0, z1, r0, r1].
 
 export enum LeituraEnvelope
 {

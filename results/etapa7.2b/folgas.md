@@ -96,7 +96,7 @@ Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora
 
 - **Vulcan, com fonte:** [F80] Fig. 4.3.1-1, p. 4-8: "LV STA 2596.66 (1575 Interface)".
 - **Falcon, sem fonte direta:** [F82] PDF p. 26: "The origin of the payload coordinate system is fixed at the center of the separation plane"; o arquivo STEP não declara que usa esse sistema (P-096).
-- **Veículos, sem fonte:** z = 0 do modelo. A P-097 (aprovada em 2026-11-07) sobe os veículos em 0,127 m; as folgas deste relatório seguem sem esse deslocamento, e as com ele estão em results/etapa7.2/rota_a.md, seção 5. Na primeira leitura do Vulcan, cada metro de altura tira 0,0173 m de folga radial.
+- **Veículos:** z = 0 do modelo é a base do veículo. Pela P-097 (aprovada em 2026-11-07), o veículo fica 0,127 m acima do plano da interface: os envelopes exportados descem essa altura, e as folgas deste relatório já a incluem. Na primeira leitura do Vulcan, cada metro de altura tira 0,0173 m de folga radial.
 
 ## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)
 

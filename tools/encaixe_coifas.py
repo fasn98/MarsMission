@@ -79,7 +79,7 @@ def veiculo_fs(nome, corpos, materiais, dono, versao):
     t = t.replace(marca, "// VERIFICACAO geometrica do modelo (Etapa 7.2b), nao validacao: novos dados e conector por tools/encaixe_coifas.py.\n" + marca)
     marca = "    });\n\nfunction vec"
     assert t.count(marca) == 1
-    conector = ('        // Etapa 7.2b: mate connector no plano da interface (z = 0 do modelo), preso ao corpo DONO_INTERFACE.\n'
+    conector = ('        // Etapa 7.2b: mate connector na base do veiculo (z = 0 do modelo), 0,127 m acima do plano da interface (P-097), preso ao corpo DONO_INTERFACE.\n'
                 '        opMateConnector(context, id + "interface", {\n'
                 '                    "coordSystem" : coordSystem(vector(0, 0, 0) * meter, vector(1, 0, 0), vector(0, 0, 1)),\n'
                 '                    "owner" : qCreatedBy(id + ("c" ~ toString(DONO_INTERFACE)) + "a", EntityType.BODY) });\n')
@@ -451,7 +451,7 @@ def escreve_md(o):
            "## Planos da interface", "",
            f"- **Vulcan, com fonte:** {o['planos']['vulcan']}.",
            f"- **Falcon, sem fonte direta:** {o['planos']['falcon']}.",
-           "- **Veículos, sem fonte:** z = 0 do modelo. A P-097 (aprovada em 2026-11-07) sobe os veículos em 0,127 m; as folgas deste relatório seguem sem esse deslocamento, e as com ele estão em results/etapa7.2/rota_a.md, seção 5. "
+           "- **Veículos:** z = 0 do modelo é a base do veículo. Pela P-097 (aprovada em 2026-11-07), o veículo fica 0,127 m acima do plano da interface: os envelopes exportados descem essa altura, e as folgas deste relatório já a incluem. "
            f"Na primeira leitura do Vulcan, cada metro de altura tira {br(o['reducao_de_folga_por_metro_de_adaptador_vulcan'], 4)} m de folga radial.", "",
            "## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)", "", "Nenhuma pendente." if not o["premissas_propostas"] else "| Id | Texto | Evidência |", "" if not o["premissas_propostas"] else "| :- | :- | :- |"]
     for p in o["premissas_propostas"]:
@@ -513,8 +513,8 @@ def escreve_roteiro(o):
     passo("Arraste uma peça do veículo.")
     passo("Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.")
     passo("Escolha o mate Fastened.")
-    passo("Clique no mate connector do envelope, no plano da interface.")
-    passo("Clique no mate connector do veículo, no plano da interface.")
+    passo("Clique no mate connector do envelope (z = 0, a base do veículo, 0,127 m acima do plano da interface pela P-097).")
+    passo("Clique no mate connector do veículo, na base dele.")
     passo("Confirme o mate.")
     passo("Confira se o veículo ficou dentro do envelope, com o topo para cima.")
     passo("Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.")

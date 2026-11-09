@@ -36,7 +36,8 @@ def test_resultados_coerentes():
     c = r["orbitador"]["conjuntos"]
     assert all(a["h1_m"] <= b["h0_m"] for a, b in zip(c, c[1:]))
     perf = (r["coifas"]["falcon"]["altura_m"], r["coifas"]["falcon"]["raio_m"])
-    h_ad = r["orbitador"]["altura_adaptador_m"]   # P-097: o veículo sobe a altura do adaptador
+    h_ad = ler("config/cad.yaml")["adaptador_coifa"]["altura_m"]["valor"]   # P-097, lida do config: o veículo sobe a altura do adaptador
+    assert r["orbitador"]["altura_adaptador_m"] == h_ad
     assert c[0]["margem_radial_m"] == pytest.approx(ea.margem_conjunto(perf, c[0]["h0_m"] + h_ad, c[0]["h1_m"] + h_ad, c[0]["raio_m"]))
     # MAV: o comprimento é a soma dos segmentos
     for x in r["mav"].values():
