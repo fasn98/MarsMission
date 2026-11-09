@@ -417,3 +417,34 @@ mav_solido:   # MAV sólido de dois estágios do MSR (versão de 2019), para a r
     - {item: "Estocagem longa", adr: "não tratado no ADR", hoje: "[F250] PDF p. 2: \"concerns exist with long duration aging associated with baseline CTPB (cold temperature capable) propellant\""}
     - {item: "Isp menor", adr: "[F58] p. 4: \"Lower ISP than liquid/hybrid counterparts\"", hoje: "vale: [F34] PDF p. 4 dá 293 e 282 s médios, contra o Isp de requisito do R-4D-11 de 310 s ([F107] Tab. 3)"}
     - {item: "Não estrangula nem desliga", adr: "[F58] p. 4: \"Cannot be actively throttled or shut down\"", hoje: "vale igual: o corte no alvo exige outro meio (o MSR usa costa longa e um 2º estágio dimensionado para a queima)"}
+
+portao_mav:   # Fabio, 2026-11-07: conclusão de sistema e famílias de arquitetura (results/etapa7.2/portao_mav.md e opcoes_arquitetura.md)
+  conclusao_de_sistema: "A arquitetura de referência da Fase 2 (dois lançamentos, orbitador químico, encontro em 300 × 25.952 km, MAV deitado em aeroshell de 4,5 m) não fecha a embalagem do MAV em nenhuma das rotas calculadas (A com e sem deck, B, sólido). Causa comum: o Δv do MAV até a órbita de encontro (5.772 m/s)."
+  msr_rumo:   # para onde a NASA convergiu, com fonte
+    - {quando: "set/2023", fonte: "[F255] PDF p. 17: \"Technical issues, risks, and performance-to-date indicate a near zero probability of ERO/CCRS or SRL/MAV meeting the 2027/2028 Launch Readiness Dates (LRDs)\"; PDF p. 37: \"the mass and volume of the OS drives the size of the Mars Ascent Vehicle\"; PDF p. 42: \"The current MSR architecture is highly constrained and is not sufficiently robust or resilient to delays\""}
+    - {quando: "abr/2024", fonte: "[F256] PDF p. 25: \"the MAV is the primary driver of architecture complexity, cost and risk\"; \"Significantly smaller and lower-mass MAV designs enable substantially different SRL architectures.\"; PDF p. 8: \"launch Sample Retrieval Lander(SRL)/Mars Ascent Vehicle (MAV) from Earth in 2035\""}
+    - {quando: "jan/2025", fonte: "[F257]: \"The first option will leverage previously flown entry, descent, and landing system designs, namely the sky crane method\"; \"the mission's landed platform will carry a smaller version of the Mars Ascent Vehicle\"; \"NASA is expected to confirm the program – and its design – in the second half of 2026\""}
+    - {quando: "mai/2025", fonte: "[F258] PDF p. 242: \"NASA plans to terminate the Mars Sample Return Program given that current architecture options remain unaffordable\""}
+    - {quando: "jul/2026", fonte: "[F259] PDF p. 2, plano de gastos do FY2026 para a P.L. 119-74: linha \"Mars Sample Return 35.0\" (milhões de dólares); o documento não diz o uso"}
+  ero:   # a estada longa de referência
+    - "[F260]: \"It would take ERO about two years to reach its operational orbit around Mars, a year to perform its Mars mission and another two years to leave Mars and return to Earth.\""
+    - "[F260]: \"While ERO would use chemical propulsion to enter Mars orbit, it would rely on solar electric propulsion for the cruise to and from Mars, and for placing itself in operational orbit.\""
+    - "[F260]: \"Launch vehicle: Ariane 64\"; \"325 km above Mars surface\"; \"Mass: 7 tonnes\""
+  motores_1_4_kn:   # candidatos ao estágio 1 do MAV hipergólico
+    - {motor: "R-40B (L3Harris, ex-Aerojet)", situacao: "voou; fora de produção", fonte: "[F228] PDF p. 30: \"Expansion Ratio 60:1\"; \"293 sec\"; \"10.5 kg (23.0 lbm)\"; \"Not in Production; Requires component obsolescence update\" (dados em results/etapa7.2/bocais_alternativas.md, alternativa F)"}
+    - {motor: "LEROS 4 (Nammo)", situacao: "em desenvolvimento, TRL 6", fonte: "[F110] PDF p. 2: \"Thrust, nominal inlet pressure 1000 N [225 lbf]\"; \"Specific Impulse 321 seconds minimum\"; \"Technology Readiness Level In development, TRL6\""}
+    - {motor: "Motor de 800 N do Chandrayaan-3 (ISRO)", situacao: "voou; abaixo de 1 kN; sem folha de dados pública", fonte: "[F261]: \"Bi-Propellant Propulsion System (MMH + MON3), 4 nos. of 800 N Throttleable engines\""}
+    - {motor: "Motor de 3000 N do Tianwen-1 (China)", situacao: "voou; sem folha de dados pública (só empuxo)", fonte: "[F262]: \"A 3000N engine was ignited at 7:52 p.m. (Beijing time) to decelerate Tianwen-1\""}
+  motores_nao_conferidos: "LEROS 4-ET (voou no Blue Ghost em 2025) e ISE-900 (L3Harris, em desenvolvimento): sem folha de dados primária reaberta nesta etapa"
+  lancadores:   # em operação, com voo realizado; "envelope" é o diâmetro útil publicado para a carga
+    - {lancador: "New Glenn (Blue Origin)", texto: "coifa de 7 m e envelope dinâmico de 6,228 a 6,350 m ([F264] PDF p. 57: \"standard offering PLF measures 7 m (23 ft) in diameter\"; PDF p. 58: \"A cylindrical volume with a diameter of between 6,228.1 and 6,350 mm\"); o guia é de 2018, anterior ao primeiro voo (PDF p. 24: \"design targets\"), e é cópia de terceiros, não conferida contra o original; voos e situação atual não conferidos em fonte oficial"}
+    - {lancador: "Vulcan (ULA), coifa de 21,3 m", texto: "envelope estático de 4,877 m na interface de 1575 mm, 4,826 m e 4,661 m mais acima ([F80] PDF p. 45, Fig. 4.3.1-2, leitura de figura); PDF p. 44: \"The 21.3-m (70-ft.) long PLF is available as a mission unique offering\", \"Some increases in diameter may also be allowed on a mission unique basis, but must be analyzed.\""}
+    - {lancador: "Ariane 6 (Arianespace), coifa longa", texto: "coifa de 5,4 m ([F263] PDF p. 88: \"This nose fairing has an external diameter of 5.4 m.\"); volume útil de Ø 4,6 m embaixo e 4,7 m no trecho superior do cilindro, com extensão a 4,9 m \"Subject to specific analysis\" ([F263] PDF p. 85, Fig. 5.3.1b, leitura de figura)"}
+    - {lancador: "Falcon Heavy (SpaceX), coifa estendida", texto: "[F82] PDF p. 27: \"The extended fairing has the same diameter as the standard faring (5.2 m, 17.2 ft)\"; \"The payload static envelope for the extended fairing is available upon request.\""}
+    - {lancador: "SLS e Starship", texto: "sem coifa de carga operacional; não avaliados com fonte oficial nesta etapa"}
+  entrada_maior:
+    - "[F254] PDF p. 12: \"A capsule diameter > 4.65-m may lead to a new launch vehicle fairing, re-thinking facility processing, and new transportation challenges\""
+    - "[F254] PDF p. 13: \"Capsule ballistic coefficient (kg/m2)\", com efeitos da massa maior: \"Less time/altitude margin\""
+    - "[F254] PDF p. 15: \"There are small windows to increase the SRL capsule and parachute diameters beyond Mars 2020 (4.5-m and 21.5-m, respectively), but new testing may be required\""
+    - "[F265] PDF p. 17: \"a larger supersonic parachute (30 m vs. 21.5 m MSL DGB) combined with one other technology is necessary to make any significant increase in landed payload mass and/or altitude\""
+    - "[F227] PDF p. 3: \"MSL will enter the largest entry mass, fly the largest diameter aeroshell\""

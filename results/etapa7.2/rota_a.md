@@ -263,3 +263,9 @@ Folga axial mínima (m):
 | Motor de 44:1 com câmara de irídio e rênio | no Isp do melhor análogo, o alvo com deck fecha só no limite, em três das quatro geometrias (seções 3 e 4), sem folga para a incerteza do Isp |
 | Aeroshell maior que 4,5 m | no Vulcan, o lander de aeroshell maior já tem folga radial negativa na leitura do Ø menor (seção 5) |
 | Carga útil menor | reduz o retorno científico, que é o requisito da missão, e não é decisão de projeto do veículo |
+
+## 7. Conclusão de sistema (Fabio, 2026-11-07)
+
+> A arquitetura de referência da Fase 2 (dois lançamentos, orbitador químico, encontro em 300 × 25.952 km, MAV deitado em aeroshell de 4,5 m) não fecha a embalagem do MAV em nenhuma das rotas calculadas (A com e sem deck, B, sólido). Causa comum: o Δv do MAV até a órbita de encontro (5.772 m/s).
+
+Resultados de cada rota e o achado do GLOM da base: results/etapa7.2/portao_mav.md. Famílias de arquitetura: results/etapa7.2/opcoes_arquitetura.md.

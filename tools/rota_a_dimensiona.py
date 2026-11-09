@@ -413,6 +413,8 @@ def escreve_md(o):
     md += [f"| {x['veiculo']} | {x['lancador']} | {br(x['injetado_kg'], 0)} | {sg(100 * x['sem_adaptador'], 1)} % | {sg(100 * x['com_adaptador'], 1)} % |" for x in o["margens"]]
     md += ["", "## 6. Alavancas descartadas por ora (Fabio, 2026-11-07)", "", "| Alavanca | Motivo |", "| :- | :- |"]
     md += [f"| {x['alavanca']} | {x['motivo']} |" for x in ad["descartadas"]]
+    md += ["", "## 7. Conclusão de sistema (Fabio, 2026-11-07)", "", f"> {ler('config/cad.yaml')['portao_mav']['conclusao_de_sistema']}", "",
+           "Resultados de cada rota e o achado do GLOM da base: results/etapa7.2/portao_mav.md. Famílias de arquitetura: results/etapa7.2/opcoes_arquitetura.md."]
     (SAIDA / "rota_a.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 

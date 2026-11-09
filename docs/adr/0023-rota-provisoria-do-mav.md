@@ -35,3 +35,18 @@ Com o Isp calculado do 44:1 (NÃO VALIDADO), a rota A **com deck não fecha** no
 geometrias do estágio 2 ([`results/etapa7.2/rota_a.md`](../../results/etapa7.2/rota_a.md), seção 0). A rota A **sem deck** fica
 pendente da perda gravitacional na subida com o empuxo/peso real e da viabilidade do arranjo sem deck, com fonte. A P-094 e a
 P-092 seguem como estão. O texto acima não muda.
+
+## Nota (2026-11-07): conclusão de sistema (decisão do Fabio, portão do PR #55)
+"A arquitetura de referência da Fase 2 (dois lançamentos, orbitador químico, encontro em 300 × 25.952 km, MAV deitado em
+aeroshell de 4,5 m) não fecha a embalagem do MAV em nenhuma das rotas calculadas (A com e sem deck, B, sólido). Causa comum: o
+Δv do MAV até a órbita de encontro (5.772 m/s)."
+
+Resultados de cada rota, com os números em [`results/etapa7.2/portao_mav.md`](../../results/etapa7.2/portao_mav.md):
+- **A com deck:** `results/etapa7.2/rota_a.md`, seção 0;
+- **A sem deck:** `results/etapa7.2/subida_mav.md`, sem ponto fixo com o empuxo/peso real;
+- **B:** `results/etapa7.2/rotas_mav.md` e o adendo do ADR 0013;
+- **sólido:** `results/etapa7.2/mav_solido.md`.
+
+As famílias de arquitetura para a próxima decisão estão em [`results/etapa7.2/opcoes_arquitetura.md`](../../results/etapa7.2/opcoes_arquitetura.md).
+O GLOM da base com o empuxo/peso real fica como achado, sem substituir o vigente (decisão do Fabio). O texto acima não muda.
+

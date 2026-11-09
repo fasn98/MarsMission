@@ -736,3 +736,22 @@ def test_mav_solido():
         for c in x["comprimentos"]:
             assert c["comprimento_m"] == pytest.approx(c["comprimento_fixo_m"] + (ref["comprimento_m"] - c["comprimento_fixo_m"]) * mp / sum(ref["propelente_kg"]))
             assert c["folga_sem_deck_m"] == pytest.approx((r["limites"]["sem_deck_m"] - c["comprimento_m"]) / 2)
+
+
+def test_opcoes_arquitetura():
+    """Portão do MAV: as páginas saem só de resultados existentes, com a conclusão do Fabio literal e as fontes numeradas."""
+    sys.path.insert(0, str(RAIZ / "tools"))
+    import opcoes_arquitetura as oa
+    cfg = ler("config/cad.yaml")["portao_mav"]
+    d = oa.dados()
+    p = (RAIZ / "results" / "etapa7.2" / "portao_mav.md").read_text(encoding="utf-8")
+    assert cfg["conclusao_de_sistema"] in p
+    assert "5.772 m/s" in cfg["conclusao_de_sistema"] and round(1000 * d["dv_km_s"]) == 5772
+    assert not d["a_sem_deck"]["convergiu"] and d["solido"]["melhor_folga_sem_deck_m"] < 0.05
+    assert all(m["folga_sem_deck_m"] < 0.05 for m in d["b"]["mav"])
+    o = (RAIZ / "results" / "etapa7.2" / "opcoes_arquitetura.md").read_text(encoding="utf-8")
+    assert "Opinião do agente" in o
+    fontes = (RAIZ / "docs" / "fontes.md").read_text(encoding="utf-8")
+    for fid in set(re.findall(r"\[(F\d+)\]", o + p)):
+        assert f"| {fid} |" in fontes, fid
+
