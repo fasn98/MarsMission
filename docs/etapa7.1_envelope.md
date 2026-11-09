@@ -119,3 +119,6 @@ Decisões do Fabio (ADR 0022; o texto acima fica como estava):
 3. **Tanques do orbitador:** dois pares por estágio.
 4. **ADR 0021:** status confirmado.
 5. **P-078 a P-088:** aprovadas, NÃO VALIDADAS. Procurar fonte para a densidade da hidrazina (P-079).
+
+## Errata (2026-11-09): P-097 propagada à Etapa 7.1
+A P-097 (aprovada pelo Fabio em 2026-11-07) põe entre o plano da interface de 1575 mm e o veículo um adaptador com sistema de separação de 43 kg e 0,127 m: a massa sai da capacidade do lançador, sem entrar na massa do veículo, e o veículo sobe essa altura no envelope. O texto acima não muda. Folga radial do lander no Vulcan: 0,136 → 0,134 m (4,5 m) e 0,060 → 0,058 m (4,65 m). Vigentes: `results/etapa7.1/envelope.md`.

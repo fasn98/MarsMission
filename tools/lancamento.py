@@ -85,6 +85,8 @@ def main():
         pfm = cfg["centro"]["plataformas"].get(lan.get("plataforma"), {})
         return la.inclinacao(pfm.get("latitude_graus", lat_c), az_min)
 
+    m_ad = la.adaptador_p097()[0]   # P-097: a massa do adaptador sai da capacidade
+
     def avaliar(veic, jans):
         m_inj = vei[veic]["injetada_kg"]
         ls = []
@@ -101,14 +103,14 @@ def main():
                     m_leo, beta, theta, extra = leo_por_janela(m_inj, j, dcfg, po, inc)
                     if m_leo != m_leo:  # giro impossível com um impulso no perigeu
                         m_leo = float("inf")
-                    marg = cap / m_leo - 1
+                    marg = (cap - m_ad) / m_leo - 1
                     if melhor_b is None or marg > melhor_b["margem"]:
                         melhor_b = {"inclinacao_graus": inc, "beta_graus": beta, "giro_perigeu_graus": theta,
                                     "dv_extra_giro_m_s": 1000 * extra, "massa_leo_kg": m_leo, "capacidade_kg": cap, "margem": marg}
                 ls.append({"veiculo": veic, "lancador": nome, "categoria": lan["categoria"], "janela": j["id"],
                            "c3_km2_s2": c3, "dla_graus": dla, "massa_injetada_kg": m_inj,
                            "a_capacidade_kg": None if cap_a != cap_a else cap_a,
-                           "a_margem": None if cap_a != cap_a else cap_a / m_inj - 1, "a_nota": nota_a, "b": melhor_b})
+                           "a_margem": None if cap_a != cap_a else (cap_a - m_ad) / m_inj - 1, "a_nota": nota_a, "b": melhor_b})
         return ls
 
     def resumir(ls):

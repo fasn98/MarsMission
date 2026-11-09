@@ -14,22 +14,22 @@ opcoes:
   plataforma_lander_kg: 1837.2989672650292
   lander_injetado_kg: 4601.844005019836
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.016640540558661154
-    Falcon Heavy (descartável): 1.4390778647703466
-    Vulcan VC2: -0.06018324730428193
-    Vulcan VC4: 0.40971043286419206
-    Vulcan VC6: 0.8020122048605287
+    Falcon Heavy (recuperação): 0.007296460239316405
+    Falcon Heavy (descartável): 1.4297337844510016
+    Vulcan VC2: -0.06952732762362657
+    Vulcan VC4: 0.4003663525448473
+    Vulcan VC6: 0.7926681245411842
 - opcao: b_rover_proprio
   nome: Rover próprio de busca (análogo do Sample Fetch Rover do MSR)
   coleta_prevista_kg: 178.0
   plataforma_lander_kg: 1926.7989672650292
   lander_injetado_kg: 4783.575673070348
   pior_margem_a:
-    Falcon Heavy (recuperação): -0.021982404675298883
-    Falcon Heavy (descartável): 1.3464154467040528
-    Vulcan VC2: -0.09588759856827755
-    Vulcan VC4: 0.3561544642872001
-    Vulcan VC6: 0.7335523944136524
+    Falcon Heavy (recuperação): -0.030971496296044676
+    Falcon Heavy (descartável): 1.337426355083307
+    Vulcan VC2: -0.10487669018902335
+    Vulcan VC4: 0.3471653726664543
+    Vulcan VC6: 0.7245633027929066
 - opcao: b_rover_proprio_com_testemunhagem
   nome: Rover próprio de busca (análogo do Sample Fetch Rover do MSR) + ferramenta
     de testemunhagem
@@ -37,41 +37,41 @@ opcoes:
   plataforma_lander_kg: 1981.4739672650292
   lander_injetado_kg: 4894.594432295618
   pior_margem_a:
-    Falcon Heavy (recuperação): -0.04416571351433307
-    Falcon Heavy (descartável): 1.2931942584884815
-    Vulcan VC2: -0.11639459631764026
-    Vulcan VC4: 0.32539428833685835
-    Vulcan VC6: 0.6942321118975103
+    Falcon Heavy (recuperação): -0.05295091535174712
+    Falcon Heavy (descartável): 1.2844090566510675
+    Vulcan VC2: -0.1251797981550543
+    Vulcan VC4: 0.3166090864994442
+    Vulcan VC6: 0.6854469100600962
 - opcao: b_rover_proprio_limite_superior
   nome: Rover próprio de busca (análogo do Sample Fetch Rover do MSR) (limite superior)
   coleta_prevista_kg: 230.0
   plataforma_lander_kg: 1978.7989672650292
   lander_injetado_kg: 4889.162787468411
   pior_margem_a:
-    Falcon Heavy (recuperação): -0.04310382366047827
-    Falcon Heavy (descartável): 1.2957418964529666
-    Vulcan VC2: -0.11541294957589032
-    Vulcan VC4: 0.3268667430991967
-    Vulcan VC6: 0.6961143292600134
+    Falcon Heavy (recuperação): -0.05189878547075277
+    Falcon Heavy (descartável): 1.286946934642692
+    Vulcan VC2: -0.12420791138616483
+    Vulcan VC4: 0.318071781288922
+    Vulcan VC6: 0.6873193674497389
 - opcao: c_tubos_do_perseverance
   nome: Recuperar os tubos deixados pelo Perseverance em Jezero (plano do MSR)
   coleta_prevista_kg: 6.375
   plataforma_lander_kg: 1755.1739672650292
   lander_injetado_kg: 4435.087432520973
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.05486560254139383
-    Falcon Heavy (descartável): 1.5307856993903632
-    Vulcan VC2: -0.02484671271707839
-    Vulcan VC4: 0.4627146821776489
-    Vulcan VC6: 0.8697667606512931
+    Falcon Heavy (recuperação): 0.045170190522073606
+    Falcon Heavy (descartável): 1.5210902873710426
+    Vulcan VC2: -0.034542124736398616
+    Vulcan VC4: 0.45301927015832866
+    Vulcan VC6: 0.8600713486319729
 - opcao: c_mais_a_escolhida
   nome: '(c) + (a): helicópteros (primário) + braço no lander (reserva) — ESCOLHIDA'
   coleta_prevista_kg: 94.875
   plataforma_lander_kg: 1843.6739672650292
   lander_injetado_kg: 4614.7885791407525
   pior_margem_a:
-    Falcon Heavy (recuperação): 0.013788843540281093
-    Falcon Heavy (descartável): 1.4322362026517572
-    Vulcan VC2: -0.06281945206355044
-    Vulcan VC4: 0.405756166948366
-    Vulcan VC6: 0.7969575246400631
+    Falcon Heavy (recuperação): 0.0044709735528316585
+    Falcon Heavy (descartável): 1.4229183326643078
+    Vulcan VC2: -0.07213732205099987
+    Vulcan VC4: 0.3964382969609166
+    Vulcan VC6: 0.7876396546526137

@@ -31,21 +31,21 @@ configuracoes:
   envelope: envelope_vulcan.fs
   leitura: Contorno reto entre as cotas
   radial:
-    folga_radial_m: 0.14122334948516002
+    folga_radial_m: 0.13902142640823723
     corpo: Escudo térmico (PICA)
     z_m: 2.15
     raio_do_corpo_m: 2.2600000000000002
-    distancia_measure_m: 0.1412021280155367
+    distancia_measure_m: 0.13900053581905109
     tipo: tronco_oco
     corpos_com_folga_negativa: []
   axial:
-    folga_axial_m: 9.8016
+    folga_axial_m: 9.6746
     corpo: Nariz do escudo (PICA)
     z_m: 3.0
-    topo_envelope_m: 12.8016
-  referencia_7_2_m: 0.14252150287894194
-  reproducao_grade_400_m: 0.14252150287894194
-  diferenca_m: -0.00129815339378192
+    topo_envelope_m: 12.6746
+  referencia_7_2_m: 0.1403195798020187
+  reproducao_grade_400_m: 0.1403195798020187
+  diferenca_m: -0.001298153393781476
 - veiculo: lander_4_5
   rotulo: Lander, aeroshell 4,5 m
   envelope: envelope_vulcan.fs
@@ -59,10 +59,10 @@ configuracoes:
     tipo: tronco_oco
     corpos_com_folga_negativa: []
   axial:
-    folga_axial_m: 9.8016
+    folga_axial_m: 9.6746
     corpo: Nariz do escudo (PICA)
     z_m: 3.0
-    topo_envelope_m: 12.8016
+    topo_envelope_m: 12.6746
   referencia_7_2_m: 0.06526817042606536
   reproducao_grade_400_m: 0.06526817042606536
   diferenca_m: -0.0012681704260657511
@@ -71,21 +71,21 @@ configuracoes:
   envelope: envelope_vulcan.fs
   leitura: Contorno reto entre as cotas
   radial:
-    folga_radial_m: 0.044405511811023146
+    folga_radial_m: 0.042203588734099906
     corpo: Escudo térmico (PICA)
     z_m: 3.12
     raio_do_corpo_m: 2.3400000000000003
-    distancia_measure_m: 0.04439883904604878
+    distancia_measure_m: 0.042197246849563164
     tipo: tronco_oco
     corpos_com_folga_negativa: []
   axial:
-    folga_axial_m: 8.8316
+    folga_axial_m: 8.7046
     corpo: Nariz do escudo (PICA)
     z_m: 3.97
-    topo_envelope_m: 12.8016
-  referencia_7_2_m: 0.046599138400648776
-  reproducao_grade_400_m: 0.046599138400648776
-  diferenca_m: -0.00219362658962563
+    topo_envelope_m: 12.6746
+  referencia_7_2_m: 0.04439721532372598
+  reproducao_grade_400_m: 0.04439721532372598
+  diferenca_m: -0.0021936265896260743
 - veiculo: lander_4_65
   rotulo: Lander, aeroshell 4,65 m
   envelope: envelope_vulcan.fs
@@ -103,10 +103,10 @@ configuracoes:
     - corpo: Casca traseira 1 (SLA-561V)
       folga_radial_m: -0.01600000000000046
   axial:
-    folga_axial_m: 8.8316
+    folga_axial_m: 8.7046
     corpo: Nariz do escudo (PICA)
     z_m: 3.97
-    topo_envelope_m: 12.8016
+    topo_envelope_m: 12.6746
   referencia_7_2_m: -0.013791164658634614
   reproducao_grade_400_m: -0.013791164658634614
   diferenca_m: -0.0022088353413658446
@@ -115,25 +115,25 @@ configuracoes:
   envelope: envelope_falcon_heavy.fs
   leitura: Keep-in do fabricante, faixas de 500 mm
   radial:
-    folga_radial_m: 0.3608084500417512
+    folga_radial_m: 0.35976705004175114
     corpo: Tanque insercao MON-3 1
     z_m: 0.5642999103775763
     raio_do_corpo_m: 1.9587642906931528
-    distancia_measure_m: 0.3607963202733614
+    distancia_measure_m: 0.35975495528346374
     tipo: esfera_oca
     corpos_com_folga_negativa: []
   axial:
-    folga_axial_m: 6.231927774191
+    folga_axial_m: 6.104927774190999
     corpo: EES com o contêiner de amostras
     z_m: 5.115672225809
-    topo_envelope_m: 11.3476
-  referencia_7_2_m: 0.35621222920797546
+    topo_envelope_m: 11.2206
+  referencia_7_2_m: 0.3551454292079752
   referencia_7_2_conjunto: Tanques de inserção
-  diferenca_m: 0.004596220833775755
+  diferenca_m: 0.00462162083377593
 srl_c_so_perfil:
   folga_radial_m:
-    vertice_m: 0.029606904906117393
-    referencia_7_2_m: 0.03187213060367977
+    vertice_m: 0.027404981829194597
+    referencia_7_2_m: 0.02967020752675653
   folga_sem_afunilamento_m:
     vertice_m: -0.03600000000000003
     referencia_7_2_m: -0.0338064727034979
@@ -201,8 +201,8 @@ comparacao_grade_e_precisao:
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: folga axial
-  antes: 6.23193
-  agora: 6.231927774191
+  antes: 6.1049299999999995
+  agora: 6.104927774190999
   diferenca_m: -2.2258090002225117e-06
   igual_em_3_casas: true
 - veiculo: orbitador
@@ -222,15 +222,15 @@ comparacao_grade_e_precisao:
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: distância no Measure
-  antes: 0.36079692393590435
-  agora: 0.3607963202733614
-  diferenca_m: -6.036625429528542e-07
+  antes: 0.35975555894600675
+  agora: 0.35975495528346374
+  diferenca_m: -6.036625430083653e-07
   igual_em_3_casas: true
 - veiculo: orbitador
   leitura: Keep-in do fabricante, faixas de 500 mm
   grandeza: folga radial
-  antes: 0.36080905372458894
-  agora: 0.3608084500417512
+  antes: 0.35976765372458885
+  agora: 0.35976705004175114
   diferenca_m: -6.03682837718722e-07
   igual_em_3_casas: true
 - veiculo: orbitador
@@ -243,22 +243,22 @@ comparacao_grade_e_precisao:
 - veiculo: lander_4_5
   leitura: Contorno reto entre as cotas
   grandeza: distância no Measure
-  antes: 0.1412021280155367
-  agora: 0.1412021280155367
+  antes: 0.13900053581905109
+  agora: 0.13900053581905109
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_5
   leitura: Contorno reto entre as cotas
   grandeza: folga axial
-  antes: 9.8016
-  agora: 9.8016
+  antes: 9.6746
+  agora: 9.6746
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_5
   leitura: Contorno reto entre as cotas
   grandeza: folga radial
-  antes: 0.14122334948516002
-  agora: 0.14122334948516002
+  antes: 0.13902142640823723
+  agora: 0.13902142640823723
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_5
@@ -292,8 +292,8 @@ comparacao_grade_e_precisao:
 - veiculo: lander_4_5
   leitura: Diametro menor desde o plano da interface
   grandeza: folga axial
-  antes: 9.8016
-  agora: 9.8016
+  antes: 9.6746
+  agora: 9.6746
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_5
@@ -327,22 +327,22 @@ comparacao_grade_e_precisao:
 - veiculo: lander_4_65
   leitura: Contorno reto entre as cotas
   grandeza: distância no Measure
-  antes: 0.04439883904604878
-  agora: 0.04439883904604878
+  antes: 0.042197246849563164
+  agora: 0.042197246849563164
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_65
   leitura: Contorno reto entre as cotas
   grandeza: folga axial
-  antes: 8.8316
-  agora: 8.8316
+  antes: 8.7046
+  agora: 8.7046
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_65
   leitura: Contorno reto entre as cotas
   grandeza: folga radial
-  antes: 0.044405511811023146
-  agora: 0.044405511811023146
+  antes: 0.042203588734099906
+  agora: 0.042203588734099906
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_65
@@ -376,8 +376,8 @@ comparacao_grade_e_precisao:
 - veiculo: lander_4_65
   leitura: Diametro menor desde o plano da interface
   grandeza: folga axial
-  antes: 8.8316
-  agora: 8.8316
+  antes: 8.7046
+  agora: 8.7046
   diferenca_m: 0.0
   igual_em_3_casas: true
 - veiculo: lander_4_65

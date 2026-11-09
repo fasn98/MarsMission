@@ -82,15 +82,15 @@ Cada linha roda `veiculos` do estudo com a órbita dada. O MAV é redimensionado
 
 | Órbita (km) | Δv do MAV (m/s) | GLOM (kg) | Comprimento (m) | Empuxo/peso, 4 e 2 motores | Descer (m/s) | Direto, extra (m/s) | Voltar, extra (m/s) | Extra do orbitador (m/s) | Orbitador (kg) | Margem no Falcon Heavy | Lander (kg) | Margem no Vulcan VC4 |
 | :- | -: | -: | -: | :- | -: | -: | -: | -: | -: | -: | -: | -: |
-| 300 × 25 952 (base) | 5 772 | 386,8 | 3,561 | 1,36 e 0,68 | 58 | +62 | +57 | 115 | 7 796 | +44,0 % | 4 615 | +40,6 % |
-| 300 × 10 824 (margem zero no Falcon Heavy) | 5 515 | 315,5 | 3,357 | 1,67 e 0,84 | 307 | +310 | +305 | 613 | 11 224 | +0,0 % | 4 464 | +45,3 % |
-| 300 × 10 000 | 5 487 | 308,8 | 3,344 | 1,71 e 0,85 | 334 | +337 | +332 | 667 | 11 730 | −4,3 % | 4 449 | +45,8 % |
-| 300 × 5 000 | 5 223 | 253,8 | 3,235 | 2,08 e 1,04 | 587 | +588 | +583 | 1 169 | 18 910 | −40,6 % | 4 332 | +49,7 % |
-| 300 × 1 000 | 4 724 | 179,9 | 3,055 | 2,93 e 1,46 | 1 053 | +1 051 | +1 046 | 2 099 | 153 086 | −92,7 % | 4 174 | +55,4 % |
-| 300 × 594 (limite em que o orbitador deixa de fechar) | 4 637 | 169,9 | 3,027 | 3,10 e 1,55 | 1 133 | +1 130 | +1 126 | 2 259 | diverge | — | 4 153 | +56,2 % |
-| 380 × 380 | 4 606 | 166,6 | 3,017 | 3,16 e 1,58 | 1 198 | +1 190 | +1 177 | 2 375 | não fecha | — | 4 146 | +56,5 % |
+| 300 × 25 952 (base) | 5 772 | 386,8 | 3,561 | 1,36 e 0,68 | 58 | +62 | +57 | 115 | 7 796 | +43,4 % | 4 615 | +39,6 % |
+| 300 × 10 900 (margem zero no Falcon Heavy) | 5 518 | 316,1 | 3,358 | 1,67 e 0,83 | 305 | +308 | +303 | 608 | 11 181 | +0,0 % | 4 465 | +44,3 % |
+| 300 × 10 000 | 5 487 | 308,8 | 3,344 | 1,71 e 0,85 | 334 | +337 | +332 | 667 | 11 730 | −4,7 % | 4 449 | +44,8 % |
+| 300 × 5 000 | 5 223 | 253,8 | 3,235 | 2,08 e 1,04 | 587 | +588 | +583 | 1 169 | 18 910 | −40,9 % | 4 332 | +48,8 % |
+| 300 × 1 000 | 4 724 | 179,9 | 3,055 | 2,93 e 1,46 | 1 053 | +1 051 | +1 046 | 2 099 | 153 086 | −92,7 % | 4 174 | +54,4 % |
+| 300 × 594 (limite em que o orbitador deixa de fechar) | 4 637 | 169,9 | 3,027 | 3,10 e 1,55 | 1 133 | +1 130 | +1 126 | 2 259 | diverge | — | 4 153 | +55,2 % |
+| 380 × 380 | 4 606 | 166,6 | 3,017 | 3,16 e 1,58 | 1 198 | +1 190 | +1 177 | 2 375 | não fecha | — | 4 146 | +55,5 % |
 
-**Limites, com periapse de 300 km:** o orbitador químico com um estágio de retorno deixa de fechar em 594 km de apoapse: abaixo disso, o Δv passa do que o estágio permite, e perto desse limite a massa diverge, então ele é só matemático. A margem no Falcon Heavy zera em 10 824 km. O Δv extra acima não depende do veículo fechar. O Vulcan VC6, a alternativa do orbitador no ADR 0008, parte de +6,4 % na órbita de base e zera bem antes.
+**Limites, com periapse de 300 km:** o orbitador químico com um estágio de retorno deixa de fechar em 594 km de apoapse: abaixo disso, o Δv passa do que o estágio permite, e perto desse limite a massa diverge, então ele é só matemático. A margem no Falcon Heavy zera em 10 900 km. O Δv extra acima não depende do veículo fechar. O Vulcan VC6, a alternativa do orbitador no ADR 0008, parte de +5,8 % na órbita de base e zera bem antes.
 
 **Não calculado:** aerofrenagem na descida (P-020): tiraria só o "descer", cerca de metade do extra, somando 90 m/s de saída e 205 dias, em valores de fonte para outra órbita; comunicação e relé, janela de encontro, sensores e o que muda na captura. A plataforma do orbitador não foi reiterada, e o MAV mais leve não mudou os motores.
 
@@ -119,13 +119,13 @@ Folga em m, com a base no ombro, a estação mais favorável; positivo = cabe. N
 | Tanques aninhados, antepara comum (limite otimista) | 0,57 | 3,070 | −0,491 | +0,057 | +0,262 | −1,289 | −0,281 | — |
 | Ø 0,6 m | 0,60 | 3,491 | −0,070 | −0,176 | +0,037 | −1,737 | −0,725 | — |
 | Ø 0,69 m | 0,69 | 3,477 | −0,084 | −0,234 | −0,002 | −1,806 | −0,781 | — |
-| Órbita 300 × 10824 km (margem zero no Falcon Heavy) | 0,57 | 3,357 | −0,204 | −0,086 | +0,119 | −1,576 | −0,567 | +498 |
+| Órbita 300 × 10900 km (margem zero no Falcon Heavy) | 0,57 | 3,358 | −0,203 | −0,087 | +0,119 | −1,577 | −0,568 | +493 |
 | Órbita 300 × 10000 km | 0,57 | 3,344 | −0,217 | −0,080 | +0,125 | −1,563 | −0,555 | +552 |
 | Órbita 300 × 5000 km | 0,57 | 3,235 | −0,326 | −0,026 | +0,180 | −1,454 | −0,445 | +1 054 |
 | Órbita 300 × 1000 km | 0,57 | 3,055 | −0,506 | +0,064 | +0,270 | −1,274 | −0,266 | +1 984 |
 | Órbita 300 × 594 km (limite em que o orbitador deixa de fechar) | 0,57 | 3,027 | −0,534 | +0,079 | +0,284 | −1,246 | −0,237 | +2 144 (massa diverge) |
 | Órbita 380 × 380 km | 0,57 | 3,017 | −0,544 | +0,083 | +0,289 | −1,236 | −0,227 | +2 260 (orbitador não fecha) |
-| Órbita de margem zero + tanques aninhados (limite otimista) | 0,57 | 2,865 | −0,696 | +0,159 | +0,365 | −1,084 | −0,076 | +498 |
+| Órbita de margem zero + tanques aninhados (limite otimista) | 0,57 | 2,867 | −0,694 | +0,158 | +0,364 | −1,086 | −0,077 | +493 |
 
 **Comprimento máximo com Ø 0,57 m:** deitado, 3,18 m no 4,5 m e 3,60 m no 4,65 m; em pé, 1,78 m e 2,79 m.
 
@@ -135,8 +135,8 @@ Teste pedido pelo Fabio para aceitar os parâmetros de amostragem como tais, nã
 
 | Parâmetro | Como dobrei | Resultado | Muda nas casas mostradas? |
 | :- | :- | :- | :- |
-| passos_bissecao | 16 para 32 passos | margem zero em 10 824 e 10 824 km; deixa de fechar em 594 e 594 km | não |
-| orbitas_amostra | ponto médio geométrico entre as órbitas: 771, 2 236, 7 071, 10 404, 16 760 km | comprimentos novos 3,040, 3,127, 3,289, 3,351, 3,457 m, em ordem entre os vizinhos | não |
+| passos_bissecao | 16 para 32 passos | margem zero em 10 900 e 10 900 km; deixa de fechar em 594 e 594 km | não |
+| orbitas_amostra | ponto médio geométrico entre as órbitas: 771, 2 236, 7 071, 10 440, 16 819 km | comprimentos novos 3,040, 3,127, 3,289, 3,351, 3,458 m, em ordem entre os vizinhos | não |
 | grade de diâmetros (mav_alternativas; amostragem.diametros_m é parte dela), 4,5 m | 7 para 13 diâmetros | melhor folga deitado na grade: −0,176 m em Ø 0,600 m; na fina: −0,176 m em Ø 0,600 m | não |
 | grade de diâmetros (mav_alternativas; amostragem.diametros_m é parte dela), 4,65 m | 7 para 13 diâmetros | melhor folga deitado na grade: +0,037 m em Ø 0,600 m; na fina: +0,037 m em Ø 0,600 m | não |
 | exemplo_p086_m | 0,10 para 0,05 m | folga por metro: 0,500 e 0,500 m/m | não |
@@ -145,4 +145,4 @@ Teste pedido pelo Fabio para aceitar os parâmetros de amostragem como tais, nã
 
 ## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)
 
-Opinião: as duas maiores alavancas são tanques aninhados (−0,49 m, limite otimista) e R-4D-11 44:1 (−0,30 a −0,42 m, com Isp e massa sem fonte). A órbita de encontro dá −0,20 m até o limite do lançador. A órbita é a única que reduz o propelente, mas sozinha não basta: na margem zero do Falcon Heavy (300 × 10 824 km) a folga deitado é −0,09 m no 4,5 m e +0,12 m no 4,65 m, e margem zero não é ponto de projeto. Ela também não resolve os bocais: ali o empuxo/peso com dois motores é 0,84, abaixo de 1, o motivo por que a opção C foi descartada. O 44:1 é a única das três alavancas que também resolveria os bocais, então eu buscaria primeiro o Isp e a massa dele. Eu não gastaria mais esforço em órbita antes disso, e a P-086 pesa pelo motor, não pela busca de mais cotas do MSR. A decisão é do Fabio.
+Opinião: as duas maiores alavancas são tanques aninhados (−0,49 m, limite otimista) e R-4D-11 44:1 (−0,30 a −0,42 m, com Isp e massa sem fonte). A órbita de encontro dá −0,20 m até o limite do lançador. A órbita é a única que reduz o propelente, mas sozinha não basta: na margem zero do Falcon Heavy (300 × 10 900 km) a folga deitado é −0,09 m no 4,5 m e +0,12 m no 4,65 m, e margem zero não é ponto de projeto. Ela também não resolve os bocais: ali o empuxo/peso com dois motores é 0,83, abaixo de 1, o motivo por que a opção C foi descartada. O 44:1 é a única das três alavancas que também resolveria os bocais, então eu buscaria primeiro o Isp e a massa dele. Eu não gastaria mais esforço em órbita antes disso, e a P-086 pesa pelo motor, não pela busca de mais cotas do MSR. A decisão é do Fabio.

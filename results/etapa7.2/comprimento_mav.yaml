@@ -152,7 +152,7 @@ aerofrenagem:
   walk_out_m_s: 90.0
   dias: 205.0
 limites_apoapse_km:
-  margem_zero_falcon_heavy: 10824.0
+  margem_zero_falcon_heavy: 10900.0
   orbitador_fecha: 594.0
 bowles:
   dv_m_s:
@@ -187,32 +187,32 @@ orbitas:
   extra_orbitador_missao_a_m_s: 114.92593201964219
   orbitador_injetado_kg: 7796.395336836866
   lander_injetado_kg: 4614.7885791407525
-  margem_falcon_heavy: 0.43967248514669066
-  margem_vulcan_vc4: 0.405756166948366
-  margem_vulcan_vc6_orbitador: 0.06364270969286756
+  margem_falcon_heavy: 0.4341571157814623
+  margem_vulcan_vc4: 0.3964382969609166
+  margem_vulcan_vc6_orbitador: 0.05812734032763922
 - periapse_km: 300
-  apoapse_km: 10824.0
+  apoapse_km: 10900.0
   fonte: ''
   base: false
   rotulo: margem zero no Falcon Heavy
   diverge: false
-  dv_mav_com_margem_m_s: 5515.099499750771
-  glom_kg: 315.54892343716523
-  propelente_mav_kg: 230.65267104661723
-  comprimento_m: 3.356796777302738
-  comprimento_aninhado_m: 2.8654487853634474
-  empuxo_peso_4_motores: 1.670416620177886
-  empuxo_peso_2_motores: 0.835208310088943
-  descer_de_1_sol_m_s: 307.3393812725487
-  partir_direto_extra_m_s: 310.1402300814291
-  voltar_a_1_sol_extra_m_s: 305.2835208753757
-  extra_orbitador_regra_iii_m_s: 612.6229021479244
-  extra_orbitador_missao_a_m_s: 612.6229021479244
-  orbitador_injetado_kg: 11223.692144514109
-  lander_injetado_kg: 4463.680055739652
-  margem_falcon_heavy: 5.022458284087428e-05
-  margem_vulcan_vc4: 0.45334509267712986
-  margem_vulcan_vc6_orbitador: -0.2611540876980283
+  dv_mav_com_margem_m_s: 5517.560267841039
+  glom_kg: 316.1460109966192
+  propelente_mav_kg: 231.11242846739682
+  comprimento_m: 3.357880547362957
+  comprimento_aninhado_m: 2.8671729810759663
+  empuxo_peso_4_motores: 1.667261796304356
+  empuxo_peso_2_motores: 0.833630898152178
+  descer_de_1_sol_m_s: 304.96964752470126
+  partir_direto_extra_m_s: 307.786503967777
+  voltar_a_1_sol_extra_m_s: 302.92979476172354
+  extra_orbitador_regra_iii_m_s: 607.8994422864248
+  extra_orbitador_missao_a_m_s: 607.8994422864248
+  orbitador_injetado_kg: 11181.081642679615
+  lander_injetado_kg: 4464.948828393261
+  margem_falcon_heavy: 1.5580522167102373e-05
+  margem_vulcan_vc4: 0.4433015364722577
+  margem_vulcan_vc6_orbitador: -0.26218416736889705
 - periapse_km: 300
   apoapse_km: 10000
   fonte: ''
@@ -233,9 +233,9 @@ orbitas:
   extra_orbitador_missao_a_m_s: 666.7165286195486
   orbitador_injetado_kg: 11730.228606045439
   lander_injetado_kg: 4449.352055232572
-  margem_falcon_heavy: -0.04313409169320648
-  margem_vulcan_vc4: 0.4580252188991829
-  margem_vulcan_vc6_orbitador: -0.2930590408411792
+  margem_falcon_heavy: -0.04679983440327096
+  margem_vulcan_vc4: 0.4483608903708458
+  margem_vulcan_vc6_orbitador: -0.29672478355124354
 - periapse_km: 300
   apoapse_km: 5000
   fonte: ''
@@ -256,9 +256,9 @@ orbitas:
   extra_orbitador_missao_a_m_s: 1169.3510674370239
   orbitador_injetado_kg: 18910.283397965315
   lander_injetado_kg: 4332.226067577248
-  margem_falcon_heavy: -0.4064469784213972
-  margem_vulcan_vc4: 0.4974443630357306
-  margem_vulcan_vc6_orbitador: -0.5614778008666832
+  margem_falcon_heavy: -0.40872087348130026
+  margem_vulcan_vc4: 0.48751874989152855
+  margem_vulcan_vc6_orbitador: -0.5637516959265862
 - periapse_km: 300
   apoapse_km: 1000
   fonte: ''
@@ -279,9 +279,9 @@ orbitas:
   extra_orbitador_missao_a_m_s: 2098.8469367642297
   orbitador_injetado_kg: 153085.9930851314
   lander_injetado_kg: 4174.199998348585
-  margem_falcon_heavy: -0.9266800598567618
-  margem_vulcan_vc4: 0.5541343267827419
-  margem_vulcan_vc6_orbitador: -0.9458305825713363
+  margem_falcon_heavy: -0.9269609477364001
+  margem_vulcan_vc4: 0.5438329516648721
+  margem_vulcan_vc6_orbitador: -0.9461114704509745
 - periapse_km: 300
   apoapse_km: 594.0
   fonte: ''
@@ -303,7 +303,7 @@ orbitas:
   orbitador_injetado_kg: null
   lander_injetado_kg: 4152.7810376747975
   margem_falcon_heavy: null
-  margem_vulcan_vc4: 0.5621501459952523
+  margem_vulcan_vc4: 0.5517956390732894
   margem_vulcan_vc6_orbitador: null
 - periapse_km: 380
   apoapse_km: 380
@@ -326,7 +326,7 @@ orbitas:
   orbitador_injetado_kg: null
   lander_injetado_kg: 4145.5339727593
   margem_falcon_heavy: null
-  margem_vulcan_vc4: 0.5648810375016717
+  margem_vulcan_vc4: 0.5545084292242923
   margem_vulcan_vc6_orbitador: null
 em_pe_na_varredura:
 - diametro_m: 0.57
@@ -436,19 +436,19 @@ alavancas:
   deitado_4_65_m: -0.0022510427533293242
   em_pe_4_5_m: -1.8059918303790945
   em_pe_4_65_m: -0.7811544116697395
-- alavanca: Órbita 300 × 10824 km (margem zero no Falcon Heavy)
+- alavanca: Órbita 300 × 10900 km (margem zero no Falcon Heavy)
   grupo: orbita
   diametro_m: 0.57
-  comprimento_m: 3.356796777302738
-  delta_comprimento_m: -0.20419794452164952
-  deitado_4_5_m: -0.08639838865136906
-  deitado_4_65_m: 0.11916682873993523
-  em_pe_4_5_m: -1.5755961770025881
-  em_pe_4_65_m: -0.5669018298290012
-  extra_orbitador_m_s: 497.6969701282821
+  comprimento_m: 3.357880547362957
+  delta_comprimento_m: -0.20311417446143043
+  deitado_4_5_m: -0.08694027368147861
+  deitado_4_65_m: 0.11862494370982568
+  em_pe_4_5_m: -1.5766799470628072
+  em_pe_4_65_m: -0.5679855998892203
+  extra_orbitador_m_s: 492.9735102667825
   orbitador_fecha: true
   diverge: false
-  margem_falcon_heavy: 5.022458284087428e-05
+  margem_falcon_heavy: 1.5580522167102373e-05
 - alavanca: Órbita 300 × 10000 km
   grupo: orbita
   diametro_m: 0.57
@@ -461,7 +461,7 @@ alavancas:
   extra_orbitador_m_s: 551.7905965999064
   orbitador_fecha: true
   diverge: false
-  margem_falcon_heavy: -0.04313409169320648
+  margem_falcon_heavy: -0.04679983440327096
 - alavanca: Órbita 300 × 5000 km
   grupo: orbita
   diametro_m: 0.57
@@ -474,7 +474,7 @@ alavancas:
   extra_orbitador_m_s: 1054.4251354173816
   orbitador_fecha: true
   diverge: false
-  margem_falcon_heavy: -0.4064469784213972
+  margem_falcon_heavy: -0.40872087348130026
 - alavanca: Órbita 300 × 1000 km
   grupo: orbita
   diametro_m: 0.57
@@ -487,7 +487,7 @@ alavancas:
   extra_orbitador_m_s: 1983.9210047445874
   orbitador_fecha: true
   diverge: false
-  margem_falcon_heavy: -0.9266800598567618
+  margem_falcon_heavy: -0.9269609477364001
 - alavanca: Órbita 300 × 594 km (limite em que o orbitador deixa de fechar)
   grupo: orbita
   diametro_m: 0.57
@@ -517,21 +517,21 @@ alavancas:
 - alavanca: Órbita de margem zero + tanques aninhados (limite otimista)
   grupo: combinada
   diametro_m: 0.57
-  comprimento_m: 2.8654487853634474
-  delta_comprimento_m: -0.69554593646094
-  deitado_4_5_m: 0.15927560731827617
-  deitado_4_65_m: 0.36484082470958046
-  em_pe_4_5_m: -1.0842481850632977
-  em_pe_4_65_m: -0.0755538378897107
-  extra_orbitador_m_s: 497.6969701282821
+  comprimento_m: 2.8671729810759663
+  delta_comprimento_m: -0.6938217407484211
+  deitado_4_5_m: 0.1584135094620167
+  deitado_4_65_m: 0.363978726853321
+  em_pe_4_5_m: -1.0859723807758166
+  em_pe_4_65_m: -0.07727803360222962
+  extra_orbitador_m_s: 492.9735102667825
   orbitador_fecha: true
-  margem_falcon_heavy: 5.022458284087428e-05
+  margem_falcon_heavy: 1.5580522167102373e-05
 resolucao_amostragem:
   passos_bissecao:
     passos: 16
     dobrado: 32
-    limite_fh_km: 10824.0
-    limite_fh_dobrado_km: 10824.0
+    limite_fh_km: 10900.0
+    limite_fh_dobrado_km: 10900.0
     limite_fecha_km: 594.0
     limite_fecha_dobrado_km: 594.0
   orbitas_amostra:
@@ -539,15 +539,15 @@ resolucao_amostragem:
     - 770.7139547199077
     - 2236.06797749979
     - 7071.067811865475
-    - 10403.845442911963
-    - 16760.333457303288
+    - 10440.30650891055
+    - 16819.071318000882
     comprimento_monotono: true
     comprimentos_novos_m:
     - 3.039734427250282
     - 3.127057956339089
     - 3.2894639239815113
-    - 3.350641988369917
-    - 3.4572539357345984
+    - 3.3511873414044158
+    - 3.4581338122779814
   diametros_m:
     pontos: 7
     dobrado: 13

@@ -17,43 +17,43 @@ massas:
     orbitador_injetado_kg: 7796.395336836866
     margens:
       orbitador:
-        Falcon Heavy (descartável): 0.43967248514669066
-        Vulcan VC6: 0.06364270969286756
+        Falcon Heavy (descartável): 0.4341571157814623
+        Vulcan VC6: 0.05812734032763922
       lander:
-        Falcon Heavy (recuperação): 0.15554197249199864
-        Falcon Heavy (descartável): 1.7723238789685771
-        Vulcan VC2: 0.06822191410374101
-        Vulcan VC4: 0.6023161670685353
-        Vulcan VC6: 1.0482172946938864
+        Falcon Heavy (recuperação): 0.1449212303785612
+        Falcon Heavy (descartável): 1.76170313685514
+        Vulcan VC2: 0.05760117199030357
+        Vulcan VC4: 0.5916954249550979
+        Vulcan VC6: 1.0375965525804487
 lancadores:
   orbitador:
     lancador: Falcon Heavy (descartável)
-    margem_base: 0.43967248514669066
+    margem_base: 0.4341571157814623
     pior:
-      margem: 0.18409186340234318
+      margem: 0.17955562057183583
       caso: Margem de Δv 20 % (base 10 %)
   lander:
     lancador: Vulcan VC4
-    margem_base: 0.405756166948366
+    margem_base: 0.3964382969609166
     pior:
-      margem: 0.07780520411267489
+      margem: 0.07066111397823893
       caso: ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230
   lander_reserva:
     lancador: Vulcan VC6
-    margem_base: 0.7969575246400631
+    margem_base: 0.7876396546526137
     pior:
-      margem: 0.37774261081909843
+      margem: 0.3705985206846627
       caso: ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230
   todas_as_margens_base:
     orbitador:
-      Falcon Heavy (descartável): 0.43967248514669066
-      Vulcan VC6: 0.06364270969286756
+      Falcon Heavy (descartável): 0.4341571157814623
+      Vulcan VC6: 0.05812734032763922
     lander:
-      Falcon Heavy (recuperação): 0.013788843540281093
-      Falcon Heavy (descartável): 1.4322362026517572
-      Vulcan VC2: -0.06281945206355044
-      Vulcan VC4: 0.405756166948366
-      Vulcan VC6: 0.7969575246400631
+      Falcon Heavy (recuperação): 0.0044709735528316585
+      Falcon Heavy (descartável): 1.4229183326643078
+      Vulcan VC2: -0.07213732205099987
+      Vulcan VC4: 0.3964382969609166
+      Vulcan VC6: 0.7876396546526137
 energia:
   lander_opcao:
     cenario: claro_jezero + global_2018

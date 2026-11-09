@@ -114,3 +114,6 @@ Decisões do Fabio (o texto acima fica como estava):
 
 Os números vigentes, com o antes e depois das decisões, estão em `results/etapa4.5/lista_massas.md`. As tabelas das seções 2
 e 4 acima são da versão do portão.
+
+## Errata (2026-11-09): P-097 propagada à Etapa 4.5
+A P-097 (aprovada pelo Fabio em 2026-11-07) põe entre o plano da interface de 1575 mm e o veículo um adaptador com sistema de separação de 43 kg e 0,127 m: a massa sai da capacidade do lançador, sem entrar na massa do veículo, e o veículo sobe essa altura no envelope. O texto acima não muda. As margens da lista de massas caem 1 ponto percentual (por exemplo, lander vigente no Vulcan VC4 +41 % → +40 %, no Falcon Heavy com recuperação +1 % → +0 %). Vigentes: `results/etapa4.5/lista_massas.md`.

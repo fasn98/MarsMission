@@ -6,7 +6,7 @@ import(path : "onshape/std/geometry.fs", version : "3112.0");
 // Envelope: leitura da figura "Simplified" [F80] Fig. 4.3.1-1, p. 4-8, nao e dado do fabricante em CAD. Plano: "LV STA 2596.66 (1575 Interface)".
 // O envelope e uma casca fina e sem material: a face INTERNA e o limite do volume utilizavel, e a espessura nao tem sentido
 // fisico. Com uma casca, Check interference so acusa o que atravessa o limite; um solido acusaria o veiculo inteiro.
-// Eixos: z = altura acima do plano da interface. Segmentos em metros: [z0, z1, r0, r1].
+// Eixos: z = altura acima da base do veiculo; o plano da interface fica abaixo dela pela altura do adaptador (P-097). Segmentos em metros: [z0, z1, r0, r1].
 
 export enum LeituraEnvelope
 {
@@ -17,8 +17,8 @@ export enum LeituraEnvelope
 }
 const OPCOES = [LeituraEnvelope.L0, LeituraEnvelope.L1];
 const SEGMENTOS = [
-    { "interno" : [[-0.01, 0, 2.4385, 2.4385], [0, 6.604, 2.4385, 2.324], [6.604, 9.398, 2.324, 1.816], [9.398, 12.8016, 1.816, 0.419]], "externo" : [[0, 6.604, 2.4485, 2.334], [6.604, 9.398, 2.334, 1.826], [9.398, 12.8016, 1.826, 0.429], [12.8016, 12.8116, 0.429, 0.429]] },
-    { "interno" : [[-0.01, 0, 2.324, 2.324], [0, 6.604, 2.324, 2.324], [6.604, 9.398, 2.324, 1.816], [9.398, 12.8016, 1.816, 0.419]], "externo" : [[0, 6.604, 2.334, 2.334], [6.604, 9.398, 2.334, 1.826], [9.398, 12.8016, 1.826, 0.429], [12.8016, 12.8116, 0.429, 0.429]] }
+    { "interno" : [[-0.137, -0.127, 2.4385, 2.4385], [-0.127, 6.477, 2.4385, 2.324], [6.477, 9.271, 2.324, 1.816], [9.271, 12.6746, 1.816, 0.419]], "externo" : [[-0.127, 6.477, 2.4485, 2.334], [6.477, 9.271, 2.334, 1.826], [9.271, 12.6746, 1.826, 0.429], [12.6746, 12.6846, 0.429, 0.429]] },
+    { "interno" : [[-0.137, -0.127, 2.324, 2.324], [-0.127, 6.477, 2.324, 2.324], [6.477, 9.271, 2.324, 1.816], [9.271, 12.6746, 1.816, 0.419]], "externo" : [[-0.127, 6.477, 2.334, 2.334], [6.477, 9.271, 2.334, 1.826], [9.271, 12.6746, 1.826, 0.429], [12.6746, 12.6846, 0.429, 0.429]] }
 ];
 const NOME = "Envelope Vulcan VC4 (referencia, sem material)";
 const COR = [0.15, 0.55, 0.85, 0.25];

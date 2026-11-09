@@ -28,10 +28,10 @@ base:
   folga_radial_bocais_m: -0.06226563466352136
   empuxo_peso: 1.3628076997021517
   lander_injetado_kg: 4614.7885791407525
-  margem_vulcan_vc4: 0.405756166948366
+  margem_vulcan_vc4: 0.3964382969609166
   massa_por_area_kg_m2: 278.50000911622186
   orbitador_injetado_kg: 7796.395336836866
-  margem_falcon_heavy: 0.43967248514669066
+  margem_falcon_heavy: 0.4341571157814623
   orbita_km:
   - 300
   - 25952.4
@@ -53,7 +53,7 @@ base_real:
   folga_radial_bocais_m: -0.06226563466352136
   empuxo_peso: 1.3628076997021517
   lander_injetado_kg: 4614.7885791407525
-  margem_vulcan_vc4: 0.405756166948366
+  margem_vulcan_vc4: 0.3964382969609166
   massa_por_area_kg_m2: 278.50000911622186
 rota_a:
 - isp_s: 304
@@ -73,7 +73,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.2402255510734588
     lander_injetado_kg: 4695.719110473078
-    margem_vulcan_vc4: 0.38152801555381566
+    margem_vulcan_vc4: 0.3723707386834647
     massa_por_area_kg_m2: 283.423488490553
   com_aninhados:
     rotulo: 44:1 e aninhados, Isp 304 s
@@ -91,7 +91,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.2402255510734588
     lander_injetado_kg: 4695.719110473078
-    margem_vulcan_vc4: 0.38152801555381566
+    margem_vulcan_vc4: 0.3723707386834647
     massa_por_area_kg_m2: 283.423488490553
 - isp_s: 308
   so_44:
@@ -110,7 +110,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.3215888481481237
     lander_injetado_kg: 4640.338261756516
-    margem_vulcan_vc4: 0.39801607950760953
+    margem_vulcan_vc4: 0.38874951367244504
     massa_por_area_kg_m2: 280.054346315157
   com_aninhados:
     rotulo: 44:1 e aninhados, Isp 308 s
@@ -128,7 +128,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.3215888481481237
     lander_injetado_kg: 4640.338261756516
-    margem_vulcan_vc4: 0.39801607950760953
+    margem_vulcan_vc4: 0.38874951367244504
     massa_por_area_kg_m2: 280.054346315157
 - isp_s: 309
   so_44:
@@ -147,7 +147,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.3421546387698735
     lander_injetado_kg: 4627.395712653398
-    margem_vulcan_vc4: 0.40192624688458545
+    margem_vulcan_vc4: 0.3926337630188943
     massa_por_area_kg_m2: 279.26697506587146
   com_aninhados:
     rotulo: 44:1 e aninhados, Isp 309 s
@@ -165,7 +165,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.3421546387698735
     lander_injetado_kg: 4627.395712653398
-    margem_vulcan_vc4: 0.40192624688458545
+    margem_vulcan_vc4: 0.3926337630188943
     massa_por_area_kg_m2: 279.26697506587146
 - isp_s: 314
   so_44:
@@ -184,7 +184,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.4462661574933902
     lander_injetado_kg: 4567.485393253433
-    margem_vulcan_vc4: 0.4203148878970142
+    margem_vulcan_vc4: 0.4109005173412781
     massa_por_area_kg_m2: 275.62227859570885
   com_aninhados:
     rotulo: 44:1 e aninhados, Isp 314 s
@@ -202,7 +202,7 @@ rota_a:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.4462661574933902
     lander_injetado_kg: 4567.485393253433
-    margem_vulcan_vc4: 0.4203148878970142
+    margem_vulcan_vc4: 0.4109005173412781
     massa_por_area_kg_m2: 275.62227859570885
 rota_a_referencia:
   so_44:
@@ -221,7 +221,7 @@ rota_a_referencia:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.1015203141319496
     lander_injetado_kg: 4808.8484849300075
-    margem_vulcan_vc4: 0.349027220262778
+    margem_vulcan_vc4: 0.34008537064228084
     massa_por_area_kg_m2: 290.30581253563423
   com_aninhados:
     rotulo: 'Referência, Isp 297 s: 44:1 e aninhados'
@@ -239,7 +239,7 @@ rota_a_referencia:
     folga_radial_bocais_m: 0.09073032142474877
     empuxo_peso: 1.1015203141319496
     lander_injetado_kg: 4808.8484849300075
-    margem_vulcan_vc4: 0.349027220262778
+    margem_vulcan_vc4: 0.34008537064228084
     massa_por_area_kg_m2: 290.30581253563423
 rota_a_ressalva: 'Os análogos de 306 a 314 s têm câmara de irídio e rênio, ou, em
   [F240], só o resumo cita essa tecnologia. Os motores convencionais de 110 lbf são
@@ -287,7 +287,7 @@ rota_b:
     folga_radial_bocais_m: 0.010599999999999998
     empuxo_peso: 1.5823567612100868
     lander_injetado_kg: 4145.5339727593
-    margem_vulcan_vc4: 0.5648810375016717
+    margem_vulcan_vc4: 0.5545084292242923
     massa_por_area_kg_m2: 249.95249635689157
     dv_mav_com_margem_m_s: 4605.615838777636
     com_p086_atual:
@@ -306,7 +306,7 @@ rota_b:
       folga_radial_bocais_m: 0.010599999999999998
       empuxo_peso: 1.5823567612100868
       lander_injetado_kg: 4145.5339727593
-      margem_vulcan_vc4: 0.5648810375016717
+      margem_vulcan_vc4: 0.5545084292242923
       massa_por_area_kg_m2: 249.95249635689157
   propulsores:
     NSTAR:
@@ -322,7 +322,7 @@ rota_b:
         dv_saida_km_s: 2.8652654154828903
         n_ativos: 3
         potencia_kw: 7.666799999999999
-        margem_falcon_heavy: -0.8231442172151028
+        margem_falcon_heavy: -0.8238217497626085
         tempo:
           pronto_no_encontro: '2030-04-09'
           pronto_antes_do_ultimo_lancamento: false
@@ -357,7 +357,7 @@ rota_b:
         total_empuxo_dias: 6276.95713355513
         n_ativos: 1
         potencia_kw: 2.5556
-        margem_falcon_heavy: 2.2938877223002825
+        margem_falcon_heavy: 2.281268874872476
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -379,7 +379,7 @@ rota_b:
         total_empuxo_dias: 3539.578474510916
         n_ativos: 2
         potencia_kw: 5.1112
-        margem_falcon_heavy: 1.9206291348688471
+        margem_falcon_heavy: 1.9094402369605787
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -401,7 +401,7 @@ rota_b:
         total_empuxo_dias: 2627.1189214961782
         n_ativos: 3
         potencia_kw: 7.666799999999999
-        margem_falcon_heavy: 1.6233544113599292
+        margem_falcon_heavy: 1.61330436962903
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -423,7 +423,7 @@ rota_b:
         total_empuxo_dias: 2170.8891449888088
         n_ativos: 4
         potencia_kw: 10.2224
-        margem_falcon_heavy: 1.3810050461753316
+        margem_falcon_heavy: 1.3718834421816344
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -445,7 +445,7 @@ rota_b:
         total_empuxo_dias: 1897.1512790843876
         n_ativos: 5
         potencia_kw: 12.778
-        margem_falcon_heavy: 1.1796461108363454
+        margem_falcon_heavy: 1.1712959106965402
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -467,7 +467,7 @@ rota_b:
         total_empuxo_dias: 1714.6593684814397
         n_ativos: 6
         potencia_kw: 15.333599999999999
-        margem_falcon_heavy: 1.0096889617142462
+        margem_falcon_heavy: 1.0019898655326953
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -489,7 +489,7 @@ rota_b:
         total_empuxo_dias: 1584.3080037650489
         n_ativos: 7
         potencia_kw: 17.889200000000002
-        margem_falcon_heavy: 0.8643193104305877
+        margem_falcon_heavy: 0.8571771237750547
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -511,7 +511,7 @@ rota_b:
         total_empuxo_dias: 1486.5444802277555
         n_ativos: 8
         potencia_kw: 20.4448
-        margem_falcon_heavy: 0.7385615020795311
+        margem_falcon_heavy: 0.7319010921966833
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -533,7 +533,7 @@ rota_b:
         total_empuxo_dias: 1410.5061841431943
         n_ativos: 9
         potencia_kw: 23.0004
-        margem_falcon_heavy: 0.6286975766458791
+        margem_falcon_heavy: 0.6224580542460749
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -555,7 +555,7 @@ rota_b:
         total_empuxo_dias: 1349.6755472756086
         n_ativos: 10
         potencia_kw: 25.556
-        margem_falcon_heavy: 0.5318935041356567
+        margem_falcon_heavy: 0.5260248370668119
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -577,7 +577,7 @@ rota_b:
         total_empuxo_dias: 1299.905026202075
         n_ativos: 11
         potencia_kw: 28.1116
-        margem_falcon_heavy: 0.4459512334199436
+        margem_falcon_heavy: 0.4404118102395347
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -599,7 +599,7 @@ rota_b:
         total_empuxo_dias: 1258.42959197413
         n_ativos: 12
         potencia_kw: 30.667199999999998
-        margem_falcon_heavy: 0.3691397706769395
+        margem_falcon_heavy: 0.36389461136062584
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -623,7 +623,7 @@ rota_b:
         total_empuxo_dias: 1258.42959197413
         n_ativos: 12
         potencia_kw: 30.667199999999998
-        margem_falcon_heavy: 0.3691397706769395
+        margem_falcon_heavy: 0.36389461136062584
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -645,7 +645,7 @@ rota_b:
         dv_saida_km_s: 2.861436369476887
         n_ativos: 2
         potencia_kw: 9.0
-        margem_falcon_heavy: -0.829399773684146
+        margem_falcon_heavy: -0.8300533412640165
         tempo:
           pronto_no_encontro: '2030-04-09'
           pronto_antes_do_ultimo_lancamento: false
@@ -681,7 +681,7 @@ rota_b:
         total_empuxo_dias: 3656.385200765272
         n_ativos: 1
         potencia_kw: 4.5
-        margem_falcon_heavy: 2.2867373990996014
+        margem_falcon_heavy: 2.274145944480881
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -703,7 +703,7 @@ rota_b:
         total_empuxo_dias: 2185.3606365849932
         n_ativos: 2
         potencia_kw: 9.0
-        margem_falcon_heavy: 1.7495640270269268
+        margem_falcon_heavy: 1.739030477654513
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -725,7 +725,7 @@ rota_b:
         total_empuxo_dias: 1695.019115191567
         n_ativos: 3
         potencia_kw: 13.5
-        margem_falcon_heavy: 1.363312184734335
+        margem_falcon_heavy: 1.3542583618971036
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -747,7 +747,7 @@ rota_b:
         total_empuxo_dias: 1449.8483544948538
         n_ativos: 4
         potencia_kw: 18.0
-        margem_falcon_heavy: 1.0722129227536707
+        margem_falcon_heavy: 1.0642742979690056
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -769,7 +769,7 @@ rota_b:
         total_empuxo_dias: 1302.745898076826
         n_ativos: 5
         potencia_kw: 22.5
-        margem_falcon_heavy: 0.8449611704954023
+        margem_falcon_heavy: 0.8378931446598252
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -791,7 +791,7 @@ rota_b:
         total_empuxo_dias: 1204.6775937981406
         n_ativos: 6
         potencia_kw: 27.0
-        margem_falcon_heavy: 0.6626271414495466
+        margem_falcon_heavy: 0.6562576352623017
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -813,7 +813,7 @@ rota_b:
         total_empuxo_dias: 1134.6288050277028
         n_ativos: 7
         potencia_kw: 31.5
-        margem_falcon_heavy: 0.5130911954411768
+        margem_falcon_heavy: 0.5072945598089533
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -835,7 +835,7 @@ rota_b:
         total_empuxo_dias: 1082.0922134498333
         n_ativos: 8
         potencia_kw: 36.0
-        margem_falcon_heavy: 0.38823404275271045
+        margem_falcon_heavy: 0.3829157334912916
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -857,7 +857,7 @@ rota_b:
         total_empuxo_dias: 1041.2304200003794
         n_ativos: 9
         potencia_kw: 40.5
-        margem_falcon_heavy: 0.2824120551172469
+        margem_falcon_heavy: 0.2774991487198777
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -879,7 +879,7 @@ rota_b:
         total_empuxo_dias: 1008.5409852408161
         n_ativos: 10
         potencia_kw: 45.0
-        margem_falcon_heavy: 0.19158052679435822
+        margem_falcon_heavy: 0.18701559497723386
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -901,7 +901,7 @@ rota_b:
         total_empuxo_dias: 981.7950840739004
         n_ativos: 11
         potencia_kw: 49.5
-        margem_falcon_heavy: 0.11276488063099688
+        margem_falcon_heavy: 0.1085018906824815
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -923,7 +923,7 @@ rota_b:
         total_empuxo_dias: 959.5068331014711
         n_ativos: 12
         potencia_kw: 54.0
-        margem_falcon_heavy: 0.04372871304664505
+        margem_falcon_heavy: 0.039730199892481055
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -946,7 +946,7 @@ rota_b:
         total_empuxo_dias: 1008.5409852408161
         n_ativos: 10
         potencia_kw: 45.0
-        margem_falcon_heavy: 0.19158052679435822
+        margem_falcon_heavy: 0.18701559497723386
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -969,7 +969,7 @@ rota_b:
         total_empuxo_dias: 959.5068331014711
         n_ativos: 12
         potencia_kw: 54.0
-        margem_falcon_heavy: 0.04372871304664505
+        margem_falcon_heavy: 0.039730199892481055
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1000,7 +1000,7 @@ rota_b:
     folga_radial_bocais_m: 0.010599999999999998
     empuxo_peso: 1.391510449229571
     lander_injetado_kg: 4194.566374766621
-    margem_vulcan_vc4: 0.5465883537606293
+    margem_vulcan_vc4: 0.5363369961331339
     massa_por_area_kg_m2: 252.93542524643087
     dv_mav_com_margem_m_s: 4801.063300687612
     com_p086_atual:
@@ -1019,7 +1019,7 @@ rota_b:
       folga_radial_bocais_m: 0.010599999999999998
       empuxo_peso: 1.391510449229571
       lander_injetado_kg: 4194.566374766621
-      margem_vulcan_vc4: 0.5465883537606293
+      margem_vulcan_vc4: 0.5363369961331339
       massa_por_area_kg_m2: 252.93542524643087
   propulsores:
     NSTAR:
@@ -1035,7 +1035,7 @@ rota_b:
         dv_saida_km_s: 2.861436369476887
         n_ativos: 1
         potencia_kw: 2.5556
-        margem_falcon_heavy: -0.7702421362611459
+        margem_falcon_heavy: -0.771122336095594
         tempo:
           pronto_no_encontro: '2030-03-26'
           pronto_antes_do_ultimo_lancamento: false
@@ -1072,7 +1072,7 @@ rota_b:
         total_empuxo_dias: 5988.825634203094
         n_ativos: 1
         potencia_kw: 2.5556
-        margem_falcon_heavy: 2.3731741034063023
+        margem_falcon_heavy: 2.3602515107295288
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1094,7 +1094,7 @@ rota_b:
         total_empuxo_dias: 3379.8284760739107
         n_ativos: 2
         potencia_kw: 5.1112
-        margem_falcon_heavy: 1.9885172697544804
+        margem_falcon_heavy: 1.9770682931524304
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1116,7 +1116,7 @@ rota_b:
         total_empuxo_dias: 2510.162756697516
         n_ativos: 3
         potencia_kw: 7.666799999999999
-        margem_falcon_heavy: 1.6826084597116604
+        margem_falcon_heavy: 1.672331416376982
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1138,7 +1138,7 @@ rota_b:
         total_empuxo_dias: 2075.3298970093188
         n_ativos: 4
         potencia_kw: 10.2224
-        margem_falcon_heavy: 1.4335108803931749
+        margem_falcon_heavy: 1.4241881271293981
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1160,7 +1160,7 @@ rota_b:
         total_empuxo_dias: 1814.430181196401
         n_ativos: 5
         potencia_kw: 12.778
-        margem_falcon_heavy: 1.2267433322553432
+        margem_falcon_heavy: 1.2182127031812615
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1182,7 +1182,7 @@ rota_b:
         total_empuxo_dias: 1640.4970373211222
         n_ativos: 6
         potencia_kw: 15.333599999999999
-        margem_falcon_heavy: 1.052360867827578
+        margem_falcon_heavy: 1.0444982960457354
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1204,7 +1204,7 @@ rota_b:
         total_empuxo_dias: 1516.2590774102086
         n_ativos: 7
         potencia_kw: 17.889200000000002
-        margem_falcon_heavy: 0.9033075585335497
+        margem_falcon_heavy: 0.8960160083308144
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1226,7 +1226,7 @@ rota_b:
         total_empuxo_dias: 1423.0806074770235
         n_ativos: 8
         potencia_kw: 20.4448
-        margem_falcon_heavy: 0.7744384465090695
+        margem_falcon_heavy: 0.7676405924489755
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1248,7 +1248,7 @@ rota_b:
         total_empuxo_dias: 1350.6084641956572
         n_ativos: 9
         potencia_kw: 23.0004
-        margem_falcon_heavy: 0.661913630012219
+        margem_falcon_heavy: 0.6555468572793979
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1270,7 +1270,7 @@ rota_b:
         total_empuxo_dias: 1292.6307495705646
         n_ativos: 10
         potencia_kw: 25.556
-        margem_falcon_heavy: 0.5628091429683966
+        margem_falcon_heavy: 0.5568220384291662
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1292,7 +1292,7 @@ rota_b:
         total_empuxo_dias: 1245.1944376045794
         n_ativos: 11
         potencia_kw: 28.1116
-        margem_falcon_heavy: 0.4748592252695374
+        margem_falcon_heavy: 0.4692090558921269
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1314,7 +1314,7 @@ rota_b:
         total_empuxo_dias: 1205.6641776329252
         n_ativos: 12
         potencia_kw: 30.667199999999998
-        margem_falcon_heavy: 0.3962809817386932
+        margem_falcon_heavy: 0.39093184474303255
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1338,7 +1338,7 @@ rota_b:
         total_empuxo_dias: 1205.6641776329252
         n_ativos: 12
         potencia_kw: 30.667199999999998
-        margem_falcon_heavy: 0.3962809817386932
+        margem_falcon_heavy: 0.39093184474303255
         vida_kg: 135.0
         dentro_da_vida: false
         vida_conhecida: true
@@ -1360,7 +1360,7 @@ rota_b:
         dv_saida_km_s: 2.853720242456512
         n_ativos: 1
         potencia_kw: 4.5
-        margem_falcon_heavy: -0.7890451584959599
+        margem_falcon_heavy: -0.7898533241602218
         tempo:
           pronto_no_encontro: '2030-04-06'
           pronto_antes_do_ultimo_lancamento: false
@@ -1397,7 +1397,7 @@ rota_b:
         total_empuxo_dias: 3496.1430756701043
         n_ativos: 1
         potencia_kw: 4.5
-        margem_falcon_heavy: 2.3565689639432716
+        margem_falcon_heavy: 2.343709985372098
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1419,7 +1419,7 @@ rota_b:
         total_empuxo_dias: 2091.805027412815
         n_ativos: 2
         potencia_kw: 9.0
-        margem_falcon_heavy: 1.805004574401845
+        margem_falcon_heavy: 1.7942586329057102
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1441,7 +1441,7 @@ rota_b:
         total_empuxo_dias: 1623.6923446603855
         n_ativos: 3
         potencia_kw: 13.5
-        margem_falcon_heavy: 1.4091274392571722
+        margem_falcon_heavy: 1.3998980986866627
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1463,7 +1463,7 @@ rota_b:
         total_empuxo_dias: 1389.6360032841708
         n_ativos: 4
         potencia_kw: 18.0
-        margem_falcon_heavy: 1.1111725145228037
+        margem_falcon_heavy: 1.1030846359730342
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1485,7 +1485,7 @@ rota_b:
         total_empuxo_dias: 1249.202198458442
         n_ativos: 5
         potencia_kw: 22.5
-        margem_falcon_heavy: 0.8788063863129432
+        margem_falcon_heavy: 0.8716086998299581
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1507,7 +1507,7 @@ rota_b:
         total_empuxo_dias: 1155.579661907956
         n_ativos: 6
         potencia_kw: 27.0
-        margem_falcon_heavy: 0.6925193084372234
+        margem_falcon_heavy: 0.6860352856889098
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1529,7 +1529,7 @@ rota_b:
         total_empuxo_dias: 1088.7064215147516
         n_ativos: 7
         potencia_kw: 31.5
-        margem_falcon_heavy: 0.5398412424394328
+        margem_falcon_heavy: 0.5339421276730625
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1551,7 +1551,7 @@ rota_b:
         total_empuxo_dias: 1038.5514912198482
         n_ativos: 8
         potencia_kw: 36.0
-        margem_falcon_heavy: 0.41242940775086745
+        margem_falcon_heavy: 0.40701840631378494
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1573,7 +1573,7 @@ rota_b:
         total_empuxo_dias: 999.542100990479
         n_ativos: 9
         potencia_kw: 40.5
-        margem_falcon_heavy: 0.3044912520632983
+        margem_falcon_heavy: 0.29949376050666476
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1595,7 +1595,7 @@ rota_b:
         total_empuxo_dias: 968.3345888069839
         n_ativos: 10
         potencia_kw: 45.0
-        margem_falcon_heavy: 0.21187918689937124
+        margem_falcon_heavy: 0.20723649113992448
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1617,7 +1617,7 @@ rota_b:
         total_empuxo_dias: 942.8011697477914
         n_ativos: 11
         potencia_kw: 49.5
-        margem_falcon_heavy: 0.13154537561708857
+        margem_falcon_heavy: 0.12721043780002783
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1639,7 +1639,7 @@ rota_b:
         total_empuxo_dias: 921.5233205317711
         n_ativos: 12
         potencia_kw: 54.0
-        margem_falcon_heavy: 0.06119988861917425
+        margem_falcon_heavy: 0.057134443584654804
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1662,7 +1662,7 @@ rota_b:
         total_empuxo_dias: 1038.5514912198482
         n_ativos: 8
         potencia_kw: 36.0
-        margem_falcon_heavy: 0.41242940775086745
+        margem_falcon_heavy: 0.40701840631378494
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1685,7 +1685,7 @@ rota_b:
         total_empuxo_dias: 921.5233205317711
         n_ativos: 12
         potencia_kw: 54.0
-        margem_falcon_heavy: 0.06119988861917425
+        margem_falcon_heavy: 0.057134443584654804
         vida_kg: null
         dentro_da_vida: true
         vida_conhecida: false
@@ -1713,8 +1713,8 @@ missao:
   volta_dias: 319.0
 referencia_m2020_kg_m2: 211.26345038568627
 folgas_coifa_vulcan_m:
-  folga_radial_m: 0.14252150287894194
-  folga_radial_vertice_m: 0.14122334948516047
+  folga_radial_m: 0.1403195798020187
+  folga_radial_vertice_m: 0.13902142640823767
   raio_max_m: 2.26
   comprimento_m: 2.88
   folga_sem_afunilamento_m: 0.06526817042606536

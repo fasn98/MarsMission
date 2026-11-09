@@ -22,6 +22,7 @@ sys.path[:0] = [str(RAIZ / "src"), str(RAIZ / "tools")]
 
 import dimensionamento as dm  # noqa: E402
 import lancamento as lc  # noqa: E402
+from orbital.lancamento import adaptador_p097  # noqa: E402
 from superficie import _ler, _v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa2.5"
@@ -29,8 +30,8 @@ SAIDA = RAIZ / "results" / "etapa2.5"
 
 def margens(vei, janelas, lcfg):
     esc = lcfg["escolha"]
-    return {"orbitador": {n: lc.pior_margem_a(n, vei["orbitador_regra_iii"]["injetada_kg"], janelas, lcfg)[0] for n in esc["orbitador"]},
-            "lander": {n: lc.pior_margem_a(n, vei["lander"]["injetada_kg"], janelas, lcfg)[0] for n in esc["lander"]}}
+    return {"orbitador": {n: lc.pior_margem_a(n, vei["orbitador_regra_iii"]["injetada_kg"], janelas, lcfg, adaptador_p097()[0])[0] for n in esc["orbitador"]},
+            "lander": {n: lc.pior_margem_a(n, vei["lander"]["injetada_kg"], janelas, lcfg, adaptador_p097()[0])[0] for n in esc["lander"]}}
 
 
 def main():

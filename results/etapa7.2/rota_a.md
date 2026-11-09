@@ -244,7 +244,7 @@ Folga axial mínima (m):
 
 **P-097, aprovada pelo Fabio em 2026-11-07:** Entre o plano da interface de 1575 mm e a base dos veículos há um adaptador com sistema de separação, de altura 0,127 m, e os veículos sobem essa altura em relação ao envelope. Fonte da altura: [F80] Tab. 4.2.2-1a. Falcon: sem altura publicada, mesma altura por análogo, do lado seguro. A capacidade para as massas dos veículos não foi conferida. Os 43 kg do adaptador entram na margem do lançador (Vulcan e Falcon Heavy), não na massa do veículo.
 
-**Margens com os 43 kg do adaptador na capacidade do lançador,** sem entrar na massa do veículo: (capacidade − 43 kg) / massa − 1, na pior janela. A curva dos lançadores é de massa separada ([F79]); [F80] define a sua capacidade em PSW, com o adaptador incluído. Se a curva do [F79] já descontar o adaptador, tirar os 43 kg conta duas vezes, e a margem fica conservadora; não conferido. As etapas anteriores seguem sem o adaptador.
+**Margens com os 43 kg do adaptador na capacidade do lançador,** sem entrar na massa do veículo: (capacidade − 43 kg) / massa − 1, na pior janela. A curva dos lançadores é de massa separada ([F79]); [F80] define a sua capacidade em PSW, com o adaptador incluído. Se a curva do [F79] já descontar o adaptador, tirar os 43 kg conta duas vezes, e a margem fica conservadora; não conferido. Desde 2026-11-09, as margens de 2.4, 2.5 e 7.2 já incluem o adaptador (errata nos relatórios); as de 3.3 (orbitador elétrico) e 4.1 seguem sem ele.
 
 | Veículo | Lançador | Injetado (kg) | Margem sem adaptador | Margem com adaptador |
 | :- | :- | -: | -: | -: |

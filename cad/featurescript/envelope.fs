@@ -6,7 +6,7 @@ import(path : "onshape/std/geometry.fs", version : "__VERSAO__.0");
 // __ORIGEM__
 // O envelope e uma casca fina e sem material: a face INTERNA e o limite do volume utilizavel, e a espessura nao tem sentido
 // fisico. Com uma casca, Check interference so acusa o que atravessa o limite; um solido acusaria o veiculo inteiro.
-// Eixos: z = altura acima do plano da interface. Segmentos em metros: [z0, z1, r0, r1].
+// Eixos: z = altura acima da base do veiculo; o plano da interface fica abaixo dela pela altura do adaptador (P-097). Segmentos em metros: [z0, z1, r0, r1].
 
 // __DADOS__
 

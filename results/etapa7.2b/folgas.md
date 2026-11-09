@@ -8,11 +8,11 @@ Calculadas com todos os corpos de cada modelo, contra a face interna do envelope
 
 | Configuração | Leitura do envelope | Folga radial | Onde | z (m) | Folga axial | Onde | Etapa 7.2 | Diferença |
 | :- | :- | -: | :- | -: | -: | :- | -: | -: |
-| Lander, aeroshell 4,5 m | Contorno reto entre as cotas | +0,141 | Escudo térmico (PICA) | 2,150 | +9,802 | Nariz do escudo (PICA) | +0,143 | −0,001 |
-| Lander, aeroshell 4,5 m | Diametro menor desde o plano da interface | +0,064 | Escudo térmico (PICA) | 2,150 | +9,802 | Nariz do escudo (PICA) | +0,065 | −0,001 |
-| Lander, aeroshell 4,65 m | Contorno reto entre as cotas | +0,044 | Escudo térmico (PICA) | 3,120 | +8,832 | Nariz do escudo (PICA) | +0,047 | −0,002 |
-| Lander, aeroshell 4,65 m | Diametro menor desde o plano da interface | −0,016 | Escudo térmico (PICA) | 3,120 | +8,832 | Nariz do escudo (PICA) | −0,014 | −0,002 |
-| Orbitador | Keep-in do fabricante, faixas de 500 mm | +0,361 | Tanque insercao MON-3 1 | 0,564 | +6,232 | EES com o contêiner de amostras | +0,356 | +0,005 |
+| Lander, aeroshell 4,5 m | Contorno reto entre as cotas | +0,139 | Escudo térmico (PICA) | 2,150 | +9,675 | Nariz do escudo (PICA) | +0,140 | −0,001 |
+| Lander, aeroshell 4,5 m | Diametro menor desde o plano da interface | +0,064 | Escudo térmico (PICA) | 2,150 | +9,675 | Nariz do escudo (PICA) | +0,065 | −0,001 |
+| Lander, aeroshell 4,65 m | Contorno reto entre as cotas | +0,042 | Escudo térmico (PICA) | 3,120 | +8,705 | Nariz do escudo (PICA) | +0,044 | −0,002 |
+| Lander, aeroshell 4,65 m | Diametro menor desde o plano da interface | −0,016 | Escudo térmico (PICA) | 3,120 | +8,705 | Nariz do escudo (PICA) | −0,014 | −0,002 |
+| Orbitador | Keep-in do fabricante, faixas de 500 mm | +0,360 | Tanque insercao MON-3 1 | 0,564 | +6,105 | EES com o contêiner de amostras | +0,355 | +0,005 |
 
 ## Por que as folgas do lander não batem com as da Etapa 7.2
 
@@ -20,16 +20,16 @@ Calculadas com todos os corpos de cada modelo, contra a face interna do envelope
 
 | Configuração | Leitura | Conta da 7.2 repetida | Publicado na 7.2 | Geometria, no vértice |
 | :- | :- | -: | -: | -: |
-| Lander, aeroshell 4,5 m | Contorno reto entre as cotas | +0,1425 | +0,1425 | +0,1412 |
+| Lander, aeroshell 4,5 m | Contorno reto entre as cotas | +0,1403 | +0,1403 | +0,1390 |
 | Lander, aeroshell 4,5 m | Diametro menor desde o plano da interface | +0,0653 | +0,0653 | +0,0640 |
-| Lander, aeroshell 4,65 m | Contorno reto entre as cotas | +0,0466 | +0,0466 | +0,0444 |
+| Lander, aeroshell 4,65 m | Contorno reto entre as cotas | +0,0444 | +0,0444 | +0,0422 |
 | Lander, aeroshell 4,65 m | Diametro menor desde o plano da interface | −0,0138 | −0,0138 | −0,0160 |
 
-Com a SRL-C, a pior forma da P-089 e sem modelo próprio, os vértices dão +0,030 e −0,036 m, contra +0,032 e −0,034 m publicados.
+Com a SRL-C, a pior forma da P-089 e sem modelo próprio, os vértices dão +0,027 e −0,036 m, contra +0,030 e −0,034 m publicados.
 
 A errata foi aprovada pelo Fabio (2026-11-04) e está em `results/etapa7.2/conferencias.md` e `portao_decisao.md`, com os valores antigos e os novos lado a lado.
 
-**Orbitador:** a Etapa 7.2 dá +0,356 m (Tanques de inserção), porque trata cada conjunto como um cilindro no raio máximo. Aqui as esferas têm a forma real, e a folga é maior. As duas contas respondem a perguntas diferentes, e a da 7.2 fica do lado seguro.
+**Orbitador:** a Etapa 7.2 dá +0,355 m (Tanques de inserção), porque trata cada conjunto como um cilindro no raio máximo. Aqui as esferas têm a forma real, e a folga é maior. As duas contas respondem a perguntas diferentes, e a da 7.2 fica do lado seguro.
 
 ## O que os arquivos têm
 
@@ -62,11 +62,11 @@ Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora
 
 | Veículo | Leitura | Grandeza | Antes | Agora | Diferença (m) |
 | :- | :- | :- | -: | -: | -: |
-| orbitador | Keep-in do fabricante, faixas de 500 mm | folga axial | 6,231930000 | 6,231927774 | −2,23e−06 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | folga axial | 6,104930000 | 6,104927774 | −2,23e−06 |
 | orbitador | Keep-in do fabricante, faixas de 500 mm | z do topo | 5,115670000 | 5,115672226 | +2,23e−06 |
 | orbitador | Keep-in do fabricante, faixas de 500 mm | raio do corpo | 1,958763685 | 1,958764291 | +6,05e−07 |
-| orbitador | Keep-in do fabricante, faixas de 500 mm | distância no Measure | 0,360796924 | 0,360796320 | −6,04e−07 |
-| orbitador | Keep-in do fabricante, faixas de 500 mm | folga radial | 0,360809054 | 0,360808450 | −6,04e−07 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | distância no Measure | 0,359755559 | 0,359754955 | −6,04e−07 |
+| orbitador | Keep-in do fabricante, faixas de 500 mm | folga radial | 0,359767654 | 0,359767050 | −6,04e−07 |
 | orbitador | Keep-in do fabricante, faixas de 500 mm | z da folga radial | 0,564300109 | 0,564299910 | −1,99e−07 |
 
 **Massa, CG e inércia (6 × 13 algarismos), contra a tolerância da P-039:**
@@ -96,7 +96,7 @@ Antes: grade angular fixa e geometria com 6 algarismos, recalculadas aqui. Agora
 
 - **Vulcan, com fonte:** [F80] Fig. 4.3.1-1, p. 4-8: "LV STA 2596.66 (1575 Interface)".
 - **Falcon, sem fonte direta:** [F82] PDF p. 26: "The origin of the payload coordinate system is fixed at the center of the separation plane"; o arquivo STEP não declara que usa esse sistema (P-096).
-- **Veículos, sem fonte:** z = 0 do modelo. A P-097 (aprovada em 2026-11-07) sobe os veículos em 0,127 m; as folgas deste relatório seguem sem esse deslocamento, e as com ele estão em results/etapa7.2/rota_a.md, seção 5. Na primeira leitura do Vulcan, cada metro de altura tira 0,0173 m de folga radial.
+- **Veículos:** z = 0 do modelo é a base do veículo. Pela P-097 (aprovada em 2026-11-07), o veículo fica 0,127 m acima do plano da interface: os envelopes exportados descem essa altura, e as folgas deste relatório já a incluem. Na primeira leitura do Vulcan, cada metro de altura tira 0,0173 m de folga radial.
 
 ## Premissas propostas (não entraram em config/premissas.yaml; pendentes do Fabio)
 

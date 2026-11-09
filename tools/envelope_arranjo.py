@@ -33,6 +33,7 @@ from matplotlib.patches import Circle, Polygon, Rectangle  # noqa: E402
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
 
+from orbital import lancamento as lc  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa7.1"
@@ -125,19 +126,20 @@ def main():
     conj_o.append({"conjunto": f"CCRS ({rot_cc} m; a maior dimensão na horizontal, P-082)", "h0_m": h, "h1_m": h + cc[2], "raio_m": math.hypot(cc[0] / 2, cc[1] / 2)})
     fal = cad["coifas"]["falcon_padrao"]["perfil"]
     perf_f = ([float(x) for x in fal["altura_m"]], [float(x) for x in fal["raio_m"]])
+    h_ad = lc.adaptador_p097()[1]   # P-097: o veículo sobe a altura do adaptador em relação ao envelope
     for c in conj_o:
-        c["margem_radial_m"] = margem_conjunto(perf_f, c["h0_m"], c["h1_m"], c["raio_m"])
+        c["margem_radial_m"] = margem_conjunto(perf_f, c["h0_m"] + h_ad, c["h1_m"] + h_ad, c["raio_m"])
     for c, nome in zip(conj_o[:2], ("insercao_marte", "retorno")):
         alt = tanques_o[nome]["alternativa_um_par"]
         h1 = c["h0_m"] + alt["diametro_esfera_m"]
-        alt["margem_com_cilindro_m"] = margem_conjunto(perf_f, c["h0_m"], h1, alt["raio_com_cilindro_m"])
-        alt["margem_sem_cilindro_m"] = margem_conjunto(perf_f, c["h0_m"], h1, alt["raio_sem_cilindro_m"])
+        alt["margem_com_cilindro_m"] = margem_conjunto(perf_f, c["h0_m"] + h_ad, h1 + h_ad, alt["raio_com_cilindro_m"])
+        alt["margem_sem_cilindro_m"] = margem_conjunto(perf_f, c["h0_m"] + h_ad, h1 + h_ad, alt["raio_sem_cilindro_m"])
     oe = pcfg["orbitador"]["energia"]
     d_af = en["orbitador"]["afelio_marte_ua"]
     area_o = (en["orbitador"]["adotada"]["painel_w_afelio"] * d_af ** 2
               / (v(pcfg["lander"]["energia"]["densidade_area_painel_w_m2"]) * v(oe["fator_perdas_painel"])))
     orbitador = {"tanques": tanques_o, "conjuntos": conj_o, "altura_total_m": conj_o[-1]["h1_m"],
-                 "topo_envelope_m": perf_f[0][-1], "cabe": all(c["margem_radial_m"] >= 0 for c in conj_o) and conj_o[-1]["h1_m"] <= perf_f[0][-1],
+                 "topo_envelope_m": perf_f[0][-1], "cabe": all(c["margem_radial_m"] >= 0 for c in conj_o) and conj_o[-1]["h1_m"] + h_ad <= perf_f[0][-1], "altura_adaptador_m": h_ad,
                  "area_paineis_m2": area_o, "ees_diametro_m": v(ob["ees_diametro_m"]), "ccrs_m": cc,
                  "raio_cilindro_central_m": rc, "folga_radial_m": f_rad,
                  "plataforma_kg": next(x["massa_kg"] for k, x in comp_o.items() if k.startswith("Plataforma")),
@@ -153,7 +155,7 @@ def main():
         dmt = v(o["diametro_m"])
         alt = v(msl["altura_m"]) * dmt / v(msl["diametro_m"])   # P-083
         opcoes[k] = {"diametro_m": dmt, "altura_conjunto_m": alt,
-                     "margem_radial_vulcan_m": margem_conjunto(perf_v, 0.0, alt, dmt / 2),
+                     "margem_radial_vulcan_m": margem_conjunto(perf_v, h_ad, alt + h_ad, dmt / 2),
                      "diametro_util_interno_m": dmt - 2 * v(ae["folga_interna_m"]),
                      "massa_entrada_referencia_kg": v(o["massa_entrada_kg"]) if "massa_entrada_kg" in o else v(o["massa_entrada_min_kg"]),
                      "referencia_e_minimo": "massa_entrada_min_kg" in o}

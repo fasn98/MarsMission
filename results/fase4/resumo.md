@@ -21,9 +21,9 @@ Referência otimista (A: L3 + braço + helicópteros (referência otimista)): pl
 
 | Veículo | Lançador | Margem na base | Pior margem nas sensibilidades | Caso da pior margem |
 | :- | :- | -: | -: | :- |
-| Orbitador | Falcon Heavy (descartável) | +44 % | +18 % | Margem de Δv 20 % (base 10 %) |
-| Lander | Vulcan VC4 | +41 % | +8 % | ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230 |
-| Lander (reserva) | Vulcan VC6 | +80 % | +38 % | ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230 |
+| Orbitador | Falcon Heavy (descartável) | +43 % | +18 % | Margem de Δv 20 % (base 10 %) |
+| Lander | Vulcan VC4 | +40 % | +7 % | ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230 |
+| Lander (reserva) | Vulcan VC6 | +79 % | +37 % | ε do MAV 0,300 (sem fonte, ilustração do risco) em vez de 0,230 |
 
 Margem na pior janela, injeção direta; sensibilidades de results/etapa2.5/arquitetura.md (uma premissa por vez).
 
