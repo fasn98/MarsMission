@@ -64,7 +64,7 @@ def main():
     rec = int(v(cc["conjuncao"]["dias_de_recuperacao"]))
     folga = int(v(op["requisitos"]["folga_min_conjuncao_dias"]))
     passo = int(v(fm["passo_serie_dias"]))
-    d, fim, serie = D(v(fm["inicio_busca"]) if not isinstance(fm["inicio_busca"]["valor"], str) else fm["inicio_busca"]["valor"]), D(fm["fim_busca"]["valor"]), []
+    d, fim, serie = D(fm["inicio_busca"]["valor"]), D(fm["fim_busca"]["valor"]), []
     while d <= fim:
         s = d.isoformat() + "T00:00:00"
         rm, _ = eph.estado(eph.BARICENTRO_MARTE, s, eph.TERRA)

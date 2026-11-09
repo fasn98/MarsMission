@@ -55,7 +55,7 @@ A NASA não chegou a escolher uma arquitetura. Em 2024, apontou o MAV como o fat
   - **Motor de 800 N do Chandrayaan-3 (ISRO)** (voou; abaixo de 1 kN; sem folha de dados pública): [F261]: "Bi-Propellant Propulsion System (MMH + MON3), 4 nos. of 800 N Throttleable engines"
   - **Motor de 3000 N do Tianwen-1 (China)** (voou; sem folha de dados pública (só empuxo)): [F262]: "A 3000N engine was ignited at 7:52 p.m. (Beijing time) to decelerate Tianwen-1"
   - Não conferidos: LEROS 4-ET e ISE-900: sem folha de dados primária reaberta nesta etapa.
-- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN está em produção (R-40B "Not in Production"; LEROS 4 "In development, TRL6", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.
+- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN tem produção confirmada (R-40B "Not in Production"; LEROS 4 "In development, TRL6", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.
 - **Para decidir, calcular:** a subida e o comprimento com cada candidato (o mesmo método de results/etapa7.2/subida_mav.md e rota_a.md).
 
 ## Família 4: três lançamentos, com o orbitador à parte, como no MSR original

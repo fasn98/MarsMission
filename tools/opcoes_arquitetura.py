@@ -112,7 +112,7 @@ def opcoes(d, cfg):
            "- **Candidatos com fonte** (motores de 1 a 4 kN, e, como referência de voo, o de 800 N do Chandrayaan-3, abaixo da faixa; o R-42, de 890 N e em produção por [F228] PDF p. 25, entra só na ordem de grandeza, porque dois não cabem em Ø 0,57 m):"]
     md += [f"  - **{x['motor']}** ({x['situacao']}): {x['fonte']}" for x in cfg["motores_1_4_kn"]]
     md += [f"  - Não conferidos: {cfg['motores_nao_conferidos']}.",
-           "- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN está em produção (R-40B \"Not in Production\"; LEROS 4 \"In development, TRL6\", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.",
+           "- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN tem produção confirmada (R-40B \"Not in Production\"; LEROS 4 \"In development, TRL6\", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.",
            "- **Para decidir, calcular:** a subida e o comprimento com cada candidato (o mesmo método de results/etapa7.2/subida_mav.md e rota_a.md).",
            "", "## Família 4: três lançamentos, com o orbitador à parte, como no MSR original", "",
            "- **Nota sobre o título:** o título é o do pedido. Nas fontes deste PR, dois landers mais o orbitador foram estudados pelo MSR (2021 e 2023) e rejeitados uma vez; nenhuma delas dá três lançamentos como linha de base do MSR.",
