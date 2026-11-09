@@ -8,9 +8,9 @@ Perfis lidos de [F41] Fig. 2 (P-089); frente para cima e estágio de cruzeiro de
 
 | Forma | Raio máximo | Comprimento | Menor folga radial ao envelope do Vulcan | Sem o afunilamento linear entre as cotas |
 | :- | -: | -: | -: | -: |
-| MSL/M2020 (Ø 4,5 m) | 2,26 | 2,88 | 0,143 | 0,065 |
-| SRL-A | 2,34 | 3,85 | 0,047 | −0,014 |
-| SRL-C | 2,36 | 3,55 | 0,032 | −0,034 |
+| MSL/M2020 (Ø 4,5 m) | 2,26 | 2,88 | 0,140 | 0,065 |
+| SRL-A | 2,34 | 3,85 | 0,044 | −0,014 |
+| SRL-C | 2,36 | 3,55 | 0,030 | −0,034 |
 
 Envelope do Vulcan: [F80] Fig. 4.3.1-1 ("Simplified"), cotas de diâmetro nas estações; entre elas o contorno desenhado é reto, e a interpolação é linear. A última coluna supõe o diâmetro menor (o da estação de cima) desde o plano do PAF.
 
@@ -36,11 +36,11 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 
 | Forma | Leitura do envelope | Publicado (grade de 400 pontos) | Vigente (vértices) | Diferença (mm) |
 | :- | :- | -: | -: | -: |
-| MSL/M2020 (Ø 4,5 m) | contorno reto | 0,1425 | 0,1412 | −1,3 |
+| MSL/M2020 (Ø 4,5 m) | contorno reto | 0,1403 | 0,1390 | −1,3 |
 | MSL/M2020 (Ø 4,5 m) | Ø menor desde o PAF | 0,0653 | 0,0640 | −1,3 |
-| SRL-A | contorno reto | 0,0466 | 0,0444 | −2,2 |
+| SRL-A | contorno reto | 0,0444 | 0,0422 | −2,2 |
 | SRL-A | Ø menor desde o PAF | −0,0138 | −0,0160 | −2,2 |
-| SRL-C | contorno reto | 0,0319 | 0,0296 | −2,3 |
+| SRL-C | contorno reto | 0,0297 | 0,0274 | −2,3 |
 | SRL-C | Ø menor desde o PAF | −0,0338 | −0,0360 | −2,2 |
 
 ## Errata (2026-11-06, decisão do Fabio): 13 algarismos nos arquivos .fs
@@ -55,7 +55,7 @@ Comprimento máximo do MAV deitado com a base na estação dada (distância ao n
 | Tanques de retorno | 1,22 | 2,13 | 1,75 | 0,56 |
 | Plataforma | 2,23 | 2,53 | 1,74 | 0,56 |
 | CCRS | 2,63 | 4,63 | 1,72 | 0,57 |
-| EES | 4,63 | 5,12 | 0,64 | 1,65 |
+| EES | 4,63 | 5,12 | 0,64 | 1,64 |
 
 ## Massa e CG esperados do CAD (pelos volumes dos primitivos; para conferir o Onshape)
 

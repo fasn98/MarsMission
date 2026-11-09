@@ -22,7 +22,7 @@ from orbital import kernels as krn
 from orbital import porkchop as pc
 from orbital.config import RAIZ, ler, v
 from orbital.constantes import GM_SOL, UA_KM
-from orbital.lancamento import pior_margem_a
+from orbital.lancamento import adaptador_p097, pior_margem_a
 from orbital.veiculos import veiculos
 
 VERIFICADO = "verificado contra dados publicados"
@@ -289,7 +289,7 @@ def orcamento(plataforma_lander_kg=None, margem_dv=None, isp_armazenavel_s=None,
                                           (("entrada", "massa_entrada_kg"), ("pousada", "massa_pousada_kg"),
                                            ("mav", "mav_e_aquecimento_kg"), ("plataforma", "plataforma_kg"))})
         for nome, lan in lcfg["lancadores"].items():
-            m, jan = pior_margem_a(nome, x["injetada_kg"], janelas, lcfg)
+            m, jan = pior_margem_a(nome, x["injetada_kg"], janelas, lcfg, adaptador_p097()[0])
             res["lancadores"].append({"veiculo": veic, "lancador": nome, "categoria": lan["categoria"],
                                       "escolhido": nome in lcfg["escolha"][veic],
                                       "margem": None if m is None else Valor(float(m), "", CALCULADO, origem),
@@ -397,7 +397,7 @@ def propulsao() -> dict:
     lcfg = ler("config/lancadores.yaml")
 
     def algum_lancador(m):
-        margens = (pior_margem_a(n, m, janelas, lcfg)[0] for n in lcfg["lancadores"])
+        margens = (pior_margem_a(n, m, janelas, lcfg, adaptador_p097()[0])[0] for n in lcfg["lancadores"])
         return any(x is not None and x >= 0 for x in margens)
 
     estada_min = min(float(x) for x in oe["janelas"].values())

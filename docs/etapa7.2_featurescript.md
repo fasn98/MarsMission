@@ -209,3 +209,6 @@ algarismos significativos, antes 6. O que muda é só a precisão dos números d
 `results/etapa7.2b/folgas.md`. A conferência no Onshape continua válida para o commit 32cb41d, porque lê as cópias em
 `tests/data/onshape/compilados_32cb41d/`. Os valores desta página anteriores a esta errata ficam como registro; os vigentes estão
 em `results/etapa7.2/conferencias.md`, `cg_lateral.md`, `conferencia_onshape.md` e `results/etapa7.2b/roteiro_onshape.md`.
+
+## Errata (2026-11-09): P-097 propagada à Etapa 7.2 e 7.2b
+A P-097 (aprovada pelo Fabio em 2026-11-07) põe entre o plano da interface de 1575 mm e o veículo um adaptador com sistema de separação de 43 kg e 0,127 m: a massa sai da capacidade do lançador, sem entrar na massa do veículo, e o veículo sobe essa altura no envelope. O texto acima não muda. Folgas radiais no Vulcan (contorno reto): MSL/M2020 0,143 → 0,140 m; SRL-A 0,047 → 0,044 m; SRL-C 0,032 → 0,030 m; a leitura do Ø menor não muda. Folga axial cai 0,127 m. Orbitador no Falcon Heavy: 0,361 → 0,360 m. Os arquivos de envelope do Onshape descem 0,127 m em relação ao z = 0 dos veículos. Vigentes: `results/etapa7.2/conferencias.md` e `results/etapa7.2b/folgas.md`.

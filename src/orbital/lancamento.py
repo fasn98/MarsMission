@@ -13,7 +13,7 @@ from __future__ import annotations
 import numpy as np
 
 from orbital import foguete as fg
-from orbital.config import v
+from orbital.config import ler, v
 
 
 def inclinacao(latitude_graus, azimute_graus):
@@ -109,3 +109,11 @@ def leo_por_janela(m_inj, cand, dcfg, po, i_graus):
         return fg.dimensionar_veiculo([e], m_inj)[0].massa_inicial, beta, theta, extra
     except ValueError:  # Δv alto demais para o estágio (giro grande): inviável
         return float("inf"), beta, theta, extra
+
+
+def adaptador_p097():
+    """(massa em kg, altura em m) do adaptador com sistema de separação da P-097 (config/cad.yaml, adaptador_coifa): a massa
+    sai da capacidade do lançador, sem entrar na massa do veículo; a altura sobe o veículo em relação ao envelope."""
+    a = ler("config/cad.yaml")["adaptador_coifa"]
+    return v(a["massa_kg"]), v(a["altura_m"])
+

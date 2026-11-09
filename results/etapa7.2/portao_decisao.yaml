@@ -2,16 +2,16 @@ gerado_por: tools/portao_7_2.py
 aeroshell:
   msl_m2020:
     rotulo: 4,5 m (forma MSL/M2020)
-    folga_vulcan_linear_m: 0.14252150287894194
+    folga_vulcan_linear_m: 0.1403195798020187
     folga_vulcan_sem_afunilamento_m: 0.06526817042606536
-    folga_vulcan_linear_vertice_m: 0.14122334948516047
+    folga_vulcan_linear_vertice_m: 0.13902142640823767
     folga_vulcan_sem_afunilamento_vertice_m: 0.06400000000000006
     massa_por_area_lander_kg_m2: 278.50000911622186
   srl_a:
     rotulo: 4,65 m (forma SRL-A)
-    folga_vulcan_linear_m: 0.046599138400648776
+    folga_vulcan_linear_m: 0.04439721532372598
     folga_vulcan_sem_afunilamento_m: -0.013791164658634614
-    folga_vulcan_linear_vertice_m: 0.04440551181102359
+    folga_vulcan_linear_vertice_m: 0.04220358873410035
     folga_vulcan_sem_afunilamento_vertice_m: -0.016000000000000014
     massa_por_area_lander_kg_m2: 260.82206889136285
 m2020_massa_por_area_kg_m2: 211.26345038568627
@@ -22,8 +22,8 @@ vulcan_diametros_mm:
 - 4877
 - 4648
 srl_c:
-  folga_radial_m: 0.03187213060367977
-  folga_radial_vertice_m: 0.029606904906117393
+  folga_radial_m: 0.02967020752675653
+  folga_radial_vertice_m: 0.027404981829194597
   raio_max_m: 2.36
   comprimento_m: 3.55
   folga_sem_afunilamento_m: -0.0338064727034979

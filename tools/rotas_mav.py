@@ -78,8 +78,8 @@ def main():
     fr = v(rd["a_frente_da_flange_pol"])
     motor = {k: (rd[k]["flange_a_saida_pol"] + fr) * POL for k in ("44:1", "164:1")}
     saida = {k: rd[k]["diametro_saida_pol"] * POL for k in ("44:1", "164:1")}
-    margem_vc4 = lambda m: lc.pior_margem_a("Vulcan VC4", m, janelas, lcfg)[0]  # noqa: E731
-    margem_fh = lambda m: lc.pior_margem_a("Falcon Heavy (descartável)", m, janelas, lcfg)[0]  # noqa: E731
+    margem_vc4 = lambda m: lc.pior_margem_a("Vulcan VC4", m, janelas, lcfg, lc.adaptador_p097()[0])[0]  # noqa: E731
+    margem_fh = lambda m: lc.pior_margem_a("Falcon Heavy (descartável)", m, janelas, lcfg, lc.adaptador_p097()[0])[0]  # noqa: E731
 
     def linha_mav(rot, est, d, n, variante, nt_, aninhado, lan):
         L = cmv.comprimento(d, est, nt_, cad, aninhado=aninhado)

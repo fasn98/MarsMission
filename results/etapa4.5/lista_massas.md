@@ -34,9 +34,9 @@ Dissipação: 357 W (máximo do LAMP do SRL [F165] + RHUs, Etapa 4.2), contra 20
 
 | Caso | Plataforma (kg) | Massa de entrada (kg) | Lander injetado (kg) | Falcon Heavy (recuperação) | Falcon Heavy (descartável) | Vulcan VC2 | Vulcan VC4 | Vulcan VC6 |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: |
-| Antes: A, sem circuito (P-017 anterior) | 1 564,9 | 3 882 | 4 012 | +17 % | +180 % | +8 % | +62 % | +107 % |
-| B com o circuito na plataforma | 1 879,4 | 4 499 | 4 650 | +1 % | +141 % | −7 % | +39 % | +78 % |
-| Depois: B, circuito no estágio de cruzeiro (vigente) | 1 843,7 | 4 429 | 4 615 | +1 % | +143 % | −6 % | +41 % | +80 % |
+| Antes: A, sem circuito (P-017 anterior) | 1 564,9 | 3 882 | 4 012 | +16 % | +179 % | +7 % | +61 % | +106 % |
+| B com o circuito na plataforma | 1 879,4 | 4 499 | 4 650 | −0 % | +140 % | −8 % | +39 % | +77 % |
+| Depois: B, circuito no estágio de cruzeiro (vigente) | 1 843,7 | 4 429 | 4 615 | +0 % | +142 % | −7 % | +40 % | +79 % |
 
 Lançadores de base (ADR 0020): lander no Vulcan VC4 (reserva: Vulcan VC6); orbitador no Falcon Heavy (descartável).
 
@@ -44,9 +44,9 @@ Lançadores de base (ADR 0020): lander no Vulcan VC4 (reserva: Vulcan VC6); orbi
 
 | Caso | Plataforma (kg) | Lander injetado (kg) | Lander: Falcon Heavy (recuperação) | Lander: Falcon Heavy (descartável) | Lander: Vulcan VC2 | Lander: Vulcan VC4 | Lander: Vulcan VC6 | Orbitador: Falcon Heavy (descartável) | Orbitador: Vulcan VC6 |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
-| A: L3 + braço + helicópteros (referência otimista) | 1 565 | 4 049 | +16 % | +177 % | +7 % | +60 % | +105 % | +44 % | +6 % |
-| B: A + itens novos, sem a dupla contagem (P-017 vigente) | 1 844 | 4 615 | +1 % | +143 % | −6 % | +41 % | +80 % | +44 % | +6 % |
-| C: núcleo = descida seca do Mars 2020 + todos os itens | 1 077 | 3 057 | +53 % | +267 % | +41 % | +112 % | +171 % | +44 % | +6 % |
+| A: L3 + braço + helicópteros (referência otimista) | 1 565 | 4 049 | +14 % | +176 % | +6 % | +59 % | +104 % | +43 % | +6 % |
+| B: A + itens novos, sem a dupla contagem (P-017 vigente) | 1 844 | 4 615 | +0 % | +142 % | −7 % | +40 % | +79 % | +43 % | +6 % |
+| C: núcleo = descida seca do Mars 2020 + todos os itens | 1 077 | 3 057 | +52 % | +266 % | +40 % | +111 % | +170 % | +43 % | +6 % |
 
 ## MAV: Isp maior (caso B; só o Isp muda)
 
@@ -54,9 +54,9 @@ Empuxo, número e massa dos motores e o propelente ficam os do R-4D-11. Ganho em
 
 | Motor | Isp (s) | Propelente | Voo | Lander injetado (kg) | Falcon Heavy (recuperação) | Falcon Heavy (descartável) | Vulcan VC2 | Vulcan VC4 | Vulcan VC6 |
 | :- | -: | :- | :- | -: | -: | -: | -: | -: | -: |
-| R-4D-11 (base, Orion) | 310 | MMH/MON-3 | Artemis I [F107] | 4 615 | +1 % (+0,0 pp) | +143 % (+0,0 pp) | −6 % (+0,0 pp) | +41 % (+0,0 pp) | +80 % (+0,0 pp) |
-| LEROS 1b | 317 | MON/hidrazina | Juno, MESSENGER, Mars Global Surveyor [F208] | 4 535 | +3 % (+1,8 pp) | +148 % (+4,3 pp) | −5 % (+1,6 pp) | +43 % (+2,5 pp) | +83 % (+3,2 pp) |
-| S400-15 | 321 | MMH/MON | não conferido para o S400-15 (a lista de herança não separa o S400-12) | 4 495 | +4 % (+2,7 pp) | +150 % (+6,5 pp) | −4 % (+2,5 pp) | +44 % (+3,7 pp) | +84 % (+4,8 pp) |
-| LEROS 1c | 324 | MON/hidrazina | "more than 60 engines delivered" [F209]; entregues, voo não conferido | 4 468 | +5 % (+3,3 pp) | +151 % (+8,0 pp) | −3 % (+3,1 pp) | +45 % (+4,6 pp) | +86 % (+5,9 pp) |
+| R-4D-11 (base, Orion) | 310 | MMH/MON-3 | Artemis I [F107] | 4 615 | +0 % (+0,0 pp) | +142 % (+0,0 pp) | −7 % (+0,0 pp) | +40 % (+0,0 pp) | +79 % (+0,0 pp) |
+| LEROS 1b | 317 | MON/hidrazina | Juno, MESSENGER, Mars Global Surveyor [F208] | 4 535 | +2 % (+1,8 pp) | +147 % (+4,3 pp) | −6 % (+1,6 pp) | +42 % (+2,5 pp) | +82 % (+3,1 pp) |
+| S400-15 | 321 | MMH/MON | não conferido para o S400-15 (a lista de herança não separa o S400-12) | 4 495 | +3 % (+2,7 pp) | +149 % (+6,4 pp) | −5 % (+2,5 pp) | +43 % (+3,7 pp) | +84 % (+4,8 pp) |
+| LEROS 1c | 324 | MON/hidrazina | "more than 60 engines delivered" [F209]; entregues, voo não conferido | 4 468 | +4 % (+3,3 pp) | +150 % (+8,0 pp) | −4 % (+3,1 pp) | +44 % (+4,6 pp) | +85 % (+5,9 pp) |
 
 Margem de sistema do JPL para um conceito nesta fase: 30 % [F210] (margem de massa do sistema, não margem do lançador).

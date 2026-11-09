@@ -27,6 +27,7 @@ sys.path.insert(0, str(RAIZ / "tools"))
 import cad_parametros as cp  # noqa: E402
 import envelope_arranjo as ea  # noqa: E402
 from conferencia_onshape import _bloco  # noqa: E402
+from orbital import lancamento as lc  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa7.2b"
@@ -46,7 +47,7 @@ def segmentos(alturas, raios, t):
     interno = [[z[i], z[i + 1], r[i], r[i + 1]] for i in range(len(z) - 1)]
     externo = [[a, b, cp.r13(c + t), cp.r13(d + t)] for a, b, c, d in interno]
     externo.append([z[-1], cp.r13(z[-1] + t), cp.r13(r[-1] + t), cp.r13(r[-1] + t)])
-    return {"interno": [[-t, z[0], r[0], r[0]]] + interno, "externo": externo}
+    return {"interno": [[cp.r13(z[0] - t), z[0], r[0], r[0]]] + interno, "externo": externo}
 
 
 def envelope_fs(arq, titulo, feature, origem, nome, cor, opcoes, versao):
@@ -263,7 +264,9 @@ def main():
     enc = cad["encaixe"]
     versao, t_casca, cor = int(v(enc["versao_featurescript"])), v(enc["espessura_casca_envelope_m"]), enc["cor_envelope"]["valor"]
     rmin = v(cad["construcao"]["raio_minimo_m"])
-    cv, cf = env["coifas"]["vulcan"], env["coifas"]["falcon"]
+    cv, cf = dict(env["coifas"]["vulcan"]), dict(env["coifas"]["falcon"])
+    h_ad = lc.adaptador_p097()[1]   # P-097: o envelope desce a altura do adaptador em relação ao z = 0 dos veículos
+    cv["altura_m"], cf["altura_m"] = [z - h_ad for z in cv["altura_m"]], [z - h_ad for z in cf["altura_m"]]
     # segunda leitura do Vulcan: a mesma regra de tools/cad_parametros.py (o diâmetro menor desde o plano da interface)
     rv2 = [cv["raio_m"][1], cv["raio_m"][1]] + list(cv["raio_m"][2:])
     op_v = [{"rotulo": "Contorno reto entre as cotas", "segmentos": segmentos(cv["altura_m"], cv["raio_m"], t_casca)},

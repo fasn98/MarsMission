@@ -8,33 +8,33 @@ Folga do MAV no aeroshell com a folga interna de 0,25 m (P-087) e a base em cada
 
 | Aeroshell | Folga no Vulcan, contorno reto entre as cotas | Folga no Vulcan, Ø menor desde o PAF | Massa por área (kg/m²) | Ø do MAV | Comprimento | Deitado, ombro | Deitado, ombro + meio deck | Deitado, ombro + deck (P-094) | Em pé, ombro | Em pé, ombro + meio deck | Em pé, ombro + deck (P-094) |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
-| 4,5 m (forma MSL/M2020) | +0,143 | +0,065 | 279 | 0,57 | 3,56 | −0,19 | −0,30 | −0,41 | −1,78 | −1,93 | −2,08 |
-| 4,65 m (forma SRL-A) | +0,047 | −0,014 | 261 | 0,57 | 3,56 | +0,02 | −0,06 | −0,14 | −0,77 | −0,92 | −1,07 |
-| 4,5 m (forma MSL/M2020) | +0,143 | +0,065 | 279 | 0,60 | 3,49 | −0,18 | −0,29 | −0,40 | −1,74 | −1,89 | −2,04 |
-| 4,65 m (forma SRL-A) | +0,047 | −0,014 | 261 | 0,60 | 3,49 | +0,04 | −0,04 | −0,12 | −0,73 | −0,87 | −1,02 |
-| 4,5 m (forma MSL/M2020) | +0,143 | +0,065 | 279 | 0,63 | 3,48 | −0,19 | −0,30 | −0,41 | −1,75 | −1,90 | −2,05 |
-| 4,65 m (forma SRL-A) | +0,047 | −0,014 | 261 | 0,63 | 3,48 | +0,03 | −0,05 | −0,13 | −0,73 | −0,88 | −1,03 |
-| 4,5 m (forma MSL/M2020) | +0,143 | +0,065 | 279 | 0,66 | 3,48 | −0,21 | −0,32 | −0,43 | −1,78 | −1,93 | −2,08 |
-| 4,65 m (forma SRL-A) | +0,047 | −0,014 | 261 | 0,66 | 3,48 | +0,01 | −0,06 | −0,14 | −0,76 | −0,91 | −1,06 |
-| 4,5 m (forma MSL/M2020) | +0,143 | +0,065 | 279 | 0,69 | 3,48 | −0,23 | −0,34 | −0,45 | −1,81 | −1,96 | −2,11 |
-| 4,65 m (forma SRL-A) | +0,047 | −0,014 | 261 | 0,69 | 3,48 | −0,002 | −0,08 | −0,16 | −0,78 | −0,93 | −1,08 |
-| 4,5 m (forma MSL/M2020) | +0,143 | +0,065 | 279 | 0,72 | 3,48 | −0,26 | −0,37 | −0,48 | −1,83 | −1,98 | −2,13 |
-| 4,65 m (forma SRL-A) | +0,047 | −0,014 | 261 | 0,72 | 3,48 | −0,02 | −0,09 | −0,17 | −0,80 | −0,95 | −1,10 |
-| 4,5 m (forma MSL/M2020) | +0,143 | +0,065 | 279 | 0,75 | 3,48 | −0,28 | −0,39 | −0,50 | −1,86 | −2,01 | −2,16 |
-| 4,65 m (forma SRL-A) | +0,047 | −0,014 | 261 | 0,75 | 3,48 | −0,03 | −0,11 | −0,19 | −0,83 | −0,98 | −1,13 |
+| 4,5 m (forma MSL/M2020) | +0,140 | +0,065 | 279 | 0,57 | 3,56 | −0,19 | −0,30 | −0,41 | −1,78 | −1,93 | −2,08 |
+| 4,65 m (forma SRL-A) | +0,044 | −0,014 | 261 | 0,57 | 3,56 | +0,02 | −0,06 | −0,14 | −0,77 | −0,92 | −1,07 |
+| 4,5 m (forma MSL/M2020) | +0,140 | +0,065 | 279 | 0,60 | 3,49 | −0,18 | −0,29 | −0,40 | −1,74 | −1,89 | −2,04 |
+| 4,65 m (forma SRL-A) | +0,044 | −0,014 | 261 | 0,60 | 3,49 | +0,04 | −0,04 | −0,12 | −0,73 | −0,87 | −1,02 |
+| 4,5 m (forma MSL/M2020) | +0,140 | +0,065 | 279 | 0,63 | 3,48 | −0,19 | −0,30 | −0,41 | −1,75 | −1,90 | −2,05 |
+| 4,65 m (forma SRL-A) | +0,044 | −0,014 | 261 | 0,63 | 3,48 | +0,03 | −0,05 | −0,13 | −0,73 | −0,88 | −1,03 |
+| 4,5 m (forma MSL/M2020) | +0,140 | +0,065 | 279 | 0,66 | 3,48 | −0,21 | −0,32 | −0,43 | −1,78 | −1,93 | −2,08 |
+| 4,65 m (forma SRL-A) | +0,044 | −0,014 | 261 | 0,66 | 3,48 | +0,01 | −0,06 | −0,14 | −0,76 | −0,91 | −1,06 |
+| 4,5 m (forma MSL/M2020) | +0,140 | +0,065 | 279 | 0,69 | 3,48 | −0,23 | −0,34 | −0,45 | −1,81 | −1,96 | −2,11 |
+| 4,65 m (forma SRL-A) | +0,044 | −0,014 | 261 | 0,69 | 3,48 | −0,002 | −0,08 | −0,16 | −0,78 | −0,93 | −1,08 |
+| 4,5 m (forma MSL/M2020) | +0,140 | +0,065 | 279 | 0,72 | 3,48 | −0,26 | −0,37 | −0,48 | −1,83 | −1,98 | −2,13 |
+| 4,65 m (forma SRL-A) | +0,044 | −0,014 | 261 | 0,72 | 3,48 | −0,02 | −0,09 | −0,17 | −0,80 | −0,95 | −1,10 |
+| 4,5 m (forma MSL/M2020) | +0,140 | +0,065 | 279 | 0,75 | 3,48 | −0,28 | −0,39 | −0,50 | −1,86 | −2,01 | −2,16 |
+| 4,65 m (forma SRL-A) | +0,044 | −0,014 | 261 | 0,75 | 3,48 | −0,03 | −0,11 | −0,19 | −0,83 | −0,98 | −1,13 |
 
-Duas leituras do envelope do Vulcan, [F80] Fig. 4.3.1-1 ("Simplified"), p. 4-8: a primeira interpola em linha reta entre Ø 4877 mm e Ø 4648 mm; a segunda usa Ø 4648 mm desde o plano do PAF. Com a forma SRL-C, as folgas são +0,032 e −0,034 m. A massa por área usa os diâmetros nominais. Comprimentos e folgas em m; folga positiva = cabe.
+Duas leituras do envelope do Vulcan, [F80] Fig. 4.3.1-1 ("Simplified"), p. 4-8: a primeira interpola em linha reta entre Ø 4877 mm e Ø 4648 mm; a segunda usa Ø 4648 mm desde o plano do PAF. Com a forma SRL-C, as folgas são +0,030 e −0,034 m. A massa por área usa os diâmetros nominais. Comprimentos e folgas em m; folga positiva = cabe.
 
 **Errata (2026-11-04, aprovada pelo Fabio):** as folgas no Vulcan da tabela acima valem um pouco menos. A conta amostrou o perfil em 400 pontos, e nenhum caiu no vértice do ombro. Os valores vigentes são os dos vértices; os antigos ficam como registro.
 
 | Aeroshell | Leitura do envelope | Publicado | Vigente |
 | :- | :- | -: | -: |
-| 4,5 m (forma MSL/M2020) | contorno reto | +0,1425 | +0,1412 |
+| 4,5 m (forma MSL/M2020) | contorno reto | +0,1403 | +0,1390 |
 | 4,5 m (forma MSL/M2020) | Ø menor desde o PAF | +0,0653 | +0,0640 |
-| 4,65 m (forma SRL-A) | contorno reto | +0,0466 | +0,0444 |
+| 4,65 m (forma SRL-A) | contorno reto | +0,0444 | +0,0422 |
 | 4,65 m (forma SRL-A) | Ø menor desde o PAF | −0,0138 | −0,0160 |
 
-SRL-C, publicado e vigente: +0,0319 e +0,0296 m (contorno reto); −0,0338 e −0,0360 m (Ø menor).
+SRL-C, publicado e vigente: +0,0297 e +0,0274 m (contorno reto); −0,0338 e −0,0360 m (Ø menor).
 
 **Nota (2026-11-06):** a massa do MAV no CAD vem agora dos arquivos com 13 algarismos; a mudança, abaixo da casa mostrada nesta página, está em results/etapa7.2b/folgas.md.
 

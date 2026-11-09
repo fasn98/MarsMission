@@ -139,3 +139,6 @@ na errata da 4.5 do relatório da Fase 3:
 - a P-075 (pouso a 200 m do depósito) é crítica.
 
 Só o Fabio altera o status.
+
+## Errata (2026-11-09): P-097 propagada à Etapa Fase 4
+A P-097 (aprovada pelo Fabio em 2026-11-07) põe entre o plano da interface de 1575 mm e o veículo um adaptador com sistema de separação de 43 kg e 0,127 m: a massa sai da capacidade do lançador, sem entrar na massa do veículo, e o veículo sobe essa altura no envelope. O texto acima não muda. Margens do resumo: orbitador no Falcon Heavy descartável +44 % → +43 %; lander no Vulcan VC4 +41 % → +40 %, no VC6 +80 % → +79 %. Vigentes: `results/fase4/resumo.md`.
