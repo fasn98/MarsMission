@@ -48,6 +48,8 @@ genéricas.
 8. **Branches pequenos e PR.**
    - Um branch por etapa ou correção; push e PR só quando o Fabio autorizar.
    - Merge só com o CI verde. Quem faz o merge é o Fabio.
+   - Nunca reescrever histórico de branch já publicado (proibido push --force e --force-with-lease). Para atualizar um branch
+     com a main, usar merge da main no branch.
 9. **Hook de pre-commit com pytest.**
    - Ativar com `git config core.hooksPath .githooks`; o hook usa `$MARSMISSION_PYTHON` ou o `python` do ambiente.
    - Nunca usar `git commit --no-verify`. Se o hook falhar, corrigir a causa.
