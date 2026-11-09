@@ -73,7 +73,7 @@ A NASA não chegou a escolher uma arquitetura. Em 2024, apontou o MAV como o fat
 | Família em reserva | Motivo |
 | :- | :- |
 | 2 (aeroshell maior que 4,65 m, outro lançador) | só o New Glenn publica envelope bem acima de 4,65 m, num guia anterior ao primeiro voo, e a entrada sai da herança de 4,5 m |
-| 3 (motor de estágio 1 de 1 a 4 kN) | nenhum motor hipergólico de 1 a 4 kN está em produção, pelas fontes achadas |
+| 3 (motor de estágio 1 de 1 a 4 kN) | nenhum motor hipergólico de 1 a 4 kN com produção confirmada pelas fontes achadas |
 | 4 (três lançamentos) | o Δv do MAV não muda, e o MSR rejeitou o segundo lander por custo e complexidade ([F255] PDF p. 7) |
 
 Resultados da família 1: results/familia1/missao.md e results/familia1/mavs.md.
