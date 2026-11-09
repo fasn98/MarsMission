@@ -36,6 +36,9 @@ casos:
   mav_na_superficie_dias: 285
   conjuncoes_na_missao:
   - {inicio: *id004, fim: *id005, dias: 39}
+  inicio_descida: 2029-12-06
+  descida_cruza_conjuncao: true
+  encontro_e_subida_fora_das_conjuncoes: true
 - altitude_km: 814.0
   n_ativos: 8
   potencia_kw: 36.0
@@ -60,3 +63,6 @@ casos:
   mav_na_superficie_dias: 301
   conjuncoes_na_missao:
   - {inicio: *id004, fim: *id005, dias: 39}
+  inicio_descida: 2029-12-26
+  descida_cruza_conjuncao: true
+  encontro_e_subida_fora_das_conjuncoes: true

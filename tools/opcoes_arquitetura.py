@@ -122,6 +122,8 @@ def opcoes(d, cfg):
            "- **Fontes do MSR:** [F254] PDF p. 8: \"The project currently is considering whether to deliver the Sample Fetch Rover (SFR) and Mars Ascent Vehicle (MAV) in one or two launches\", \"Two launches: Entry system heavier than MSL and Mars 2020, probably no new technologies needed, but more costly\"; PDF p. 13: cápsula de 4.65 m no SRL de dois lançamentos, contra >5.4 m no de um lançamento; [F255] PDF p. 7: o segundo lander foi \"eventually rejected because of added complexity/cost\"; PDF p. 45: \"MSR MAV Lander (MML), which includes the MAV and a MAV landing/launch system using a scaled-up Skycrane EDL\".",
            "- **Riscos:** custo e complexidade de um terceiro lançamento e de um segundo pouso (a razão da rejeição no MSR); dependência entre os pousos.",
            "- **Para decidir, calcular:** a massa e o arranjo do lander só com o MAV, e as margens dos três lançamentos.",
+           "", "## Decisão do Fabio (2026-11-09): família 1 calculada; 2, 3 e 4 em reserva", "", "| Família em reserva | Motivo |", "| :- | :- |",
+           *[f"| {x['familia']} | {x['motivo']} |" for x in cfg["reservas"]], "", "Resultados da família 1: results/familia1/missao.md e results/familia1/mavs.md.",
            "", "## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", "",
            "- A causa comum é o Δv. A família 1 é a única que ataca o Δv do MAV diretamente; as famílias 2 e 4 tratam a embalagem, e a 3 trata a perda na subida.",
            "- Os dados sugerem que uma combinação pode ser necessária: a rota B sozinha chega perto de caber sem deck, e mais empuxo no estágio 1 reduziria o MAV.",

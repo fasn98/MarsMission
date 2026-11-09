@@ -19,7 +19,9 @@ Referência: chegada do lander em 2029-09-20, partida em 2030-11-08; lançamento
 | 380 | 10 × XIPS-25, 45,0 kW | 9 420 | 2030-07-02 | 2030-07-02 | 2032-04-26 | 2031-01-20 | 487 | 414 | 7,23 | 5,44 | 2031-11-01 | 1072 | 285 |
 | 814 | 8 × XIPS-25, 36,0 kW | 7 947 | 2030-07-18 | 2030-07-18 | 2032-04-26 | 2031-02-02 | 500 | 414 | 7,99 | 5,44 | 2031-11-04 | 1075 | 301 |
 
-**Conjunção solar:** na referência, o MAV lança antes da conjunção de 2030. Aqui, o orbitador elétrico ainda desce em espiral durante ela, e o MAV lança depois, no intervalo até a conjunção seguinte. A espiral na conjunção pede operação autônoma do orbitador; o encontro e a subida em espiral ficam fora das duas conjunções.
+**Conjunção solar:** na referência, o MAV lança antes da conjunção de 2030. Aqui, o MAV lança depois dela, no intervalo até a seguinte.
+- Encontro a 380 km: a descida em espiral começa em 2029-12-06 e cruza a conjunção (pede operação autônoma do orbitador); o encontro e a subida em espiral ficam fora das conjunções.
+- Encontro a 814 km: a descida em espiral começa em 2029-12-26 e cruza a conjunção (pede operação autônoma do orbitador); o encontro e a subida em espiral ficam fora das conjunções.
 
 **O que falta para verificar o orbitador só elétrico:** (1) uma trajetória heliocêntrica de baixo empuxo com efemérides, nas datas de cada caso, no lugar do trecho quase circular com margem; (2) comparação dessa trajetória com um caso publicado de baixo empuxo Terra–Marte (por exemplo o ERO, [F260], ou um estudo com massas e tempos publicados); (3) a vida dos propulsores XIPS-25 com fonte ("não achada" em results/etapa7.2/rotas_mav.md). A espiral em Marte usa as leis de guiagem já verificadas da Etapa 3.2.
 

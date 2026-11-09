@@ -7,3 +7,36 @@ missao:
   passo_serie_dias: {valor: 1, premissa: P-109}
   tof_retorno_dias: {valor: [150, 400], premissa: P-109}
   passo_tof_dias: {valor: 5, premissa: P-109}
+
+mav_solido:
+  verificacao:   # MAV sólido do MSR de 2019 ([F34]): o modelo deve chegar à órbita publicada com as massas publicadas
+    orbita_km: {valor: 350, fonte: "[F34] PDF p. 4: \"Nominal orbit: 351 x 349 km\" (média)"}
+    inclinacao_graus: {valor: 25, fonte: "[F34] PDF p. 4: \"Target orbit 343 x 343 km ± 25 deg inclination\""}
+    costa_publicada_s: {valor: 446, fonte: "[F34] PDF p. 7: \"including 446 seconds of coast\""}
+    fracao_inerte_estagio_2: {valor: [0.30, 0.34, 0.38, 0.40, 0.42, 0.46, 0.50], premissa: P-110}
+  guia:   # P-110: subida vertical, partidas e limites do guiamento do sólido (escolhas numéricas)
+    t_v_s: {valor: 5, premissa: P-110}
+    partidas: {valor: [[1.0, 0.003, 5.0], [1.2, 0.008, 15.0], [1.4, 0.003, 15.0]], premissa: P-110}
+    limites: {valor: [[0.3, 1.55], [0.0, 0.05], [0.0, 60.0]], premissa: P-110}
+    tol_custo: {valor: 1.0e-6, premissa: P-110}
+    escala_busca: {valor: [0.5, 4.0], premissa: P-110}
+    passo_varredura_escala: {valor: 0.05, premissa: P-110}
+    passos_escala: {valor: 8, premissa: P-110}
+
+mav_hipergolico:
+  diametro_m: {valor: 0.72, fonte: "results/etapa7.2/bocais_alternativas.md, alternativa A: o menor Ø da varredura que contém as 4 saídas de 164:1 com parede"}
+
+termico:
+  rhu_w: {valor: 0.90, fonte: "[F155] p. 1: \"As of September 2014, the average thermal power of the RHUs in the DOE's inventory was approximately 0.90 watts each\""}
+  rhu_disponiveis: {valor: 43, fonte: "[F155] p. 2: \"Proposing teams have been offered the chance to use up to 43 RHUs from the existing U.S. inventory\""}
+  horas_por_sol: {valor: 24.6597, fonte: "[F47]: \"Length of day (hrs) 24.6597\""}
+  envelhecimento_solido:
+    - "[F263] PDF p. 1: \"The test plan includes propellant aging first at high vacuum conditions, representative of the Mars transit, followed by an additional year at simulated Mars surface conditions.\""
+    - "[F263] PDF p. 2: \"The project has also completed the first of three phases of propellant aging\""
+    - "[F263] PDF p. 1: \"the flight heritage is limited and outside the environments, the MAV must endure\""
+    - "[F250] PDF p. 2: \"concerns exist with long duration aging associated with baseline CTPB (cold temperature capable) propellant\""
+    - "[F248] PDF p. 3: \"The SRL is expected to keep the MAV between -40 °C and +40 °C, enabling the use of propellant that has already been qualified for that temperature range.\""
+    - "[F248] PDF p. 13: \"Current qualification minimum temperatures are -50 °C\"; PDF p. 14: \"Data from the analog samples showed cracking at approximately -70 °C\""
+  tempo_no_msr:
+    - "[F266] (slides do IAC-19) PDF p. 3: \"MAV dwell time in SRL on Mars ~9 months\""
+    - "[F35] PDF p. 1: \"After residing on the surface for another year\""

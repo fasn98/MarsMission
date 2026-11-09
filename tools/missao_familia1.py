@@ -95,7 +95,10 @@ def main():
                       "proxima_conjuncao": prox, "partida_marte": partida, "estada_dias": (partida - chegada_lander).days, "estada_referencia_dias": (partida_ref - chegada_lander).days,
                       "c3_partida_km2_s2": c3, "tof_balistico_dias": tof, "c3_partida_referencia_km2_s2": c3_ref, "chegada_terra": chegada_terra,
                       "missao_total_dias": (chegada_terra - D(ref["partida_terra"])).days, "mav_na_superficie_dias": (lanc0 - chegada_lander).days,
-                      "conjuncoes_na_missao": [c for c in conj if D(ref["partida_terra"]) <= c["fim"] and c["inicio"] <= chegada_terra]})
+                      "conjuncoes_na_missao": [c for c in conj if D(ref["partida_terra"]) <= c["fim"] and c["inicio"] <= chegada_terra],
+                      "inicio_descida": pronto - dt.timedelta(days=int(np.ceil(e["descida_dias"]))),
+                      "descida_cruza_conjuncao": any(pronto - dt.timedelta(days=int(np.ceil(e["descida_dias"]))) <= c["fim"] and c["inicio"] <= pronto for c in conj),
+                      "encontro_e_subida_fora_das_conjuncoes": not any(lanc0 <= c["fim"] and c["inicio"] <= partida for c in conj)})
     out = nativo({"gerado_por": "tools/missao_familia1.py", "status": "calculado, NÃO verificado (orbitador só elétrico)", "referencia": ref, "conjuncoes": conj,
                   "criterio_conjuncao_graus": lim, "folga_conjuncao_dias": folga, "recuperacao_dias": rec, "casos": casos})
     SAIDA.mkdir(parents=True, exist_ok=True)
@@ -115,7 +118,10 @@ def escreve_md(o):
            "| -: | -: | -: | :- | :- | :- | :- | -: | -: | -: | -: | :- | -: | -: |"]
     for c in o["casos"]:
         md.append(f"| {br(c['altitude_km'])} | {c['n_ativos']} × XIPS-25, {br(c['potencia_kw'], 1)} kW | {br(c['orbitador_kg'])} | {c['pronto_no_encontro']} | {c['lancamento_mav']} | {c['lancamento_mav_mais_tarde']} | {c['partida_marte']} | {c['estada_dias']} | {c['estada_referencia_dias']} | {br(c['c3_partida_km2_s2'], 2)} | {br(c['c3_partida_referencia_km2_s2'], 2)} | {c['chegada_terra']} | {c['missao_total_dias']} | {c['mav_na_superficie_dias']} |")
-    md += ["", "**Conjunção solar:** na referência, o MAV lança antes da conjunção de 2030. Aqui, o orbitador elétrico ainda desce em espiral durante ela, e o MAV lança depois, no intervalo até a conjunção seguinte. A espiral na conjunção pede operação autônoma do orbitador; o encontro e a subida em espiral ficam fora das duas conjunções.", "",
+    md += ["", "**Conjunção solar:** na referência, o MAV lança antes da conjunção de 2030. Aqui, o MAV lança depois dela, no intervalo até a seguinte."]
+    for c in o["casos"]:
+        md.append(f"- Encontro a {br(c['altitude_km'])} km: a descida em espiral começa em {c['inicio_descida']} e " + ("cruza a conjunção (pede operação autônoma do orbitador)" if c["descida_cruza_conjuncao"] else "não cruza a conjunção") + "; o encontro e a subida em espiral " + ("ficam fora das conjunções." if c["encontro_e_subida_fora_das_conjuncoes"] else "cruzam uma conjunção."))
+    md += ["",
            "**O que falta para verificar o orbitador só elétrico:** (1) uma trajetória heliocêntrica de baixo empuxo com efemérides, nas datas de cada caso, no lugar do trecho quase circular com margem; (2) comparação dessa trajetória com um caso publicado de baixo empuxo Terra–Marte (por exemplo o ERO, [F260], ou um estudo com massas e tempos publicados); (3) a vida dos propulsores XIPS-25 com fonte (\"não achada\" em results/etapa7.2/rotas_mav.md). A espiral em Marte usa as leis de guiagem já verificadas da Etapa 3.2.", "",
            "**Retorno:** o C3 balístico na data de partida, contra o da partida da referência, mostra que a data ainda fica na janela. A volta do elétrico usa o tempo de empuxo da rota B, não esse C3; a chegada à Terra usa o tempo de voo balístico, como ordem de grandeza."]
     (SAIDA / "missao.md").write_text("\n".join(md) + "\n", encoding="utf-8")

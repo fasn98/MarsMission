@@ -68,6 +68,16 @@ A NASA não chegou a escolher uma arquitetura. Em 2024, apontou o MAV como o fat
 - **Riscos:** custo e complexidade de um terceiro lançamento e de um segundo pouso (a razão da rejeição no MSR); dependência entre os pousos.
 - **Para decidir, calcular:** a massa e o arranjo do lander só com o MAV, e as margens dos três lançamentos.
 
+## Decisão do Fabio (2026-11-09): família 1 calculada; 2, 3 e 4 em reserva
+
+| Família em reserva | Motivo |
+| :- | :- |
+| 2 (aeroshell maior que 4,65 m, outro lançador) | só o New Glenn publica envelope bem acima de 4,65 m, num guia anterior ao primeiro voo, e a entrada sai da herança de 4,5 m |
+| 3 (motor de estágio 1 de 1 a 4 kN) | nenhum motor hipergólico de 1 a 4 kN está em produção, pelas fontes achadas |
+| 4 (três lançamentos) | o Δv do MAV não muda, e o MSR rejeitou o segundo lander por custo e complexidade ([F255] PDF p. 7) |
+
+Resultados da família 1: results/familia1/missao.md e results/familia1/mavs.md.
+
 ## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)
 
 - A causa comum é o Δv. A família 1 é a única que ataca o Δv do MAV diretamente; as famílias 2 e 4 tratam a embalagem, e a 3 trata a perda na subida.
