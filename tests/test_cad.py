@@ -785,7 +785,10 @@ def test_familia1_mavs():
     assert sb.omega_efetivo(1.0, 60.0) == pytest.approx(0.5)
     r = ler("results/familia1/mavs.yaml")
     b = r["verificacao"]["base"]
-    assert b["fecha"] and abs(b["voo"]["periapse_m"] - 350e3) < 1.0 and abs(b["voo"]["apoapse_m"] - 350e3) < 1.0
+    assert b["fecha"] and b["modelo"] == "tempo_publicado"
+    # empuxo da base: propelente × Isp × g0 / tempo de queima publicado ([F34] PDF p. 4)
+    assert b["empuxos_n"][0] == pytest.approx(216 * 293 * 9.80665 / 75.9) and b["empuxos_n"][1] == pytest.approx(54.4 * 282 * 9.80665 / 24.5)
+    assert b["queimas_s"][0] == pytest.approx(75.9) and b["queimas_s"][1] == pytest.approx(24.5)
     aq = ler("config/mav_propulsao.yaml")["aquecimento"]
     for x in r["solido"] + r["hipergolico"]:
         if not x["fecha"]:

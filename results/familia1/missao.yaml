@@ -1,4 +1,6 @@
 gerado_por: tools/missao_familia1.py
+janela_retorno: '2030'
+c3_minimo_janela_km2_s2: 5.43
 status: calculado, NÃO verificado (orbitador só elétrico)
 referencia: {chegada: '2029-09-20', partida: '2030-11-08', conjuncao_inicio: '2030-05-06',
   conjuncao_fim: '2030-06-13', lancamento_mav_mais_cedo: '2029-11-03', lancamento_mav_mais_tarde: '2030-03-06',

@@ -158,7 +158,8 @@ def elementos(pl, s):
 def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, atol=1e-6, max_step=1.0):
     """Motor sólido de dois estágios, sem corte: o 1º queima até esgotar com o guiamento linear-tangente, o veículo descarta o
     inerte do 1º e costa; o 2º acende t_antes segundos antes do apoapse da costa e queima até esgotar, com empuxo na
-    horizontal local. A lógica segue [F249] PDF p. 9 (acender no apoapse ou antes, quando o Δv que falta iguala o do 2º).
+    horizontal local. A antecedência t_antes é um parâmetro livre, ajustado; [F249] PDF p. 9 descreve a lógica de voo
+    (acender no apoapse ou antes, quando o Δv que falta iguala o do 2º), que o modelo não implementa.
     Devolve as altitudes finais do periapse e do apoapse (m), a costa (s) e a massa no fim, ou None se o veículo cai."""
     e1, e2 = estagios
     s = [pl.raio, 0.0, 0.0, pl.omega * pl.raio, e1.massa_inicial_kg]

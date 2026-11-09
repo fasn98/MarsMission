@@ -6,151 +6,196 @@ verificacao:
   orbita_km: 350.0
   costa_publicada_s: 446.0
   casos:
-  - fracao_inerte_2: 0.3
+  - modelo: tempo_publicado
+    fracao_inerte_2: 0.3
     inertes_kg:
     - 75.32000000000001
     - 32.28000000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
     fecha: false
-    custo: 159.29232422775726
-    voo:
-      periapse_m: 377453.85326334415
-      apoapse_m: 526365.3899906278
-      costa_s: 601.6959495135585
-      massa_final_kg: 48.279999999999724
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
-    guia:
-      t_v_s: 5.0
-      theta0_graus: 73.65919112320128
-      c_1_s: 0.049999999999989116
-      t_antes_apoapse_s: 13.887620185101094
-  - fracao_inerte_2: 0.34
+  - modelo: tempo_publicado
+    fracao_inerte_2: 0.34
     inertes_kg:
     - 71.016
     - 36.58400000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
     fecha: false
-    custo: 30.373321654363664
-    voo:
-      periapse_m: 366635.9260996925
-      apoapse_m: 426144.01022850256
-      costa_s: 535.7327808568494
-      massa_final_kg: 52.58399999999976
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
-    guia:
-      t_v_s: 5.0
-      theta0_graus: 71.99518314796467
-      c_1_s: 0.049999999999999996
-      t_antes_apoapse_s: 13.62237228305124
-  - fracao_inerte_2: 0.38
+  - modelo: tempo_publicado
+    fracao_inerte_2: 0.38
     inertes_kg:
     - 66.71200000000002
     - 40.88800000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
     fecha: true
-    custo: 1.3821212981604793e-09
-    voo:
-      periapse_m: 349999.86080759997
-      apoapse_m: 350000.50700072525
-      costa_s: 482.5073084747025
-      massa_final_kg: 56.88799999999994
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
+    costa_s: 474.82504384235887
+    queimas_s:
+    - 75.90000000000002
+    - 24.5
+    guia:
+      t_v_s: 5.0
+      theta0_graus: 69.08736222963826
+      c_1_s: 0.03565037836998128
+      t_antes_apoapse_s: 15.142584147721788
+  - modelo: tempo_publicado
+    fracao_inerte_2: 0.4
+    inertes_kg:
+    - 64.56000000000002
+    - 43.04000000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
+    fecha: true
+    costa_s: 480.6728083080763
+    queimas_s:
+    - 75.90000000000002
+    - 24.5
+    guia:
+      t_v_s: 5.0
+      theta0_graus: 65.02130804955452
+      c_1_s: 0.02706215246682505
+      t_antes_apoapse_s: 15.051197922293962
+  - modelo: tempo_publicado
+    fracao_inerte_2: 0.42
+    inertes_kg:
+    - 62.40800000000002
+    - 45.19200000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
+    fecha: true
+    costa_s: 487.1448277455667
+    queimas_s:
+    - 75.90000000000002
+    - 24.5
+    guia:
+      t_v_s: 5.0
+      theta0_graus: 58.67601048156317
+      c_1_s: 0.017295255776924624
+      t_antes_apoapse_s: 14.965156453223312
+  - modelo: tempo_publicado
+    fracao_inerte_2: 0.46
+    inertes_kg:
+    - 58.10400000000001
+    - 49.49600000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
+    fecha: false
+  - modelo: tempo_publicado
+    fracao_inerte_2: 0.5
+    inertes_kg:
+    - 53.80000000000001
+    - 53.80000000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
+    fecha: false
+  - modelo: empuxo_publicado
+    fracao_inerte_2: 0.3
+    inertes_kg:
+    - 75.32000000000001
+    - 32.28000000000001
+    empuxos_n:
+    - 9854
+    - 6937
+    fecha: false
+  - modelo: empuxo_publicado
+    fracao_inerte_2: 0.34
+    inertes_kg:
+    - 71.016
+    - 36.58400000000001
+    empuxos_n:
+    - 9854
+    - 6937
+    fecha: false
+  - modelo: empuxo_publicado
+    fracao_inerte_2: 0.38
+    inertes_kg:
+    - 66.71200000000002
+    - 40.88800000000001
+    empuxos_n:
+    - 9854
+    - 6937
+    fecha: true
+    costa_s: 482.5073084747025
+    queimas_s:
+    - 62.98389133346864
+    - 21.686875640766903
     guia:
       t_v_s: 5.0
       theta0_graus: 68.64702263903203
       c_1_s: 0.04306032346253734
       t_antes_apoapse_s: 13.403833076844071
-  - fracao_inerte_2: 0.4
-    inertes_kg:
-    - 64.56000000000002
-    - 43.04000000000001
-    fecha: true
-    custo: 3.4418882582219526e-10
-    voo:
-      periapse_m: 349999.82673668116
-      apoapse_m: 350000.1970217945
-      costa_s: 488.1367349722761
-      massa_final_kg: 59.03999999999976
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
-    guia:
-      t_v_s: 5.0
-      theta0_graus: 64.5202264870848
-      c_1_s: 0.03277021579801051
-      t_antes_apoapse_s: 13.323048289742204
-  - fracao_inerte_2: 0.42
-    inertes_kg:
-    - 62.40800000000002
-    - 45.19200000000001
-    fecha: false
-    custo: 5.378639826661704
-    voo:
-      periapse_m: 326885.0089176423
-      apoapse_m: 373268.5442732214
-      costa_s: 485.5098148597579
-      massa_final_kg: 61.1919999999999
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
-    guia:
-      t_v_s: 5.0
-      theta0_graus: 58.135593752734245
-      c_1_s: 0.021125071140035378
-      t_antes_apoapse_s: 22.15731896157988
-  - fracao_inerte_2: 0.46
-    inertes_kg:
-    - 58.10400000000001
-    - 49.49600000000001
-    fecha: false
-    custo: 14.433518953035874
-    voo:
-      periapse_m: 297554.4320851369
-      apoapse_m: 338330.97276142286
-      costa_s: 458.67591998340714
-      massa_final_kg: 65.49599999999985
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
-    guia:
-      t_v_s: 5.0
-      theta0_graus: 44.2229900814696
-      c_1_s: 0.007130741037574114
-      t_antes_apoapse_s: 13.055028615632896
-  - fracao_inerte_2: 0.5
-    inertes_kg:
-    - 53.80000000000001
-    - 53.80000000000001
-    fecha: false
-    custo: 95.70293965952698
-    voo:
-      periapse_m: 217536.05450592097
-      apoapse_m: 310076.4345774697
-      costa_s: 387.84868130399025
-      massa_final_kg: 69.79999999999964
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
-    guia:
-      t_v_s: 5.0
-      theta0_graus: 40.69653617126363
-      c_1_s: 0.00815572865301811
-      t_antes_apoapse_s: 11.511596012029417
-  base:
+  - modelo: empuxo_publicado
     fracao_inerte_2: 0.4
     inertes_kg:
     - 64.56000000000002
     - 43.04000000000001
+    empuxos_n:
+    - 9854
+    - 6937
     fecha: true
-    custo: 3.4418882582219526e-10
-    voo:
-      periapse_m: 349999.82673668116
-      apoapse_m: 350000.1970217945
-      costa_s: 488.1367349722761
-      massa_final_kg: 59.03999999999976
-      queima_1_s: 62.98389133346864
-      queima_2_s: 21.686875640766903
+    costa_s: 488.1367349722761
+    queimas_s:
+    - 62.98389133346864
+    - 21.686875640766903
     guia:
       t_v_s: 5.0
       theta0_graus: 64.5202264870848
       c_1_s: 0.03277021579801051
       t_antes_apoapse_s: 13.323048289742204
+  - modelo: empuxo_publicado
+    fracao_inerte_2: 0.42
+    inertes_kg:
+    - 62.40800000000002
+    - 45.19200000000001
+    empuxos_n:
+    - 9854
+    - 6937
+    fecha: false
+  - modelo: empuxo_publicado
+    fracao_inerte_2: 0.46
+    inertes_kg:
+    - 58.10400000000001
+    - 49.49600000000001
+    empuxos_n:
+    - 9854
+    - 6937
+    fecha: false
+  - modelo: empuxo_publicado
+    fracao_inerte_2: 0.5
+    inertes_kg:
+    - 53.80000000000001
+    - 53.80000000000001
+    empuxos_n:
+    - 9854
+    - 6937
+    fecha: false
+  base:
+    modelo: tempo_publicado
+    fracao_inerte_2: 0.4
+    inertes_kg:
+    - 64.56000000000002
+    - 43.04000000000001
+    empuxos_n:
+    - 8177.118118577073
+    - 6140.483931428571
+    fecha: true
+    costa_s: 480.6728083080763
+    queimas_s:
+    - 75.90000000000002
+    - 24.5
+    guia:
+      t_v_s: 5.0
+      theta0_graus: 65.02130804955452
+      c_1_s: 0.02706215246682505
+      t_antes_apoapse_s: 15.051197922293962
 limites:
   solido:
     diametro_m: 0.57
@@ -165,114 +210,102 @@ solido:
   altitude_km: 380.0
   rotulo: Sólido, 380 km, sem margem (o menor que chega)
   fecha: true
-  escala: 0.9955078125000005
-  voo_minimo:
-    periapse_m: 379999.88207409903
-    apoapse_m: 379999.9616513513
-    costa_s: 515.9771744527359
-    massa_final_kg: 58.84665625000055
-    queima_1_s: 62.98389133346864
-    queima_2_s: 21.686875640766903
+  simulado: true
+  escala: 1.0289062500000004
+  costa_s: 506.94742396050793
   guia:
     t_v_s: 5.0
-    theta0_graus: 58.832120633287474
-    c_1_s: 0.02046235265975471
-    t_antes_apoapse_s: 13.327573244715957
-  capacidade_m_s: 4086.8280841529363
-  capacidade_minima_m_s: 4086.8280841529363
-  glom_kg: 392.3019531250002
+    theta0_graus: 62.250094340612605
+    c_1_s: 0.021057655201255215
+    t_antes_apoapse_s: 15.077945036270993
+  capacidade_m_s: 4103.228163115581
+  capacidade_minima_m_s: 4103.228163115581
+  glom_kg: 404.9265625000002
   propelente_kg:
-  - 215.0296875000001
-  - 54.15562500000003
+  - 222.2437500000001
+  - 55.97250000000002
   inertes_kg:
-  - 64.26998437500005
-  - 42.84665625000004
+  - 66.42618750000005
+  - 44.28412500000003
   empuxos_n:
-  - 9809.733984375005
-  - 6905.8376953125035
-  empuxo_peso: 6.7342484550230415
+  - 8413.487939192195
+  - 6317.982295071431
+  empuxo_peso: 5.595671165823677
   comprimentos:
   - comprimento_fixo_m: 0.0
-    comprimento_m: 2.6878710937500014
-    folga_sem_deck_m: 0.24806445312499914
-    folga_com_deck_m: 0.028064453124999167
+    comprimento_m: 2.7780468750000016
+    folga_sem_deck_m: 0.20297656249999907
+    folga_com_deck_m: -0.017023437500000904
   - comprimento_fixo_m: 0.5
-    comprimento_m: 2.6901171875000016
-    folga_sem_deck_m: 0.24694140624999905
-    folga_com_deck_m: 0.026941406249999078
+    comprimento_m: 2.7635937500000014
+    folga_sem_deck_m: 0.21020312499999916
+    folga_com_deck_m: -0.009796875000000815
   - comprimento_fixo_m: 1.0
-    comprimento_m: 2.6923632812500014
-    folga_sem_deck_m: 0.24581835937499918
-    folga_com_deck_m: 0.02581835937499921
+    comprimento_m: 2.749140625000001
+    folga_sem_deck_m: 0.21742968749999947
+    folga_com_deck_m: -0.0025703125000005045
   - comprimento_fixo_m: 1.5
-    comprimento_m: 2.6946093750000006
-    folga_sem_deck_m: 0.24469531249999954
-    folga_com_deck_m: 0.024695312499999567
-  massa_entrada_kg: 4418.186148519216
-  massa_por_area_kg_m2: 277.79799112571897
+    comprimento_m: 2.7346875000000006
+    folga_sem_deck_m: 0.22465624999999956
+    folga_com_deck_m: 0.004656249999999584
+  massa_entrada_kg: 4442.988917428843
+  massa_por_area_kg_m2: 279.3574906908876
   termico:
     temperatura_c: -40.0
-    potencia_w: 16.983525197814785
+    potencia_w: 17.36130657254762
     dias: 285
-    energia_kwh: 116.16731235305313
-    rhus: 19
-    rhu_disponiveis: 43.0
+    energia_kwh: 118.75133695622571
+    rhu_w: 0.74
+    ano: 2030
+    rhus: 24
+    rhu_teto_new_frontiers: 43.0
 - tipo: solido
   altitude_km: 380.0
-  rotulo: Sólido, 380 km, com a margem da P-014 na capacidade
+  rotulo: Sólido, 380 km, com a margem da P-014 na capacidade, não simulado
   fecha: true
-  escala: 3.4816924794348605
-  voo_minimo:
-    periapse_m: 379999.88207409903
-    apoapse_m: 379999.9616513513
-    costa_s: 515.9771744527359
-    massa_final_kg: 58.84665625000055
-    queima_1_s: 62.98389133346864
-    queima_2_s: 21.686875640766903
-  guia:
-    t_v_s: 5.0
-    theta0_graus: 58.832120633287474
-    c_1_s: 0.02046235265975471
-    t_antes_apoapse_s: 13.327573244715957
-  capacidade_m_s: 4495.510892568231
-  capacidade_minima_m_s: 4086.8280841529363
-  glom_kg: 1332.0797572263773
+  simulado: false
+  escala: 3.8511561116626902
+  capacidade_m_s: 4513.55097942714
+  capacidade_minima_m_s: 4103.228163115581
+  glom_kg: 1471.737010208497
   propelente_kg:
-  - 752.0455755579299
-  - 189.40407088125642
+  - 831.8497201191411
+  - 209.50289247445033
   inertes_kg:
-  - 224.77806647231466
-  - 149.85204431487645
+  - 248.63063856894337
+  - 165.75375904596223
   empuxos_n:
-  - 34308.59769235111
-  - 24152.500729839627
-  empuxo_peso: 6.936256004542853
+  - 31491.358418145814
+  - 23647.962221087684
+  empuxo_peso: 5.762534766700051
   comprimentos:
   - comprimento_fixo_m: 0.0
-    comprimento_m: 9.400569694474125
-    folga_sem_deck_m: -3.108284847237063
-    folga_com_deck_m: -3.3282848472370627
+    comprimento_m: 10.398121501489264
+    folga_sem_deck_m: -3.6070607507446324
+    folga_com_deck_m: -3.827060750744632
   - comprimento_fixo_m: 0.5
-    comprimento_m: 8.159723454756694
-    folga_sem_deck_m: -2.4878617273783474
-    folga_com_deck_m: -2.707861727378347
+    comprimento_m: 8.97254344565792
+    folga_sem_deck_m: -2.89427172282896
+    folga_com_deck_m: -3.11427172282896
   - comprimento_fixo_m: 1.0
-    comprimento_m: 6.918877215039264
-    folga_sem_deck_m: -1.867438607519632
-    folga_com_deck_m: -2.087438607519632
+    comprimento_m: 7.546965389826575
+    folga_sem_deck_m: -2.1814826949132877
+    folga_com_deck_m: -2.4014826949132875
   - comprimento_fixo_m: 1.5
-    comprimento_m: 5.678030975321834
-    folga_sem_deck_m: -1.247015487660917
-    folga_com_deck_m: -1.467015487660917
-  massa_entrada_kg: 6264.50796404255
-  massa_por_area_kg_m2: 393.8873712655476
+    comprimento_m: 6.121387333995229
+    folga_sem_deck_m: -1.4686936669976147
+    folga_com_deck_m: -1.6886936669976147
+  massa_entrada_kg: 6538.883706640034
+  massa_por_area_kg_m2: 411.13902783795214
   termico:
     temperatura_c: -40.0
-    potencia_w: 39.1329981736344
+    potencia_w: 41.854779550680675
     dias: 285
-    energia_kwh: 267.66970750765927
-    rhus: 44
-    rhu_disponiveis: 43.0
+    energia_kwh: 286.28669212665585
+    rhu_w: 0.74
+    ano: 2030
+    rhus: 57
+    rhu_teto_new_frontiers: 43.0
 - tipo: solido
   altitude_km: 814.0
   rotulo: Sólido, 814 km
@@ -320,15 +353,17 @@ hipergolico:
     potencia_w: 32.527346480432875
     dias: 285
     energia_kwh: 222.4870499261609
-    rhus: 37
-    rhu_disponiveis: 43.0
+    rhu_w: 0.74
+    ano: 2030
+    rhus: 44
+    rhu_teto_new_frontiers: 43.0
 - tipo: hipergolico
   altitude_km: 380.0
   rotulo: Hipergólico 4 × 164:1, 380 km, sem margem
   fecha: true
   convergiu: true
   glom_kg: 124.41824050113075
-  dv_subida_com_margem_km_s: 4.138674402741282
+  dv_subida_km_s: 4.138674402741282
   dv_100x100_m_s: 3979.6509129434316
   empuxo_peso: 4.236502333304493
   comprimento_m: 2.9353618431137574
@@ -343,8 +378,10 @@ hipergolico:
     potencia_w: 26.80142522274488
     dias: 285
     energia_kwh: 183.32174852357497
-    rhus: 30
-    rhu_disponiveis: 43.0
+    rhu_w: 0.74
+    ano: 2030
+    rhus: 37
+    rhu_teto_new_frontiers: 43.0
 - tipo: hipergolico
   altitude_km: 814.0
   rotulo: Hipergólico 4 × 164:1, 814 km, com a margem da P-014
@@ -387,15 +424,17 @@ hipergolico:
     potencia_w: 35.160976149795275
     dias: 301
     energia_kwh: 254.00289170612106
-    rhus: 40
-    rhu_disponiveis: 43.0
+    rhu_w: 0.74
+    ano: 2030
+    rhus: 48
+    rhu_teto_new_frontiers: 43.0
 - tipo: hipergolico
   altitude_km: 814.0
   rotulo: Hipergólico 4 × 164:1, 814 km, sem margem
   fecha: true
   convergiu: true
   glom_kg: 136.1645089556652
-  dv_subida_com_margem_km_s: 4.286558948057262
+  dv_subida_km_s: 4.286558948057262
   dv_100x100_m_s: 3949.85594743216
   empuxo_peso: 3.8710393055528276
   comprimento_m: 2.9778631662692963
@@ -410,8 +449,10 @@ hipergolico:
     potencia_w: 28.703969005283334
     dias: 301
     energia_kwh: 207.35747209416678
-    rhus: 32
-    rhu_disponiveis: 43.0
+    rhu_w: 0.74
+    ano: 2030
+    rhus: 39
+    rhu_teto_new_frontiers: 43.0
 envelhecimento_solido:
 - '[F263] PDF p. 1: "The test plan includes propellant aging first at high vacuum
   conditions, representative of the Mars transit, followed by an additional year at

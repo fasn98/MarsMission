@@ -1213,12 +1213,12 @@ premissas:
 
   - id: P-109
     nome: parametros_numericos_da_missao_da_familia_1
-    valor: {passo_serie_dias: 1, tof_retorno_dias: [150, 400], passo_tof_dias: 5}
+    valor: {inicio_busca: "2029-06-01", fim_busca: "2035-01-01", passo_serie_dias: 1, tof_retorno_dias: [150, 400], passo_tof_dias: 5}
     unidade: dias
     uso: config/familia1.yaml (missao), results/familia1/missao.md
     justificativa: >
-      Passo da série de ângulos Sol–Terra–Marte e faixa e passo dos tempos de voo de Lambert usados para o C3 de partida no
-      retorno. Escolhas numéricas, sem fonte.
+      Início, fim e passo da série de ângulos Sol–Terra–Marte, e faixa e passo dos tempos de voo de Lambert usados para o C3
+      de partida no retorno. Escolhas numéricas, sem fonte.
     status: NÃO VALIDADA
 
   - id: P-110
@@ -1232,3 +1232,17 @@ premissas:
       subida vertical, as partidas, os limites do guiamento, a tolerância e a busca da escala do propelente são escolhas
       numéricas. Sem fonte.
     status: NÃO VALIDADA
+
+  - id: P-111
+    nome: empuxo_e_escala_do_inerte_do_mav_solido
+    valor: {modelos_de_empuxo: [tempo_publicado, empuxo_publicado], base: tempo_publicado, inerte_proporcional_ao_propelente_por_estagio: true}
+    unidade: —
+    uso: config/familia1.yaml (mav_solido), results/familia1/mavs.md
+    justificativa: >
+      Os dados de [F34] PDF p. 4 não fecham entre si: empuxo médio × tempo de queima é maior que propelente × Isp × g0. Na base,
+      ficam o propelente, o Isp e o tempo de queima publicados, e o empuxo sai deles; o empuxo médio publicado é a
+      alternativa, mostrada na conferência. Na escala, o inerte de cada estágio é proporcional ao propelente dele, com as razões
+      da divisão escolhida na conferência (P-110), e não a fração 0,286 da P-019; isso inclui na escala a aviônica, o RCS e a
+      estrutura da carga. Sem fonte.
+    status: NÃO VALIDADA
+
