@@ -38,48 +38,48 @@ conferencias:
     h0_m: 0.0
     h1_m: 1.119781605307442
     raio_m: 1.958781605307442
-    folga_radial_m: 0.35621222920797546
+    folga_radial_m: 0.3551454292079752
   - conjunto: Tanques de retorno
     h0_m: 1.2197816053074422
     h1_m: 2.1272685979602364
     raio_m: 1.7464869926527942
-    folga_radial_m: 0.5601439511243398
+    folga_radial_m: 0.55907715112434
   - conjunto: Plataforma
     h0_m: 2.2272685979602365
     h1_m: 2.5272685979602363
     raio_m: 1.7449869926527941
-    folga_radial_m: 0.558289404843932
+    folga_radial_m: 0.5572480048439319
   - conjunto: CCRS
     h0_m: 2.6272685979602364
     h1_m: 4.627268597960237
     raio_m: 1.7182840277439582
-    folga_radial_m: 0.5676214623135836
+    folga_radial_m: 0.566529262313584
   - conjunto: EES
     h0_m: 4.627268597960237
     h1_m: 5.115672225808845
     raio_m: 0.6365
-    folga_radial_m: 1.6452746221935297
+    folga_radial_m: 1.6442586221935294
   lander_vulcan:
     forma: srl_a
     altura_estagio_cruzeiro_m: 0.1200000000000001
     por_forma:
       msl_m2020:
-        folga_radial_m: 0.14252150287894194
-        folga_radial_vertice_m: 0.14122334948516047
+        folga_radial_m: 0.1403195798020187
+        folga_radial_vertice_m: 0.13902142640823767
         raio_max_m: 2.26
         comprimento_m: 2.88
         folga_sem_afunilamento_m: 0.06526817042606536
         folga_sem_afunilamento_vertice_m: 0.06400000000000006
       srl_a:
-        folga_radial_m: 0.046599138400648776
-        folga_radial_vertice_m: 0.04440551181102359
+        folga_radial_m: 0.04439721532372598
+        folga_radial_vertice_m: 0.04220358873410035
         raio_max_m: 2.34
         comprimento_m: 3.85
         folga_sem_afunilamento_m: -0.013791164658634614
         folga_sem_afunilamento_vertice_m: -0.016000000000000014
       srl_c:
-        folga_radial_m: 0.03187213060367977
-        folga_radial_vertice_m: 0.029606904906117393
+        folga_radial_m: 0.02967020752675653
+        folga_radial_vertice_m: 0.027404981829194597
         raio_max_m: 2.36
         comprimento_m: 3.55
         folga_sem_afunilamento_m: -0.0338064727034979

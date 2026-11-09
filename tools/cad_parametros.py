@@ -34,6 +34,7 @@ sys.path.insert(0, str(RAIZ / "tools"))
 
 import envelope_arranjo as ea  # noqa: E402
 from orbital import motores as om  # noqa: E402
+from orbital import lancamento as lc  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "etapa7.2"
@@ -326,7 +327,8 @@ def main():
                 ("Plataforma", z_plat, z_plat + h_plat, r_plat),
                 ("CCRS", z_cc, z_cc + cc[2], math.hypot(cc[0] / 2, cc[1] / 2)),
                 ("EES", z_ees, z_ees + h_ees, r_ees)]
-    folga_orb = [{"conjunto": a, "h0_m": b, "h1_m": c, "raio_m": r, "folga_radial_m": ea.margem_conjunto(perf_f, b, c, r)} for a, b, c, r in conj_orb]
+    h_ad = lc.adaptador_p097()[1]   # P-097: o veículo sobe a altura do adaptador em relação ao envelope
+    folga_orb = [{"conjunto": a, "h0_m": b, "h1_m": c, "raio_m": r, "folga_radial_m": ea.margem_conjunto(perf_f, b + h_ad, c + h_ad, r)} for a, b, c, r in conj_orb]
 
     # ---------------- lander: cápsula real (P-089), frente para cima (P-091), MAV deitado ao longo de y
     capsulas = cad["capsulas"]
@@ -345,13 +347,13 @@ def main():
         """Errata (2026-11-04): a menor folga do perfil, nos vértices dele, sem a grade de 400 pontos de folga_vulcan."""
         Lc = perfil[0][-1]
         return min(ea.raio_envelope(perf_v, h_aft + (Lc - x)) - r for x, r in zip(*perfil))
-    fol_v = {k: {"folga_radial_m": folga_vulcan(p, h_cz), "folga_radial_vertice_m": folga_nos_vertices(p, h_cz), "raio_max_m": max(p[1]), "comprimento_m": p[0][-1]} for k, p in perfis.items()}
+    fol_v = {k: {"folga_radial_m": folga_vulcan(p, h_cz + h_ad), "folga_radial_vertice_m": folga_nos_vertices(p, h_cz + h_ad), "raio_max_m": max(p[1]), "comprimento_m": p[0][-1]} for k, p in perfis.items()}
     # sensibilidade: envelope sem o afunilamento linear entre as cotas (o diâmetro menor, da estação de cima, desde o PAF)
     perf_v_ref = perf_v
     perf_v = ([perf_v_ref[0][0], perf_v_ref[0][1]] + list(perf_v_ref[0][2:]), [perf_v_ref[1][1], perf_v_ref[1][1]] + list(perf_v_ref[1][2:]))
     for k, p in perfis.items():
-        fol_v[k]["folga_sem_afunilamento_m"] = folga_vulcan(p, h_cz)
-        fol_v[k]["folga_sem_afunilamento_vertice_m"] = folga_nos_vertices(p, h_cz)
+        fol_v[k]["folga_sem_afunilamento_m"] = folga_vulcan(p, h_cz + h_ad)
+        fol_v[k]["folga_sem_afunilamento_vertice_m"] = folga_nos_vertices(p, h_cz + h_ad)
     perf_v = perf_v_ref
 
     lan = monta_lander(cad, env, arq, mot, forma)

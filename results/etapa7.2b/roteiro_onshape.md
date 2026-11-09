@@ -82,8 +82,8 @@
 58. Arraste uma peça do veículo.
 59. Se ela sair sozinha, selecione todas as peças do veículo e crie um Group, para que andem juntas.
 60. Escolha o mate Fastened.
-61. Clique no mate connector do envelope, no plano da interface.
-62. Clique no mate connector do veículo, no plano da interface.
+61. Clique no mate connector do envelope (z = 0, a base do veículo, 0,127 m acima do plano da interface pela P-097).
+62. Clique no mate connector do veículo, na base dele.
 63. Confirme o mate.
 64. Confira se o veículo ficou dentro do envelope, com o topo para cima.
 65. Se o veículo ficar de cabeça para baixo, use a opção de inverter o eixo no diálogo do mate.
@@ -96,16 +96,16 @@ Selecione as duas entidades da tabela e leia a distância mínima. A leitura dev
 
 | Assembly | Medida | Selecione no veículo | Selecione no envelope | Esperado (m) | Folga com sinal (m) |
 | :- | :- | :- | :- | -: | -: |
-| A1 | radial | a aresta circular de `Escudo termico (PICA)`, em z = 2,150 m e raio 2,260 m | a face interna na mesma altura | 0,141 | +0,141 |
-| A1 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,000 m | a face interna plana do topo, em z = 12,802 m | 9,802 | +9,802 |
+| A1 | radial | a aresta circular de `Escudo termico (PICA)`, em z = 2,150 m e raio 2,260 m | a face interna na mesma altura | 0,139 | +0,139 |
+| A1 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,000 m | a face interna plana do topo, em z = 12,675 m | 9,675 | +9,675 |
 | A2 | radial | a aresta circular de `Escudo termico (PICA)`, em z = 2,150 m e raio 2,260 m | a face interna na mesma altura | 0,064 | +0,064 |
-| A2 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,000 m | a face interna plana do topo, em z = 12,802 m | 9,802 | +9,802 |
-| A3 | radial | a aresta circular de `Escudo termico (PICA)`, em z = 3,120 m e raio 2,340 m | a face interna na mesma altura | 0,044 | +0,044 |
-| A3 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,970 m | a face interna plana do topo, em z = 12,802 m | 8,832 | +8,832 |
+| A2 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,000 m | a face interna plana do topo, em z = 12,675 m | 9,675 | +9,675 |
+| A3 | radial | a aresta circular de `Escudo termico (PICA)`, em z = 3,120 m e raio 2,340 m | a face interna na mesma altura | 0,042 | +0,042 |
+| A3 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,970 m | a face interna plana do topo, em z = 12,675 m | 8,705 | +8,705 |
 | A4 | radial | a aresta circular de `Escudo termico (PICA)`, em z = 3,120 m e raio 2,340 m | a face interna na mesma altura | 0,016 | −0,016 |
-| A4 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,970 m | a face interna plana do topo, em z = 12,802 m | 8,832 | +8,832 |
-| A5 | radial | a face da peça, perto do ponto mais próximo de `Tanque insercao MON-3 1`, em z = 0,564 m e raio 1,959 m | a face interna na mesma altura | 0,361 | +0,361 |
-| A5 | axial | o topo de `EES com o conteiner de amostras`, em z = 5,116 m | a face interna plana do topo, em z = 11,348 m | 6,232 | +6,232 |
+| A4 | axial | o topo de `Nariz do escudo (PICA)`, em z = 3,970 m | a face interna plana do topo, em z = 12,675 m | 8,705 | +8,705 |
+| A5 | radial | a face da peça, perto do ponto mais próximo de `Tanque insercao MON-3 1`, em z = 0,564 m e raio 1,959 m | a face interna na mesma altura | 0,360 | +0,360 |
+| A5 | axial | o topo de `EES com o conteiner de amostras`, em z = 5,116 m | a face interna plana do topo, em z = 11,221 m | 6,105 | +6,105 |
 
 O valor esperado é a menor distância entre as superfícies, um pouco menor que a folga horizontal onde o envelope é inclinado. O Measure não mostra o sinal (não conferido): uma folga negativa aparece como valor positivo, e quem diz que há interferência é a seção E.
 

@@ -20,6 +20,7 @@ sys.path[:0] = [str(RAIZ / "src"), str(RAIZ / "tools")]
 
 import dimensionamento as dm  # noqa: E402
 import lancamento as lc  # noqa: E402
+from orbital.lancamento import adaptador_p097  # noqa: E402
 import plataformas as pl  # noqa: E402
 from superficie import _ler  # noqa: E402
 
@@ -54,7 +55,7 @@ def main():
     for k, (nome, m_col) in casos.items():
         plat = l3 + m_col + extra
         m_inj = lc.veiculos(plat)[0]["lander"]["injetada_kg"]
-        margens = {n: lc.pior_margem_a(n, m_inj, janelas, lcfg)[0] for n in lanc}
+        margens = {n: lc.pior_margem_a(n, m_inj, janelas, lcfg, adaptador_p097()[0])[0] for n in lanc}
         linhas.append({"opcao": k, "nome": nome, "coleta_prevista_kg": m_col, "plataforma_lander_kg": plat,
                        "lander_injetado_kg": m_inj, "pior_margem_a": margens})
     out = {"gerado_por": "tools/coleta.py", "l3_kg": l3, "itens_etapa_4_kg": extra, "lancadores_do_lander_a": lanc, "opcoes": linhas}

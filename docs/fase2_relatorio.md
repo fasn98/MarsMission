@@ -337,3 +337,6 @@ Lançadores de base (ADR 0020): lander no Vulcan VC4, com o VC6 de reserva; orbi
 fim da Fase 2 (P-001 a P-040). Antes, a lista acumulava as premissas das fases seguintes, e as notas acima que citam 41, 43,
 44 e 45 premissas contavam essa lista acumulada. Vigente: 40 premissas, todas NÃO VALIDADAS. A lista completa fica em
 `results/fase1/premissas.md`. O texto acima fica como estava.
+
+## Errata (2026-11-09): P-097 propagada à Etapa 2.5
+A P-097 (aprovada pelo Fabio em 2026-11-07) põe entre o plano da interface de 1575 mm e o veículo um adaptador com sistema de separação de 43 kg e 0,127 m: a massa sai da capacidade do lançador, sem entrar na massa do veículo, e o veículo sobe essa altura no envelope. O texto acima não muda. Margens da arquitetura: orbitador no Falcon Heavy descartável +44 % → +43 %; lander no Vulcan VC4 +41 % → +40 %, no VC6 +80 % → +79 %, no Falcon Heavy com recuperação +1 % → +0 %, no Vulcan VC2 −6 % → −7 %. As massas não mudam. Vigentes: `results/etapa2.5/arquitetura.md` e `results/etapa2.5/coleta.md`.

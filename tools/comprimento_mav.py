@@ -116,7 +116,7 @@ def main():
             m = ve.veiculos(orbita=(rp, ra))[0]["orbitador_regra_iii"]["injetada_kg"]
         except ValueError:
             return None, None
-        return m, lc.pior_margem_a("Falcon Heavy (descartável)", m, janelas, lcfg)[0]
+        return m, lc.pior_margem_a("Falcon Heavy (descartável)", m, janelas, lcfg, lc.adaptador_p097()[0])[0]
 
     def ponto(hp, ha, fonte="", eh_base=False, rotulo="", diverge=False):
         rp, ra = R + hp, R + ha
@@ -138,8 +138,8 @@ def main():
                 "descer_de_1_sol_m_s": 1e3 * descer, "partir_direto_extra_m_s": 1e3 * (tei_a - tei_1), "voltar_a_1_sol_extra_m_s": 1e3 * (voltar - tei_1),
                 "extra_orbitador_regra_iii_m_s": 1e3 * extra["regra_iii"], "extra_orbitador_missao_a_m_s": 1e3 * extra["missao_A"],
                 "orbitador_injetado_kg": m_o, "lander_injetado_kg": lan["injetada_kg"], "margem_falcon_heavy": mg_o,
-                "margem_vulcan_vc4": lc.pior_margem_a("Vulcan VC4", lan["injetada_kg"], janelas, lcfg)[0],
-                "margem_vulcan_vc6_orbitador": lc.pior_margem_a("Vulcan VC6", m_o, janelas, lcfg)[0] if m_o else None}
+                "margem_vulcan_vc4": lc.pior_margem_a("Vulcan VC4", lan["injetada_kg"], janelas, lcfg, lc.adaptador_p097()[0])[0],
+                "margem_vulcan_vc6_orbitador": lc.pior_margem_a("Vulcan VC6", m_o, janelas, lcfg, lc.adaptador_p097()[0])[0] if m_o else None}
 
     def bissecao(cumpre, lo, hi, passos=amostra["passos_bissecao"]):
         """Menor apoapse (km) em [lo, hi] que cumpre a condição, com `hi` cumprindo; arredondado para cima em km."""

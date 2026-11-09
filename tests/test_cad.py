@@ -325,6 +325,7 @@ def test_encaixe_coifas():
         p = cad["capsulas"][forma]
         r_o = max(float(x) for x in p["r_m"])
         z_o = h_cz + float(p["x_m"][-1]) - float(p["x_m"][[float(x) for x in p["r_m"]].index(r_o)])
+        z_o += cad["adaptador_coifa"]["altura_m"]["valor"]   # P-097: o veículo sobe a altura do adaptador
         linear = 2.4385 + (2.324 - 2.4385) * z_o / 6.604
         assert li[(veic, "Contorno")]["radial"]["folga_radial_m"] == pytest.approx(linear - r_o, abs=1e-9)
         assert li[(veic, "Diametro")]["radial"]["folga_radial_m"] == pytest.approx(2.324 - r_o, abs=1e-9)
@@ -446,7 +447,7 @@ def test_comprimento_mav():
     cand = {c["id"]: c for c in ms["candidatas"]}
     janelas = [cand[w["missao"]] for w in ms["envelope_dimensionamento"]["minimo_admissivel_por_janela"].values()]
     lcfg = ler("config/lancadores.yaml")
-    mg = lambda ha: lc.pior_margem_a("Falcon Heavy (descartável)", ve.veiculos(orbita=(R + zero["periapse_km"], R + ha))[0]["orbitador_regra_iii"]["injetada_kg"], janelas, lcfg)[0]  # noqa: E731
+    mg = lambda ha: lc.pior_margem_a("Falcon Heavy (descartável)", ve.veiculos(orbita=(R + zero["periapse_km"], R + ha))[0]["orbitador_regra_iii"]["injetada_kg"], janelas, lcfg, lc.adaptador_p097()[0])[0]  # noqa: E731
     assert mg(zero["apoapse_km"]) >= 0 > mg(zero["apoapse_km"] - 1)
     # figura: frações somam 1, e a escala é o limite de [F35]
     fm = r["figura_msr"]

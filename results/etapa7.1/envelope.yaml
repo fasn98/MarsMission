@@ -14,8 +14,8 @@ orbitador:
         diametro_esfera_m: 1.4108364158119189
         raio_com_cilindro_m: 2.248336415811919
         raio_sem_cilindro_m: 1.4358364158119188
-        margem_com_cilindro_m: 0.06421255829526107
-        margem_sem_cilindro_m: 0.8767125582952611
+        margem_com_cilindro_m: 0.06315332557842357
+        margem_sem_cilindro_m: 0.8756533255784236
     retorno:
       oxidante_kg: 1063.9300699577152
       combustivel_kg: 644.8061030046758
@@ -29,27 +29,28 @@ orbitador:
         diametro_esfera_m: 1.1433619645490494
         raio_com_cilindro_m: 1.9808619645490495
         raio_sem_cilindro_m: 1.1683619645490493
-        margem_com_cilindro_m: 0.3237876294641562
-        margem_sem_cilindro_m: 1.1362876294641564
+        margem_com_cilindro_m: 0.3227208294641559
+        margem_sem_cilindro_m: 1.1352208294641561
   conjuntos:
   - conjunto: Estágio de inserção em Marte
     h0_m: 0.0
     h1_m: 1.119781605307442
     raio_m: 1.957281605307442
-    margem_radial_m: 0.3577122292079755
+    margem_radial_m: 0.35664542920797526
   - conjunto: Estágio de retorno
     h0_m: 1.2197816053074422
     h1_m: 2.1272685979602364
     raio_m: 1.7449869926527941
-    margem_radial_m: 0.5616439511243398
+    margem_radial_m: 0.56057715112434
   - conjunto: CCRS (3,4 × 0,5 × 2 m; a maior dimensão na horizontal, P-082)
     h0_m: 2.2272685979602365
     h1_m: 4.2272685979602365
     raio_m: 1.7182840277439582
-    margem_radial_m: 0.5709523697527679
+    margem_radial_m: 0.5699109697527678
   altura_total_m: 4.2272685979602365
   topo_envelope_m: 11.3476
   cabe: true
+  altura_adaptador_m: 0.127
   area_paineis_m2: 14.283349246897568
   ees_diametro_m: 1.273
   ccrs_m:
@@ -66,7 +67,7 @@ lander:
     m2020:
       diametro_m: 4.5
       altura_conjunto_m: 3.0
-      margem_radial_vulcan_m: 0.13648606904906124
+      margem_radial_vulcan_m: 0.134284145972138
       diametro_util_interno_m: 4.0
       massa_entrada_referencia_kg: 3360.0
       referencia_e_minimo: false
@@ -75,7 +76,7 @@ lander:
     srl_duplo:
       diametro_m: 4.65
       altura_conjunto_m: 3.1
-      margem_radial_vulcan_m: 0.05975227135069616
+      margem_radial_vulcan_m: 0.057550348273773366
       diametro_util_interno_m: 4.15
       massa_entrada_referencia_kg: 5000.0
       referencia_e_minimo: true

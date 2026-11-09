@@ -30,8 +30,8 @@ Massa de entrada do lander: 4 429 kg. Semiângulo da frente do aeroshell: 70°.
 
 | Opção de aeroshell | Diâmetro | Massa de entrada da referência | Massa por área: lander / referência (kg/m²) | Altura do conjunto (P-083) | Folga radial no Vulcan | Diâmetro útil interno |
 | :- | -: | -: | -: | -: | -: | -: |
-| Mars 2020 | 4,50 | 3 360 | 279 / 211 | 3,00 | 0,136 | 4,00 |
-| SRL, lançamento duplo | 4,65 | > 5 000 | 261 / > 294 | 3,10 | 0,060 | 4,15 |
+| Mars 2020 | 4,50 | 3 360 | 279 / 211 | 3,00 | 0,134 | 4,00 |
+| SRL, lançamento duplo | 4,65 | > 5 000 | 261 / > 294 | 3,10 | 0,058 | 4,15 |
 
 - **Estágio de cruzeiro:** 113,8 kg de MMH/MON; tanques de 0,052 e 0,052 m³ (Ø 0,46 m).
 - **Descida (P-084):** 544 kg de hidrazina em 3 esferas de Ø 0,71 m (0,571 m³ no total).

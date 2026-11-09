@@ -10,14 +10,14 @@ quimico:
   dv_subida_mav_km_s: 5.2475945824387225
   margens:
     orbitador:
-      Falcon Heavy (descartável): 0.43967248514669066
-      Vulcan VC6: 0.06364270969286756
+      Falcon Heavy (descartável): 0.4341571157814623
+      Vulcan VC6: 0.05812734032763922
     lander:
-      Falcon Heavy (recuperação): 0.013788843540281093
-      Falcon Heavy (descartável): 1.4322362026517572
-      Vulcan VC2: -0.06281945206355044
-      Vulcan VC4: 0.405756166948366
-      Vulcan VC6: 0.7969575246400631
+      Falcon Heavy (recuperação): 0.0044709735528316585
+      Falcon Heavy (descartável): 1.4229183326643078
+      Vulcan VC2: -0.07213732205099987
+      Vulcan VC4: 0.3964382969609166
+      Vulcan VC6: 0.7876396546526137
 hibrido_c2:
   NSTAR:
     por_n:
