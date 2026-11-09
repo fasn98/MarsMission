@@ -1162,7 +1162,9 @@ premissas:
     uso: config/subida.yaml (arrasto), results/etapa7.2/subida_mav.md
     justificativa: >
       Coeficiente constante, sem variação com o Mach. Não há tabela de CD(Mach) publicada para o MAV: [F37] e os trabalhos do
-      MSR só trazem gráficos. Varredura de 0,25 a 1,0 para a sensibilidade. Sem fonte.
+      MSR só trazem gráficos. Varredura de 0,25 a 1,0 para a sensibilidade. Sem fonte. A atmosfera da subida vem de uma página
+      educacional ([F245], NASA Glenn) e deve ser trocada por um modelo de referência (Mars-GRAM, [F246], ou a Mars Climate
+      Database, com fonte) quando a subida decidir o projeto (Fabio, 2026-11-07).
     status: NÃO VALIDADA
 
   - id: P-105
