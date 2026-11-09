@@ -10,7 +10,7 @@ Decisão do Fabio (2026-11-07), registrada também no ADR 0023. Números de resu
 | :- | :- | :- |
 | A com deck | Isp calculado de 298,2 s: folga com deck de −0,118 a −0,097 m nas quatro geometrias, contra o alvo de +0,05 m | results/etapa7.2/rota_a.md, seção 0 |
 | A sem deck | não converge: com o empuxo/peso real, o Δv pedido passa do usado em toda a varredura (de +171 a +417 m/s), até o MAV não decolar | results/etapa7.2/subida_mav.md |
-| B (orbitador elétrico, encontro em órbita baixa) | MAV com folga sem deck de +0,032 m (380 km) e +0,000 m (814 km), abaixo do alvo, e com deck negativa; orbitador híbrido com margem no Falcon Heavy de −82,9 a −77,0 %; o só elétrico fecha a massa (+19,2 a +41,2 %), mas exigiria outra missão de referência | results/etapa7.2/rotas_mav.md; ADR 0013, adendo |
+| B (orbitador elétrico, encontro em órbita baixa) | MAV com folga sem deck de +0,032 m (380 km) e +0,000 m (814 km), abaixo do alvo, e com deck negativa; orbitador híbrido com margem no Falcon Heavy de −82,9 a −77,0 %; o só elétrico (calculado, não verificado) fecha massa (+19,2 a +41,2 %) e estada, mas fica pronto em 2030-07-02 e 2030-07-18, depois do último lançamento do MAV (2030-03-06) | results/etapa7.2/rotas_mav.md; ADR 0013, adendo |
 | Sólido | GLOM de 553 a 1 645 kg; melhor folga sem deck −0,008 m, no limite do Δv ideal | results/etapa7.2/mav_solido.md |
 
 ## Achado: GLOM da base com o empuxo/peso real (não aplicado)

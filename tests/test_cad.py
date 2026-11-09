@@ -749,6 +749,11 @@ def test_opcoes_arquitetura():
     assert "5.772 m/s" in cfg["conclusao_de_sistema"] and round(1000 * d["dv_km_s"]) == 5772
     assert not d["a_sem_deck"]["convergiu"] and d["solido"]["melhor_folga_sem_deck_m"] < 0.05
     assert all(m["folga_sem_deck_m"] < 0.05 for m in d["b"]["mav"])
+    # rota B só elétrica: o texto segue o resultado (estada e lançador, prontidão no encontro)
+    rb = ler("results/etapa7.2/rotas_mav.yaml")
+    e = [p["eletrico_primeiro_que_fecha"] for x in rb["rota_b"] for p in x["propulsores"].values() if p.get("eletrico_primeiro_que_fecha")]
+    assert d["b"]["eletrico_fecha_estada"] == all(x["fecha_estada_e_lancador"] for x in e)
+    assert d["b"]["eletrico_a_tempo"] == any(x["pronto_antes_do_ultimo_lancamento"] for x in e)
     o = (RAIZ / "results" / "etapa7.2" / "opcoes_arquitetura.md").read_text(encoding="utf-8")
     assert "Opinião do agente" in o
     fontes = (RAIZ / "docs" / "fontes.md").read_text(encoding="utf-8")
