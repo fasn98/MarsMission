@@ -1,0 +1,62 @@
+gerado_por: tools/missao_familia1.py
+status: calculado, NÃO verificado (orbitador só elétrico)
+referencia: {chegada: '2029-09-20', partida: '2030-11-08', conjuncao_inicio: '2030-05-06',
+  conjuncao_fim: '2030-06-13', lancamento_mav_mais_cedo: '2029-11-03', lancamento_mav_mais_tarde: '2030-03-06',
+  encontro_dias: 22.0, estada_minima_dias: 414.0, partida_terra: '2028-11-24', ida_dias: 300.0,
+  volta_dias: 319.0}
+conjuncoes:
+- {inicio: &id004 2030-05-06, fim: &id005 2030-06-13, dias: 39}
+- {inicio: &id002 2032-06-25, fim: &id003 2032-07-27, dias: 33}
+- {inicio: 2034-08-05, fim: 2034-09-03, dias: 30}
+criterio_conjuncao_graus: 5.0
+folga_conjuncao_dias: 60
+recuperacao_dias: 7
+casos:
+- altitude_km: 380.0
+  n_ativos: 10
+  potencia_kw: 45.0
+  orbitador_kg: 9419.636858254124
+  partida_terra: '2028-11-24'
+  empuxo_ida_dias: 376.41546154470984
+  descida_dias: 207.9944339267023
+  subida_dias: 179.61642414994336
+  empuxo_volta_dias: 244.51466561946052
+  pronto_no_encontro: &id001 2030-07-02
+  lancamento_mav: *id001
+  lancamento_mav_mais_tarde: 2032-04-26
+  proxima_conjuncao: {inicio: *id002, fim: *id003, dias: 33}
+  partida_marte: 2031-01-20
+  estada_dias: 487
+  estada_referencia_dias: 414
+  c3_partida_km2_s2: 7.228396113443014
+  tof_balistico_dias: 285
+  c3_partida_referencia_km2_s2: 5.435019288911316
+  chegada_terra: 2031-11-01
+  missao_total_dias: 1072
+  mav_na_superficie_dias: 285
+  conjuncoes_na_missao:
+  - {inicio: *id004, fim: *id005, dias: 39}
+- altitude_km: 814.0
+  n_ativos: 8
+  potencia_kw: 36.0
+  orbitador_kg: 7946.772977237388
+  partida_terra: '2028-11-24'
+  empuxo_ida_dias: 396.94845234355694
+  descida_dias: 203.9367708769516
+  subida_dias: 176.8918883742853
+  empuxo_volta_dias: 260.77437962505456
+  pronto_no_encontro: &id006 2030-07-18
+  lancamento_mav: *id006
+  lancamento_mav_mais_tarde: 2032-04-26
+  proxima_conjuncao: {inicio: *id002, fim: *id003, dias: 33}
+  partida_marte: 2031-02-02
+  estada_dias: 500
+  estada_referencia_dias: 414
+  c3_partida_km2_s2: 7.988606309201153
+  tof_balistico_dias: 275
+  c3_partida_referencia_km2_s2: 5.435019288911316
+  chegada_terra: 2031-11-04
+  missao_total_dias: 1075
+  mav_na_superficie_dias: 301
+  conjuncoes_na_missao:
+  - {inicio: *id004, fim: *id005, dias: 39}

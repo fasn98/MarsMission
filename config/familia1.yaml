@@ -1,0 +1,9 @@
+# Família 1 (Fabio, 2026-11-09): estada longa e orbitador só elétrico, encontro em órbita baixa; dois MAVs comparados.
+# Fontes em docs/fontes.md; premissas (NÃO VALIDADAS) em config/premissas.yaml.
+
+missao:
+  inicio_busca: {valor: "2029-06-01", fonte: "antes da chegada da referência (results/etapa1.3/missoes.yaml); só delimita a série"}
+  fim_busca: {valor: "2035-01-01", fonte: "depois da janela de retorno de 2032; só delimita a série"}
+  passo_serie_dias: {valor: 1, premissa: P-109}
+  tof_retorno_dias: {valor: [150, 400], premissa: P-109}
+  passo_tof_dias: {valor: 5, premissa: P-109}

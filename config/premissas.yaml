@@ -1210,3 +1210,13 @@ premissas:
       propelente, no mesmo diâmetro; a parte fixa vai de 0 a 1,5 m, sem fonte. Empuxo de cada estágio proporcional à massa de
       propelente, com o mesmo tempo de queima de [F34]. Fração estrutural e divisão do Δv: as da P-019.
     status: NÃO VALIDADA
+
+  - id: P-109
+    nome: parametros_numericos_da_missao_da_familia_1
+    valor: {passo_serie_dias: 1, tof_retorno_dias: [150, 400], passo_tof_dias: 5}
+    unidade: dias
+    uso: config/familia1.yaml (missao), results/familia1/missao.md
+    justificativa: >
+      Passo da série de ângulos Sol–Terra–Marte e faixa e passo dos tempos de voo de Lambert usados para o C3 de partida no
+      retorno. Escolhas numéricas, sem fonte.
+    status: NÃO VALIDADA
