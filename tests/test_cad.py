@@ -883,3 +883,29 @@ def test_familia1_inerte_solido():
             y = c[k]
             assert y["inertes_kg"] == pytest.approx([n + ci * p ** c["b"] for n, ci, p in zip(c["N_kg"], c["c"], y["propelente_kg"])])
             assert y["folga_465_com_deck_m"][0] == pytest.approx((lim["com_deck_m"] - y["comprimento_m"][1]) / 2)
+
+
+def test_familia1_inerte_comprimento_e_vies():
+    """Comprimento do motor refeito por fora (L = a P^b D^c); o resto fixo fecha os 2,7 m do MSR; o comprimento revisto de
+    cada caso; o viés é um fator de Isp > 1 com Δv positivo."""
+    import numpy as np
+    from orbital.config import v
+    r = ler("results/familia1/inerte_solido.yaml")
+    cfg = ler("config/familia1.yaml")["inerte_solido"]
+    lb = v(ler("config/motores.yaml")["conversao"]["lb_para_kg"])
+    P = np.array([m["propelente_lbm"] for m in cfg["motores"]]) * lb
+    D = np.array([m["diametro_pol"] for m in cfg["motores"]]) * 0.0254
+    L = np.array([m["comprimento_pol"] for m in cfg["motores"]]) * 0.0254
+    X = np.vstack([np.ones_like(P), np.log(P), np.log(D)]).T
+    co, *_ = np.linalg.lstsq(X, np.log(L), rcond=None)
+    cp = r["comprimento"]
+    assert cp["b"] == pytest.approx(co[1]) and cp["c"] == pytest.approx(co[2]) and cp["a"] == pytest.approx(math.exp(co[0]))
+    lm = lambda p: cp["a"] * p ** cp["b"] * cp["diametro_mav_m"] ** cp["c"]  # noqa: E731
+    assert cp["resto_m"] + sum(cp["motores_msr_m"]) == pytest.approx(cp["comprimento_msr_m"])
+    for c in r["casos"] + ([r["vies"]["corrigida"]] if r["vies"].get("corrigida") else []):
+        if c.get("fecha_na_varredura"):
+            for k in ("sem_margem", "com_margem"):
+                y = c[k]
+                assert y["comprimento_novo_m"] == pytest.approx(lm(y["propelente_kg"][0]) + lm(y["propelente_kg"][1]) + cp["resto_m"])
+    if r["vies"].get("fator_isp"):
+        assert r["vies"]["fator_isp"] > 1 and r["vies"]["dv_vies_m_s"] > 0 and r["vies"]["voo"]["fecha"]

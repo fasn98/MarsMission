@@ -1270,4 +1270,32 @@ premissas:
       cresce. O nível c do motor tem duas variantes: A, pelo inerte do motor do MSR [F269]; B, pela divisão do inerte que a
       verificação da P-110 escolheu. Que a lei do motor do catálogo valha para o MAV (frio, armazenagem longa) não tem fonte.
       Proposta para a aprovação do Fabio; a P-019 e a P-111 não mudam.
+      Aprovada pelo Fabio em 2026-11-10 como NÃO VALIDADA: variante A nominal; B só como sensibilidade.
+    status: NÃO VALIDADA
+
+  - id: P-114
+    nome: vies_do_modelo_de_subida_do_solido
+    valor: {forma: "fator comum no Isp dos dois estágios", fator_isp_busca: [1.0, 1.2], passo_varredura: 0.005, passos_bissecao: 20}
+    unidade: —
+    uso: config/familia1.yaml (inerte_solido.vies), results/familia1/inerte_solido.md
+    justificativa: >
+      Com a variante A da P-113, o modelo de subida não leva o MAV do MSR à órbita publicada ([F34]). O que falta é medido
+      como um fator comum no Isp dos dois estágios (o Δv equivalente é a diferença de capacidade ideal) e tratado como
+      incerteza do modelo de subida do sólido (decisão do Fabio, 2026-11-10). Que o viés seja um fator de Isp, igual nos dois
+      estágios, e que valha em outras escalas e órbitas, não tem fonte. A faixa, o passo da varredura e o número de passos da
+      bisseção são escolhas numéricas.
+    status: NÃO VALIDADA
+
+  - id: P-115
+    nome: gasto_de_energia_do_solido_com_margem
+    valor: {antecedencia_max_s: 300, guinada_partida_rad: 0.3, guinada_limites_rad: [0.0, 1.4]}
+    unidade: s; rad
+    uso: config/familia1.yaml (inerte_solido.guinada), src/orbital/subida.py (voa_solido), results/familia1/inerte_solido.md
+    justificativa: >
+      (a1) Ignição antecipada do estágio 2, o método do MSR ([F230] PDF p. 9, [F271] PDF p. 3): o limite de 60 s da P-110 para
+      a antecedência sobe para 300 s só no caso com margem; o valor é escolha numérica.
+      (a2) O excesso de energia do sólido é gasto com guinada alternada do estágio 2 (±ψ em metades iguais da queima). No modelo
+      plano, só a componente cos ψ do empuxo fica no plano; supõe-se que a mudança de plano se cancela entre as metades e que
+      o controle de atitude consegue a manobra. Sem fonte para o MAV; a partida e os limites do 4º parâmetro do guiamento são
+      escolhas numéricas.
     status: NÃO VALIDADA

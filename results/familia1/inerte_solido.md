@@ -60,26 +60,63 @@ Massas do catálogo em lbm; 1 lb = 0,4535924 kg ([F112] p. 65 do PDF).
 
 ## Subida com cada variante (modelo de subida do sólido; tolerância 1e-06, passo da varredura 0,05, os da P-110)
 
-### Lei A (nível do motor pelo [F269])
+### Lei A (nível do motor pelo [F269]): nominal
 
 - N = 14 e 34 kg; c = 1,063 e 0,855; b = 0,701. O c da variante A é calibrado no propelente do [F269] (216 e 54 kg) e aplicado ao do MSR usado no estudo (216 e 54,4 kg, config/cad.yaml), daí o estágio 2 com um pouco mais que 48 kg.
 - Verificação com o MAV do MSR (órbita publicada de 350 km): inertes 60,0 e 48,1 kg; órbita 318 × 344 km; costa 468 s (publicada 446 s); **não chega à órbita publicada** (resíduo 5,2e+00).
 
-| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
-| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |
-| sem margem (o menor que chega) | 1,075 | 4 110 | 418,0 | 232,3 + 58,5 | 62,4 + 48,8 | 380 × 380 | sim | 2,79 a 2,90 | +0,192 a +0,248 | +0,346 a +0,402 | −0,080 a −0,023 |
-| com a margem da P-014 na capacidade | 1,345 | 4 521 | 501,6 | 290,5 + 73,2 | 70,6 + 51,3 | 432 × 693 | não | 3,11 a 3,63 | −0,172 a +0,087 | −0,018 a +0,241 | −0,443 a −0,185 |
+| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento, P-108 (m) | 4,65 m com deck, P-108 | Comprimento, P-108 revista (m) | 4,65 m com deck, revista | 4,65 m sem deck, revista | 4,5 m com deck, revista |
+| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: | -: | -: |
+| sem margem (o menor que chega) | 1,075 | 4 110 | 418,0 | 232,3 + 58,5 | 62,4 + 48,8 | 380 × 380 | sim | 2,79 a 2,90 | +0,192 a +0,248 | 2,79 | +0,251 | +0,405 | −0,021 |
+| com a margem da P-014 na capacidade | 1,345 | 4 521 | 501,6 | 290,5 + 73,2 | 70,6 + 51,3 | 432 × 693 | não | 3,11 a 3,63 | −0,172 a +0,087 | 3,08 | +0,102 | +0,256 | −0,169 |
 
-### Lei B (nível pela divisão verificada da P-110)
+### Lei B (nível pela divisão verificada da P-110): sensibilidade
 
 - N = 14 e 34 kg; c = 1,169 e 0,549; b = 0,701.
 - Verificação com o MAV do MSR (órbita publicada de 350 km): inertes 64,6 e 43,0 kg; órbita 350 × 350 km; costa 481 s (publicada 446 s); **chega à órbita publicada**.
 
-| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
-| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |
-| sem margem (o menor que chega) | 0,994 | 4 078 | 392,2 | 214,7 + 54,1 | 64,4 + 43,0 | 380 × 380 | sim | 2,68 a 2,69 | +0,297 a +0,302 | +0,451 a +0,455 | +0,026 a +0,030 |
-| com a margem da P-014 na capacidade | 1,227 | 4 486 | 464,5 | 265,0 + 66,7 | 72,3 + 44,4 | 422 × 635 | não | 2,97 a 3,31 | −0,012 a +0,158 | +0,141 a +0,311 | −0,284 a −0,114 |
+| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento, P-108 (m) | 4,65 m com deck, P-108 | Comprimento, P-108 revista (m) | 4,65 m com deck, revista | 4,65 m sem deck, revista | 4,5 m com deck, revista |
+| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: | -: | -: |
+| sem margem (o menor que chega) | 0,994 | 4 078 | 392,2 | 214,7 + 54,1 | 64,4 + 43,0 | 380 × 380 | sim | 2,68 a 2,69 | +0,297 a +0,302 | 2,69 | +0,297 | +0,451 | +0,025 |
+| com a margem da P-014 na capacidade | 1,227 | 4 486 | 464,5 | 265,0 + 66,7 | 72,3 + 44,4 | 422 × 635 | não | 2,97 a 3,31 | −0,012 a +0,158 | 2,95 | +0,166 | +0,320 | −0,105 |
 
 As duas variantes fecham a 380 km com o passo e a tolerância da P-110: não foi preciso refiná-los.
 
-Alvo de folga: +0,05 m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de 380 km se o guiamento conseguir gastá-la; "não" na coluna "Chega?" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv.
+Alvo de folga: +0,05 m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de 380 km se o guiamento conseguir gastá-la; "não" na coluna "Chega?" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. O gasto por guinada está na seção da energia que sobra.
+
+## Viés do modelo de subida do sólido (P-114, NÃO VALIDADO)
+
+Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante A à órbita publicada: **1,0083**, ou **33 m/s** de capacidade ideal (órbita 350 × 350 km). É a incerteza do modelo de subida do sólido; a P-110 não foi ajustada.
+
+### Variante nominal corrigida pelo viés (Isp × fator nos dois estágios)
+
+| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento, P-108 (m) | 4,65 m com deck, P-108 | Comprimento, P-108 revista (m) | 4,65 m com deck, revista | 4,65 m sem deck, revista | 4,5 m com deck, revista |
+| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: | -: | -: |
+| sem margem (o menor que chega) | 1,023 | 4 053 | 401,7 | 221,0 + 55,7 | 60,7 + 48,3 | 380 × 380 | sim | 2,73 a 2,76 | +0,262 a +0,280 | 2,73 | +0,280 | +0,434 | +0,009 |
+| com a margem da P-014 na capacidade | 1,275 | 4 459 | 480,0 | 275,4 + 69,4 | 68,5 + 50,7 | 429 × 632 | não | 3,03 a 3,44 | −0,078 a +0,129 | 3,01 | +0,140 | +0,294 | −0,132 |
+
+## Comprimento do motor (P-108 revista, proposta)
+
+- Os 25 motores do catálogo publicam diâmetro e comprimento ("Motor length"; no Orion 38, "Overall motor length (including nozzle)"); nenhum tem bocal extensível.
+- Forma: L = a · P^b · D^c, mínimos quadrados em ln: a = 0,0070, b = 0,780 (erro-padrão 0,059), c = −1,529 (erro-padrão 0,181); erro: fator rms 1,09, maior desvio fator 1,23.
+- Só com o propelente (L = a · P^b): b = 0,294, fator rms 1,20, maior desvio 1,55. O diâmetro entra porque o do MAV é fixo e menor que o da maioria dos motores.
+- No Ø 0,57 m do MAV e no propelente do MSR: motores de 1,10 e 0,37 m. O resto até os 2,7 m do MSR ([F247]), 1,23 m, é interestágio, carga, aviônica e adaptadores: continua sem fonte e fica fixo na escala.
+- **Proposta (para aprovação do Fabio): P-108 revista** = comprimento = motor do estágio 1 + motor do estágio 2 (pelo ajuste) + o resto fixo acima. Hoje a P-108 escala o comprimento não fixo na proporção do propelente, com a parte fixa de 0 a 1,5 m. A P-108 atual não foi mudada; as tabelas mostram as duas.
+
+## Energia que sobra no sólido com margem (variante nominal)
+
+- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis"; [F271] PDF p. 3: "The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit"), com a antecedência até o limite da P-115: não chega a 380 km (melhor órbita 432 × 693 km, antecedência 16 s). No modelo, o estágio 2 empurra na horizontal local e o excesso vem do estágio 1 (guiamento no limite c₁ = 0,050 1/s da P-110); o MSR apontava o estágio 2 com guiamento próprio ([F230] PDF p. 9), o que o modelo não tem.
+- **(a2) Guinada alternada do estágio 2 (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4):** melhor órbita 379,97 × 380,04 km com guinada de 42,1° (resíduo 1,4e-05, tolerância 1e-06: **fora** da tolerância da P-110). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada.
+- **(b) Aceitar a órbita do sólido (432 × 693 km) e levar o orbitador até ela** (orbitador só elétrico, XIPS-25 × 10, **calculado, não verificado**; massa de 9 420 kg, a injetada, como limite superior: o tempo sai maior que o real):
+  - subir a circular de 380 km até o periapse: 23 m/s, 3,9 dias; essa parte se recupera na espiral de saída (Edelbaum coplanar: o Δv entre circulares soma);
+  - subir o apoapse em arcos em torno do periapse (P-049): 56 m/s, 22,8 dias (fim em 438 × 693 km);
+  - semieixo dessa órbita a 563 km de altitude (no raio do estudo), acima do limite de 500 km do MSR ([F273] PDF p. 1, sobre o raio equatorial): no MSR, essa órbita estaria fora da faixa aceita;
+  - total antes do encontro: 26,7 dias a mais entre o lançamento do MAV e a partida, que atrasam a partida de Marte. Não inclui a fase (RAAN e anomalia) nem o crédito da saída a partir da elipse.
+- **Qual afeta menos a missão:** pelos critérios da P-110, só (b) fecha. Se a órbita de (a2), a 0,04 km da circular de 380 km, for aceita, (a) afeta menos (nem massa nem datas), contra os 26,7 dias e o xenônio de (b). A guinada de (a2) não tem fonte para o MAV; o método com fonte do MSR é (a1), que o modelo não reproduz. Decisão do Fabio.
+
+## Proposta de errata da P-110 (para aprovação do Fabio; o valor antigo fica)
+
+- Decisão do Fabio (2026-11-10): a divisão do inerte do [F269] (fração do estágio 2 = 0,444) prevalece como entrada.
+- Errata proposta: a P-110 passa a usar a divisão do [F269] na verificação e na escala, no lugar da varredura que escolheu 0,40. O valor antigo, 0,40, fica registrado na errata. Consequência: a verificação deixa de chegar à órbita publicada, e a diferença passa a ser o viés da P-114 (acima).
+- Nada foi mudado em config/premissas.yaml para a P-110 nem em results/familia1/mavs.yaml.
+

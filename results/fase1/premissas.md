@@ -115,5 +115,7 @@
 | P-111 | empuxo_e_escala_do_inerte_do_mav_solido | modelos_de_empuxo: ['tempo_publicado', 'empuxo_publicado']; base: tempo_publicado; inerte_proporcional_ao_propelente_por_estagio: True | — | NÃO VALIDADA | config/familia1.yaml (mav_solido), results/familia1/mavs.md |
 | P-112 | perda_de_capacidade_da_coifa_longa_do_vulcan | 89 | kg | NÃO VALIDADA | config/familia1.yaml (aeroshell_465), results/familia1/aeroshell_465.md |
 | P-113 | lei_de_massa_inerte_do_mav_solido | forma: inerte do estágio = N + c · P^b; b: 0,701 ± 0,041 (erro-padrão), do ajuste do catálogo [F270] em results/familia1/inerte_solido.yaml; N_kg: [14, 34]; variantes_do_nivel_c: ['A', 'B'] | kg | NÃO VALIDADA | config/familia1.yaml (inerte_solido), results/familia1/inerte_solido.md |
+| P-114 | vies_do_modelo_de_subida_do_solido | forma: fator comum no Isp dos dois estágios; fator_isp_busca: [1.0, 1.2]; passo_varredura: 0.005; passos_bissecao: 20 | — | NÃO VALIDADA | config/familia1.yaml (inerte_solido.vies), results/familia1/inerte_solido.md |
+| P-115 | gasto_de_energia_do_solido_com_margem | antecedencia_max_s: 300; guinada_partida_rad: 0.3; guinada_limites_rad: [0.0, 1.4] | s; rad | NÃO VALIDADA | config/familia1.yaml (inerte_solido.guinada), src/orbital/subida.py (voa_solido), results/familia1/inerte_solido.md |
 
-Total: 113 premissas, 113 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 115 premissas, 115 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

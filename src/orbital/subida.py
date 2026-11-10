@@ -155,11 +155,13 @@ def elementos(pl, s):
     return a * (1 - ecc) - pl.raio, a * (1 + ecc) - pl.raio
 
 
-def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, atol=1e-6, max_step=1.0):
+def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, atol=1e-6, max_step=1.0, guinada_2_rad=0.0):
     """Motor sólido de dois estágios, sem corte: o 1º queima até esgotar com o guiamento linear-tangente, o veículo descarta o
     inerte do 1º e costa; o 2º acende t_antes segundos antes do apoapse da costa e queima até esgotar, com empuxo na
     horizontal local. A antecedência t_antes é um parâmetro livre, ajustado; [F249] PDF p. 9 descreve a lógica de voo
     (acender no apoapse ou antes, quando o Δv que falta iguala o do 2º), que o modelo não implementa.
+    `guinada_2_rad`: guinada alternada do 2º (±ψ em metades iguais da queima), que gasta energia sem mudar o plano em primeira
+    ordem: no modelo plano, só a componente cos ψ do empuxo fica no plano; a componente fora do plano não é integrada.
     Devolve as altitudes finais do periapse e do apoapse (m), a costa (s) e a massa no fim, ou None se o veículo cai."""
     e1, e2 = estagios
     s = [pl.raio, 0.0, 0.0, pl.omega * pl.raio, e1.massa_inicial_kg]
@@ -185,7 +187,7 @@ def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, at
 
     def horizontal(t, y):
         r, _, vr, vt, m = y
-        return [vr, vt / r, vt * vt / r - pl.mu / (r * r), -vr * vt / r + e2.empuxo_n / m, -mdot2]
+        return [vr, vt / r, vt * vt / r - pl.mu / (r * r), -vr * vt / r + e2.empuxo_n * math.cos(guinada_2_rad) / m, -mdot2]
     sol = solve_ivp(horizontal, (t_ign, t_ign + dur2), s, rtol=rtol, atol=atol, max_step=max_step)
     s = list(sol.y[:, -1])
     p, a = elementos(pl, s)
@@ -194,12 +196,13 @@ def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, at
 
 def ajusta_solido(pl, estagios, inertes, area_cd, atm, h_alvo, t_v, partidas, limites, escala_m=1.0e4):
     """Guiamento (θ0, c) e antecedência da ignição do 2º que levam o sólido à circular de altitude h_alvo; mínimos quadrados
-    a partir de cada ponto de partida. Devolve (custo, voo, parâmetros): custo ~0 quando a órbita é alcançada."""
+    a partir de cada ponto de partida. Com um 4º elemento nas partidas e nos limites, a guinada alternada do 2º (rad) também
+    é livre (`voa_solido`). Devolve (custo, voo, parâmetros): custo ~0 quando a órbita é alcançada."""
     from scipy.optimize import least_squares
     melhor = None
     for x0 in partidas:
         def res(x):
-            r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2])
+            r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2], guinada_2_rad=x[3] if len(x) > 3 else 0.0)
             if r is None:
                 return [1.0e3, 1.0e3]
             return [(r["periapse_m"] - h_alvo) / escala_m, (r["apoapse_m"] - h_alvo) / escala_m]
@@ -207,4 +210,7 @@ def ajusta_solido(pl, estagios, inertes, area_cd, atm, h_alvo, t_v, partidas, li
         if melhor is None or ls.cost < melhor[0]:
             melhor = (ls.cost, ls.x)
     x = melhor[1]
-    return melhor[0], voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2]), {"t_v_s": t_v, "theta0_graus": math.degrees(x[0]), "c_1_s": float(x[1]), "t_antes_apoapse_s": float(x[2])}
+    par = {"t_v_s": t_v, "theta0_graus": math.degrees(x[0]), "c_1_s": float(x[1]), "t_antes_apoapse_s": float(x[2])}
+    if len(x) > 3:
+        par["guinada_2_graus"] = math.degrees(x[3])
+    return melhor[0], voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2], guinada_2_rad=x[3] if len(x) > 3 else 0.0), par

@@ -69,31 +69,31 @@ inerte_solido:   # Fabio, 2026-11-10 (PR #60, item 3): lei de massa inerte do MA
   criterio_selecao: "motores do catálogo [F270] com folha de dados de massa e propelente entre 12 e 1.300 kg, reunidos na busca de 2026-11-10 (não se afirma que a lista é exaustiva) (estágio superior e de chute, do tamanho do MAV ao do MAV escalado); fora: STAR 3 a 6B (TIRS, retro e spin, menos de 12 kg de propelente) e a série STAR 48 (acima de 2.000 kg)"
   # Catálogo [F270], massas em lbm; página do PDF (= impressa + 5). "inerte" é o "Total inert" impresso, salvo onde dito.
   motores:
-    - {nome: STAR 8, envelope: titânio, propelente_lbm: 27.12, inerte_lbm: 11.31, pagina_pdf: 78, fonte: "\"Propellant 27.12\"; \"Total inert 11.31\""}
-    - {nome: STAR 9, envelope: grafite-epóxi, propelente_lbm: 31.8, inerte_lbm: 9.2, pagina_pdf: 79, fonte: "\"Propellant (including igniter propellant) 31.8\"; \"Total inert 9.2\""}
-    - {nome: STAR 12GV, envelope: grafite-epóxi, propelente_lbm: 72.6, inerte_lbm: 19.8, pagina_pdf: 80, fonte: "\"Propellant 72.6\"; \"Total inert 19.8\"; \"*Includes actuators and cables only\""}
-    - {nome: STAR 13B, envelope: titânio, propelente_lbm: 90.9, inerte_lbm: 12.8, pagina_pdf: 81, fonte: "\"Propellant 90.9\"; \"Total inert 12.8\""}
-    - {nome: STAR 15G, envelope: grafite-epóxi, propelente_lbm: 175.5, inerte_lbm: 30.9, pagina_pdf: 82, fonte: "\"Propellant (excluding 0.12 lbm of igniter propellant) 175.5\"; \"Total inert 30.9\""}
-    - {nome: STAR 17, envelope: titânio, propelente_lbm: 153.5, inerte_lbm: 20.8, pagina_pdf: 83, fonte: "\"Propellant 153.5\"; \"Total inert 20.8\""}
-    - {nome: STAR 17A, envelope: titânio, propelente_lbm: 247.5, inerte_lbm: 29.5, pagina_pdf: 84, fonte: "\"Propellant 247.5\"; \"Total inert 29.5\""}
-    - {nome: STAR 20, envelope: fibra de vidro-epóxi, propelente_lbm: 601.6, inerte_lbm: 60.7, pagina_pdf: 85, fonte: "\"Propellant (including igniter propellant) 601.6\"; \"Total inert 60.7\""}
-    - {nome: STAR 24, envelope: titânio, propelente_lbm: 440.6, inerte_lbm: 40.4, pagina_pdf: 86, fonte: "\"Propellant (including igniter propellant) 440.6\"; \"Total inert 40.4\""}
-    - {nome: STAR 24C, envelope: titânio, propelente_lbm: 484.0, inerte_lbm: 43.5, pagina_pdf: 87, fonte: "\"Propellant (including 1.2 lbm igniter propellant) 484.0\"; \"Total inert 43.5\""}
-    - {nome: STAR 26, envelope: aço D6AC, propelente_lbm: 508.5, inerte_lbm: 85.5, pagina_pdf: 88, fonte: "\"Propellant (including 1.2 lbm igniter propellant) 508.5\"; \"Total inert 85.5\""}
-    - {nome: STAR 26B, envelope: titânio, propelente_lbm: 524.0, inerte_lbm: 51.6, pagina_pdf: 89, fonte: "\"Propellant (including 0.4 lbm igniter propellant) 524.0\"; \"Total inert 51.6\""}
-    - {nome: STAR 26C, envelope: titânio, propelente_lbm: 511.4, inerte_lbm: 67.6, pagina_pdf: 90, fonte: "\"Propellant (including igniter propellant) 511.4\"; \"Total inert 67.6\""}
-    - {nome: STAR 27, envelope: titânio, propelente_lbm: 735.6, inerte_lbm: 60.6, pagina_pdf: 91, fonte: "\"Propellant (including 0.5 lbm igniter propellant) 735.6\"; \"Total inert 60.6\""}
-    - {nome: STAR 27H, envelope: titânio, propelente_lbm: 744.8, inerte_lbm: 66.1, pagina_pdf: 92, fonte: "\"Propellant (including 0.5 lbm igniter propellant 744.8\"; \"Total inert 66.1\""}
-    - {nome: STAR 30BP, envelope: titânio, propelente_lbm: 1113.6, inerte_lbm: 83.1, pagina_pdf: 94, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,113.6\"; \"Total inert* 83.1\"; \"*Excluding remote S&A/ETA\""}
-    - {nome: STAR 30C, envelope: titânio, propelente_lbm: 1302.5, inerte_lbm: 84.8, pagina_pdf: 95, fonte: "\"Propellant (including igniter propellant) 1,302.5\"; \"Total inert* 84.8\""}
-    - {nome: STAR 30C/BP, envelope: titânio, propelente_lbm: 1302.5, inerte_lbm: 90.6, pagina_pdf: 96, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,302.5\"; \"Total inert* 90.6\""}
-    - {nome: STAR 30E, envelope: titânio, propelente_lbm: 1392.0, inerte_lbm: 93.7, pagina_pdf: 97, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,392.0\"; \"Total inert* 93.7\""}
-    - {nome: STAR 31, envelope: kevlar-epóxi, propelente_lbm: 2835, inerte_lbm: 237, pagina_pdf: 99, fonte: "\"Propellant (including igniter propellant) 2,835\"; \"Total inert 237\""}
-    - {nome: STAR 37FM, envelope: titânio, propelente_lbm: 2350.1, inerte_lbm: 180.1, pagina_pdf: 100, fonte: "\"Propellant (including igniter propellant) 2,350.1\"; \"Total inert 180.1\" (total − propelente dá 180.7)"}
-    - {nome: STAR 37FMV, envelope: titânio, propelente_lbm: 2345.3, inerte_lbm: 236.7, pagina_pdf: 101, fonte: "\"Propellant (including igniter propellant) 2,345.3\"; \"Total inert 236.7\" (total − propelente dá 233.5)"}
-    - {nome: STAR 37XFP, envelope: titânio, propelente_lbm: 1948.2, inerte_lbm: 159.6, pagina_pdf: 102, fonte: "\"Propellant (including igniter propellant) 1,948.2\"; \"Total inert (excluding igniter propellant) 159.6\""}
-    - {nome: STAR 37GV, envelope: grafite-epóxi, propelente_lbm: 2148, inerte_lbm: 243.0, pagina_pdf: 103, fonte: "\"Propellant 2,148\"; \"Total inert 243.0\"; \"Weights do not include TVA system hardware\""}
-    - {nome: Orion 38, envelope: não declarado, propelente_lbm: 1698, inerte_lbm: 226, pagina_pdf: 16, fonte: "\"Total motor 1,924\"; \"Propellant 1,698\" (inerte calculado como total − propelente; a folha não dá o inerte total)"}
+    - {nome: STAR 8, envelope: titânio, propelente_lbm: 27.12, inerte_lbm: 11.31, pagina_pdf: 78, fonte: "\"Propellant 27.12\"; \"Total inert 11.31\"", diametro_pol: 8.06, comprimento_pol: 27.07, fonte_dimensoes: "\"Motor diameter, in ... 8.06\"; \"Motor length, in ... 27.07\""}
+    - {nome: STAR 9, envelope: grafite-epóxi, propelente_lbm: 31.8, inerte_lbm: 9.2, pagina_pdf: 79, fonte: "\"Propellant (including igniter propellant) 31.8\"; \"Total inert 9.2\"", diametro_pol: 9, comprimento_pol: 19.96, fonte_dimensoes: "\"Motor diameter, in ... 9\"; \"Motor length, in ... 19.96\""}
+    - {nome: STAR 12GV, envelope: grafite-epóxi, propelente_lbm: 72.6, inerte_lbm: 19.8, pagina_pdf: 80, fonte: "\"Propellant 72.6\"; \"Total inert 19.8\"; \"*Includes actuators and cables only\"", diametro_pol: 12.24, comprimento_pol: 22.5, fonte_dimensoes: "\"Motor diameter, in ... 12.24\"; \"Motor length, in ... 22.5\""}
+    - {nome: STAR 13B, envelope: titânio, propelente_lbm: 90.9, inerte_lbm: 12.8, pagina_pdf: 81, fonte: "\"Propellant 90.9\"; \"Total inert 12.8\"", diametro_pol: 13.57, comprimento_pol: 25.11, fonte_dimensoes: "\"Motor diameter, in ... 13.57\"; \"Motor length, in ... 25.11\""}
+    - {nome: STAR 15G, envelope: grafite-epóxi, propelente_lbm: 175.5, inerte_lbm: 30.9, pagina_pdf: 82, fonte: "\"Propellant (excluding 0.12 lbm of igniter propellant) 175.5\"; \"Total inert 30.9\"", diametro_pol: 15.04, comprimento_pol: 31.57, fonte_dimensoes: "\"Motor diameter, in ... 15.04\"; \"Motor length, in ... 31.57\""}
+    - {nome: STAR 17, envelope: titânio, propelente_lbm: 153.5, inerte_lbm: 20.8, pagina_pdf: 83, fonte: "\"Propellant 153.5\"; \"Total inert 20.8\"", diametro_pol: 17.4, comprimento_pol: 27.06, fonte_dimensoes: "\"Motor diameter, in ... 17.4\"; \"Motor length, in ... 27.06\""}
+    - {nome: STAR 17A, envelope: titânio, propelente_lbm: 247.5, inerte_lbm: 29.5, pagina_pdf: 84, fonte: "\"Propellant 247.5\"; \"Total inert 29.5\"", diametro_pol: 17.4, comprimento_pol: 38.64, fonte_dimensoes: "\"Motor diameter, in ... 17.4\"; \"Motor length, in ... 38.64\""}
+    - {nome: STAR 20, envelope: fibra de vidro-epóxi, propelente_lbm: 601.6, inerte_lbm: 60.7, pagina_pdf: 85, fonte: "\"Propellant (including igniter propellant) 601.6\"; \"Total inert 60.7\"", diametro_pol: 19.7, comprimento_pol: 58.5, fonte_dimensoes: "\"Motor diameter, in ... 19.7\"; \"Motor length, in ... 58.5\""}
+    - {nome: STAR 24, envelope: titânio, propelente_lbm: 440.6, inerte_lbm: 40.4, pagina_pdf: 86, fonte: "\"Propellant (including igniter propellant) 440.6\"; \"Total inert 40.4\"", diametro_pol: 24.5, comprimento_pol: 40.5, fonte_dimensoes: "\"Motor diameter, in ... 24.5\"; \"Motor length, in ... 40.5\""}
+    - {nome: STAR 24C, envelope: titânio, propelente_lbm: 484.0, inerte_lbm: 43.5, pagina_pdf: 87, fonte: "\"Propellant (including 1.2 lbm igniter propellant) 484.0\"; \"Total inert 43.5\"", diametro_pol: 24.5, comprimento_pol: 42, fonte_dimensoes: "\"Motor diameter, in ... 24.5\"; \"Motor length, in ... 42\""}
+    - {nome: STAR 26, envelope: aço D6AC, propelente_lbm: 508.5, inerte_lbm: 85.5, pagina_pdf: 88, fonte: "\"Propellant (including 1.2 lbm igniter propellant) 508.5\"; \"Total inert 85.5\"", diametro_pol: 26, comprimento_pol: 33, fonte_dimensoes: "\"Motor diameter, in ... 26\"; \"Motor length, in ... 33\""}
+    - {nome: STAR 26B, envelope: titânio, propelente_lbm: 524.0, inerte_lbm: 51.6, pagina_pdf: 89, fonte: "\"Propellant (including 0.4 lbm igniter propellant) 524.0\"; \"Total inert 51.6\"", diametro_pol: 26.1, comprimento_pol: 33.1, fonte_dimensoes: "\"Motor diameter, in ... 26.1\"; \"Motor length, in ... 33.1\""}
+    - {nome: STAR 26C, envelope: titânio, propelente_lbm: 511.4, inerte_lbm: 67.6, pagina_pdf: 90, fonte: "\"Propellant (including igniter propellant) 511.4\"; \"Total inert 67.6\"", diametro_pol: 26.1, comprimento_pol: 33.1, fonte_dimensoes: "\"Motor diameter, in ... 26.1\"; \"Motor length, in ... 33.1\""}
+    - {nome: STAR 27, envelope: titânio, propelente_lbm: 735.6, inerte_lbm: 60.6, pagina_pdf: 91, fonte: "\"Propellant (including 0.5 lbm igniter propellant) 735.6\"; \"Total inert 60.6\"", diametro_pol: 27.3, comprimento_pol: 48.7, fonte_dimensoes: "\"Motor diameter, in ... 27.3\"; \"Motor length, in ... 48.7\""}
+    - {nome: STAR 27H, envelope: titânio, propelente_lbm: 744.8, inerte_lbm: 66.1, pagina_pdf: 92, fonte: "\"Propellant (including 0.5 lbm igniter propellant 744.8\"; \"Total inert 66.1\"", diametro_pol: 27.3, comprimento_pol: 48, fonte_dimensoes: "\"Motor diameter, in ... 27.3\"; \"Motor length, in ... 48\""}
+    - {nome: STAR 30BP, envelope: titânio, propelente_lbm: 1113.6, inerte_lbm: 83.1, pagina_pdf: 94, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,113.6\"; \"Total inert* 83.1\"; \"*Excluding remote S&A/ETA\"", diametro_pol: 30, comprimento_pol: 59.3, fonte_dimensoes: "\"Motor diameter, in ... 30\"; \"Motor length, in ... 59.3\""}
+    - {nome: STAR 30C, envelope: titânio, propelente_lbm: 1302.5, inerte_lbm: 84.8, pagina_pdf: 95, fonte: "\"Propellant (including igniter propellant) 1,302.5\"; \"Total inert* 84.8\"", diametro_pol: 30, comprimento_pol: 58.8, fonte_dimensoes: "\"Motor diameter, in ... 30\"; \"Motor length, in ... 58.8\""}
+    - {nome: STAR 30C/BP, envelope: titânio, propelente_lbm: 1302.5, inerte_lbm: 90.6, pagina_pdf: 96, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,302.5\"; \"Total inert* 90.6\"", diametro_pol: 30, comprimento_pol: 64.3, fonte_dimensoes: "\"Motor diameter, in ... 30\"; \"Motor length, in ... 64.3\""}
+    - {nome: STAR 30E, envelope: titânio, propelente_lbm: 1392.0, inerte_lbm: 93.7, pagina_pdf: 97, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,392.0\"; \"Total inert* 93.7\"", diametro_pol: 30, comprimento_pol: 66.3, fonte_dimensoes: "\"Motor diameter, in ... 30\"; \"Motor length, in ... 66.3\""}
+    - {nome: STAR 31, envelope: kevlar-epóxi, propelente_lbm: 2835, inerte_lbm: 237, pagina_pdf: 99, fonte: "\"Propellant (including igniter propellant) 2,835\"; \"Total inert 237\"", diametro_pol: 30.1, comprimento_pol: 113, fonte_dimensoes: "\"Motor diameter, in ... 30.1\"; \"Motor length, in ... 113\""}
+    - {nome: STAR 37FM, envelope: titânio, propelente_lbm: 2350.1, inerte_lbm: 180.1, pagina_pdf: 100, fonte: "\"Propellant (including igniter propellant) 2,350.1\"; \"Total inert 180.1\" (total − propelente dá 180.7)", diametro_pol: 36.8, comprimento_pol: 66.5, fonte_dimensoes: "\"Motor diameter, in ... 36.8\"; \"Motor length, in ... 66.5\""}
+    - {nome: STAR 37FMV, envelope: titânio, propelente_lbm: 2345.3, inerte_lbm: 236.7, pagina_pdf: 101, fonte: "\"Propellant (including igniter propellant) 2,345.3\"; \"Total inert 236.7\" (total − propelente dá 233.5)", diametro_pol: 36.8, comprimento_pol: 75.5, fonte_dimensoes: "\"Motor diameter, in ... 36.8\"; \"Motor length, in ... 75.5\""}
+    - {nome: STAR 37XFP, envelope: titânio, propelente_lbm: 1948.2, inerte_lbm: 159.6, pagina_pdf: 102, fonte: "\"Propellant (including igniter propellant) 1,948.2\"; \"Total inert (excluding igniter propellant) 159.6\"", diametro_pol: 36.7, comprimento_pol: 59.2, fonte_dimensoes: "\"Motor diameter, in ... 36.7\"; \"Motor length, in ... 59.2\""}
+    - {nome: STAR 37GV, envelope: grafite-epóxi, propelente_lbm: 2148, inerte_lbm: 243.0, pagina_pdf: 103, fonte: "\"Propellant 2,148\"; \"Total inert 243.0\"; \"Weights do not include TVA system hardware\"", diametro_pol: 35.2, comprimento_pol: 66.2, fonte_dimensoes: "\"Motor diameter, in ... 35.2\"; \"Motor length, in ... 66.2\""}
+    - {nome: Orion 38, envelope: não declarado, propelente_lbm: 1698, inerte_lbm: 226, pagina_pdf: 16, fonte: "\"Total motor 1,924\"; \"Propellant 1,698\" (inerte calculado como total − propelente; a folha não dá o inerte total)", diametro_pol: 38, comprimento_pol: 52.6, fonte_dimensoes: "\"Motor diameter, in ... 38\"; \"Overall motor length (including nozzle), in ... 52.6\""}
   # MAV sólido do MSR, estimativa de projeto conceitual ([F269] PDF p. 2, Tab. 1, coluna MAV), kg: estágio 1 = "Stage k-1",
   # estágio 2 = "Stage k".
   msr:
@@ -101,3 +101,19 @@ inerte_solido:   # Fabio, 2026-11-10 (PR #60, item 3): lei de massa inerte do MA
     inerte_nao_propulsivo_kg: {valor: [14, 34], fonte: "[F269] PDF p. 2, Tab. 1 (mesma citação)"}
     propelente_kg: {valor: [216, 54], fonte: "[F269] PDF p. 2, Tab. 1 (mesma citação)"}
   altitude_km: {valor: 380, fonte: "decisão do Fabio, 2026-11-10 (PR #60, item 4): o caso com margem a 380 km"}
+  # Decisão do Fabio, 2026-11-10 (portão da lei de inerte): P-113 aprovada como NÃO VALIDADA; variante A nominal, B sensibilidade.
+  variante_nominal: A
+  # Viés do modelo de subida do sólido (P-114): o menor fator comum no Isp dos dois estágios que leva o MSR da variante A à
+  # órbita publicada (varredura até o primeiro que fecha, depois bisseção na borda de baixo da janela).
+  vies:
+    fator_isp_busca: {valor: [1.0, 1.2], premissa: P-114}
+    passo_varredura: {valor: 0.005, premissa: P-114}
+    passos_bissecao: {valor: 20, premissa: P-114}
+  # Gasto do excesso (P-115): (a1) ignição antecipada do estágio 2, o método do MSR ([F230] PDF p. 9; NTRS 20200002335 PDF p. 3),
+  # com o limite da antecedência alargado só neste caso; (a2) guinada alternada do estágio 2 (4º parâmetro do guiamento, rad).
+  antecedencia_max_s: {valor: 300, premissa: P-115}
+  guinada:
+    partida_rad: {valor: 0.3, premissa: P-115}
+    limites_rad: {valor: [0.0, 1.4], premissa: P-115}
+  semieixo_max_alt_km: {valor: 500, fonte: "[F273] PDF p. 1: \"3. Semi-major axis below 500-km altitude to reduce size of orbit dispersion and ensure reliable imaging opportunities\" (altitudes sobre o raio equatorial de Marte, 3396.2 km)"}
+  propulsor_orbitador: {valor: XIPS-25, fonte: "results/familia1/missao.md (o orbitador elétrico da família 1: XIPS-25, o primeiro que fecha); calculado, não verificado"}

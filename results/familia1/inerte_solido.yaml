@@ -9,6 +9,9 @@ motores:
   pagina_pdf: 78
   residuo_fator: 1.4957055401252406
   inerte_sobre_propelente: 0.4170353982300885
+  comprimento_m: 0.687578
+  diametro_m: 0.20472400000000002
+  residuo_comprimento_fator: 1.2260455949675886
 - nome: STAR 9
   envelope: grafite-epóxi
   propelente_kg: 14.42423832
@@ -16,6 +19,9 @@ motores:
   pagina_pdf: 79
   residuo_fator: 1.0882187724983214
   inerte_sobre_propelente: 0.28930817610062887
+  comprimento_m: 0.506984
+  diametro_m: 0.2286
+  residuo_comprimento_fator: 0.9450710707770675
 - nome: STAR 12GV
   envelope: grafite-epóxi
   propelente_kg: 32.93080824
@@ -23,6 +29,9 @@ motores:
   pagina_pdf: 80
   residuo_fator: 1.313201791935667
   inerte_sobre_propelente: 0.27272727272727276
+  comprimento_m: 0.5715
+  diametro_m: 0.310896
+  residuo_comprimento_fator: 0.8950392770234594
 - nome: STAR 13B
   envelope: titânio
   propelente_kg: 41.23154916
@@ -30,6 +39,9 @@ motores:
   pagina_pdf: 81
   residuo_fator: 0.7251936312034902
   inerte_sobre_propelente: 0.1408140814081408
+  comprimento_m: 0.637794
+  diametro_m: 0.344678
+  residuo_comprimento_fator: 0.9813006140654921
 - nome: STAR 15G
   envelope: grafite-epóxi
   propelente_kg: 79.6054662
@@ -37,6 +49,9 @@ motores:
   pagina_pdf: 82
   residuo_fator: 1.10397640106378
   inerte_sobre_propelente: 0.17606837606837605
+  comprimento_m: 0.801878
+  diametro_m: 0.38201599999999997
+  residuo_comprimento_fator: 0.8640231908238222
 - nome: STAR 17
   envelope: titânio
   propelente_kg: 69.6264334
@@ -44,6 +59,9 @@ motores:
   pagina_pdf: 83
   residuo_fator: 0.8162671619080997
   inerte_sobre_propelente: 0.13550488599348537
+  comprimento_m: 0.6873239999999999
+  diametro_m: 0.44195999999999996
+  residuo_comprimento_fator: 1.0274549588542514
 - nome: STAR 17A
   envelope: titânio
   propelente_kg: 112.26411900000001
@@ -51,6 +69,9 @@ motores:
   pagina_pdf: 84
   residuo_fator: 0.8282996215527813
   inerte_sobre_propelente: 0.11919191919191918
+  comprimento_m: 0.981456
+  diametro_m: 0.44195999999999996
+  residuo_comprimento_fator: 1.0105190413098222
 - nome: STAR 20
   envelope: fibra de vidro-epóxi
   propelente_kg: 272.88118784
@@ -58,6 +79,9 @@ motores:
   pagina_pdf: 85
   residuo_fator: 0.914560935410897
   inerte_sobre_propelente: 0.10089760638297873
+  comprimento_m: 1.4859
+  diametro_m: 0.5003799999999999
+  residuo_comprimento_fator: 0.9247722044211626
 - nome: STAR 24
   envelope: titânio
   propelente_kg: 199.85281144
@@ -65,6 +89,9 @@ motores:
   pagina_pdf: 86
   residuo_fator: 0.757190058293209
   inerte_sobre_propelente: 0.09169314571039491
+  comprimento_m: 1.0287
+  diametro_m: 0.6223
+  residuo_comprimento_fator: 1.1394530496165167
 - nome: STAR 24C
   envelope: titânio
   propelente_kg: 219.5387216
@@ -72,6 +99,9 @@ motores:
   pagina_pdf: 87
   residuo_fator: 0.7633389504519992
   inerte_sobre_propelente: 0.08987603305785123
+  comprimento_m: 1.0668
+  diametro_m: 0.6223
+  residuo_comprimento_fator: 1.0981095566673598
 - nome: STAR 26
   envelope: aço D6AC
   propelente_kg: 230.6517354
@@ -79,6 +109,9 @@ motores:
   pagina_pdf: 88
   residuo_fator: 1.4493193551249635
   inerte_sobre_propelente: 0.168141592920354
+  comprimento_m: 0.8382
+  diametro_m: 0.6604
+  residuo_comprimento_fator: 0.9091375720763668
 - nome: STAR 26B
   envelope: titânio
   propelente_kg: 237.6824176
@@ -86,6 +119,9 @@ motores:
   pagina_pdf: 89
   residuo_fator: 0.856462470901219
   inerte_sobre_propelente: 0.09847328244274808
+  comprimento_m: 0.84074
+  diametro_m: 0.66294
+  residuo_comprimento_fator: 0.8960137432017239
 - nome: STAR 26C
   envelope: titânio
   propelente_kg: 231.96715336
@@ -93,6 +129,9 @@ motores:
   pagina_pdf: 90
   residuo_fator: 1.141336568977035
   inerte_sobre_propelente: 0.1321861556511537
+  comprimento_m: 0.84074
+  diametro_m: 0.66294
+  residuo_comprimento_fator: 0.9131980668512031
 - nome: STAR 27
   envelope: titânio
   propelente_kg: 333.66256944
@@ -100,6 +139,9 @@ motores:
   pagina_pdf: 91
   residuo_fator: 0.7930278589187506
   inerte_sobre_propelente: 0.08238172920065252
+  comprimento_m: 1.23698
+  diametro_m: 0.69342
+  residuo_comprimento_fator: 1.0836475082839045
 - nome: STAR 27H
   envelope: titânio
   propelente_kg: 337.83561951999997
@@ -107,6 +149,9 @@ motores:
   pagina_pdf: 92
   residuo_fator: 0.8574999772920198
   inerte_sobre_propelente: 0.08874865735767991
+  comprimento_m: 1.2191999999999998
+  diametro_m: 0.69342
+  residuo_comprimento_fator: 1.0577601980935727
 - nome: STAR 30BP
   envelope: titânio
   propelente_kg: 505.12049663999994
@@ -114,6 +159,9 @@ motores:
   pagina_pdf: 94
   residuo_fator: 0.8132089571288942
   inerte_sobre_propelente: 0.07462284482758622
+  comprimento_m: 1.50622
+  diametro_m: 0.762
+  residuo_comprimento_fator: 1.1027539009778093
 - nome: STAR 30C
   envelope: titânio
   propelente_kg: 590.8041010000001
@@ -121,6 +169,9 @@ motores:
   pagina_pdf: 95
   residuo_fator: 0.7435412139653349
   inerte_sobre_propelente: 0.06510556621880997
+  comprimento_m: 1.49352
+  diametro_m: 0.762
+  residuo_comprimento_fator: 0.9675857240342368
 - nome: STAR 30C/BP
   envelope: titânio
   propelente_kg: 590.8041010000001
@@ -128,6 +179,9 @@ motores:
   pagina_pdf: 96
   residuo_fator: 0.794396627184662
   inerte_sobre_propelente: 0.06955854126679462
+  comprimento_m: 1.63322
+  diametro_m: 0.762
+  residuo_comprimento_fator: 1.0580911914183915
 - nome: STAR 30E
   envelope: titânio
   propelente_kg: 631.4006208
@@ -135,6 +189,9 @@ motores:
   pagina_pdf: 97
   residuo_fator: 0.784189714475195
   inerte_sobre_propelente: 0.0673132183908046
+  comprimento_m: 1.6840199999999999
+  diametro_m: 0.762
+  residuo_comprimento_fator: 1.0358557575840452
 - nome: STAR 31
   envelope: kevlar-epóxi
   propelente_kg: 1285.934454
@@ -142,6 +199,9 @@ motores:
   pagina_pdf: 99
   residuo_fator: 1.2048334456100402
   inerte_sobre_propelente: 0.0835978835978836
+  comprimento_m: 2.8702
+  diametro_m: 0.76454
+  residuo_comprimento_fator: 1.018513963712188
 - nome: STAR 37FM
   envelope: titânio
   propelente_kg: 1065.98749924
@@ -149,6 +209,9 @@ motores:
   pagina_pdf: 100
   residuo_fator: 1.0442115626473167
   inerte_sobre_propelente: 0.07663503680694438
+  comprimento_m: 1.6890999999999998
+  diametro_m: 0.9347199999999999
+  residuo_comprimento_fator: 0.9435003579256578
 - nome: STAR 37FMV
   envelope: titânio
   propelente_kg: 1063.81025572
@@ -156,6 +219,9 @@ motores:
   pagina_pdf: 101
   residuo_fator: 1.3743437025917098
   inerte_sobre_propelente: 0.10092525476484884
+  comprimento_m: 1.9177
+  diametro_m: 0.9347199999999999
+  residuo_comprimento_fator: 1.0729028795669422
 - nome: STAR 37XFP
   envelope: titânio
   propelente_kg: 883.68871368
@@ -163,6 +229,9 @@ motores:
   pagina_pdf: 102
   residuo_fator: 1.0553439733079213
   inerte_sobre_propelente: 0.08192177394518016
+  comprimento_m: 1.50368
+  diametro_m: 0.93218
+  residuo_comprimento_fator: 0.9682982075466483
 - nome: STAR 37GV
   envelope: grafite-epóxi
   propelente_kg: 974.3164752
@@ -170,6 +239,9 @@ motores:
   pagina_pdf: 103
   residuo_fator: 1.5005510595760938
   inerte_sobre_propelente: 0.11312849162011174
+  comprimento_m: 1.68148
+  diametro_m: 0.89408
+  residuo_comprimento_fator: 0.9413307332170349
 - nome: Orion 38
   envelope: não declarado
   propelente_kg: 770.1998952
@@ -177,6 +249,9 @@ motores:
   pagina_pdf: 16
   residuo_fator: 1.6455365991253839
   inerte_sobre_propelente: 0.1330977620730271
+  comprimento_m: 1.33604
+  diametro_m: 0.9652
+  residuo_comprimento_fator: 1.0101349257355714
 ajuste:
   a: 0.5907242287047155
   b: 0.7008520255155859
@@ -246,6 +321,11 @@ casos:
     periapse_km: 318.41173888344366
     apoapse_km: 343.97642506082497
     costa_s: 468.1741651146377
+    guiamento:
+      t_v_s: 5.0
+      theta0_graus: 46.57026926682585
+      c_1_s: 0.005992279475676002
+      t_antes_apoapse_s: 14.83695423836639
     inertes_kg:
     - 60.0
     - 48.07260068075654
@@ -267,6 +347,11 @@ casos:
       periapse_km: 379.9994206680744
       apoapse_km: 380.00057933038147
       costa_s: 509.54606155120194
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 64.47741103102618
+        c_1_s: 0.02574983554073925
+        t_antes_apoapse_s: 15.009982707710666
     comprimento_m:
     - 2.7904687500000014
     - 2.9035546875000025
@@ -279,6 +364,10 @@ casos:
     folga_45_com_deck_m:
     - -0.07977734375000134
     - -0.023234375000000806
+    comprimento_novo_m: 2.7858609053312122
+    folga_novo_465_com_deck_m: 0.2507217212474373
+    folga_novo_465_sem_deck_m: 0.40463476472569804
+    folga_novo_45_com_deck_m: -0.020930452665606225
   com_margem:
     escala: 1.3448131195047277
     capacidade_m_s: 4521.003480787999
@@ -295,6 +384,34 @@ casos:
       periapse_km: 432.1636249801218
       apoapse_km: 693.4067014954761
       costa_s: 716.1382226955243
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 76.29414259270109
+        c_1_s: 0.049999999999999795
+        t_antes_apoapse_s: 15.674571955920554
+    voo_antecipada:
+      custo: 504.7240215196225
+      fecha: false
+      periapse_km: 432.16362489475915
+      apoapse_km: 693.4067014946606
+      costa_s: 716.139125291668
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 76.29414261522216
+        c_1_s: 0.049999999999999996
+        t_antes_apoapse_s: 15.673670355427733
+    voo_com_guinada:
+      custo: 1.4474696085658412e-05
+      fecha: false
+      periapse_km: 379.966823802026
+      apoapse_km: 380.04235893182226
+      costa_s: 543.3962863372142
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 53.355571626980854
+        c_1_s: 0.01395074725091613
+        t_antes_apoapse_s: 14.923873456591886
+        guinada_2_graus: 42.0756193663062
     comprimento_m:
     - 3.1137757434056734
     - 3.6309954226627656
@@ -307,6 +424,10 @@ casos:
     folga_45_com_deck_m:
     - -0.44349771133138294
     - -0.18488787170283683
+    comprimento_novo_m: 3.0826687342076946
+    folga_novo_465_com_deck_m: 0.10231780680919611
+    folga_novo_465_sem_deck_m: 0.25623085028745685
+    folga_novo_45_com_deck_m: -0.16933436710384742
 - lei: B (nível pela divisão verificada da P-110)
   N_kg:
   - 14.0
@@ -321,6 +442,11 @@ casos:
     periapse_km: 349.99976475118984
     apoapse_km: 350.00025140117015
     costa_s: 480.6728083080763
+    guiamento:
+      t_v_s: 5.0
+      theta0_graus: 65.02130804955452
+      c_1_s: 0.02706215246682505
+      t_antes_apoapse_s: 15.051197922293962
     inertes_kg:
     - 64.56000000000002
     - 43.04000000000001
@@ -342,6 +468,11 @@ casos:
       periapse_km: 379.9987590801609
       apoapse_km: 380.0009772737334
       costa_s: 510.45496531356173
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 55.627363173689446
+        c_1_s: 0.011858749677720022
+        t_antes_apoapse_s: 15.046963433046107
     comprimento_m:
     - 2.6841796875000017
     - 2.692968750000001
@@ -354,6 +485,10 @@ casos:
     folga_45_com_deck_m:
     - 0.025515624999999487
     - 0.029910156249999043
+    comprimento_novo_m: 2.6932685124752376
+    folga_novo_465_com_deck_m: 0.2970179176754246
+    folga_novo_465_sem_deck_m: 0.45093096115368536
+    folga_novo_45_com_deck_m: 0.0253657437623811
   com_margem:
     escala: 1.2267786486658232
     capacidade_m_s: 4485.668203358564
@@ -370,6 +505,34 @@ casos:
       periapse_km: 422.4173972865683
       apoapse_km: 635.0491375669278
       costa_s: 673.9490443065501
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 76.13668281310264
+        c_1_s: 0.04999999999999968
+        t_antes_apoapse_s: 15.68867683181098
+    voo_antecipada:
+      custo: 334.24649072313133
+      fecha: false
+      periapse_km: 422.4174009552584
+      apoapse_km: 635.0491369144917
+      costa_s: 673.9500161427037
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 76.13668283118176
+        c_1_s: 0.049999999999999996
+        t_antes_apoapse_s: 15.687705804394025
+    voo_com_guinada:
+      custo: 3.657041474244137e-09
+      fecha: true
+      periapse_km: 379.9993952653678
+      apoapse_km: 380.0006047349167
+      costa_s: 533.6142800285413
+      guiamento:
+        t_v_s: 5.0
+        theta0_graus: 53.44276663186912
+        c_1_s: 0.012947160317762486
+        t_antes_apoapse_s: 15.001553980444234
+        guinada_2_graus: 39.547930764931515
     comprimento_m:
     - 2.972134378398988
     - 3.3123023513977228
@@ -382,3 +545,159 @@ casos:
     folga_45_com_deck_m:
     - -0.2841511756988615
     - -0.11406718919949421
+    comprimento_novo_m: 2.9544161243269027
+    folga_novo_465_com_deck_m: 0.16644411174959206
+    folga_novo_465_sem_deck_m: 0.3203571552278528
+    folga_novo_45_com_deck_m: -0.10520806216345147
+comprimento:
+  a: 0.006997297237408232
+  b: 0.7804988476974604
+  c: -1.528931890146
+  erro_padrao_b: 0.05918978656812409
+  erro_padrao_c: 0.18098434798509055
+  n: 25
+  fator_rms: 1.094403025898152
+  fator_max: 1.2260455949675886
+  so_propelente:
+    a: 0.2248874130067059
+    b: 0.294234180754986
+    fator_rms: 1.1993179259955256
+    fator_max: 1.552775090665684
+  diametro_mav_m: 0.57
+  motores_msr_m:
+  - 1.0970325249404103
+  - 0.37395038292674276
+  comprimento_msr_m: 2.7
+  resto_m: 1.2290170921328472
+vies:
+  variante: A (nível do motor pelo [F269])
+  fecha_na_busca: true
+  fator_isp: 1.008270673751831
+  dv_vies_m_s: 32.906820424299895
+  voo:
+    custo: 7.148748475076536e-07
+    fecha: true
+    periapse_km: 349.9880918234554
+    apoapse_km: 350.0010818044576
+    costa_s: 494.37942441088296
+    guiamento:
+      t_v_s: 5.0
+      theta0_graus: 48.4571475122921
+      c_1_s: 0.006526018692312055
+      t_antes_apoapse_s: 14.872463673202988
+  corrigida:
+    fecha_na_varredura: true
+    sem_margem:
+      escala: 1.0232421875000004
+      capacidade_m_s: 4053.3389629164303
+      glom_kg: 401.73246280586727
+      propelente_kg:
+      - 221.02031250000007
+      - 55.66437500000002
+      inertes_kg:
+      - 60.746730327083334
+      - 48.30104497878381
+      voo:
+        custo: 6.12697099760453e-08
+        fecha: true
+        periapse_km: 379.99689921395714
+        apoapse_km: 380.0016245208252
+        costa_s: 517.6874696386286
+        guiamento:
+          t_v_s: 5.0
+          theta0_graus: 50.359355731511855
+          c_1_s: 0.00719374308709066
+          t_antes_apoapse_s: 14.925989190193027
+      comprimento_m:
+      - 2.7278906250000006
+      - 2.7627539062500017
+      folga_465_com_deck_m:
+      - 0.26227522078804255
+      - 0.27970686141304313
+      folga_465_sem_deck_m:
+      - 0.4161882642663033
+      - 0.43361990489130386
+      folga_45_com_deck_m:
+      - -0.009376953125000975
+      - 0.008054687499999602
+      comprimento_novo_m: 2.7266169335536263
+      folga_novo_465_com_deck_m: 0.28034370713623025
+      folga_novo_465_sem_deck_m: 0.434256750614491
+      folga_novo_45_com_deck_m: 0.00869153322318672
+    com_margem:
+      escala: 1.2749824932111835
+      capacidade_m_s: 4458.6728592091595
+      glom_kg: 479.9781052124453
+      propelente_kg:
+      - 275.39621853361564
+      - 69.35904763068838
+      inertes_kg:
+      - 68.53818478120265
+      - 50.68465426693865
+      voo:
+        custo: 329.83955459364955
+        fecha: false
+        periapse_km: 429.279871678601
+        apoapse_km: 632.0702385567771
+        costa_s: 678.2770625430728
+        guiamento:
+          t_v_s: 5.0
+          theta0_graus: 75.71607079453548
+          c_1_s: 0.049999999999999996
+          t_antes_apoapse_s: 15.534241731633292
+      voo_antecipada:
+        custo: 329.8395545909531
+        fecha: false
+        periapse_km: 429.27989438734994
+        apoapse_km: 632.0702341161333
+        costa_s: 678.2773336082462
+        guiamento:
+          t_v_s: 5.0
+          theta0_graus: 75.71607075171356
+          c_1_s: 0.049999999999999996
+          t_antes_apoapse_s: 15.53396839129951
+      voo_com_guinada:
+        custo: 0.0033909054689606013
+        fecha: false
+        periapse_km: 379.41804909224436
+        apoapse_km: 380.5826785003366
+        costa_s: 531.1714957772025
+        guiamento:
+          t_v_s: 5.0
+          theta0_graus: 61.343024592374164
+          c_1_s: 0.023328640785631696
+          t_antes_apoapse_s: 14.698542035206389
+          guinada_2_graus: 37.16258471569194
+      comprimento_m:
+      - 3.0299789918534206
+      - 3.4424527316701963
+      folga_465_com_deck_m:
+      - -0.07757419192205472
+      - 0.12866267798633313
+      folga_465_sem_deck_m:
+      - 0.07633885155620601
+      - 0.28257572146459387
+      folga_45_com_deck_m:
+      - -0.34922636583509825
+      - -0.1429894959267104
+      comprimento_novo_m: 3.0071063154114386
+      folga_novo_465_com_deck_m: 0.14009901620732412
+      folga_novo_465_sem_deck_m: 0.29401205968558486
+      folga_novo_45_com_deck_m: -0.1315531577057194
+    lei: A (nível do motor pelo [F269]), corrigida pelo viés
+orbitador_b:
+  propulsor: XIPS-25
+  n_ativos: 10
+  massa_kg: 9419.636858254124
+  orbita_km:
+  - 432.1636249801218
+  - 693.4067014954761
+  circular_dv_m_s: 23.022452827715867
+  circular_dias: 3.8660197613050653
+  apoapse_dv_m_s: 55.94482955909347
+  apoapse_dias: 22.809812759983043
+  apoapse_final_km: 693.4067014954767
+  periapse_final_km: 437.81936514989866
+  subida_dias_familia1: 179.61642414994336
+variante_nominal: A (nível do motor pelo [F269])
+semieixo_max_alt_km: 500.0

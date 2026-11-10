@@ -31,6 +31,7 @@ from orbital import subida as sb  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "familia1"
+POL = 0.0254   # [F112] Apêndice B.8, PDF p. 62: polegada em metros
 br, sg = sm.br, sm.sg
 
 
@@ -104,54 +105,151 @@ def main():
     passo = v(g["passo_varredura_escala"])
     l465, l45 = a4["limites_465"][str(d_s)], a4["limites_45"][str(d_s)]
 
-    def voo(pl, est, ine, h_m):
-        c_, vo, gu = sb.ajusta_solido(pl, est, ine, area, atm, h_m, t_v, partidas, limites)
-        return {"custo": c_, "fecha": c_ < tol, "periapse_km": vo["periapse_m"] / 1000, "apoapse_km": vo["apoapse_m"] / 1000, "costa_s": vo["costa_s"]}
+    gn = cfg["guinada"]
+    part_g = [list(x) + [v(gn["partida_rad"])] for x in partidas]
+    lim_g = limites + [tuple(gn["limites_rad"]["valor"])]
+
+    lim_a = limites[:2] + [(limites[2][0], v(cfg["antecedencia_max_s"]))]
+
+    def voo(pl, est, ine, h_m, guinada=False, antecipada=False):
+        lim_ = lim_g if guinada else lim_a if antecipada else limites
+        c_, vo, gu = sb.ajusta_solido(pl, est, ine, area, atm, h_m, t_v, part_g if guinada else partidas, lim_)
+        return {"custo": c_, "fecha": c_ < tol, "periapse_km": vo["periapse_m"] / 1000, "apoapse_km": vo["apoapse_m"] / 1000, "costa_s": vo["costa_s"], "guiamento": gu}
+
+    # ---------------- comprimento do motor: ajuste do catálogo, L = a · P^b · D^c (P-108 revista, proposta)
+    Dm = np.array([m_["diametro_pol"] * POL for m_ in cfg["motores"]])
+    Lm = np.array([m_["comprimento_pol"] * POL for m_ in cfg["motores"]])
+    X = np.vstack([np.ones_like(P), np.log(P), np.log(Dm)]).T
+    co, *_ = np.linalg.lstsq(X, np.log(Lm), rcond=None)
+    rL = np.log(Lm) - X @ co
+    cov = float(rL @ rL) / (len(P) - 3) * np.linalg.inv(X.T @ X)
+    Xp = np.vstack([np.ones_like(P), np.log(P)]).T
+    cp_, *_ = np.linalg.lstsq(Xp, np.log(Lm), rcond=None)
+    rP = np.log(Lm) - Xp @ cp_
+    comp = {"a": math.exp(co[0]), "b": float(co[1]), "c": float(co[2]), "erro_padrao_b": math.sqrt(cov[1, 1]), "erro_padrao_c": math.sqrt(cov[2, 2]), "n": len(P),
+            "fator_rms": math.exp(math.sqrt(float(rL @ rL) / (len(P) - 3))), "fator_max": math.exp(float(np.abs(rL).max())),
+            "so_propelente": {"a": math.exp(cp_[0]), "b": float(cp_[1]), "fator_rms": math.exp(math.sqrt(float(rP @ rP) / (len(P) - 2))), "fator_max": math.exp(float(np.abs(rP).max()))}}
+    for m_, L_, D_, ri in zip(mot, Lm, Dm, rL):
+        m_["comprimento_m"], m_["diametro_m"], m_["residuo_comprimento_fator"] = float(L_), float(D_), math.exp(float(ri))
+
+    def l_motor(p_):
+        return comp["a"] * p_ ** comp["b"] * d_s ** comp["c"]
+    L_msr = v(msd["comprimento_m"])
+    resto = L_msr - l_motor(mp[0]) - l_motor(mp[1])
+    comp.update({"diametro_mav_m": d_s, "motores_msr_m": [l_motor(mp[0]), l_motor(mp[1])], "comprimento_msr_m": L_msr, "resto_m": resto})
 
     def geometria(est):
         mpt = sum(e.propelente_kg for e in est)
-        Ls = [lf + (v(msd["comprimento_m"]) - lf) * mpt / sum(mp) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
+        Ls = [lf + (L_msr - lf) * mpt / sum(mp) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
+        Ln = l_motor(est[0].propelente_kg) + l_motor(est[1].propelente_kg) + resto
         return {"comprimento_m": [min(Ls), max(Ls)], "folga_465_com_deck_m": [(l465["com_deck_m"] - max(Ls)) / 2, (l465["com_deck_m"] - min(Ls)) / 2],
                 "folga_465_sem_deck_m": [(l465["sem_deck_m"] - max(Ls)) / 2, (l465["sem_deck_m"] - min(Ls)) / 2],
-                "folga_45_com_deck_m": [(l45["com_deck_m"] - max(Ls)) / 2, (l45["com_deck_m"] - min(Ls)) / 2]}
+                "folga_45_com_deck_m": [(l45["com_deck_m"] - max(Ls)) / 2, (l45["com_deck_m"] - min(Ls)) / 2],
+                "comprimento_novo_m": Ln, "folga_novo_465_com_deck_m": (l465["com_deck_m"] - Ln) / 2, "folga_novo_465_sem_deck_m": (l465["sem_deck_m"] - Ln) / 2,
+                "folga_novo_45_com_deck_m": (l45["com_deck_m"] - Ln) / 2}
 
-    casos = []
-    for nome, lei in leis.items():
-        e1, i1 = estagios(1.0, lei, mp, f, isp, carga)
-        x = {"lei": nome, "N_kg": lei[0], "c": lei[1], "b": lei[2], "verificacao": {**voo(pl_v, e1, i1, 1000 * v(vf["orbita_km"])), "inertes_kg": i1, "glom_kg": e1[0].massa_inicial_kg}}
+    def dimensiona(lei, isp_):
+        f_ = [m_ * i * sb.G0_M / t for m_, i, t in zip(mp, isp_, tq)]   # P-111: tempo de queima publicado
+        x = {}
         s_, a_, ok = lo, lo, None
         while s_ <= hi + 1e-9:
-            e_, i_ = estagios(s_, lei, mp, f, isp, carga)
+            e_, i_ = estagios(s_, lei, mp, f_, isp_, carga)
             if voo(pl_e, e_, i_, 1000 * h)["fecha"]:
                 ok = s_
                 break
             a_, s_ = s_, s_ + passo
         x["fecha_na_varredura"] = ok is not None
-        if ok is not None:
-            b_ = ok
-            for _ in range(int(v(g["passos_escala"]))):
-                m_ = (a_ + b_) / 2
-                e_, i_ = estagios(m_, lei, mp, f, isp, carga)
-                a_, b_ = (a_, m_) if voo(pl_e, e_, i_, 1000 * h)["fecha"] else (m_, b_)
-            e0, i0 = estagios(b_, lei, mp, f, isp, carga)
-            cap0 = mf.capacidade(e0, i0, carga)
-            # escala do caso com a margem: a capacidade cresce sem limite com a escala (o inerte cresce menos que o propelente)
-            s1, s2 = b_, b_
-            while mf.capacidade(*estagios(s2, lei, mp, f, isp, carga), carga) < (1 + margem) * cap0:
-                s1, s2 = s2, 2 * s2
-            while s2 - s1 > 1e-12 * s2:
-                m_ = (s1 + s2) / 2
-                s1, s2 = (m_, s2) if mf.capacidade(*estagios(m_, lei, mp, f, isp, carga), carga) < (1 + margem) * cap0 else (s1, m_)
-            em, im = estagios(s2, lei, mp, f, isp, carga)
-            x["sem_margem"] = {"escala": b_, "capacidade_m_s": cap0, "glom_kg": e0[0].massa_inicial_kg, "propelente_kg": [e.propelente_kg for e in e0], "inertes_kg": i0,
-                               "voo": voo(pl_e, e0, i0, 1000 * h), **geometria(e0)}
-            x["com_margem"] = {"escala": s2, "capacidade_m_s": mf.capacidade(em, im, carga), "glom_kg": em[0].massa_inicial_kg, "propelente_kg": [e.propelente_kg for e in em],
-                               "inertes_kg": im, "voo": voo(pl_e, em, im, 1000 * h), **geometria(em)}
+        if ok is None:
+            return x
+        b_ = ok
+        for _ in range(int(v(g["passos_escala"]))):
+            m_ = (a_ + b_) / 2
+            e_, i_ = estagios(m_, lei, mp, f_, isp_, carga)
+            a_, b_ = (a_, m_) if voo(pl_e, e_, i_, 1000 * h)["fecha"] else (m_, b_)
+        e0, i0 = estagios(b_, lei, mp, f_, isp_, carga)
+        cap0 = mf.capacidade(e0, i0, carga)
+        # escala do caso com a margem: a capacidade cresce sem limite com a escala (o inerte cresce menos que o propelente)
+        s1, s2 = b_, b_
+        while mf.capacidade(*estagios(s2, lei, mp, f_, isp_, carga), carga) < (1 + margem) * cap0:
+            s1, s2 = s2, 2 * s2
+        while s2 - s1 > 1e-12 * s2:
+            m_ = (s1 + s2) / 2
+            s1, s2 = (m_, s2) if mf.capacidade(*estagios(m_, lei, mp, f_, isp_, carga), carga) < (1 + margem) * cap0 else (s1, m_)
+        em, im = estagios(s2, lei, mp, f_, isp_, carga)
+        x["sem_margem"] = {"escala": b_, "capacidade_m_s": cap0, "glom_kg": e0[0].massa_inicial_kg, "propelente_kg": [e.propelente_kg for e in e0], "inertes_kg": i0,
+                           "voo": voo(pl_e, e0, i0, 1000 * h), **geometria(e0)}
+        x["com_margem"] = {"escala": s2, "capacidade_m_s": mf.capacidade(em, im, carga), "glom_kg": em[0].massa_inicial_kg, "propelente_kg": [e.propelente_kg for e in em],
+                           "inertes_kg": im, "voo": voo(pl_e, em, im, 1000 * h), "voo_antecipada": voo(pl_e, em, im, 1000 * h, antecipada=True),
+                           "voo_com_guinada": voo(pl_e, em, im, 1000 * h, guinada=True), **geometria(em)}
+        return x
+
+    casos = []
+    for nome, lei in leis.items():
+        e1, i1 = estagios(1.0, lei, mp, f, isp, carga)
+        x = {"lei": nome, "N_kg": lei[0], "c": lei[1], "b": lei[2], "verificacao": {**voo(pl_v, e1, i1, 1000 * v(vf["orbita_km"])), "inertes_kg": i1, "glom_kg": e1[0].massa_inicial_kg}}
+        x.update(dimensiona(lei, isp))
         casos.append(x)
+    # ---------------- viés do modelo na variante nominal (P-114) e a variante corrigida
+    nom = next(k for k in leis if k.startswith(cfg["variante_nominal"]))
+    lei_n = leis[nom]
+    vz = cfg["vies"]
+
+    def fecha_verif(fator):
+        isp_ = [i * fator for i in isp]
+        f_ = [m_ * i * sb.G0_M / t for m_, i, t in zip(mp, isp_, tq)]
+        e_, i_ = estagios(1.0, lei_n, mp, f_, isp_, carga)
+        return voo(pl_v, e_, i_, 1000 * v(vf["orbita_km"])), mf.capacidade(e_, i_, carga)
+    # varredura do fator até o primeiro que fecha (o sólido só fecha numa janela de energia), depois bisseção na borda de baixo
+    f_lo, f_top = vz["fator_isp_busca"]["valor"]
+    f_, ok_ = f_lo, None
+    while f_ <= f_top + 1e-12:
+        if fecha_verif(f_)[0]["fecha"]:
+            ok_ = f_
+            break
+        f_lo, f_ = f_, f_ + v(vz["passo_varredura"])
+    vies = {"variante": nom, "fecha_na_busca": ok_ is not None}
+    if ok_ is not None:
+        f_hi = ok_
+        for _ in range(int(v(vz["passos_bissecao"]))):
+            m_ = (f_lo + f_hi) / 2
+            if fecha_verif(m_)[0]["fecha"]:
+                f_hi = m_
+            else:
+                f_lo = m_
+        rv, cap_v = fecha_verif(f_hi)
+        cap_1 = mf.capacidade(*estagios(1.0, lei_n, mp, f, isp, carga), carga)
+        vies.update({"fator_isp": f_hi, "dv_vies_m_s": cap_v - cap_1, "voo": rv})
+        corr = dimensiona(lei_n, [i * f_hi for i in isp])
+        corr.update({"lei": nom + ", corrigida pelo viés"})
+        vies["corrigida"] = corr
+    # ---------------- (b): aceitar a órbita do sólido com margem e levar o orbitador elétrico até ela
+    caso_n = next(c for c in casos if c["lei"] == nom)
+    orb = None
+    if caso_n.get("fecha_na_varredura"):
+        import orbitador_eletrico as oe
+        from orbital import baixo_empuxo as be
+        from orbital import hibrido as hb
+        from orbital.config import parametros
+        po = ler("config/parametros_orbitais.yaml")
+        mu, R = parametros().mu_marte, v(po["raio_marte_km"])
+        rb = ler("results/etapa7.2/rotas_mav.yaml")
+        prop = cfg["propulsor_orbitador"]["valor"]
+        el = next(x for x in rb["rota_b"] if abs(x["altitude_km"] - h) < 1e-6)["propulsores"][prop]["eletrico_primeiro_que_fecha"]
+        se = oe.sistema(prop, el["n_ativos"], ler("config/eletrica.yaml"), ler("config/plataformas.yaml"))
+        m0 = el["orbitador_injetado_kg"]   # limite superior da massa no encontro: o tempo sai maior que o real
+        vo = caso_n["com_margem"]["voo"]
+        rp_, ra_ = R + vo["periapse_km"], R + vo["apoapse_km"]
+        t_on1, t_d1, dv1, m1 = hb.tempos_espiral(mu, R, R + h, rp_, m0, se)
+        arc = be.apoapse_por_arcos(mu, rp_, rp_, ra_, se.empuxo_total_n, se.isp_s, m1, float(ler("config/eletrica.yaml")["varredura"]["c1_meio_arco_graus"]["valor"]))
+        orb = {"propulsor": prop, "n_ativos": el["n_ativos"], "massa_kg": m0, "orbita_km": [vo["periapse_km"], vo["apoapse_km"]],
+               "circular_dv_m_s": 1000 * dv1, "circular_dias": (t_on1 + t_d1) / 86400, "apoapse_dv_m_s": 1000 * arc.dv_km_s, "apoapse_dias": arc.tempo_total_s / 86400,
+               "apoapse_final_km": arc.ra_final_km - R, "periapse_final_km": arc.rp_final_km - R, "subida_dias_familia1": el["subida_dias"]}
     out = nativo({"gerado_por": "tools/inerte_solido.py", "status": "NÃO VALIDADO", "lb_para_kg": lb, "motores": mot, "ajuste": ajuste_cat, "comparacao_msr": comparacao,
                   "p019_k": eps / (1 - eps), "p111_k": [i / x for i, x in zip(ine_v, mp)], "altitude_km": h, "margem_dv": margem, "tol_custo": tol, "passo": passo,
                   "orbita_verificacao_km": v(vf["orbita_km"]), "criterio_selecao": cfg["criterio_selecao"],
-                  "fracao_2_f269": (Im[1] + Nm[1]) / (sum(Im) + sum(Nm)), "fracao_2_p110": mv["verificacao"]["base"]["fracao_inerte_2"], "costa_publicada_s": v(vf["costa_publicada_s"]), "alvo_folga_m": a4["alvo_folga_m"], "casos": casos})
+                  "fracao_2_f269": (Im[1] + Nm[1]) / (sum(Im) + sum(Nm)), "fracao_2_p110": mv["verificacao"]["base"]["fracao_inerte_2"],
+                  "costa_publicada_s": v(vf["costa_publicada_s"]), "alvo_folga_m": a4["alvo_folga_m"], "casos": casos,
+                  "comprimento": comp, "vies": vies, "orbitador_b": orb, "variante_nominal": nom, "semieixo_max_alt_km": v(cfg["semieixo_max_alt_km"])})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "inerte_solido.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -187,25 +285,66 @@ def escreve_md(o):
            "- **Conflito com a P-110 (não resolvido aqui).** A justificativa da P-110 diz que a divisão do inerte por estágio não tem fonte; o [F269] publica uma (fração do estágio 2 = " + f"{br(o['fracao_2_f269'], 3)}, contra {br(o['fracao_2_p110'], 2)} escolhida pela verificação da P-110). Com o modelo de subida e o guiamento atuais, a divisão do [F269] não chega à órbita publicada (variante A, abaixo). A P-110 não foi mudada; a decisão é do Fabio.",
            "- **Proposta (P-113, NÃO VALIDADA, para aprovação):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Duas variantes do nível c: A, pelo motor do MSR [F269]; B, pela divisão que a verificação da P-110 escolheu. A escolha é do Fabio.",
            "", f"## Subida com cada variante (modelo de subida do sólido; tolerância {o['tol_custo']:.0e}, passo da varredura {br(o['passo'], 2)}, os da P-110)".replace(".0e", "e"), ""]
+    def tabela(c):
+        t = [f"| Caso, {br(o['altitude_km'], 0)} km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento, P-108 (m) | 4,65 m com deck, P-108 | Comprimento, P-108 revista (m) | 4,65 m com deck, revista | 4,65 m sem deck, revista | 4,5 m com deck, revista |",
+             "| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: | -: | -: |"]
+        for rot, k in (("sem margem (o menor que chega)", "sem_margem"), ("com a margem da P-014 na capacidade", "com_margem")):
+            y = c[k]
+            t.append(f"| {rot} | {br(y['escala'], 3)} | {br(y['capacidade_m_s'], 0)} | {br(y['glom_kg'], 1)} | {br(y['propelente_kg'][0], 1)} + {br(y['propelente_kg'][1], 1)} | {br(y['inertes_kg'][0], 1)} + {br(y['inertes_kg'][1], 1)} | "
+                     f"{br(y['voo']['periapse_km'], 0)} × {br(y['voo']['apoapse_km'], 0)} | {'sim' if y['voo']['fecha'] else 'não'} | {faixa(y['comprimento_m'], lambda z: br(z, 2))} | {faixa(y['folga_465_com_deck_m'])} | "
+                     f"{br(y['comprimento_novo_m'], 2)} | {sg(y['folga_novo_465_com_deck_m'])} | {sg(y['folga_novo_465_sem_deck_m'])} | {sg(y['folga_novo_45_com_deck_m'])} |")
+        return t
     for c in o["casos"]:
         vf = c["verificacao"]
-        md += [f"### Lei {c['lei']}", "",
+        papel = "nominal" if c["lei"] == o["variante_nominal"] else "sensibilidade"
+        md += [f"### Lei {c['lei']}: {papel}", "",
                f"- N = {br(c['N_kg'][0], 0)} e {br(c['N_kg'][1], 0)} kg; c = {br(c['c'][0], 3)} e {br(c['c'][1], 3)}; b = {br(c['b'], 3)}." + (" O c da variante A é calibrado no propelente do [F269] (216 e 54 kg) e aplicado ao do MSR usado no estudo (216 e 54,4 kg, config/cad.yaml), daí o estágio 2 com um pouco mais que 48 kg." if c["lei"].startswith("A") else ""),
                f"- Verificação com o MAV do MSR (órbita publicada de {br(o['orbita_verificacao_km'], 0)} km): inertes {br(vf['inertes_kg'][0], 1)} e {br(vf['inertes_kg'][1], 1)} kg; órbita {br(vf['periapse_km'], 0)} × {br(vf['apoapse_km'], 0)} km; costa {br(vf['costa_s'], 0)} s (publicada {br(o['costa_publicada_s'], 0)} s); "
                + ("**chega à órbita publicada**." if vf["fecha"] else f"**não chega à órbita publicada** (resíduo {vf['custo']:.1e}).".replace(".", ",", 1))]
         if not c["fecha_na_varredura"]:
             md += [f"- {br(o['altitude_km'], 0)} km: não fecha na varredura da P-110.", ""]
             continue
-        md += ["", f"| Caso, {br(o['altitude_km'], 0)} km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |",
-               "| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |"]
-        for rot, k in (("sem margem (o menor que chega)", "sem_margem"), ("com a margem da P-014 na capacidade", "com_margem")):
-            y = c[k]
-            md.append(f"| {rot} | {br(y['escala'], 3)} | {br(y['capacidade_m_s'], 0)} | {br(y['glom_kg'], 1)} | {br(y['propelente_kg'][0], 1)} + {br(y['propelente_kg'][1], 1)} | {br(y['inertes_kg'][0], 1)} + {br(y['inertes_kg'][1], 1)} | "
-                      f"{br(y['voo']['periapse_km'], 0)} × {br(y['voo']['apoapse_km'], 0)} | {'sim' if y['voo']['fecha'] else 'não'} | {faixa(y['comprimento_m'], lambda z: br(z, 2))} | {faixa(y['folga_465_com_deck_m'])} | {faixa(y['folga_465_sem_deck_m'])} | {faixa(y['folga_45_com_deck_m'])} |")
-        md.append("")
+        md += [""] + tabela(c) + [""]
     if all(c["fecha_na_varredura"] for c in o["casos"]):
-        md += ["As duas variantes fecham a 380 km com o passo e a tolerância da P-110: não foi preciso refiná-los.", ""]
-    md += [f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de {br(o['altitude_km'], 0)} km se o guiamento conseguir gastá-la; \"não\" na coluna \"Chega?\" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv."]
+        md += [f"As duas variantes fecham a {br(o['altitude_km'], 0)} km com o passo e a tolerância da P-110: não foi preciso refiná-los.", ""]
+    md += [f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de {br(o['altitude_km'], 0)} km se o guiamento conseguir gastá-la; \"não\" na coluna \"Chega?\" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. O gasto por guinada está na seção da energia que sobra.", ""]
+    vz = o["vies"]
+    md += ["## Viés do modelo de subida do sólido (P-114, NÃO VALIDADO)", ""]
+    if vz.get("fator_isp"):
+        vv = vz["voo"]
+        md += [f"Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante {vz['variante'][0]} à órbita publicada: **{br(vz['fator_isp'], 4)}**, ou **{br(vz['dv_vies_m_s'], 0)} m/s** de capacidade ideal (órbita {br(vv['periapse_km'], 0)} × {br(vv['apoapse_km'], 0)} km). É a incerteza do modelo de subida do sólido; a P-110 não foi ajustada.", "",
+               "### Variante nominal corrigida pelo viés (Isp × fator nos dois estágios)", ""]
+        cr = vz["corrigida"]
+        md += (tabela(cr) if cr.get("fecha_na_varredura") else [f"Não fecha na varredura da P-110 a {br(o['altitude_km'], 0)} km."]) + [""]
+    else:
+        md += ["Nenhum fator de Isp na busca da P-114 leva o MAV do MSR à órbita publicada: viés não medido.", ""]
+    cp = o["comprimento"]
+    md += ["## Comprimento do motor (P-108 revista, proposta)", "",
+           f"- Os {cp['n']} motores do catálogo publicam diâmetro e comprimento (\"Motor length\"; no Orion 38, \"Overall motor length (including nozzle)\"); nenhum tem bocal extensível.",
+           f"- Forma: L = a · P^b · D^c, mínimos quadrados em ln: a = {br(cp['a'], 4)}, b = {br(cp['b'], 3)} (erro-padrão {br(cp['erro_padrao_b'], 3)}), c = {br(cp['c'], 3)} (erro-padrão {br(cp['erro_padrao_c'], 3)}); erro: fator rms {br(cp['fator_rms'], 2)}, maior desvio fator {br(cp['fator_max'], 2)}.",
+           f"- Só com o propelente (L = a · P^b): b = {br(cp['so_propelente']['b'], 3)}, fator rms {br(cp['so_propelente']['fator_rms'], 2)}, maior desvio {br(cp['so_propelente']['fator_max'], 2)}. O diâmetro entra porque o do MAV é fixo e menor que o da maioria dos motores.",
+           f"- No Ø {br(cp['diametro_mav_m'], 2)} m do MAV e no propelente do MSR: motores de {br(cp['motores_msr_m'][0], 2)} e {br(cp['motores_msr_m'][1], 2)} m. O resto até os {br(cp['comprimento_msr_m'], 1)} m do MSR ([F247]), {br(cp['resto_m'], 2)} m, é interestágio, carga, aviônica e adaptadores: continua sem fonte e fica fixo na escala.",
+           "- **Proposta (para aprovação do Fabio): P-108 revista** = comprimento = motor do estágio 1 + motor do estágio 2 (pelo ajuste) + o resto fixo acima. Hoje a P-108 escala o comprimento não fixo na proporção do propelente, com a parte fixa de 0 a 1,5 m. A P-108 atual não foi mudada; as tabelas mostram as duas.", ""]
+    ob = o["orbitador_b"]
+    cn = next(c for c in o["casos"] if c["lei"] == o["variante_nominal"])
+    md += ["## Energia que sobra no sólido com margem (variante nominal)", ""]
+    if ob:
+        cm = cn["com_margem"]
+        vg = cm["voo_com_guinada"]
+        va = cm["voo_antecipada"]
+        md += [f"- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: \"This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis\"; [F271] PDF p. 3: \"The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit\"), com a antecedência até o limite da P-115: "
+               + (f"chega a {br(va['periapse_km'], 0)} × {br(va['apoapse_km'], 0)} km, acendendo {br(va['guiamento']['t_antes_apoapse_s'], 0)} s antes do apoapse." if va["fecha"] else f"não chega a {br(o['altitude_km'], 0)} km (melhor órbita {br(va['periapse_km'], 0)} × {br(va['apoapse_km'], 0)} km, antecedência {br(va['guiamento']['t_antes_apoapse_s'], 0)} s). No modelo, o estágio 2 empurra na horizontal local e o excesso vem do estágio 1 (guiamento no limite c₁ = " + f"{br(va['guiamento']['c_1_s'], 3)} 1/s da P-110); o MSR apontava o estágio 2 com guiamento próprio ([F230] PDF p. 9), o que o modelo não tem.")]
+        md += [f"- **(a2) Guinada alternada do estágio 2 (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4):** " + f"melhor órbita {br(vg['periapse_km'], 2)} × {br(vg['apoapse_km'], 2)} km com guinada de {br(vg['guiamento']['guinada_2_graus'], 1)}° (resíduo {vg['custo']:.1e}".replace(".", ",", 1) + f", tolerância {o['tol_custo']:.0e}: " + ("dentro" if vg["fecha"] else "**fora**") + " da tolerância da P-110). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada.",
+               f"- **(b) Aceitar a órbita do sólido ({br(ob['orbita_km'][0], 0)} × {br(ob['orbita_km'][1], 0)} km) e levar o orbitador até ela** (orbitador só elétrico, {ob['propulsor']} × {ob['n_ativos']}, **calculado, não verificado**; massa de {br(ob['massa_kg'], 0)} kg, a injetada, como limite superior: o tempo sai maior que o real):",
+               f"  - subir a circular de {br(o['altitude_km'], 0)} km até o periapse: {br(ob['circular_dv_m_s'], 0)} m/s, {br(ob['circular_dias'], 1)} dias; essa parte se recupera na espiral de saída (Edelbaum coplanar: o Δv entre circulares soma);",
+               f"  - subir o apoapse em arcos em torno do periapse (P-049): {br(ob['apoapse_dv_m_s'], 0)} m/s, {br(ob['apoapse_dias'], 1)} dias (fim em {br(ob['periapse_final_km'], 0)} × {br(ob['apoapse_final_km'], 0)} km);",
+               f"  - semieixo dessa órbita a {br((ob['orbita_km'][0] + ob['orbita_km'][1]) / 2, 0)} km de altitude (no raio do estudo), acima do limite de {br(o['semieixo_max_alt_km'], 0)} km do MSR ([F273] PDF p. 1, sobre o raio equatorial): no MSR, essa órbita estaria fora da faixa aceita;",
+               f"  - total antes do encontro: {br(ob['circular_dias'] + ob['apoapse_dias'], 1)} dias a mais entre o lançamento do MAV e a partida, que atrasam a partida de Marte. Não inclui a fase (RAAN e anomalia) nem o crédito da saída a partir da elipse.",
+               "- **Qual afeta menos a missão:** " + ("(a): não muda massa nem datas; (b) atrasa a partida e gasta xenônio do orbitador, que é a parte não verificada da família 1." if (va["fecha"] or vg["fecha"]) else f"pelos critérios da P-110, só (b) fecha. Se a órbita de (a2), a {br(max(abs(vg['periapse_km'] - o['altitude_km']), abs(vg['apoapse_km'] - o['altitude_km'])), 2)} km da circular de {br(o['altitude_km'], 0)} km, for aceita, (a) afeta menos (nem massa nem datas), contra os {br(ob['circular_dias'] + ob['apoapse_dias'], 1)} dias e o xenônio de (b). A guinada de (a2) não tem fonte para o MAV; o método com fonte do MSR é (a1), que o modelo não reproduz. Decisão do Fabio."), ""]
+    md += ["## Proposta de errata da P-110 (para aprovação do Fabio; o valor antigo fica)", "",
+           f"- Decisão do Fabio (2026-11-10): a divisão do inerte do [F269] (fração do estágio 2 = {br(o['fracao_2_f269'], 3)}) prevalece como entrada.",
+           f"- Errata proposta: a P-110 passa a usar a divisão do [F269] na verificação e na escala, no lugar da varredura que escolheu {br(o['fracao_2_p110'], 2)}. O valor antigo, {br(o['fracao_2_p110'], 2)}, fica registrado na errata. Consequência: a verificação deixa de chegar à órbita publicada, e a diferença passa a ser o viés da P-114 (acima).",
+           "- Nada foi mudado em config/premissas.yaml para a P-110 nem em results/familia1/mavs.yaml.", ""]
     (SAIDA / "inerte_solido.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 
