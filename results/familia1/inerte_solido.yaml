@@ -699,5 +699,7 @@ orbitador_b:
   apoapse_final_km: 693.4067014954767
   periapse_final_km: 437.81936514989866
   subida_dias_familia1: 179.61642414994336
+  semieixo_alt_eq_km: 562.7751632377995
 variante_nominal: A (nível do motor pelo [F269])
 semieixo_max_alt_km: 500.0
+antecedencia_max_s: 300.0

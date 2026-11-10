@@ -1,6 +1,6 @@
 # Lei de massa inerte do MAV sólido (gerado por tools/inerte_solido.py)
 
-**NÃO VALIDADO.** Premissas P-014, P-019, P-108, P-110, P-111 e P-113 (nova, para aprovação).
+**NÃO VALIDADO.** Premissas P-014, P-019, P-108, P-110, P-111, P-113 (aprovada como NÃO VALIDADA em 2026-11-10: variante A nominal, B sensibilidade), P-114 e P-115.
 
 ## Motores do catálogo [F270] (inerte total impresso, salvo o Orion 38)
 
@@ -56,7 +56,7 @@ Massas do catálogo em lbm; 1 lb = 0,4535924 kg ([F112] p. 65 do PDF).
 - **Erro-padrão.** Supõe resíduos independentes; há variantes do mesmo motor (STAR 26/26B/26C, 30BP/30C/30C-BP/30E, 37FM/37FMV), então o erro-padrão está subestimado. A distância de b a 1 é de 7,3 erros-padrão.
 - **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima). A verificação da P-110 reproduz o inerte total do MSR e a órbita publicada, não a divisão por estágio: a P-111 dá 64,6 e 43,0 kg, contra 60 e 48 kg do [F269]. A P-019 dá outra divisão. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte.
 - **Conflito com a P-110 (não resolvido aqui).** A justificativa da P-110 diz que a divisão do inerte por estágio não tem fonte; o [F269] publica uma (fração do estágio 2 = 0,444, contra 0,40 escolhida pela verificação da P-110). Com o modelo de subida e o guiamento atuais, a divisão do [F269] não chega à órbita publicada (variante A, abaixo). A P-110 não foi mudada; a decisão é do Fabio.
-- **Proposta (P-113, NÃO VALIDADA, para aprovação):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Duas variantes do nível c: A, pelo motor do MSR [F269]; B, pela divisão que a verificação da P-110 escolheu. A escolha é do Fabio.
+- **Lei (P-113, NÃO VALIDADA; aprovada pelo Fabio em 2026-11-10):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Nível c: A, pelo motor do MSR [F269] (nominal); B, pela divisão que a verificação da P-110 escolheu (sensibilidade).
 
 ## Subida com cada variante (modelo de subida do sólido; tolerância 1e-06, passo da varredura 0,05, os da P-110)
 
@@ -105,14 +105,14 @@ Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante A à ór
 
 ## Energia que sobra no sólido com margem (variante nominal)
 
-- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis"; [F271] PDF p. 3: "The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit"), com a antecedência até o limite da P-115: não chega a 380 km (melhor órbita 432 × 693 km, antecedência 16 s). No modelo, o estágio 2 empurra na horizontal local e o excesso vem do estágio 1 (guiamento no limite c₁ = 0,050 1/s da P-110); o MSR apontava o estágio 2 com guiamento próprio ([F230] PDF p. 9), o que o modelo não tem.
+- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis"; [F271] PDF p. 3: "The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit"), com a antecedência até o limite da P-115: não chega a 380 km (melhor órbita 432 × 693 km, antecedência ótima 16 s, longe do limite de 300 s: o limite não esteve ativo). Com o empuxo do estágio 2 na horizontal local, antecipar a ignição não tira energia; o excesso vem do estágio 1 (guiamento no limite c₁ = 0,050 1/s da P-110), e o semieixo fica acima do alvo. No MSR o excesso era menor e o estágio 2 tinha guiamento próprio; gastar um excesso deste tamanho exige apontar fora do ótimo, que é o (a2).
 - **(a2) Guinada alternada do estágio 2 (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4):** melhor órbita 379,97 × 380,04 km com guinada de 42,1° (resíduo 1,4e-05, tolerância 1e-06: **fora** da tolerância da P-110). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada.
-- **(b) Aceitar a órbita do sólido (432 × 693 km) e levar o orbitador até ela** (orbitador só elétrico, XIPS-25 × 10, **calculado, não verificado**; massa de 9 420 kg, a injetada, como limite superior: o tempo sai maior que o real):
-  - subir a circular de 380 km até o periapse: 23 m/s, 3,9 dias; essa parte se recupera na espiral de saída (Edelbaum coplanar: o Δv entre circulares soma);
+- **(b) Aceitar a órbita do sólido (432 × 693 km) e levar o orbitador até ela** (orbitador só elétrico, XIPS-25 × 10, **calculado, não verificado**, e não usado como fato). Limite superior, na hipótese de o orbitador esperar na circular de 380 km, com a massa injetada (9 420 kg):
+  - subir a circular de 380 km até o periapse: 23 m/s, 3,9 dias; essa parte se recupera na espiral de saída (Edelbaum coplanar: o Δv entre circulares soma), então não entra no custo;
   - subir o apoapse em arcos em torno do periapse (P-049): 56 m/s, 22,8 dias (fim em 438 × 693 km);
-  - semieixo dessa órbita a 563 km de altitude (no raio do estudo), acima do limite de 500 km do MSR ([F273] PDF p. 1, sobre o raio equatorial): no MSR, essa órbita estaria fora da faixa aceita;
-  - total antes do encontro: 26,7 dias a mais entre o lançamento do MAV e a partida, que atrasam a partida de Marte. Não inclui a fase (RAAN e anomalia) nem o crédito da saída a partir da elipse.
-- **Qual afeta menos a missão:** pelos critérios da P-110, só (b) fecha. Se a órbita de (a2), a 0,04 km da circular de 380 km, for aceita, (a) afeta menos (nem massa nem datas), contra os 26,7 dias e o xenônio de (b). A guinada de (a2) não tem fonte para o MAV; o método com fonte do MSR é (a1), que o modelo não reproduz. Decisão do Fabio.
+  - semieixo dessa órbita a 563 km de altitude sobre o raio equatorial (o referencial do [F273]), acima do limite de 500 km do MSR ([F273] PDF p. 1): no MSR, essa órbita estaria fora da faixa aceita;
+  - custo: no máximo 56 m/s e 22,8 dias, sem a fase (RAAN e anomalia). Não foi calculado o ganho: na rota B o orbitador desce em espiral desde a captura, e uma órbita de encontro mais alta encurta a descida e a espiral de saída.
+- **Qual afeta menos a missão:** pelos critérios atuais, nenhum dos dois fecha: (a2) erra a circular de 380 km por 42 m (resíduo acima da tolerância da P-110), e a órbita de (b) fica fora da faixa do MSR. (a2) não custa massa nem datas, mas a guinada não tem fonte para o MAV; o custo de (b) é só um limite superior, com o orbitador não verificado. Os dados não bastam para ordenar as duas; decisão do Fabio.
 
 ## Proposta de errata da P-110 (para aprovação do Fabio; o valor antigo fica)
 

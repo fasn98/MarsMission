@@ -1296,6 +1296,8 @@ premissas:
       a antecedência sobe para 300 s só no caso com margem; o valor é escolha numérica.
       (a2) O excesso de energia do sólido é gasto com guinada alternada do estágio 2 (±ψ em metades iguais da queima). No modelo
       plano, só a componente cos ψ do empuxo fica no plano; supõe-se que a mudança de plano se cancela entre as metades e que
-      o controle de atitude consegue a manobra. Sem fonte para o MAV; a partida e os limites do 4º parâmetro do guiamento são
+      o controle de atitude consegue a manobra. O cancelamento é aproximado (as metades têm Δv diferentes porque a massa cai),
+      e o que sobra fora do plano não foi estimado; não há fonte de que o estágio 2 do MAV permita a guinada calculada. Sem
+      fonte para o MAV; a partida e os limites do 4º parâmetro do guiamento são
       escolhas numéricas.
     status: NÃO VALIDADA
