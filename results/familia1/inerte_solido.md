@@ -4,6 +4,8 @@
 
 ## Motores do catálogo [F270] (inerte total impresso, salvo o Orion 38)
 
+Critério: motores do catálogo [F270] com folha de dados de massa e propelente entre 12 e 1.300 kg, reunidos na busca de 2026-11-10 (não se afirma que a lista é exaustiva) (estágio superior e de chute, do tamanho do MAV ao do MAV escalado); fora: STAR 3 a 6B (TIRS, retro e spin, menos de 12 kg de propelente) e a série STAR 48 (acima de 2.000 kg)
+
 | Motor | Envelope | Propelente (kg) | Inerte (kg) | Inerte/propelente | Fator do resíduo | PDF p. |
 | :- | :- | -: | -: | -: | -: | -: |
 | STAR 8 | titânio | 12,3 | 5,1 | 0,417 | 1,50 | 78 |
@@ -50,15 +52,17 @@ Massas do catálogo em lbm; 1 lb = 0,4535924 kg ([F112] p. 65 do PDF).
 
 ## O que os dados sustentam
 
-- **Escala.** A P-019 (k = 0,401 nos dois estágios) e a P-111 (k = 0,299 e 0,791) são proporcionais: o inerte cresce como o propelente (b = 1). O catálogo dá b = 0,70, e b = 1 fica fora de ±2 erros-padrão: **os dados não sustentam a escala proporcional de nenhuma das duas**. Ao crescer, a fração inerte cai.
-- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima); a P-111 reproduz o estágio do MSR por construção (verificação da P-110), e a P-019 dá outra divisão entre os estágios. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte e que não precisa crescer com o motor.
+- **Escala.** A P-019 (k = 0,401 nos dois estágios) e a P-111 (k = 0,299 e 0,791) são proporcionais: o inerte cresce como o propelente (b = 1). O catálogo dá b = 0,70, e b = 1 fica fora de ±2 erros-padrão: **para o motor, os dados não sustentam a escala proporcional de nenhuma das duas**; ao crescer, a fração inerte do motor cai. Para o estágio inteiro, isso depende também de como cresce o inerte não propulsivo, que não tem fonte (a P-113 o fixa). O catálogo junta projetos diferentes: a dispersão entre eles não é a escala de um único projeto.
+- **Erro-padrão.** Supõe resíduos independentes; há variantes do mesmo motor (STAR 26/26B/26C, 30BP/30C/30C-BP/30E, 37FM/37FMV), então o erro-padrão está subestimado. A distância de b a 1 é de 7,3 erros-padrão.
+- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima). A verificação da P-110 reproduz o inerte total do MSR e a órbita publicada, não a divisão por estágio: a P-111 dá 64,6 e 43,0 kg, contra 60 e 48 kg do [F269]. A P-019 dá outra divisão. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte.
+- **Conflito com a P-110 (não resolvido aqui).** A justificativa da P-110 diz que a divisão do inerte por estágio não tem fonte; o [F269] publica uma (fração do estágio 2 = 0,444, contra 0,40 escolhida pela verificação da P-110). Com o modelo de subida e o guiamento atuais, a divisão do [F269] não chega à órbita publicada (variante A, abaixo). A P-110 não foi mudada; a decisão é do Fabio.
 - **Proposta (P-113, NÃO VALIDADA, para aprovação):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Duas variantes do nível c: A, pelo motor do MSR [F269]; B, pela divisão que a verificação da P-110 escolheu. A escolha é do Fabio.
 
 ## Subida com cada variante (modelo de subida do sólido; tolerância 1e-06, passo da varredura 0,05, os da P-110)
 
 ### Lei A (nível do motor pelo [F269])
 
-- N = 14 e 34 kg; c = 1,063 e 0,855; b = 0,701.
+- N = 14 e 34 kg; c = 1,063 e 0,855; b = 0,701. O c da variante A é calibrado no propelente do [F269] (216 e 54 kg) e aplicado ao do MSR usado no estudo (216 e 54,4 kg, config/cad.yaml), daí o estágio 2 com um pouco mais que 48 kg.
 - Verificação com o MAV do MSR (órbita publicada de 350 km): inertes 60,0 e 48,1 kg; órbita 318 × 344 km; costa 468 s (publicada 446 s); **não chega à órbita publicada** (resíduo 5,2e+00).
 
 | Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
@@ -75,5 +79,7 @@ Massas do catálogo em lbm; 1 lb = 0,4535924 kg ([F112] p. 65 do PDF).
 | :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |
 | sem margem (o menor que chega) | 0,994 | 4 078 | 392,2 | 214,7 + 54,1 | 64,4 + 43,0 | 380 × 380 | sim | 2,68 a 2,69 | +0,297 a +0,302 | +0,451 a +0,455 | +0,026 a +0,030 |
 | com a margem da P-014 na capacidade | 1,227 | 4 486 | 464,5 | 265,0 + 66,7 | 72,3 + 44,4 | 422 × 635 | não | 2,97 a 3,31 | −0,012 a +0,158 | +0,141 a +0,311 | −0,284 a −0,114 |
+
+As duas variantes fecham a 380 km com o passo e a tolerância da P-110: não foi preciso refiná-los.
 
 Alvo de folga: +0,05 m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de 380 km se o guiamento conseguir gastá-la; "não" na coluna "Chega?" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv.

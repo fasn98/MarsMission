@@ -1261,7 +1261,7 @@ premissas:
 
   - id: P-113
     nome: lei_de_massa_inerte_do_mav_solido
-    valor: {forma: "inerte do estágio = N + c · P^b", b: "ajuste do catálogo [F270]", N_kg: [14, 34], variantes_do_nivel_c: [A, B]}
+    valor: {forma: "inerte do estágio = N + c · P^b", b: "0,701 ± 0,041 (erro-padrão), do ajuste do catálogo [F270] em results/familia1/inerte_solido.yaml", N_kg: [14, 34], variantes_do_nivel_c: [A, B]}
     unidade: kg
     uso: config/familia1.yaml (inerte_solido), results/familia1/inerte_solido.md
     justificativa: >

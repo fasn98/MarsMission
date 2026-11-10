@@ -101,7 +101,7 @@ def main():
     h = v(cfg["altitude_km"])
     margem = v(dcfg["margem_dv"])
     lo, hi = g["escala_busca"]["valor"]
-    passo = v(cfg["passo_varredura_escala"])
+    passo = v(g["passo_varredura_escala"])
     l465, l45 = a4["limites_465"][str(d_s)], a4["limites_45"][str(d_s)]
 
     def voo(pl, est, ine, h_m):
@@ -150,7 +150,8 @@ def main():
         casos.append(x)
     out = nativo({"gerado_por": "tools/inerte_solido.py", "status": "NÃO VALIDADO", "lb_para_kg": lb, "motores": mot, "ajuste": ajuste_cat, "comparacao_msr": comparacao,
                   "p019_k": eps / (1 - eps), "p111_k": [i / x for i, x in zip(ine_v, mp)], "altitude_km": h, "margem_dv": margem, "tol_custo": tol, "passo": passo,
-                  "orbita_verificacao_km": v(vf["orbita_km"]), "costa_publicada_s": v(vf["costa_publicada_s"]), "alvo_folga_m": a4["alvo_folga_m"], "casos": casos})
+                  "orbita_verificacao_km": v(vf["orbita_km"]), "criterio_selecao": cfg["criterio_selecao"],
+                  "fracao_2_f269": (Im[1] + Nm[1]) / (sum(Im) + sum(Nm)), "fracao_2_p110": mv["verificacao"]["base"]["fracao_inerte_2"], "costa_publicada_s": v(vf["costa_publicada_s"]), "alvo_folga_m": a4["alvo_folga_m"], "casos": casos})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "inerte_solido.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -165,7 +166,7 @@ def escreve_md(o):
     aj = o["ajuste"]
     lim2 = (aj["b"] - 2 * aj["erro_padrao_b"], aj["b"] + 2 * aj["erro_padrao_b"])
     md = ["# Lei de massa inerte do MAV sólido (gerado por tools/inerte_solido.py)", "", "**NÃO VALIDADO.** Premissas P-014, P-019, P-108, P-110, P-111 e P-113 (nova, para aprovação).", "",
-          "## Motores do catálogo [F270] (inerte total impresso, salvo o Orion 38)", "",
+          "## Motores do catálogo [F270] (inerte total impresso, salvo o Orion 38)", "", "Critério: " + o["criterio_selecao"], "",
           "| Motor | Envelope | Propelente (kg) | Inerte (kg) | Inerte/propelente | Fator do resíduo | PDF p. |", "| :- | :- | -: | -: | -: | -: | -: |"]
     md += [f"| {m['nome']} | {m['envelope']} | {br(m['propelente_kg'], 1)} | {br(m['inerte_kg'], 1)} | {br(m['inerte_sobre_propelente'], 3)} | {br(m['residuo_fator'], 2)} | {m['pagina_pdf']} |" for m in o["motores"]]
     md += ["", f"Massas do catálogo em lbm; 1 lb = {br(o['lb_para_kg'], 7)} kg ([F112] p. 65 do PDF).", "",
@@ -180,14 +181,16 @@ def escreve_md(o):
     linear = lim2[0] <= 1.0 <= lim2[1]
     md += ["", "## O que os dados sustentam", "",
            f"- **Escala.** A P-019 (k = {br(o['p019_k'], 3)} nos dois estágios) e a P-111 (k = {br(o['p111_k'][0], 3)} e {br(o['p111_k'][1], 3)}) são proporcionais: o inerte cresce como o propelente (b = 1). "
-           + ("O catálogo é compatível com b = 1 dentro de ±2 erros-padrão." if linear else f"O catálogo dá b = {br(aj['b'], 2)}, e b = 1 fica fora de ±2 erros-padrão: **os dados não sustentam a escala proporcional de nenhuma das duas**. Ao crescer, a fração inerte cai."),
-           "- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima); a P-111 reproduz o estágio do MSR por construção (verificação da P-110), e a P-019 dá outra divisão entre os estágios. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte e que não precisa crescer com o motor.",
+           + ("O catálogo é compatível com b = 1 dentro de ±2 erros-padrão." if linear else f"O catálogo dá b = {br(aj['b'], 2)}, e b = 1 fica fora de ±2 erros-padrão: **para o motor, os dados não sustentam a escala proporcional de nenhuma das duas**; ao crescer, a fração inerte do motor cai. Para o estágio inteiro, isso depende também de como cresce o inerte não propulsivo, que não tem fonte (a P-113 o fixa). O catálogo junta projetos diferentes: a dispersão entre eles não é a escala de um único projeto."),
+           "- **Erro-padrão.** Supõe resíduos independentes; há variantes do mesmo motor (STAR 26/26B/26C, 30BP/30C/30C-BP/30E, 37FM/37FMV), então o erro-padrão está subestimado. A distância de b a 1 é de " + f"{br((1 - aj['b']) / aj['erro_padrao_b'], 1)} erros-padrão.",
+           "- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima). A verificação da P-110 reproduz o inerte total do MSR e a órbita publicada, não a divisão por estágio: a P-111 dá " + f"{br(o['comparacao_msr'][0]['p111_estagio_kg'], 1)} e {br(o['comparacao_msr'][1]['p111_estagio_kg'], 1)} kg, contra {br(o['comparacao_msr'][0]['msr_estagio_kg'], 0)} e {br(o['comparacao_msr'][1]['msr_estagio_kg'], 0)} kg do [F269]. A P-019 dá outra divisão. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte.",
+           "- **Conflito com a P-110 (não resolvido aqui).** A justificativa da P-110 diz que a divisão do inerte por estágio não tem fonte; o [F269] publica uma (fração do estágio 2 = " + f"{br(o['fracao_2_f269'], 3)}, contra {br(o['fracao_2_p110'], 2)} escolhida pela verificação da P-110). Com o modelo de subida e o guiamento atuais, a divisão do [F269] não chega à órbita publicada (variante A, abaixo). A P-110 não foi mudada; a decisão é do Fabio.",
            "- **Proposta (P-113, NÃO VALIDADA, para aprovação):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Duas variantes do nível c: A, pelo motor do MSR [F269]; B, pela divisão que a verificação da P-110 escolheu. A escolha é do Fabio.",
            "", f"## Subida com cada variante (modelo de subida do sólido; tolerância {o['tol_custo']:.0e}, passo da varredura {br(o['passo'], 2)}, os da P-110)".replace(".0e", "e"), ""]
     for c in o["casos"]:
         vf = c["verificacao"]
         md += [f"### Lei {c['lei']}", "",
-               f"- N = {br(c['N_kg'][0], 0)} e {br(c['N_kg'][1], 0)} kg; c = {br(c['c'][0], 3)} e {br(c['c'][1], 3)}; b = {br(c['b'], 3)}.",
+               f"- N = {br(c['N_kg'][0], 0)} e {br(c['N_kg'][1], 0)} kg; c = {br(c['c'][0], 3)} e {br(c['c'][1], 3)}; b = {br(c['b'], 3)}." + (" O c da variante A é calibrado no propelente do [F269] (216 e 54 kg) e aplicado ao do MSR usado no estudo (216 e 54,4 kg, config/cad.yaml), daí o estágio 2 com um pouco mais que 48 kg." if c["lei"].startswith("A") else ""),
                f"- Verificação com o MAV do MSR (órbita publicada de {br(o['orbita_verificacao_km'], 0)} km): inertes {br(vf['inertes_kg'][0], 1)} e {br(vf['inertes_kg'][1], 1)} kg; órbita {br(vf['periapse_km'], 0)} × {br(vf['apoapse_km'], 0)} km; costa {br(vf['costa_s'], 0)} s (publicada {br(o['costa_publicada_s'], 0)} s); "
                + ("**chega à órbita publicada**." if vf["fecha"] else f"**não chega à órbita publicada** (resíduo {vf['custo']:.1e}).".replace(".", ",", 1))]
         if not c["fecha_na_varredura"]:
@@ -200,6 +203,8 @@ def escreve_md(o):
             md.append(f"| {rot} | {br(y['escala'], 3)} | {br(y['capacidade_m_s'], 0)} | {br(y['glom_kg'], 1)} | {br(y['propelente_kg'][0], 1)} + {br(y['propelente_kg'][1], 1)} | {br(y['inertes_kg'][0], 1)} + {br(y['inertes_kg'][1], 1)} | "
                       f"{br(y['voo']['periapse_km'], 0)} × {br(y['voo']['apoapse_km'], 0)} | {'sim' if y['voo']['fecha'] else 'não'} | {faixa(y['comprimento_m'], lambda z: br(z, 2))} | {faixa(y['folga_465_com_deck_m'])} | {faixa(y['folga_465_sem_deck_m'])} | {faixa(y['folga_45_com_deck_m'])} |")
         md.append("")
+    if all(c["fecha_na_varredura"] for c in o["casos"]):
+        md += ["As duas variantes fecham a 380 km com o passo e a tolerância da P-110: não foi preciso refiná-los.", ""]
     md += [f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de {br(o['altitude_km'], 0)} km se o guiamento conseguir gastá-la; \"não\" na coluna \"Chega?\" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv."]
     (SAIDA / "inerte_solido.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 

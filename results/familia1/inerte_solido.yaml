@@ -222,6 +222,13 @@ margem_dv: 0.1
 tol_custo: 1.0e-06
 passo: 0.05
 orbita_verificacao_km: 350.0
+criterio_selecao: 'motores do catálogo [F270] com folha de dados de massa e propelente
+  entre 12 e 1.300 kg, reunidos na busca de 2026-11-10 (não se afirma que a lista
+  é exaustiva) (estágio superior e de chute, do tamanho do MAV ao do MAV escalado);
+  fora: STAR 3 a 6B (TIRS, retro e spin, menos de 12 kg de propelente) e a série STAR
+  48 (acima de 2.000 kg)'
+fracao_2_f269: 0.4444444444444444
+fracao_2_p110: 0.4
 costa_publicada_s: 446.0
 alvo_folga_m: 0.05
 casos:

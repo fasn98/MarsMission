@@ -66,6 +66,7 @@ politica_margem_msr:
   - "[F267] PDF p. 3 (Tab. 1, requisitos do estudo de conceito de 2018): \"Performance Margin\" — \"Addtl. 5 kg payload\"; \"Other Margin Allocation\" — \"AIAA margins / 25% for unknowns\""
 
 inerte_solido:   # Fabio, 2026-11-10 (PR #60, item 3): lei de massa inerte do MAV sólido ancorada em motores reais
+  criterio_selecao: "motores do catálogo [F270] com folha de dados de massa e propelente entre 12 e 1.300 kg, reunidos na busca de 2026-11-10 (não se afirma que a lista é exaustiva) (estágio superior e de chute, do tamanho do MAV ao do MAV escalado); fora: STAR 3 a 6B (TIRS, retro e spin, menos de 12 kg de propelente) e a série STAR 48 (acima de 2.000 kg)"
   # Catálogo [F270], massas em lbm; página do PDF (= impressa + 5). "inerte" é o "Total inert" impresso, salvo onde dito.
   motores:
     - {nome: STAR 8, envelope: titânio, propelente_lbm: 27.12, inerte_lbm: 11.31, pagina_pdf: 78, fonte: "\"Propellant 27.12\"; \"Total inert 11.31\""}
@@ -99,5 +100,4 @@ inerte_solido:   # Fabio, 2026-11-10 (PR #60, item 3): lei de massa inerte do MA
     inerte_motor_kg: {valor: [46, 14], fonte: "[F269] PDF p. 2, Tab. 1: \"Stage k-1 ... Non-prop inerts kg 14 / inert kg 46 / propellant kg 216\"; \"Stage k ... Non-prop inerts kg 34 / inert kg 14 / propellant kg 54\""}
     inerte_nao_propulsivo_kg: {valor: [14, 34], fonte: "[F269] PDF p. 2, Tab. 1 (mesma citação)"}
     propelente_kg: {valor: [216, 54], fonte: "[F269] PDF p. 2, Tab. 1 (mesma citação)"}
-  passo_varredura_escala: {valor: 0.05, premissa: P-110}   # o da P-110; refinar só se não fechar
   altitude_km: {valor: 380, fonte: "decisão do Fabio, 2026-11-10 (PR #60, item 4): o caso com margem a 380 km"}
