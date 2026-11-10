@@ -114,5 +114,6 @@
 | P-110 | divisao_do_inerte_e_guiamento_do_mav_solido | fracao_inerte_estagio_2: [0.3, 0.34, 0.38, 0.4, 0.42, 0.46, 0.5]; t_v_s: 5; partidas: [[1.0, 0.003, 5.0], [1.2, 0.008, 15.0], [1.4, 0.003, 15.0]]; limites: [[0.3, 1.55], [0.0, 0.05], [0.0, 60.0]]; tol_custo: 1e-06; escala_busca: [0.5, 4.0]; passo_varredura_escala: 0.05; passos_escala: 8 | fração; s; rad, 1/s, s; — | NÃO VALIDADA | config/familia1.yaml (mav_solido), results/familia1/mavs.md |
 | P-111 | empuxo_e_escala_do_inerte_do_mav_solido | modelos_de_empuxo: ['tempo_publicado', 'empuxo_publicado']; base: tempo_publicado; inerte_proporcional_ao_propelente_por_estagio: True | — | NÃO VALIDADA | config/familia1.yaml (mav_solido), results/familia1/mavs.md |
 | P-112 | perda_de_capacidade_da_coifa_longa_do_vulcan | 89 | kg | NÃO VALIDADA | config/familia1.yaml (aeroshell_465), results/familia1/aeroshell_465.md |
+| P-113 | lei_de_massa_inerte_do_mav_solido | forma: inerte do estágio = N + c · P^b; b: ajuste do catálogo [F270]; N_kg: [14, 34]; variantes_do_nivel_c: ['A', 'B'] | kg | NÃO VALIDADA | config/familia1.yaml (inerte_solido), results/familia1/inerte_solido.md |
 
-Total: 112 premissas, 112 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 113 premissas, 113 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

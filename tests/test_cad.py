@@ -854,3 +854,32 @@ def test_familia1_aeroshell_465():
             for mm, ch in (("modelo", "lander_injetado_kg"), ("piso_srl", "lander_injetado_piso_srl_kg")):
                 assert mg[f"{mm}_coifa_longa"] == pytest.approx(mg[f"{mm}_coifa_padrao"] - pen / x[ch])
         assert x["lander_injetado_piso_srl_kg"] >= x["lander_injetado_kg"] - 1e-9
+
+
+def test_familia1_inerte_solido():
+    """Lei de inerte do sólido: o ajuste refeito por fora; a variante B reproduz os inertes da verificação na escala 1;
+    o caso com margem chega à capacidade-alvo; folgas pela regra de sempre."""
+    import numpy as np
+    from orbital.config import v
+    r = ler("results/familia1/inerte_solido.yaml")
+    cfg = ler("config/familia1.yaml")["inerte_solido"]
+    lb = v(ler("config/motores.yaml")["conversao"]["lb_para_kg"])
+    P = np.array([m["propelente_lbm"] for m in cfg["motores"]]) * lb
+    I = np.array([m["inerte_lbm"] for m in cfg["motores"]]) * lb
+    b, la = np.polyfit(np.log(P), np.log(I), 1)
+    assert r["ajuste"]["b"] == pytest.approx(b) and r["ajuste"]["a"] == pytest.approx(math.exp(la))
+    mv = ler("results/familia1/mavs.yaml")
+    a4 = ler("results/familia1/aeroshell_465.yaml")
+    lim = a4["limites_465"][str(mv["limites"]["solido"]["diametro_m"])]
+    margem = v(ler("config/dimensionamento.yaml")["margem_dv"])
+    for c in r["casos"]:
+        if c["lei"].startswith("B"):
+            assert c["verificacao"]["inertes_kg"] == pytest.approx(mv["verificacao"]["base"]["inertes_kg"])
+        if not c["fecha_na_varredura"]:
+            continue
+        assert c["sem_margem"]["voo"]["fecha"]
+        assert c["com_margem"]["capacidade_m_s"] == pytest.approx((1 + margem) * c["sem_margem"]["capacidade_m_s"], rel=1e-9)
+        for k in ("sem_margem", "com_margem"):
+            y = c[k]
+            assert y["inertes_kg"] == pytest.approx([n + ci * p ** c["b"] for n, ci, p in zip(c["N_kg"], c["c"], y["propelente_kg"])])
+            assert y["folga_465_com_deck_m"][0] == pytest.approx((lim["com_deck_m"] - y["comprimento_m"][1]) / 2)

@@ -1258,3 +1258,16 @@ premissas:
       escape não tem fonte. Só como estimativa ao lado do limite otimista (a curva do ELVPerf usada no estudo).
       Aprovada pelo Fabio em 2026-11-10 (PR #60) como NÃO VALIDADA, com a faixa de 70 kg dos 531 a 551 registrada aqui.
     status: NÃO VALIDADA
+
+  - id: P-113
+    nome: lei_de_massa_inerte_do_mav_solido
+    valor: {forma: "inerte do estágio = N + c · P^b", b: "ajuste do catálogo [F270]", N_kg: [14, 34], variantes_do_nivel_c: [A, B]}
+    unidade: kg
+    uso: config/familia1.yaml (inerte_solido), results/familia1/inerte_solido.md
+    justificativa: >
+      O expoente b vem do ajuste em ln dos motores sólidos de estágio superior do catálogo [F270] (motor só). O inerte não
+      propulsivo N (aviônica, RCS, estrutura da carga) é o do MAV do MSR [F269], fixo na escala: não há fonte de como ele
+      cresce. O nível c do motor tem duas variantes: A, pelo inerte do motor do MSR [F269]; B, pela divisão do inerte que a
+      verificação da P-110 escolheu. Que a lei do motor do catálogo valha para o MAV (frio, armazenagem longa) não tem fonte.
+      Proposta para a aprovação do Fabio; a P-019 e a P-111 não mudam.
+    status: NÃO VALIDADA

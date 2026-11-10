@@ -64,3 +64,40 @@ politica_margem_msr:
   - "[F248] PDF p. 17: \"a MAV solid propulsion system was designed that allowed the vehicle to maintain a GLOM 6 kg below the 400 kg limit.\""
   - "[F230] PDF p. 6: \"The designs themselves included a length margin of 10cm on SRM1 and 1.8kg of propellant mass margin in SRM2.\""
   - "[F267] PDF p. 3 (Tab. 1, requisitos do estudo de conceito de 2018): \"Performance Margin\" — \"Addtl. 5 kg payload\"; \"Other Margin Allocation\" — \"AIAA margins / 25% for unknowns\""
+
+inerte_solido:   # Fabio, 2026-11-10 (PR #60, item 3): lei de massa inerte do MAV sólido ancorada em motores reais
+  # Catálogo [F270], massas em lbm; página do PDF (= impressa + 5). "inerte" é o "Total inert" impresso, salvo onde dito.
+  motores:
+    - {nome: STAR 8, envelope: titânio, propelente_lbm: 27.12, inerte_lbm: 11.31, pagina_pdf: 78, fonte: "\"Propellant 27.12\"; \"Total inert 11.31\""}
+    - {nome: STAR 9, envelope: grafite-epóxi, propelente_lbm: 31.8, inerte_lbm: 9.2, pagina_pdf: 79, fonte: "\"Propellant (including igniter propellant) 31.8\"; \"Total inert 9.2\""}
+    - {nome: STAR 12GV, envelope: grafite-epóxi, propelente_lbm: 72.6, inerte_lbm: 19.8, pagina_pdf: 80, fonte: "\"Propellant 72.6\"; \"Total inert 19.8\"; \"*Includes actuators and cables only\""}
+    - {nome: STAR 13B, envelope: titânio, propelente_lbm: 90.9, inerte_lbm: 12.8, pagina_pdf: 81, fonte: "\"Propellant 90.9\"; \"Total inert 12.8\""}
+    - {nome: STAR 15G, envelope: grafite-epóxi, propelente_lbm: 175.5, inerte_lbm: 30.9, pagina_pdf: 82, fonte: "\"Propellant (excluding 0.12 lbm of igniter propellant) 175.5\"; \"Total inert 30.9\""}
+    - {nome: STAR 17, envelope: titânio, propelente_lbm: 153.5, inerte_lbm: 20.8, pagina_pdf: 83, fonte: "\"Propellant 153.5\"; \"Total inert 20.8\""}
+    - {nome: STAR 17A, envelope: titânio, propelente_lbm: 247.5, inerte_lbm: 29.5, pagina_pdf: 84, fonte: "\"Propellant 247.5\"; \"Total inert 29.5\""}
+    - {nome: STAR 20, envelope: fibra de vidro-epóxi, propelente_lbm: 601.6, inerte_lbm: 60.7, pagina_pdf: 85, fonte: "\"Propellant (including igniter propellant) 601.6\"; \"Total inert 60.7\""}
+    - {nome: STAR 24, envelope: titânio, propelente_lbm: 440.6, inerte_lbm: 40.4, pagina_pdf: 86, fonte: "\"Propellant (including igniter propellant) 440.6\"; \"Total inert 40.4\""}
+    - {nome: STAR 24C, envelope: titânio, propelente_lbm: 484.0, inerte_lbm: 43.5, pagina_pdf: 87, fonte: "\"Propellant (including 1.2 lbm igniter propellant) 484.0\"; \"Total inert 43.5\""}
+    - {nome: STAR 26, envelope: aço D6AC, propelente_lbm: 508.5, inerte_lbm: 85.5, pagina_pdf: 88, fonte: "\"Propellant (including 1.2 lbm igniter propellant) 508.5\"; \"Total inert 85.5\""}
+    - {nome: STAR 26B, envelope: titânio, propelente_lbm: 524.0, inerte_lbm: 51.6, pagina_pdf: 89, fonte: "\"Propellant (including 0.4 lbm igniter propellant) 524.0\"; \"Total inert 51.6\""}
+    - {nome: STAR 26C, envelope: titânio, propelente_lbm: 511.4, inerte_lbm: 67.6, pagina_pdf: 90, fonte: "\"Propellant (including igniter propellant) 511.4\"; \"Total inert 67.6\""}
+    - {nome: STAR 27, envelope: titânio, propelente_lbm: 735.6, inerte_lbm: 60.6, pagina_pdf: 91, fonte: "\"Propellant (including 0.5 lbm igniter propellant) 735.6\"; \"Total inert 60.6\""}
+    - {nome: STAR 27H, envelope: titânio, propelente_lbm: 744.8, inerte_lbm: 66.1, pagina_pdf: 92, fonte: "\"Propellant (including 0.5 lbm igniter propellant 744.8\"; \"Total inert 66.1\""}
+    - {nome: STAR 30BP, envelope: titânio, propelente_lbm: 1113.6, inerte_lbm: 83.1, pagina_pdf: 94, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,113.6\"; \"Total inert* 83.1\"; \"*Excluding remote S&A/ETA\""}
+    - {nome: STAR 30C, envelope: titânio, propelente_lbm: 1302.5, inerte_lbm: 84.8, pagina_pdf: 95, fonte: "\"Propellant (including igniter propellant) 1,302.5\"; \"Total inert* 84.8\""}
+    - {nome: STAR 30C/BP, envelope: titânio, propelente_lbm: 1302.5, inerte_lbm: 90.6, pagina_pdf: 96, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,302.5\"; \"Total inert* 90.6\""}
+    - {nome: STAR 30E, envelope: titânio, propelente_lbm: 1392.0, inerte_lbm: 93.7, pagina_pdf: 97, fonte: "\"Propellant (including 0.6 lbm igniter propellant) 1,392.0\"; \"Total inert* 93.7\""}
+    - {nome: STAR 31, envelope: kevlar-epóxi, propelente_lbm: 2835, inerte_lbm: 237, pagina_pdf: 99, fonte: "\"Propellant (including igniter propellant) 2,835\"; \"Total inert 237\""}
+    - {nome: STAR 37FM, envelope: titânio, propelente_lbm: 2350.1, inerte_lbm: 180.1, pagina_pdf: 100, fonte: "\"Propellant (including igniter propellant) 2,350.1\"; \"Total inert 180.1\" (total − propelente dá 180.7)"}
+    - {nome: STAR 37FMV, envelope: titânio, propelente_lbm: 2345.3, inerte_lbm: 236.7, pagina_pdf: 101, fonte: "\"Propellant (including igniter propellant) 2,345.3\"; \"Total inert 236.7\" (total − propelente dá 233.5)"}
+    - {nome: STAR 37XFP, envelope: titânio, propelente_lbm: 1948.2, inerte_lbm: 159.6, pagina_pdf: 102, fonte: "\"Propellant (including igniter propellant) 1,948.2\"; \"Total inert (excluding igniter propellant) 159.6\""}
+    - {nome: STAR 37GV, envelope: grafite-epóxi, propelente_lbm: 2148, inerte_lbm: 243.0, pagina_pdf: 103, fonte: "\"Propellant 2,148\"; \"Total inert 243.0\"; \"Weights do not include TVA system hardware\""}
+    - {nome: Orion 38, envelope: não declarado, propelente_lbm: 1698, inerte_lbm: 226, pagina_pdf: 16, fonte: "\"Total motor 1,924\"; \"Propellant 1,698\" (inerte calculado como total − propelente; a folha não dá o inerte total)"}
+  # MAV sólido do MSR, estimativa de projeto conceitual ([F269] PDF p. 2, Tab. 1, coluna MAV), kg: estágio 1 = "Stage k-1",
+  # estágio 2 = "Stage k".
+  msr:
+    inerte_motor_kg: {valor: [46, 14], fonte: "[F269] PDF p. 2, Tab. 1: \"Stage k-1 ... Non-prop inerts kg 14 / inert kg 46 / propellant kg 216\"; \"Stage k ... Non-prop inerts kg 34 / inert kg 14 / propellant kg 54\""}
+    inerte_nao_propulsivo_kg: {valor: [14, 34], fonte: "[F269] PDF p. 2, Tab. 1 (mesma citação)"}
+    propelente_kg: {valor: [216, 54], fonte: "[F269] PDF p. 2, Tab. 1 (mesma citação)"}
+  passo_varredura_escala: {valor: 0.05, premissa: P-110}   # o da P-110; refinar só se não fechar
+  altitude_km: {valor: 380, fonte: "decisão do Fabio, 2026-11-10 (PR #60, item 4): o caso com margem a 380 km"}
