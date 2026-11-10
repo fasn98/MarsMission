@@ -1253,7 +1253,7 @@ premissas:
     uso: config/familia1.yaml (aeroshell_465), results/familia1/aeroshell_465.md
     justificativa: >
       [F80] não publica a capacidade do Vulcan com a coifa longa de 21,3 m para C3 de Marte, nem a massa das coifas. Usa-se o
-      análogo da Atlas V 500 com a coifa longa de 5 m ([F268] PDF p. 57): 70 a 89 kg de perda, só para GTO; adota-se o maior
-      valor. Outro lançador, outro estágio superior (Centaur III) e outra órbita: a transferência para o Vulcan e para C3 de
-      escape não tem fonte. Só como estimativa ao lado do limite otimista (a curva da coifa padrão).
+      análogo da Atlas V 500 com a coifa longa de 5 m ([F27] PDF p. 57): 70 a 89 kg de perda, só para GTO; adota-se o maior
+      valor (511 e 521); os 531 a 551, com mais SRBs e mais parecidos com o VC4 e o VC6, dão 70 kg. Outro lançador, outro estágio superior (Centaur III) e outra órbita: a transferência para o Vulcan e para C3 de
+      escape não tem fonte. Só como estimativa ao lado do limite otimista (a curva do ELVPerf usada no estudo).
     status: NÃO VALIDADA

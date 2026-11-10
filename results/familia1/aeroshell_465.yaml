@@ -19,6 +19,20 @@ encaixe:
   folga_grade_m: 0.07520883534136535
   topo_capsula_m: 4.097
   topo_envelope_m: 18.796
+- forma: srl_c
+  diametro_m: 4.72
+  leitura: contorno reto
+  folga_vertices_m: 0.06666559055118126
+  folga_grade_m: 0.06887572432450506
+  topo_capsula_m: 3.7969999999999997
+  topo_envelope_m: 18.796
+- forma: srl_c
+  diametro_m: 4.72
+  leitura: Ø menor desde a interface
+  folga_vertices_m: 0.052999999999999936
+  folga_grade_m: 0.055193527296502065
+  topo_capsula_m: 3.7969999999999997
+  topo_envelope_m: 18.796
 - forma: msl_m2020
   diametro_m: 4.52
   leitura: contorno reto
@@ -409,7 +423,7 @@ capacidade_coifa_longa: '[F80] não publica a capacidade para C3 de Marte com a 
 penalidade_coifa_longa:
   valor: 89
   premissa: P-112
-  fonte: '[F268] PDF p. 57, §2.5.2.2 (Atlas V, só GTO): "For Atlas V 500 series configurations
+  fonte: '[F27] PDF p. 57, §2.5.2.2 (Atlas V, só GTO): "For Atlas V 500 series configurations
     that use the 5-m long PLF, the typical range of performance degradation is 89
     kg (197 lb) for the Atlas V 511 and 521, to 70 kg (155 lb) for the Atlas V 531
     through 551 for GTO missions."'
@@ -432,20 +446,20 @@ sensibilidade_solido:
     - 0.40854177989130336
     - 0.43022146739130385
   - margem: com a margem da P-014, não simulado
-    escala: 3.8511561116627084
-    capacidade_m_s: 4513.550979427139
-    glom_kg: 1471.737010208504
+    escala: 3.8511561116661723
+    capacidade_m_s: 4513.550979427292
+    glom_kg: 1471.7370102098132
     comprimento_m:
-    - 6.121387333995251
-    - 10.398121501489314
+    - 6.121387333999408
+    - 10.398121501498666
     folga_465_com_deck_m:
-    - -3.5554085768316135
-    - -1.4170414930845823
+    - -3.5554085768362897
+    - -1.4170414930866606
     folga_465_sem_deck_m:
-    - -3.4014955333533528
-    - -1.2631284496063215
+    - -3.401495533358029
+    - -1.2631284496083999
   capacidade_minima_m_s: 4103.228163115581
-  capacidade_assintotica_m_s: 4694.270174233767
+  capacidade_assintotica_m_s: 4694.270910354586
   k:
   - 0.298888888888889
   - 0.7911764705882356
@@ -464,7 +478,7 @@ sensibilidade_solido:
     capacidade_m_s: 4519.925457976659
     glom_kg: 1527.9999999999982
     indicativo_com_margem: null
-  capacidade_assintotica_m_s: 4694.270174233767
+  capacidade_assintotica_m_s: 4694.270910354586
 - inerte: P-019 (ε 0,286 nos dois estágios)
   altitude_km: 380.0
   fecha: false
@@ -480,22 +494,22 @@ sensibilidade_solido:
     capacidade_m_s: 4268.298554472507
     glom_kg: 243.22689075630254
     indicativo_com_margem:
-      escala: 0.9447519351470882
-      capacidade_m_s: 4695.128409919761
-      glom_kg: 373.7884079324547
+      escala: 0.9447519351471784
+      capacidade_m_s: 4695.128409919838
+      glom_kg: 373.78840793248884
       comprimento_m:
-      - 2.5508302248971386
-      - 2.6337023221765063
+      - 2.550830224897382
+      - 2.6337023221766143
       folga_465_sem_deck_m:
-      - 0.480714056303051
-      - 0.5221501049427348
+      - 0.480714056302997
+      - 0.5221501049426132
       folga_465_com_deck_m:
-      - 0.32680101282479024
-      - 0.3682370614644741
+      - 0.3268010128247363
+      - 0.3682370614643524
       folga_45_com_deck_m:
-      - 0.05514883891174671
-      - 0.09658488755143058
-  capacidade_assintotica_m_s: 5889.112795615992
+      - 0.055148838911692755
+      - 0.0965848875513089
+  capacidade_assintotica_m_s: 5889.114406611101
 - inerte: P-019 (ε 0,286 nos dois estágios)
   altitude_km: 814.0
   fecha: false
@@ -511,22 +525,22 @@ sensibilidade_solido:
     capacidade_m_s: 5346.660023670295
     glom_kg: 981.7142857142853
     indicativo_com_margem:
-      escala: 127.49999999999997
-      capacidade_m_s: 5876.52177863392
-      glom_kg: 48301.714285714275
+      escala: 206.4142909077607
+      capacidade_m_s: 5881.326026037327
+      glom_kg: 78187.4625510623
       comprimento_m:
-      - 154.5
-      - 344.24999999999994
+      - 249.19714908931286
+      - 557.318585450954
       folga_465_sem_deck_m:
-      - -170.32743478260866
-      - -75.45243478260869
+      - -276.86172750808566
+      - -122.80100932726512
       folga_465_com_deck_m:
-      - -170.48134782608693
-      - -75.60634782608696
+      - -277.01564055156393
+      - -122.95492237074339
       folga_45_com_deck_m:
-      - -170.753
-      - -75.878
-  capacidade_assintotica_m_s: 5889.112795615992
+      - -277.28729272547696
+      - -123.22657454465643
+  capacidade_assintotica_m_s: 5889.114406611101
 politica_margem_msr:
 - '[F34] PDF p. 6: "A mass growth allowance of 19% and 17% was assigned to the first
   and second stage structures, respectively."'
@@ -539,5 +553,6 @@ politica_margem_msr:
   vehicle to maintain a GLOM 6 kg below the 400 kg limit."'
 - '[F230] PDF p. 6: "The designs themselves included a length margin of 10cm on SRM1
   and 1.8kg of propellant mass margin in SRM2."'
-- '[F267] PDF p. 3 (requisitos do conceito de 2019): "Performance Margin" — "Addtl.
-  5 kg payload"; "Other Margin Allocation" — "AIAA margins / 25% for unknowns"'
+- '[F267] PDF p. 3 (Tab. 1, requisitos do estudo de conceito de 2018): "Performance
+  Margin" — "Addtl. 5 kg payload"; "Other Margin Allocation" — "AIAA margins / 25%
+  for unknowns"'

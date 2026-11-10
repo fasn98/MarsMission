@@ -7,7 +7,7 @@
 (c) Folga dos MAVs da família 1 (results/familia1/mavs.yaml) e da base da Fase 2 (results/etapa7.2/rotas_mav.yaml).
 (d) Massa por área com 4,65 m, contra a do Mars 2020.
 (e) Margem do lander no Vulcan VC4 e VC6 com a coifa longa: a capacidade publicada da coifa padrão (limite otimista) e,
-    se houver premissa aprovada para a perda da coifa longa, a estimativa.
+    com a perda da coifa longa da P-112 (NÃO VALIDADA), a estimativa.
 (f) Sólido com a fração estrutural da P-019 no lugar da P-111, com a margem da P-014: sensibilidade.
 Saída: results/familia1/aeroshell_465.yaml e .md
 
@@ -57,7 +57,7 @@ def main():
     leituras = {"contorno reto": (hs, rs), "Ø menor desde a interface": (hs, [rs[1], rs[1]] + rs[2:])}
     # (a) encaixe nas duas leituras, nos vértices do perfil da cápsula, com o veículo h_ad acima do plano da interface
     encaixe = []
-    for f in (forma, "msl_m2020"):
+    for f in (forma, "srl_c", "msl_m2020"):
         c = cad["capsulas"][f]
         xs, rr = [float(x) for x in c["x_m"]], [float(x) for x in c["r_m"]]
         L = xs[-1]
@@ -196,13 +196,9 @@ def main():
                     else:
                         a_ = mid
                 cap0 = mf.capacidade(ok[1], ok[2], carga)
-                s1, s2_ = b_, 50 * b_
-                for _ in range(80):
-                    m_ = (s1 + s2_) / 2
-                    e_, i_ = mf.solido([m_ * x for x in mp_msr], [m_ * x for x in f_tempo], isp_s, k, carga)
-                    s1, s2_ = (m_, s2_) if mf.capacidade(e_, i_, carga) < (1 + margem) * cap0 else (s1, m_)
-                assint = mf.capacidade(*mf.solido([1e6 * x for x in mp_msr], [1e6 * x for x in f_tempo], isp_s, k, carga), carga)
-                for nome, esc in (("sem margem", b_), ("com a margem da P-014, não simulado", s2_)):
+                s2_ = escala_para((1 + margem) * cap0, b_, mp_msr, f_tempo, isp_s, k, carga)
+                assint = assintotica(mp_msr, f_tempo, isp_s, k)
+                for nome, esc in (("sem margem", b_), ("com a margem da P-014, não simulado", s2_)) if s2_ is not None else (("sem margem", b_),):
                     e_, i_ = mf.solido([esc * x for x in mp_msr], [esc * x for x in f_tempo], isp_s, k, carga)
                     mp = sum(x.propelente_kg for x in e_)
                     Ls = [lf + (v(msd["comprimento_m"]) - lf) * mp / sum(mp_msr) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
@@ -214,12 +210,8 @@ def main():
                 # não fecha na tolerância da P-110: o melhor ponto da varredura, só como diagnóstico
                 e_, i_ = mf.solido([melhor["escala"] * x for x in mp_msr], [melhor["escala"] * x for x in f_tempo], isp_s, k, carga)
                 cap_b = mf.capacidade(e_, i_, carga)
-                assint_ = mf.capacidade(*mf.solido([1e6 * x for x in mp_msr], [1e6 * x for x in f_tempo], isp_s, k, carga), carga)
-                s1, s2_ = melhor["escala"], 50 * melhor["escala"]
-                for _ in range(80):
-                    m_ = (s1 + s2_) / 2
-                    e2, i2 = mf.solido([m_ * x for x in mp_msr], [m_ * x for x in f_tempo], isp_s, k, carga)
-                    s1, s2_ = (m_, s2_) if mf.capacidade(e2, i2, carga) < (1 + margem) * cap_b else (s1, m_)
+                assint_ = assintotica(mp_msr, f_tempo, isp_s, k)
+                s2_ = escala_para((1 + margem) * cap_b, melhor["escala"], mp_msr, f_tempo, isp_s, k, carga) or melhor["escala"]
                 e2, i2 = mf.solido([s2_ * x for x in mp_msr], [s2_ * x for x in f_tempo], isp_s, k, carga)
                 mp2 = sum(x.propelente_kg for x in e2)
                 L2 = [lf + (v(msd["comprimento_m"]) - lf) * mp2 / sum(mp_msr) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
@@ -227,7 +219,7 @@ def main():
                        "folga_465_sem_deck_m": [(lim[d_s]["sem_deck_m"] - max(L2)) / 2, (lim[d_s]["sem_deck_m"] - min(L2)) / 2],
                        "folga_465_com_deck_m": [(lim[d_s]["com_deck_m"] - max(L2)) / 2, (lim[d_s]["com_deck_m"] - min(L2)) / 2],
                        "folga_45_com_deck_m": [(lim45[d_s]["com_deck_m"] - max(L2)) / 2, (lim45[d_s]["com_deck_m"] - min(L2)) / 2]}
-                if (1 + margem) * cap_b >= assint_:
+                if escala_para((1 + margem) * cap_b, melhor["escala"], mp_msr, f_tempo, isp_s, k, carga) is None:
                     ind = None   # a capacidade com a margem passa da assintótica: não há escala que chegue
                 linha.update({"k": k, "melhor_da_varredura": {**melhor, "tolerancia": tol, "capacidade_m_s": cap_b, "glom_kg": e_[0].massa_inicial_kg, "indicativo_com_margem": ind},
                               "capacidade_assintotica_m_s": assint_})
@@ -239,6 +231,28 @@ def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "aeroshell_465.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
+
+
+def assintotica(mp, f, isp, k):
+    """Capacidade ideal do sólido de escala infinita: a carga útil some diante do resto, e a capacidade sem carga não
+    depende da escala."""
+    return mf.capacidade(*mf.solido(mp, f, isp, k, 0.0), 0.0)
+
+
+def escala_para(cap_alvo, s0, mp, f, isp, k, carga):
+    """Menor escala do propelente cuja capacidade ideal chega a `cap_alvo`, a partir de `s0`; None se o alvo passa da
+    capacidade assintótica (escala infinita). A capacidade cresce com a escala: dobra até passar do alvo, depois bisseção."""
+    def cap(s):
+        return mf.capacidade(*mf.solido([s * x for x in mp], [s * x for x in f], isp, k, carga), carga)
+    if cap_alvo >= assintotica(mp, f, isp, k):
+        return None
+    lo, hi = s0, s0
+    while cap(hi) < cap_alvo:
+        lo, hi = hi, 2 * hi
+    while hi - lo > 1e-12 * hi:
+        m = (lo + hi) / 2
+        lo, hi = (m, hi) if cap(m) < cap_alvo else (lo, m)
+    return hi
 
 
 def faixa(par, f=sg):
@@ -255,15 +269,15 @@ def escreve_md(o):
     md += ["", "## (b) Comprimento máximo do MAV deitado", "", "| Ø do MAV (m) | 4,65 m sem deck | 4,65 m com deck (P-094) | 4,5 m sem deck | 4,5 m com deck |", "| -: | -: | -: | -: | -: |"]
     md += [f"| {br(float(d), 2)} | {br(x['sem_deck_m'])} | {br(x['com_deck_m'])} | {br(o['limites_45'][d]['sem_deck_m'])} | {br(o['limites_45'][d]['com_deck_m'])} |" for d, x in o["limites_465"].items()]
     md += ["", f"## (c) e (d) Folgas e massa por área (alvo {sg(al, 2)} m)", "",
-           "| MAV | Ø (m) | Comprimento (m) | 4,65 m sem deck | 4,65 m com deck | 4,5 m sem deck | 4,5 m com deck | Massa por área com 4,65 m (kg/m²) | Com 4,5 m |", "| :- | -: | -: | -: | -: | -: | -: | -: | -: |"]
+           "| MAV | Ø (m) | Comprimento (m) | 4,65 m sem deck | 4,65 m com deck | 4,5 m sem deck | 4,5 m com deck | Massa por área com 4,65 m, modelo (kg/m²) | Com 4,65 m, piso do SRL (kg/m²) | Com 4,5 m, modelo (kg/m²) |", "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
     for x in o["linhas"]:
         if not x.get("fecha"):
-            md.append(f"| {x['rotulo']} | — | não fecha | | | | | | |")
+            md.append(f"| {x['rotulo']} | — | não fecha | | | | | | | |")
             continue
         md.append(f"| {x['rotulo']} | {br(x['diametro_m'], 2)} | {faixa(x['comprimento_m'], lambda y: br(y, 2))} | {faixa(x['folga_465']['sem_deck_m'])} | {faixa(x['folga_465']['com_deck_m'])} | {faixa(x['folga_45']['sem_deck_m'])} | {faixa(x['folga_45']['com_deck_m'])} | "
-                  + (f"{br(x['massa_por_area_465_kg_m2'], 0)} | {br(x['massa_por_area_45_kg_m2'], 0)} |" if x.get("massa_entrada_kg") else "— | — |"))
-    md += ["", f"Mars 2020: {br(o['referencia_m2020_kg_m2'], 0)} kg/m² (results/etapa7.2/rotas_mav.md). A massa de entrada não muda com o diâmetro no modelo (P-018 fixa): o aeroshell maior não pesa mais aqui, o que é otimista.", "",
-           "## (e) Margem do lander no Vulcan com a coifa longa", "", o["capacidade_coifa_longa"] + ". Coluna \"coifa padrão\": a curva publicada da coifa padrão, menos o adaptador da P-097 (limite otimista para a coifa longa). Coluna \"coifa longa\": " + (f"a mesma curva menos também {br(o['penalidade_coifa_longa']['valor'], 0)} kg da P-112 (NÃO VALIDADA, análogo da Atlas V em GTO, [F268] PDF p. 57; sem fonte para o Vulcan)." if o["penalidade_coifa_longa"] else "não calculada, sem premissa."), "",
+                  + (f"{br(x['massa_por_area_465_kg_m2'], 0)} | {br(x['massa_por_area_465_piso_srl_kg_m2'], 0)} | {br(x['massa_por_area_45_kg_m2'], 0)} |" if x.get("massa_entrada_kg") else "— | — | — |"))
+    md += ["", f"Mars 2020: {br(o['referencia_m2020_kg_m2'], 0)} kg/m² (results/etapa7.2/rotas_mav.md). A massa de entrada não muda com o diâmetro no modelo (P-018 fixa): o aeroshell maior não pesa mais aqui, o que é otimista. A coluna do piso usa a massa de entrada publicada do SRL de 4,65 m (" + f"{br(o['massa_entrada_min_srl_kg'], 0)} kg, [F202] p. 13, \">5000\") quando o modelo dá menos.", "",
+           "## (e) Margem do lander no Vulcan com a coifa longa", "", o["capacidade_coifa_longa"] + ". Coluna \"coifa padrão\": a curva do ELVPerf [F79] usada no estudo, menos o adaptador da P-097; a consulta não informa o comprimento da coifa, e tratá-la como a da coifa padrão é inferência (limite otimista para a coifa longa). Coluna \"coifa longa\": " + (f"a mesma curva menos também {br(o['penalidade_coifa_longa']['valor'], 0)} kg da P-112 (NÃO VALIDADA, análogo da Atlas V em GTO, [F27] PDF p. 57; sem fonte para o Vulcan)." if o["penalidade_coifa_longa"] else "não calculada, sem premissa."), "",
            f"Duas massas do lander: a do modelo (razão pousada/entrada da P-018 fixa, a mesma do aeroshell de 4,5 m) e a com a massa de entrada levada ao piso publicado do SRL de 4,65 m ({br(o['massa_entrada_min_srl_kg'], 0)} kg, [F202] p. 13, \">5000\"), quando o modelo dá menos.", "",
            "| Lander | Massa de entrada (kg) | Injetado (kg) | VC4, coifa padrão | VC4, coifa longa | VC6, coifa padrão | VC6, coifa longa |", "| :- | -: | -: | -: | -: | -: | -: |"]
 
@@ -278,6 +292,10 @@ def escreve_md(o):
     vc4 = [x["margens"]["Vulcan VC4"][f"{mm}_coifa_padrao"] for x in o["linhas"] if x.get("margens") for mm in ("modelo", "piso_srl")]
     if vc4:
         md += ["", f"Pior margem no VC4 com a curva da coifa padrão (limite otimista para a coifa longa): {sg(100 * min(vc4), 1)} %; melhor: {sg(100 * max(vc4), 1)} %."]
+        neg = [(x["rotulo"], mm) for x in o["linhas"] if x.get("margens") for mm in ("modelo", "piso_srl")
+               if min(x["margens"]["Vulcan VC4"][f"{mm}_{cs}"] for cs in ("coifa_padrao", "coifa_longa") if x["margens"]["Vulcan VC4"][f"{mm}_{cs}"] is not None) <= 0]
+        md += ["", ("**O VC4 com a coifa longa não tem margem positiva** (nem no limite otimista) para: " + "; ".join(f"{r} ({'modelo' if mm == 'modelo' else 'piso do SRL'})" for r, mm in dict.fromkeys(neg))
+                    + ". Nesses casos o VC6 fica como a alternativa; a decisão é do Fabio.") if neg else "O VC4 com a coifa longa tem margem positiva em todos os casos da tabela, nas duas colunas."]
     md += ["", "## (f) Sólido: P-111 × P-019, com a margem da P-014", "",
            "| Inerte | Encontro (km) | Capacidade mínima (m/s) | Capacidade assintótica (m/s) | Caso | Escala | GLOM (kg) | Comprimento (m) | 4,65 m sem deck | 4,65 m com deck |", "| :- | -: | -: | -: | :- | -: | -: | -: | -: | -: |"]
     for s in o["sensibilidade_solido"]:
@@ -293,7 +311,9 @@ def escreve_md(o):
         for c in s["casos"]:
             md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | {br(s['capacidade_minima_m_s'], 0)} | {br(s['capacidade_assintotica_m_s'], 0)} | {c['margem']} | {br(c['escala'], 2)} | {br(c['glom_kg'], 1)} | {faixa(c['comprimento_m'], lambda y: br(y, 2))} | {faixa(c['folga_465_sem_deck_m'])} | {faixa(c['folga_465_com_deck_m'])} |")
     md += ["", "A capacidade assintótica é a de um sólido de escala infinita com os mesmos k de inerte: se a capacidade com a margem passa dela, não há sólido que feche.", "",
-           "\"Não fecha na varredura\" quer dizer: nenhum ponto da varredura da P-110 (passo e tolerância de lá) chega à órbita dentro da tolerância. O melhor ponto é diagnóstico, não resultado: a P-110 não foi mudada."]
+           "\"Não fecha na varredura\" quer dizer: nenhum ponto da varredura da P-110 (passo e tolerância de lá) chega à órbita dentro da tolerância. O melhor ponto é diagnóstico, não resultado: a P-110 não foi mudada.",
+           "", "Com a P-019 a 380 km, o melhor ponto fica a menos de 1 km da órbita (resíduo acima da tolerância da P-110). O sólido não regula o empuxo: Δv a mais passa da órbita, e a janela de escalas que chegam é estreita. O mais provável é que o passo da varredura da P-110 seja grosso para o inerte mais leve da P-019, e não que a P-019 piore o sólido: a capacidade assintótica com a P-019 é maior que com a P-111. Mudar o passo ou a tolerância da P-110 é decisão do Fabio.",
+           "", "O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; \"não existe\" quando esse alvo passa da capacidade assintótica."]
     if o["politica_margem_msr"]:
         md += ["", "## Política de margem do MAV sólido do MSR, nas fontes", ""] + [f"- {x}" for x in o["politica_margem_msr"]]
     (SAIDA / "aeroshell_465.md").write_text("\n".join(md) + "\n", encoding="utf-8")
