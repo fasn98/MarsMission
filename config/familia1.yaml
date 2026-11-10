@@ -42,3 +42,25 @@ termico:
   tempo_no_msr:
     - "[F266] (slides do IAC-19) PDF p. 3: \"MAV dwell time in SRL on Mars ~9 months\""
     - "[F35] PDF p. 1: \"After residing on the surface for another year\""
+
+aeroshell_465:   # Fabio, 2026-11-10: família 1 com o aeroshell de 4,65 m (forma SRL-A da 7.2)
+  forma: srl_a
+  coifa_longa_vulcan:
+    estacao_pol: [2596.66, 2846.66, 3066.66, 3186.66, 3336.66]
+    diametro_mm: [4877, 4826, 4661, 3632, 609]
+    estacao_interface_pol: 2596.66
+    fonte: "[F80] Fig. 4.3.1-2, PDF p. 45 (p. 4-9), \"Vulcan Centaur 21.3-m (70-ft.) PLF Simplified Static Payload Envelope\" (leitura da figura): Ø 4877 em \"LV STA 2596.66 (1575 Interface)\", Ø 4826 em LV STA 2846.66, Ø 4661 em LV STA 3066.66, Ø 3632 em LV STA 3186.66, Ø 609 em LV STA 3336.66; PDF p. 44: \"The 21.3-m (70-ft.) long PLF is available as a mission unique offering\""
+  lancadores: ["Vulcan VC4", "Vulcan VC6"]
+  # Perda de capacidade da coifa longa: sem fonte para o Vulcan (nem massa das coifas); análogo da Atlas V (P-112).
+  penalidade_coifa_longa_kg: {valor: 89, premissa: P-112, fonte: "[F268] PDF p. 57, §2.5.2.2 (Atlas V, só GTO): \"For Atlas V 500 series configurations that use the 5-m long PLF, the typical range of performance degradation is 89 kg (197 lb) for the Atlas V 511 and 521, to 70 kg (155 lb) for the Atlas V 531 through 551 for GTO missions.\""}
+  capacidade_coifa_longa: "[F80] não publica a capacidade para C3 de Marte com a coifa longa: a Tab. 2.2.5-1 (PDF p. 21) só traz VC2S, VC4S e VC6S (coifa padrão)"
+
+# Política de margem do MAV sólido do MSR, como está nas fontes (Fabio, 2026-11-10, item 3a). Nenhuma fonte dá uma margem
+# de Δv nem diz se o comprimento de 2,7 m já a incluía.
+politica_margem_msr:
+  - "[F34] PDF p. 6: \"A mass growth allowance of 19% and 17% was assigned to the first and second stage structures, respectively.\""
+  - "[F34] PDF p. 7: \"the MAVSolid trajectory was designed so that it targeted above the ideal orbit altitude in order to maintain the minimum periapsis of 300 km, including when performance parameters like ISP, payload mass, launch angle, and azimuth were selectively dispersed.\""
+  - "[F248] PDF p. 12: \"Trajectories delivered the expected ~4 kg payload margin.\""
+  - "[F248] PDF p. 17: \"a MAV solid propulsion system was designed that allowed the vehicle to maintain a GLOM 6 kg below the 400 kg limit.\""
+  - "[F230] PDF p. 6: \"The designs themselves included a length margin of 10cm on SRM1 and 1.8kg of propellant mass margin in SRM2.\""
+  - "[F267] PDF p. 3 (requisitos do conceito de 2019): \"Performance Margin\" — \"Addtl. 5 kg payload\"; \"Other Margin Allocation\" — \"AIAA margins / 25% for unknowns\""

@@ -420,6 +420,9 @@ mav_solido:   # MAV sólido de dois estágios do MSR (versão de 2019), para a r
 
 portao_mav:   # Fabio, 2026-11-07: conclusão de sistema e famílias de arquitetura (results/etapa7.2/portao_mav.md e opcoes_arquitetura.md)
   conclusao_de_sistema: "A arquitetura de referência da Fase 2 (dois lançamentos, orbitador químico, encontro em 300 × 25.952 km, MAV deitado em aeroshell de 4,5 m) não fecha a embalagem do MAV em nenhuma das rotas calculadas (A com e sem deck, B, sólido). Causa comum: o Δv do MAV até a órbita de encontro (5.772 m/s)."
+  conclusao_parcial_familia1:   # Fabio, 2026-11-10, portão da família 1 (texto dele; linha não decidida)
+    data: "2026-11-10"
+    texto: "Com aeroshell de 4,5 m e deck (P-094), nenhum MAV calculado fecha o alvo de +0,05 m com a margem da P-014, em nenhuma das arquiteturas testadas."
   msr_rumo:   # para onde a NASA convergiu, com fonte
     - {quando: "set/2023", fonte: "[F255] PDF p. 17: \"Technical issues, risks, and performance-to-date indicate a near zero probability of ERO/CCRS or SRL/MAV meeting the 2027/2028 Launch Readiness Dates (LRDs)\"; PDF p. 37: \"the mass and volume of the OS drives the size of the Mars Ascent Vehicle\"; PDF p. 42: \"The current MSR architecture is highly constrained and is not sufficiently robust or resilient to delays\""}
     - {quando: "abr/2024", fonte: "[F256] PDF p. 25: \"the MAV is the primary driver of architecture complexity, cost and risk\"; \"Significantly smaller and lower-mass MAV designs enable substantially different SRL architectures.\"; PDF p. 8: \"launch Sample Retrieval Lander(SRL)/Mars Ascent Vehicle (MAV) from Earth in 2035\""}

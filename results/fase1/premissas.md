@@ -113,5 +113,6 @@
 | P-109 | parametros_numericos_da_missao_da_familia_1 | inicio_busca: 2029-06-01; fim_busca: 2035-01-01; passo_serie_dias: 1; tof_retorno_dias: [150, 400]; passo_tof_dias: 5 | dias | NÃO VALIDADA | config/familia1.yaml (missao), results/familia1/missao.md |
 | P-110 | divisao_do_inerte_e_guiamento_do_mav_solido | fracao_inerte_estagio_2: [0.3, 0.34, 0.38, 0.4, 0.42, 0.46, 0.5]; t_v_s: 5; partidas: [[1.0, 0.003, 5.0], [1.2, 0.008, 15.0], [1.4, 0.003, 15.0]]; limites: [[0.3, 1.55], [0.0, 0.05], [0.0, 60.0]]; tol_custo: 1e-06; escala_busca: [0.5, 4.0]; passo_varredura_escala: 0.05; passos_escala: 8 | fração; s; rad, 1/s, s; — | NÃO VALIDADA | config/familia1.yaml (mav_solido), results/familia1/mavs.md |
 | P-111 | empuxo_e_escala_do_inerte_do_mav_solido | modelos_de_empuxo: ['tempo_publicado', 'empuxo_publicado']; base: tempo_publicado; inerte_proporcional_ao_propelente_por_estagio: True | — | NÃO VALIDADA | config/familia1.yaml (mav_solido), results/familia1/mavs.md |
+| P-112 | perda_de_capacidade_da_coifa_longa_do_vulcan | 89 | kg | NÃO VALIDADA | config/familia1.yaml (aeroshell_465), results/familia1/aeroshell_465.md |
 
-Total: 111 premissas, 111 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 112 premissas, 112 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

@@ -4,6 +4,12 @@ Decisão do Fabio (2026-11-07), registrada também no ADR 0023. Números de resu
 
 > A arquitetura de referência da Fase 2 (dois lançamentos, orbitador químico, encontro em 300 × 25.952 km, MAV deitado em aeroshell de 4,5 m) não fecha a embalagem do MAV em nenhuma das rotas calculadas (A com e sem deck, B, sólido). Causa comum: o Δv do MAV até a órbita de encontro (5.772 m/s).
 
+Conclusão parcial do portão da família 1 (decisão do Fabio, 2026-11-10; a linha não foi decidida):
+
+> Com aeroshell de 4,5 m e deck (P-094), nenhum MAV calculado fecha o alvo de +0,05 m com a margem da P-014, em nenhuma das arquiteturas testadas.
+
+A família 1 com o aeroshell de 4,65 m está em results/familia1/aeroshell_465.md.
+
 Δv do MAV com margem, no vigente: 5,772 km/s (results/etapa2.5/arquitetura.yaml); órbita de encontro 300 × 25 952 km.
 
 | Rota | Resultado | Fonte |

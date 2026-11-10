@@ -1245,3 +1245,15 @@ premissas:
       da divisão escolhida na conferência (P-110), e não a fração 0,286 da P-019; isso inclui na escala a aviônica, o RCS e a
       estrutura da carga. Sem fonte.
     status: NÃO VALIDADA
+
+  - id: P-112
+    nome: perda_de_capacidade_da_coifa_longa_do_vulcan
+    valor: 89
+    unidade: kg
+    uso: config/familia1.yaml (aeroshell_465), results/familia1/aeroshell_465.md
+    justificativa: >
+      [F80] não publica a capacidade do Vulcan com a coifa longa de 21,3 m para C3 de Marte, nem a massa das coifas. Usa-se o
+      análogo da Atlas V 500 com a coifa longa de 5 m ([F268] PDF p. 57): 70 a 89 kg de perda, só para GTO; adota-se o maior
+      valor. Outro lançador, outro estágio superior (Centaur III) e outra órbita: a transferência para o Vulcan e para C3 de
+      escape não tem fonte. Só como estimativa ao lado do limite otimista (a curva da coifa padrão).
+    status: NÃO VALIDADA
