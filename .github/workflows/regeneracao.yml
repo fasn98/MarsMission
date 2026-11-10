@@ -33,7 +33,7 @@ on:
 jobs:
   regeneracao:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 180   # Fabio, 2026-11-10: a regeneração da main já passava de 90 min (run 42798308524)
     defaults:
       run:
         shell: bash -el {0}
