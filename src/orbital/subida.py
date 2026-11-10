@@ -136,3 +136,75 @@ def dv_ideal(pl, h_alvo):
     vp = math.sqrt(pl.mu * 2 * r2 / (r1 * (r1 + r2)))
     return (vp - pl.omega * r1) + (math.sqrt(pl.mu / r2) - vp * r1 / r2)
 
+
+
+def omega_efetivo(omega, inclinacao_graus):
+    """Rotação efetiva no plano da órbita: ω R cos φ sen Az = ω R cos i, com sen Az = cos i / cos φ (lançamento direto na
+    inclinação i a partir da latitude φ ≤ i). No modelo plano, a superfície e a atmosfera giram com ω cos i."""
+    return omega * math.cos(math.radians(inclinacao_graus))
+
+
+def elementos(pl, s):
+    """(altitude do periapse, altitude do apoapse) em m do estado plano s = [r, θ, vr, vt, m]."""
+    r, _, vr, vt, _ = s
+    e = (vr * vr + vt * vt) / 2 - pl.mu / r
+    if e >= 0:
+        return math.inf, math.inf
+    a = -pl.mu / (2 * e)
+    ecc = math.sqrt(max(0.0, 1 + 2 * e * (r * vt) ** 2 / pl.mu ** 2))
+    return a * (1 - ecc) - pl.raio, a * (1 + ecc) - pl.raio
+
+
+def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, atol=1e-6, max_step=1.0):
+    """Motor sólido de dois estágios, sem corte: o 1º queima até esgotar com o guiamento linear-tangente, o veículo descarta o
+    inerte do 1º e costa; o 2º acende t_antes segundos antes do apoapse da costa e queima até esgotar, com empuxo na
+    horizontal local. A antecedência t_antes é um parâmetro livre, ajustado; [F249] PDF p. 9 descreve a lógica de voo
+    (acender no apoapse ou antes, quando o Δv que falta iguala o do 2º), que o modelo não implementa.
+    Devolve as altitudes finais do periapse e do apoapse (m), a costa (s) e a massa no fim, ou None se o veículo cai."""
+    e1, e2 = estagios
+    s = [pl.raio, 0.0, 0.0, pl.omega * pl.raio, e1.massa_inicial_kg]
+    dur1 = e1.propelente_kg / (e1.empuxo_n / (e1.isp_s * G0_M))
+    sol = solve_ivp(_deriv(pl, e1, area_cd, atm, guia), (0.0, dur1), s, rtol=rtol, atol=atol, max_step=max_step)
+    s = list(sol.y[:, -1])
+    if s[0] < pl.raio + 1000.0 or s[2] <= 0:
+        return None
+    s[4] -= inertes[0]
+    costa = Estagio(1.0, 0.0, 0.0, 1.0)
+
+    def apo(t, y):
+        return y[2]
+    apo.terminal, apo.direction = True, -1
+    sol = solve_ivp(_deriv(pl, costa, area_cd, atm, guia), (dur1, dur1 + 1.0e4), s, rtol=rtol, atol=atol, events=apo, dense_output=True, max_step=5.0)
+    if not sol.t_events[0].size:
+        return None
+    t_apo = sol.t[-1]
+    t_ign = max(dur1, t_apo - t_antes)
+    s = list(sol.sol(t_ign))
+    dur2 = e2.propelente_kg / (e2.empuxo_n / (e2.isp_s * G0_M))
+    mdot2 = e2.empuxo_n / (e2.isp_s * G0_M)
+
+    def horizontal(t, y):
+        r, _, vr, vt, m = y
+        return [vr, vt / r, vt * vt / r - pl.mu / (r * r), -vr * vt / r + e2.empuxo_n / m, -mdot2]
+    sol = solve_ivp(horizontal, (t_ign, t_ign + dur2), s, rtol=rtol, atol=atol, max_step=max_step)
+    s = list(sol.y[:, -1])
+    p, a = elementos(pl, s)
+    return {"periapse_m": p, "apoapse_m": a, "costa_s": t_ign - dur1, "massa_final_kg": s[4], "queima_1_s": dur1, "queima_2_s": dur2}
+
+
+def ajusta_solido(pl, estagios, inertes, area_cd, atm, h_alvo, t_v, partidas, limites, escala_m=1.0e4):
+    """Guiamento (θ0, c) e antecedência da ignição do 2º que levam o sólido à circular de altitude h_alvo; mínimos quadrados
+    a partir de cada ponto de partida. Devolve (custo, voo, parâmetros): custo ~0 quando a órbita é alcançada."""
+    from scipy.optimize import least_squares
+    melhor = None
+    for x0 in partidas:
+        def res(x):
+            r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2])
+            if r is None:
+                return [1.0e3, 1.0e3]
+            return [(r["periapse_m"] - h_alvo) / escala_m, (r["apoapse_m"] - h_alvo) / escala_m]
+        ls = least_squares(res, x0, bounds=([b[0] for b in limites], [b[1] for b in limites]))
+        if melhor is None or ls.cost < melhor[0]:
+            melhor = (ls.cost, ls.x)
+    x = melhor[1]
+    return melhor[0], voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2]), {"t_v_s": t_v, "theta0_graus": math.degrees(x[0]), "c_1_s": float(x[1]), "t_antes_apoapse_s": float(x[2])}

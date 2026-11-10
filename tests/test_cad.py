@@ -761,3 +761,54 @@ def test_opcoes_arquitetura():
     for fid in set(re.findall(r"\[(F\d+)\]", o + p)):
         assert f"| {fid} |" in fontes, fid
 
+
+
+def test_familia1_missao():
+    """Família 1: o MAV lança depois que o orbitador está pronto e antes da folga da conjunção seguinte; a partida é o
+    lançamento mais o encontro e a subida em espiral."""
+    import datetime as dt
+    r = ler("results/familia1/missao.yaml")
+    for c in r["casos"]:
+        lanc, pronto = dt.date.fromisoformat(str(c["lancamento_mav"])), dt.date.fromisoformat(str(c["pronto_no_encontro"]))
+        assert lanc >= pronto
+        prox = dt.date.fromisoformat(str(c["proxima_conjuncao"]["inicio"]))
+        assert lanc <= prox - dt.timedelta(days=r["folga_conjuncao_dias"])
+        partida = dt.date.fromisoformat(str(c["partida_marte"]))
+        assert (partida - lanc).days == math.ceil(r["referencia"]["encontro_dias"] + c["subida_dias"])
+        assert c["estada_dias"] == (partida - dt.date.fromisoformat(r["referencia"]["chegada"])).days
+
+
+def test_familia1_mavs():
+    """Família 1: o sólido do MSR fecha a órbita publicada na divisão de base; rotação efetiva ω cos i; folgas, capacidade
+    e aquecimento refeitos por fora da ferramenta."""
+    from orbital import subida as sb
+    from orbital.config import v
+    assert sb.omega_efetivo(1.0, 60.0) == pytest.approx(0.5)
+    r = ler("results/familia1/mavs.yaml")
+    b = r["verificacao"]["base"]
+    assert b["fecha"] and b["modelo"] == "tempo_publicado"
+    # empuxo da base: propelente × Isp × g0 / tempo de queima publicado ([F34] PDF p. 4)
+    assert b["empuxos_n"][0] == pytest.approx(216 * 293 * 9.80665 / 75.9) and b["empuxos_n"][1] == pytest.approx(54.4 * 282 * 9.80665 / 24.5)
+    assert b["queimas_s"][0] == pytest.approx(75.9) and b["queimas_s"][1] == pytest.approx(24.5)
+    aq = ler("config/mav_propulsao.yaml")["aquecimento"]
+    for x in r["solido"] + r["hipergolico"]:
+        if not x["fecha"]:
+            continue
+        if x["tipo"] == "solido":
+            # capacidade ideal à mão
+            m0 = 16 + sum(x["propelente_kg"]) + sum(x["inertes_kg"])
+            dv = 0.0
+            for mp, ine, isp in zip(x["propelente_kg"], x["inertes_kg"], (293, 282)):
+                dv += isp * 9.80665 * math.log(m0 / (m0 - mp))
+                m0 -= mp + ine
+            assert x["capacidade_m_s"] == pytest.approx(dv)
+            for c in x["comprimentos"]:
+                assert c["folga_sem_deck_m"] == pytest.approx((r["limites"]["solido"]["sem_deck_m"] - c["comprimento_m"]) / 2)
+            t_min = v(aq["t_minima_c"]["O1"])
+        else:
+            assert x["folga_sem_deck_m"] == pytest.approx((r["limites"]["hipergolico"]["sem_deck_m"] - x["comprimento_m"]) / 2)
+            t_min = 15.0
+        mp = sum(x["propelente_kg"]) if isinstance(x["propelente_kg"], list) else x["propelente_kg"]
+        p = 36 * (t_min + 62.5) / (-20 + 62.5) * (mp / 320) ** 0.6667
+        assert x["termico"]["potencia_w"] == pytest.approx(p)
+        assert x["termico"]["energia_kwh"] == pytest.approx(p * 24 * x["termico"]["dias"] / 1000)

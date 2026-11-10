@@ -55,7 +55,7 @@ A NASA não chegou a escolher uma arquitetura. Em 2024, apontou o MAV como o fat
   - **Motor de 800 N do Chandrayaan-3 (ISRO)** (voou; abaixo de 1 kN; sem folha de dados pública): [F261]: "Bi-Propellant Propulsion System (MMH + MON3), 4 nos. of 800 N Throttleable engines"
   - **Motor de 3000 N do Tianwen-1 (China)** (voou; sem folha de dados pública (só empuxo)): [F262]: "A 3000N engine was ignited at 7:52 p.m. (Beijing time) to decelerate Tianwen-1"
   - Não conferidos: LEROS 4-ET e ISE-900: sem folha de dados primária reaberta nesta etapa.
-- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN está em produção (R-40B "Not in Production"; LEROS 4 "In development, TRL6", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.
+- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN tem produção confirmada (R-40B "Not in Production"; LEROS 4 "In development, TRL6", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.
 - **Para decidir, calcular:** a subida e o comprimento com cada candidato (o mesmo método de results/etapa7.2/subida_mav.md e rota_a.md).
 
 ## Família 4: três lançamentos, com o orbitador à parte, como no MSR original
@@ -67,6 +67,16 @@ A NASA não chegou a escolher uma arquitetura. Em 2024, apontou o MAV como o fat
 - **Fontes do MSR:** [F254] PDF p. 8: "The project currently is considering whether to deliver the Sample Fetch Rover (SFR) and Mars Ascent Vehicle (MAV) in one or two launches", "Two launches: Entry system heavier than MSL and Mars 2020, probably no new technologies needed, but more costly"; PDF p. 13: cápsula de 4.65 m no SRL de dois lançamentos, contra >5.4 m no de um lançamento; [F255] PDF p. 7: o segundo lander foi "eventually rejected because of added complexity/cost"; PDF p. 45: "MSR MAV Lander (MML), which includes the MAV and a MAV landing/launch system using a scaled-up Skycrane EDL".
 - **Riscos:** custo e complexidade de um terceiro lançamento e de um segundo pouso (a razão da rejeição no MSR); dependência entre os pousos.
 - **Para decidir, calcular:** a massa e o arranjo do lander só com o MAV, e as margens dos três lançamentos.
+
+## Decisão do Fabio (2026-11-09): família 1 calculada; 2, 3 e 4 em reserva
+
+| Família em reserva | Motivo |
+| :- | :- |
+| 2 (aeroshell maior que 4,65 m, outro lançador) | só o New Glenn publica envelope bem acima de 4,65 m, num guia anterior ao primeiro voo, e a entrada sai da herança de 4,5 m |
+| 3 (motor de estágio 1 de 1 a 4 kN) | nenhum motor hipergólico de 1 a 4 kN com produção confirmada pelas fontes achadas |
+| 4 (três lançamentos) | o Δv do MAV não muda, e o MSR rejeitou o segundo lander por custo e complexidade ([F255] PDF p. 7) |
+
+Resultados da família 1: results/familia1/missao.md e results/familia1/mavs.md.
 
 ## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)
 

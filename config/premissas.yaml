@@ -1210,3 +1210,38 @@ premissas:
       propelente, no mesmo diâmetro; a parte fixa vai de 0 a 1,5 m, sem fonte. Empuxo de cada estágio proporcional à massa de
       propelente, com o mesmo tempo de queima de [F34]. Fração estrutural e divisão do Δv: as da P-019.
     status: NÃO VALIDADA
+
+  - id: P-109
+    nome: parametros_numericos_da_missao_da_familia_1
+    valor: {inicio_busca: "2029-06-01", fim_busca: "2035-01-01", passo_serie_dias: 1, tof_retorno_dias: [150, 400], passo_tof_dias: 5}
+    unidade: dias
+    uso: config/familia1.yaml (missao), results/familia1/missao.md
+    justificativa: >
+      Início, fim e passo da série de ângulos Sol–Terra–Marte, e faixa e passo dos tempos de voo de Lambert usados para o C3
+      de partida no retorno. Escolhas numéricas, sem fonte.
+    status: NÃO VALIDADA
+
+  - id: P-110
+    nome: divisao_do_inerte_e_guiamento_do_mav_solido
+    valor: {fracao_inerte_estagio_2: [0.30, 0.34, 0.38, 0.40, 0.42, 0.46, 0.50], t_v_s: 5, partidas: [[1.0, 0.003, 5.0], [1.2, 0.008, 15.0], [1.4, 0.003, 15.0]], limites: [[0.3, 1.55], [0.0, 0.05], [0.0, 60.0]], tol_custo: 1.0e-6, escala_busca: [0.5, 4.0], passo_varredura_escala: 0.05, passos_escala: 8}
+    unidade: fração; s; rad, 1/s, s; —
+    uso: config/familia1.yaml (mav_solido), results/familia1/mavs.md
+    justificativa: >
+      [F34] dá o inerte total do MAV sólido de 2019, mas não a divisão por estágio. A divisão é varrida e escolhida pela
+      verificação (a que leva às 351 × 349 km publicadas); o tempo de costa, não ajustado, é a conferência independente. A
+      subida vertical, as partidas, os limites do guiamento, a tolerância e a busca da escala do propelente são escolhas
+      numéricas. Sem fonte.
+    status: NÃO VALIDADA
+
+  - id: P-111
+    nome: empuxo_e_escala_do_inerte_do_mav_solido
+    valor: {modelos_de_empuxo: [tempo_publicado, empuxo_publicado], base: tempo_publicado, inerte_proporcional_ao_propelente_por_estagio: true}
+    unidade: —
+    uso: config/familia1.yaml (mav_solido), results/familia1/mavs.md
+    justificativa: >
+      Os dados de [F34] PDF p. 4 não fecham entre si: empuxo médio × tempo de queima é maior que propelente × Isp × g0. Na base,
+      ficam o propelente, o Isp e o tempo de queima publicados, e o empuxo sai deles; o empuxo médio publicado é a
+      alternativa, mostrada na conferência. Na escala, o inerte de cada estágio é proporcional ao propelente dele, com as razões
+      da divisão escolhida na conferência (P-110), e não a fração 0,286 da P-019; isso inclui na escala a aviônica, o RCS e a
+      estrutura da carga. Sem fonte.
+    status: NÃO VALIDADA

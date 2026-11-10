@@ -112,7 +112,7 @@ def opcoes(d, cfg):
            "- **Candidatos com fonte** (motores de 1 a 4 kN, e, como referência de voo, o de 800 N do Chandrayaan-3, abaixo da faixa; o R-42, de 890 N e em produção por [F228] PDF p. 25, entra só na ordem de grandeza, porque dois não cabem em Ø 0,57 m):"]
     md += [f"  - **{x['motor']}** ({x['situacao']}): {x['fonte']}" for x in cfg["motores_1_4_kn"]]
     md += [f"  - Não conferidos: {cfg['motores_nao_conferidos']}.",
-           "- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN está em produção (R-40B \"Not in Production\"; LEROS 4 \"In development, TRL6\", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.",
+           "- **Riscos:** pelas fontes, nenhum candidato de 1 a 4 kN tem produção confirmada (R-40B \"Not in Production\"; LEROS 4 \"In development, TRL6\", ficha de 2021, situação atual não conferida; os motores da ISRO e do Tianwen-1 sem dado de produção); o R-40B exige atualização de componentes obsoletos pela própria folha; o Isp do R-40B é menor que o do R-4D-11.",
            "- **Para decidir, calcular:** a subida e o comprimento com cada candidato (o mesmo método de results/etapa7.2/subida_mav.md e rota_a.md).",
            "", "## Família 4: três lançamentos, com o orbitador à parte, como no MSR original", "",
            "- **Nota sobre o título:** o título é o do pedido. Nas fontes deste PR, dois landers mais o orbitador foram estudados pelo MSR (2021 e 2023) e rejeitados uma vez; nenhuma delas dá três lançamentos como linha de base do MSR.",
@@ -122,6 +122,8 @@ def opcoes(d, cfg):
            "- **Fontes do MSR:** [F254] PDF p. 8: \"The project currently is considering whether to deliver the Sample Fetch Rover (SFR) and Mars Ascent Vehicle (MAV) in one or two launches\", \"Two launches: Entry system heavier than MSL and Mars 2020, probably no new technologies needed, but more costly\"; PDF p. 13: cápsula de 4.65 m no SRL de dois lançamentos, contra >5.4 m no de um lançamento; [F255] PDF p. 7: o segundo lander foi \"eventually rejected because of added complexity/cost\"; PDF p. 45: \"MSR MAV Lander (MML), which includes the MAV and a MAV landing/launch system using a scaled-up Skycrane EDL\".",
            "- **Riscos:** custo e complexidade de um terceiro lançamento e de um segundo pouso (a razão da rejeição no MSR); dependência entre os pousos.",
            "- **Para decidir, calcular:** a massa e o arranjo do lander só com o MAV, e as margens dos três lançamentos.",
+           "", "## Decisão do Fabio (2026-11-09): família 1 calculada; 2, 3 e 4 em reserva", "", "| Família em reserva | Motivo |", "| :- | :- |",
+           *[f"| {x['familia']} | {x['motivo']} |" for x in cfg["reservas"]], "", "Resultados da família 1: results/familia1/missao.md e results/familia1/mavs.md.",
            "", "## Opinião do agente (separada dos dados; não é fato nem recomendação como fato)", "",
            "- A causa comum é o Δv. A família 1 é a única que ataca o Δv do MAV diretamente; as famílias 2 e 4 tratam a embalagem, e a 3 trata a perda na subida.",
            "- Os dados sugerem que uma combinação pode ser necessária: a rota B sozinha chega perto de caber sem deck, e mais empuxo no estágio 1 reduziria o MAV.",
