@@ -41,6 +41,8 @@ Envelope de [F80] Fig. 4.3.1-2, PDF p. 45 (figura simplificada, leitura das cota
 | Fase 2: Base: 4 × 164:1, Ø atual | 0,57 | 3,56 | +0,017 | −0,137 | −0,188 | −0,408 | 261 | 294 | 279 |
 | Fase 2: Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a P-086 não muda) | 0,57 | 3,62 | −0,012 | −0,166 | −0,218 | −0,438 | 261 | 294 | 279 |
 
+Abaixo do alvo com deck no aeroshell de 4,65 m, embora positivos: Hipergólico 4 × 164:1, 380 km, com a margem da P-014 (+0,037 m); Hipergólico 4 × 164:1, 814 km, com a margem da P-014 (+0,011 m). O alvo de +0,05 m continua (decisão do Fabio, 2026-11-10, PR #60).
+
 Mars 2020: 211 kg/m² (results/etapa7.2/rotas_mav.md). A massa de entrada não muda com o diâmetro no modelo (P-018 fixa): o aeroshell maior não pesa mais aqui, o que é otimista. A coluna do piso usa a massa de entrada publicada do SRL de 4,65 m (5 000 kg, [F202] p. 13, ">5000") quando o modelo dá menos.
 
 ## (e) Margem do lander no Vulcan com a coifa longa

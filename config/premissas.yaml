@@ -1256,4 +1256,5 @@ premissas:
       análogo da Atlas V 500 com a coifa longa de 5 m ([F27] PDF p. 57): 70 a 89 kg de perda, só para GTO; adota-se o maior
       valor (511 e 521); os 531 a 551, com mais SRBs e mais parecidos com o VC4 e o VC6, dão 70 kg. Outro lançador, outro estágio superior (Centaur III) e outra órbita: a transferência para o Vulcan e para C3 de
       escape não tem fonte. Só como estimativa ao lado do limite otimista (a curva do ELVPerf usada no estudo).
+      Aprovada pelo Fabio em 2026-11-10 (PR #60) como NÃO VALIDADA, com a faixa de 70 kg dos 531 a 551 registrada aqui.
     status: NÃO VALIDADA
