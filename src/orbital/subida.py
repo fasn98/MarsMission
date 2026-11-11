@@ -149,7 +149,7 @@ def vetor_excentricidade(pl, s):
     s = [r, θ, vr, vt, m]: funções suaves do estado, sem a quina de |e| em e = 0."""
     r, _, vr, vt, _ = s
     e = (vr * vr + vt * vt) / 2 - pl.mu / r
-    return {"semieixo_m": -pl.mu / (2 * e) if e < 0 else math.inf, "ecc_radial": r * vt * vt / pl.mu - 1.0, "ecc_transversal": r * vt * vr / pl.mu}
+    return {"semieixo_m": -pl.mu / (2 * e) if e < 0 else math.inf, "ecc_radial": r * vt * vt / pl.mu - 1.0, "ecc_transversal": -r * vt * vr / pl.mu}
 
 
 def elementos(pl, s):
@@ -227,3 +227,31 @@ def ajusta_solido(pl, estagios, inertes, area_cd, atm, h_alvo, t_v, partidas, li
             melhor = (ls.cost, ls.x)
     x = melhor[1]
     return melhor[0], voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2], **kw), {"t_v_s": t_v, "theta0_graus": math.degrees(x[0]), "c_1_s": float(x[1]), "t_antes_apoapse_s": float(x[2])}
+
+def semieixo_circular_maximo(pl, estagios, inertes, area_cd, atm, t_v, partidas, limites, num, integrador=None):
+    """Maior semieixo (m) que o sólido alcança numa órbita circular (P-117). Para cada c (taxa da linear-tangente), θ0 e a
+    antecedência da ignição do 2º zeram as duas componentes do vetor excentricidade (mínimos quadrados 2 × 2, a partir de
+    cada ponto de partida); o semieixo dessa circular é maximizado em c (busca 1-D limitada). `num` = {tol_ls, custo_circular,
+    xatol_c}. Devolve (semieixo, voo, guiamento) ou (None, None, None) se nenhuma circular é alcançada."""
+    from scipy.optimize import least_squares, minimize_scalar
+    kw = {} if integrador is None else {"rtol": integrador["rtol"], "atol": integrador["atol"], "max_step": integrador["max_step_s"], "max_step_costa": integrador["max_step_costa_s"]}
+    lo = [limites[0][0], limites[2][0]]
+    hi = [limites[0][1], limites[2][1]]
+
+    def circular(c):
+        melhor = None
+        for x0 in partidas:
+            def res(x):
+                r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], c), x[1], **kw)
+                return [1.0e3, 1.0e3] if r is None else [r["ecc_radial"] * 1.0e3, r["ecc_transversal"] * 1.0e3]
+            ls = least_squares(res, [x0[0], x0[2]], bounds=(lo, hi), xtol=num["tol_ls"], ftol=num["tol_ls"], gtol=num["tol_ls"])
+            if ls.cost < num["custo_circular"]:
+                r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, ls.x[0], c), ls.x[1], **kw)
+                if melhor is None or r["semieixo_m"] > melhor[0]:
+                    melhor = (r["semieixo_m"], ls.x, r)
+        return melhor
+    o = minimize_scalar(lambda c: (lambda m: 1.0e12 if m is None else -m[0])(circular(c)), bounds=limites[1], method="bounded", options={"xatol": num["xatol_c"]})
+    m = circular(o.x)
+    if m is None:
+        return None, None, None
+    return m[0], m[2], {"t_v_s": t_v, "theta0_graus": math.degrees(m[1][0]), "c_1_s": float(o.x), "t_antes_apoapse_s": float(m[1][1])}

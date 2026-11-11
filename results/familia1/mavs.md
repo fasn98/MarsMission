@@ -23,7 +23,7 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | empuxo publicado | 9 854 e 6 937 | 0,46 | 58,1 e 49,5 | não | — | — |
 | empuxo publicado | 9 854 e 6 937 | 0,50 | 53,8 e 53,8 | não | — | — |
 
-**Base: tempo de queima publicado, fração 0,40** (escolhida entre as que chegam, P-110). Costa de 481 s, contra 446 s publicados ([F34] PDF p. 7). O tempo de costa não foi ajustado, mas não há critério de aceitação definido para ele, e a divisão do inerte foi escolhida para fechar, com três parâmetros de guiamento para dois resíduos: **o modelo não fica verificado**; é uma conferência parcial.
+**Base: tempo de queima publicado, fração 0,40** (escolhida entre as que chegam, P-110). Costa de 481 s, contra 446 s publicados ([F34] PDF p. 7). O tempo de costa não foi ajustado, mas não há critério de aceitação definido para ele, e a divisão do inerte foi escolhida para fechar, com três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial.
 
 ## Comparação lado a lado
 
@@ -31,11 +31,11 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | :- | -: | -: | -: | -: | -: | -: | -: |
 | Fecha | sim | não simulado | não | sim | sim | sim | sim |
 | Δv (m/s) | 4 073 (capacidade ideal) | 4 481 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
-| GLOM (kg) | 382,4 | 1 234,8 | — | 161,0 | 124,4 | 178,9 | 136,2 |
+| GLOM (kg) | 382,3 | 1 234,2 | — | 161,0 | 124,4 | 178,9 | 136,2 |
 | Empuxo/peso na decolagem | 5,58 | 5,75 | — | 3,27 | 4,24 | 2,95 | 3,87 |
-| Comprimento (m) | 2,62 a 2,66 | 5,37 a 8,71 | — | 3,059 | 2,935 | 3,111 | 2,978 |
-| Folga deitado sem deck (m) | +0,260 a +0,283 | −2,761 a −1,093 | — | −0,047 | +0,014 | −0,074 | −0,007 |
-| Folga deitado com deck (m) | +0,040 a +0,063 | −2,981 a −1,313 | — | −0,267 | −0,206 | −0,294 | −0,227 |
+| Comprimento (m) | 2,62 a 2,66 | 5,37 a 8,70 | — | 3,059 | 2,935 | 3,111 | 2,978 |
+| Folga deitado sem deck (m) | +0,260 a +0,284 | −2,759 a −1,092 | — | −0,047 | +0,014 | −0,074 | −0,007 |
+| Folga deitado com deck (m) | +0,040 a +0,064 | −2,979 a −1,312 | — | −0,267 | −0,206 | −0,294 | −0,227 |
 | Massa por área (kg/m²) | 277 | 382 | — | 249 | 245 | 252 | 246 |
 | Dias na superfície | 285 | 285 | — | 285 | 285 | 301 | 301 |
 | Temperatura mantida (°C) | −40 | −40 | — | 15 | 15 | 15 | 15 |
@@ -71,11 +71,13 @@ O aquecimento segue o modelo da Etapa 4.2 (P-027, [F57]): a potência escala com
 
 ## Errata (2026-11-11, decisão do Fabio)
 
-O ajuste do sólido media o periapse e o apoapse, que têm uma quina em e = 0, exatamente no alvo circular; o custo parava em valores espalhados, a tolerância da P-110 caía no meio desse ruído, e a escala escolhida mudava com a CPU (CI do PR #60, run 42896102600; results/conferencia/ruido_subida.md). O ajuste passou a usar o semieixo e o vetor excentricidade, funções suaves, e a escala do sólido é a menor com energia para a circular (P-117, NÃO VALIDADA, para aprovação). Valores publicados no PR #59 (results/familia1/mavs.yaml no commit 8417131 (merge do PR #59)) e vigentes; os antigos ficam como registro. O hipergólico e a verificação não mudaram de conclusão.
+O ajuste do sólido media o periapse e o apoapse, que têm uma quina em e = 0, exatamente no alvo circular; o custo parava em valores espalhados, a tolerância da P-110 caía no meio desse ruído, e a escala escolhida mudava com a CPU (CI do PR #60, run 42896102600; results/conferencia/ruido_subida.md). O ajuste passou a usar o semieixo e o vetor excentricidade, funções suaves, e a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo), por brentq (P-117, NÃO VALIDADA, para aprovação). Os valores publicados vêm de results/familia1/mavs.yaml no commit 8417131, o merge do PR #59; os antigos ficam como registro. O hipergólico não mudou.
 
-| Sólido, 380 km | Escala | GLOM (kg) | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) |
-| :- | -: | -: | -: | -: | -: | -: |
-| sem margem, publicado | 1,0289 | 404,9 | 2,73 a 2,78 | +0,203 a +0,225 | −0,017 a +0,005 | 4 443 |
-| sem margem, vigente | 0,9693 | 382,4 | 2,62 a 2,66 | +0,260 a +0,283 | +0,040 a +0,063 | 4 399 |
-| com a margem da P-014, publicado | 3,8512 | 1 471,7 | 6,12 a 10,40 | −3,607 a −1,469 | −3,827 a −1,689 | 6 539 |
-| com a margem da P-014, vigente | 3,2243 | 1 234,8 | 5,37 a 8,71 | −2,761 a −1,093 | −2,981 a −1,313 | 6 073 |
+| Sólido, 380 km | Escala | GLOM (kg) | Capacidade (m/s) | Empuxo/peso | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) | Massa por área (kg/m²) | Aquecimento (W) | Energia (kWh) | RHUs |
+| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
+| sem margem, publicado | 1,0289 | 404,9 | 4 103 | 5,60 | 2,73 a 2,78 | +0,203 a +0,225 | −0,017 a +0,005 | 4 443 | 279 | 17,4 | 119 | 24 |
+| sem margem, vigente | 0,9692 | 382,3 | 4 073 | 5,58 | 2,62 a 2,66 | +0,260 a +0,284 | +0,040 a +0,064 | 4 399 | 277 | 16,7 | 114 | 23 |
+| com a margem da P-014, publicado | 3,8512 | 1 471,7 | 4 514 | 5,76 | 6,12 a 10,40 | −3,607 a −1,469 | −3,827 a −1,689 | 6 539 | 411 | 41,9 | 286 | 57 |
+| com a margem da P-014, vigente | 3,2228 | 1 234,2 | 4 481 | 5,75 | 5,37 a 8,70 | −2,759 a −1,092 | −2,979 a −1,312 | 6 072 | 382 | 37,2 | 254 | 51 |
+
+Verificação, divisões que chegam à órbita publicada: tempo publicado: publicado 0,38, 0,40, 0,42, vigente 0,38, 0,40, 0,42; empuxo publicado: publicado 0,38, 0,40, vigente 0,38, 0,40, 0,42. A base continua em 0,40.
