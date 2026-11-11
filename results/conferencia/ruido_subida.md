@@ -13,7 +13,7 @@ Rugosidade: desvio rms do ajuste quadrático da órbita final em 21 passos de 1,
 | b | 1,0e-11 | 1,0e-08 | 0,25 / 1,00 | 3,9e-03 / 7,7e-04 / 2,3e-03 / 3,3e-03 | 1,3e-01 / 5,3e-01 | 3,9e-09 / 4,1e-03 |
 | c | 1,0e-12 | 1,0e-09 | 0,10 / 0,50 | 1,5e-05 / 1,5e-05 / 1,5e-05 / 8,4e-06 | 1,3e-01 / 5,3e-01 | 5,5e-09 / 4,3e-04 |
 
-Em grandezas suaves, a rugosidade cai de 1,3e-01 m (integrador atual) para 4,3e-04 m (integrador c): o ruído do integrador existe e cai ao apertá-lo. Em periapse e apoapse, ela fica em 5,4e-01 a 5,3e-01 m porque mede a quina, não o integrador.
+Em grandezas suaves, a rugosidade cai de 1,3e-01 m (integrador atual) para 4,3e-04 m (integrador c): o ruído do integrador existe e cai ao apertá-lo. Em periapse e apoapse, ela fica entre 5,2e-01 e 5,4e-01 m porque mede a quina, não o integrador.
 
 **Errata (2026-11-11):** a primeira versão deste diagnóstico (commit 5729b00, não publicado) media a rugosidade só em periapse e apoapse e concluía que "o ruído do sólido não vem do integrador". Essa conclusão não se sustenta: aquela medida via a quina em e = 0. Vale a medida em grandezas suaves acima. O diagnóstico do ajuste (a quina no resíduo espalhava o custo, tabela abaixo) continua valendo.
 
@@ -40,7 +40,9 @@ A escala mínima é a raiz de (maior semieixo de uma circular alcançável) − 
 | 380 | rtol e atol × 0,5 | primeira ordem (déficit na raiz ÷ inclinação do intervalo) | 0,9691798569 | 6,3e-07 | 382,349986 | 6,0e-07 | -2,6e-01 |
 | 380 | rtol e atol × 2,0 | primeira ordem (déficit na raiz ÷ inclinação do intervalo) | 0,9691775168 | -1,8e-06 | 382,349101 | -1,7e-06 | 7,3e-01 |
 
-As variantes do integrador mudam o modelo (o erro de truncamento), não só o ruído: a diferença delas é a ordem do erro do integrador atual no semieixo, contínua, sem saltos. O ruído de ponto flutuante entre CPUs é o das duas perturbações com a raiz refeita.
+**As variantes do integrador ficam fora da P-039** (6,3e-07 e -1,8e-06 na escala): a parte do critério que pedia perturbar as tolerâncias do integrador dentro da P-039 **não foi atendida**. Essas variantes mudam o modelo (o erro de truncamento do integrador atual no semieixo é 5,4e-01 m contra a referência), e foram estimadas em primeira ordem, em dois pontos, sem refazer a raiz: não demonstram continuidade.
+
+**Risco residual entre CPUs.** As perturbações de 4,0e-16 na escala e de 1,0e-13 na carga mudam a escala em ~1e-12, porque não viram nenhuma decisão discreta do integrador (aceitar ou rejeitar um passo). Se outra CPU virar uma dessas decisões, o salto pode ter a ordem da rugosidade do integrador atual em grandezas suaves (1,3e-01 m), ~3,2e-07 relativo na escala pela inclinação do déficit, acima da P-039. A prova é a regeneração do CI em outra CPU. A decisão sobre esse risco é do Fabio.
 
 ## Hipergólico (`voa`), veículo de referência da subida, guiamento ótimo do integrador atual (tolerâncias da P-107: 1,0 m e 0,1 m/s)
 

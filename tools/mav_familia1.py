@@ -73,8 +73,11 @@ def escala_minima(tenta, deficit, lo, hi, passo, tol, xtol):
         a_ -= passo
         da = deficit(a_)[0]
     while db <= 0:
+        if b_ + passo > hi + 1e-9:
+            raise RuntimeError(f"déficit sem troca de sinal até a escala {hi}: o ajuste fecha, mas nenhuma circular foi achada no alvo")
         b_ += passo
         db = deficit(b_)[0]
+    # o intervalo vem da decisão do ajuste na grade (robusta: déficit de milhares de metros longe da borda)
     raiz = brentq(lambda x: deficit(x)[0], a_, b_, xtol=xtol, rtol=4 * np.finfo(float).eps)
     return raiz, deficit(raiz), {"intervalo": [a_, b_], "deficit_m": [da, db]}
 

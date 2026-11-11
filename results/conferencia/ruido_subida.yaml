@@ -199,3 +199,7 @@ reprodutibilidade:
   escala: 0.9691775167755029
   glom_kg: 382.3491013411401
   deficit_m: 0.7256339583545923
+inclinacao_deficit_m: 419673.7433930576
+escala_atual: 0.9691792458185269
+perturbacao_escala: 4.0e-16
+perturbacao_relativa: 1.0e-13

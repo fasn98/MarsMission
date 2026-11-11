@@ -137,7 +137,7 @@ def main():
         def raiz(nome, **kw):
             deficit = maquina(**kw)[1]
             da, db = deficit(s0 - meia)[0], deficit(s0 + meia)[0]
-            linha = {"altitude_km": h, "variante": nome, "metodo": "raiz por brentq em torno da atual", "fecha": da < 0 < db, "deficit_intervalo_m": [da, db]}
+            linha = {"altitude_km": h, "variante": nome, "metodo": "raiz por brentq em torno da atual" if da < 0 < db else "sinal do déficit não troca no intervalo", "fecha": da < 0 < db, "deficit_intervalo_m": [da, db]}
             if linha["fecha"]:
                 r_ = brentq(lambda x: deficit(x)[0], s0 - meia, s0 + meia, xtol=v(em_["xtol_escala"]), rtol=4 * np.finfo(float).eps)
                 e_, i_ = mf.solido([r_ * y for y in mp], [r_ * y for y in f_m], isp, k, kw.get("cg", carga))
@@ -148,6 +148,7 @@ def main():
         lo_m, hi_m = sv["busca_da_escala"]["intervalo"]
         d_lo, d_hi = sv["busca_da_escala"]["deficit_m"]
         inclinacao = (d_hi - d_lo) / (hi_m - lo_m)
+        inclinacao_md, escala_md = inclinacao, s0
         for fz in cfg["fatores_tolerancia"]["valor"]:
             itg = {"rtol": x0[0] * fz, "atol": x0[1] * fz, "max_step_s": x0[2], "max_step_costa_s": x0[3]}
             d_ = maquina(itg=itg)[1](s0)[0]
@@ -178,7 +179,8 @@ def main():
                     "erro_altitude_m": abs(o[0] - ref_h[0]), "erro_vr_m_s": abs(o[1] - ref_h[1]), "erro_dv_m_s": abs(o[2] - ref_h[2]),
                     "rugosidade_altitude_m": rh[0], "rugosidade_vr_m_s": rh[1], "rugosidade_dv_m_s": rh[2]})
     out = nativo({"gerado_por": "tools/ruido_subida.py", "status": "diagnóstico; não muda resultados", "solido": solido, "custos_p111_380km": custos,
-                  "tol_custo_p110": tol, "tol_hipergolico": {"altitude_m": num["tol_m"], "vr_m_s": num["tol_m_s"]}, "hipergolico": hip, "rugosidade": rg, "reprodutibilidade": repro})
+                  "tol_custo_p110": tol, "tol_hipergolico": {"altitude_m": num["tol_m"], "vr_m_s": num["tol_m_s"]}, "hipergolico": hip, "rugosidade": rg, "reprodutibilidade": repro,
+                  "inclinacao_deficit_m": inclinacao_md, "escala_atual": escala_md, "perturbacao_escala": ds, "perturbacao_relativa": pert})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "ruido_subida.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -200,7 +202,7 @@ def escreve_md(o):
            f"{e(x['rugosidade_apses_t_antes_m'])} / {e(x['rugosidade_apses_theta0_m'])} | {e(x['rugosidade_suave_t_antes_m'])} / {e(x['rugosidade_suave_theta0_m'])} |" for x in o["solido"]]
     a0, a1 = o["solido"][0], o["solido"][-1]
     md += ["", f"Em grandezas suaves, a rugosidade cai de {e(max(a0['rugosidade_suave_t_antes_m'], a0['rugosidade_suave_theta0_m']))} m (integrador {a0['integrador']}) para {e(max(a1['rugosidade_suave_t_antes_m'], a1['rugosidade_suave_theta0_m']))} m (integrador {a1['integrador']}): o ruído do integrador existe e cai ao apertá-lo. "
-           f"Em periapse e apoapse, ela fica em {e(max(a0['rugosidade_apses_t_antes_m'], a0['rugosidade_apses_theta0_m']))} a {e(max(a1['rugosidade_apses_t_antes_m'], a1['rugosidade_apses_theta0_m']))} m porque mede a quina, não o integrador.", "",
+           f"Em periapse e apoapse, ela fica entre {e(min(max(x['rugosidade_apses_t_antes_m'], x['rugosidade_apses_theta0_m']) for x in o['solido']))} e {e(max(max(x['rugosidade_apses_t_antes_m'], x['rugosidade_apses_theta0_m']) for x in o['solido']))} m porque mede a quina, não o integrador.", "",
            "**Errata (2026-11-11):** a primeira versão deste diagnóstico (commit 5729b00, não publicado) media a rugosidade só em periapse e apoapse e concluía que \"o ruído do sólido não vem do integrador\". Essa conclusão não se sustenta: aquela medida via a quina em e = 0. Vale a medida em grandezas suaves acima. O diagnóstico do ajuste (a quina no resíduo espalhava o custo, tabela abaixo) continua valendo."]
     nomes = [k for k in o["custos_p111_380km"][0] if k != "escala"]
     md += ["", f"## Sólido: menor custo do ajuste, P-111 a 380 km (tolerância da P-110: {e(o['tol_custo_p110'])}, ~{br(1.0e4 * math.sqrt(2 * o['tol_custo_p110']), 0)} m)", "",
@@ -214,10 +216,18 @@ def escreve_md(o):
     for x in o["reprodutibilidade"]:
         b0 = base.get(x["altitude_km"])
         if not x["fecha"]:
-            md.append(f"| {br(x['altitude_km'], 0)} | {x['variante']} | {x['metodo']} | não fecha | | | | |")
+            md.append(f"| {br(x['altitude_km'], 0)} | {x['variante']} | {x['metodo']} | sem raiz no intervalo | | | | |")
             continue
         md.append(f"| {br(x['altitude_km'], 0)} | {x['variante']} | {x['metodo']} | {br(x['escala'], 10)} | {e((x['escala'] - b0['escala']) / b0['escala'])} | {br(x['glom_kg'], 6)} | {e((x['glom_kg'] - b0['glom_kg']) / b0['glom_kg'])} | {e(x['deficit_m'])} |")
-    md += ["", "As variantes do integrador mudam o modelo (o erro de truncamento), não só o ruído: a diferença delas é a ordem do erro do integrador atual no semieixo, contínua, sem saltos. O ruído de ponto flutuante entre CPUs é o das duas perturbações com a raiz refeita."]
+    ints = [x for x in o["reprodutibilidade"] if x["metodo"].startswith("primeira ordem")]
+    rz = o["solido"][0]
+    risco = max(rz["rugosidade_suave_t_antes_m"], rz["rugosidade_suave_theta0_m"]) / o["inclinacao_deficit_m"] / o["escala_atual"]
+    md += ["", "**As variantes do integrador ficam fora da P-039** (" + " e ".join(f"{e((x['escala'] - base[x['altitude_km']]['escala']) / base[x['altitude_km']]['escala'])}" for x in ints)
+           + " na escala): a parte do critério que pedia perturbar as tolerâncias do integrador dentro da P-039 **não foi atendida**. Essas variantes mudam o modelo (o erro de truncamento do integrador atual no semieixo é "
+           + f"{e(rz['erro_semieixo_m'])} m contra a referência), e foram estimadas em primeira ordem, em dois pontos, sem refazer a raiz: não demonstram continuidade.",
+           "", f"**Risco residual entre CPUs.** As perturbações de {e(o['perturbacao_escala'])} na escala e de {e(o['perturbacao_relativa'])} na carga mudam a escala em ~1e-12, porque não viram nenhuma decisão discreta do integrador (aceitar ou rejeitar um passo). "
+           f"Se outra CPU virar uma dessas decisões, o salto pode ter a ordem da rugosidade do integrador atual em grandezas suaves ({e(max(rz['rugosidade_suave_t_antes_m'], rz['rugosidade_suave_theta0_m']))} m), ~{e(risco)} relativo na escala pela inclinação do déficit, acima da P-039. "
+           "A prova é a regeneração do CI em outra CPU. A decisão sobre esse risco é do Fabio."]
     th = o["tol_hipergolico"]
     md += ["", f"## Hipergólico (`voa`), veículo de referência da subida, guiamento ótimo do integrador atual (tolerâncias da P-107: {br(th['altitude_m'], 1)} m e {br(th['vr_m_s'], 1)} m/s)", "",
            "| Integrador | rtol | atol | Passo máx. (s) | Erro contra a referência: altitude (m) / v radial (m/s) / Δv (m/s) | Rugosidade em θ0: altitude (m) / v radial (m/s) / Δv (m/s) |",
