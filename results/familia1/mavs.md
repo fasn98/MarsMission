@@ -1,6 +1,6 @@
 # Família 1: dois MAVs para o encontro em órbita baixa (gerado por tools/mav_familia1.py)
 
-**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110 e P-111.
+**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110, P-111 e P-117.
 
 ## Verificação do modelo do sólido com o MAV do MSR de 2019
 
@@ -19,7 +19,7 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | empuxo publicado | 9 854 e 6 937 | 0,34 | 71,0 e 36,6 | não | — | — |
 | empuxo publicado | 9 854 e 6 937 | 0,38 | 66,7 e 40,9 | sim | 63,0 e 21,7 | 483 |
 | empuxo publicado | 9 854 e 6 937 | 0,40 | 64,6 e 43,0 | sim | 63,0 e 21,7 | 488 |
-| empuxo publicado | 9 854 e 6 937 | 0,42 | 62,4 e 45,2 | não | — | — |
+| empuxo publicado | 9 854 e 6 937 | 0,42 | 62,4 e 45,2 | sim | 63,0 e 21,7 | 494 |
 | empuxo publicado | 9 854 e 6 937 | 0,46 | 58,1 e 49,5 | não | — | — |
 | empuxo publicado | 9 854 e 6 937 | 0,50 | 53,8 e 53,8 | não | — | — |
 
@@ -30,18 +30,18 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | Grandeza | Sólido, 380 km, sem margem (o menor que chega) | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | Sólido, 814 km | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | Hipergólico 4 × 164:1, 380 km, sem margem | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | Hipergólico 4 × 164:1, 814 km, sem margem |
 | :- | -: | -: | -: | -: | -: | -: | -: |
 | Fecha | sim | não simulado | não | sim | sim | sim | sim |
-| Δv (m/s) | 4 103 (capacidade ideal) | 4 514 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
-| GLOM (kg) | 404,9 | 1 471,7 | — | 161,0 | 124,4 | 178,9 | 136,2 |
-| Empuxo/peso na decolagem | 5,60 | 5,76 | — | 3,27 | 4,24 | 2,95 | 3,87 |
-| Comprimento (m) | 2,73 a 2,78 | 6,12 a 10,40 | — | 3,059 | 2,935 | 3,111 | 2,978 |
-| Folga deitado sem deck (m) | +0,203 a +0,225 | −3,607 a −1,469 | — | −0,047 | +0,014 | −0,074 | −0,007 |
-| Folga deitado com deck (m) | −0,017 a +0,005 | −3,827 a −1,689 | — | −0,267 | −0,206 | −0,294 | −0,227 |
-| Massa por área (kg/m²) | 279 | 411 | — | 249 | 245 | 252 | 246 |
+| Δv (m/s) | 4 073 (capacidade ideal) | 4 481 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
+| GLOM (kg) | 382,4 | 1 234,8 | — | 161,0 | 124,4 | 178,9 | 136,2 |
+| Empuxo/peso na decolagem | 5,58 | 5,75 | — | 3,27 | 4,24 | 2,95 | 3,87 |
+| Comprimento (m) | 2,62 a 2,66 | 5,37 a 8,71 | — | 3,059 | 2,935 | 3,111 | 2,978 |
+| Folga deitado sem deck (m) | +0,260 a +0,283 | −2,761 a −1,093 | — | −0,047 | +0,014 | −0,074 | −0,007 |
+| Folga deitado com deck (m) | +0,040 a +0,063 | −2,981 a −1,313 | — | −0,267 | −0,206 | −0,294 | −0,227 |
+| Massa por área (kg/m²) | 277 | 382 | — | 249 | 245 | 252 | 246 |
 | Dias na superfície | 285 | 285 | — | 285 | 285 | 301 | 301 |
 | Temperatura mantida (°C) | −40 | −40 | — | 15 | 15 | 15 | 15 |
-| Aquecimento (W) | 17,4 | 41,9 | — | 32,5 | 26,8 | 35,2 | 28,7 |
-| Energia na superfície (kWh) | 119 | 286 | — | 222 | 183 | 254 | 207 |
-| RHUs equivalentes | 24 de 0,74 W em 2030 | 57 de 0,74 W em 2030 | — | 44 de 0,74 W em 2030 | 37 de 0,74 W em 2030 | 48 de 0,74 W em 2030 | 39 de 0,74 W em 2030 |
+| Aquecimento (W) | 16,7 | 37,2 | — | 32,5 | 26,8 | 35,2 | 28,7 |
+| Energia na superfície (kWh) | 114 | 254 | — | 222 | 183 | 254 | 207 |
+| RHUs equivalentes | 23 de 0,74 W em 2030 | 51 de 0,74 W em 2030 | — | 44 de 0,74 W em 2030 | 37 de 0,74 W em 2030 | 48 de 0,74 W em 2030 | 39 de 0,74 W em 2030 |
 
 Alvo de folga: +0,05 m. Limites deitado: sólido em Ø 0,57 m, 3,184 m sem deck e 2,744 m com deck; hipergólico em Ø 0,72 m, 2,964 m e 2,524 m. O comprimento do sólido varia com a parte fixa da P-108.
 
@@ -68,3 +68,14 @@ O aquecimento segue o modelo da Etapa 4.2 (P-027, [F57]): a potência escala com
 **Tempo do MAV em Marte no MSR, para comparar:**
 - [F266] (slides do IAC-19) PDF p. 3: "MAV dwell time in SRL on Mars ~9 months"
 - [F35] PDF p. 1: "After residing on the surface for another year"
+
+## Errata (2026-11-11, decisão do Fabio)
+
+O ajuste do sólido media o periapse e o apoapse, que têm uma quina em e = 0, exatamente no alvo circular; o custo parava em valores espalhados, a tolerância da P-110 caía no meio desse ruído, e a escala escolhida mudava com a CPU (CI do PR #60, run 42896102600; results/conferencia/ruido_subida.md). O ajuste passou a usar o semieixo e o vetor excentricidade, funções suaves, e a escala do sólido é a menor com energia para a circular (P-117, NÃO VALIDADA, para aprovação). Valores publicados no PR #59 (results/familia1/mavs.yaml no commit 8417131 (merge do PR #59)) e vigentes; os antigos ficam como registro. O hipergólico e a verificação não mudaram de conclusão.
+
+| Sólido, 380 km | Escala | GLOM (kg) | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) |
+| :- | -: | -: | -: | -: | -: | -: |
+| sem margem, publicado | 1,0289 | 404,9 | 2,73 a 2,78 | +0,203 a +0,225 | −0,017 a +0,005 | 4 443 |
+| sem margem, vigente | 0,9693 | 382,4 | 2,62 a 2,66 | +0,260 a +0,283 | +0,040 a +0,063 | 4 399 |
+| com a margem da P-014, publicado | 3,8512 | 1 471,7 | 6,12 a 10,40 | −3,607 a −1,469 | −3,827 a −1,689 | 6 539 |
+| com a margem da P-014, vigente | 3,2243 | 1 234,8 | 5,37 a 8,71 | −2,761 a −1,093 | −2,981 a −1,313 | 6 073 |

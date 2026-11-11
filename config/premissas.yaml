@@ -1245,3 +1245,29 @@ premissas:
       da divisão escolhida na conferência (P-110), e não a fração 0,286 da P-019; isso inclui na escala a aviônica, o RCS e a
       estrutura da carga. Sem fonte.
     status: NÃO VALIDADA
+
+  - id: P-116
+    nome: diagnostico_do_ruido_da_subida
+    valor: {integradores_solido: "atual, a, b, c e referência (config/familia1.yaml, ruido_subida)", integradores_hipergolico: "atual, a, b, c e referência", rugosidade: {passos: 21, delta_t_antes_s: 1.0e-4, delta_theta0_rad: 1.0e-7}, escalas_custo: [0.97, 0.98, 0.99, 1.0, 1.02, 1.03], fatores_tolerancia: [0.5, 2.0], perturbacao_relativa: 1.0e-13, altitudes_reprodutibilidade_km: [380]}
+    unidade: SI; s; rad; —
+    uso: config/familia1.yaml (ruido_subida), results/conferencia/ruido_subida.md
+    justificativa: >
+      Integradores, passos e perturbações usados só no diagnóstico do piso de ruído da subida e no teste de reprodutibilidade
+      da escala mínima do sólido (decisão do Fabio, 2026-11-11). Escolhas numéricas, sem fonte; não mudam resultados.
+    status: NÃO VALIDADA
+
+  - id: P-117
+    nome: escala_minima_do_mav_solido_por_energia
+    valor: {criterio: "menor escala do propelente com que o guiamento chega à circular-alvo (resíduo suave: semieixo e vetor excentricidade)", abaixo: "falta energia: o semieixo alcançado fica abaixo do alvo"}
+    unidade: —
+    uso: tools/mav_familia1.py (escala_minima), src/orbital/subida.py (ajusta_solido), results/familia1/mavs.md
+    justificativa: >
+      O motor sólido não desliga no alvo: queima até esgotar. A escala do sólido é a menor com energia suficiente para a
+      órbita-alvo; o excesso acima dela é tratado à parte. O ajuste antigo media periapse e apoapse, que têm uma quina em
+      e = 0, exatamente no alvo circular; o custo parava entre 1e-9 e 4e-4 conforme a escala, a tolerância da P-110 caía no
+      meio desse ruído, e a escala escolhida mudava com a CPU (CI do PR #60, run 42896102600). Com o semieixo e o vetor
+      excentricidade, funções suaves do estado, o custo vai a ~1e-20 onde há energia, contra ≥ 5e-2 abaixo da borda
+      (results/conferencia/ruido_subida.md). Proposta para a aprovação do Fabio (2026-11-11); o pedido falava em "apoapse
+      ótimo ≥ alvo": o apoapse sozinho não garante a órbita (uma trajetória suborbital o alcança), e o critério usa a
+      circular inteira.
+    status: NÃO VALIDADA

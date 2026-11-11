@@ -52,6 +52,32 @@ def capacidade(est, inertes, carga):
     return dv
 
 
+def escala_minima(tenta, lo, hi, passo, passos, tol):
+    """Menor escala do propelente com energia para chegar à circular (P-117): varre de baixo para cima até a primeira escala
+    em que o ajuste fecha (resíduo suave, orbital.subida.ajusta_solido) e refina por bisseção entre ela e a anterior.
+    Abaixo dela o ajuste não fecha porque falta energia (o semieixo alcançado fica abaixo do alvo, registrado em
+    `abaixo`); acima, o excesso do sólido, que não desliga no alvo, é tratado à parte. `tenta(s)` devolve
+    ((custo, voo, guia), estágios, inertes). Devolve (escala, resultado, voo na maior escala que não fecha) ou None."""
+    a_, ok_b, s_, r_a = lo, None, lo, None
+    while s_ <= hi + 1e-9:
+        r = tenta(s_)
+        if r[0][0] < tol:
+            ok_b = r
+            break
+        a_, s_, r_a = s_, s_ + passo, r
+    if ok_b is None:
+        return None
+    b_ = s_
+    for _ in range(passos):
+        mid = (a_ + b_) / 2
+        r = tenta(mid)
+        if r[0][0] < tol:
+            b_, ok_b = mid, r
+        else:
+            a_, r_a = mid, r
+    return b_, ok_b, (None if r_a is None else {"escala": a_, "semieixo_m": r_a[0][1]["semieixo_m"] if r_a[0][1] else None})
+
+
 def solido(mp, f, isp, k, carga):
     """Estágios e inertes do sólido com propelente mp, empuxo f e inerte k·mp por estágio."""
     ine = [ki * m for ki, m in zip(k, mp)]
@@ -111,27 +137,11 @@ def main():
             def tenta(s):
                 est, ine = solido([s * x for x in mp_msr], [s * x for x in f_msr], isp_s, k, carga)
                 return sb.ajusta_solido(pl_e, est, ine, area_s, atm, 1000 * h, t_v, partidas, limites), est, ine
-            # a faixa de escalas que chega à circular é estreita (o sólido não corta): varre de baixo para cima até a
-            # primeira que fecha e refina entre ela e a anterior
-            passo = v(fc["mav_solido"]["guia"]["passo_varredura_escala"])
-            a_, ok_b, s_ = lo, None, lo
-            while s_ <= hi + 1e-9:
-                r = tenta(s_)
-                if r[0][0] < tol:
-                    ok_b = r
-                    break
-                a_, s_ = s_, s_ + passo
-            if ok_b is None:
+            esc_ = escala_minima(tenta, lo, hi, v(fc["mav_solido"]["guia"]["passo_varredura_escala"]), int(v(fc["mav_solido"]["guia"]["passos_escala"])), tol)
+            if esc_ is None:
                 sol_casos.append({"tipo": "solido", "altitude_km": h, "rotulo": f"Sólido, {br(h, 0)} km", "fecha": False})
                 continue
-            b_ = s_
-            for _ in range(int(v(fc["mav_solido"]["guia"]["passos_escala"]))):
-                mid = (a_ + b_) / 2
-                r = tenta(mid)
-                if r[0][0] < tol:
-                    b_, ok_b = mid, r
-                else:
-                    a_ = mid
+            b_, ok_b, abaixo = esc_
             (_, voo, guia), est, ine = ok_b
             cap0 = capacidade(est, ine, carga)
             # margem da P-014 sobre a capacidade: a escala cresce até a capacidade ser (1 + margem) vezes a mínima
@@ -143,7 +153,7 @@ def main():
             for rot, esc, simulado in (("sem margem (o menor que chega)", b_, True), ("com a margem da P-014 na capacidade, não simulado", s2, False)):
                 est_m, ine_m = solido([esc * x for x in mp_msr], [esc * x for x in f_msr], isp_s, k, carga)
                 sol_casos.append({"tipo": "solido", "altitude_km": h, "rotulo": f"Sólido, {br(h, 0)} km, {rot}", "fecha": True, "simulado": simulado, "escala": esc,
-                                  **({"costa_s": voo["costa_s"], "guia": guia} if simulado else {}),
+                                  **({"costa_s": voo["costa_s"], "guia": guia, "abaixo_da_escala_minima": abaixo} if simulado else {}),
                                   "capacidade_m_s": capacidade(est_m, ine_m, carga), "capacidade_minima_m_s": cap0,
                                   "glom_kg": est_m[0].massa_inicial_kg, "propelente_kg": [e.propelente_kg for e in est_m], "inertes_kg": ine_m,
                                   "empuxos_n": [e.empuxo_n for e in est_m], "empuxo_peso": est_m[0].empuxo_n / (est_m[0].massa_inicial_kg * pl0.mu / pl0.raio ** 2)})
@@ -234,13 +244,14 @@ def main():
                   "limites": {"solido": {"diametro_m": d_s, "sem_deck_m": m.lim_ombro[d_s], "com_deck_m": m.lim_deck[d_s]}, "hipergolico": {"diametro_m": d_h, "sem_deck_m": m.lim_ombro[d_h], "com_deck_m": m.lim_deck[d_h]}},
                   "solido": sol_casos, "hipergolico": hip, "envelhecimento_solido": tf["envelhecimento_solido"], "tempo_no_msr": tf["tempo_no_msr"]})
     SAIDA.mkdir(parents=True, exist_ok=True)
+    out["errata"] = fc.get("errata_mavs_2026_11_11")
     (SAIDA / "mavs.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
 
 
 def escreve_md(o):
     vb = o["verificacao"]
-    md = ["# Família 1: dois MAVs para o encontro em órbita baixa (gerado por tools/mav_familia1.py)", "", "**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110 e P-111.", "",
+    md = ["# Família 1: dois MAVs para o encontro em órbita baixa (gerado por tools/mav_familia1.py)", "", "**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110, P-111 e P-117.", "",
           "## Verificação do modelo do sólido com o MAV do MSR de 2019", "",
           f"Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; [F249] PDF p. 5); alvo de {br(vb['orbita_km'], 0)} km ([F34] PDF p. 4). **Os dados publicados não fecham entre si:** empuxo médio × tempo de queima é maior que propelente × Isp × g0. A base usa o tempo de queima publicado e tira o empuxo dele; a alternativa usa o empuxo publicado e tira o tempo (P-111). A divisão do inerte entre os estágios não é publicada: varrida (P-110).", "",
           "| Modelo de empuxo | Empuxos (N) | Fração do inerte no estágio 2 | Inertes (kg) | Chega à órbita | Queimas (s) | Costa (s) |", "| :- | -: | -: | -: | :- | -: | -: |"]
@@ -285,6 +296,25 @@ def escreve_md(o):
     md += [f"- {x}" for x in o["envelhecimento_solido"]]
     md += ["", "**Tempo do MAV em Marte no MSR, para comparar:**"]
     md += [f"- {x}" for x in o["tempo_no_msr"]]
+    er = o.get("errata")
+    if er:
+        sm_, cm_ = (next(x for x in o["solido"] if x.get("fecha") and x["altitude_km"] == 380 and nome in x["rotulo"]) for nome in ("sem margem", "com a margem"))
+        a_, b_ = er["solido_380_sem_margem"], er["solido_380_com_margem"]
+
+        def fx(par, f=sg):
+            return f"{f(par[0])} a {f(par[1])}"
+
+        def novo(x, ch):
+            v_ = [c[ch] for c in x["comprimentos"]]
+            return [min(v_), max(v_)]
+        md += ["", "## Errata (2026-11-11, decisão do Fabio)", "",
+               "O ajuste do sólido media o periapse e o apoapse, que têm uma quina em e = 0, exatamente no alvo circular; o custo parava em valores espalhados, a tolerância da P-110 caía no meio desse ruído, e a escala escolhida mudava com a CPU (CI do PR #60, run 42896102600; results/conferencia/ruido_subida.md). "
+               "O ajuste passou a usar o semieixo e o vetor excentricidade, funções suaves, e a escala do sólido é a menor com energia para a circular (P-117, NÃO VALIDADA, para aprovação). Valores publicados no PR #59 (" + er["fonte"] + ") e vigentes; os antigos ficam como registro. O hipergólico e a verificação não mudaram de conclusão.", "",
+               "| Sólido, 380 km | Escala | GLOM (kg) | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) |", "| :- | -: | -: | -: | -: | -: | -: |",
+               f"| sem margem, publicado | {br(a_['escala'], 4)} | {br(a_['glom_kg'], 1)} | {fx(a_['comprimento_m'], lambda y: br(y, 2))} | {fx(a_['folga_sem_deck_m'])} | {fx(a_['folga_com_deck_m'])} | {br(a_['massa_entrada_kg'], 0)} |",
+               f"| sem margem, vigente | {br(sm_['escala'], 4)} | {br(sm_['glom_kg'], 1)} | {fx(novo(sm_, 'comprimento_m'), lambda y: br(y, 2))} | {fx(novo(sm_, 'folga_sem_deck_m'))} | {fx(novo(sm_, 'folga_com_deck_m'))} | {br(sm_['massa_entrada_kg'], 0)} |",
+               f"| com a margem da P-014, publicado | {br(b_['escala'], 4)} | {br(b_['glom_kg'], 1)} | {fx(b_['comprimento_m'], lambda y: br(y, 2))} | {fx(b_['folga_sem_deck_m'])} | {fx(b_['folga_com_deck_m'])} | {br(b_['massa_entrada_kg'], 0)} |",
+               f"| com a margem da P-014, vigente | {br(cm_['escala'], 4)} | {br(cm_['glom_kg'], 1)} | {fx(novo(cm_, 'comprimento_m'), lambda y: br(y, 2))} | {fx(novo(cm_, 'folga_sem_deck_m'))} | {fx(novo(cm_, 'folga_com_deck_m'))} | {br(cm_['massa_entrada_kg'], 0)} |"]
     (SAIDA / "mavs.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 
