@@ -10,6 +10,12 @@ Conclusão parcial do portão da família 1 (decisão do Fabio, 2026-11-10; a li
 
 A família 1 com o aeroshell de 4,65 m está em results/familia1/aeroshell_465.md.
 
+Resultado parcial da família 1 com o aeroshell de 4,65 m (decisão do Fabio, 2026-11-12; **NÃO VALIDADO**):
+
+> Família 1 com aeroshell de 4,65 m no Vulcan de coifa longa: o MAV sólido com a margem da P-014, massa pela P-113 e comprimento pela P-108 revista, fecha o alvo com deck (488 kg, folga +0,126 m). Pendências: verificação do orbitador só elétrico e tratamento da energia que sobra na subida.
+
+Números de results/familia1/inerte_solido.md (variante A da P-113, com a margem da P-014, 380 km): GLOM de 488,1 kg, comprimento de 3,04 m, folga com deck de +0,126 m no aeroshell de 4,65 m, contra o alvo de +0,05 m.
+
 Δv do MAV com margem, no vigente: 5,772 km/s (results/etapa2.5/arquitetura.yaml); órbita de encontro 300 × 25 952 km.
 
 | Rota | Resultado | Fonte |

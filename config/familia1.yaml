@@ -108,6 +108,14 @@ inerte_solido:   # Fabio, 2026-11-10 (PR #60, item 3): lei de massa inerte do MA
   altitude_km: {valor: 380, fonte: "decisão do Fabio, 2026-11-10 (PR #60, item 4): o caso com margem a 380 km"}
   # Decisão do Fabio, 2026-11-10 (portão da lei de inerte): P-113 aprovada como NÃO VALIDADA; variante A nominal, B sensibilidade.
   variante_nominal: A
+  # Variante B da P-113: deixou de ser regenerada (Fabio, 2026-11-12). Com a errata da P-110 ela ficou quase igual à A, e a
+  # regeneração no CI passava do tempo. Último resultado, como sensibilidade documentada:
+  variante_b_registro:
+    fonte: "results/familia1/inerte_solido.yaml no commit 7f1ce50 (branch docs/familia1-inerte-solido), 2026-11-12"
+    lei: "B (nível pela divisão verificada da P-110)"
+    verificacao_orbita_km: [326.83015169447333, 345.58076126364756]
+    sem_margem: {escala: 1.03748115483542, glom_kg: 405.6918836643159, comprimento_m: 2.7428577574987996, folga_465_com_deck_m: 0.27222329516364363, folga_465_sem_deck_m: 0.42613633864190437, folga_45_com_deck_m: 0.000571121250600104}
+    com_margem: {escala: 1.2935992785109514, glom_kg: 485.17332237388655, comprimento_m: 3.0273380844764577, folga_465_com_deck_m: 0.12998313167481457, folga_465_sem_deck_m: 0.2838961751530753, folga_45_com_deck_m: -0.14166904223822896}
   # Viés do modelo de subida do sólido (P-114): o menor fator comum no Isp dos dois estágios que leva o MSR da variante A à
   # órbita publicada (varredura até o primeiro que fecha, depois bisseção na borda de baixo da janela).
   vies:

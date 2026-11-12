@@ -182,6 +182,8 @@ def main():
 
     casos = []
     for nome, lei in leis.items():
+        if not nome.startswith(cfg["variante_nominal"]):
+            continue   # a variante B deixou de ser regenerada (Fabio, 2026-11-12); o último resultado está no config
         e1, i1 = estagios(1.0, lei, mp, f, isp, carga)
         x = {"lei": nome, "N_kg": lei[0], "c": lei[1], "b": lei[2], "verificacao": {**voo(pl_v, e1, i1, 1000 * v(vf["orbita_km"])), "inertes_kg": i1, "glom_kg": e1[0].massa_inicial_kg}}
         x.update(dimensiona(lei, isp))
@@ -243,7 +245,7 @@ def main():
                   "fracao_2_f269": (Im[1] + Nm[1]) / (sum(Im) + sum(Nm)), "fracao_2_p110": mv["verificacao"]["base"]["fracao_inerte_2"],
                   "costa_publicada_s": v(vf["costa_publicada_s"]), "alvo_folga_m": a4["alvo_folga_m"], "casos": casos,
                   "comprimento": comp, "vies": vies, "orbitador_b": orb, "variante_nominal": nom,
-                  "incerteza_integrador": incerteza, "fracao_2_p110_original": fc["errata_mavs_2026_11_12"]["fracao_inerte_2_base"], "semieixo_max_alt_km": v(cfg["semieixo_max_alt_km"]),
+                  "incerteza_integrador": incerteza, "variante_b_registro": cfg.get("variante_b_registro"), "fracao_2_p110_original": fc["errata_mavs_2026_11_12"]["fracao_inerte_2_base"], "semieixo_max_alt_km": v(cfg["semieixo_max_alt_km"]),
                   "antecedencia_max_s": v(cfg["antecedencia_max_s"])})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "inerte_solido.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -304,8 +306,18 @@ def escreve_md(o):
             md += [f"- {br(o['altitude_km'], 0)} km: não fecha na varredura da P-110.", ""]
             continue
         md += [""] + tabela(c) + [""]
+    vb = o.get("variante_b_registro")
+    if vb:
+        md += [f"### Lei {vb['lei']}: sensibilidade documentada, não regenerada", "",
+               "A variante B deixou de ser regenerada em 2026-11-12 (decisão do Fabio): com a errata da P-110 ela ficou quase igual à A, e a regeneração no CI passava do tempo. "
+               f"Último resultado ({vb['fonte']}); verificação com o MAV do MSR: {br(vb['verificacao_orbita_km'][0], 0)} × {br(vb['verificacao_orbita_km'][1], 0)} km.", "",
+               f"| Caso, {br(o['altitude_km'], 0)} km | Escala | GLOM (kg) | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |", "| :- | -: | -: | -: | -: | -: | -: |"]
+        for rot, k in (("sem margem (o menor que chega)", "sem_margem"), ("com a margem da P-014 na capacidade", "com_margem")):
+            y = vb[k]
+            md.append(f"| {rot} | {br(y['escala'], 3)} | {br(y['glom_kg'], 1)} | {br(y['comprimento_m'], 2)} | {sg(y['folga_465_com_deck_m'])} | {sg(y['folga_465_sem_deck_m'])} | {sg(y['folga_45_com_deck_m'])} |")
+        md.append("")
     if all(c["fecha_na_varredura"] for c in o["casos"]):
-        md += [f"As duas variantes chegam à circular de {br(o['altitude_km'], 0)} km; a escala mínima é a raiz da P-117 (results/familia1/mavs.md).", ""]
+        md += [f"A variante nominal chega à circular de {br(o['altitude_km'], 0)} km; a escala mínima é a raiz da P-117 (results/familia1/mavs.md).", ""]
     md += [f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de {br(o['altitude_km'], 0)} km se o guiamento conseguir gastá-la; \"não\" na coluna \"Chega?\" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. O gasto por guinada está na seção da energia que sobra.", ""]
     vz = o["vies"]
     md += ["## Viés do modelo de subida do sólido (P-114, NÃO VALIDADO)", ""]

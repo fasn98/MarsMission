@@ -1304,14 +1304,15 @@ premissas:
     unidade: s; rad
     uso: config/familia1.yaml (inerte_solido.guinada), src/orbital/subida.py (voa_solido), results/familia1/inerte_solido.md
     justificativa: >
-      (a1) Ignição antecipada do estágio 2, o método do MSR ([F230] PDF p. 9, [F271] PDF p. 3): o limite de 60 s da P-110 para
-      a antecedência sobe para 300 s só no caso com margem; o valor é escolha numérica.
-      (a2) O excesso de energia do sólido é gasto com guinada alternada do estágio 2 (±ψ em metades iguais da queima). No modelo
-      plano, só a componente cos ψ do empuxo fica no plano; supõe-se que a mudança de plano se cancela entre as metades e que
-      o controle de atitude consegue a manobra. O cancelamento é aproximado (as metades têm Δv diferentes porque a massa cai),
-      e o que sobra fora do plano não foi estimado; não há fonte de que o estágio 2 do MAV permita a guinada calculada. Sem
-      fonte para o MAV; a partida e os limites do 4º parâmetro do guiamento são
-      escolhas numéricas.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA.
+      COM FONTE (método): (a1) a ignição antecipada do estágio 2 é o método do MSR para gastar a energia que sobra no sólido
+      ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy";
+      [F271] PDF p. 3: os motores são dimensionados com Δv a mais que o necessário). (a2) Pilotar fora do ótimo para gastar
+      o excesso tem o análogo do GEM ([F272] PDF p. 4); não há fonte de guinada alternada para o MAV.
+      SEM FONTE (escolha numérica e hipótese): o limite de 300 s para a antecedência (no lugar dos 60 s da P-110) só no caso
+      com margem; a partida (0,3 rad) e os limites (0 a 1,4 rad) da guinada; a hipótese de que a mudança de plano se cancela
+      entre as metades da guinada (aproximada: as metades têm Δv diferentes porque a massa cai; o resto fora do plano não
+      foi estimado) e de que o controle de atitude do estágio 2 consegue a manobra.
     status: NÃO VALIDADA
 
   - id: P-116
@@ -1320,8 +1321,11 @@ premissas:
     unidade: SI; s; rad; —
     uso: config/familia1.yaml (ruido_subida), results/conferencia/ruido_subida.md
     justificativa: >
-      Integradores, passos e perturbações usados só no diagnóstico do piso de ruído da subida e no teste de reprodutibilidade
-      da escala mínima do sólido (decisão do Fabio, 2026-11-11). Escolhas numéricas, sem fonte; não mudam resultados.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA.
+      COM FONTE: nenhuma; é um diagnóstico numérico (decisão do Fabio, 2026-11-11) que não muda resultados.
+      SEM FONTE (escolha numérica): os integradores (rtol, atol, passos máximos) atual, a, b, c e de referência; os 21 passos
+      de 1e-4 s e 1e-7 rad da rugosidade; as escalas da tabela de custos; os fatores 0,5 e 2 nas tolerâncias; as
+      perturbações de 1e-13 na carga e de 4e-16 na escala; a meia largura de ±1e-6 do intervalo; a altitude de 380 km.
     status: NÃO VALIDADA
 
   - id: P-117
@@ -1330,14 +1334,14 @@ premissas:
     unidade: tol_ls e custo_circular adimensionais; xatol_c em 1/s; xtol_escala adimensional
     uso: tools/mav_familia1.py (escala_minima), src/orbital/subida.py (ajusta_solido, semieixo_circular_maximo), results/familia1/mavs.md
     justificativa: >
-      O motor sólido não desliga no alvo: queima até esgotar. A escala do sólido é a menor com que ele chega à circular-alvo;
-      o excesso acima dela é tratado à parte. O ajuste antigo media periapse e apoapse, que têm uma quina em e = 0, exatamente
-      no alvo circular; o custo parava entre 1e-9 e 4e-4 conforme a escala, e a escala escolhida mudava com a CPU (CI do PR
-      #60, run 42896102600). Uma primeira correção (resíduo suave com bisseção sobre o limiar de custo, commit 5729b00, não
-      publicado) ainda virava com uma perturbação de 4e-16, porque o custo abaixo da borda vai a zero de forma contínua. Com a
-      raiz de uma função suave e monótona (opção A, aprovada pelo Fabio em 2026-11-11), perturbações do tamanho do ruído de ponto
-      flutuante mudam a escala em ~1e-12; as variantes do integrador (rtol × 0,5 e × 2) mudam ~1e-6, fora da P-039, e uma
-      decisão discreta do integrador virada em outra CPU pode dar um salto da ordem da rugosidade (results/conferencia/ruido_subida.md). O pedido falava em "apoapse ótimo ≥ alvo": o apoapse sozinho não garante a
-      órbita (uma trajetória suborbital o alcança), e o critério usa a circular inteira. As tolerâncias numéricas são escolhas
-      sem fonte. Proposta para a aprovação do Fabio.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA.
+      COM FONTE (motivo físico): o motor sólido não desliga no alvo e queima até esgotar; o MAV sólido do MSR era
+      dimensionado com energia a mais que a necessária para a órbita-alvo ([F271] PDF p. 3) e gastava o excesso na subida
+      ([F230] PDF p. 9). Por isso a escala do sólido é a menor com que ele chega à circular-alvo, e o excesso acima dela é
+      tratado à parte.
+      MÉTODO (decisão do Fabio, opção A, 2026-11-11): raiz em s de (maior semieixo de uma circular alcançável) − (raio-alvo),
+      por brentq. O ajuste antigo media periapse e apoapse, com uma quina em e = 0 no alvo circular, e a escala mudava com a
+      CPU (CI do PR #60, run 42896102600); o critério usa a circular inteira, porque o apoapse sozinho não garante a órbita.
+      SEM FONTE (escolha numérica): tol_ls = 1e-14, custo_circular = 1e-16, xatol_c = 1e-10 1/s e xtol_escala = 1e-14.
+      Reprodutibilidade e incerteza numérica: results/conferencia/ruido_subida.md.
     status: NÃO VALIDADA
