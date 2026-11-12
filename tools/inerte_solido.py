@@ -251,7 +251,7 @@ def main():
 
 
 def e_(x):
-    return f"{x:.1e}".replace(".", ",")
+    return f"{x:.1e}".replace(".", ",").replace("-", "−")
 
 
 def faixa(par, f=sg):
@@ -280,7 +280,7 @@ def escreve_md(o):
            f"- **Escala.** A P-019 (k = {br(o['p019_k'], 3)} nos dois estágios) e a P-111 (k = {br(o['p111_k'][0], 3)} e {br(o['p111_k'][1], 3)}) são proporcionais: o inerte cresce como o propelente (b = 1). "
            + ("O catálogo é compatível com b = 1 dentro de ±2 erros-padrão." if linear else f"O catálogo dá b = {br(aj['b'], 2)}, e b = 1 fica fora de ±2 erros-padrão: **para o motor, os dados não sustentam a escala proporcional de nenhuma das duas**; ao crescer, a fração inerte do motor cai. Para o estágio inteiro, isso depende também de como cresce o inerte não propulsivo, que não tem fonte (a P-113 o fixa). O catálogo junta projetos diferentes: a dispersão entre eles não é a escala de um único projeto."),
            "- **Erro-padrão.** Supõe resíduos independentes; há variantes do mesmo motor (STAR 26/26B/26C, 30BP/30C/30C-BP/30E, 37FM/37FMV), então o erro-padrão está subestimado. A distância de b a 1 é de " + f"{br((1 - aj['b']) / aj['erro_padrao_b'], 1)} erros-padrão.",
-           "- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima). A verificação da P-110 reproduz o inerte total do MSR e a órbita publicada, não a divisão por estágio: a P-111 dá " + f"{br(o['comparacao_msr'][0]['p111_estagio_kg'], 1)} e {br(o['comparacao_msr'][1]['p111_estagio_kg'], 1)} kg, contra {br(o['comparacao_msr'][0]['msr_estagio_kg'], 0)} e {br(o['comparacao_msr'][1]['msr_estagio_kg'], 0)} kg do [F269]. A P-019 dá outra divisão. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte.",
+           "- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima). A verificação original da P-110 (divisão 0,40) reproduzia o inerte total do MSR e a órbita publicada, não a divisão por estágio: a P-111 daquela divisão dava " + f"{br(o['comparacao_msr'][0]['p111_estagio_kg'], 1)} e {br(o['comparacao_msr'][1]['p111_estagio_kg'], 1)} kg, contra {br(o['comparacao_msr'][0]['msr_estagio_kg'], 0)} e {br(o['comparacao_msr'][1]['msr_estagio_kg'], 0)} kg do [F269]. A P-019 dá outra divisão. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte.",
            "- **Divisão do inerte (P-110).** A justificativa original da P-110 dizia que a divisão por estágio não tinha fonte; o [F269] publica uma (fração do estágio 2 = " + f"{br(o['fracao_2_f269'], 3)}, contra {br(o['fracao_2_p110_original'], 2)} escolhida pela varredura da P-110). Errata da P-110 aplicada (aprovada pelo Fabio em 2026-11-12): vale a do [F269]; ver o fim da página.",
            "- **Lei (P-113, NÃO VALIDADA; aprovada pelo Fabio em 2026-11-10):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Nível c: A, pelo motor do MSR [F269] (nominal); B, pela divisão que a verificação da P-110 escolheu (sensibilidade).",
            "", f"## Subida com cada variante (modelo de subida do sólido; tolerância {o['tol_custo']:.0e}, passo da varredura {br(o['passo'], 2)}, os da P-110)".replace(".0e", "e"), ""]

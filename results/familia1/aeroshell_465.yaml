@@ -137,42 +137,42 @@ linhas:
   fecha: true
   diametro_m: 0.57
   comprimento_m:
-  - 6.073824978605361
-  - 6.073824978605361
+  - 8.614697793738225
+  - 8.614697793738225
   folga_465:
     sem_deck_m:
-    - -1.2393472719113765
-    - -1.2393472719113765
+    - -2.5097836794778083
+    - -2.5097836794778083
     com_deck_m:
-    - -1.3932603153896372
-    - -1.3932603153896372
+    - -2.663696722956069
+    - -2.663696722956069
   folga_45:
     sem_deck_m:
-    - -1.4449124893026808
-    - -1.4449124893026808
+    - -2.715348896869113
+    - -2.715348896869113
     com_deck_m:
-    - -1.6649124893026808
-    - -1.6649124893026808
-  glom_kg: 1756.7874112810878
+    - -2.9353488968691126
+    - -2.9353488968691126
+  glom_kg: 3003.8389824800743
   tipo: solido
   altitude_km: 380.0
-  massa_entrada_kg: 7098.904140967325
-  lander_injetado_kg: 7373.86600348385
-  lander_injetado_piso_srl_kg: 7373.86600348385
+  massa_entrada_kg: 9548.907227802269
+  lander_injetado_kg: 9906.030944031381
+  lander_injetado_piso_srl_kg: 9906.030944031381
   margens:
     Vulcan VC4:
-      modelo_coifa_padrao: -0.12606663841662613
-      modelo_coifa_longa: -0.13813629088358859
-      piso_srl_coifa_padrao: -0.12606663841662613
-      piso_srl_coifa_longa: -0.13813629088358859
+      modelo_coifa_padrao: -0.3494601883741516
+      modelo_coifa_longa: -0.35844461417524653
+      piso_srl_coifa_padrao: -0.3494601883741516
+      piso_srl_coifa_longa: -0.35844461417524653
     Vulcan VC6:
-      modelo_coifa_padrao: 0.11875901433690439
-      modelo_coifa_longa: 0.10668936186994182
-      piso_srl_coifa_padrao: 0.11875901433690439
-      piso_srl_coifa_longa: 0.10668936186994182
-  massa_por_area_465_piso_srl_kg_m2: 418.0185212886483
-  massa_por_area_465_kg_m2: 418.0185212886483
-  massa_por_area_45_kg_m2: 446.3508877315456
+      modelo_coifa_padrao: -0.16721650593262405
+      modelo_coifa_longa: -0.17620093173371887
+      piso_srl_coifa_padrao: -0.16721650593262405
+      piso_srl_coifa_longa: -0.17620093173371887
+  massa_por_area_465_piso_srl_kg_m2: 562.2867980781716
+  massa_por_area_465_kg_m2: 562.2867980781716
+  massa_por_area_45_kg_m2: 600.3973477256922
 - rotulo: Sólido, 814 km
   fecha: false
 - rotulo: Hipergólico 4 × 164:1, 380 km, com a margem da P-014

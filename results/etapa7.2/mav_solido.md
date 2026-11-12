@@ -4,7 +4,7 @@
 
 ## Resposta
 
-O MAV sólido fica entre **553 e 1 645 kg** (1,4 a 4,2 vezes o do MSR de 2019), com comprimento de 3,15 a 5,71 m em Ø 0,57 m. **Não cabe deitado, nem sem deck**, em nenhum caso: a melhor folga sem deck é +0,018 m.
+O MAV sólido fica entre **553 e 1 645 kg** (1,4 a 4,2 vezes o do MSR de 2019), com comprimento de 3,15 a 5,71 m em Ø 0,57 m. **Não atinge o alvo de folga** (+0,05 m) em nenhum caso, nem sem deck: a melhor folga sem deck é +0,018 m (cabe sem deck, abaixo do alvo).
 
 **A perda gravitacional do item 2 não foi aplicada ao sólido.** A simulação de subida corta a queima quando chega à energia da órbita, como um motor que desliga; o sólido não desliga, e o MSR usa queima, costa longa e queima do 2º estágio ([F57] PDF p. 2), que o modelo não tem. No lugar, há dois limites para o Δv de 100 × 100 km: o de [F37], com as perdas do caso de [F37], e o ideal, sem perdas (src/orbital/subida.py, dv_ideal). O empuxo/peso maior do sólido tende a reduzir a perda gravitacional; o arrasto, a aumentar.
 

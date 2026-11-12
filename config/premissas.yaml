@@ -1203,7 +1203,7 @@ premissas:
     nome: escala_do_mav_solido
     valor: {comprimento: "motor do estágio 1 + motor do estágio 2 (ajuste do [F270]) + resto fixo", resto: "results/familia1/comprimento_solido.yaml", original_registro: {comprimento_fixo_m: [0.0, 0.5, 1.0, 1.5]}}
     unidade: m
-    uso: config/cad.yaml (mav_solido.escala), results/etapa7.2/mav_solido.md
+    uso: tools/comprimento_solido.py (desde 2026-11-12; antes, config/cad.yaml mav_solido.escala), results/etapa7.2/mav_solido.md, results/familia1/mavs.md, aeroshell_465.md e inerte_solido.md
     justificativa: >
       O MAV sólido de 2019 ([F34], [F247]) não publica o comprimento por estágio nem a densidade do propelente. Escala: o
       comprimento total é uma parte fixa (carga, aviônica, bocais e interestágio) mais o resto proporcional à massa de
@@ -1278,6 +1278,8 @@ premissas:
       verificação da P-110 escolheu. Que a lei do motor do catálogo valha para o MAV (frio, armazenagem longa) não tem fonte.
       Proposta para a aprovação do Fabio; a P-019 e a P-111 não mudam.
       Aprovada pelo Fabio em 2026-11-10 como NÃO VALIDADA: variante A nominal; B só como sensibilidade.
+      Nota (2026-11-12): com a errata da P-110, a divisão de base passou a ser a do [F269], e a variante B fica quase igual à
+      A (results/familia1/inerte_solido.md).
     status: NÃO VALIDADA
 
   - id: P-114

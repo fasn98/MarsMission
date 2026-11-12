@@ -54,7 +54,7 @@ Massas do catálogo em lbm; 1 lb = 0,4535924 kg ([F112] p. 65 do PDF).
 
 - **Escala.** A P-019 (k = 0,401 nos dois estágios) e a P-111 (k = 0,277 e 0,879) são proporcionais: o inerte cresce como o propelente (b = 1). O catálogo dá b = 0,70, e b = 1 fica fora de ±2 erros-padrão: **para o motor, os dados não sustentam a escala proporcional de nenhuma das duas**; ao crescer, a fração inerte do motor cai. Para o estágio inteiro, isso depende também de como cresce o inerte não propulsivo, que não tem fonte (a P-113 o fixa). O catálogo junta projetos diferentes: a dispersão entre eles não é a escala de um único projeto.
 - **Erro-padrão.** Supõe resíduos independentes; há variantes do mesmo motor (STAR 26/26B/26C, 30BP/30C/30C-BP/30E, 37FM/37FMV), então o erro-padrão está subestimado. A distância de b a 1 é de 7,3 erros-padrão.
-- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima). A verificação da P-110 reproduz o inerte total do MSR e a órbita publicada, não a divisão por estágio: a P-111 dá 59,8 e 47,8 kg, contra 60 e 48 kg do [F269]. A P-019 dá outra divisão. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte.
+- **Nível.** No tamanho do MSR, o motor do catálogo é mais leve que o motor do MSR [F269] (tabela acima). A verificação original da P-110 (divisão 0,40) reproduzia o inerte total do MSR e a órbita publicada, não a divisão por estágio: a P-111 daquela divisão dava 59,8 e 47,8 kg, contra 60 e 48 kg do [F269]. A P-019 dá outra divisão. Nenhuma das duas separa o inerte não propulsivo (aviônica, RCS, estrutura da carga), que o [F269] dá à parte.
 - **Divisão do inerte (P-110).** A justificativa original da P-110 dizia que a divisão por estágio não tinha fonte; o [F269] publica uma (fração do estágio 2 = 0,444, contra 0,40 escolhida pela varredura da P-110). Errata da P-110 aplicada (aprovada pelo Fabio em 2026-11-12): vale a do [F269]; ver o fim da página.
 - **Lei (P-113, NÃO VALIDADA; aprovada pelo Fabio em 2026-11-10):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Nível c: A, pelo motor do MSR [F269] (nominal); B, pela divisão que a verificação da P-110 escolheu (sensibilidade).
 
@@ -88,7 +88,7 @@ Alvo de folga: +0,05 m. O caso com a margem foi simulado com o mesmo guiamento (
 
 Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante A à órbita publicada: **1,0082**, ou **33 m/s** de capacidade ideal (órbita 350 × 350 km). É a incerteza do modelo de subida do sólido (P-114, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA); o modelo não foi ajustado.
 
-**Incerteza numérica do modelo de subida** (aceita pelo Fabio em 2026-11-12 como sensibilidade numérica): com o rtol e o atol do integrador × 0,5 e × 2, a escala mínima do sólido muda 2,2e-08 e -2,3e-07 relativo (results/conferencia/ruido_subida.md).
+**Incerteza numérica do modelo de subida** (aceita pelo Fabio em 2026-11-12 como sensibilidade numérica): com o rtol e o atol do integrador × 0,5 e × 2, a escala mínima do sólido muda 2,2e−08 e −2,3e−07 relativo (results/conferencia/ruido_subida.md).
 
 ### Variante nominal corrigida pelo viés (Isp × fator nos dois estágios)
 

@@ -19,6 +19,8 @@ A família 1 com o aeroshell de 4,65 m está em results/familia1/aeroshell_465.m
 | B (orbitador elétrico, encontro em órbita baixa) | MAV com folga sem deck de +0,032 m (380 km) e +0,000 m (814 km), abaixo do alvo, e com deck negativa; orbitador híbrido com margem no Falcon Heavy de −83,0 a −77,1 %; o só elétrico (calculado, não verificado) fecha massa (+18,7 a +40,7 %) e estada, mas fica pronto em 2030-07-02 e 2030-07-18, depois do último lançamento do MAV (2030-03-06) | results/etapa7.2/rotas_mav.md; ADR 0013, adendo |
 | Sólido | GLOM de 553 a 1 645 kg; melhor folga sem deck +0,018 m, no limite do Δv ideal | results/etapa7.2/mav_solido.md |
 
+**Nota (2026-11-12):** a linha do sólido segue a P-108 revista (comprimento pelos motores do catálogo [F270] mais um resto fixo); a folga sem deck mudou com ela. Os valores anteriores estão na errata de results/etapa7.2/mav_solido.md.
+
 ## Achado: GLOM da base com o empuxo/peso real (não aplicado)
 
 Com a subida simulada no empuxo/peso real (1,48), a base com o 164:1 converge em GLOM de 355,7 kg, contra 386,8 kg vigentes, com Δv de 100 × 100 km de 3 933,3 m/s contra 4 027,9 m/s de [F37] (results/etapa7.2/subida_mav.md). A folga sem deck da base segue negativa (−0,171 m). **Decisão do Fabio: não substituir o vigente agora; decidir junto com a arquitetura.**

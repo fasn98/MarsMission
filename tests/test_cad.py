@@ -780,8 +780,8 @@ def test_familia1_missao():
 
 
 def test_familia1_mavs():
-    """Família 1: o sólido do MSR fecha a órbita publicada na divisão de base; rotação efetiva ω cos i; folgas, capacidade
-    e aquecimento refeitos por fora da ferramenta."""
+    """Família 1: a divisão de base é a do [F269] (errata da P-110); o caso com margem chega à capacidade-alvo da P-014;
+    rotação efetiva ω cos i; folgas, capacidade e aquecimento refeitos por fora da ferramenta."""
     from orbital import subida as sb
     from orbital.config import v
     assert sb.omega_efetivo(1.0, 60.0) == pytest.approx(0.5)
@@ -791,6 +791,10 @@ def test_familia1_mavs():
     msr = ler("config/familia1.yaml")["inerte_solido"]["msr"]
     f2 = (msr["inerte_motor_kg"]["valor"][1] + msr["inerte_nao_propulsivo_kg"]["valor"][1]) / (sum(msr["inerte_motor_kg"]["valor"]) + sum(msr["inerte_nao_propulsivo_kg"]["valor"]))
     assert b["fracao_inerte_2"] == pytest.approx(f2) and b["modelo"] == "tempo_publicado"
+    margem = v(ler("config/dimensionamento.yaml")["margem_dv"])
+    for x in r["solido"]:
+        if x.get("fecha") and "com a margem" in x["rotulo"]:
+            assert x["capacidade_m_s"] == pytest.approx((1 + margem) * x["capacidade_minima_m_s"], rel=1e-9)
     # empuxo da base: propelente × Isp × g0 / tempo de queima publicado ([F34] PDF p. 4)
     assert b["empuxos_n"][0] == pytest.approx(216 * 293 * 9.80665 / 75.9) and b["empuxos_n"][1] == pytest.approx(54.4 * 282 * 9.80665 / 24.5)
     assert b["queimas_s"][0] == pytest.approx(75.9) and b["queimas_s"][1] == pytest.approx(24.5)

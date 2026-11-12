@@ -165,8 +165,11 @@ def main():
             est, ine = solido([b_ * x for x in mp_msr], [b_ * x for x in f_msr], isp_s, k, carga)
             cap0 = capacidade(est, ine, carga)
             # margem da P-014 sobre a capacidade: a escala cresce até a capacidade ser (1 + margem) vezes a mínima
-            s1, s2 = b_, 4 * b_
-            for _ in range(60):
+            # o teto da busca dobra até passar do alvo (antes era fixo em 4 vezes a escala mínima e podia não chegar)
+            s1, s2 = b_, b_
+            while capacidade(*solido([s2 * x for x in mp_msr], [s2 * x for x in f_msr], isp_s, k, carga), carga) < (1 + margem) * cap0:
+                s1, s2 = s2, 2 * s2
+            for _ in range(80):
                 sm_ = (s1 + s2) / 2
                 e_, i_ = solido([sm_ * x for x in mp_msr], [sm_ * x for x in f_msr], isp_s, k, carga)
                 s1, s2 = (sm_, s2) if capacidade(e_, i_, carga) < (1 + margem) * cap0 else (s1, sm_)
@@ -272,7 +275,7 @@ def main():
 
 def escreve_md(o):
     vb = o["verificacao"]
-    md = ["# Família 1: dois MAVs para o encontro em órbita baixa (gerado por tools/mav_familia1.py)", "", "**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110, P-111 e P-117.", "",
+    md = ["# Família 1: dois MAVs para o encontro em órbita baixa (gerado por tools/mav_familia1.py)", "", "**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110, P-111, P-114 e P-117.", "",
           "## Verificação do modelo do sólido com o MAV do MSR de 2019", "",
           f"Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; [F249] PDF p. 5); alvo de {br(vb['orbita_km'], 0)} km ([F34] PDF p. 4). **Os dados publicados não fecham entre si:** empuxo médio × tempo de queima é maior que propelente × Isp × g0. A base usa o tempo de queima publicado e tira o empuxo dele; a alternativa usa o empuxo publicado e tira o tempo (P-111). A divisão do inerte entre os estágios não é publicada: varrida (P-110).", "",
           "| Modelo de empuxo | Empuxos (N) | Fração do inerte no estágio 2 | Inertes (kg) | Chega à órbita | Queimas (s) | Costa (s) |", "| :- | -: | -: | -: | :- | -: | -: |"]
@@ -296,8 +299,8 @@ def escreve_md(o):
               ("GLOM (kg)", lambda s: br(s["glom_kg"], 1)),
               ("Empuxo/peso na decolagem", lambda s: br(s["empuxo_peso"], 2)),
               ("Comprimento (m)", lambda s: br(s["comprimentos"][0]["comprimento_m"], 2) if "comprimentos" in s and len(s["comprimentos"]) == 1 else (f"{br(min(c['comprimento_m'] for c in s['comprimentos']), 2)} a {br(max(c['comprimento_m'] for c in s['comprimentos']), 2)}" if "comprimentos" in s else br(s["comprimento_m"], 3))),
-              ("Folga deitado sem deck (m)", lambda s: f"{sg(min(c['folga_sem_deck_m'] for c in s['comprimentos']))} a {sg(max(c['folga_sem_deck_m'] for c in s['comprimentos']))}" if "comprimentos" in s else sg(s["folga_sem_deck_m"])),
-              ("Folga deitado com deck (m)", lambda s: f"{sg(min(c['folga_com_deck_m'] for c in s['comprimentos']))} a {sg(max(c['folga_com_deck_m'] for c in s['comprimentos']))}" if "comprimentos" in s else sg(s["folga_com_deck_m"])),
+              ("Folga deitado sem deck (m)", lambda s: (sg(s["comprimentos"][0]["folga_sem_deck_m"]) if len(s["comprimentos"]) == 1 else f"{sg(min(c['folga_sem_deck_m'] for c in s['comprimentos']))} a {sg(max(c['folga_sem_deck_m'] for c in s['comprimentos']))}") if "comprimentos" in s else sg(s["folga_sem_deck_m"])),
+              ("Folga deitado com deck (m)", lambda s: (sg(s["comprimentos"][0]["folga_com_deck_m"]) if len(s["comprimentos"]) == 1 else f"{sg(min(c['folga_com_deck_m'] for c in s['comprimentos']))} a {sg(max(c['folga_com_deck_m'] for c in s['comprimentos']))}") if "comprimentos" in s else sg(s["folga_com_deck_m"])),
               ("Massa por área (kg/m²)", lambda s: br(s["massa_por_area_kg_m2"], 0)),
               ("Dias na superfície", lambda s: br(s["termico"]["dias"], 0)),
               ("Temperatura mantida (°C)", lambda s: br(s["termico"]["temperatura_c"], 0)),
@@ -307,7 +310,7 @@ def escreve_md(o):
     for nome, f in linhas:
         md.append(f"| {nome} | " + " | ".join(cel(s, f) for s in o["solido"] + o["hipergolico"]) + " |")
     ls, lh = o["limites"]["solido"], o["limites"]["hipergolico"]
-    md += ["", f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. Limites deitado: sólido em Ø {br(ls['diametro_m'], 2)} m, {br(ls['sem_deck_m'], 3)} m sem deck e {br(ls['com_deck_m'], 3)} m com deck; hipergólico em Ø {br(lh['diametro_m'], 2)} m, {br(lh['sem_deck_m'], 3)} m e {br(lh['com_deck_m'], 3)} m. O comprimento do sólido varia com a parte fixa da P-108.", "",
+    md += ["", f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. Limites deitado: sólido em Ø {br(ls['diametro_m'], 2)} m, {br(ls['sem_deck_m'], 3)} m sem deck e {br(ls['com_deck_m'], 3)} m com deck; hipergólico em Ø {br(lh['diametro_m'], 2)} m, {br(lh['sem_deck_m'], 3)} m e {br(lh['com_deck_m'], 3)} m. O comprimento do sólido segue a P-108 revista (results/familia1/comprimento_solido.md).", "",
            "**A margem no sólido:** com o inerte de cada estágio proporcional ao propelente (P-111), o sólido está perto da assíntota da equação do foguete: somar a margem de 10 % da P-014 à capacidade multiplica a escala do veículo. Essa coluna não foi simulada: um sólido sem corte com capacidade sobrando precisa de gestão de energia para chegar à circular. Com a fração 0,286 da P-019, o resultado seria outro. Por isso a tabela mostra o sólido sem e com margem, e o hipergólico também.", "",
            "**Sólido a 814 km:** nenhuma escala da varredura (P-110) leva à circular, com a proporção de propelente entre estágios do MSR e o 2º estágio na horizontal. Causa provável, não demonstrada: a limitação do método. Não é uma conclusão sobre o sólido.", "",
            "**Hipergólico:** Ø 0,72 m é o menor da grade de diâmetros que contém as quatro saídas com parede (results/etapa7.2/bocais_alternativas.md); o mínimo contínuo é menor. A versão sem margem tira a margem só do MAV: o Δv de 100 × 100 km é o do veículo com margem (empuxo/peso menor, conservador), e a massa de entrada desconta só a diferença do GLOM, sem a da energia de aquecimento. Os números diferem dos da rota B (results/etapa7.2/rotas_mav.md) porque aqui entra a perda gravitacional do PR #55, e porque a rota B usou 2 × 164:1 em Ø 0,60 m.", "",

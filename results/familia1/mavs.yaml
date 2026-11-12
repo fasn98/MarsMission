@@ -273,35 +273,35 @@ solido:
   rotulo: Sólido, 380 km, com a margem da P-014 na capacidade, não simulado
   fecha: true
   simulado: false
-  escala: 4.605257701801819
-  capacidade_m_s: 4399.197968856187
+  escala: 7.904335932486969
+  capacidade_m_s: 4454.644964763125
   capacidade_minima_m_s: 4049.6772406937503
-  glom_kg: 1756.7874112810878
+  glom_kg: 3003.8389824800743
   propelente_kg:
-  - 994.735663589193
-  - 250.52601897801895
+  - 1707.3365614171853
+  - 429.9958747272911
   inertes_kg:
-  - 275.2920715077088
-  - 220.23365720616704
+  - 472.50363685311
+  - 378.002909482488
   empuxos_n:
-  - 37657.73619412027
-  - 28278.51091800174
-  empuxo_peso: 5.772811452141181
+  - 64634.688568859
+  - 48536.447782049705
+  empuxo_peso: 5.794839163810691
   comprimentos:
   - lei: P-108 revista
-    comprimento_m: 6.073824978605361
-    folga_sem_deck_m: -1.4449124893026808
-    folga_com_deck_m: -1.6649124893026808
-  massa_entrada_kg: 7098.904140967325
-  massa_por_area_kg_m2: 446.3508877315456
+    comprimento_m: 8.614697793738225
+    folga_sem_deck_m: -2.715348896869113
+    folga_com_deck_m: -2.9353488968691126
+  massa_entrada_kg: 9548.907227802269
+  massa_por_area_kg_m2: 600.3973477256922
   termico:
     temperatura_c: -40.0
-    potencia_w: 47.15446879968962
+    potencia_w: 67.59869497965879
     dias: 285
-    energia_kwh: 322.53656658987694
+    energia_kwh: 462.3750736608661
     rhu_w: 0.74
     ano: 2030
-    rhus: 64
+    rhus: 92
     rhu_teto_new_frontiers: 43.0
 - tipo: solido
   altitude_km: 814.0

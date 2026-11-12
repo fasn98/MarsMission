@@ -32,7 +32,7 @@ Envelope de [F80] Fig. 4.3.1-2, PDF p. 45 (figura simplificada, leitura das cota
 | MAV | Ø (m) | Comprimento (m) | 4,65 m sem deck | 4,65 m com deck | 4,5 m sem deck | 4,5 m com deck | Massa por área com 4,65 m, modelo (kg/m²) | Com 4,65 m, piso do SRL (kg/m²) | Com 4,5 m, modelo (kg/m²) |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
 | Sólido, 380 km, sem margem (o menor que chega) | 0,57 | 2,87 | +0,362 | +0,208 | +0,156 | −0,064 | 267 | 294 | 285 |
-| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | 0,57 | 6,07 | −1,239 | −1,393 | −1,445 | −1,665 | 418 | 418 | 446 |
+| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | 0,57 | 8,61 | −2,510 | −2,664 | −2,715 | −2,935 | 562 | 562 | 600 |
 | Sólido, 814 km | — | não fecha | | | | | | | |
 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 0,72 | 3,06 | +0,191 | +0,037 | −0,047 | −0,267 | 233 | 294 | 249 |
 | Hipergólico 4 × 164:1, 380 km, sem margem | 0,72 | 2,94 | +0,253 | +0,099 | +0,014 | −0,206 | 229 | 294 | 245 |
@@ -55,8 +55,8 @@ Duas massas do lander: a do modelo (razão pousada/entrada da P-018 fixa, a mesm
 | :- | -: | -: | -: | -: | -: | -: |
 | Sólido, 380 km, sem margem (o menor que chega) (modelo) | 4 534 | 4 723 | +36,4 % | +34,6 % | +74,7 % | +72,8 % |
 | Sólido, 380 km, sem margem (o menor que chega) (piso do SRL) | 5 000 | 5 205 | +23,8 % | +22,1 % | +58,5 % | +56,8 % |
-| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (modelo) | 7 099 | 7 374 | −12,6 % | −13,8 % | +11,9 % | +10,7 % |
-| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (piso do SRL) | 7 099 | 7 374 | −12,6 % | −13,8 % | +11,9 % | +10,7 % |
+| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (modelo) | 9 549 | 9 906 | −34,9 % | −35,8 % | −16,7 % | −17,6 % |
+| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (piso do SRL) | 9 549 | 9 906 | −34,9 % | −35,8 % | −16,7 % | −17,6 % |
 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 (modelo) | 3 964 | 4 133 | +55,9 % | +53,8 % | +99,6 % | +97,4 % |
 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 (piso do SRL) | 5 000 | 5 205 | +23,8 % | +22,1 % | +58,5 % | +56,8 % |
 | Hipergólico 4 × 164:1, 380 km, sem margem (modelo) | 3 892 | 4 059 | +58,8 % | +56,6 % | +103,2 % | +101,0 % |
@@ -70,7 +70,7 @@ Duas massas do lander: a do modelo (razão pousada/entrada da P-018 fixa, a mesm
 | Fase 2: Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a P-086 não muda) (modelo) | 4 429 | 4 615 | +39,6 % | +37,7 % | +78,8 % | +76,8 % |
 | Fase 2: Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a P-086 não muda) (piso do SRL) | 5 000 | 5 205 | +23,8 % | +22,1 % | +58,5 % | +56,8 % |
 
-Pior margem no VC4 com a curva da coifa padrão (limite otimista para a coifa longa): −12,6 %; melhor: +58,8 %.
+Pior margem no VC4 com a curva da coifa padrão (limite otimista para a coifa longa): −34,9 %; melhor: +58,8 %.
 
 **O VC4 com a coifa longa não tem margem positiva** (nem no limite otimista) para: Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (modelo); Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (piso do SRL). Nesses casos o VC6 fica como a alternativa; a decisão é do Fabio.
 

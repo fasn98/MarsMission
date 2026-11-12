@@ -1,6 +1,6 @@
 # Família 1: dois MAVs para o encontro em órbita baixa (gerado por tools/mav_familia1.py)
 
-**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110, P-111 e P-117.
+**NÃO VALIDADO.** Premissas P-014, P-018, P-019, P-027, P-104 a P-108, P-110, P-111, P-114 e P-117.
 
 ## Verificação do modelo do sólido com o MAV do MSR de 2019
 
@@ -30,20 +30,20 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | Grandeza | Sólido, 380 km, sem margem (o menor que chega) | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | Sólido, 814 km | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | Hipergólico 4 × 164:1, 380 km, sem margem | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | Hipergólico 4 × 164:1, 814 km, sem margem |
 | :- | -: | -: | -: | -: | -: | -: | -: |
 | Fecha | sim | não simulado | não | sim | sim | sim | sim |
-| Δv (m/s) | 4 050 (capacidade ideal) | 4 399 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
-| GLOM (kg) | 451,2 | 1 756,8 | — | 161,0 | 124,4 | 178,9 | 136,2 |
-| Empuxo/peso na decolagem | 5,62 | 5,77 | — | 3,27 | 4,24 | 2,95 | 3,87 |
-| Comprimento (m) | 2,87 | 6,07 | — | 3,059 | 2,935 | 3,111 | 2,978 |
-| Folga deitado sem deck (m) | +0,156 a +0,156 | −1,445 a −1,445 | — | −0,047 | +0,014 | −0,074 | −0,007 |
-| Folga deitado com deck (m) | −0,064 a −0,064 | −1,665 a −1,665 | — | −0,267 | −0,206 | −0,294 | −0,227 |
-| Massa por área (kg/m²) | 285 | 446 | — | 249 | 245 | 252 | 246 |
+| Δv (m/s) | 4 050 (capacidade ideal) | 4 455 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
+| GLOM (kg) | 451,2 | 3 003,8 | — | 161,0 | 124,4 | 178,9 | 136,2 |
+| Empuxo/peso na decolagem | 5,62 | 5,79 | — | 3,27 | 4,24 | 2,95 | 3,87 |
+| Comprimento (m) | 2,87 | 8,61 | — | 3,059 | 2,935 | 3,111 | 2,978 |
+| Folga deitado sem deck (m) | +0,156 | −2,715 | — | −0,047 | +0,014 | −0,074 | −0,007 |
+| Folga deitado com deck (m) | −0,064 | −2,935 | — | −0,267 | −0,206 | −0,294 | −0,227 |
+| Massa por área (kg/m²) | 285 | 600 | — | 249 | 245 | 252 | 246 |
 | Dias na superfície | 285 | 285 | — | 285 | 285 | 301 | 301 |
 | Temperatura mantida (°C) | −40 | −40 | — | 15 | 15 | 15 | 15 |
-| Aquecimento (W) | 18,7 | 47,2 | — | 32,5 | 26,8 | 35,2 | 28,7 |
-| Energia na superfície (kWh) | 128 | 323 | — | 222 | 183 | 254 | 207 |
-| RHUs equivalentes | 26 de 0,74 W em 2030 | 64 de 0,74 W em 2030 | — | 44 de 0,74 W em 2030 | 37 de 0,74 W em 2030 | 48 de 0,74 W em 2030 | 39 de 0,74 W em 2030 |
+| Aquecimento (W) | 18,7 | 67,6 | — | 32,5 | 26,8 | 35,2 | 28,7 |
+| Energia na superfície (kWh) | 128 | 462 | — | 222 | 183 | 254 | 207 |
+| RHUs equivalentes | 26 de 0,74 W em 2030 | 92 de 0,74 W em 2030 | — | 44 de 0,74 W em 2030 | 37 de 0,74 W em 2030 | 48 de 0,74 W em 2030 | 39 de 0,74 W em 2030 |
 
-Alvo de folga: +0,05 m. Limites deitado: sólido em Ø 0,57 m, 3,184 m sem deck e 2,744 m com deck; hipergólico em Ø 0,72 m, 2,964 m e 2,524 m. O comprimento do sólido varia com a parte fixa da P-108.
+Alvo de folga: +0,05 m. Limites deitado: sólido em Ø 0,57 m, 3,184 m sem deck e 2,744 m com deck; hipergólico em Ø 0,72 m, 2,964 m e 2,524 m. O comprimento do sólido segue a P-108 revista (results/familia1/comprimento_solido.md).
 
 **A margem no sólido:** com o inerte de cada estágio proporcional ao propelente (P-111), o sólido está perto da assíntota da equação do foguete: somar a margem de 10 % da P-014 à capacidade multiplica a escala do veículo. Essa coluna não foi simulada: um sólido sem corte com capacidade sobrando precisa de gestão de energia para chegar à circular. Com a fração 0,286 da P-019, o resultado seria outro. Por isso a tabela mostra o sólido sem e com margem, e o hipergólico também.
 
@@ -91,4 +91,4 @@ Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores
 | sem margem, PR #64 (results/familia1/mavs.yaml no commit 9da6251, o merge do PR #64) | 0,9692 | 382,3 | 4 073 | 5,58 | 2,62 a 2,66 | +0,260 a +0,284 | +0,040 a +0,064 | 4 399 | 277 | 16,7 | 114 | 23 |
 | sem margem, vigente | 1,1513 | 451,2 | 4 050 | 5,62 | 2,87 | +0,156 | −0,064 | 4 534 | 285 | 18,7 | 128 | 26 |
 | com a margem da P-014, PR #64 (results/familia1/mavs.yaml no commit 9da6251, o merge do PR #64) | 3,2228 | 1 234,2 | 4 481 | 5,75 | 5,37 a 8,70 | −2,759 a −1,092 | −2,979 a −1,312 | 6 072 | 382 | 37,2 | 254 | 51 |
-| com a margem da P-014, vigente | 4,6053 | 1 756,8 | 4 399 | 5,77 | 6,07 | −1,445 | −1,665 | 7 099 | 446 | 47,2 | 323 | 64 |
+| com a margem da P-014, vigente | 7,9043 | 3 003,8 | 4 455 | 5,79 | 8,61 | −2,715 | −2,935 | 9 549 | 600 | 67,6 | 462 | 92 |
