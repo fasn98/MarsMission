@@ -412,111 +412,6 @@ casos:
     folga_465_com_deck_m: 0.12590933082743283
     folga_465_sem_deck_m: 0.27982237430569357
     folga_45_com_deck_m: -0.1457428430856107
-- lei: B (nível pela divisão verificada da P-110)
-  N_kg:
-  - 14.0
-  - 34.0
-  c:
-  - 1.058152023135362
-  - 0.8398077276810876
-  b: 0.7008520255155859
-  verificacao:
-    custo: 1.3941834137899127
-    fecha: false
-    periapse_km: 326.83015169447333
-    apoapse_km: 345.58076126364756
-    costa_s: 475.2000408625743
-    guiamento:
-      t_v_s: 5.0
-      theta0_graus: 46.88792796584494
-      c_1_s: 0.005934345729995118
-      t_antes_apoapse_s: 14.858306758375385
-    inertes_kg:
-    - 59.77777777777778
-    - 47.82222222222223
-    glom_kg: 394.0
-  fecha_na_varredura: true
-  busca_da_escala:
-    intervalo:
-    - 1.0000000000000004
-    - 1.0500000000000005
-    deficit_m:
-    - -53494.96086990181
-    - 17166.368633922655
-  sem_margem:
-    escala: 1.03748115483542
-    capacidade_m_s: 4054.421553265733
-    glom_kg: 405.6918836643159
-    propelente_kg:
-    - 224.0959294444507
-    - 56.43897482304684
-    inertes_kg:
-    - 60.97366799308199
-    - 48.18331140373641
-    voo:
-      custo: null
-      fecha: true
-      deficit_m: 6.449408829212189e-07
-      periapse_km: 380.00000000064495
-      apoapse_km: 380.00000000064495
-      costa_s: 517.4917649746188
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 48.80979184136914
-        c_1_s: 0.005559363391991985
-        t_antes_apoapse_s: 14.947728260119666
-    comprimento_m: 2.7428577574987996
-    folga_465_com_deck_m: 0.27222329516364363
-    folga_465_sem_deck_m: 0.42613633864190437
-    folga_45_com_deck_m: 0.000571121250600104
-  com_margem:
-    escala: 1.2935992785109514
-    capacidade_m_s: 4459.863708593231
-    glom_kg: 485.17332237388655
-    propelente_kg:
-    - 279.41744415836547
-    - 70.37180075099575
-    inertes_kg:
-    - 68.82893347387105
-    - 50.55514399065427
-    voo:
-      custo: 159.58394913293859
-      fecha: false
-      periapse_km: 421.317957610344
-      apoapse_km: 632.5184833143246
-      costa_s: 677.8159254420652
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 75.77239428798741
-        c_1_s: 0.049999999993330095
-        t_antes_apoapse_s: 15.561849233539565
-    voo_antecipada:
-      custo: 159.58394913446793
-      fecha: false
-      periapse_km: 421.31795134007746
-      apoapse_km: 632.5184845183803
-      costa_s: 677.8155253188042
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 75.7723942915368
-        c_1_s: 0.04999999999340703
-        t_antes_apoapse_s: 15.562249540693074
-    voo_com_guinada:
-      custo: 2.4097688717314405e-17
-      fecha: true
-      periapse_km: 379.99999999992593
-      apoapse_km: 379.99999999992593
-      costa_s: 541.9616787929326
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 50.40394003875445
-        c_1_s: 0.010670015207356545
-        t_antes_apoapse_s: 14.898593571488023
-        guinada_2_graus: 39.989062181163426
-    comprimento_m: 3.0273380844764577
-    folga_465_com_deck_m: 0.12998313167481457
-    folga_465_sem_deck_m: 0.2838961751530753
-    folga_45_com_deck_m: -0.14166904223822896
 comprimento:
   gerado_por: tools/comprimento_solido.py
   status: NÃO VALIDADO
@@ -690,6 +585,27 @@ variante_nominal: A (nível do motor pelo [F269])
 incerteza_integrador:
 - 2.2297297514177828e-08
 - -2.3270139865337255e-07
+variante_b_registro:
+  fonte: results/familia1/inerte_solido.yaml no commit 7f1ce50 (branch docs/familia1-inerte-solido),
+    2026-11-12
+  lei: B (nível pela divisão verificada da P-110)
+  verificacao_orbita_km:
+  - 326.83015169447333
+  - 345.58076126364756
+  sem_margem:
+    escala: 1.03748115483542
+    glom_kg: 405.6918836643159
+    comprimento_m: 2.7428577574987996
+    folga_465_com_deck_m: 0.27222329516364363
+    folga_465_sem_deck_m: 0.42613633864190437
+    folga_45_com_deck_m: 0.000571121250600104
+  com_margem:
+    escala: 1.2935992785109514
+    glom_kg: 485.17332237388655
+    comprimento_m: 3.0273380844764577
+    folga_465_com_deck_m: 0.12998313167481457
+    folga_465_sem_deck_m: 0.2838961751530753
+    folga_45_com_deck_m: -0.14166904223822896
 fracao_2_p110_original: 0.4
 semieixo_max_alt_km: 500.0
 antecedencia_max_s: 300.0

@@ -70,17 +70,16 @@ Massas do catálogo em lbm; 1 lb = 0,4535924 kg ([F112] p. 65 do PDF).
 | sem margem (o menor que chega) | 1,043 | 4 054 | 407,8 | 225,2 + 56,7 | 61,4 + 48,5 | 380 × 380 | sim | 2,75 | +0,269 | +0,423 | −0,002 |
 | com a margem da P-014 na capacidade | 1,301 | 4 460 | 488,1 | 281,0 + 70,8 | 69,3 + 50,9 | 421 × 632 | não | 3,04 | +0,126 | +0,280 | −0,146 |
 
-### Lei B (nível pela divisão verificada da P-110): sensibilidade
+### Lei B (nível pela divisão verificada da P-110): sensibilidade documentada, não regenerada
 
-- N = 14 e 34 kg; c = 1,058 e 0,840; b = 0,701.
-- Verificação com o MAV do MSR (órbita publicada de 350 km): inertes 59,8 e 47,8 kg; órbita 327 × 346 km; costa 475 s (publicada 446 s); **não chega à órbita publicada** (resíduo 1,4e+00).
+A variante B deixou de ser regenerada em 2026-11-12 (decisão do Fabio): com a errata da P-110 ela ficou quase igual à A, e a regeneração no CI passava do tempo. Último resultado (results/familia1/inerte_solido.yaml no commit 7f1ce50 (branch docs/familia1-inerte-solido), 2026-11-12); verificação com o MAV do MSR: 327 × 346 km.
 
-| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
-| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |
-| sem margem (o menor que chega) | 1,037 | 4 054 | 405,7 | 224,1 + 56,4 | 61,0 + 48,2 | 380 × 380 | sim | 2,74 | +0,272 | +0,426 | +0,001 |
-| com a margem da P-014 na capacidade | 1,294 | 4 460 | 485,2 | 279,4 + 70,4 | 68,8 + 50,6 | 421 × 633 | não | 3,03 | +0,130 | +0,284 | −0,142 |
+| Caso, 380 km | Escala | GLOM (kg) | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
+| :- | -: | -: | -: | -: | -: | -: |
+| sem margem (o menor que chega) | 1,037 | 405,7 | 2,74 | +0,272 | +0,426 | +0,001 |
+| com a margem da P-014 na capacidade | 1,294 | 485,2 | 3,03 | +0,130 | +0,284 | −0,142 |
 
-As duas variantes chegam à circular de 380 km; a escala mínima é a raiz da P-117 (results/familia1/mavs.md).
+A variante nominal chega à circular de 380 km; a escala mínima é a raiz da P-117 (results/familia1/mavs.md).
 
 Alvo de folga: +0,05 m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de 380 km se o guiamento conseguir gastá-la; "não" na coluna "Chega?" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. O gasto por guinada está na seção da energia que sobra.
 
