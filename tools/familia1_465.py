@@ -185,8 +185,10 @@ def main():
                 est, ine = mf.solido([s * x for x in mp_msr], [s * x for x in f_tempo], isp_s, k, carga)
                 a_m, vo, gu = sb.semieixo_circular_maximo(pl_e, est, ine, area_s, atm, t_v, partidas, limites, nm_)
                 return (-1.0e7 if a_m is None else a_m - (pl_e.raio + 1000 * h)), vo, gu
-            # escala mínima pelo critério da P-117 (o mesmo de tools/mav_familia1.py)
-            r_ = mf.escala_minima(tenta, deficit, lo, hi, passo, tol, v(em_["xtol_escala"]))
+            # escala mínima pelo critério da P-117 (o mesmo de tools/mav_familia1.py); a da P-111 já está em results/familia1/mavs.yaml
+            # (mesma conta, mesmos dados) e é reaproveitada sem recalcular (Fabio, 2026-11-12)
+            pre = next((x for x in mv["solido"] if x.get("fecha") and x.get("simulado") and x["altitude_km"] == h), None) if rot.startswith("P-111") else None
+            r_ = (pre["escala"], None, None) if pre else mf.escala_minima(tenta, deficit, lo, hi, passo, tol, v(em_["xtol_escala"]))
             linha = {"inerte": rot, "altitude_km": h, "fecha": r_ is not None}
             if r_:
                 b_ = r_[0]

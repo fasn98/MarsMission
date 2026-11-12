@@ -33,7 +33,7 @@ on:
 jobs:
   regeneracao:
     runs-on: ubuntu-latest
-    timeout-minutes: 180   # Fabio, 2026-11-10: a regeneração da main já passava de 90 min (run 42798308524)
+    timeout-minutes: 300   # Fabio, 2026-11-12. Limite por job em runner hospedado: "Each job in a workflow can run for up to 6 hours of execution time" (docs.github.com/en/actions/reference/limits, tabela "Existing system limits", lida em 2026-11-12)
     defaults:
       run:
         shell: bash -el {0}
