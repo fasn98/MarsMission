@@ -31,8 +31,8 @@ Envelope de [F80] Fig. 4.3.1-2, PDF p. 45 (figura simplificada, leitura das cota
 
 | MAV | Ø (m) | Comprimento (m) | 4,65 m sem deck | 4,65 m com deck | 4,5 m sem deck | 4,5 m com deck | Massa por área com 4,65 m, modelo (kg/m²) | Com 4,65 m, piso do SRL (kg/m²) | Com 4,5 m, modelo (kg/m²) |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: |
-| Sólido, 380 km, sem margem (o menor que chega) | 0,57 | 2,73 a 2,78 | +0,409 a +0,430 | +0,255 a +0,276 | +0,203 a +0,225 | −0,017 a +0,005 | 262 | 294 | 279 |
-| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | 0,57 | 6,12 a 10,40 | −3,401 a −1,263 | −3,555 a −1,417 | −3,607 a −1,469 | −3,827 a −1,689 | 385 | 385 | 411 |
+| Sólido, 380 km, sem margem (o menor que chega) | 0,57 | 2,62 a 2,66 | +0,466 a +0,489 | +0,312 a +0,335 | +0,260 a +0,284 | +0,040 a +0,064 | 259 | 294 | 277 |
+| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | 0,57 | 5,37 a 8,70 | −2,553 a −0,886 | −2,707 a −1,040 | −2,759 a −1,092 | −2,979 a −1,312 | 358 | 358 | 382 |
 | Sólido, 814 km | — | não fecha | | | | | | | |
 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 0,72 | 3,06 | +0,191 | +0,037 | −0,047 | −0,267 | 233 | 294 | 249 |
 | Hipergólico 4 × 164:1, 380 km, sem margem | 0,72 | 2,94 | +0,253 | +0,099 | +0,014 | −0,206 | 229 | 294 | 245 |
@@ -53,10 +53,10 @@ Duas massas do lander: a do modelo (razão pousada/entrada da P-018 fixa, a mesm
 
 | Lander | Massa de entrada (kg) | Injetado (kg) | VC4, coifa padrão | VC4, coifa longa | VC6, coifa padrão | VC6, coifa longa |
 | :- | -: | -: | -: | -: | -: | -: |
-| Sólido, 380 km, sem margem (o menor que chega) (modelo) | 4 443 | 4 629 | +39,2 % | +37,3 % | +78,2 % | +76,3 % |
+| Sólido, 380 km, sem margem (o menor que chega) (modelo) | 4 399 | 4 583 | +40,6 % | +38,7 % | +80,0 % | +78,1 % |
 | Sólido, 380 km, sem margem (o menor que chega) (piso do SRL) | 5 000 | 5 205 | +23,8 % | +22,1 % | +58,5 % | +56,8 % |
-| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (modelo) | 6 539 | 6 795 | −5,2 % | −6,5 % | +21,4 % | +20,1 % |
-| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (piso do SRL) | 6 539 | 6 795 | −5,2 % | −6,5 % | +21,4 % | +20,1 % |
+| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (modelo) | 6 072 | 6 313 | +2,1 % | +0,7 % | +30,7 % | +29,3 % |
+| Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (piso do SRL) | 6 072 | 6 313 | +2,1 % | +0,7 % | +30,7 % | +29,3 % |
 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 (modelo) | 3 964 | 4 133 | +55,9 % | +53,8 % | +99,6 % | +97,4 % |
 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 (piso do SRL) | 5 000 | 5 205 | +23,8 % | +22,1 % | +58,5 % | +56,8 % |
 | Hipergólico 4 × 164:1, 380 km, sem margem (modelo) | 3 892 | 4 059 | +58,8 % | +56,6 % | +103,2 % | +101,0 % |
@@ -70,28 +70,28 @@ Duas massas do lander: a do modelo (razão pousada/entrada da P-018 fixa, a mesm
 | Fase 2: Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a P-086 não muda) (modelo) | 4 429 | 4 615 | +39,6 % | +37,7 % | +78,8 % | +76,8 % |
 | Fase 2: Base com a P-086 só pelo motor 164:1 [F228], sem estrutura de empuxo (a P-086 não muda) (piso do SRL) | 5 000 | 5 205 | +23,8 % | +22,1 % | +58,5 % | +56,8 % |
 
-Pior margem no VC4 com a curva da coifa padrão (limite otimista para a coifa longa): −5,2 %; melhor: +58,8 %.
+Pior margem no VC4 com a curva da coifa padrão (limite otimista para a coifa longa): +2,1 %; melhor: +58,8 %.
 
-**O VC4 com a coifa longa não tem margem positiva** (nem no limite otimista) para: Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (modelo); Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (piso do SRL). Nesses casos o VC6 fica como a alternativa; a decisão é do Fabio.
+O VC4 com a coifa longa tem margem positiva em todos os casos da tabela, nas duas colunas.
 
 ## (f) Sólido: P-111 × P-019, com a margem da P-014
 
 | Inerte | Encontro (km) | Capacidade mínima (m/s) | Capacidade assintótica (m/s) | Caso | Escala | GLOM (kg) | Comprimento (m) | 4,65 m sem deck | 4,65 m com deck |
 | :- | -: | -: | -: | :- | -: | -: | -: | -: | -: |
-| P-111 (divisão da conferência) | 380 | 4 103 | 4 694 | sem margem | 1,03 | 404,9 | 2,73 a 2,78 | +0,409 a +0,430 | +0,255 a +0,276 |
-| P-111 (divisão da conferência) | 380 | 4 103 | 4 694 | com a margem da P-014, não simulado | 3,85 | 1 471,7 | 6,12 a 10,40 | −3,401 a −1,263 | −3,555 a −1,417 |
-| P-111 (divisão da conferência) | 814 | não fecha na varredura | 4 694 | melhor ponto (diagnóstico): resíduo 9,1e+01 (tolerância 1e-06), 679 × 803 km, 4 520 m/s | 4,00 | 1 528,0 | | | |
+| P-111 (divisão da conferência) | 380 | 4 073 | 4 694 | sem margem | 0,97 | 382,3 | 2,62 a 2,66 | +0,466 a +0,489 | +0,312 a +0,335 |
+| P-111 (divisão da conferência) | 380 | 4 073 | 4 694 | com a margem da P-014, não simulado | 3,22 | 1 234,2 | 5,37 a 8,70 | −2,553 a −0,886 | −2,707 a −1,040 |
+| P-111 (divisão da conferência) | 814 | não fecha na varredura | 4 694 | melhor ponto (diagnóstico): resíduo 4,6e+01 (tolerância 1e-06), 680 × 801 km, 4 520 m/s | 4,00 | 1 528,0 | | | |
 | P-111 (divisão da conferência) | 814 | | | indicativo com a margem da P-014: não existe (passa da capacidade assintótica) | | | | | |
-| P-019 (ε 0,286 nos dois estágios) | 380 | não fecha na varredura | 5 889 | melhor ponto (diagnóstico): resíduo 3,3e-04 (tolerância 1e-06), 380 × 380 km, 4 268 m/s | 0,60 | 243,2 | | | |
-| P-019 (ε 0,286 nos dois estágios) | 380 | | | indicativo: o melhor ponto com a margem da P-014, não simulado | 0,94 | 373,8 | 2,55 a 2,63 | +0,481 a +0,522 | +0,327 a +0,368 |
-| P-019 (ε 0,286 nos dois estágios) | 814 | não fecha na varredura | 5 889 | melhor ponto (diagnóstico): resíduo 7,6e-01 (tolerância 1e-06), 802 × 814 km, 5 347 m/s | 2,55 | 981,7 | | | |
+| P-019 (ε 0,286 nos dois estágios) | 380 | 4 186 | 5 889 | sem margem | 0,55 | 225,8 | 1,50 a 2,16 | +0,715 a +1,050 | +0,561 a +0,896 |
+| P-019 (ε 0,286 nos dois estágios) | 380 | 4 186 | 5 889 | com a margem da P-014, não simulado | 0,85 | 338,5 | 2,30 a 2,52 | +0,537 a +0,648 | +0,383 a +0,494 |
+| P-019 (ε 0,286 nos dois estágios) | 814 | não fecha na varredura | 5 889 | melhor ponto (diagnóstico): resíduo 3,8e-01 (tolerância 1e-06), 802 × 814 km, 5 347 m/s | 2,55 | 981,7 | | | |
 | P-019 (ε 0,286 nos dois estágios) | 814 | | | indicativo: o melhor ponto com a margem da P-014, não simulado | 206,41 | 78 187,5 | 249,20 a 557,32 | −276,862 a −122,801 | −277,016 a −122,955 |
 
 A capacidade assintótica é a de um sólido de escala infinita com os mesmos k de inerte: se a capacidade com a margem passa dela, não há sólido que feche.
 
-"Não fecha na varredura" quer dizer: nenhum ponto da varredura da P-110 (passo e tolerância de lá) chega à órbita dentro da tolerância. O melhor ponto é diagnóstico, não resultado: a P-110 não foi mudada.
+"Não fecha na varredura" quer dizer: em nenhuma escala da varredura da P-110 o ajuste chega à circular (critério da P-117). O melhor ponto é diagnóstico, não resultado.
 
-Com a P-019 a 380 km, o melhor ponto fica a menos de 1 km da órbita (resíduo acima da tolerância da P-110). O sólido não regula o empuxo: Δv a mais passa da órbita, e a janela de escalas que chegam é estreita. O mais provável é que o passo da varredura da P-110 seja grosso para o inerte mais leve da P-019, e não que a P-019 piore o sólido: a capacidade assintótica com a P-019 é maior que com a P-111. Mudar o passo ou a tolerância da P-110 é decisão do Fabio.
+**Nota (2026-11-12):** a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo) (P-117, PR #64); as versões anteriores desta página, com o ajuste antigo, davam a P-019 a 380 km como "não fecha na varredura", com o melhor ponto a menos de 1 km da órbita. Valem os números desta versão; os da linha do sólido nas seções (c) a (e) vêm de results/familia1/mavs.yaml, regenerado no PR #64.
 
 O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; "não existe" quando esse alvo passa da capacidade assintótica.
 

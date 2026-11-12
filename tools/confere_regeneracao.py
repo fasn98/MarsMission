@@ -65,7 +65,7 @@ FASE_ATUAL = [["tools/redimensiona.py"], ["tools/plataformas.py"], ["tools/lanca
               ["tools/geometria_marte.py"], ["tools/orbitador_eletrico.py"], ["tools/energia.py"], ["tools/termico.py"], ["tools/comunicacao.py"], ["tools/operacao_superficie.py"], ["tools/lista_massas_lander.py"],
               ["tools/fase4.py"], ["tools/envelope_arranjo.py"],
               ["tools/cad_parametros.py"], ["tools/encaixe_coifas.py"], ["tools/mav_arranjo.py"],
-              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/isp_44_bocal.py"], ["tools/rota_a_dimensiona.py"], ["tools/subida_mav.py"], ["tools/mav_solido.py"], ["tools/missao_familia1.py"], ["tools/mav_familia1.py"], ["tools/familia1_465.py"], ["tools/inerte_solido.py"], ["tools/opcoes_arquitetura.py"]]
+              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/isp_44_bocal.py"], ["tools/rota_a_dimensiona.py"], ["tools/subida_mav.py"], ["tools/mav_solido.py"], ["tools/missao_familia1.py"], ["tools/mav_familia1.py"], ["tools/ruido_subida.py"], ["tools/familia1_465.py"], ["tools/inerte_solido.py"], ["tools/opcoes_arquitetura.py"]]
 _SO_NA_RAIZ = {".git", "data", "results", "hanatrial", ".venv", ".pythonlibs", ".cache", ".claude"}
 
 

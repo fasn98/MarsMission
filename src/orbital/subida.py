@@ -144,6 +144,14 @@ def omega_efetivo(omega, inclinacao_graus):
     return omega * math.cos(math.radians(inclinacao_graus))
 
 
+def vetor_excentricidade(pl, s):
+    """Semieixo maior (m) e componentes do vetor excentricidade no referencial local (radial e transversal) do estado plano
+    s = [r, θ, vr, vt, m]: funções suaves do estado, sem a quina de |e| em e = 0."""
+    r, _, vr, vt, _ = s
+    e = (vr * vr + vt * vt) / 2 - pl.mu / r
+    return {"semieixo_m": -pl.mu / (2 * e) if e < 0 else math.inf, "ecc_radial": r * vt * vt / pl.mu - 1.0, "ecc_transversal": -r * vt * vr / pl.mu}
+
+
 def elementos(pl, s):
     """(altitude do periapse, altitude do apoapse) em m do estado plano s = [r, θ, vr, vt, m]."""
     r, _, vr, vt, _ = s
@@ -155,7 +163,7 @@ def elementos(pl, s):
     return a * (1 - ecc) - pl.raio, a * (1 + ecc) - pl.raio
 
 
-def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, atol=1e-6, max_step=1.0, guinada_2_rad=0.0):
+def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, atol=1e-6, max_step=1.0, max_step_costa=5.0, guinada_2_rad=0.0):
     """Motor sólido de dois estágios, sem corte: o 1º queima até esgotar com o guiamento linear-tangente, o veículo descarta o
     inerte do 1º e costa; o 2º acende t_antes segundos antes do apoapse da costa e queima até esgotar, com empuxo na
     horizontal local. A antecedência t_antes é um parâmetro livre, ajustado; [F249] PDF p. 9 descreve a lógica de voo
@@ -176,7 +184,7 @@ def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, at
     def apo(t, y):
         return y[2]
     apo.terminal, apo.direction = True, -1
-    sol = solve_ivp(_deriv(pl, costa, area_cd, atm, guia), (dur1, dur1 + 1.0e4), s, rtol=rtol, atol=atol, events=apo, dense_output=True, max_step=5.0)
+    sol = solve_ivp(_deriv(pl, costa, area_cd, atm, guia), (dur1, dur1 + 1.0e4), s, rtol=rtol, atol=atol, events=apo, dense_output=True, max_step=max_step_costa)
     if not sol.t_events[0].size:
         return None
     t_apo = sol.t[-1]
@@ -191,21 +199,32 @@ def voa_solido(pl, estagios, inertes, area_cd, atm, guia, t_antes, rtol=1e-9, at
     sol = solve_ivp(horizontal, (t_ign, t_ign + dur2), s, rtol=rtol, atol=atol, max_step=max_step)
     s = list(sol.y[:, -1])
     p, a = elementos(pl, s)
-    return {"periapse_m": p, "apoapse_m": a, "costa_s": t_ign - dur1, "massa_final_kg": s[4], "queima_1_s": dur1, "queima_2_s": dur2}
+    return {"periapse_m": p, "apoapse_m": a, "costa_s": t_ign - dur1, "massa_final_kg": s[4], "queima_1_s": dur1, "queima_2_s": dur2, **vetor_excentricidade(pl, s)}
 
 
-def ajusta_solido(pl, estagios, inertes, area_cd, atm, h_alvo, t_v, partidas, limites, escala_m=1.0e4):
+def ajusta_solido(pl, estagios, inertes, area_cd, atm, h_alvo, t_v, partidas, limites, escala_m=1.0e4, integrador=None, residuo="suave"):
     """Guiamento (θ0, c) e antecedência da ignição do 2º que levam o sólido à circular de altitude h_alvo; mínimos quadrados
-    a partir de cada ponto de partida. Com um 4º elemento nas partidas e nos limites, a guinada alternada do 2º (rad) também
-    é livre (`voa_solido`). Devolve (custo, voo, parâmetros): custo ~0 quando a órbita é alcançada."""
+    a partir de cada ponto de partida. `integrador` ({rtol, atol, max_step_s, max_step_costa_s}) troca os do `voa_solido`.
+    Resíduos ("suave", o padrão desde 2026-11-11): semieixo maior menos o raio-alvo e as duas componentes do vetor
+    excentricidade vezes o raio-alvo, funções suaves do estado. A forma antiga ("apses": periapse e apoapse menos o alvo)
+    tem uma quina em e = 0, exatamente no alvo circular, e o ajuste parava em custos espalhados entre 1e-9 e 4e-4
+    (results/conferencia/ruido_subida.md); fica só para o diagnóstico.
+    Com um 4º elemento nas partidas e nos limites, a guinada alternada do 2º (rad) também é livre (`voa_solido`).
+    Devolve (custo, voo, parâmetros): custo ~0 quando a órbita é alcançada."""
     from scipy.optimize import least_squares
+    kw = {} if integrador is None else {"rtol": integrador["rtol"], "atol": integrador["atol"], "max_step": integrador["max_step_s"], "max_step_costa": integrador["max_step_costa_s"]}
     melhor = None
     for x0 in partidas:
         def res(x):
-            r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2], guinada_2_rad=x[3] if len(x) > 3 else 0.0)
+            r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2], guinada_2_rad=x[3] if len(x) > 3 else 0.0, **kw)
+            if residuo == "apses":
+                if r is None:
+                    return [1.0e3, 1.0e3]
+                return [(r["periapse_m"] - h_alvo) / escala_m, (r["apoapse_m"] - h_alvo) / escala_m]
             if r is None:
-                return [1.0e3, 1.0e3]
-            return [(r["periapse_m"] - h_alvo) / escala_m, (r["apoapse_m"] - h_alvo) / escala_m]
+                return [1.0e3, 1.0e3, 1.0e3]
+            r_alvo = pl.raio + h_alvo
+            return [(min(r["semieixo_m"], 1.0e9) - r_alvo) / escala_m, r["ecc_radial"] * r_alvo / escala_m, r["ecc_transversal"] * r_alvo / escala_m]
         ls = least_squares(res, x0, bounds=([b[0] for b in limites], [b[1] for b in limites]))
         if melhor is None or ls.cost < melhor[0]:
             melhor = (ls.cost, ls.x)
@@ -213,4 +232,32 @@ def ajusta_solido(pl, estagios, inertes, area_cd, atm, h_alvo, t_v, partidas, li
     par = {"t_v_s": t_v, "theta0_graus": math.degrees(x[0]), "c_1_s": float(x[1]), "t_antes_apoapse_s": float(x[2])}
     if len(x) > 3:
         par["guinada_2_graus"] = math.degrees(x[3])
-    return melhor[0], voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2], guinada_2_rad=x[3] if len(x) > 3 else 0.0), par
+    return melhor[0], voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], x[1]), x[2], guinada_2_rad=x[3] if len(x) > 3 else 0.0, **kw), par
+
+def semieixo_circular_maximo(pl, estagios, inertes, area_cd, atm, t_v, partidas, limites, num, integrador=None):
+    """Maior semieixo (m) que o sólido alcança numa órbita circular (P-117). Para cada c (taxa da linear-tangente), θ0 e a
+    antecedência da ignição do 2º zeram as duas componentes do vetor excentricidade (mínimos quadrados 2 × 2, a partir de
+    cada ponto de partida); o semieixo dessa circular é maximizado em c (busca 1-D limitada). `num` = {tol_ls, custo_circular,
+    xatol_c}. Devolve (semieixo, voo, guiamento) ou (None, None, None) se nenhuma circular é alcançada."""
+    from scipy.optimize import least_squares, minimize_scalar
+    kw = {} if integrador is None else {"rtol": integrador["rtol"], "atol": integrador["atol"], "max_step": integrador["max_step_s"], "max_step_costa": integrador["max_step_costa_s"]}
+    lo = [limites[0][0], limites[2][0]]
+    hi = [limites[0][1], limites[2][1]]
+
+    def circular(c):
+        melhor = None
+        for x0 in partidas:
+            def res(x):
+                r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, x[0], c), x[1], **kw)
+                return [1.0e3, 1.0e3] if r is None else [r["ecc_radial"] * 1.0e3, r["ecc_transversal"] * 1.0e3]
+            ls = least_squares(res, [x0[0], x0[2]], bounds=(lo, hi), xtol=num["tol_ls"], ftol=num["tol_ls"], gtol=num["tol_ls"])
+            if ls.cost < num["custo_circular"]:
+                r = voa_solido(pl, estagios, inertes, area_cd, atm, (t_v, ls.x[0], c), ls.x[1], **kw)
+                if melhor is None or r["semieixo_m"] > melhor[0]:
+                    melhor = (r["semieixo_m"], ls.x, r)
+        return melhor
+    o = minimize_scalar(lambda c: (lambda m: 1.0e12 if m is None else -m[0])(circular(c)), bounds=limites[1], method="bounded", options={"xatol": num["xatol_c"]})
+    m = circular(o.x)
+    if m is None:
+        return None, None, None
+    return m[0], m[2], {"t_v_s": t_v, "theta0_graus": math.degrees(m[1][0]), "c_1_s": float(o.x), "t_antes_apoapse_s": float(m[1][1])}
