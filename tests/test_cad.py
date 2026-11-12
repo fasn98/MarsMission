@@ -812,3 +812,40 @@ def test_familia1_mavs():
         p = 36 * (t_min + 62.5) / (-20 + 62.5) * (mp / 320) ** 0.6667
         assert x["termico"]["potencia_w"] == pytest.approx(p)
         assert x["termico"]["energia_kwh"] == pytest.approx(p * 24 * x["termico"]["dias"] / 1000)
+
+
+def test_vetor_excentricidade_e_escala_minima():
+    """Vetor excentricidade: zero na circular e |e| = (ra − rp)/(ra + rp) numa elipse; escala mínima (P-117): a raiz de um
+    déficit sintético monótono, com o intervalo achado pela varredura, e a mesma raiz com a escala perturbada em 1e-15."""
+    import math as m
+    from orbital import subida as sb
+    import mav_familia1 as mf
+    pl = sb.Planeta(4.2828e13, 3.39619e6, 0.0)
+    r = 3.77619e6
+    vc = m.sqrt(pl.mu / r)
+    x = sb.vetor_excentricidade(pl, [r, 0.0, 0.0, vc, 1.0])
+    assert x["semieixo_m"] == pytest.approx(r) and abs(x["ecc_radial"]) < 1e-12 and abs(x["ecc_transversal"]) < 1e-12
+    rp, ra = 3.7e6, 4.2e6
+    a = (rp + ra) / 2
+    vp = m.sqrt(pl.mu * (2 / rp - 1 / a))
+    y = sb.vetor_excentricidade(pl, [rp, 0.0, 0.0, vp, 1.0])
+    assert m.hypot(y["ecc_radial"], y["ecc_transversal"]) == pytest.approx((ra - rp) / (ra + rp))
+    # num ponto fora do periapse, |e| é o mesmo
+    p_ = a * (1 - ((ra - rp) / (ra + rp)) ** 2)
+    nu = 1.0
+    e_ = (ra - rp) / (ra + rp)
+    rr = p_ / (1 + e_ * m.cos(nu))
+    h = m.sqrt(pl.mu * p_)
+    z = sb.vetor_excentricidade(pl, [rr, nu, pl.mu / h * e_ * m.sin(nu), h / rr, 1.0])
+    assert m.hypot(z["ecc_radial"], z["ecc_transversal"]) == pytest.approx(e_)
+    s_star = 0.96917
+
+    def tenta(s):
+        return ((0.0 if s >= s_star + 0.002 else 1.0, None, None), None, None)
+
+    def deficit(s):
+        return (4.2e5 * (s - s_star), None, None)
+    r1 = mf.escala_minima(tenta, deficit, 0.5, 4.0, 0.05, 1e-6, 1e-14)
+    assert r1[0] == pytest.approx(s_star, abs=1e-12)
+    r2 = mf.escala_minima(tenta, lambda s: deficit(s + 1e-15), 0.5, 4.0, 0.05, 1e-6, 1e-14)
+    assert abs(r2[0] - r1[0]) < 1e-12
