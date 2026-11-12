@@ -23,6 +23,11 @@ mav_solido:
     escala_busca: {valor: [0.5, 4.0], premissa: P-110}
     passo_varredura_escala: {valor: 0.05, premissa: P-110}
     passos_escala: {valor: 8, premissa: P-110}
+  escala_minima:   # P-117: raiz de (maior semieixo de uma circular alcançável) − (raio-alvo)
+    tol_ls: {valor: 1.0e-14, premissa: P-117}          # mínimos quadrados 2 × 2 da circular (xtol, ftol, gtol)
+    custo_circular: {valor: 1.0e-16, premissa: P-117}  # custo abaixo do qual a circular é aceita
+    xatol_c: {valor: 1.0e-10, premissa: P-117}         # busca 1-D em c (1/s)
+    xtol_escala: {valor: 1.0e-14, premissa: P-117}     # brentq na escala
 
 mav_hipergolico:
   diametro_m: {valor: 0.72, fonte: "results/etapa7.2/bocais_alternativas.md, alternativa A: o menor Ø da varredura que contém as 4 saídas de 164:1 com parede"}
@@ -64,3 +69,29 @@ politica_margem_msr:
   - "[F248] PDF p. 17: \"a MAV solid propulsion system was designed that allowed the vehicle to maintain a GLOM 6 kg below the 400 kg limit.\""
   - "[F230] PDF p. 6: \"The designs themselves included a length margin of 10cm on SRM1 and 1.8kg of propellant mass margin in SRM2.\""
   - "[F267] PDF p. 3 (Tab. 1, requisitos do estudo de conceito de 2018): \"Performance Margin\" — \"Addtl. 5 kg payload\"; \"Other Margin Allocation\" — \"AIAA margins / 25% for unknowns\""
+
+ruido_subida:   # Fabio, 2026-11-11: diagnóstico do piso de ruído dos integradores da subida (P-116), sem mudar resultados
+  solido:   # rtol, atol (SI), passo máximo nas queimas e na costa (s); "atual" é o padrão de orbital.subida.voa_solido
+    integradores: {valor: {atual: [1.0e-9, 1.0e-6, 1.0, 5.0], a: [1.0e-10, 1.0e-7, 0.5, 2.5], b: [1.0e-11, 1.0e-8, 0.25, 1.0], c: [1.0e-12, 1.0e-9, 0.1, 0.5]}, premissa: P-116}
+    referencia: {valor: [1.0e-13, 1.0e-10, 0.05, 0.25], premissa: P-116}
+  hipergolico:   # rtol, atol, passo máximo (s); "atual" é o da P-107
+    integradores: {valor: {atual: [1.0e-8, 1.0e-6, 2.0], a: [1.0e-10, 1.0e-8, 1.0], b: [1.0e-11, 1.0e-9, 0.5], c: [1.0e-12, 1.0e-10, 0.25]}, premissa: P-116}
+    referencia: {valor: [1.0e-13, 1.0e-11, 0.1], premissa: P-116}
+  rugosidade: {valor: {passos: 21, delta_t_antes_s: 1.0e-4, delta_theta0_rad: 1.0e-7}, premissa: P-116}
+  escalas_custo: {valor: [0.97, 0.98, 0.99, 1.0, 1.02, 1.03], premissa: P-116}   # P-111 a 380 km, onde o CI divergiu
+  # Reprodutibilidade (item 1c): a escala mínima do sólido (P-117) com o rtol e o atol multiplicados por estes fatores, e
+  # com a carga útil perturbada por este fator relativo (da ordem do ruído de ponto flutuante entre CPUs).
+  fatores_tolerancia: {valor: [0.5, 2.0], premissa: P-116}
+  perturbacao_relativa: {valor: 1.0e-13, premissa: P-116}
+  perturbacao_escala: {valor: 4.0e-16, premissa: P-116}
+  meia_largura_intervalo: {valor: 1.0e-6, premissa: P-116}   # relativa, em torno da raiz atual, para refazer as raízes perturbadas   # o caso achado na revisão do commit 5729b00
+  altitudes_reprodutibilidade_km: {valor: [380], premissa: P-116}   # a 814 km o sólido não fecha (results/familia1/mavs.md)
+
+# Errata de results/familia1/mavs.md (Fabio, 2026-11-11): valores publicados no PR #59 com o ajuste antigo do sólido
+# (resíduo em periapse e apoapse; ver P-117); a escala dependia da CPU. Registro dos valores antigos, sem apagar.
+errata_mavs_2026_11_11:
+  fonte: "results/familia1/mavs.yaml no commit 8417131, o merge do PR #59"
+  # verificação: as divisões que chegavam à órbita publicada, por modelo de empuxo
+  verificacao_fecha: {tempo_publicado: [0.38, 0.40, 0.42], empuxo_publicado: [0.38, 0.40]}
+  solido_380_sem_margem: {escala: 1.0289062500000004, capacidade_minima_m_s: 4103.228163115581, capacidade_m_s: 4103.228163115581, empuxo_peso: 5.595671165823677, massa_por_area_kg_m2: 279.3574906908876, potencia_w: 17.36130657254762, energia_kwh: 118.75133695622571, rhus: 24, glom_kg: 404.9265625000002, comprimento_m: [2.7346875000000006, 2.7780468750000016], folga_sem_deck_m: [0.20297656249999907, 0.22465624999999956], folga_com_deck_m: [-0.017023437500000904, 0.004656249999999584], massa_entrada_kg: 4442.988917428843}
+  solido_380_com_margem: {escala: 3.8511561116626902, capacidade_m_s: 4513.55097942714, empuxo_peso: 5.762534766700051, massa_por_area_kg_m2: 411.13902783795214, potencia_w: 41.854779550680675, energia_kwh: 286.28669212665585, rhus: 57, glom_kg: 1471.737010208497, comprimento_m: [6.121387333995229, 10.398121501489264], folga_sem_deck_m: [-3.6070607507446324, -1.4686936669976147], folga_com_deck_m: [-3.827060750744632, -1.6886936669976147], massa_entrada_kg: 6538.883706640034}

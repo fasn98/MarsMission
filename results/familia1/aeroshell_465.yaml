@@ -97,82 +97,82 @@ linhas:
   fecha: true
   diametro_m: 0.57
   comprimento_m:
-  - 2.7346875000000006
-  - 2.7780468750000016
+  - 2.616783963710023
+  - 2.6630150949822324
   folga_465:
     sem_deck_m:
-    - 0.40854177989130336
-    - 0.43022146739130385
+    - 0.46605766990018793
+    - 0.48917323553629255
     com_deck_m:
-    - 0.2546287364130426
-    - 0.2763084239130431
+    - 0.3121446264219272
+    - 0.3352601920580318
   folga_45:
     sem_deck_m:
-    - 0.20297656249999907
-    - 0.22465624999999956
+    - 0.26049245250888364
+    - 0.28360801814498826
     com_deck_m:
-    - -0.017023437500000904
-    - 0.004656249999999584
-  glom_kg: 404.9265625000002
+    - 0.04049245250888367
+    - 0.06360801814498829
+  glom_kg: 382.3497549194032
   tipo: solido
   altitude_km: 380.0
-  massa_entrada_kg: 4442.988917428843
-  lander_injetado_kg: 4628.883578666328
+  massa_entrada_kg: 4398.633696248888
+  lander_injetado_kg: 4583.040887036413
   lander_injetado_piso_srl_kg: 5204.57425528715
   margens:
     Vulcan VC4:
-      modelo_coifa_padrao: 0.39218612755577675
-      modelo_coifa_longa: 0.37295902916639734
+      modelo_coifa_padrao: 0.4061117199539397
+      modelo_coifa_longa: 0.3866922990511621
       piso_srl_coifa_padrao: 0.23819301794829584
       piso_srl_coifa_longa: 0.22109267589638093
     Vulcan VC6:
-      modelo_coifa_padrao: 0.7821962729697485
-      modelo_coifa_longa: 0.7629691745803691
+      modelo_coifa_padrao: 0.8000230120671095
+      modelo_coifa_longa: 0.7806035911643316
       piso_srl_coifa_padrao: 0.5850631881233195
       piso_srl_coifa_longa: 0.5679628460714046
   massa_por_area_465_piso_srl_kg_m2: 294.4246837172304
-  massa_por_area_465_kg_m2: 261.62512135462936
-  massa_por_area_45_kg_m2: 279.3574906908876
+  massa_por_area_465_kg_m2: 259.0132669612061
+  massa_por_area_45_kg_m2: 276.568610610799
 - rotulo: Sólido, 380 km, com a margem da P-014 na capacidade, não simulado
   fecha: true
   diametro_m: 0.57
   comprimento_m:
-  - 6.121387333995229
-  - 10.398121501489264
+  - 5.367405730616496
+  - 8.701662893887114
   folga_465:
     sem_deck_m:
-    - -3.401495533353328
-    - -1.2631284496063104
+    - -2.553266229552253
+    - -0.8861376479169438
     com_deck_m:
-    - -3.5554085768315886
-    - -1.4170414930845712
+    - -2.7071792730305138
+    - -1.0400506913952046
   folga_45:
     sem_deck_m:
-    - -3.6070607507446324
-    - -1.4686936669976147
+    - -2.7588314469435575
+    - -1.0917028653082481
     com_deck_m:
-    - -3.827060750744632
-    - -1.6886936669976147
-  glom_kg: 1471.737010208497
+    - -2.9788314469435573
+    - -1.311702865308248
+  glom_kg: 1234.232805144196
   tipo: solido
   altitude_km: 380.0
-  massa_entrada_kg: 6538.883706640034
-  lander_injetado_kg: 6795.065055267208
-  lander_injetado_piso_srl_kg: 6795.065055267208
+  massa_entrada_kg: 6072.274266435121
+  lander_injetado_kg: 6312.807676995183
+  lander_injetado_piso_srl_kg: 6312.807676995183
   margens:
     Vulcan VC4:
-      modelo_coifa_padrao: -0.05162534105619587
-      modelo_coifa_longa: -0.06472308173654606
-      piso_srl_coifa_padrao: -0.05162534105619587
-      piso_srl_coifa_longa: -0.06472308173654606
+      modelo_coifa_padrao: 0.020824304179878128
+      modelo_coifa_longa: 0.006725981443969298
+      piso_srl_coifa_padrao: 0.020824304179878128
+      piso_srl_coifa_longa: 0.006725981443969298
     Vulcan VC6:
-      modelo_coifa_padrao: 0.21405446376342252
-      modelo_coifa_longa: 0.20095672308307222
-      piso_srl_coifa_padrao: 0.21405446376342252
-      piso_srl_coifa_longa: 0.20095672308307222
-  massa_por_area_465_piso_srl_kg_m2: 385.0417534382486
-  massa_por_area_465_kg_m2: 385.0417534382486
-  massa_por_area_45_kg_m2: 411.13902783795214
+      modelo_coifa_padrao: 0.30680031517080786
+      modelo_coifa_longa: 0.29270199243489925
+      piso_srl_coifa_padrao: 0.30680031517080786
+      piso_srl_coifa_longa: 0.29270199243489925
+  massa_por_area_465_piso_srl_kg_m2: 357.5654860678875
+  massa_por_area_465_kg_m2: 357.5654860678875
+  massa_por_area_45_kg_m2: 381.80048012359987
 - rotulo: Sólido, 814 km
   fecha: false
 - rotulo: Hipergólico 4 × 164:1, 380 km, com a margem da P-014
@@ -433,32 +433,32 @@ sensibilidade_solido:
   fecha: true
   casos:
   - margem: sem margem
-    escala: 1.0289062500000004
-    capacidade_m_s: 4103.228163115581
-    glom_kg: 404.9265625000002
+    escala: 0.9691792458185269
+    capacidade_m_s: 4073.238790043569
+    glom_kg: 382.3497549194032
     comprimento_m:
-    - 2.7346875000000006
-    - 2.7780468750000016
+    - 2.616783963710023
+    - 2.6630150949822324
     folga_465_com_deck_m:
-    - 0.2546287364130426
-    - 0.2763084239130431
+    - 0.3121446264219272
+    - 0.3352601920580318
     folga_465_sem_deck_m:
-    - 0.40854177989130336
-    - 0.43022146739130385
+    - 0.46605766990018793
+    - 0.48917323553629255
   - margem: com a margem da P-014, não simulado
-    escala: 3.8511561116661723
-    capacidade_m_s: 4513.550979427292
-    glom_kg: 1471.7370102098132
+    escala: 3.22283810884847
+    capacidade_m_s: 4480.562669048014
+    glom_kg: 1234.2328051447219
     comprimento_m:
-    - 6.121387333999408
-    - 10.398121501498666
+    - 5.367405730618165
+    - 8.70166289389087
     folga_465_com_deck_m:
-    - -3.5554085768362897
-    - -1.4170414930866606
+    - -2.7071792730323914
+    - -1.040050691396039
     folga_465_sem_deck_m:
-    - -3.401495533358029
-    - -1.2631284496083999
-  capacidade_minima_m_s: 4103.228163115581
+    - -2.5532662295541306
+    - -0.8861376479177783
+  capacidade_minima_m_s: 4073.238790043569
   capacidade_assintotica_m_s: 4694.270910354586
   k:
   - 0.298888888888889
@@ -470,10 +470,10 @@ sensibilidade_solido:
   - 0.298888888888889
   - 0.7911764705882356
   melhor_da_varredura:
-    custo: 91.06904227654691
+    custo: 46.204543711081826
     escala: 3.9999999999999942
-    periapse_km: 679.4998856133465
-    apoapse_km: 802.8856990644261
+    periapse_km: 679.623928632339
+    apoapse_km: 801.3847569482634
     tolerancia: 1.0e-06
     capacidade_m_s: 4519.925457976659
     glom_kg: 1527.9999999999982
@@ -481,35 +481,39 @@ sensibilidade_solido:
   capacidade_assintotica_m_s: 4694.270910354586
 - inerte: P-019 (ε 0,286 nos dois estágios)
   altitude_km: 380.0
-  fecha: false
+  fecha: true
+  casos:
+  - margem: sem margem
+    escala: 0.5538785158747388
+    capacidade_m_s: 4185.657723608315
+    glom_kg: 225.76015503155375
+    comprimento_m:
+    - 1.4954719928617952
+    - 2.164654219049687
+    folga_465_com_deck_m:
+    - 0.5613250643882
+    - 0.8959161774821458
+    folga_465_sem_deck_m:
+    - 0.7152381078664607
+    - 1.0498292209604065
+  - margem: com a margem da P-014, não simulado
+    escala: 0.851506116365168
+    capacidade_m_s: 4604.223495969631
+    glom_kg: 338.4751454693858
+    comprimento_m:
+    - 2.299066514185954
+    - 2.521807339638202
+    folga_465_com_deck_m:
+    - 0.38274850409394245
+    - 0.49411891682006637
+    folga_465_sem_deck_m:
+    - 0.5366615475722032
+    - 0.6480319602983271
+  capacidade_minima_m_s: 4185.657723608315
+  capacidade_assintotica_m_s: 5889.114406611101
   k:
   - 0.4005602240896358
   - 0.4005602240896358
-  melhor_da_varredura:
-    custo: 0.00033109134950902707
-    escala: 0.6000000000000001
-    periapse_km: 379.8373065436664
-    apoapse_km: 380.1993717862889
-    tolerancia: 1.0e-06
-    capacidade_m_s: 4268.298554472507
-    glom_kg: 243.22689075630254
-    indicativo_com_margem:
-      escala: 0.9447519351471784
-      capacidade_m_s: 4695.128409919838
-      glom_kg: 373.78840793248884
-      comprimento_m:
-      - 2.550830224897382
-      - 2.6337023221766143
-      folga_465_sem_deck_m:
-      - 0.480714056302997
-      - 0.5221501049426132
-      folga_465_com_deck_m:
-      - 0.3268010128247363
-      - 0.3682370614643524
-      folga_45_com_deck_m:
-      - 0.055148838911692755
-      - 0.0965848875513089
-  capacidade_assintotica_m_s: 5889.114406611101
 - inerte: P-019 (ε 0,286 nos dois estágios)
   altitude_km: 814.0
   fecha: false
@@ -517,10 +521,10 @@ sensibilidade_solido:
   - 0.4005602240896358
   - 0.4005602240896358
   melhor_da_varredura:
-    custo: 0.755194725175606
+    custo: 0.3781514764529834
     escala: 2.5499999999999994
-    periapse_km: 801.7103016473474
-    apoapse_km: 814.0475335242655
+    periapse_km: 801.7102695397288
+    apoapse_km: 814.0387005750583
     tolerancia: 1.0e-06
     capacidade_m_s: 5346.660023670295
     glom_kg: 981.7142857142853

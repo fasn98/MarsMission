@@ -1258,3 +1258,31 @@ premissas:
       escape não tem fonte. Só como estimativa ao lado do limite otimista (a curva do ELVPerf usada no estudo).
       Aprovada pelo Fabio em 2026-11-10 (PR #60) como NÃO VALIDADA, com a faixa de 70 kg dos 531 a 551 registrada aqui.
     status: NÃO VALIDADA
+
+  - id: P-116
+    nome: diagnostico_do_ruido_da_subida
+    valor: {integradores_solido: "atual, a, b, c e referência (config/familia1.yaml, ruido_subida)", integradores_hipergolico: "atual, a, b, c e referência", rugosidade: {passos: 21, delta_t_antes_s: 1.0e-4, delta_theta0_rad: 1.0e-7}, escalas_custo: [0.97, 0.98, 0.99, 1.0, 1.02, 1.03], fatores_tolerancia: [0.5, 2.0], perturbacao_relativa: 1.0e-13, perturbacao_escala: 4.0e-16, meia_largura_intervalo: 1.0e-6, altitudes_reprodutibilidade_km: [380]}
+    unidade: SI; s; rad; —
+    uso: config/familia1.yaml (ruido_subida), results/conferencia/ruido_subida.md
+    justificativa: >
+      Integradores, passos e perturbações usados só no diagnóstico do piso de ruído da subida e no teste de reprodutibilidade
+      da escala mínima do sólido (decisão do Fabio, 2026-11-11). Escolhas numéricas, sem fonte; não mudam resultados.
+    status: NÃO VALIDADA
+
+  - id: P-117
+    nome: escala_minima_do_mav_solido_por_energia
+    valor: {criterio: "raiz em s de (maior semieixo de uma circular alcançável) − (raio-alvo)", metodo: "brentq; para cada s, busca 1-D limitada em c com θ0 e a antecedência por mínimos quadrados 2 × 2 no vetor excentricidade", tol_ls: 1.0e-14, custo_circular: 1.0e-16, xatol_c: 1.0e-10, xtol_escala: 1.0e-14, ajuste: "resíduo suave (semieixo e vetor excentricidade)"}
+    unidade: tol_ls e custo_circular adimensionais; xatol_c em 1/s; xtol_escala adimensional
+    uso: tools/mav_familia1.py (escala_minima), src/orbital/subida.py (ajusta_solido, semieixo_circular_maximo), results/familia1/mavs.md
+    justificativa: >
+      O motor sólido não desliga no alvo: queima até esgotar. A escala do sólido é a menor com que ele chega à circular-alvo;
+      o excesso acima dela é tratado à parte. O ajuste antigo media periapse e apoapse, que têm uma quina em e = 0, exatamente
+      no alvo circular; o custo parava entre 1e-9 e 4e-4 conforme a escala, e a escala escolhida mudava com a CPU (CI do PR
+      #60, run 42896102600). Uma primeira correção (resíduo suave com bisseção sobre o limiar de custo, commit 5729b00, não
+      publicado) ainda virava com uma perturbação de 4e-16, porque o custo abaixo da borda vai a zero de forma contínua. Com a
+      raiz de uma função suave e monótona (opção A, aprovada pelo Fabio em 2026-11-11), perturbações do tamanho do ruído de ponto
+      flutuante mudam a escala em ~1e-12; as variantes do integrador (rtol × 0,5 e × 2) mudam ~1e-6, fora da P-039, e uma
+      decisão discreta do integrador virada em outra CPU pode dar um salto da ordem da rugosidade (results/conferencia/ruido_subida.md). O pedido falava em "apoapse ótimo ≥ alvo": o apoapse sozinho não garante a
+      órbita (uma trajetória suborbital o alcança), e o critério usa a circular inteira. As tolerâncias numéricas são escolhas
+      sem fonte. Proposta para a aprovação do Fabio.
+    status: NÃO VALIDADA

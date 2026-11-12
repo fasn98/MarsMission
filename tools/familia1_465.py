@@ -167,34 +167,30 @@ def main():
     margem = v(dcfg["margem_dv"])
     lo, hi = fc["mav_solido"]["guia"]["escala_busca"]["valor"]
     passo = v(g["passo_varredura_escala"])
+    em_ = fc["mav_solido"]["escala_minima"]
+    nm_ = {"tol_ls": v(em_["tol_ls"]), "custo_circular": v(em_["custo_circular"]), "xatol_c": v(em_["xatol_c"])}
     sens = []
     for rot, k in (("P-111 (divisão da conferência)", k111), ("P-019 (ε 0,286 nos dois estágios)", k19)):
         for h in sorted({x["altitude_km"] for x in mv["solido"]}):
             melhor = {}
 
-            def tenta(s):
+            def tenta(s, k=k, h=h):
                 est, ine = mf.solido([s * x for x in mp_msr], [s * x for x in f_tempo], isp_s, k, carga)
                 aj = sb.ajusta_solido(pl_e, est, ine, area_s, atm, 1000 * h, t_v, partidas, limites)
                 if not melhor or aj[0] < melhor["custo"]:
                     melhor.update({"custo": aj[0], "escala": s, "periapse_km": aj[1]["periapse_m"] / 1000, "apoapse_km": aj[1]["apoapse_m"] / 1000})
-                return aj[0] < tol, est, ine
-            s_, a_, ok = lo, lo, None
-            while s_ <= hi + 1e-9:
-                r = tenta(s_)
-                if r[0]:
-                    ok = r
-                    break
-                a_, s_ = s_, s_ + passo
-            linha = {"inerte": rot, "altitude_km": h, "fecha": ok is not None}
-            if ok:
-                b_ = s_
-                for _ in range(int(v(g["passos_escala"]))):
-                    mid = (a_ + b_) / 2
-                    r = tenta(mid)
-                    if r[0]:
-                        b_, ok = mid, r
-                    else:
-                        a_ = mid
+                return aj, est, ine
+
+            def deficit(s, k=k, h=h):
+                est, ine = mf.solido([s * x for x in mp_msr], [s * x for x in f_tempo], isp_s, k, carga)
+                a_m, vo, gu = sb.semieixo_circular_maximo(pl_e, est, ine, area_s, atm, t_v, partidas, limites, nm_)
+                return (-1.0e7 if a_m is None else a_m - (pl_e.raio + 1000 * h)), vo, gu
+            # escala mínima pelo critério da P-117 (o mesmo de tools/mav_familia1.py)
+            r_ = mf.escala_minima(tenta, deficit, lo, hi, passo, tol, v(em_["xtol_escala"]))
+            linha = {"inerte": rot, "altitude_km": h, "fecha": r_ is not None}
+            if r_:
+                b_ = r_[0]
+                ok = (None,) + mf.solido([b_ * x for x in mp_msr], [b_ * x for x in f_tempo], isp_s, k, carga)
                 cap0 = mf.capacidade(ok[1], ok[2], carga)
                 s2_ = escala_para((1 + margem) * cap0, b_, mp_msr, f_tempo, isp_s, k, carga)
                 assint = assintotica(mp_msr, f_tempo, isp_s, k)
@@ -207,7 +203,7 @@ def main():
                                                           "folga_465_sem_deck_m": [(lim[d_s]["sem_deck_m"] - max(Ls)) / 2, (lim[d_s]["sem_deck_m"] - min(Ls)) / 2]})
                 linha.update({"capacidade_minima_m_s": cap0, "capacidade_assintotica_m_s": assint, "k": k})
             else:
-                # não fecha na tolerância da P-110: o melhor ponto da varredura, só como diagnóstico
+                # nenhuma escala da grade fecha a circular (P-117): o melhor ponto da varredura, só como diagnóstico
                 e_, i_ = mf.solido([melhor["escala"] * x for x in mp_msr], [melhor["escala"] * x for x in f_tempo], isp_s, k, carga)
                 cap_b = mf.capacidade(e_, i_, carga)
                 assint_ = assintotica(mp_msr, f_tempo, isp_s, k)
@@ -315,8 +311,8 @@ def escreve_md(o):
         for c in s["casos"]:
             md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | {br(s['capacidade_minima_m_s'], 0)} | {br(s['capacidade_assintotica_m_s'], 0)} | {c['margem']} | {br(c['escala'], 2)} | {br(c['glom_kg'], 1)} | {faixa(c['comprimento_m'], lambda y: br(y, 2))} | {faixa(c['folga_465_sem_deck_m'])} | {faixa(c['folga_465_com_deck_m'])} |")
     md += ["", "A capacidade assintótica é a de um sólido de escala infinita com os mesmos k de inerte: se a capacidade com a margem passa dela, não há sólido que feche.", "",
-           "\"Não fecha na varredura\" quer dizer: nenhum ponto da varredura da P-110 (passo e tolerância de lá) chega à órbita dentro da tolerância. O melhor ponto é diagnóstico, não resultado: a P-110 não foi mudada.",
-           "", "Com a P-019 a 380 km, o melhor ponto fica a menos de 1 km da órbita (resíduo acima da tolerância da P-110). O sólido não regula o empuxo: Δv a mais passa da órbita, e a janela de escalas que chegam é estreita. O mais provável é que o passo da varredura da P-110 seja grosso para o inerte mais leve da P-019, e não que a P-019 piore o sólido: a capacidade assintótica com a P-019 é maior que com a P-111. Mudar o passo ou a tolerância da P-110 é decisão do Fabio.",
+           "\"Não fecha na varredura\" quer dizer: em nenhuma escala da varredura da P-110 o ajuste chega à circular (critério da P-117). O melhor ponto é diagnóstico, não resultado.",
+           "", "**Nota (2026-11-12):** a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo) (P-117, PR #64); as versões anteriores desta página, com o ajuste antigo, davam a P-019 a 380 km como \"não fecha na varredura\", com o melhor ponto a menos de 1 km da órbita. Valem os números desta versão; os da linha do sólido nas seções (c) a (e) vêm de results/familia1/mavs.yaml, regenerado no PR #64.",
            "", "O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; \"não existe\" quando esse alvo passa da capacidade assintótica."]
     if o["politica_margem_msr"]:
         md += ["", "## Política de margem do MAV sólido do MSR, nas fontes", ""] + [f"- {x}" for x in o["politica_margem_msr"]]
