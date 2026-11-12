@@ -409,7 +409,7 @@ mav_solido:   # MAV sólido de dois estágios do MSR (versão de 2019), para a r
   comprimento_m: {valor: 2.7, fonte: "[F247] PDF p. 2, cota da figura do veículo: \"2.7 m = 8 ft 10.25 in.\""}
   diametro_m: {valor: 0.57, fonte: "[F248] PDF p. 4, Tab. 1 (imagem): \"Max Vehicle Diameter .57 m\" (limite; o diâmetro real não é publicado)"}
   escala:   # P-108: o MAV sólido para o nosso Δv, a partir do de 2019
-    comprimento_fixo_m: {valor: [0.0, 0.5, 1.0, 1.5], premissa: P-108}
+    comprimento_fixo_m: {valor: [0.0, 0.5, 1.0, 1.5], registro: "P-108 original"}   # só registro desde 2026-11-12 (P-108 revista: tools/comprimento_solido.py)
   contra_no_adr_0007:
     - {item: "Massa pela regra (iii)", adr: "41,3 a 41,4 t do sólido, contra 34,2 a 34,4 t do hipergólico", hoje: "o ADR registra que a comparação não foi refeita com o Isp de voo de 310 s; o GLOM do sólido para o nosso Δv está na tabela de cima"}
     - {item: "Frio extremo", adr: "[F58] p. 4: \"Potential issues with extremely cold environments\"", hoje: "o MSR mantém o MAV num recinto térmico: [F249] PDF p. 3: \"the MAV is stored in a thermal enclosure known as the igloo\"; [F35] PDF p. 9: \"the vehicle exterior will be maintained at -62.5°C by the SRL igloo. Most internal components will be kept at a non-operational AFT of -40°C\". O grão trincou perto de −70 °C em ensaio: [F248] PDF p. 14: \"Data from the analog samples showed cracking at approximately -70 °C\"; PDF p. 13: \"Current qualification minimum temperatures are -50 °C\". O risco segue, com mitigação de projeto, não de voo"}
@@ -455,3 +455,13 @@ portao_mav:   # Fabio, 2026-11-07: conclusão de sistema e famílias de arquitet
     - "[F254] PDF p. 15: \"There are small windows to increase the SRL capsule and parachute diameters beyond Mars 2020 (4.5-m and 21.5-m, respectively), but new testing may be required\""
     - "[F265] PDF p. 17: \"a larger supersonic parachute (30 m vs. 21.5 m MSL DGB) combined with one other technology is necessary to make any significant increase in landed payload mass and/or altitude\""
     - "[F227] PDF p. 3: \"MSL will enter the largest entry mass, fly the largest diameter aeroshell\""
+
+# Errata de results/etapa7.2/mav_solido.md (Fabio, 2026-11-12): P-108 revista aplicada; comprimentos antigos (parte fixa de
+# 0 a 1,5 m, P-108 original) como registro.
+errata_mav_solido_2026_11_12:
+  fonte: "results/etapa7.2/mav_solido.yaml no commit 9da6251 (main, merge do PR #64)"
+  casos:
+    - rotulo: "Δv de [F37], com perdas"
+      comprimentos: [{comprimento_fixo_m: 0.0, comprimento_m: 11.614123069655824, folga_sem_deck_m: -4.215061534827912, folga_com_deck_m: -4.435061534827912}, {comprimento_fixo_m: 0.5, comprimento_m: 9.963359538238079, folga_sem_deck_m: -3.3896797691190397, folga_com_deck_m: -3.6096797691190394}, {comprimento_fixo_m: 1.0, comprimento_m: 8.312596006820334, folga_sem_deck_m: -2.5642980034101672, folga_com_deck_m: -2.784298003410167}, {comprimento_fixo_m: 1.5, comprimento_m: 6.661832475402589, folga_sem_deck_m: -1.7389162377012946, folga_com_deck_m: -1.9589162377012945}]
+    - rotulo: "Δv ideal, sem perdas (limite inferior)"
+      comprimentos: [{comprimento_fixo_m: 0.0, comprimento_m: 3.8257626686746677, folga_sem_deck_m: -0.320881334337334, folga_com_deck_m: -0.540881334337334}, {comprimento_fixo_m: 0.5, comprimento_m: 3.6172881004015816, folga_sem_deck_m: -0.21664405020079092, folga_com_deck_m: -0.4366440502007909}, {comprimento_fixo_m: 1.0, comprimento_m: 3.408813532128495, folga_sem_deck_m: -0.1124067660642476, folga_com_deck_m: -0.33240676606424757}, {comprimento_fixo_m: 1.5, comprimento_m: 3.2003389638554083, folga_sem_deck_m: -0.00816948192770428, folga_com_deck_m: -0.22816948192770425}]

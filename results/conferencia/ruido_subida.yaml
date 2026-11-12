@@ -6,108 +6,108 @@ solido:
   atol: 1.0e-06
   max_step_s: 1.0
   max_step_costa_s: 5.0
-  erro_periapse_m: 1.0343327783048153
-  erro_apoapse_m: 0.042009014170616865
-  erro_semieixo_m: 0.5381708960048854
-  erro_excentricidade_m: 0.4968871243691997
-  rugosidade_apses_t_antes_m: 0.20440043035588518
-  rugosidade_apses_theta0_m: 0.5431180464666941
-  rugosidade_suave_t_antes_m: 2.219318720593553e-09
-  rugosidade_suave_theta0_m: 0.12823500543078287
+  erro_periapse_m: 0.052257135044783354
+  erro_apoapse_m: 2.3270012200810015
+  erro_semieixo_m: 1.1896291775628924
+  erro_excentricidade_m: 1.1385277027820848
+  rugosidade_apses_t_antes_m: 1.0791734719088304e-07
+  rugosidade_apses_theta0_m: 0.3190765708812755
+  rugosidade_suave_t_antes_m: 1.6290223721132478e-09
+  rugosidade_suave_theta0_m: 0.17454616803504155
 - integrador: a
   rtol: 1.0e-10
   atol: 1.0e-07
   max_step_s: 0.5
   max_step_costa_s: 2.5
-  erro_periapse_m: 0.12316859420388937
-  erro_apoapse_m: 0.009939605370163918
-  erro_semieixo_m: 0.06655409932136536
-  erro_excentricidade_m: 0.05457800839220983
-  rugosidade_apses_t_antes_m: 0.14136094789629236
-  rugosidade_apses_theta0_m: 0.5216984170921811
-  rugosidade_suave_t_antes_m: 3.726675937452908e-09
-  rugosidade_suave_theta0_m: 0.010452939315978623
+  erro_periapse_m: 0.011209080927073956
+  erro_apoapse_m: 0.1069084070622921
+  erro_semieixo_m: 0.05905874399468303
+  erro_excentricidade_m: 0.04787590706473566
+  rugosidade_apses_t_antes_m: 9.299018910629918e-08
+  rugosidade_apses_theta0_m: 0.015198518986836674
+  rugosidade_suave_t_antes_m: 2.6145050304305602e-09
+  rugosidade_suave_theta0_m: 0.008314100930387027
 - integrador: b
   rtol: 1.0e-11
   atol: 1.0e-08
   max_step_s: 0.25
   max_step_costa_s: 1.0
-  erro_periapse_m: 0.0039151618257164955
-  erro_apoapse_m: 0.0007699127309024334
-  erro_semieixo_m: 0.002342537045478821
-  erro_excentricidade_m: 0.003282478229107433
-  rugosidade_apses_t_antes_m: 0.13352025037886206
-  rugosidade_apses_theta0_m: 0.5264294513730029
-  rugosidade_suave_t_antes_m: 3.8694076698218314e-09
-  rugosidade_suave_theta0_m: 0.0041437953790504954
+  erro_periapse_m: 3.601983189582825e-05
+  erro_apoapse_m: 0.0004163626581430435
+  erro_semieixo_m: 0.00019017141312360764
+  erro_excentricidade_m: 0.00022657064801023807
+  rugosidade_apses_t_antes_m: 1.2241226944824144e-07
+  rugosidade_apses_theta0_m: 0.009353889660772595
+  rugosidade_suave_t_antes_m: 4.30399448733825e-09
+  rugosidade_suave_theta0_m: 0.005116923234680646
 - integrador: c
   rtol: 1.0e-12
   atol: 1.0e-09
   max_step_s: 0.1
   max_step_costa_s: 0.5
-  erro_periapse_m: 1.458311453461647e-05
-  erro_apoapse_m: 1.458311453461647e-05
-  erro_semieixo_m: 1.458311453461647e-05
-  erro_excentricidade_m: 8.372697078984359e-06
-  rugosidade_apses_t_antes_m: 0.1334677962925675
-  rugosidade_apses_theta0_m: 0.5261823069170927
-  rugosidade_suave_t_antes_m: 5.522881595621877e-09
-  rugosidade_suave_theta0_m: 0.0004342352205093397
+  erro_periapse_m: 6.534811109304428e-05
+  erro_apoapse_m: 0.0003786347806453705
+  erro_semieixo_m: 0.00022199144586920738
+  erro_excentricidade_m: 0.0001565271377330646
+  rugosidade_apses_t_antes_m: 1.0694285717979646e-07
+  rugosidade_apses_theta0_m: 0.0008271093817336782
+  rugosidade_suave_t_antes_m: 5.61282615194306e-09
+  rugosidade_suave_theta0_m: 0.0004525452439869114
 custos_p111_380km:
 - escala: 0.97
   apses, atual:
-    custo: 3.845937769794134e-06
-    erro_orbita_m: 27.73423072592472
+    custo: 30.3099297243663
+    erro_orbita_m: 77858.756378928
     fecha: false
   suave, atual:
-    custo: 5.366512349999711e-20
-    erro_orbita_m: 3.276129530406181e-06
-    fecha: true
+    custo: 15.268604937733947
+    erro_orbita_m: 55260.48305567723
+    fecha: false
 - escala: 0.98
   apses, atual:
-    custo: 3.713383085822188e-09
-    erro_orbita_m: 0.8617868745603158
-    fecha: true
+    custo: 26.380812537662713
+    erro_orbita_m: 72637.1978226896
+    fecha: false
   suave, atual:
-    custo: 3.2519147884544837e-23
-    erro_orbita_m: 8.064632401361495e-08
-    fecha: true
+    custo: 13.283365106012958
+    erro_orbita_m: 51542.924065312705
+    fecha: false
 - escala: 0.99
   apses, atual:
-    custo: 8.89610637999915e-05
-    erro_orbita_m: 133.3874535329253
+    custo: 22.8182248125962
+    erro_orbita_m: 67554.7552916835
     fecha: false
   suave, atual:
-    custo: 2.684139574250323e-21
-    erro_orbita_m: 7.326854132914511e-07
-    fecha: true
+    custo: 11.483822606339094
+    erro_orbita_m: 47924.57116415147
+    fecha: false
 - escala: 1.0
   apses, atual:
-    custo: 1.2817734256390188e-08
-    erro_orbita_m: 1.60110800737428
-    fecha: true
+    custo: 19.59200972816267
+    erro_orbita_m: 62597.14007550611
+    fecha: false
   suave, atual:
-    custo: 1.6262260719714008e-21
-    erro_orbita_m: 5.703027392484453e-07
-    fecha: true
+    custo: 9.856224212442573
+    erro_orbita_m: 44398.703162237915
+    fecha: false
 - escala: 1.02
   apses, atual:
-    custo: 0.00039337499166297574
-    erro_orbita_m: 280.49063858281465
+    custo: 14.070486184125594
+    erro_orbita_m: 53048.065344790084
     fecha: false
   suave, atual:
-    custo: 2.687547554272598e-25
-    erro_orbita_m: 7.331504012510118e-09
-    fecha: true
+    custo: 7.07190217920637
+    erro_orbita_m: 37608.24957162024
+    fecha: false
 - escala: 1.03
   apses, atual:
-    custo: 6.323213639855526e-05
-    erro_orbita_m: 112.45633499145814
+    custo: 11.734260962267525
+    erro_orbita_m: 48444.32053867104
     fecha: false
   suave, atual:
-    custo: 4.337340078484292e-25
-    erro_orbita_m: 9.3137963027804e-09
-    fecha: true
+    custo: 5.895261705722149
+    erro_orbita_m: 34337.33159615682
+    fecha: false
 tol_custo_p110: 1.0e-06
 tol_hipergolico:
   altitude_m: 1.0
@@ -162,44 +162,44 @@ reprodutibilidade:
   variante: atual
   metodo: raiz de results/familia1/mavs.yaml
   fecha: true
-  escala: 0.9691792458185269
-  glom_kg: 382.3497549194032
-  deficit_m: 5.4016709327697754e-08
+  escala: 1.1513144254504548
+  glom_kg: 451.19685282027194
+  deficit_m: -1.2619420886039734e-07
 - altitude_km: 380
   variante: escala + 4,0e-16 no déficit
   metodo: raiz por brentq em torno da atual
   fecha: true
   deficit_intervalo_m:
-  - -0.40908016450703144
-  - 0.40907913306728005
-  escala: 0.9691792458175463
-  glom_kg: 382.34975491903253
-  deficit_m: 4.4284388422966003e-07
+  - -0.3505920423194766
+  - 0.35058822063729167
+  escala: 1.151314425450944
+  glom_kg: 451.19685282045685
+  deficit_m: -1.364387571811676e-07
 - altitude_km: 380
   variante: carga útil × (1 + 1,0e-13)
   metodo: raiz por brentq em torno da atual
   fecha: true
   deficit_intervalo_m:
-  - -0.4090811936184764
-  - 0.4090779069811106
-  escala: 0.9691792458195218
-  glom_kg: 382.3497549197809
-  deficit_m: 3.0314549803733826e-07
+  - -0.3505919431336224
+  - 0.35058744344860315
+  escala: 1.1513144254509962
+  glom_kg: 451.19685282047817
+  deficit_m: -3.739260137081146e-07
 - altitude_km: 380
   variante: rtol e atol × 0,5
   metodo: primeira ordem (déficit na raiz ÷ inclinação do intervalo)
   fecha: true
-  escala: 0.9691798569089062
-  glom_kg: 382.3499859115666
-  deficit_m: -0.256458587013185
+  escala: 1.151314451121655
+  glom_kg: 451.19686252398566
+  deficit_m: -0.007506894413381815
 - altitude_km: 380
   variante: rtol e atol × 2,0
   metodo: primeira ordem (déficit na raiz ÷ inclinação do intervalo)
   fecha: true
-  escala: 0.9691775167755029
-  glom_kg: 382.3491013411401
-  deficit_m: 0.7256339583545923
-inclinacao_deficit_m: 419673.7433930576
-escala_atual: 0.9691792458185269
+  escala: 1.1513141575379777
+  glom_kg: 451.1967515493556
+  deficit_m: 0.0783442398533225
+inclinacao_deficit_m: 292424.7527183683
+escala_atual: 1.1513144254504548
 perturbacao_escala: 4.0e-16
 perturbacao_relativa: 1.0e-13

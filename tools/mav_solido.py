@@ -20,6 +20,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
 sys.path.insert(0, str(RAIZ / "tools"))
 
+import comprimento_solido as cs  # noqa: E402
 import rota_a_dimensiona as rad  # noqa: E402
 import subida_mav as sm  # noqa: E402
 from orbital import subida as sb  # noqa: E402
@@ -56,16 +57,15 @@ def main():
     for rot, dv100 in (("Δv de [F37], com perdas", v(ref["dv_100x100_m_s"])), ("Δv ideal, sem perdas (limite inferior)", sb.dv_ideal(pl, v(sc["alvo_altitude_m"])))):
         lan, e_, f, tw = dimensiona(ctx, m, m2, ms, dv100)
         mp = sum(e["propelente_kg"] for e in e_)
-        comps = []
-        for lf in ms["escala"]["comprimento_fixo_m"]["valor"]:
-            L = lf + (v(ms["comprimento_m"]) - lf) * mp / sum(mp_ref)
-            comps.append({"comprimento_fixo_m": lf, "comprimento_m": L, "folga_sem_deck_m": (m.lim_ombro[d] - L) / 2, "folga_com_deck_m": (m.lim_deck[d] - L) / 2})
+        # P-108 revista: motores pelo ajuste do catálogo [F270] mais o resto fixo (tools/comprimento_solido.py)
+        L = cs.comprimento([e["propelente_kg"] for e in e_], d)
+        comps = [{"lei": "P-108 revista", "comprimento_m": L, "folga_sem_deck_m": (m.lim_ombro[d] - L) / 2, "folga_com_deck_m": (m.lim_deck[d] - L) / 2}]
         casos.append({"rotulo": rot, "dv_100x100_m_s": dv100, "dv_subida_com_margem_km_s": (1 + v(ler("config/dimensionamento.yaml")["margem_dv"])) * lan["dv_subida_mav_km_s"],
                       "glom_kg": e_[0]["massa_inicial_kg"], "propelente_kg": [e["propelente_kg"] for e in e_], "empuxos_n": f, "empuxo_peso": tw, "lander_injetado_kg": lan["injetada_kg"],
                       "razao_glom_msr": e_[0]["massa_inicial_kg"] / v(ms["glom_kg"]), "comprimentos": comps})
     out = nativo({"gerado_por": "tools/mav_solido.py", "status": "NÃO VALIDADO", "referencia_msr": {k: ms[k]["valor"] for k in ("glom_kg", "propelente_kg", "empuxo_medio_n", "tempo_queima_s", "isp_s", "comprimento_m", "diametro_m")},
                   "fracao_estrutural": v(o1["fracao_estrutural"]), "alvo_folga_m": m.alvo, "limites": {"sem_deck_m": m.lim_ombro[d], "com_deck_m": m.lim_deck[d]},
-                  "casos": casos, "contra_no_adr_0007": ms["contra_no_adr_0007"]})
+                  "casos": casos, "contra_no_adr_0007": ms["contra_no_adr_0007"], "errata_p108": m.cad.get("errata_mav_solido_2026_11_12")})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "mav_solido.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -76,7 +76,7 @@ def escreve_md(o):
     todos = [c for x in o["casos"] for c in x["comprimentos"]]
     fecha = [c for c in todos if c["folga_sem_deck_m"] >= o["alvo_folga_m"]]
     md = ["# MAV de propelente sólido para o nosso encontro (gerado por tools/mav_solido.py)", "",
-          "**NÃO VALIDADO.** Reabre o ADR 0007 só como dado; o ADR não muda. Escala do MAV sólido do MSR de 2019 (P-108).", "",
+          "**NÃO VALIDADO.** Reabre o ADR 0007 só como dado; o ADR não muda. Escala do MAV sólido do MSR de 2019; comprimento pela P-108 revista (2026-11-12; ver a errata no fim).", "",
           "## Resposta", "",
           f"O MAV sólido fica entre **{br(min(x['glom_kg'] for x in o['casos']), 0)} e {br(max(x['glom_kg'] for x in o['casos']), 0)} kg** ({br(min(x['razao_glom_msr'] for x in o['casos']), 1)} a {br(max(x['razao_glom_msr'] for x in o['casos']), 1)} vezes o do MSR de 2019), com comprimento de {br(min(c['comprimento_m'] for c in todos), 2)} a {br(max(c['comprimento_m'] for c in todos), 2)} m em Ø {br(r['diametro_m'], 2)} m. "
           + (f"**Não cabe deitado, nem sem deck**, em nenhum caso: a melhor folga sem deck é {sg(max(c['folga_sem_deck_m'] for c in todos))} m." if not fecha else f"Cabe sem deck com folga ≥ {sg(o['alvo_folga_m'], 2)} m em {len(fecha)} de {len(todos)} casos."), "",
@@ -92,11 +92,18 @@ def escreve_md(o):
         md.append(f"| {nome} | " + " | ".join(f_(x) for x in o["casos"]) + " |")
     md += ["", f"Fração estrutural {br(o['fracao_estrutural'], 3)} (P-019), a do veículo inteiro de 2019.", "",
            "## Comprimento e folga deitado", "", f"Limites em Ø {br(r['diametro_m'], 2)} m: {br(o['limites']['sem_deck_m'], 3)} m sem deck e {br(o['limites']['com_deck_m'], 3)} m com deck.", "",
-           "| Δv | Parte fixa (m, P-108) | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) |", "| :- | -: | -: | -: | -: |"]
-    md += [f"| {x['rotulo']} | {br(c['comprimento_fixo_m'], 1)} | {br(c['comprimento_m'], 2)} | {sg(c['folga_sem_deck_m'])} | {sg(c['folga_com_deck_m'])} |" for x in o["casos"] for c in x["comprimentos"]]
+           "| Δv | Comprimento (m, P-108 revista) | Folga sem deck (m) | Folga com deck (m) |", "| :- | -: | -: | -: |"]
+    md += [f"| {x['rotulo']} | {br(c['comprimento_m'], 2)} | {sg(c['folga_sem_deck_m'])} | {sg(c['folga_com_deck_m'])} |" for x in o["casos"] for c in x["comprimentos"]]
     md += ["", "## O que o ADR 0007 disse contra o sólido, e se ainda vale", "", "| Item | ADR 0007 | Hoje, com as fontes do MSR |", "| :- | :- | :- |"]
     md += [f"| {x['item']} | {x['adr']} | {x['hoje']} |" for x in o["contra_no_adr_0007"]]
     md += ["", "**Limitações:** escala linear de um único projeto; a fração estrutural de 0,286 é do veículo inteiro (P-019); sem simulação de subida própria do sólido."]
+    er = o.get("errata_p108")
+    if er:
+        md += ["", "## Errata (2026-11-12, decisão do Fabio)", "",
+               "A P-108 foi revista (aprovada como NÃO VALIDADA): o comprimento passou a ser motor do estágio 1 + motor do estágio 2, pelo ajuste dos motores do catálogo [F270], mais um resto fixo sem fonte (results/familia1/comprimento_solido.md). "
+               f"Antes, o comprimento não fixo escalava com o propelente, com a parte fixa de 0 a 1,5 m. Valores publicados ({er['fonte']}), como registro:", "",
+               "| Δv | Parte fixa (m, P-108 original) | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) |", "| :- | -: | -: | -: | -: |"]
+        md += [f"| {x['rotulo']} | {br(c['comprimento_fixo_m'], 1)} | {br(c['comprimento_m'], 2)} | {sg(c['folga_sem_deck_m'])} | {sg(c['folga_com_deck_m'])} |" for x in er["casos"] for c in x["comprimentos"]]
     (SAIDA / "mav_solido.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 

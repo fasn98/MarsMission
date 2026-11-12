@@ -23,25 +23,25 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | empuxo publicado | 9 854 e 6 937 | 0,46 | 58,1 e 49,5 | não | — | — |
 | empuxo publicado | 9 854 e 6 937 | 0,50 | 53,8 e 53,8 | não | — | — |
 
-**Base: tempo de queima publicado, fração 0,40** (escolhida entre as que chegam, P-110). Costa de 481 s, contra 446 s publicados ([F34] PDF p. 7). O tempo de costa não foi ajustado, mas não há critério de aceitação definido para ele, e a divisão do inerte foi escolhida para fechar, com três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial.
+**Base: tempo de queima publicado, fração 0,444, a do [F269]** (errata da P-110, 2026-11-12): **não chega à órbita publicada** (327 × 346 km); a diferença é o viés da P-114. Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de 475 s no melhor ajuste, contra 446 s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial.
 
 ## Comparação lado a lado
 
 | Grandeza | Sólido, 380 km, sem margem (o menor que chega) | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | Sólido, 814 km | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | Hipergólico 4 × 164:1, 380 km, sem margem | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | Hipergólico 4 × 164:1, 814 km, sem margem |
 | :- | -: | -: | -: | -: | -: | -: | -: |
 | Fecha | sim | não simulado | não | sim | sim | sim | sim |
-| Δv (m/s) | 4 073 (capacidade ideal) | 4 481 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
-| GLOM (kg) | 382,3 | 1 234,2 | — | 161,0 | 124,4 | 178,9 | 136,2 |
-| Empuxo/peso na decolagem | 5,58 | 5,75 | — | 3,27 | 4,24 | 2,95 | 3,87 |
-| Comprimento (m) | 2,62 a 2,66 | 5,37 a 8,70 | — | 3,059 | 2,935 | 3,111 | 2,978 |
-| Folga deitado sem deck (m) | +0,260 a +0,284 | −2,759 a −1,092 | — | −0,047 | +0,014 | −0,074 | −0,007 |
-| Folga deitado com deck (m) | +0,040 a +0,064 | −2,979 a −1,312 | — | −0,267 | −0,206 | −0,294 | −0,227 |
-| Massa por área (kg/m²) | 277 | 382 | — | 249 | 245 | 252 | 246 |
+| Δv (m/s) | 4 050 (capacidade ideal) | 4 399 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
+| GLOM (kg) | 451,2 | 1 756,8 | — | 161,0 | 124,4 | 178,9 | 136,2 |
+| Empuxo/peso na decolagem | 5,62 | 5,77 | — | 3,27 | 4,24 | 2,95 | 3,87 |
+| Comprimento (m) | 2,87 | 6,07 | — | 3,059 | 2,935 | 3,111 | 2,978 |
+| Folga deitado sem deck (m) | +0,156 a +0,156 | −1,445 a −1,445 | — | −0,047 | +0,014 | −0,074 | −0,007 |
+| Folga deitado com deck (m) | −0,064 a −0,064 | −1,665 a −1,665 | — | −0,267 | −0,206 | −0,294 | −0,227 |
+| Massa por área (kg/m²) | 285 | 446 | — | 249 | 245 | 252 | 246 |
 | Dias na superfície | 285 | 285 | — | 285 | 285 | 301 | 301 |
 | Temperatura mantida (°C) | −40 | −40 | — | 15 | 15 | 15 | 15 |
-| Aquecimento (W) | 16,7 | 37,2 | — | 32,5 | 26,8 | 35,2 | 28,7 |
-| Energia na superfície (kWh) | 114 | 254 | — | 222 | 183 | 254 | 207 |
-| RHUs equivalentes | 23 de 0,74 W em 2030 | 51 de 0,74 W em 2030 | — | 44 de 0,74 W em 2030 | 37 de 0,74 W em 2030 | 48 de 0,74 W em 2030 | 39 de 0,74 W em 2030 |
+| Aquecimento (W) | 18,7 | 47,2 | — | 32,5 | 26,8 | 35,2 | 28,7 |
+| Energia na superfície (kWh) | 128 | 323 | — | 222 | 183 | 254 | 207 |
+| RHUs equivalentes | 26 de 0,74 W em 2030 | 64 de 0,74 W em 2030 | — | 44 de 0,74 W em 2030 | 37 de 0,74 W em 2030 | 48 de 0,74 W em 2030 | 39 de 0,74 W em 2030 |
 
 Alvo de folga: +0,05 m. Limites deitado: sólido em Ø 0,57 m, 3,184 m sem deck e 2,744 m com deck; hipergólico em Ø 0,72 m, 2,964 m e 2,524 m. O comprimento do sólido varia com a parte fixa da P-108.
 
@@ -81,3 +81,14 @@ O ajuste do sólido media o periapse e o apoapse, que têm uma quina em e = 0, e
 | com a margem da P-014, vigente | 3,2228 | 1 234,2 | 4 481 | 5,75 | 5,37 a 8,70 | −2,759 a −1,092 | −2,979 a −1,312 | 6 072 | 382 | 37,2 | 254 | 51 |
 
 Verificação, divisões que chegam à órbita publicada: tempo publicado: publicado 0,38, 0,40, 0,42, vigente 0,38, 0,40, 0,42; empuxo publicado: publicado 0,38, 0,40, vigente 0,38, 0,40, 0,42. A base continua em 0,40.
+
+## Errata (2026-11-12, decisões do Fabio)
+
+Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores pelo ajuste do catálogo [F270] + resto fixo sem fonte; results/familia1/comprimento_solido.md) e a errata da P-110 (a divisão do inerte na base passa de 0,40, escolhida pela varredura, para 0,444, publicada no [F269]; o valor antigo fica como registro). A tabela da errata de 2026-11-11 mostra, na linha "vigente", os valores do PR #64; os vigentes de hoje estão abaixo. Com a divisão do [F269], o modelo **não chega à órbita publicada** do MSR (327 × 346 km); a diferença é o viés do modelo de subida (P-114, results/familia1/inerte_solido.md).
+
+| Sólido, 380 km | Escala | GLOM (kg) | Capacidade (m/s) | Empuxo/peso | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) | Massa por área (kg/m²) | Aquecimento (W) | Energia (kWh) | RHUs |
+| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
+| sem margem, PR #64 (results/familia1/mavs.yaml no commit 9da6251, o merge do PR #64) | 0,9692 | 382,3 | 4 073 | 5,58 | 2,62 a 2,66 | +0,260 a +0,284 | +0,040 a +0,064 | 4 399 | 277 | 16,7 | 114 | 23 |
+| sem margem, vigente | 1,1513 | 451,2 | 4 050 | 5,62 | 2,87 | +0,156 | −0,064 | 4 534 | 285 | 18,7 | 128 | 26 |
+| com a margem da P-014, PR #64 (results/familia1/mavs.yaml no commit 9da6251, o merge do PR #64) | 3,2228 | 1 234,2 | 4 481 | 5,75 | 5,37 a 8,70 | −2,759 a −1,092 | −2,979 a −1,312 | 6 072 | 382 | 37,2 | 254 | 51 |
+| com a margem da P-014, vigente | 4,6053 | 1 756,8 | 4 399 | 5,77 | 6,07 | −1,445 | −1,665 | 7 099 | 446 | 47,2 | 323 | 64 |

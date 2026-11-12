@@ -29,6 +29,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 sys.path.insert(0, str(RAIZ / "tools"))
 
 import comprimento_mav as cmv  # noqa: E402
+import comprimento_solido as cs  # noqa: E402
 import rota_a_dimensiona as rad  # noqa: E402
 import subida_mav as sm  # noqa: E402
 from orbital import motores as om  # noqa: E402
@@ -125,8 +126,16 @@ def main():
             if x["fecha"]:
                 x.update({"costa_s": voo["costa_s"], "queimas_s": [voo["queima_1_s"], voo["queima_2_s"]], "guia": guia})
             verif.append(x)
-    fecham = [x for x in verif if x["fecha"] and x["modelo"] == "tempo_publicado"]
-    base = fecham[(len(fecham) - 1) // 2] if fecham else None
+    # base da escala: a divisão do inerte publicada no [F269] (errata da P-110, decisão do Fabio em 2026-11-12); a varredura
+    # acima fica como registro. Com essa divisão, o modelo não chega à órbita publicada; a diferença é o viés da P-114.
+    msr = fc["inerte_solido"]["msr"]
+    f2_base = (msr["inerte_motor_kg"]["valor"][1] + msr["inerte_nao_propulsivo_kg"]["valor"][1]) / (sum(msr["inerte_motor_kg"]["valor"]) + sum(msr["inerte_nao_propulsivo_kg"]["valor"]))
+    ine_b = [(1 - f2_base) * inerte_total, f2_base * inerte_total]
+    k_b = [i / x for i, x in zip(ine_b, mp_msr)]
+    est_b, ine_b = solido(mp_msr, f_tempo, isp_s, k_b, carga)
+    custo_b, voo_b, guia_b = sb.ajusta_solido(pl_v, est_b, ine_b, area_s, atm, 1000 * v(vf["orbita_km"]), t_v, partidas, limites)
+    base = {"modelo": "tempo_publicado", "fracao_inerte_2": f2_base, "fonte": "[F269] (errata da P-110)", "inertes_kg": ine_b, "empuxos_n": f_tempo, "fecha": custo_b < tol,
+            "orbita_km": [voo_b["periapse_m"] / 1000, voo_b["apoapse_m"] / 1000], "costa_s": voo_b["costa_s"], "queimas_s": [voo_b["queima_1_s"], voo_b["queima_2_s"]], "guia": guia_b}
     # ---------------- dimensionamento do sólido para o encontro da família 1
     inc = v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"])
     pl_e = sb.Planeta(pl0.mu, pl0.raio, sb.omega_efetivo(pl0.omega, inc))
@@ -225,9 +234,9 @@ def main():
         if not s_["fecha"]:
             continue
         mp = sum(s_["propelente_kg"])
-        s_["comprimentos"] = [{"comprimento_fixo_m": lf, "comprimento_m": lf + (v(ms["comprimento_m"]) - lf) * mp / sum(mp_msr)} for lf in ms["escala"]["comprimento_fixo_m"]["valor"]]
-        for c in s_["comprimentos"]:
-            c["folga_sem_deck_m"], c["folga_com_deck_m"] = (m.lim_ombro[d_s] - c["comprimento_m"]) / 2, (m.lim_deck[d_s] - c["comprimento_m"]) / 2
+        # P-108 revista: motores pelo ajuste do catálogo [F270] mais o resto fixo (tools/comprimento_solido.py)
+        L_ = cs.comprimento(s_["propelente_kg"], d_s)
+        s_["comprimentos"] = [{"lei": "P-108 revista", "comprimento_m": L_, "folga_sem_deck_m": (m.lim_ombro[d_s] - L_) / 2, "folga_com_deck_m": (m.lim_deck[d_s] - L_) / 2}]
         if h_.get("convergiu"):
             s_["massa_entrada_kg"] = h_["massa_entrada_kg"] + (s_["glom_kg"] - h_["glom_kg"]) / razao
     for x in sol_casos + hip:
@@ -256,6 +265,7 @@ def main():
                   "solido": sol_casos, "hipergolico": hip, "envelhecimento_solido": tf["envelhecimento_solido"], "tempo_no_msr": tf["tempo_no_msr"]})
     SAIDA.mkdir(parents=True, exist_ok=True)
     out["errata"] = fc.get("errata_mavs_2026_11_11")
+    out["errata_2"] = fc.get("errata_mavs_2026_11_12")
     (SAIDA / "mavs.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
 
@@ -269,7 +279,7 @@ def escreve_md(o):
     for x in vb["casos"]:
         md.append(f"| {x['modelo'].replace('_', ' ')} | {br(x['empuxos_n'][0], 0)} e {br(x['empuxos_n'][1], 0)} | {br(x['fracao_inerte_2'], 2)} | {br(x['inertes_kg'][0], 1)} e {br(x['inertes_kg'][1], 1)} | {'sim' if x['fecha'] else 'não'} | " + (f"{br(x['queimas_s'][0], 1)} e {br(x['queimas_s'][1], 1)} | {br(x['costa_s'], 0)} |" if x["fecha"] else "— | — |"))
     b = vb["base"]
-    md += ["", (f"**Base: tempo de queima publicado, fração {br(b['fracao_inerte_2'], 2)}** (escolhida entre as que chegam, P-110). Costa de {br(b['costa_s'], 0)} s, contra {br(vb['costa_publicada_s'], 0)} s publicados ([F34] PDF p. 7). O tempo de costa não foi ajustado, mas não há critério de aceitação definido para ele, e a divisão do inerte foi escolhida para fechar, com três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial." if b else "**Nenhuma divisão do inerte leva à órbita publicada com o tempo de queima publicado: o modelo não reproduz o MSR.**"), "",
+    md += ["", (f"**Base: tempo de queima publicado, fração {br(b['fracao_inerte_2'], 3)}, a do [F269]** (errata da P-110, 2026-11-12): " + ("chega à órbita publicada. " if b["fecha"] else f"**não chega à órbita publicada** ({br(b['orbita_km'][0], 0)} × {br(b['orbita_km'][1], 0)} km); a diferença é o viés da P-114. ") + f"Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de {br(b['costa_s'], 0)} s no melhor ajuste, contra {br(vb['costa_publicada_s'], 0)} s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial." if b else "**Nenhuma divisão do inerte leva à órbita publicada com o tempo de queima publicado: o modelo não reproduz o MSR.**"), "",
            "## Comparação lado a lado", ""]
     hd = "| Grandeza | " + " | ".join(x["rotulo"] for x in o["solido"] + o["hipergolico"]) + " |"
     md += [hd, "| :- |" + " -: |" * (len(o["solido"]) + len(o["hipergolico"]))]
@@ -285,7 +295,7 @@ def escreve_md(o):
               ("Δv (m/s)", lambda s: f"{br(s['capacidade_m_s'], 0)} (capacidade ideal)" if "capacidade_m_s" in s else f"{br(1000 * s.get('dv_subida_com_margem_km_s', s.get('dv_subida_km_s', 0)), 0)} (de projeto)"),
               ("GLOM (kg)", lambda s: br(s["glom_kg"], 1)),
               ("Empuxo/peso na decolagem", lambda s: br(s["empuxo_peso"], 2)),
-              ("Comprimento (m)", lambda s: f"{br(min(c['comprimento_m'] for c in s['comprimentos']), 2)} a {br(max(c['comprimento_m'] for c in s['comprimentos']), 2)}" if "comprimentos" in s else br(s["comprimento_m"], 3)),
+              ("Comprimento (m)", lambda s: br(s["comprimentos"][0]["comprimento_m"], 2) if "comprimentos" in s and len(s["comprimentos"]) == 1 else (f"{br(min(c['comprimento_m'] for c in s['comprimentos']), 2)} a {br(max(c['comprimento_m'] for c in s['comprimentos']), 2)}" if "comprimentos" in s else br(s["comprimento_m"], 3))),
               ("Folga deitado sem deck (m)", lambda s: f"{sg(min(c['folga_sem_deck_m'] for c in s['comprimentos']))} a {sg(max(c['folga_sem_deck_m'] for c in s['comprimentos']))}" if "comprimentos" in s else sg(s["folga_sem_deck_m"])),
               ("Folga deitado com deck (m)", lambda s: f"{sg(min(c['folga_com_deck_m'] for c in s['comprimentos']))} a {sg(max(c['folga_com_deck_m'] for c in s['comprimentos']))}" if "comprimentos" in s else sg(s["folga_com_deck_m"])),
               ("Massa por área (kg/m²)", lambda s: br(s["massa_por_area_kg_m2"], 0)),
@@ -313,24 +323,48 @@ def escreve_md(o):
         a_, b_ = er["solido_380_sem_margem"], er["solido_380_com_margem"]
 
         def fx(par, f=sg):
-            return f"{f(par[0])} a {f(par[1])}"
+            return f(par[0]) if abs(par[0] - par[1]) < 5e-4 else f"{f(par[0])} a {f(par[1])}"
 
         def novo(x, ch):
             v_ = [c[ch] for c in x["comprimentos"]]
             return [min(v_), max(v_)]
+
+        def linha_vigente(rot, x_, rotulo="vigente"):
+            if "comprimentos" in x_:   # caso calculado agora
+                cmp_, fs_, fc_ = novo(x_, "comprimento_m"), novo(x_, "folga_sem_deck_m"), novo(x_, "folga_com_deck_m")
+                pot, en, rh = x_["termico"]["potencia_w"], x_["termico"]["energia_kwh"], x_["termico"]["rhus"]
+            else:   # registro do config
+                cmp_, fs_, fc_ = x_["comprimento_m"], x_["folga_sem_deck_m"], x_["folga_com_deck_m"]
+                pot, en, rh = x_["potencia_w"], x_["energia_kwh"], x_["rhus"]
+            return (f"| {rot}, {rotulo} | {br(x_['escala'], 4)} | {br(x_['glom_kg'], 1)} | {br(x_['capacidade_m_s'], 0)} | {br(x_['empuxo_peso'], 2)} | {fx(cmp_, lambda y: br(y, 2))} | {fx(fs_)} | {fx(fc_)} | "
+                    f"{br(x_['massa_entrada_kg'], 0)} | {br(x_['massa_por_area_kg_m2'], 0)} | {br(pot, 1)} | {br(en, 0)} | {rh} |")
         md += ["", "## Errata (2026-11-11, decisão do Fabio)", "",
                "O ajuste do sólido media o periapse e o apoapse, que têm uma quina em e = 0, exatamente no alvo circular; o custo parava em valores espalhados, a tolerância da P-110 caía no meio desse ruído, e a escala escolhida mudava com a CPU (CI do PR #60, run 42896102600; results/conferencia/ruido_subida.md). "
                "O ajuste passou a usar o semieixo e o vetor excentricidade, funções suaves, e a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo), por brentq (P-117, NÃO VALIDADA, para aprovação). "
                f"Os valores publicados vêm de {er['fonte']}; os antigos ficam como registro. O hipergólico não mudou.", "",
                "| Sólido, 380 km | Escala | GLOM (kg) | Capacidade (m/s) | Empuxo/peso | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) | Massa por área (kg/m²) | Aquecimento (W) | Energia (kWh) | RHUs |",
                "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
+        er2 = o.get("errata_2")
         for rot, a_, x_ in (("sem margem", er["solido_380_sem_margem"], sm_), ("com a margem da P-014", er["solido_380_com_margem"], cm_)):
+            if er2:   # a linha "vigente" desta errata é a do PR #64 (registro); os vigentes de hoje estão na errata de 2026-11-12
+                x_ = er2["solido_380_sem_margem" if rot == "sem margem" else "solido_380_com_margem"]
             md.append(f"| {rot}, publicado | {br(a_['escala'], 4)} | {br(a_['glom_kg'], 1)} | {br(a_['capacidade_m_s'], 0)} | {br(a_['empuxo_peso'], 2)} | {fx(a_['comprimento_m'], lambda y: br(y, 2))} | {fx(a_['folga_sem_deck_m'])} | {fx(a_['folga_com_deck_m'])} | {br(a_['massa_entrada_kg'], 0)} | {br(a_['massa_por_area_kg_m2'], 0)} | {br(a_['potencia_w'], 1)} | {br(a_['energia_kwh'], 0)} | {a_['rhus']} |")
-            md.append(f"| {rot}, vigente | {br(x_['escala'], 4)} | {br(x_['glom_kg'], 1)} | {br(x_['capacidade_m_s'], 0)} | {br(x_['empuxo_peso'], 2)} | {fx(novo(x_, 'comprimento_m'), lambda y: br(y, 2))} | {fx(novo(x_, 'folga_sem_deck_m'))} | {fx(novo(x_, 'folga_com_deck_m'))} | {br(x_['massa_entrada_kg'], 0)} | {br(x_['massa_por_area_kg_m2'], 0)} | {br(x_['termico']['potencia_w'], 1)} | {br(x_['termico']['energia_kwh'], 0)} | {x_['termico']['rhus']} |")
+            md.append(linha_vigente(rot, x_))
         vfa = er["verificacao_fecha"]
         vfn = {m_: [c["fracao_inerte_2"] for c in o["verificacao"]["casos"] if c["modelo"] == m_ and c["fecha"]] for m_ in vfa}
         md += ["", "Verificação, divisões que chegam à órbita publicada: " + "; ".join(f"{m_.replace('_', ' ')}: publicado {', '.join(br(x, 2) for x in vfa[m_])}, vigente {', '.join(br(x, 2) for x in vfn[m_])}" for m_ in vfa)
-               + f". A base continua em {br(o['verificacao']['base']['fracao_inerte_2'], 2)}."]
+               + f". A base continua em {br(er2['fracao_inerte_2_base'] if er2 else o['verificacao']['base']['fracao_inerte_2'], 2)}."]
+        if er2:
+            sm2, cm2 = (next(x for x in o["solido"] if x.get("fecha") and x["altitude_km"] == 380 and nome in x["rotulo"]) for nome in ("sem margem", "com a margem"))
+            md += ["", "## Errata (2026-11-12, decisões do Fabio)", "",
+                   f"Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores pelo ajuste do catálogo [F270] + resto fixo sem fonte; results/familia1/comprimento_solido.md) e a errata da P-110 (a divisão do inerte na base passa de {br(er2['fracao_inerte_2_base'], 2)}, escolhida pela varredura, para {br(o['verificacao']['base']['fracao_inerte_2'], 3)}, publicada no [F269]; o valor antigo fica como registro). "
+                   "A tabela da errata de 2026-11-11 mostra, na linha \"vigente\", os valores do PR #64; os vigentes de hoje estão abaixo. "
+                   + ("Com a divisão do [F269], o modelo **não chega à órbita publicada** do MSR " + f"({br(o['verificacao']['base']['orbita_km'][0], 0)} × {br(o['verificacao']['base']['orbita_km'][1], 0)} km); a diferença é o viés do modelo de subida (P-114, results/familia1/inerte_solido.md)." if not o["verificacao"]["base"]["fecha"] else "Com a divisão do [F269], o modelo chega à órbita publicada do MSR."), "",
+                   "| Sólido, 380 km | Escala | GLOM (kg) | Capacidade (m/s) | Empuxo/peso | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) | Massa por área (kg/m²) | Aquecimento (W) | Energia (kWh) | RHUs |",
+                   "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
+            for rot, a_, x_ in (("sem margem", er2["solido_380_sem_margem"], sm2), ("com a margem da P-014", er2["solido_380_com_margem"], cm2)):
+                md.append(linha_vigente(rot, a_, f"PR #64 ({er2['fonte']})"))
+                md.append(linha_vigente(rot, x_))
     (SAIDA / "mavs.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 

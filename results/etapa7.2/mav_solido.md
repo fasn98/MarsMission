@@ -1,10 +1,10 @@
 # MAV de propelente sólido para o nosso encontro (gerado por tools/mav_solido.py)
 
-**NÃO VALIDADO.** Reabre o ADR 0007 só como dado; o ADR não muda. Escala do MAV sólido do MSR de 2019 (P-108).
+**NÃO VALIDADO.** Reabre o ADR 0007 só como dado; o ADR não muda. Escala do MAV sólido do MSR de 2019; comprimento pela P-108 revista (2026-11-12; ver a errata no fim).
 
 ## Resposta
 
-O MAV sólido fica entre **553 e 1 645 kg** (1,4 a 4,2 vezes o do MSR de 2019), com comprimento de 3,20 a 11,61 m em Ø 0,57 m. **Não cabe deitado, nem sem deck**, em nenhum caso: a melhor folga sem deck é −0,008 m.
+O MAV sólido fica entre **553 e 1 645 kg** (1,4 a 4,2 vezes o do MSR de 2019), com comprimento de 3,15 a 5,71 m em Ø 0,57 m. **Não cabe deitado, nem sem deck**, em nenhum caso: a melhor folga sem deck é +0,018 m.
 
 **A perda gravitacional do item 2 não foi aplicada ao sólido.** A simulação de subida corta a queima quando chega à energia da órbita, como um motor que desliga; o sólido não desliga, e o MSR usa queima, costa longa e queima do 2º estágio ([F57] PDF p. 2), que o modelo não tem. No lugar, há dois limites para o Δv de 100 × 100 km: o de [F37], com as perdas do caso de [F37], e o ideal, sem perdas (src/orbital/subida.py, dv_ideal). O empuxo/peso maior do sólido tende a reduzir a perda gravitacional; o arrasto, a aumentar.
 
@@ -37,16 +37,10 @@ Fração estrutural 0,286 (P-019), a do veículo inteiro de 2019.
 
 Limites em Ø 0,57 m: 3,184 m sem deck e 2,744 m com deck.
 
-| Δv | Parte fixa (m, P-108) | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) |
-| :- | -: | -: | -: | -: |
-| Δv de [F37], com perdas | 0,0 | 11,61 | −4,215 | −4,435 |
-| Δv de [F37], com perdas | 0,5 | 9,96 | −3,390 | −3,610 |
-| Δv de [F37], com perdas | 1,0 | 8,31 | −2,564 | −2,784 |
-| Δv de [F37], com perdas | 1,5 | 6,66 | −1,739 | −1,959 |
-| Δv ideal, sem perdas (limite inferior) | 0,0 | 3,83 | −0,321 | −0,541 |
-| Δv ideal, sem perdas (limite inferior) | 0,5 | 3,62 | −0,217 | −0,437 |
-| Δv ideal, sem perdas (limite inferior) | 1,0 | 3,41 | −0,112 | −0,332 |
-| Δv ideal, sem perdas (limite inferior) | 1,5 | 3,20 | −0,008 | −0,228 |
+| Δv | Comprimento (m, P-108 revista) | Folga sem deck (m) | Folga com deck (m) |
+| :- | -: | -: | -: |
+| Δv de [F37], com perdas | 5,71 | −1,263 | −1,483 |
+| Δv ideal, sem perdas (limite inferior) | 3,15 | +0,018 | −0,202 |
 
 ## O que o ADR 0007 disse contra o sólido, e se ainda vale
 
@@ -60,3 +54,18 @@ Limites em Ø 0,57 m: 3,184 m sem deck e 2,744 m com deck.
 | Não estrangula nem desliga | [F58] p. 4: "Cannot be actively throttled or shut down" | vale igual: o corte no alvo exige outro meio (o MSR usa costa longa e um 2º estágio dimensionado para a queima) |
 
 **Limitações:** escala linear de um único projeto; a fração estrutural de 0,286 é do veículo inteiro (P-019); sem simulação de subida própria do sólido.
+
+## Errata (2026-11-12, decisão do Fabio)
+
+A P-108 foi revista (aprovada como NÃO VALIDADA): o comprimento passou a ser motor do estágio 1 + motor do estágio 2, pelo ajuste dos motores do catálogo [F270], mais um resto fixo sem fonte (results/familia1/comprimento_solido.md). Antes, o comprimento não fixo escalava com o propelente, com a parte fixa de 0 a 1,5 m. Valores publicados (results/etapa7.2/mav_solido.yaml no commit 9da6251 (main, merge do PR #64)), como registro:
+
+| Δv | Parte fixa (m, P-108 original) | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) |
+| :- | -: | -: | -: | -: |
+| Δv de [F37], com perdas | 0,0 | 11,61 | −4,215 | −4,435 |
+| Δv de [F37], com perdas | 0,5 | 9,96 | −3,390 | −3,610 |
+| Δv de [F37], com perdas | 1,0 | 8,31 | −2,564 | −2,784 |
+| Δv de [F37], com perdas | 1,5 | 6,66 | −1,739 | −1,959 |
+| Δv ideal, sem perdas (limite inferior) | 0,0 | 3,83 | −0,321 | −0,541 |
+| Δv ideal, sem perdas (limite inferior) | 0,5 | 3,62 | −0,217 | −0,437 |
+| Δv ideal, sem perdas (limite inferior) | 1,0 | 3,41 | −0,112 | −0,332 |
+| Δv ideal, sem perdas (limite inferior) | 1,5 | 3,20 | −0,008 | −0,228 |

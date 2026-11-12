@@ -734,8 +734,9 @@ def test_mav_solido():
     for x in r["casos"]:
         mp = sum(x["propelente_kg"])
         assert x["empuxos_n"][0] == pytest.approx(ref["empuxo_medio_n"][0] * x["propelente_kg"][0] / ref["propelente_kg"][0])
-        for c in x["comprimentos"]:
-            assert c["comprimento_m"] == pytest.approx(c["comprimento_fixo_m"] + (ref["comprimento_m"] - c["comprimento_fixo_m"]) * mp / sum(ref["propelente_kg"]))
+        cs_ = ler("results/familia1/comprimento_solido.yaml")
+        for c in x["comprimentos"]:   # P-108 revista: motores pelo ajuste do catálogo + resto fixo
+            assert mp > 0 and c["comprimento_m"] == pytest.approx(sum(cs_["a"] * p ** cs_["b"] * ref["diametro_m"] ** cs_["c"] for p in x["propelente_kg"]) + cs_["resto_m"])
             assert c["folga_sem_deck_m"] == pytest.approx((r["limites"]["sem_deck_m"] - c["comprimento_m"]) / 2)
 
 
@@ -786,7 +787,10 @@ def test_familia1_mavs():
     assert sb.omega_efetivo(1.0, 60.0) == pytest.approx(0.5)
     r = ler("results/familia1/mavs.yaml")
     b = r["verificacao"]["base"]
-    assert b["fecha"] and b["modelo"] == "tempo_publicado"
+    # errata da P-110 (2026-11-12): a base é a divisão do [F269], que não precisa chegar à órbita publicada (viés da P-114)
+    msr = ler("config/familia1.yaml")["inerte_solido"]["msr"]
+    f2 = (msr["inerte_motor_kg"]["valor"][1] + msr["inerte_nao_propulsivo_kg"]["valor"][1]) / (sum(msr["inerte_motor_kg"]["valor"]) + sum(msr["inerte_nao_propulsivo_kg"]["valor"]))
+    assert b["fracao_inerte_2"] == pytest.approx(f2) and b["modelo"] == "tempo_publicado"
     # empuxo da base: propelente × Isp × g0 / tempo de queima publicado ([F34] PDF p. 4)
     assert b["empuxos_n"][0] == pytest.approx(216 * 293 * 9.80665 / 75.9) and b["empuxos_n"][1] == pytest.approx(54.4 * 282 * 9.80665 / 24.5)
     assert b["queimas_s"][0] == pytest.approx(75.9) and b["queimas_s"][1] == pytest.approx(24.5)
@@ -882,7 +886,7 @@ def test_familia1_inerte_solido():
         for k in ("sem_margem", "com_margem"):
             y = c[k]
             assert y["inertes_kg"] == pytest.approx([n + ci * p ** c["b"] for n, ci, p in zip(c["N_kg"], c["c"], y["propelente_kg"])])
-            assert y["folga_465_com_deck_m"][0] == pytest.approx((lim["com_deck_m"] - y["comprimento_m"][1]) / 2)
+            assert y["folga_465_com_deck_m"] == pytest.approx((lim["com_deck_m"] - y["comprimento_m"]) / 2)
 
 
 def test_familia1_inerte_comprimento_e_vies():
@@ -906,7 +910,7 @@ def test_familia1_inerte_comprimento_e_vies():
         if c.get("fecha_na_varredura"):
             for k in ("sem_margem", "com_margem"):
                 y = c[k]
-                assert y["comprimento_novo_m"] == pytest.approx(lm(y["propelente_kg"][0]) + lm(y["propelente_kg"][1]) + cp["resto_m"])
+                assert y["comprimento_m"] == pytest.approx(lm(y["propelente_kg"][0]) + lm(y["propelente_kg"][1]) + cp["resto_m"])
     if r["vies"].get("fator_isp"):
         assert r["vies"]["fator_isp"] > 1 and r["vies"]["dv_vies_m_s"] > 0 and r["vies"]["voo"]["fecha"]
 

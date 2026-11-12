@@ -97,82 +97,82 @@ linhas:
   fecha: true
   diametro_m: 0.57
   comprimento_m:
-  - 2.616783963710023
-  - 2.6630150949822324
+  - 2.8710030205617003
+  - 2.8710030205617003
   folga_465:
     sem_deck_m:
-    - 0.46605766990018793
-    - 0.48917323553629255
+    - 0.362063707110454
+    - 0.362063707110454
     com_deck_m:
-    - 0.3121446264219272
-    - 0.3352601920580318
+    - 0.20815066363219326
+    - 0.20815066363219326
   folga_45:
     sem_deck_m:
-    - 0.26049245250888364
-    - 0.28360801814498826
+    - 0.1564984897191497
+    - 0.1564984897191497
     com_deck_m:
-    - 0.04049245250888367
-    - 0.06360801814498829
-  glom_kg: 382.3497549194032
+    - -0.06350151028085027
+    - -0.06350151028085027
+  glom_kg: 451.19685282027194
   tipo: solido
   altitude_km: 380.0
-  massa_entrada_kg: 4398.633696248888
-  lander_injetado_kg: 4583.040887036413
+  massa_entrada_kg: 4533.893220612088
+  lander_injetado_kg: 4722.836394767831
   lander_injetado_piso_srl_kg: 5204.57425528715
   margens:
     Vulcan VC4:
-      modelo_coifa_padrao: 0.4061117199539397
-      modelo_coifa_longa: 0.3866922990511621
+      modelo_coifa_padrao: 0.36449094688718153
+      modelo_coifa_longa: 0.34564633899464514
       piso_srl_coifa_padrao: 0.23819301794829584
       piso_srl_coifa_longa: 0.22109267589638093
     Vulcan VC6:
-      modelo_coifa_padrao: 0.8000230120671095
-      modelo_coifa_longa: 0.7806035911643316
+      modelo_coifa_padrao: 0.7467425022491259
+      modelo_coifa_longa: 0.7278978943565895
       piso_srl_coifa_padrao: 0.5850631881233195
       piso_srl_coifa_longa: 0.5679628460714046
   massa_por_area_465_piso_srl_kg_m2: 294.4246837172304
-  massa_por_area_465_kg_m2: 259.0132669612061
-  massa_por_area_45_kg_m2: 276.568610610799
+  massa_por_area_465_kg_m2: 266.9780154972818
+  massa_por_area_45_kg_m2: 285.07319210320867
 - rotulo: Sólido, 380 km, com a margem da P-014 na capacidade, não simulado
   fecha: true
   diametro_m: 0.57
   comprimento_m:
-  - 5.367405730616496
-  - 8.701662893887114
+  - 6.073824978605361
+  - 6.073824978605361
   folga_465:
     sem_deck_m:
-    - -2.553266229552253
-    - -0.8861376479169438
+    - -1.2393472719113765
+    - -1.2393472719113765
     com_deck_m:
-    - -2.7071792730305138
-    - -1.0400506913952046
+    - -1.3932603153896372
+    - -1.3932603153896372
   folga_45:
     sem_deck_m:
-    - -2.7588314469435575
-    - -1.0917028653082481
+    - -1.4449124893026808
+    - -1.4449124893026808
     com_deck_m:
-    - -2.9788314469435573
-    - -1.311702865308248
-  glom_kg: 1234.232805144196
+    - -1.6649124893026808
+    - -1.6649124893026808
+  glom_kg: 1756.7874112810878
   tipo: solido
   altitude_km: 380.0
-  massa_entrada_kg: 6072.274266435121
-  lander_injetado_kg: 6312.807676995183
-  lander_injetado_piso_srl_kg: 6312.807676995183
+  massa_entrada_kg: 7098.904140967325
+  lander_injetado_kg: 7373.86600348385
+  lander_injetado_piso_srl_kg: 7373.86600348385
   margens:
     Vulcan VC4:
-      modelo_coifa_padrao: 0.020824304179878128
-      modelo_coifa_longa: 0.006725981443969298
-      piso_srl_coifa_padrao: 0.020824304179878128
-      piso_srl_coifa_longa: 0.006725981443969298
+      modelo_coifa_padrao: -0.12606663841662613
+      modelo_coifa_longa: -0.13813629088358859
+      piso_srl_coifa_padrao: -0.12606663841662613
+      piso_srl_coifa_longa: -0.13813629088358859
     Vulcan VC6:
-      modelo_coifa_padrao: 0.30680031517080786
-      modelo_coifa_longa: 0.29270199243489925
-      piso_srl_coifa_padrao: 0.30680031517080786
-      piso_srl_coifa_longa: 0.29270199243489925
-  massa_por_area_465_piso_srl_kg_m2: 357.5654860678875
-  massa_por_area_465_kg_m2: 357.5654860678875
-  massa_por_area_45_kg_m2: 381.80048012359987
+      modelo_coifa_padrao: 0.11875901433690439
+      modelo_coifa_longa: 0.10668936186994182
+      piso_srl_coifa_padrao: 0.11875901433690439
+      piso_srl_coifa_longa: 0.10668936186994182
+  massa_por_area_465_piso_srl_kg_m2: 418.0185212886483
+  massa_por_area_465_kg_m2: 418.0185212886483
+  massa_por_area_45_kg_m2: 446.3508877315456
 - rotulo: Sólido, 814 km
   fecha: false
 - rotulo: Hipergólico 4 × 164:1, 380 km, com a margem da P-014
@@ -433,52 +433,52 @@ sensibilidade_solido:
   fecha: true
   casos:
   - margem: sem margem
-    escala: 0.9691792458185269
-    capacidade_m_s: 4073.238790043569
-    glom_kg: 382.3497549194032
+    escala: 1.1513144254504548
+    capacidade_m_s: 4049.6772406937503
+    glom_kg: 451.19685282027194
     comprimento_m:
-    - 2.616783963710023
-    - 2.6630150949822324
+    - 2.8710030205617003
+    - 2.8710030205617003
     folga_465_com_deck_m:
-    - 0.3121446264219272
-    - 0.3352601920580318
+    - 0.20815066363219326
+    - 0.20815066363219326
     folga_465_sem_deck_m:
-    - 0.46605766990018793
-    - 0.48917323553629255
+    - 0.362063707110454
+    - 0.362063707110454
   - margem: com a margem da P-014, não simulado
-    escala: 3.22283810884847
-    capacidade_m_s: 4480.562669048014
-    glom_kg: 1234.2328051447219
+    escala: 7.9043359324882125
+    capacidade_m_s: 4454.644964763136
+    glom_kg: 3003.8389824805445
     comprimento_m:
-    - 5.367405730618165
-    - 8.70166289389087
+    - 8.614697793739131
+    - 8.614697793739131
     folga_465_com_deck_m:
-    - -2.7071792730323914
-    - -1.040050691396039
+    - -2.663696722956522
+    - -2.663696722956522
     folga_465_sem_deck_m:
-    - -2.5532662295541306
-    - -0.8861376479177783
-  capacidade_minima_m_s: 4073.238790043569
-  capacidade_assintotica_m_s: 4694.270910354586
+    - -2.5097836794782613
+    - -2.5097836794782613
+  capacidade_minima_m_s: 4049.6772406937503
+  capacidade_assintotica_m_s: 4535.399257799143
   k:
-  - 0.298888888888889
-  - 0.7911764705882356
+  - 0.2767489711934157
+  - 0.8790849673202616
 - inerte: P-111 (divisão da conferência)
   altitude_km: 814.0
   fecha: false
   k:
-  - 0.298888888888889
-  - 0.7911764705882356
+  - 0.2767489711934157
+  - 0.8790849673202616
   melhor_da_varredura:
-    custo: 46.204543711081826
+    custo: 104.74768095944613
     escala: 3.9999999999999942
-    periapse_km: 679.623928632339
-    apoapse_km: 801.3847569482634
+    periapse_km: 612.9237429368743
+    apoapse_km: 789.5675812887387
     tolerancia: 1.0e-06
-    capacidade_m_s: 4519.925457976659
-    glom_kg: 1527.9999999999982
+    capacidade_m_s: 4379.564010552702
+    glom_kg: 1527.999999999998
     indicativo_com_margem: null
-  capacidade_assintotica_m_s: 4694.270910354586
+  capacidade_assintotica_m_s: 4535.399257799143
 - inerte: P-019 (ε 0,286 nos dois estágios)
   altitude_km: 380.0
   fecha: true
@@ -488,27 +488,27 @@ sensibilidade_solido:
     capacidade_m_s: 4185.657723608315
     glom_kg: 225.76015503155375
     comprimento_m:
-    - 1.4954719928617952
-    - 2.164654219049687
+    - 2.156579106082013
+    - 2.156579106082013
     folga_465_com_deck_m:
-    - 0.5613250643882
-    - 0.8959161774821458
+    - 0.5653626208720368
+    - 0.5653626208720368
     folga_465_sem_deck_m:
-    - 0.7152381078664607
-    - 1.0498292209604065
+    - 0.7192756643502975
+    - 0.7192756643502975
   - margem: com a margem da P-014, não simulado
     escala: 0.851506116365168
     capacidade_m_s: 4604.223495969631
     glom_kg: 338.4751454693858
     comprimento_m:
-    - 2.299066514185954
-    - 2.521807339638202
+    - 2.5265526340786337
+    - 2.5265526340786337
     folga_465_com_deck_m:
-    - 0.38274850409394245
-    - 0.49411891682006637
+    - 0.38037585687372655
+    - 0.38037585687372655
     folga_465_sem_deck_m:
-    - 0.5366615475722032
-    - 0.6480319602983271
+    - 0.5342889003519873
+    - 0.5342889003519873
   capacidade_minima_m_s: 4185.657723608315
   capacidade_assintotica_m_s: 5889.114406611101
   k:
@@ -533,17 +533,17 @@ sensibilidade_solido:
       capacidade_m_s: 5881.326026037327
       glom_kg: 78187.4625510623
       comprimento_m:
-      - 249.19714908931286
-      - 557.318585450954
+      - 95.47423944540137
+      - 95.47423944540137
       folga_465_sem_deck_m:
-      - -276.86172750808566
-      - -122.80100932726512
+      - -45.93955450530938
+      - -45.93955450530938
       folga_465_com_deck_m:
-      - -277.01564055156393
-      - -122.95492237074339
+      - -46.09346754878764
+      - -46.09346754878764
       folga_45_com_deck_m:
-      - -277.28729272547696
-      - -123.22657454465643
+      - -46.36511972270068
+      - -46.36511972270068
   capacidade_assintotica_m_s: 5889.114406611101
 politica_margem_msr:
 - '[F34] PDF p. 6: "A mass growth allowance of 19% and 17% was assigned to the first

@@ -1201,7 +1201,7 @@ premissas:
 
   - id: P-108
     nome: escala_do_mav_solido
-    valor: {comprimento_fixo_m: [0.0, 0.5, 1.0, 1.5]}
+    valor: {comprimento: "motor do estágio 1 + motor do estágio 2 (ajuste do [F270]) + resto fixo", resto: "results/familia1/comprimento_solido.yaml", original_registro: {comprimento_fixo_m: [0.0, 0.5, 1.0, 1.5]}}
     unidade: m
     uso: config/cad.yaml (mav_solido.escala), results/etapa7.2/mav_solido.md
     justificativa: >
@@ -1209,6 +1209,10 @@ premissas:
       comprimento total é uma parte fixa (carga, aviônica, bocais e interestágio) mais o resto proporcional à massa de
       propelente, no mesmo diâmetro; a parte fixa vai de 0 a 1,5 m, sem fonte. Empuxo de cada estágio proporcional à massa de
       propelente, com o mesmo tempo de queima de [F34]. Fração estrutural e divisão do Δv: as da P-019.
+      Errata (2026-11-12, aprovada pelo Fabio): P-108 revista. Comprimento = motor do estágio 1 + motor do estágio 2, pelo
+      ajuste L = a · P^b · D^c dos motores do catálogo [F270], mais um resto fixo (interestágio, carga, aviônica e
+      adaptadores) que fecha os 2,7 m do MSR ([F247]), sem fonte (tools/comprimento_solido.py). O valor antigo, parte fixa
+      [0,0; 0,5; 1,0; 1,5] m com o resto proporcional ao propelente, fica como registro.
     status: NÃO VALIDADA
 
   - id: P-109
@@ -1231,6 +1235,9 @@ premissas:
       verificação (a que leva às 351 × 349 km publicadas); o tempo de costa, não ajustado, é a conferência independente. A
       subida vertical, as partidas, os limites do guiamento, a tolerância e a busca da escala do propelente são escolhas
       numéricas. Sem fonte.
+      Errata (2026-11-12, aprovada pelo Fabio): a base da escala usa a divisão do inerte publicada no [F269] (fração do
+      estágio 2 = 48/108); o valor antigo, 0,40, escolhido pela varredura, fica como registro (results/familia1/mavs.md). A
+      varredura continua só como registro.
     status: NÃO VALIDADA
 
   - id: P-111
@@ -1284,6 +1291,9 @@ premissas:
       incerteza do modelo de subida do sólido (decisão do Fabio, 2026-11-10). Que o viés seja um fator de Isp, igual nos dois
       estágios, e que valha em outras escalas e órbitas, não tem fonte. A faixa, o passo da varredura e o número de passos da
       bisseção são escolhas numéricas.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA. A busca passou a ser a raiz da P-117 no fator (passo da varredura
+      para achar o intervalo, brentq na escala da P-117); os passos de bisseção não são mais usados. Incerteza numérica do
+      integrador (rtol × 0,5 e × 2), aceita como sensibilidade numérica: results/familia1/inerte_solido.md.
     status: NÃO VALIDADA
 
   - id: P-115

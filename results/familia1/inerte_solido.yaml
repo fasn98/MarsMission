@@ -275,9 +275,9 @@ comparacao_msr:
   msr_nao_propulsivo_kg: 14
   msr_estagio_kg: 60
   p019_estagio_kg: 86.52100840336134
-  p111_estagio_kg: 64.56000000000002
+  p111_estagio_kg: 59.777777777777786
   lei_A_estagio_kg: 60.0
-  lei_B_estagio_kg: 64.56000000000002
+  lei_B_estagio_kg: 59.77777777777778
 - estagio: estágio 2
   propelente_kg: 54.4
   catalogo_motor_kg: 9.722608273388104
@@ -285,13 +285,13 @@ comparacao_msr:
   msr_nao_propulsivo_kg: 34
   msr_estagio_kg: 48
   p019_estagio_kg: 21.790476190476188
-  p111_estagio_kg: 43.04000000000001
+  p111_estagio_kg: 47.82222222222223
   lei_A_estagio_kg: 48.07260068075654
-  lei_B_estagio_kg: 43.04000000000001
+  lei_B_estagio_kg: 47.82222222222223
 p019_k: 0.4005602240896358
 p111_k:
-- 0.298888888888889
-- 0.7911764705882356
+- 0.2767489711934157
+- 0.8790849673202616
 altitude_km: 380.0
 margem_dv: 0.1
 tol_custo: 1.0e-06
@@ -303,7 +303,7 @@ criterio_selecao: 'motores do catálogo [F270] com folha de dados de massa e pro
   fora: STAR 3 a 6B (TIRS, retro e spin, menos de 12 kg de propelente) e a série STAR
   48 (acima de 2.000 kg)'
 fracao_2_f269: 0.4444444444444444
-fracao_2_p110: 0.4
+fracao_2_p110: 0.4444444444444444
 costa_publicada_s: 446.0
 alvo_folga_m: 0.05
 casos:
@@ -316,240 +316,211 @@ casos:
   - 0.8550201704375014
   b: 0.7008520255155859
   verificacao:
-    custo: 5.17050847707802
+    custo: 2.593300557630846
     fecha: false
-    periapse_km: 318.41173888344366
-    apoapse_km: 343.97642506082497
-    costa_s: 468.1741651146377
+    periapse_km: 318.4346176956636
+    apoapse_km: 343.86253725180075
+    costa_s: 468.1824639140952
     guiamento:
       t_v_s: 5.0
-      theta0_graus: 46.57026926682585
-      c_1_s: 0.005992279475676002
-      t_antes_apoapse_s: 14.83695423836639
+      theta0_graus: 46.574380856510196
+      c_1_s: 0.005994730041111886
+      t_antes_apoapse_s: 14.84578467347167
     inertes_kg:
     - 60.0
     - 48.07260068075654
     glom_kg: 394.4726006807565
   fecha_na_varredura: true
+  busca_da_escala:
+    intervalo:
+    - 1.0000000000000004
+    - 1.0500000000000005
+    deficit_m:
+    - -60796.622212619055
+    - 9839.509088151623
   sem_margem:
-    escala: 1.0753906250000007
-    capacidade_m_s: 4110.003164352307
-    glom_kg: 417.99764974818487
+    escala: 1.0427882754873512
+    capacidade_m_s: 4054.246420685744
+    glom_kg: 407.8327015912978
     propelente_kg:
-    - 232.28437500000015
-    - 58.501250000000034
+    - 225.24226750526785
+    - 56.727682186511906
     inertes_kg:
-    - 62.40398293839732
-    - 48.80804180978735
+    - 61.37079059554365
+    - 48.49196130397441
     voo:
-      custo: 3.3562458546035626e-09
+      custo: null
       fecha: true
-      periapse_km: 379.9994206680744
-      apoapse_km: 380.00057933038147
-      costa_s: 509.54606155120194
+      deficit_m: -6.100162863731384e-08
+      periapse_km: 379.999999999939
+      apoapse_km: 379.999999999939
+      costa_s: 517.459670318145
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 64.47741103102618
-        c_1_s: 0.02574983554073925
-        t_antes_apoapse_s: 15.009982707710666
-    comprimento_m:
-    - 2.7904687500000014
-    - 2.9035546875000025
-    folga_465_com_deck_m:
-    - 0.1918748301630422
-    - 0.24841779891304272
-    folga_465_sem_deck_m:
-    - 0.3457878736413029
-    - 0.40233084239130346
-    folga_45_com_deck_m:
-    - -0.07977734375000134
-    - -0.023234375000000806
-    comprimento_novo_m: 2.7858609053312122
-    folga_novo_465_com_deck_m: 0.2507217212474373
-    folga_novo_465_sem_deck_m: 0.40463476472569804
-    folga_novo_45_com_deck_m: -0.020930452665606225
+        theta0_graus: 48.77800679469802
+        c_1_s: 0.00552150854359187
+        t_antes_apoapse_s: 14.948442700272457
+    comprimento_m: 2.748898464827527
+    folga_465_com_deck_m: 0.2692029414992798
+    folga_465_sem_deck_m: 0.42311598497754055
+    folga_45_com_deck_m: -0.0024492324137637134
   com_margem:
-    escala: 1.3448131195047277
-    capacidade_m_s: 4521.003480787999
-    glom_kg: 501.5723544892754
+    escala: 1.3011131950878383
+    capacidade_m_s: 4459.6710627555085
+    glom_kg: 488.06377802507774
     propelente_kg:
-    - 290.47963381302117
-    - 73.15783370105719
+    - 281.0404501389731
+    - 70.7805578127784
     inertes_kg:
-    - 70.61490866581595
-    - 51.3199783093811
+    - 69.31918687911146
+    - 50.923583194214814
     voo:
-      custo: 504.72402156670614
+      custo: 159.32323028880683
       fecha: false
-      periapse_km: 432.1636249801218
-      apoapse_km: 693.4067014954761
-      costa_s: 716.1382226955243
+      periapse_km: 421.2588471691203
+      apoapse_km: 632.3143742973078
+      costa_s: 677.6360688193598
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 76.29414259270109
-        c_1_s: 0.049999999999999795
-        t_antes_apoapse_s: 15.674571955920554
+        theta0_graus: 75.77329524887566
+        c_1_s: 0.04999999999986658
+        t_antes_apoapse_s: 15.562703132085607
     voo_antecipada:
-      custo: 504.7240215196225
+      custo: 159.32323028890292
       fecha: false
-      periapse_km: 432.16362489475915
-      apoapse_km: 693.4067014946606
-      costa_s: 716.139125291668
+      periapse_km: 421.2588530789418
+      apoapse_km: 632.3143731644857
+      costa_s: 677.6362218916753
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 76.29414261522216
-        c_1_s: 0.049999999999999996
-        t_antes_apoapse_s: 15.673670355427733
+        theta0_graus: 75.77329523985443
+        c_1_s: 0.049999999999867595
+        t_antes_apoapse_s: 15.56254959048738
     voo_com_guinada:
-      custo: 1.4474696085658412e-05
-      fecha: false
-      periapse_km: 379.966823802026
-      apoapse_km: 380.04235893182226
-      costa_s: 543.3962863372142
+      custo: 4.852151082647356e-18
+      fecha: true
+      periapse_km: 379.9999999998999
+      apoapse_km: 379.9999999998999
+      costa_s: 528.6210226245796
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 53.355571626980854
-        c_1_s: 0.01395074725091613
-        t_antes_apoapse_s: 14.923873456591886
-        guinada_2_graus: 42.0756193663062
-    comprimento_m:
-    - 3.1137757434056734
-    - 3.6309954226627656
-    folga_465_com_deck_m:
-    - -0.1718455374183394
-    - 0.0867643022102067
-    folga_465_sem_deck_m:
-    - -0.017932493940078675
-    - 0.24067734568846744
-    folga_45_com_deck_m:
-    - -0.44349771133138294
-    - -0.18488787170283683
-    comprimento_novo_m: 3.0826687342076946
-    folga_novo_465_com_deck_m: 0.10231780680919611
-    folga_novo_465_sem_deck_m: 0.25623085028745685
-    folga_novo_45_com_deck_m: -0.16933436710384742
+        theta0_graus: 62.37734121595888
+        c_1_s: 0.02476083394459568
+        t_antes_apoapse_s: 14.972463023776406
+        guinada_2_graus: 36.66070054230334
+    comprimento_m: 3.035485686171221
+    folga_465_com_deck_m: 0.12590933082743283
+    folga_465_sem_deck_m: 0.27982237430569357
+    folga_45_com_deck_m: -0.1457428430856107
 - lei: B (nível pela divisão verificada da P-110)
   N_kg:
   - 14.0
   - 34.0
   c:
-  - 1.1686929529308623
-  - 0.5492504559817794
+  - 1.058152023135362
+  - 0.8398077276810876
   b: 0.7008520255155859
   verificacao:
-    custo: 5.927227551568362e-10
-    fecha: true
-    periapse_km: 349.99976475118984
-    apoapse_km: 350.00025140117015
-    costa_s: 480.6728083080763
+    custo: 1.3941834137899127
+    fecha: false
+    periapse_km: 326.83015169447333
+    apoapse_km: 345.58076126364756
+    costa_s: 475.2000408625743
     guiamento:
       t_v_s: 5.0
-      theta0_graus: 65.02130804955452
-      c_1_s: 0.02706215246682505
-      t_antes_apoapse_s: 15.051197922293962
+      theta0_graus: 46.88792796584494
+      c_1_s: 0.005934345729995118
+      t_antes_apoapse_s: 14.858306758375385
     inertes_kg:
-    - 64.56000000000002
-    - 43.04000000000001
+    - 59.77777777777778
+    - 47.82222222222223
     glom_kg: 394.0
   fecha_na_varredura: true
+  busca_da_escala:
+    intervalo:
+    - 1.0000000000000004
+    - 1.0500000000000005
+    deficit_m:
+    - -53494.96086990181
+    - 17166.368633922655
   sem_margem:
-    escala: 0.9941406250000004
-    capacidade_m_s: 4077.880184870529
-    glom_kg: 392.17065928364445
+    escala: 1.03748115483542
+    capacidade_m_s: 4054.421553265733
+    glom_kg: 405.6918836643159
     propelente_kg:
-    - 214.73437500000009
-    - 54.081250000000026
+    - 224.0959294444507
+    - 56.43897482304684
     inertes_kg:
-    - 64.35219015740026
-    - 43.00284412624404
+    - 60.97366799308199
+    - 48.18331140373641
     voo:
-      custo: 1.2474729985200775e-08
+      custo: null
       fecha: true
-      periapse_km: 379.9987590801609
-      apoapse_km: 380.0009772737334
-      costa_s: 510.45496531356173
+      deficit_m: 6.449408829212189e-07
+      periapse_km: 380.00000000064495
+      apoapse_km: 380.00000000064495
+      costa_s: 517.4917649746188
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 55.627363173689446
-        c_1_s: 0.011858749677720022
-        t_antes_apoapse_s: 15.046963433046107
-    comprimento_m:
-    - 2.6841796875000017
-    - 2.692968750000001
-    folga_465_com_deck_m:
-    - 0.297167798913043
-    - 0.30156233016304257
-    folga_465_sem_deck_m:
-    - 0.45108084239130375
-    - 0.4554753736413033
-    folga_45_com_deck_m:
-    - 0.025515624999999487
-    - 0.029910156249999043
-    comprimento_novo_m: 2.6932685124752376
-    folga_novo_465_com_deck_m: 0.2970179176754246
-    folga_novo_465_sem_deck_m: 0.45093096115368536
-    folga_novo_45_com_deck_m: 0.0253657437623811
+        theta0_graus: 48.80979184136914
+        c_1_s: 0.005559363391991985
+        t_antes_apoapse_s: 14.947728260119666
+    comprimento_m: 2.7428577574987996
+    folga_465_com_deck_m: 0.27222329516364363
+    folga_465_sem_deck_m: 0.42613633864190437
+    folga_45_com_deck_m: 0.000571121250600104
   com_margem:
-    escala: 1.2267786486658232
-    capacidade_m_s: 4485.668203358564
-    glom_kg: 464.5003234804373
+    escala: 1.2935992785109514
+    capacidade_m_s: 4459.863708593231
+    glom_kg: 485.17332237388655
     propelente_kg:
-    - 264.9841881118178
-    - 66.73675848742079
+    - 279.41744415836547
+    - 70.37180075099575
     inertes_kg:
-    - 72.34706870995652
-    - 44.43230817124224
+    - 68.82893347387105
+    - 50.55514399065427
     voo:
-      custo: 334.24649083100127
+      custo: 159.58394913293859
       fecha: false
-      periapse_km: 422.4173972865683
-      apoapse_km: 635.0491375669278
-      costa_s: 673.9490443065501
+      periapse_km: 421.317957610344
+      apoapse_km: 632.5184833143246
+      costa_s: 677.8159254420652
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 76.13668281310264
-        c_1_s: 0.04999999999999968
-        t_antes_apoapse_s: 15.68867683181098
+        theta0_graus: 75.77239428798741
+        c_1_s: 0.049999999993330095
+        t_antes_apoapse_s: 15.561849233539565
     voo_antecipada:
-      custo: 334.24649072313133
+      custo: 159.58394913446793
       fecha: false
-      periapse_km: 422.4174009552584
-      apoapse_km: 635.0491369144917
-      costa_s: 673.9500161427037
+      periapse_km: 421.31795134007746
+      apoapse_km: 632.5184845183803
+      costa_s: 677.8155253188042
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 76.13668283118176
-        c_1_s: 0.049999999999999996
-        t_antes_apoapse_s: 15.687705804394025
+        theta0_graus: 75.7723942915368
+        c_1_s: 0.04999999999340703
+        t_antes_apoapse_s: 15.562249540693074
     voo_com_guinada:
-      custo: 3.657041474244137e-09
+      custo: 2.4097688717314405e-17
       fecha: true
-      periapse_km: 379.9993952653678
-      apoapse_km: 380.0006047349167
-      costa_s: 533.6142800285413
+      periapse_km: 379.99999999992593
+      apoapse_km: 379.99999999992593
+      costa_s: 541.9616787929326
       guiamento:
         t_v_s: 5.0
-        theta0_graus: 53.44276663186912
-        c_1_s: 0.012947160317762486
-        t_antes_apoapse_s: 15.001553980444234
-        guinada_2_graus: 39.547930764931515
-    comprimento_m:
-    - 2.972134378398988
-    - 3.3123023513977228
-    folga_465_com_deck_m:
-    - -0.012499001785817976
-    - 0.15758498471354931
-    folga_465_sem_deck_m:
-    - 0.14141404169244276
-    - 0.31149802819181005
-    folga_45_com_deck_m:
-    - -0.2841511756988615
-    - -0.11406718919949421
-    comprimento_novo_m: 2.9544161243269027
-    folga_novo_465_com_deck_m: 0.16644411174959206
-    folga_novo_465_sem_deck_m: 0.3203571552278528
-    folga_novo_45_com_deck_m: -0.10520806216345147
+        theta0_graus: 50.40394003875445
+        c_1_s: 0.010670015207356545
+        t_antes_apoapse_s: 14.898593571488023
+        guinada_2_graus: 39.989062181163426
+    comprimento_m: 3.0273380844764577
+    folga_465_com_deck_m: 0.12998313167481457
+    folga_465_sem_deck_m: 0.2838961751530753
+    folga_45_com_deck_m: -0.14166904223822896
 comprimento:
+  gerado_por: tools/comprimento_solido.py
+  status: NÃO VALIDADO
+  premissa: P-108 (revista)
   a: 0.006997297237408232
   b: 0.7804988476974604
   c: -1.528931890146
@@ -563,143 +534,162 @@ comprimento:
     b: 0.294234180754986
     fator_rms: 1.1993179259955256
     fator_max: 1.552775090665684
-  diametro_mav_m: 0.57
+  diametro_msr_m: 0.57
+  propelente_msr_kg:
+  - 216
+  - 54.4
+  comprimento_msr_m: 2.7
   motores_msr_m:
   - 1.0970325249404103
   - 0.37395038292674276
-  comprimento_msr_m: 2.7
   resto_m: 1.2290170921328472
+  residuos_fator:
+    STAR 8: 1.2260455949675886
+    STAR 9: 0.9450710707770675
+    STAR 12GV: 0.8950392770234594
+    STAR 13B: 0.9813006140654921
+    STAR 15G: 0.8640231908238222
+    STAR 17: 1.0274549588542514
+    STAR 17A: 1.0105190413098222
+    STAR 20: 0.9247722044211626
+    STAR 24: 1.1394530496165167
+    STAR 24C: 1.0981095566673598
+    STAR 26: 0.9091375720763668
+    STAR 26B: 0.8960137432017239
+    STAR 26C: 0.9131980668512031
+    STAR 27: 1.0836475082839045
+    STAR 27H: 1.0577601980935727
+    STAR 30BP: 1.1027539009778093
+    STAR 30C: 0.9675857240342368
+    STAR 30C/BP: 1.0580911914183915
+    STAR 30E: 1.0358557575840452
+    STAR 31: 1.018513963712188
+    STAR 37FM: 0.9435003579256578
+    STAR 37FMV: 1.0729028795669422
+    STAR 37XFP: 0.9682982075466483
+    STAR 37GV: 0.9413307332170349
+    Orion 38: 1.0101349257355714
+  diametro_mav_m: 0.57
 vies:
   variante: A (nível do motor pelo [F269])
   fecha_na_busca: true
-  fator_isp: 1.008270673751831
-  dv_vies_m_s: 32.906820424299895
+  fator_isp: 1.0082492547415123
+  dv_vies_m_s: 32.82159985492672
   voo:
-    custo: 7.148748475076536e-07
+    custo: null
     fecha: true
-    periapse_km: 349.9880918234554
-    apoapse_km: 350.0010818044576
-    costa_s: 494.37942441088296
+    deficit_m: 4.838220775127411e-07
+    periapse_km: 350.0000000004838
+    apoapse_km: 350.0000000004838
+    costa_s: 494.590743903835
     guiamento:
       t_v_s: 5.0
-      theta0_graus: 48.4571475122921
-      c_1_s: 0.006526018692312055
-      t_antes_apoapse_s: 14.872463673202988
+      theta0_graus: 47.65920424758024
+      c_1_s: 0.005791887206246605
+      t_antes_apoapse_s: 14.874526684824726
   corrigida:
     fecha_na_varredura: true
+    busca_da_escala:
+      intervalo:
+      - 1.0000000000000004
+      - 1.0500000000000005
+      deficit_m:
+      - -33281.039530260954
+      - 37453.426729212515
     sem_margem:
-      escala: 1.0232421875000004
-      capacidade_m_s: 4053.3389629164303
-      glom_kg: 401.73246280586727
+      escala: 1.0230461770219337
+      capacidade_m_s: 4052.9046410665287
+      glom_kg: 401.6712654306809
       propelente_kg:
-      - 221.02031250000007
-      - 55.66437500000002
+      - 220.97797423673768
+      - 55.65371202999319
       inertes_kg:
-      - 60.746730327083334
-      - 48.30104497878381
+      - 60.740454212450125
+      - 48.2991249514999
       voo:
-        custo: 6.12697099760453e-08
+        custo: null
         fecha: true
-        periapse_km: 379.99689921395714
-        apoapse_km: 380.0016245208252
-        costa_s: 517.6874696386286
+        deficit_m: -8.195638656616211e-07
+        periapse_km: 379.99999999918043
+        apoapse_km: 379.99999999918043
+        costa_s: 518.1047063411329
         guiamento:
           t_v_s: 5.0
-          theta0_graus: 50.359355731511855
-          c_1_s: 0.00719374308709066
-          t_antes_apoapse_s: 14.925989190193027
-      comprimento_m:
-      - 2.7278906250000006
-      - 2.7627539062500017
-      folga_465_com_deck_m:
-      - 0.26227522078804255
-      - 0.27970686141304313
-      folga_465_sem_deck_m:
-      - 0.4161882642663033
-      - 0.43361990489130386
-      folga_45_com_deck_m:
-      - -0.009376953125000975
-      - 0.008054687499999602
-      comprimento_novo_m: 2.7266169335536263
-      folga_novo_465_com_deck_m: 0.28034370713623025
-      folga_novo_465_sem_deck_m: 0.434256750614491
-      folga_novo_45_com_deck_m: 0.00869153322318672
+          theta0_graus: 48.726948959213594
+          c_1_s: 0.005609467202514566
+          t_antes_apoapse_s: 14.926451694038876
+      comprimento_m: 2.7263930212112797
+      folga_465_com_deck_m: 0.28045566330740357
+      folga_465_sem_deck_m: 0.4343687067856643
+      folga_45_com_deck_m: 0.008803489394360042
     com_margem:
-      escala: 1.2749824932111835
-      capacidade_m_s: 4458.6728592091595
-      glom_kg: 479.9781052124453
+      escala: 1.2747207141639336
+      capacidade_m_s: 4458.195105174489
+      glom_kg: 479.89707096642724
       propelente_kg:
-      - 275.39621853361564
-      - 69.35904763068838
+      - 275.33967425940966
+      - 69.34480685051798
       inertes_kg:
-      - 68.53818478120265
-      - 50.68465426693865
+      - 68.53033656404247
+      - 50.682253292457105
       voo:
-        custo: 329.83955459364955
+        custo: 160.29103340460958
         fecha: false
-        periapse_km: 429.279871678601
-        apoapse_km: 632.0702385567771
-        costa_s: 678.2770625430728
+        periapse_km: 422.1962219119775
+        apoapse_km: 632.9320831115367
+        costa_s: 678.7606825943526
         guiamento:
           t_v_s: 5.0
-          theta0_graus: 75.71607079453548
-          c_1_s: 0.049999999999999996
-          t_antes_apoapse_s: 15.534241731633292
+          theta0_graus: 75.72735997054065
+          c_1_s: 0.04999999999999972
+          t_antes_apoapse_s: 15.536475897946595
       voo_antecipada:
-        custo: 329.8395545909531
+        custo: 160.2910334036916
         fecha: false
-        periapse_km: 429.27989438734994
-        apoapse_km: 632.0702341161333
-        costa_s: 678.2773336082462
+        periapse_km: 422.1962317993366
+        apoapse_km: 632.9320811804245
+        costa_s: 678.7608722073587
         guiamento:
           t_v_s: 5.0
-          theta0_graus: 75.71607075171356
-          c_1_s: 0.049999999999999996
-          t_antes_apoapse_s: 15.53396839129951
+          theta0_graus: 75.72735995367583
+          c_1_s: 0.04999999999999971
+          t_antes_apoapse_s: 15.536285392202066
       voo_com_guinada:
-        custo: 0.0033909054689606013
-        fecha: false
-        periapse_km: 379.41804909224436
-        apoapse_km: 380.5826785003366
-        costa_s: 531.1714957772025
+        custo: 6.151189415651205e-18
+        fecha: true
+        periapse_km: 380.0000000000936
+        apoapse_km: 380.0000000000936
+        costa_s: 524.0108353059628
         guiamento:
           t_v_s: 5.0
-          theta0_graus: 61.343024592374164
-          c_1_s: 0.023328640785631696
-          t_antes_apoapse_s: 14.698542035206389
-          guinada_2_graus: 37.16258471569194
-      comprimento_m:
-      - 3.0299789918534206
-      - 3.4424527316701963
-      folga_465_com_deck_m:
-      - -0.07757419192205472
-      - 0.12866267798633313
-      folga_465_sem_deck_m:
-      - 0.07633885155620601
-      - 0.28257572146459387
-      folga_45_com_deck_m:
-      - -0.34922636583509825
-      - -0.1429894959267104
-      comprimento_novo_m: 3.0071063154114386
-      folga_novo_465_com_deck_m: 0.14009901620732412
-      folga_novo_465_sem_deck_m: 0.29401205968558486
-      folga_novo_45_com_deck_m: -0.1315531577057194
+          theta0_graus: 65.29474823825021
+          c_1_s: 0.02975382976217778
+          t_antes_apoapse_s: 14.984976330184901
+          guinada_2_graus: 34.96401854494077
+      comprimento_m: 3.0068213669841546
+      folga_465_com_deck_m: 0.14024149042096612
+      folga_465_sem_deck_m: 0.29415453389922686
+      folga_45_com_deck_m: -0.1314106834920774
     lei: A (nível do motor pelo [F269]), corrigida pelo viés
 orbitador_b:
   propulsor: XIPS-25
   n_ativos: 10
   massa_kg: 9419.636858254124
   orbita_km:
-  - 432.1636249801218
-  - 693.4067014954761
-  circular_dv_m_s: 23.022452827715867
-  circular_dias: 3.8660197613050653
-  apoapse_dv_m_s: 55.94482955909347
-  apoapse_dias: 22.809812759983043
-  apoapse_final_km: 693.4067014954767
-  periapse_final_km: 437.81936514989866
+  - 421.2588471691203
+  - 632.3143742973078
+  circular_dv_m_s: 18.248660177091924
+  circular_dias: 3.0671534874956414
+  apoapse_dv_m_s: 45.751731357846
+  apoapse_dias: 18.542125148685187
+  apoapse_final_km: 632.314374297308
+  periapse_final_km: 425.88059069802694
   subida_dias_familia1: 179.61642414994336
-  semieixo_alt_eq_km: 562.7751632377995
+  semieixo_alt_eq_km: 526.7766107332145
 variante_nominal: A (nível do motor pelo [F269])
+incerteza_integrador:
+- 2.2297297514177828e-08
+- -2.3270139865337255e-07
+fracao_2_p110_original: 0.4
 semieixo_max_alt_km: 500.0
 antecedencia_max_s: 300.0

@@ -36,22 +36,10 @@ casos:
   lander_injetado_kg: 7245.593849528216
   razao_glom_msr: 4.175222588799486
   comprimentos:
-  - comprimento_fixo_m: 0.0
-    comprimento_m: 11.614123069655824
-    folga_sem_deck_m: -4.215061534827912
-    folga_com_deck_m: -4.435061534827912
-  - comprimento_fixo_m: 0.5
-    comprimento_m: 9.963359538238079
-    folga_sem_deck_m: -3.3896797691190397
-    folga_com_deck_m: -3.6096797691190394
-  - comprimento_fixo_m: 1.0
-    comprimento_m: 8.312596006820334
-    folga_sem_deck_m: -2.5642980034101672
-    folga_com_deck_m: -2.784298003410167
-  - comprimento_fixo_m: 1.5
-    comprimento_m: 6.661832475402589
-    folga_sem_deck_m: -1.7389162377012946
-    folga_com_deck_m: -1.9589162377012945
+  - lei: P-108 revista
+    comprimento_m: 5.71062333646547
+    folga_sem_deck_m: -1.263311668232735
+    folga_com_deck_m: -1.483311668232735
 - rotulo: Δv ideal, sem perdas (limite inferior)
   dv_100x100_m_s: 3361.5788921954368
   dv_subida_com_margem_km_s: 5.039400822097576
@@ -66,22 +54,10 @@ casos:
   lander_injetado_kg: 4962.132912107791
   razao_glom_msr: 1.4025759164856788
   comprimentos:
-  - comprimento_fixo_m: 0.0
-    comprimento_m: 3.8257626686746677
-    folga_sem_deck_m: -0.320881334337334
-    folga_com_deck_m: -0.540881334337334
-  - comprimento_fixo_m: 0.5
-    comprimento_m: 3.6172881004015816
-    folga_sem_deck_m: -0.21664405020079092
-    folga_com_deck_m: -0.4366440502007909
-  - comprimento_fixo_m: 1.0
-    comprimento_m: 3.408813532128495
-    folga_sem_deck_m: -0.1124067660642476
-    folga_com_deck_m: -0.33240676606424757
-  - comprimento_fixo_m: 1.5
-    comprimento_m: 3.2003389638554083
-    folga_sem_deck_m: -0.00816948192770428
-    folga_com_deck_m: -0.22816948192770425
+  - lei: P-108 revista
+    comprimento_m: 3.1476685948349816
+    folga_sem_deck_m: 0.018165702582509047
+    folga_com_deck_m: -0.20183429741749093
 contra_no_adr_0007:
 - item: Massa pela regra (iii)
   adr: 41,3 a 41,4 t do sólido, contra 34,2 a 34,4 t do hipergólico
@@ -113,3 +89,42 @@ contra_no_adr_0007:
   adr: '[F58] p. 4: "Cannot be actively throttled or shut down"'
   hoje: 'vale igual: o corte no alvo exige outro meio (o MSR usa costa longa e um
     2º estágio dimensionado para a queima)'
+errata_p108:
+  fonte: 'results/etapa7.2/mav_solido.yaml no commit 9da6251 (main, merge do PR #64)'
+  casos:
+  - rotulo: Δv de [F37], com perdas
+    comprimentos:
+    - comprimento_fixo_m: 0.0
+      comprimento_m: 11.614123069655824
+      folga_sem_deck_m: -4.215061534827912
+      folga_com_deck_m: -4.435061534827912
+    - comprimento_fixo_m: 0.5
+      comprimento_m: 9.963359538238079
+      folga_sem_deck_m: -3.3896797691190397
+      folga_com_deck_m: -3.6096797691190394
+    - comprimento_fixo_m: 1.0
+      comprimento_m: 8.312596006820334
+      folga_sem_deck_m: -2.5642980034101672
+      folga_com_deck_m: -2.784298003410167
+    - comprimento_fixo_m: 1.5
+      comprimento_m: 6.661832475402589
+      folga_sem_deck_m: -1.7389162377012946
+      folga_com_deck_m: -1.9589162377012945
+  - rotulo: Δv ideal, sem perdas (limite inferior)
+    comprimentos:
+    - comprimento_fixo_m: 0.0
+      comprimento_m: 3.8257626686746677
+      folga_sem_deck_m: -0.320881334337334
+      folga_com_deck_m: -0.540881334337334
+    - comprimento_fixo_m: 0.5
+      comprimento_m: 3.6172881004015816
+      folga_sem_deck_m: -0.21664405020079092
+      folga_com_deck_m: -0.4366440502007909
+    - comprimento_fixo_m: 1.0
+      comprimento_m: 3.408813532128495
+      folga_sem_deck_m: -0.1124067660642476
+      folga_com_deck_m: -0.33240676606424757
+    - comprimento_fixo_m: 1.5
+      comprimento_m: 3.2003389638554083
+      folga_sem_deck_m: -0.00816948192770428
+      folga_com_deck_m: -0.22816948192770425

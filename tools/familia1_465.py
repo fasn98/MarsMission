@@ -29,6 +29,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 sys.path.insert(0, str(RAIZ / "tools"))
 
 import cad_parametros as cp  # noqa: E402
+import comprimento_solido as cs  # noqa: E402
 import envelope_arranjo as ea  # noqa: E402
 import mav_familia1 as mf  # noqa: E402
 import rota_a_dimensiona as rad  # noqa: E402
@@ -196,8 +197,7 @@ def main():
                 assint = assintotica(mp_msr, f_tempo, isp_s, k)
                 for nome, esc in (("sem margem", b_), ("com a margem da P-014, não simulado", s2_)) if s2_ is not None else (("sem margem", b_),):
                     e_, i_ = mf.solido([esc * x for x in mp_msr], [esc * x for x in f_tempo], isp_s, k, carga)
-                    mp = sum(x.propelente_kg for x in e_)
-                    Ls = [lf + (v(msd["comprimento_m"]) - lf) * mp / sum(mp_msr) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
+                    Ls = [cs.comprimento([x.propelente_kg for x in e_], d_s)]   # P-108 revista
                     linha.setdefault("casos", []).append({"margem": nome, "escala": esc, "capacidade_m_s": mf.capacidade(e_, i_, carga), "glom_kg": e_[0].massa_inicial_kg,
                                                           "comprimento_m": [min(Ls), max(Ls)], "folga_465_com_deck_m": [(lim[d_s]["com_deck_m"] - max(Ls)) / 2, (lim[d_s]["com_deck_m"] - min(Ls)) / 2],
                                                           "folga_465_sem_deck_m": [(lim[d_s]["sem_deck_m"] - max(Ls)) / 2, (lim[d_s]["sem_deck_m"] - min(Ls)) / 2]})
@@ -209,8 +209,7 @@ def main():
                 assint_ = assintotica(mp_msr, f_tempo, isp_s, k)
                 s2_ = escala_para((1 + margem) * cap_b, melhor["escala"], mp_msr, f_tempo, isp_s, k, carga) or melhor["escala"]
                 e2, i2 = mf.solido([s2_ * x for x in mp_msr], [s2_ * x for x in f_tempo], isp_s, k, carga)
-                mp2 = sum(x.propelente_kg for x in e2)
-                L2 = [lf + (v(msd["comprimento_m"]) - lf) * mp2 / sum(mp_msr) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
+                L2 = [cs.comprimento([x.propelente_kg for x in e2], d_s)]   # P-108 revista
                 ind = {"escala": s2_, "capacidade_m_s": mf.capacidade(e2, i2, carga), "glom_kg": e2[0].massa_inicial_kg, "comprimento_m": [min(L2), max(L2)],
                        "folga_465_sem_deck_m": [(lim[d_s]["sem_deck_m"] - max(L2)) / 2, (lim[d_s]["sem_deck_m"] - min(L2)) / 2],
                        "folga_465_com_deck_m": [(lim[d_s]["com_deck_m"] - max(L2)) / 2, (lim[d_s]["com_deck_m"] - min(L2)) / 2],
