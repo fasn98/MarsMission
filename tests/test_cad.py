@@ -814,6 +814,47 @@ def test_familia1_mavs():
         assert x["termico"]["energia_kwh"] == pytest.approx(p * 24 * x["termico"]["dias"] / 1000)
 
 
+def test_familia1_aeroshell_465():
+    """Família 1 com o aeroshell de 4,65 m: massas de entrada iguais às de results/familia1/mavs.yaml e à da arquitetura;
+    massa por área, folgas e a perda da coifa longa (P-112) refeitas por fora da ferramenta."""
+    r = ler("results/familia1/aeroshell_465.yaml")
+    mv = ler("results/familia1/mavs.yaml")
+    arq = ler("results/etapa2.5/arquitetura.yaml")["lander"]
+    ent = {x["rotulo"]: x.get("massa_entrada_kg") for x in mv["solido"] + mv["hipergolico"]}
+    pen = ler("config/familia1.yaml")["aeroshell_465"]["penalidade_coifa_longa_kg"]["valor"]
+    assert all(e["folga_vertices_m"] > 0 for e in r["encaixe"])
+    margem = ler("config/dimensionamento.yaml")["margem_dv"]["valor"]
+    # o caso com a margem chega ao alvo de capacidade (e não ao teto de uma busca)
+    for s in r["sensibilidade_solido"]:
+        if s["fecha"]:
+            cm = [c for c in s["casos"] if "com a margem" in c["margem"]]
+            for c in cm:
+                assert c["capacidade_m_s"] == pytest.approx((1 + margem) * s["capacidade_minima_m_s"], rel=1e-9)
+        else:
+            ind = s["melhor_da_varredura"]["indicativo_com_margem"]
+            if ind is None:
+                assert (1 + margem) * s["melhor_da_varredura"]["capacidade_m_s"] >= s["capacidade_assintotica_m_s"]
+            else:
+                assert ind["capacidade_m_s"] == pytest.approx((1 + margem) * s["melhor_da_varredura"]["capacidade_m_s"], rel=1e-9)
+    for d, lim in (("0.57", mv["limites"]["solido"]), ("0.72", mv["limites"]["hipergolico"])):
+        assert r["limites_45"][d]["sem_deck_m"] == pytest.approx(lim["sem_deck_m"]) and r["limites_45"][d]["com_deck_m"] == pytest.approx(lim["com_deck_m"])
+    for x in r["linhas"]:
+        if not x["fecha"]:
+            continue
+        if x["tipo"] == "base":
+            assert x["massa_entrada_kg"] == pytest.approx(arq["massa_entrada_kg"])
+            assert x["lander_injetado_kg"] == pytest.approx(arq["injetado_kg"])
+        else:
+            assert x["massa_entrada_kg"] == pytest.approx(ent[x["rotulo"]])
+        assert x["massa_por_area_465_kg_m2"] == pytest.approx(x["massa_entrada_kg"] / (math.pi * 4.65 ** 2 / 4))
+        assert x["massa_por_area_45_kg_m2"] == pytest.approx(x["massa_entrada_kg"] / (math.pi * 4.5 ** 2 / 4))
+        lim = r["limites_465"][str(x["diametro_m"])]
+        assert x["folga_465"]["com_deck_m"][0] == pytest.approx((lim["com_deck_m"] - x["comprimento_m"][1]) / 2)
+        for nl, mg in x["margens"].items():
+            for mm, ch in (("modelo", "lander_injetado_kg"), ("piso_srl", "lander_injetado_piso_srl_kg")):
+                assert mg[f"{mm}_coifa_longa"] == pytest.approx(mg[f"{mm}_coifa_padrao"] - pen / x[ch])
+        assert x["lander_injetado_piso_srl_kg"] >= x["lander_injetado_kg"] - 1e-9
+
 def test_vetor_excentricidade_e_escala_minima():
     """Vetor excentricidade: zero na circular e |e| = (ra − rp)/(ra + rp) numa elipse; escala mínima (P-117): a raiz de um
     déficit sintético monótono, com o intervalo achado pela varredura, e a mesma raiz com a escala perturbada em 1e-15."""
