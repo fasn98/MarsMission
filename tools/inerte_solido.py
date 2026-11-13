@@ -247,9 +247,45 @@ def main():
                   "comprimento": comp, "vies": vies, "orbitador_b": orb, "variante_nominal": nom,
                   "incerteza_integrador": incerteza, "variante_b_registro": cfg.get("variante_b_registro"), "fracao_2_p110_original": fc["errata_mavs_2026_11_12"]["fracao_inerte_2_base"], "semieixo_max_alt_km": v(cfg["semieixo_max_alt_km"]),
                   "antecedencia_max_s": v(cfg["antecedencia_max_s"])})
+    # só vai para o yaml (comparado pelo CI, P-039) o que tem resposta bem definida (Fabio, 2026-11-13); o resto fica no
+    # .md, arredondado e rotulado como diagnóstico
+    removidos = []
+    out_yaml = so_bem_definido(out, "", removidos)
+    out_yaml["fora_do_yaml"] = sorted(set(removidos))
+    out["fora_do_yaml"] = out_yaml["fora_do_yaml"]
     SAIDA.mkdir(parents=True, exist_ok=True)
-    (SAIDA / "inerte_solido.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    (SAIDA / "inerte_solido.yaml").write_text(yaml.safe_dump(out_yaml, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
+
+
+VOOS_DIAGNOSTICO = ("voo", "voo_antecipada", "voo_com_guinada")
+
+
+def so_bem_definido(x, caminho, removidos):
+    """Cópia de x sem as saídas mal definidas, cujos caminhos (sem índices) vão para `removidos`: dos voos, só fica "fecha"
+    (o guiamento e a órbita de um ajuste que não fecha são ponto de compromisso; na raiz da P-117, a órbita é a circular
+    por construção, o déficit é nulo por construção e o guiamento é o argumento de um máximo raso); da verificação que não
+    fecha, só ficam "fecha", os inertes e o GLOM; do caso (b), que parte da órbita de um ajuste que não fecha, só o
+    sistema do orbitador."""
+    if isinstance(x, list):
+        return [so_bem_definido(y, caminho + "[]", removidos) for y in x]
+    if not isinstance(x, dict):
+        return x
+    out = {}
+    for k, y in x.items():
+        c = f"{caminho}/{k}"
+        if k in VOOS_DIAGNOSTICO and isinstance(y, dict):
+            out[k] = {"fecha": y["fecha"]}
+            removidos += [f"{c}/{z}" for z in y if z != "fecha"]
+        elif k == "verificacao" and isinstance(y, dict) and not y.get("fecha"):
+            out[k] = {z: y[z] for z in ("fecha", "inertes_kg", "glom_kg") if z in y}
+            removidos += [f"{c}/{z}" for z in y if z not in out[k]]
+        elif k == "orbitador_b" and isinstance(y, dict):
+            out[k] = {z: y[z] for z in ("propulsor", "n_ativos", "massa_kg") if z in y}
+            removidos += [f"{c}/{z}" for z in y if z not in out[k]]
+        else:
+            out[k] = so_bem_definido(y, c, removidos)
+    return out
 
 
 def e_(x):
@@ -353,6 +389,9 @@ def escreve_md(o):
                f"  - semieixo dessa órbita a {br(ob['semieixo_alt_eq_km'], 0)} km de altitude sobre o raio equatorial (o referencial do [F273]), acima do limite de {br(o['semieixo_max_alt_km'], 0)} km do MSR ([F273] PDF p. 1): no MSR, essa órbita estaria fora da faixa aceita;",
                f"  - custo: no máximo {br(ob['apoapse_dv_m_s'], 0)} m/s e {br(ob['apoapse_dias'], 1)} dias, sem a fase (RAAN e anomalia). Não foi calculado o ganho: na rota B o orbitador desce em espiral desde a captura, e uma órbita de encontro mais alta encurta a descida e a espiral de saída.",
                "- **Qual afeta menos a missão:** " + ("(a): não muda massa nem datas." if (va["fecha"] or vg["fecha"]) else f"pelos critérios atuais, nenhum dos dois fecha: (a2) erra a circular de {br(o['altitude_km'], 0)} km por {br(1000 * max(abs(vg['periapse_km'] - o['altitude_km']), abs(vg['apoapse_km'] - o['altitude_km'])), 0)} m (resíduo acima da tolerância da P-110), e a órbita de (b) fica fora da faixa do MSR. (a2) não custa massa nem datas, mas a guinada não tem fonte para o MAV; o custo de (b) é só um limite superior, com o orbitador não verificado. Os dados não bastam para ordenar as duas; decisão do Fabio."), ""]
+    md += ["## Fora da comparação do CI (diagnóstico)", "",
+           "Por decisão do Fabio (2026-11-13), só vai para results/familia1/inerte_solido.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. Os números marcados como diagnóstico nesta página (órbitas, resíduos, guiamentos, tempos de costa, o caso (b) do orbitador) são arredondados e vêm de ajustes que não fecham, de mínimos locais ou de grandezas nulas por construção. Saíram do yaml:", ""]
+    md += [f"- `{c}`" for c in o["fora_do_yaml"]] + [""]
     md += ["## Errata da P-110 (aplicada)", "",
            f"- Aprovada pelo Fabio em 2026-11-12: a divisão do inerte do [F269] (fração do estágio 2 = {br(o['fracao_2_f269'], 3)}) é a base da escala, no lugar da que a varredura escolhia ({br(o['fracao_2_p110_original'], 2)}, registro em results/familia1/mavs.md). "
            f"Com ela, a verificação não chega à órbita publicada, e a diferença é o viés da P-114 (acima).",
