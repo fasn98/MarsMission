@@ -284,6 +284,10 @@ def main():
             fora += [f"/solido[]/{k}" for k in ("costa_s", "guia", "deficit_na_escala_m") if k in x]
             for k in ("costa_s", "guia", "deficit_na_escala_m"):
                 x.pop(k, None)
+            if "busca_da_escala" in x and "deficit_m" in x["busca_da_escala"]:
+                # o déficit nos pontos da grade é o máximo de um otimizador: variou 1,3e-4 entre CPUs (run 43294739101)
+                x["busca_da_escala"].pop("deficit_m")
+                fora.append("/solido[]/busca_da_escala/deficit_m")
     out["fora_do_yaml"] = oy["fora_do_yaml"] = sorted(set(fora))
     (SAIDA / "mavs.yaml").write_text(yaml.safe_dump(oy, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
@@ -298,7 +302,7 @@ def escreve_md(o):
     for x in vb["casos"]:
         md.append(f"| {x['modelo'].replace('_', ' ')} | {br(x['empuxos_n'][0], 0)} e {br(x['empuxos_n'][1], 0)} | {br(x['fracao_inerte_2'], 2)} | {br(x['inertes_kg'][0], 1)} e {br(x['inertes_kg'][1], 1)} | {'sim' if x['fecha'] else 'não'} | " + (f"{br(x['queimas_s'][0], 1)} e {br(x['queimas_s'][1], 1)} | {br(x['costa_s'], 0)} |" if x["fecha"] else "— | — |"))
     b = vb["base"]
-    md += ["", (f"**Base: tempo de queima publicado, fração {br(b['fracao_inerte_2'], 3)}, a do [F269]** (errata da P-110, 2026-11-12): " + ("chega à órbita publicada. " if b["fecha"] else f"**não chega à órbita publicada** ({br(b['orbita_km'][0], 0)} × {br(b['orbita_km'][1], 0)} km, diagnóstico); a diferença é o viés da P-114. ") + f"Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de {br(b['costa_s'], 0)} s no melhor ajuste (diagnóstico), contra {br(vb['costa_publicada_s'], 0)} s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial." if b else "**Nenhuma divisão do inerte leva à órbita publicada com o tempo de queima publicado: o modelo não reproduz o MSR.**"), "",
+    md += ["", (f"**Base: tempo de queima publicado, fração {br(b['fracao_inerte_2'], 3)}, a do [F269]** (errata da P-110, 2026-11-12): " + ("chega à órbita publicada. " if b["fecha"] else "**não chega à órbita publicada** (órbita e costa do melhor ajuste em results/familia1/diagnostico_mav_familia1.md); a diferença é o viés da P-114. ") + f"Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa publicada: {br(vb['costa_publicada_s'], 0)} s ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial." if b else "**Nenhuma divisão do inerte leva à órbita publicada com o tempo de queima publicado: o modelo não reproduz o MSR.**"), "",
            "## Comparação lado a lado", ""]
     hd = "| Grandeza | " + " | ".join(x["rotulo"] for x in o["solido"] + o["hipergolico"]) + " |"
     md += [hd, "| :- |" + " -: |" * (len(o["solido"]) + len(o["hipergolico"]))]
@@ -378,7 +382,7 @@ def escreve_md(o):
             md += ["", "## Errata (2026-11-12, decisões do Fabio)", "",
                    f"Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores pelo ajuste do catálogo [F270] + resto fixo sem fonte; results/familia1/comprimento_solido.md) e a errata da P-110 (a divisão do inerte na base passa de {br(er2['fracao_inerte_2_base'], 2)}, escolhida pela varredura, para {br(o['verificacao']['base']['fracao_inerte_2'], 3)}, publicada no [F269]; o valor antigo fica como registro). "
                    "A tabela da errata de 2026-11-11 mostra, na linha \"vigente\", os valores do PR #64; os vigentes de hoje estão abaixo. "
-                   + ("Com a divisão do [F269], o modelo **não chega à órbita publicada** do MSR " + f"({br(o['verificacao']['base']['orbita_km'][0], 0)} × {br(o['verificacao']['base']['orbita_km'][1], 0)} km); a diferença é o viés do modelo de subida (P-114, results/familia1/inerte_solido.md)." if not o["verificacao"]["base"]["fecha"] else "Com a divisão do [F269], o modelo chega à órbita publicada do MSR."), "",
+                   + ("Com a divisão do [F269], o modelo **não chega à órbita publicada** do MSR " + "(órbita em results/familia1/diagnostico_mav_familia1.md); a diferença é o viés do modelo de subida (P-114, results/familia1/inerte_solido.md)." if not o["verificacao"]["base"]["fecha"] else "Com a divisão do [F269], o modelo chega à órbita publicada do MSR."), "",
                    "| Sólido, 380 km | Escala | GLOM (kg) | Capacidade (m/s) | Empuxo/peso | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) | Massa por área (kg/m²) | Aquecimento (W) | Energia (kWh) | RHUs |",
                    "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |"]
             for rot, a_, x_ in (("sem margem", er2["solido_380_sem_margem"], sm2), ("com a margem da P-014", er2["solido_380_com_margem"], cm2)):
@@ -386,9 +390,16 @@ def escreve_md(o):
                 md.append(linha_vigente(rot, x_))
     if o.get("fora_do_yaml"):
         md += ["", "## Fora da comparação do CI (diagnóstico)", "",
-               "Por decisão do Fabio (2026-11-13), só vai para results/familia1/mavs.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. A órbita e a costa da base, que não chega à órbita publicada, e a costa e o guiamento na raiz da P-117 aparecem nesta página só arredondados, como diagnóstico. Saíram do yaml:", ""]
+               "Por decisão do Fabio (2026-11-13), só vai para results/familia1/mavs.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. A órbita e a costa da base, que não chega à órbita publicada, estão em results/familia1/diagnostico_mav_familia1.md, fora da comparação; a costa e o guiamento na raiz da P-117 e o déficit nos pontos da grade não são mostrados. Saíram do yaml:", ""]
         md += [f"- `{c}`" for c in o["fora_do_yaml"]]
     (SAIDA / "mavs.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    b = o["verificacao"]["base"]
+    dg = ["# Diagnóstico da família 1, MAVs (gerado por tools/mav_familia1.py)", "",
+          "**Fora da comparação do CI** (CLAUDE.md, regra 6): saídas de ajustes que não fecham, arredondadas. Os resultados estão em results/familia1/mavs.md.", ""]
+    if b and not b["fecha"]:
+        dg += [f"## Base da verificação (divisão {br(b['fracao_inerte_2'], 3)}, [F269]), melhor ajuste", "",
+               f"Órbita {br(b['orbita_km'][0], 0)} × {br(b['orbita_km'][1], 0)} km (publicada {br(o['verificacao']['orbita_km'], 0)} km); costa {br(b['costa_s'], 0)} s (publicada {br(o['verificacao']['costa_publicada_s'], 0)} s).", ""]
+    (SAIDA / "diagnostico_mav_familia1.md").write_text("\n".join(dg) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

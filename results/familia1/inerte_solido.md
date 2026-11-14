@@ -63,12 +63,12 @@ Massas do catálogo em lbm; 1 lb = 0,4535924 kg ([F112] p. 65 do PDF).
 ### Lei A (nível do motor pelo [F269]): nominal
 
 - N = 14 e 34 kg; c = 1,063 e 0,855; b = 0,701. O c da variante A é calibrado no propelente do [F269] (216 e 54 kg) e aplicado ao do MSR usado no estudo (216 e 54,4 kg, config/cad.yaml), daí o estágio 2 com um pouco mais que 48 kg.
-- Verificação com o MAV do MSR (órbita publicada de 350 km): inertes 60,0 e 48,1 kg; órbita 318 × 344 km; costa 468 s (publicada 446 s); **não chega à órbita publicada** (resíduo 2,6e+00).
+- Verificação com o MAV do MSR (órbita publicada de 350 km): inertes 60,0 e 48,1 kg; **não chega à órbita publicada** (órbita, costa e resíduo do melhor ajuste em results/familia1/diagnostico_inerte_solido.md).
 
-| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
-| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |
-| sem margem (o menor que chega) | 1,043 | 4 054 | 407,8 | 225,2 + 56,7 | 61,4 + 48,5 | 380 × 380 | sim | 2,75 | +0,269 | +0,423 | −0,002 |
-| com a margem da P-014 na capacidade | 1,301 | 4 460 | 488,1 | 281,0 + 70,8 | 69,3 + 50,9 | 421 × 632 | não | 3,04 | +0,126 | +0,280 | −0,146 |
+| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Chega? | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
+| :- | -: | -: | -: | -: | -: | :- | -: | -: | -: | -: |
+| sem margem (o menor que chega) | 1,043 | 4 054 | 407,8 | 225,2 + 56,7 | 61,4 + 48,5 | sim | 2,75 | +0,269 | +0,423 | −0,002 |
+| com a margem da P-014 na capacidade | 1,301 | 4 460 | 488,1 | 281,0 + 70,8 | 69,3 + 50,9 | não | 3,04 | +0,126 | +0,280 | −0,146 |
 
 ### Lei B (nível pela divisão verificada da P-110): sensibilidade documentada, não regenerada
 
@@ -81,20 +81,20 @@ A variante B deixou de ser regenerada em 2026-11-12 (decisão do Fabio): com a e
 
 A variante nominal chega à circular de 380 km; a escala mínima é a raiz da P-117 (results/familia1/mavs.md).
 
-Alvo de folga: +0,05 m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de 380 km se o guiamento conseguir gastá-la; "não" na coluna "Chega?" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. O gasto por guinada está na seção da energia que sobra.
+Alvo de folga: +0,05 m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de 380 km se o guiamento conseguir gastá-la; "não" na coluna "Chega?" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. A órbita simulada de cada caso está em results/familia1/diagnostico_inerte_solido.md; o gasto do excesso está na seção da energia que sobra.
 
 ## Viés do modelo de subida do sólido (P-114, NÃO VALIDADO)
 
-Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante A à órbita publicada: **1,0082**, ou **33 m/s** de capacidade ideal (órbita 350 × 350 km). É a incerteza do modelo de subida do sólido (P-114, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA); o modelo não foi ajustado.
+Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante A à órbita publicada: **1,0082**, ou **33 m/s** de capacidade ideal. É a incerteza do modelo de subida do sólido (P-114, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA); o modelo não foi ajustado.
 
 **Incerteza numérica do modelo de subida** (aceita pelo Fabio em 2026-11-12 como sensibilidade numérica): com o rtol e o atol do integrador × 0,5 e × 2, a escala mínima do sólido muda 2,2e−08 e −2,3e−07 relativo (results/conferencia/ruido_subida.md).
 
 ### Variante nominal corrigida pelo viés (Isp × fator nos dois estágios)
 
-| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
-| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |
-| sem margem (o menor que chega) | 1,023 | 4 053 | 401,7 | 221,0 + 55,7 | 60,7 + 48,3 | 380 × 380 | sim | 2,73 | +0,280 | +0,434 | +0,009 |
-| com a margem da P-014 na capacidade | 1,275 | 4 458 | 479,9 | 275,3 + 69,3 | 68,5 + 50,7 | 422 × 633 | não | 3,01 | +0,140 | +0,294 | −0,131 |
+| Caso, 380 km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Chega? | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |
+| :- | -: | -: | -: | -: | -: | :- | -: | -: | -: | -: |
+| sem margem (o menor que chega) | 1,023 | 4 053 | 401,7 | 221,0 + 55,7 | 60,7 + 48,3 | sim | 2,73 | +0,280 | +0,434 | +0,009 |
+| com a margem da P-014 na capacidade | 1,275 | 4 458 | 479,9 | 275,3 + 69,3 | 68,5 + 50,7 | não | 3,01 | +0,140 | +0,294 | −0,131 |
 
 ## Comprimento (P-108 revista, aplicada)
 
@@ -108,20 +108,19 @@ P-108 revista, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA; o ajuste es
 
 ## Energia que sobra no sólido com margem (variante nominal)
 
-- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis"; [F271] PDF p. 3: "The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit"), com a antecedência até o limite da P-115: não chega a 380 km (melhor órbita 421 × 632 km, antecedência ótima 16 s, longe do limite de 300 s: o limite não esteve ativo). Com o empuxo do estágio 2 na horizontal local, antecipar a ignição não tira energia; o excesso vem do estágio 1 (guiamento no limite c₁ = 0,050 1/s da P-110), e o semieixo fica acima do alvo. No MSR o excesso era menor e o estágio 2 tinha guiamento próprio; gastar um excesso deste tamanho exige apontar fora do ótimo, que é o (a2).
-- **A guinada é multimodal.** Com uma partida só (0,3 rad), o caso corrigido pelo viés caiu em dois mínimos diferentes conforme a CPU (θ0 de 65,3° e 62,2°; commit 70ccede (local) e run 43294739101 do CI (AMD EPYC 7763), caso vies/corrigida/com_margem/voo_com_guinada). Desde 2026-11-13 o ajuste parte de 9 pontos fixos (as 3 partidas da P-110 × guinada inicial de 0,2, 0,5, 0,8 rad, P-115 revista) e fica com o melhor mínimo; o guiamento e a órbita da guinada ficam fora do yaml (diagnóstico).
-- **(a2) Guinada alternada do estágio 2 (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4):** melhor órbita 380,00 × 380,00 km com guinada de 38,0° (resíduo 5,9e-19, tolerância 1e-06: dentro da tolerância da P-110). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada.
-- **(b) Aceitar a órbita do sólido (421 × 632 km) e levar o orbitador até ela** (orbitador só elétrico, XIPS-25 × 10, **calculado, não verificado**, e não usado como fato). Limite superior, na hipótese de o orbitador esperar na circular de 380 km, com a massa injetada (9 420 kg):
-  - subir a circular de 380 km até o periapse: 18 m/s, 3,1 dias; essa parte se recupera na espiral de saída (Edelbaum coplanar: o Δv entre circulares soma), então não entra no custo;
-  - subir o apoapse em arcos em torno do periapse (P-049): 46 m/s, 18,5 dias (fim em 426 × 632 km);
-  - semieixo dessa órbita a 527 km de altitude sobre o raio equatorial (o referencial do [F273]), acima do limite de 500 km do MSR ([F273] PDF p. 1): no MSR, essa órbita estaria fora da faixa aceita;
-  - custo: no máximo 46 m/s e 18,5 dias, sem a fase (RAAN e anomalia). Não foi calculado o ganho: na rota B o orbitador desce em espiral desde a captura, e uma órbita de encontro mais alta encurta a descida e a espiral de saída.
-- **Qual afeta menos a missão:** pelos números, (a2): chega à circular sem massa a mais nem atraso, enquanto a órbita de (b) fica fora da faixa do MSR e o custo de (b) é só um limite superior, com o orbitador não verificado. A guinada de (a2) não tem fonte para o MAV (P-115); a decisão sobre a energia que sobra continua com o Fabio.
+Os números de cada caso (órbitas, antecedência, c₁, custo do orbitador) estão em results/familia1/diagnostico_inerte_solido.md; aqui fica só se o caso chega à circular.
+
+- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis"; [F271] PDF p. 3: "The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit"), com a antecedência até o limite da P-115: **não chega à circular**. Com o empuxo do estágio 2 na horizontal local, antecipar a ignição não tira energia; o excesso vem do estágio 1, e o semieixo fica acima do alvo. No MSR o excesso era menor e o estágio 2 tinha guiamento próprio; gastar um excesso deste tamanho exige apontar fora do ótimo, que é o (a2).
+- **(a2) Guinada alternada do estágio 2** (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4): **chega à circular** (o ajuste parte de pontos fixos, P-115). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada. O ângulo e o guiamento não são dados: o ajuste tem 4 parâmetros (θ0, c₁, antecedência, guinada) para 3 resíduos (semieixo e as duas componentes do vetor excentricidade), e as soluções exatas formam uma curva; só "chega à circular" é bem definido. Quando a energia que sobra for decidida, o critério para tornar a solução única fica registrado: a menor guinada entre as que chegam à circular, por otimização com restrição (decisão do Fabio, 2026-11-14; não implementado).
+  - **Errata (2026-11-14) do diagnóstico anterior:** a versão de 2026-11-13 desta página dizia "A guinada é multimodal": que, com uma partida só (0,3 rad), o caso corrigido pelo viés caíra em dois mínimos diferentes conforme a CPU (θ0 de 65,3° e 62,2°; commit 70ccede (local) e run 43294739101 do CI (AMD EPYC 7763), caso vies/corrigida/com_margem/voo_com_guinada), e que o ajuste passaria a ficar com o melhor mínimo de 9 pontos fixos. Não era multimodalidade: os dois valores são duas soluções exatas da mesma curva (custo ~1e-18), e "o melhor mínimo" escolhia entre custos de 1e-19 a 1e-18, pelo arredondamento. As partidas fixas ficam só para garantir que o ajuste ache uma solução que chega à circular.
+- **(b) Aceitar a órbita do sólido e levar o orbitador até ela** (orbitador só elétrico, XIPS-25 × 10, **calculado, não verificado**, e não usado como fato): o semieixo dessa órbita fica acima do limite de 500 km do MSR ([F273] PDF p. 1), então ela estaria fora da faixa aceita no MSR; o custo para o orbitador é só um limite superior (na hipótese de esperar na circular de 380 km) e não inclui o ganho de uma descida mais curta na rota B.
+- **Qual afeta menos a missão (indicativo):** (a2) chega à circular sem massa a mais nem atraso, enquanto a órbita de (b) fica fora da faixa do MSR e o custo de (b) é só um limite superior, com o orbitador não verificado. A guinada de (a2) tem hipóteses sem fonte (P-115): o resto fora do plano não foi estimado e o controle de atitude do estágio 2 pode não conseguir a manobra. A decisão sobre a energia que sobra continua com o Fabio.
 
 ## Fora da comparação do CI (diagnóstico)
 
-Por decisão do Fabio (2026-11-13), só vai para results/familia1/inerte_solido.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. Os números marcados como diagnóstico nesta página (órbitas, resíduos, guiamentos, tempos de costa, o caso (b) do orbitador) são arredondados e vêm de ajustes que não fecham, de mínimos locais ou de grandezas nulas por construção. Saíram do yaml:
+Por decisão do Fabio (2026-11-13 e 2026-11-14), só vai para os arquivos comparados pelo CI (P-039) o que tem resposta bem definida. As saídas de ajustes que não fecham, de soluções não únicas e as grandezas nulas por construção estão em results/familia1/diagnostico_inerte_solido.md, fora da comparação. Saíram do yaml:
 
+- `/casos[]/busca_da_escala/deficit_m`
 - `/casos[]/com_margem/voo/apoapse_km`
 - `/casos[]/com_margem/voo/costa_s`
 - `/casos[]/com_margem/voo/custo`
@@ -156,7 +155,7 @@ Por decisão do Fabio (2026-11-13), só vai para results/familia1/inerte_solido.
 - `/orbitador_b/orbita_km`
 - `/orbitador_b/periapse_final_km`
 - `/orbitador_b/semieixo_alt_eq_km`
-- `/orbitador_b/subida_dias_familia1`
+- `/vies/corrigida/busca_da_escala/deficit_m`
 - `/vies/corrigida/com_margem/voo/apoapse_km`
 - `/vies/corrigida/com_margem/voo/costa_s`
 - `/vies/corrigida/com_margem/voo/custo`

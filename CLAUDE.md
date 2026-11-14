@@ -37,6 +37,10 @@ genéricas.
        observado.
    - **Diferença acima do limite é problema a investigar**, nunca motivo para alargar a tolerância sem decisão do Fabio.
    - Texto, estrutura, forma e NaN nunca são tolerados.
+   - Só vai para os arquivos comparados pelo CI (P-039) o que tem resposta bem definida. Saídas de ajustes que não fecham,
+     soluções não únicas, mínimos locais e grandezas nulas por construção vão para arquivos de diagnóstico próprios
+     (`results/<etapa>/diagnostico_<ferramenta>.md`), fora da comparação; os arquivos comparados citam o diagnóstico, sem
+     os números (decisões do Fabio, 2026-11-13 e 2026-11-14).
    - A verificação é bloqueante, e cada relatório lista as diferenças abaixo do limite, com o tamanho.
    - Quando uma mudança altera um resultado de etapa anterior, regenerar e registrar errata no mesmo PR.
 

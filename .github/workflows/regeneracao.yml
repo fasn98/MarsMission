@@ -34,6 +34,8 @@ jobs:
   regeneracao:
     runs-on: ubuntu-latest
     timeout-minutes: 300   # Fabio, 2026-11-12. Limite por job em runner hospedado: "Each job in a workflow can run for up to 6 hours of execution time" (docs.github.com/en/actions/reference/limits, tabela "Existing system limits", lida em 2026-11-12)
+    # Comparação: tools/confere_regeneracao.py compara results/ com tolerância (P-039, P-040); results/conferencia/ e
+    # os arquivos results/**/diagnostico_*.md ficam fora da comparação (CLAUDE.md, regra 6).
     defaults:
       run:
         shell: bash -el {0}

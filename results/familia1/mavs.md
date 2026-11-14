@@ -23,7 +23,7 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | empuxo publicado | 9 854 e 6 937 | 0,46 | 58,1 e 49,5 | não | — | — |
 | empuxo publicado | 9 854 e 6 937 | 0,50 | 53,8 e 53,8 | não | — | — |
 
-**Base: tempo de queima publicado, fração 0,444, a do [F269]** (errata da P-110, 2026-11-12): **não chega à órbita publicada** (327 × 346 km, diagnóstico); a diferença é o viés da P-114. Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de 475 s no melhor ajuste (diagnóstico), contra 446 s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial.
+**Base: tempo de queima publicado, fração 0,444, a do [F269]** (errata da P-110, 2026-11-12): **não chega à órbita publicada** (órbita e costa do melhor ajuste em results/familia1/diagnostico_mav_familia1.md); a diferença é o viés da P-114. Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa publicada: 446 s ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial.
 
 ## Comparação lado a lado
 
@@ -84,7 +84,7 @@ Verificação, divisões que chegam à órbita publicada: tempo publicado: publi
 
 ## Errata (2026-11-12, decisões do Fabio)
 
-Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores pelo ajuste do catálogo [F270] + resto fixo sem fonte; results/familia1/comprimento_solido.md) e a errata da P-110 (a divisão do inerte na base passa de 0,40, escolhida pela varredura, para 0,444, publicada no [F269]; o valor antigo fica como registro). A tabela da errata de 2026-11-11 mostra, na linha "vigente", os valores do PR #64; os vigentes de hoje estão abaixo. Com a divisão do [F269], o modelo **não chega à órbita publicada** do MSR (327 × 346 km); a diferença é o viés do modelo de subida (P-114, results/familia1/inerte_solido.md).
+Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores pelo ajuste do catálogo [F270] + resto fixo sem fonte; results/familia1/comprimento_solido.md) e a errata da P-110 (a divisão do inerte na base passa de 0,40, escolhida pela varredura, para 0,444, publicada no [F269]; o valor antigo fica como registro). A tabela da errata de 2026-11-11 mostra, na linha "vigente", os valores do PR #64; os vigentes de hoje estão abaixo. Com a divisão do [F269], o modelo **não chega à órbita publicada** do MSR (órbita em results/familia1/diagnostico_mav_familia1.md); a diferença é o viés do modelo de subida (P-114, results/familia1/inerte_solido.md).
 
 | Sólido, 380 km | Escala | GLOM (kg) | Capacidade (m/s) | Empuxo/peso | Comprimento (m) | Folga sem deck (m) | Folga com deck (m) | Massa de entrada (kg) | Massa por área (kg/m²) | Aquecimento (W) | Energia (kWh) | RHUs |
 | :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: |
@@ -95,8 +95,9 @@ Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores
 
 ## Fora da comparação do CI (diagnóstico)
 
-Por decisão do Fabio (2026-11-13), só vai para results/familia1/mavs.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. A órbita e a costa da base, que não chega à órbita publicada, e a costa e o guiamento na raiz da P-117 aparecem nesta página só arredondados, como diagnóstico. Saíram do yaml:
+Por decisão do Fabio (2026-11-13), só vai para results/familia1/mavs.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. A órbita e a costa da base, que não chega à órbita publicada, estão em results/familia1/diagnostico_mav_familia1.md, fora da comparação; a costa e o guiamento na raiz da P-117 e o déficit nos pontos da grade não são mostrados. Saíram do yaml:
 
+- `/solido[]/busca_da_escala/deficit_m`
 - `/solido[]/costa_s`
 - `/solido[]/deficit_na_escala_m`
 - `/solido[]/guia`

@@ -150,7 +150,7 @@ def main():
         repro.append(raiz(f"escala + {e(ds)} no déficit", d_s=ds))
         repro.append(raiz(f"carga útil × (1 + {e(pert)})", cg=carga * (1 + pert)))
         lo_m, hi_m = sv["busca_da_escala"]["intervalo"]
-        d_lo, d_hi = sv["busca_da_escala"]["deficit_m"]
+        d_lo, d_hi = maquina()[1](lo_m)[0], maquina()[1](hi_m)[0]   # o déficit na grade não fica mais no yaml de mavs
         inclinacao = (d_hi - d_lo) / (hi_m - lo_m)
         inclinacao_md, escala_md = inclinacao, s0
         for fz in cfg["fatores_tolerancia"]["valor"]:
@@ -205,6 +205,7 @@ def escreve_md(o):
     md += [f"| {x['integrador']} | {e(x['rtol'])} | {e(x['atol'])} | {br(x['max_step_s'], 2)} / {br(x['max_step_costa_s'], 2)} | {e(x['erro_periapse_m'])} / {e(x['erro_apoapse_m'])} / {e(x['erro_semieixo_m'])} / {e(x['erro_excentricidade_m'])} | "
            f"{e(x['rugosidade_apses_t_antes_m'])} / {e(x['rugosidade_apses_theta0_m'])} | {e(x['rugosidade_suave_t_antes_m'])} / {e(x['rugosidade_suave_theta0_m'])} |" for x in o["solido"]]
     a0, a1 = o["solido"][0], o["solido"][-1]
+    md += ["", f"**Nota (2026-11-13):** até o commit 70ccede, esta tabela usava a divisão de base (a do [F269] desde a errata da P-110), com o guiamento dela; a base deixou de chegar à órbita publicada, e a rugosidade passou a usar a divisão {br(o['fracao_rugosidade'], 2)} da varredura, que chega. Os números antigos estão em results/conferencia/ruido_subida.md no commit 70ccede."]
     md += ["", f"Em grandezas suaves, a rugosidade cai de {e(max(a0['rugosidade_suave_t_antes_m'], a0['rugosidade_suave_theta0_m']))} m (integrador {a0['integrador']}) para {e(max(a1['rugosidade_suave_t_antes_m'], a1['rugosidade_suave_theta0_m']))} m (integrador {a1['integrador']}): o ruído do integrador existe e cai ao apertá-lo. "
            f"Em periapse e apoapse, ela fica entre {e(min(max(x['rugosidade_apses_t_antes_m'], x['rugosidade_apses_theta0_m']) for x in o['solido']))} e {e(max(max(x['rugosidade_apses_t_antes_m'], x['rugosidade_apses_theta0_m']) for x in o['solido']))} m porque mede a quina, não o integrador.", "",
            "**Errata (2026-11-11):** a primeira versão deste diagnóstico (commit 5729b00, não publicado) media a rugosidade só em periapse e apoapse e concluía que \"o ruído do sólido não vem do integrador\". Essa conclusão não se sustenta: aquela medida via a quina em e = 0. Vale a medida em grandezas suaves acima. O diagnóstico do ajuste (a quina no resíduo espalhava o custo, tabela abaixo) continua valendo."]

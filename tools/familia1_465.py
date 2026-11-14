@@ -268,6 +268,8 @@ def faixa(par, f=sg):
 
 def escreve_md(o):
     al = o["alvo_folga_m"]
+    dg = ["# Diagnóstico da família 1 com o aeroshell de 4,65 m (gerado por tools/familia1_465.py)", "",
+          "**Fora da comparação do CI** (CLAUDE.md, regra 6): o melhor ponto da varredura dos casos que não fecham (ponto de compromisso do ajuste) e o indicativo derivado dele, arredondados. Os resultados estão em results/familia1/aeroshell_465.md.", ""]
     md = ["# Família 1 com o aeroshell de 4,65 m (gerado por tools/familia1_465.py)", "", "**NÃO VALIDADO.** Forma da cápsula: " + o["forma"].upper().replace("_", "-") + f" (Ø {br(o['diametro_m'], 2)} m); adaptador da P-097 ({br(o['altura_adaptador_m'], 3)} m e {br(o['massa_adaptador_kg'], 0)} kg).", "",
           "## (a) Encaixe no Vulcan com a coifa longa de 21,3 m", "", "Envelope de [F80] Fig. 4.3.1-2, PDF p. 45 (figura simplificada, leitura das cotas). Duas leituras entre as cotas, como na 7.2: contorno reto, e o Ø da segunda estação desde a interface.", "",
           "| Cápsula | Leitura | Folga radial nos vértices (m) | Folga na grade de 400 pontos (m) |", "| :- | :- | -: | -: |"]
@@ -312,25 +314,26 @@ def escreve_md(o):
         if not s["fecha"]:
             b = s["melhor_da_varredura"]
             ind = b["indicativo_com_margem"]
-            md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | não fecha na varredura | {br(s['capacidade_assintotica_m_s'], 0)} | melhor ponto (diagnóstico): resíduo {b['custo']:.1e} (tolerância {b['tolerancia']:.0e}), {br(b['periapse_km'], 0)} × {br(b['apoapse_km'], 0)} km, {br(b['capacidade_m_s'], 0)} m/s".replace(".", ",") + f" | {br(b['escala'], 2)} | {br(b['glom_kg'], 1)} | | | |")
-            if ind is None:
-                md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | | | indicativo com a margem da P-014: não existe (passa da capacidade assintótica) | | | | | |")
-                continue
-            md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | | | indicativo: o melhor ponto com a margem da P-014, não simulado | {br(ind['escala'], 2)} | {br(ind['glom_kg'], 1)} | {faixa(ind['comprimento_m'], lambda y: br(y, 2))} | {faixa(ind['folga_465_sem_deck_m'])} | {faixa(ind['folga_465_com_deck_m'])} |")
+            md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | não fecha na varredura | {br(s['capacidade_assintotica_m_s'], 0)} | melhor ponto e indicativo com margem: results/familia1/diagnostico_familia1_465.md | | | | | |")
+            dg += [f"## {s['inerte']}, {br(s['altitude_km'], 0)} km: não fecha na varredura", "",
+                   f"- Melhor ponto da varredura: escala {br(b['escala'], 2)}, GLOM {br(b['glom_kg'], 1)} kg, órbita {br(b['periapse_km'], 0)} × {br(b['apoapse_km'], 0)} km, resíduo {b['custo']:.0e} (tolerância {b['tolerancia']:.0e}), capacidade {br(b['capacidade_m_s'], 0)} m/s.".replace("e-", "e−"),
+                   ("- Indicativo com a margem da P-014: não existe (passa da capacidade assintótica)." if ind is None else
+                    f"- Indicativo com a margem da P-014, não simulado: escala {br(ind['escala'], 2)}, GLOM {br(ind['glom_kg'], 1)} kg, comprimento {faixa(ind['comprimento_m'], lambda y: br(y, 2))} m, folga a 4,65 m sem deck {faixa(ind['folga_465_sem_deck_m'])} m, com deck {faixa(ind['folga_465_com_deck_m'])} m."), ""]
             continue
         for c in s["casos"]:
             md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | {br(s['capacidade_minima_m_s'], 0)} | {br(s['capacidade_assintotica_m_s'], 0)} | {c['margem']} | {br(c['escala'], 2)} | {br(c['glom_kg'], 1)} | {faixa(c['comprimento_m'], lambda y: br(y, 2))} | {faixa(c['folga_465_sem_deck_m'])} | {faixa(c['folga_465_com_deck_m'])} |")
     md += ["", "A capacidade assintótica é a de um sólido de escala infinita com os mesmos k de inerte: se a capacidade com a margem passa dela, não há sólido que feche.", "",
            "\"Não fecha na varredura\" quer dizer: em nenhuma escala da varredura da P-110 o ajuste chega à circular (critério da P-117). O melhor ponto é diagnóstico, não resultado.",
            "", "**Nota (2026-11-12):** a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo) (P-117, PR #64); as versões anteriores desta página, com o ajuste antigo, davam a P-019 a 380 km como \"não fecha na varredura\", com o melhor ponto a menos de 1 km da órbita. Valem os números desta versão; os da linha do sólido nas seções (c) a (e) vêm de results/familia1/mavs.yaml, regenerado no PR #64.",
-           "", "O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; \"não existe\" quando esse alvo passa da capacidade assintótica."]
+           "", "O caso indicativo (no diagnóstico) é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; \"não existe\" quando esse alvo passa da capacidade assintótica."]
     if o.get("fora_do_yaml"):
         md += ["", "## Fora da comparação do CI (diagnóstico)", "",
-               "Por decisão do Fabio (2026-11-13), só vai para results/familia1/aeroshell_465.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. O melhor ponto da varredura dos casos que não fecham, e o indicativo com margem derivado dele, aparecem na tabela (f) só como diagnóstico. Saíram do yaml:", ""]
+               "Por decisão do Fabio (2026-11-13), só vai para results/familia1/aeroshell_465.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. O melhor ponto da varredura dos casos que não fecham, e o indicativo com margem derivado dele, estão em results/familia1/diagnostico_familia1_465.md, fora da comparação. Saíram do yaml:", ""]
         md += [f"- `{c}`" for c in o["fora_do_yaml"]]
     if o["politica_margem_msr"]:
         md += ["", "## Política de margem do MAV sólido do MSR, nas fontes", ""] + [f"- {x}" for x in o["politica_margem_msr"]]
     (SAIDA / "aeroshell_465.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    (SAIDA / "diagnostico_familia1_465.md").write_text("\n".join(dg) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

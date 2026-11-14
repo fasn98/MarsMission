@@ -80,12 +80,10 @@ Pior margem no VC4 com a curva da coifa padrão (limite otimista para a coifa lo
 | :- | -: | -: | -: | :- | -: | -: | -: | -: | -: |
 | P-111 (divisão da conferência) | 380 | 4 050 | 4 535 | sem margem | 1,15 | 451,2 | 2,87 | +0,362 | +0,208 |
 | P-111 (divisão da conferência) | 380 | 4 050 | 4 535 | com a margem da P-014, não simulado | 7,90 | 3 003,8 | 8,61 | −2,510 | −2,664 |
-| P-111 (divisão da conferência) | 814 | não fecha na varredura | 4 535 | melhor ponto (diagnóstico): resíduo 1,0e+02 (tolerância 1e-06), 613 × 790 km, 4 380 m/s | 4,00 | 1 528,0 | | | |
-| P-111 (divisão da conferência) | 814 | | | indicativo com a margem da P-014: não existe (passa da capacidade assintótica) | | | | | |
+| P-111 (divisão da conferência) | 814 | não fecha na varredura | 4 535 | melhor ponto e indicativo com margem: results/familia1/diagnostico_familia1_465.md | | | | | |
 | P-019 (ε 0,286 nos dois estágios) | 380 | 4 186 | 5 889 | sem margem | 0,55 | 225,8 | 2,16 | +0,719 | +0,565 |
 | P-019 (ε 0,286 nos dois estágios) | 380 | 4 186 | 5 889 | com a margem da P-014, não simulado | 0,85 | 338,5 | 2,53 | +0,534 | +0,380 |
-| P-019 (ε 0,286 nos dois estágios) | 814 | não fecha na varredura | 5 889 | melhor ponto (diagnóstico): resíduo 3,8e-01 (tolerância 1e-06), 802 × 814 km, 5 347 m/s | 2,55 | 981,7 | | | |
-| P-019 (ε 0,286 nos dois estágios) | 814 | | | indicativo: o melhor ponto com a margem da P-014, não simulado | 206,41 | 78 187,5 | 95,47 | −45,940 | −46,093 |
+| P-019 (ε 0,286 nos dois estágios) | 814 | não fecha na varredura | 5 889 | melhor ponto e indicativo com margem: results/familia1/diagnostico_familia1_465.md | | | | | |
 
 A capacidade assintótica é a de um sólido de escala infinita com os mesmos k de inerte: se a capacidade com a margem passa dela, não há sólido que feche.
 
@@ -93,11 +91,11 @@ A capacidade assintótica é a de um sólido de escala infinita com os mesmos k 
 
 **Nota (2026-11-12):** a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo) (P-117, PR #64); as versões anteriores desta página, com o ajuste antigo, davam a P-019 a 380 km como "não fecha na varredura", com o melhor ponto a menos de 1 km da órbita. Valem os números desta versão; os da linha do sólido nas seções (c) a (e) vêm de results/familia1/mavs.yaml, regenerado no PR #64.
 
-O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; "não existe" quando esse alvo passa da capacidade assintótica.
+O caso indicativo (no diagnóstico) é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; "não existe" quando esse alvo passa da capacidade assintótica.
 
 ## Fora da comparação do CI (diagnóstico)
 
-Por decisão do Fabio (2026-11-13), só vai para results/familia1/aeroshell_465.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. O melhor ponto da varredura dos casos que não fecham, e o indicativo com margem derivado dele, aparecem na tabela (f) só como diagnóstico. Saíram do yaml:
+Por decisão do Fabio (2026-11-13), só vai para results/familia1/aeroshell_465.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. O melhor ponto da varredura dos casos que não fecham, e o indicativo com margem derivado dele, estão em results/familia1/diagnostico_familia1_465.md, fora da comparação. Saíram do yaml:
 
 - `/sensibilidade_solido[]/melhor_da_varredura`
 

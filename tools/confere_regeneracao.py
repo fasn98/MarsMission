@@ -369,8 +369,10 @@ def main():
         subprocess.run(["git", "add", "-A"], cwd=d, check=True)
         subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True)
         log = regenerar(d)
+        # fora da comparação: results/conferencia/ e os arquivos de diagnóstico (diagnostico_*.md), que guardam saídas sem
+        # resposta bem definida (ajustes que não fecham, soluções não únicas, grandezas nulas por construção; CLAUDE.md, regra 6)
         versionados = sorted(x for x in base.rglob("*") if x.is_file() and x.name != ".gitkeep"
-                             and "conferencia" not in x.relative_to(base).parts)
+                             and "conferencia" not in x.relative_to(base).parts and not x.name.startswith("diagnostico_"))
         arquivos = []
         for p in versionados:
             rel = Path("results") / p.relative_to(base)

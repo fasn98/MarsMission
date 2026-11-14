@@ -281,8 +281,12 @@ def so_bem_definido(x, caminho, removidos):
         elif k == "verificacao" and isinstance(y, dict) and not y.get("fecha"):
             out[k] = {z: y[z] for z in ("fecha", "inertes_kg", "glom_kg") if z in y}
             removidos += [f"{c}/{z}" for z in y if z not in out[k]]
+        elif k == "busca_da_escala" and isinstance(y, dict):
+            # o déficit nos pontos da grade é o máximo de um otimizador (variou entre CPUs em mavs, run 43294739101)
+            out[k] = {z: y[z] for z in y if z != "deficit_m"}
+            removidos += [f"{c}/deficit_m"] if "deficit_m" in y else []
         elif k == "orbitador_b" and isinstance(y, dict):
-            out[k] = {z: y[z] for z in ("propulsor", "n_ativos", "massa_kg") if z in y}
+            out[k] = {z: y[z] for z in ("propulsor", "n_ativos", "massa_kg", "subida_dias_familia1") if z in y}
             removidos += [f"{c}/{z}" for z in y if z not in out[k]]
         else:
             out[k] = so_bem_definido(y, c, removidos)
@@ -323,26 +327,38 @@ def escreve_md(o):
            "- **Divisão do inerte (P-110).** A justificativa original da P-110 dizia que a divisão por estágio não tinha fonte; o [F269] publica uma (fração do estágio 2 = " + f"{br(o['fracao_2_f269'], 3)}, contra {br(o['fracao_2_p110_original'], 2)} escolhida pela varredura da P-110). Errata da P-110 aplicada (aprovada pelo Fabio em 2026-11-12): vale a do [F269]; ver o fim da página.",
            "- **Lei (P-113, NÃO VALIDADA; aprovada pelo Fabio em 2026-11-10):** inerte do estágio = N + c · P^b, com b do catálogo e N, o não propulsivo do [F269], fixo. Nível c: A, pelo motor do MSR [F269] (nominal); B, pela divisão que a verificação da P-110 escolheu (sensibilidade).",
            "", f"## Subida com cada variante (modelo de subida do sólido; tolerância {o['tol_custo']:.0e}, passo da varredura {br(o['passo'], 2)}, os da P-110)".replace(".0e", "e"), ""]
+    dg = ["# Diagnóstico da lei de massa inerte (gerado por tools/inerte_solido.py)", "",
+          "**Fora da comparação do CI** (CLAUDE.md, regra 6): saídas de ajustes que não fecham, de soluções não únicas e grandezas nulas por construção, arredondadas. Os resultados estão em results/familia1/inerte_solido.md.", ""]
+    DIAG = "results/familia1/diagnostico_inerte_solido.md"
+
     def tabela(c):
-        t = [f"| Caso, {br(o['altitude_km'], 0)} km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Órbita simulada (km) | Chega? | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |",
-             "| :- | -: | -: | -: | -: | -: | :- | :- | -: | -: | -: | -: |"]
+        t = [f"| Caso, {br(o['altitude_km'], 0)} km | Escala | Capacidade (m/s) | GLOM (kg) | Propelente (kg) | Inertes (kg) | Chega? | Comprimento (m, P-108 revista) | 4,65 m com deck | 4,65 m sem deck | 4,5 m com deck |",
+             "| :- | -: | -: | -: | -: | -: | :- | -: | -: | -: | -: |"]
         for rot, k in (("sem margem (o menor que chega)", "sem_margem"), ("com a margem da P-014 na capacidade", "com_margem")):
             y = c[k]
             t.append(f"| {rot} | {br(y['escala'], 3)} | {br(y['capacidade_m_s'], 0)} | {br(y['glom_kg'], 1)} | {br(y['propelente_kg'][0], 1)} + {br(y['propelente_kg'][1], 1)} | {br(y['inertes_kg'][0], 1)} + {br(y['inertes_kg'][1], 1)} | "
-                     f"{br(y['voo']['periapse_km'], 0)} × {br(y['voo']['apoapse_km'], 0)} | {'sim' if y['voo']['fecha'] else 'não'} | "
-                     f"{br(y['comprimento_m'], 2)} | {sg(y['folga_465_com_deck_m'])} | {sg(y['folga_465_sem_deck_m'])} | {sg(y['folga_45_com_deck_m'])} |")
+                     f"{'sim' if y['voo']['fecha'] else 'não'} | {br(y['comprimento_m'], 2)} | {sg(y['folga_465_com_deck_m'])} | {sg(y['folga_465_sem_deck_m'])} | {sg(y['folga_45_com_deck_m'])} |")
         return t
+
+    def voos_diag(c, rot):
+        out = [f"## {rot}", "", "| Caso | Órbita simulada (km) | Resíduo | Costa (s) |", "| :- | :- | -: | -: |"]
+        for k in ("sem_margem", "com_margem"):
+            y = c[k]["voo"]
+            out.append(f"| {k.replace('_', ' ')} | {br(y['periapse_km'], 0)} × {br(y['apoapse_km'], 0)} | " + (e_(y['custo']) if y.get('custo') is not None else "raiz da P-117") + f" | {br(y['costa_s'], 0)} |")
+        return out + [""]
     for c in o["casos"]:
         vf = c["verificacao"]
         papel = "nominal" if c["lei"] == o["variante_nominal"] else "sensibilidade"
         md += [f"### Lei {c['lei']}: {papel}", "",
                f"- N = {br(c['N_kg'][0], 0)} e {br(c['N_kg'][1], 0)} kg; c = {br(c['c'][0], 3)} e {br(c['c'][1], 3)}; b = {br(c['b'], 3)}." + (" O c da variante A é calibrado no propelente do [F269] (216 e 54 kg) e aplicado ao do MSR usado no estudo (216 e 54,4 kg, config/cad.yaml), daí o estágio 2 com um pouco mais que 48 kg." if c["lei"].startswith("A") else ""),
-               f"- Verificação com o MAV do MSR (órbita publicada de {br(o['orbita_verificacao_km'], 0)} km): inertes {br(vf['inertes_kg'][0], 1)} e {br(vf['inertes_kg'][1], 1)} kg; órbita {br(vf['periapse_km'], 0)} × {br(vf['apoapse_km'], 0)} km; costa {br(vf['costa_s'], 0)} s (publicada {br(o['costa_publicada_s'], 0)} s); "
-               + ("**chega à órbita publicada**." if vf["fecha"] else f"**não chega à órbita publicada** (resíduo {vf['custo']:.1e}).".replace(".", ",", 1))]
+               f"- Verificação com o MAV do MSR (órbita publicada de {br(o['orbita_verificacao_km'], 0)} km): inertes {br(vf['inertes_kg'][0], 1)} e {br(vf['inertes_kg'][1], 1)} kg; "
+               + ("**chega à órbita publicada**." if vf["fecha"] else f"**não chega à órbita publicada** (órbita, costa e resíduo do melhor ajuste em {DIAG}).")]
+        dg += [f"## Verificação da lei {c['lei']} com o MAV do MSR", "", f"Órbita {br(vf['periapse_km'], 0)} × {br(vf['apoapse_km'], 0)} km (publicada {br(o['orbita_verificacao_km'], 0)} km); costa {br(vf['costa_s'], 0)} s (publicada {br(o['costa_publicada_s'], 0)} s); resíduo {e_(vf['custo'])}.", ""]
         if not c["fecha_na_varredura"]:
             md += [f"- {br(o['altitude_km'], 0)} km: não fecha na varredura da P-110.", ""]
             continue
         md += [""] + tabela(c) + [""]
+        dg += voos_diag(c, f"Voos da lei {c['lei']} a {br(o['altitude_km'], 0)} km")
     vb = o.get("variante_b_registro")
     if vb:
         md += [f"### Lei {vb['lei']}: sensibilidade documentada, não regenerada", "",
@@ -355,16 +371,17 @@ def escreve_md(o):
         md.append("")
     if all(c["fecha_na_varredura"] for c in o["casos"]):
         md += [f"A variante nominal chega à circular de {br(o['altitude_km'], 0)} km; a escala mínima é a raiz da P-117 (results/familia1/mavs.md).", ""]
-    md += [f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de {br(o['altitude_km'], 0)} km se o guiamento conseguir gastá-la; \"não\" na coluna \"Chega?\" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. O gasto por guinada está na seção da energia que sobra.", ""]
+    md += [f"Alvo de folga: {sg(o['alvo_folga_m'], 2)} m. O caso com a margem foi simulado com o mesmo guiamento (subida vertical, tangente linear, costa e queima do estágio 2 antes do apoapse): o sólido não regula o empuxo, então a capacidade a mais só chega à órbita de {br(o['altitude_km'], 0)} km se o guiamento conseguir gastá-la; \"não\" na coluna \"Chega?\" quer dizer que ele passa da órbita com esse guiamento, não que falta Δv. A órbita simulada de cada caso está em {DIAG}; o gasto do excesso está na seção da energia que sobra.", ""]
     vz = o["vies"]
     md += ["## Viés do modelo de subida do sólido (P-114, NÃO VALIDADO)", ""]
     if vz.get("fator_isp"):
-        vv = vz["voo"]
-        md += [f"Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante {vz['variante'][0]} à órbita publicada: **{br(vz['fator_isp'], 4)}**, ou **{br(vz['dv_vies_m_s'], 0)} m/s** de capacidade ideal (órbita {br(vv['periapse_km'], 0)} × {br(vv['apoapse_km'], 0)} km). É a incerteza do modelo de subida do sólido (P-114, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA); o modelo não foi ajustado.", "",
+        md += [f"Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante {vz['variante'][0]} à órbita publicada: **{br(vz['fator_isp'], 4)}**, ou **{br(vz['dv_vies_m_s'], 0)} m/s** de capacidade ideal. É a incerteza do modelo de subida do sólido (P-114, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA); o modelo não foi ajustado.", "",
                f"**Incerteza numérica do modelo de subida** (aceita pelo Fabio em 2026-11-12 como sensibilidade numérica): com o rtol e o atol do integrador × 0,5 e × 2, a escala mínima do sólido muda {' e '.join(e_(x) for x in o['incerteza_integrador'])} relativo (results/conferencia/ruido_subida.md).", "",
                "### Variante nominal corrigida pelo viés (Isp × fator nos dois estágios)", ""]
         cr = vz["corrigida"]
         md += (tabela(cr) if cr.get("fecha_na_varredura") else [f"Não fecha na varredura da P-110 a {br(o['altitude_km'], 0)} km."]) + [""]
+        if cr.get("fecha_na_varredura"):
+            dg += voos_diag(cr, f"Voos da variante nominal corrigida pelo viés, {br(o['altitude_km'], 0)} km")
     else:
         md += ["Nenhum fator de Isp na busca da P-114 leva o MAV do MSR à órbita publicada: viés não medido.", ""]
     cp = o["comprimento"]
@@ -376,30 +393,33 @@ def escreve_md(o):
            "- Comprimento do MAV = motor do estágio 1 + motor do estágio 2 (pelo ajuste) + o resto fixo acima. A P-108 original escalava o comprimento não fixo na proporção do propelente, com a parte fixa de 0 a 1,5 m (registro na errata de results/familia1/mavs.md).", ""]
     ob = o["orbitador_b"]
     cn = next(c for c in o["casos"] if c["lei"] == o["variante_nominal"])
-    md += ["## Energia que sobra no sólido com margem (variante nominal)", ""]
+    md += ["## Energia que sobra no sólido com margem (variante nominal)", "", f"Os números de cada caso (órbitas, antecedência, c₁, custo do orbitador) estão em {DIAG}; aqui fica só se o caso chega à circular.", ""]
     if ob:
         cm = cn["com_margem"]
         vg = cm["voo_com_guinada"]
         va = cm["voo_antecipada"]
-        md += [f"- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: \"This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis\"; [F271] PDF p. 3: \"The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit\"), com a antecedência até o limite da P-115: "
-               + (f"chega a {br(va['periapse_km'], 0)} × {br(va['apoapse_km'], 0)} km, acendendo {br(va['guiamento']['t_antes_apoapse_s'], 0)} s antes do apoapse." if va["fecha"] else f"não chega a {br(o['altitude_km'], 0)} km (melhor órbita {br(va['periapse_km'], 0)} × {br(va['apoapse_km'], 0)} km, antecedência ótima {br(va['guiamento']['t_antes_apoapse_s'], 0)} s, longe do limite de {br(o['antecedencia_max_s'], 0)} s: o limite não esteve ativo). Com o empuxo do estágio 2 na horizontal local, antecipar a ignição não tira energia; o excesso vem do estágio 1 (guiamento no limite c₁ = " + f"{br(va['guiamento']['c_1_s'], 3)} 1/s da P-110), e o semieixo fica acima do alvo. No MSR o excesso era menor e o estágio 2 tinha guiamento próprio; gastar um excesso deste tamanho exige apontar fora do ótimo, que é o (a2).")]
+        md += ["- **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: \"This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis\"; [F271] PDF p. 3: \"The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit\"), com a antecedência até o limite da P-115: "
+               + ("**chega à circular**." if va["fecha"] else "**não chega à circular**. Com o empuxo do estágio 2 na horizontal local, antecipar a ignição não tira energia; o excesso vem do estágio 1, e o semieixo fica acima do alvo. No MSR o excesso era menor e o estágio 2 tinha guiamento próprio; gastar um excesso deste tamanho exige apontar fora do ótimo, que é o (a2).")]
         mo = o["guinada_multimodal"]
-        md += [f"- **A guinada é multimodal.** Com uma partida só (0,3 rad), o caso corrigido pelo viés caiu em dois mínimos diferentes conforme a CPU (θ0 de {br(mo['valor'][0], 1)}° e {br(mo['valor'][1], 1)}°; {mo['fonte']}). Desde 2026-11-13 o ajuste parte de {len(o['partidas_guinada_rad']) * 3} pontos fixos (as 3 partidas da P-110 × guinada inicial de {', '.join(br(x, 1) for x in o['partidas_guinada_rad'])} rad, P-115 revista) e fica com o melhor mínimo; o guiamento e a órbita da guinada ficam fora do yaml (diagnóstico)."]
-        md += [f"- **(a2) Guinada alternada do estágio 2 (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4):** " + f"melhor órbita {br(vg['periapse_km'], 2)} × {br(vg['apoapse_km'], 2)} km com guinada de {br(vg['guiamento']['guinada_2_graus'], 1)}° (resíduo {vg['custo']:.1e}".replace(".", ",", 1) + f", tolerância {o['tol_custo']:.0e}: " + ("dentro" if vg["fecha"] else "**fora**") + " da tolerância da P-110). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada.",
-               f"- **(b) Aceitar a órbita do sólido ({br(ob['orbita_km'][0], 0)} × {br(ob['orbita_km'][1], 0)} km) e levar o orbitador até ela** (orbitador só elétrico, {ob['propulsor']} × {ob['n_ativos']}, **calculado, não verificado**, e não usado como fato). Limite superior, na hipótese de o orbitador esperar na circular de {br(o['altitude_km'], 0)} km, com a massa injetada ({br(ob['massa_kg'], 0)} kg):",
-               f"  - subir a circular de {br(o['altitude_km'], 0)} km até o periapse: {br(ob['circular_dv_m_s'], 0)} m/s, {br(ob['circular_dias'], 1)} dias; essa parte se recupera na espiral de saída (Edelbaum coplanar: o Δv entre circulares soma), então não entra no custo;",
-               f"  - subir o apoapse em arcos em torno do periapse (P-049): {br(ob['apoapse_dv_m_s'], 0)} m/s, {br(ob['apoapse_dias'], 1)} dias (fim em {br(ob['periapse_final_km'], 0)} × {br(ob['apoapse_final_km'], 0)} km);",
-               f"  - semieixo dessa órbita a {br(ob['semieixo_alt_eq_km'], 0)} km de altitude sobre o raio equatorial (o referencial do [F273]), acima do limite de {br(o['semieixo_max_alt_km'], 0)} km do MSR ([F273] PDF p. 1): no MSR, essa órbita estaria fora da faixa aceita;",
-               f"  - custo: no máximo {br(ob['apoapse_dv_m_s'], 0)} m/s e {br(ob['apoapse_dias'], 1)} dias, sem a fase (RAAN e anomalia). Não foi calculado o ganho: na rota B o orbitador desce em espiral desde a captura, e uma órbita de encontro mais alta encurta a descida e a espiral de saída.",
-               "- **Qual afeta menos a missão:** " + ("pelos números, (a" + ("1" if va["fecha"] else "2") + "): chega à circular sem massa a mais nem atraso, enquanto a órbita de (b) fica fora da faixa do MSR e o custo de (b) é só um limite superior, com o orbitador não verificado. " + ("A guinada de (a2) não tem fonte para o MAV (P-115); " if not va["fecha"] else "") + "a decisão sobre a energia que sobra continua com o Fabio." if (va["fecha"] or vg["fecha"]) else f"pelos critérios atuais, nenhum dos dois fecha: (a2) erra a circular de {br(o['altitude_km'], 0)} km por {br(1000 * max(abs(vg['periapse_km'] - o['altitude_km']), abs(vg['apoapse_km'] - o['altitude_km'])), 0)} m (resíduo acima da tolerância da P-110), e a órbita de (b) fica fora da faixa do MSR. (a2) não custa massa nem datas, mas a guinada não tem fonte para o MAV; o custo de (b) é só um limite superior, com o orbitador não verificado. Os dados não bastam para ordenar as duas; decisão do Fabio."), ""]
+        md += [f"- **(a2) Guinada alternada do estágio 2** (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4): " + ("**chega à circular**" if vg["fecha"] else "**não chega à circular**") + " (o ajuste parte de pontos fixos, P-115). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada. O ângulo e o guiamento não são dados: o ajuste tem 4 parâmetros (θ0, c₁, antecedência, guinada) para 3 resíduos (semieixo e as duas componentes do vetor excentricidade), e as soluções exatas formam uma curva; só \"chega à circular\" é bem definido. Quando a energia que sobra for decidida, o critério para tornar a solução única fica registrado: a menor guinada entre as que chegam à circular, por otimização com restrição (decisão do Fabio, 2026-11-14; não implementado).",
+               f"  - **Errata (2026-11-14) do diagnóstico anterior:** a versão de 2026-11-13 desta página dizia \"A guinada é multimodal\": que, com uma partida só (0,3 rad), o caso corrigido pelo viés caíra em dois mínimos diferentes conforme a CPU (θ0 de {br(mo['valor'][0], 1)}° e {br(mo['valor'][1], 1)}°; {mo['fonte']}), e que o ajuste passaria a ficar com o melhor mínimo de {len(o['partidas_guinada_rad']) * 3} pontos fixos. Não era multimodalidade: os dois valores são duas soluções exatas da mesma curva (custo ~1e-18), e \"o melhor mínimo\" escolhia entre custos de 1e-19 a 1e-18, pelo arredondamento. As partidas fixas ficam só para garantir que o ajuste ache uma solução que chega à circular.",
+               f"- **(b) Aceitar a órbita do sólido e levar o orbitador até ela** (orbitador só elétrico, {ob['propulsor']} × {ob['n_ativos']}, **calculado, não verificado**, e não usado como fato): o semieixo dessa órbita fica acima do limite de {br(o['semieixo_max_alt_km'], 0)} km do MSR ([F273] PDF p. 1), então ela estaria fora da faixa aceita no MSR; o custo para o orbitador é só um limite superior (na hipótese de esperar na circular de {br(o['altitude_km'], 0)} km) e não inclui o ganho de uma descida mais curta na rota B.",
+               "- **Qual afeta menos a missão (indicativo):** " + ("(a" + ("1" if va["fecha"] else "2") + ") chega à circular sem massa a mais nem atraso, enquanto a órbita de (b) fica fora da faixa do MSR e o custo de (b) é só um limite superior, com o orbitador não verificado. " + ("A guinada de (a2) tem hipóteses sem fonte (P-115): o resto fora do plano não foi estimado e o controle de atitude do estágio 2 pode não conseguir a manobra. " if not va["fecha"] else "") + "A decisão sobre a energia que sobra continua com o Fabio." if (va["fecha"] or vg["fecha"]) else "nenhum dos dois chega à circular pelos critérios atuais, e a órbita de (b) fica fora da faixa do MSR; os dados não bastam para ordenar as duas; decisão do Fabio."), ""]
+        dg += ["## Energia que sobra no sólido com margem (variante nominal)", "",
+               f"- (a1) Melhor órbita {br(va['periapse_km'], 0)} × {br(va['apoapse_km'], 0)} km; antecedência ótima {br(va['guiamento']['t_antes_apoapse_s'], 0)} s (limite {br(o['antecedencia_max_s'], 0)} s); c₁ = {br(va['guiamento']['c_1_s'], 3)} 1/s (limite da P-110 de 0,05 1/s).",
+               f"- (b) Órbita aceita {br(ob['orbita_km'][0], 0)} × {br(ob['orbita_km'][1], 0)} km; semieixo a {br(ob['semieixo_alt_eq_km'], 0)} km de altitude sobre o raio equatorial; orbitador com {br(ob['massa_kg'], 0)} kg (a massa injetada, limite superior):",
+               f"  - circular de {br(o['altitude_km'], 0)} km até o periapse: {br(ob['circular_dv_m_s'], 0)} m/s, {br(ob['circular_dias'], 1)} dias (recuperados na espiral de saída, Edelbaum coplanar);",
+               f"  - apoapse em arcos em torno do periapse (P-049): {br(ob['apoapse_dv_m_s'], 0)} m/s, {br(ob['apoapse_dias'], 1)} dias (fim em {br(ob['periapse_final_km'], 0)} × {br(ob['apoapse_final_km'], 0)} km).",
+               "- (a2) O ângulo e o guiamento da guinada não são mostrados: o ajuste é subdeterminado (curva de soluções exatas).", ""]
     md += ["## Fora da comparação do CI (diagnóstico)", "",
-           "Por decisão do Fabio (2026-11-13), só vai para results/familia1/inerte_solido.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. Os números marcados como diagnóstico nesta página (órbitas, resíduos, guiamentos, tempos de costa, o caso (b) do orbitador) são arredondados e vêm de ajustes que não fecham, de mínimos locais ou de grandezas nulas por construção. Saíram do yaml:", ""]
+           f"Por decisão do Fabio (2026-11-13 e 2026-11-14), só vai para os arquivos comparados pelo CI (P-039) o que tem resposta bem definida. As saídas de ajustes que não fecham, de soluções não únicas e as grandezas nulas por construção estão em {DIAG}, fora da comparação. Saíram do yaml:", ""]
     md += [f"- `{c}`" for c in o["fora_do_yaml"]] + [""]
     md += ["## Errata da P-110 (aplicada)", "",
            f"- Aprovada pelo Fabio em 2026-11-12: a divisão do inerte do [F269] (fração do estágio 2 = {br(o['fracao_2_f269'], 3)}) é a base da escala, no lugar da que a varredura escolhia ({br(o['fracao_2_p110_original'], 2)}, registro em results/familia1/mavs.md). "
            f"Com ela, a verificação não chega à órbita publicada, e a diferença é o viés da P-114 (acima).",
            f"- Consequência para a P-113: a variante B tomava o nível da divisão verificada da P-110, que agora é a do [F269]; ela fica quase igual à A (estágios de {br(o['comparacao_msr'][0]['lei_B_estagio_kg'], 1)} e {br(o['comparacao_msr'][1]['lei_B_estagio_kg'], 1)} kg, contra {br(o['comparacao_msr'][0]['lei_A_estagio_kg'], 1)} e {br(o['comparacao_msr'][1]['lei_A_estagio_kg'], 1)} kg na A, no tamanho do MSR). A diferença que resta vem do inerte total ([F34] contra [F269]).", ""]
     (SAIDA / "inerte_solido.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    (SAIDA / "diagnostico_inerte_solido.md").write_text("\n".join(dg) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

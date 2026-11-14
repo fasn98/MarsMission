@@ -127,8 +127,9 @@ inerte_solido:   # Fabio, 2026-11-10 (PR #60, item 3): lei de massa inerte do MA
   antecedencia_max_s: {valor: 300, premissa: P-115}
   guinada:
     partidas_rad: {valor: [0.2, 0.5, 0.8], premissa: P-115}   # revisão de 2026-11-13: várias partidas fixas, fica o melhor mínimo
-    # A guinada é multimodal: dois mínimos para o caso corrigido pelo viés, com θ0 de 65,3° (results/familia1/inerte_solido.yaml
-    # no commit 70ccede) e de 62,2° (regeneração do CI do PR #63, run 43294739101), com a partida única de 0,3 rad.
+    # Registro: com a partida única de 0,3 rad, o caso corrigido pelo viés deu θ0 de 65,3° (commit 70ccede) e de 62,2° (CI do
+    # PR #63, run 43294739101). Errata (2026-11-14): não é multimodalidade; o ajuste é subdeterminado (4 parâmetros, 3
+    # resíduos) e os dois valores são soluções exatas da mesma curva.
     minimos_observados_theta0_graus: {valor: [65.29474823825021, 62.240660299798805], fonte: "commit 70ccede (local) e run 43294739101 do CI (AMD EPYC 7763), caso vies/corrigida/com_margem/voo_com_guinada"}
     limites_rad: {valor: [0.0, 1.4], premissa: P-115}
   semieixo_max_alt_km: {valor: 500, fonte: "[F273] PDF p. 1: \"3. Semi-major axis below 500-km altitude to reduce size of orbit dispersion and ensure reliable imaging opportunities by ERO.\""}

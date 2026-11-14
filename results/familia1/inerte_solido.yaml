@@ -326,9 +326,6 @@ casos:
     intervalo:
     - 1.0000000000000004
     - 1.0500000000000005
-    deficit_m:
-    - -60796.622212619055
-    - 9839.509088151623
   sem_margem:
     escala: 1.0427882754873512
     capacidade_m_s: 4054.246420685744
@@ -431,9 +428,6 @@ vies:
       intervalo:
       - 1.0000000000000004
       - 1.0500000000000005
-      deficit_m:
-      - -33281.039530260954
-      - 37453.426729212515
     sem_margem:
       escala: 1.0230461770219337
       capacidade_m_s: 4052.9046410665287
@@ -475,6 +469,7 @@ orbitador_b:
   propulsor: XIPS-25
   n_ativos: 10
   massa_kg: 9419.636858254124
+  subida_dias_familia1: 179.61642414994336
 variante_nominal: A (nível do motor pelo [F269])
 incerteza_integrador:
 - 2.2297297514177828e-08
@@ -513,6 +508,7 @@ guinada_multimodal:
   - 62.240660299798805
   fonte: commit 70ccede (local) e run 43294739101 do CI (AMD EPYC 7763), caso vies/corrigida/com_margem/voo_com_guinada
 fora_do_yaml:
+- /casos[]/busca_da_escala/deficit_m
 - /casos[]/com_margem/voo/apoapse_km
 - /casos[]/com_margem/voo/costa_s
 - /casos[]/com_margem/voo/custo
@@ -547,7 +543,7 @@ fora_do_yaml:
 - /orbitador_b/orbita_km
 - /orbitador_b/periapse_final_km
 - /orbitador_b/semieixo_alt_eq_km
-- /orbitador_b/subida_dias_familia1
+- /vies/corrigida/busca_da_escala/deficit_m
 - /vies/corrigida/com_margem/voo/apoapse_km
 - /vies/corrigida/com_margem/voo/costa_s
 - /vies/corrigida/com_margem/voo/custo

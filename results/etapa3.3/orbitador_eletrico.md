@@ -27,7 +27,7 @@ Estada em Marte por janela (dias): 2028-conjuncao 414, 2031-conjuncao 480, 2033-
 | 11 | 28,1 | 1,02 | 1 216 | 1 939 | 2,788 | 2,839 | 0,235 | 75 | 71 | 108 491 | 315 | 4 239 | 226 | 342 202 | 246 |
 | 12 | 30,7 | 1,12 | 1 216 | 1 939 | 2,788 | 2,839 | 0,235 | 73 | 68 | 114 605 | 333 | 4 239 | 226 | 360 763 | 251 |
 
-Conferência da descida no ponto de 1 ativos: Δv quase circular 0,0774 km/s, numérico 0,0774 km/s (-2.105e-09); tempo de empuxo 89,4 × 89,4 d; 782 voltas; excentricidade final 0,0000.
+Conferência da descida no ponto de 1 ativos: em results/etapa3.3/diagnostico_orbitador_eletrico.md (fora da comparação do CI; Nota de 2026-11-14: a linha com os números foi movida para lá, porque diferenças relativas de ~1e-9 e uma excentricidade final de ~0 podem virar na borda do arredondamento).
 
 Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) −90 %, Falcon Heavy (descartável) −76 %, Vulcan VC2 −91 %, Vulcan VC4 −86 %, Vulcan VC6 −83 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn −90 %, SLS Block 1 (5 m + iCPS) −63 %; lander: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) +10 %, Falcon Heavy (descartável) +165 %, Vulcan VC2 +2 %, Vulcan VC4 +53 %, Vulcan VC6 +96 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn +7 %, SLS Block 1 (5 m + iCPS) +319 %
 
@@ -50,7 +50,7 @@ Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (AS
 | 11 | 49,5 | 1,82 | 1 092 | 1 939 | 2,788 | 2,839 | 0,281 | 73 | 68 | 154 783 | 479 | 4 226 | 219 | 482 685 | 251 |
 | 12 | 54,0 | 1,98 | 1 092 | 1 939 | 2,788 | 2,839 | 0,281 | 71 | 67 | 165 052 | 510 | 4 226 | 219 | 513 855 | 254 |
 
-Conferência da descida no ponto de 1 ativos: Δv quase circular 0,1625 km/s, numérico 0,1625 km/s (-3.350e-09); tempo de empuxo 116,8 × 116,8 d; 1 021 voltas; excentricidade final 0,0000.
+Conferência da descida no ponto de 1 ativos: em results/etapa3.3/diagnostico_orbitador_eletrico.md (fora da comparação do CI; Nota de 2026-11-14: a linha com os números foi movida para lá, porque diferenças relativas de ~1e-9 e uma excentricidade final de ~0 podem virar na borda do arredondamento).
 
 Margens dos lançadores (injeção direta, pior janela): orbitador: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) −91 %, Falcon Heavy (descartável) −79 %, Vulcan VC2 −92 %, Vulcan VC4 −88 %, Vulcan VC6 −84 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn −91 %, SLS Block 1 (5 m + iCPS) −66 %; lander: Falcon 9 (ASDS) —, Falcon Heavy (recuperação) +11 %, Falcon Heavy (descartável) +166 %, Vulcan VC2 +2 %, Vulcan VC4 +54 %, Vulcan VC6 +96 %, Atlas V 541 —, Atlas V 551 —, Ariane 64 —, New Glenn +8 %, SLS Block 1 (5 m + iCPS) +320 %
 

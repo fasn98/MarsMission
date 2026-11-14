@@ -13,6 +13,8 @@ Rugosidade: desvio rms do ajuste quadrático da órbita final em 21 passos de 1,
 | b | 1,0e-11 | 1,0e-08 | 0,25 / 1,00 | 3,9e-03 / 7,7e-04 / 2,3e-03 / 3,3e-03 | 1,3e-01 / 5,3e-01 | 3,9e-09 / 4,1e-03 |
 | c | 1,0e-12 | 1,0e-09 | 0,10 / 0,50 | 1,5e-05 / 1,5e-05 / 1,5e-05 / 8,4e-06 | 1,3e-01 / 5,3e-01 | 5,5e-09 / 4,3e-04 |
 
+**Nota (2026-11-13):** até o commit 70ccede, esta tabela usava a divisão de base (a do [F269] desde a errata da P-110), com o guiamento dela; a base deixou de chegar à órbita publicada, e a rugosidade passou a usar a divisão 0,40 da varredura, que chega. Os números antigos estão em results/conferencia/ruido_subida.md no commit 70ccede.
+
 Em grandezas suaves, a rugosidade cai de 1,3e-01 m (integrador atual) para 4,3e-04 m (integrador c): o ruído do integrador existe e cai ao apertá-lo. Em periapse e apoapse, ela fica entre 5,2e-01 e 5,4e-01 m porque mede a quina, não o integrador.
 
 **Errata (2026-11-11):** a primeira versão deste diagnóstico (commit 5729b00, não publicado) media a rugosidade só em periapse e apoapse e concluía que "o ruído do sólido não vem do integrador". Essa conclusão não se sustenta: aquela medida via a quina em e = 0. Vale a medida em grandezas suaves acima. O diagnóstico do ajuste (a quina no resíduo espalhava o custo, tabela abaixo) continua valendo.

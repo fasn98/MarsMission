@@ -1304,19 +1304,24 @@ premissas:
     unidade: s; rad
     uso: config/familia1.yaml (inerte_solido.guinada), src/orbital/subida.py (voa_solido), results/familia1/inerte_solido.md
     justificativa: >
-      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA (antecedência e guinada com uma partida de 0,3 rad).
       COM FONTE (método): (a1) a ignição antecipada do estágio 2 é o método do MSR para gastar a energia que sobra no sólido
       ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy";
       [F271] PDF p. 3: os motores são dimensionados com Δv a mais que o necessário). (a2) Pilotar fora do ótimo para gastar
       o excesso tem o análogo do GEM ([F272] PDF p. 4); não há fonte de guinada alternada para o MAV.
       SEM FONTE (escolha numérica e hipótese): o limite de 300 s para a antecedência (no lugar dos 60 s da P-110) só no caso
-      com margem; a partida (0,3 rad) e os limites (0 a 1,4 rad) da guinada; a hipótese de que a mudança de plano se cancela
-      entre as metades da guinada (aproximada: as metades têm Δv diferentes porque a massa cai; o resto fora do plano não
-      foi estimado) e de que o controle de atitude do estágio 2 consegue a manobra.
-      REVISÃO PROPOSTA (2026-11-13, para a aprovação do Fabio; a opção 3 foi aprovada): a guinada é multimodal (dois mínimos
-      observados, θ0 de 65,3° e 62,2°, conforme a CPU). Em vez de uma partida de 0,3 rad, o ajuste parte de 9 pontos fixos
-      (as 3 partidas da P-110 × guinada inicial de 0,2, 0,5 e 0,8 rad) e fica com o melhor mínimo. Valor antigo, como
-      registro: guinada_partida_rad = 0,3. Escolha numérica, sem fonte.
+      com margem; as partidas e os limites (0 a 1,4 rad) da guinada; a hipótese de que a mudança de plano se cancela entre
+      as metades da guinada (aproximada: as metades têm Δv diferentes porque a massa cai; o resto fora do plano não foi
+      estimado) e de que o controle de atitude do estágio 2 consegue a manobra.
+      REVISÃO PROPOSTA (2026-11-14, para a aprovação do Fabio; opção B aprovada): o ajuste com guinada é subdeterminado (4
+      parâmetros, θ0, c₁, antecedência e guinada, para 3 resíduos, semieixo e as duas componentes do vetor excentricidade):
+      as soluções exatas formam uma curva, e só "chega à circular" é bem definido. O ajuste parte de 9 pontos fixos (as 3
+      partidas da P-110 × guinada inicial de 0,2, 0,5 e 0,8 rad), só para garantir que ache uma solução que chega à
+      circular; o ângulo e o guiamento não são resultado. Valor antigo, como registro: guinada_partida_rad = 0,3.
+      Errata (2026-11-14): a revisão de 2026-11-13 dizia que a guinada era multimodal e que as partidas escolheriam o
+      melhor mínimo; não era multimodalidade, e sim a curva de soluções exatas. Critério para tornar a solução única,
+      registrado para quando a energia que sobra for decidida (não implementado): a menor guinada entre as que chegam à
+      circular, por otimização com restrição.
     status: NÃO VALIDADA
 
   - id: P-116

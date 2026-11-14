@@ -220,9 +220,6 @@ solido:
     intervalo:
     - 1.1500000000000006
     - 1.2000000000000006
-    deficit_m:
-    - -401.2648135917261
-    - 14219.972822326701
   capacidade_m_s: 4049.6772406937503
   capacidade_minima_m_s: 4049.6772406937503
   glom_kg: 451.19685282027194
@@ -543,6 +540,7 @@ errata_2:
     energia_kwh: 254.23196835450824
     rhus: 51
 fora_do_yaml:
+- /solido[]/busca_da_escala/deficit_m
 - /solido[]/costa_s
 - /solido[]/deficit_na_escala_m
 - /solido[]/guia

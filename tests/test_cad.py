@@ -528,7 +528,8 @@ def test_pendencia_recompilar_onshape():
     assert "**Pendência (decisão do Fabio, 2026-11-06):**" in md and "bocais e do aeroshell" in md
     assert "Orbitador +6,8 g; Lander −0,015 kg; MAV −0,6 g" in md
     # resíduo da descida com 4 algarismos: o passo de impressão fica em 1 % do piso da P-039
-    el = (RAIZ / "results/etapa3.3/orbitador_eletrico.md").read_text(encoding="utf-8")
+    # desde 2026-11-14 a conferência da descida fica no arquivo de diagnóstico, fora da comparação do CI
+    el = (RAIZ / "results/etapa3.3/diagnostico_orbitador_eletrico.md").read_text(encoding="utf-8")
     assert "(-2.105e-09)" in el and "(-3.350e-09)" in el
 
 
