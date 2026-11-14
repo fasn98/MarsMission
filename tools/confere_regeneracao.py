@@ -65,7 +65,7 @@ FASE_ATUAL = [["tools/redimensiona.py"], ["tools/plataformas.py"], ["tools/lanca
               ["tools/geometria_marte.py"], ["tools/orbitador_eletrico.py"], ["tools/energia.py"], ["tools/termico.py"], ["tools/comunicacao.py"], ["tools/operacao_superficie.py"], ["tools/lista_massas_lander.py"],
               ["tools/fase4.py"], ["tools/envelope_arranjo.py"],
               ["tools/cad_parametros.py"], ["tools/encaixe_coifas.py"], ["tools/mav_arranjo.py"],
-              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/isp_44_bocal.py"], ["tools/rota_a_dimensiona.py"], ["tools/subida_mav.py"], ["tools/mav_solido.py"], ["tools/missao_familia1.py"], ["tools/mav_familia1.py"], ["tools/ruido_subida.py"], ["tools/familia1_465.py"], ["tools/opcoes_arquitetura.py"]]
+              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/isp_44_bocal.py"], ["tools/rota_a_dimensiona.py"], ["tools/subida_mav.py"], ["tools/comprimento_solido.py"], ["tools/mav_solido.py"], ["tools/missao_familia1.py"], ["tools/mav_familia1.py"], ["tools/ruido_subida.py"], ["tools/familia1_465.py"], ["tools/inerte_solido.py"], ["tools/opcoes_arquitetura.py"]]
 _SO_NA_RAIZ = {".git", "data", "results", "hanatrial", ".venv", ".pythonlibs", ".cache", ".claude"}
 
 
@@ -369,8 +369,10 @@ def main():
         subprocess.run(["git", "add", "-A"], cwd=d, check=True)
         subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True)
         log = regenerar(d)
+        # fora da comparação: results/conferencia/ e os arquivos de diagnóstico (diagnostico_*.md), que guardam saídas sem
+        # resposta bem definida (ajustes que não fecham, soluções não únicas, grandezas nulas por construção; CLAUDE.md, regra 6)
         versionados = sorted(x for x in base.rglob("*") if x.is_file() and x.name != ".gitkeep"
-                             and "conferencia" not in x.relative_to(base).parts)
+                             and "conferencia" not in x.relative_to(base).parts and not x.name.startswith("diagnostico_"))
         arquivos = []
         for p in versionados:
             rel = Path("results") / p.relative_to(base)

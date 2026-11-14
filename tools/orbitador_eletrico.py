@@ -210,6 +210,7 @@ def main():
 
 
 def escreve_md(out):
+    dg = []
     br = lambda x, n=0: "—" if x is None else f"{x:,.{n}f}".replace(",", " ").replace(".", ",").replace("-", "−")  # noqa: E731
     pc = lambda x: "—" if x is None else f"{100 * x:+.0f} %".replace("-", "−")  # noqa: E731
     q = out["quimico"]
@@ -239,9 +240,11 @@ def escreve_md(out):
         if r["n_minimo"] is not None:
             c = r["conferencia_descida"]
             e = next(x for x in r["por_n"] if x["n_ativos"] == r["n_minimo"])["escolha"]
-            md += [f"Conferência da descida no ponto de {r['n_minimo']} ativos: Δv quase circular {br(c['dv_quase_circular_km_s'], 4)} km/s, numérico "
-                   f"{br(c['dv_numerico_km_s'], 4)} km/s ({c['diferenca_relativa']:+.3e}); tempo de empuxo {br(c['tempo_empuxo_quase_circular_dias'], 1)} × "
-                   f"{br(c['tempo_empuxo_numerico_dias'], 1)} d; {br(c['voltas'])} voltas; excentricidade final {br(c['excentricidade_final'], 4)}.", "",
+            dg.append(f"Conferência da descida ({nome}) no ponto de {r['n_minimo']} ativos: Δv quase circular {br(c['dv_quase_circular_km_s'], 4)} km/s, numérico "
+                      f"{br(c['dv_numerico_km_s'], 4)} km/s ({c['diferenca_relativa']:+.3e}); tempo de empuxo {br(c['tempo_empuxo_quase_circular_dias'], 1)} × "
+                      f"{br(c['tempo_empuxo_numerico_dias'], 1)} d; {br(c['voltas'])} voltas; excentricidade final {br(c['excentricidade_final'], 4)}.")
+            dg.append("")
+            md += [f"Conferência da descida no ponto de {r['n_minimo']} ativos: em results/etapa3.3/diagnostico_orbitador_eletrico.md (fora da comparação do CI; Nota de 2026-11-14: a linha com os números foi movida para lá, porque diferenças relativas de ~1e-9 e uma excentricidade final de ~0 podem virar na borda do arredondamento).", "",
                    "Margens dos lançadores (injeção direta, pior janela): " + "; ".join(
                        f"{v_}: " + ", ".join(f"{k} {pc(m)}" for k, m in d.items()) for v_, d in e["margens"].items()), ""]
     c1 = out["hibrido_c1"]
@@ -265,6 +268,8 @@ def escreve_md(out):
     md += [f"| {c['propulsor']} | {c['n_ativos']} | {br(c['massa_inicial_kg'])} | {br(c['tempo_empuxo_ida_dias'])} |" for c in el["casos"]]
     md += ["", "**Nota (2026-11-06, decisão do Fabio):** o resíduo da conferência da descida passou a 4 algarismos, para o arredondamento ficar bem abaixo da tolerância da P-039. Antes, com 2 algarismos: −2,1e-09 e −3,4e-09. Nenhum valor calculado mudou."]
     (SAIDA / "orbitador_eletrico.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    (SAIDA / "diagnostico_orbitador_eletrico.md").write_text("\n".join(["# Diagnóstico do orbitador elétrico (gerado por tools/orbitador_eletrico.py)", "",
+                                                                         "**Fora da comparação do CI** (CLAUDE.md, regra 6): conferências numéricas com diferenças da ordem do ruído. Os resultados estão em results/etapa3.3/orbitador_eletrico.md.", ""] + dg) + "\n", encoding="utf-8")
     print("\n".join(md))
 
 

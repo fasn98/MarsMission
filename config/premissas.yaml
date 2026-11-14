@@ -1201,14 +1201,18 @@ premissas:
 
   - id: P-108
     nome: escala_do_mav_solido
-    valor: {comprimento_fixo_m: [0.0, 0.5, 1.0, 1.5]}
+    valor: {comprimento: "motor do estágio 1 + motor do estágio 2 (ajuste do [F270]) + resto fixo", resto: "results/familia1/comprimento_solido.yaml", original_registro: {comprimento_fixo_m: [0.0, 0.5, 1.0, 1.5]}}
     unidade: m
-    uso: config/cad.yaml (mav_solido.escala), results/etapa7.2/mav_solido.md
+    uso: tools/comprimento_solido.py (desde 2026-11-12; antes, config/cad.yaml mav_solido.escala), results/etapa7.2/mav_solido.md, results/familia1/mavs.md, aeroshell_465.md e inerte_solido.md
     justificativa: >
       O MAV sólido de 2019 ([F34], [F247]) não publica o comprimento por estágio nem a densidade do propelente. Escala: o
       comprimento total é uma parte fixa (carga, aviônica, bocais e interestágio) mais o resto proporcional à massa de
       propelente, no mesmo diâmetro; a parte fixa vai de 0 a 1,5 m, sem fonte. Empuxo de cada estágio proporcional à massa de
       propelente, com o mesmo tempo de queima de [F34]. Fração estrutural e divisão do Δv: as da P-019.
+      Errata (2026-11-12, aprovada pelo Fabio): P-108 revista. Comprimento = motor do estágio 1 + motor do estágio 2, pelo
+      ajuste L = a · P^b · D^c dos motores do catálogo [F270], mais um resto fixo (interestágio, carga, aviônica e
+      adaptadores) que fecha os 2,7 m do MSR ([F247]), sem fonte (tools/comprimento_solido.py). O valor antigo, parte fixa
+      [0,0; 0,5; 1,0; 1,5] m com o resto proporcional ao propelente, fica como registro.
     status: NÃO VALIDADA
 
   - id: P-109
@@ -1231,6 +1235,9 @@ premissas:
       verificação (a que leva às 351 × 349 km publicadas); o tempo de costa, não ajustado, é a conferência independente. A
       subida vertical, as partidas, os limites do guiamento, a tolerância e a busca da escala do propelente são escolhas
       numéricas. Sem fonte.
+      Errata (2026-11-12, aprovada pelo Fabio): a base da escala usa a divisão do inerte publicada no [F269] (fração do
+      estágio 2 = 48/108); o valor antigo, 0,40, escolhido pela varredura, fica como registro (results/familia1/mavs.md). A
+      varredura continua só como registro.
     status: NÃO VALIDADA
 
   - id: P-111
@@ -1259,14 +1266,75 @@ premissas:
       Aprovada pelo Fabio em 2026-11-10 (PR #60) como NÃO VALIDADA, com a faixa de 70 kg dos 531 a 551 registrada aqui.
     status: NÃO VALIDADA
 
+  - id: P-113
+    nome: lei_de_massa_inerte_do_mav_solido
+    valor: {forma: "inerte do estágio = N + c · P^b", b: "0,701 ± 0,041 (erro-padrão), do ajuste do catálogo [F270] em results/familia1/inerte_solido.yaml", N_kg: [14, 34], variantes_do_nivel_c: [A, B]}
+    unidade: kg
+    uso: config/familia1.yaml (inerte_solido), results/familia1/inerte_solido.md
+    justificativa: >
+      O expoente b vem do ajuste em ln dos motores sólidos de estágio superior do catálogo [F270] (motor só). O inerte não
+      propulsivo N (aviônica, RCS, estrutura da carga) é o do MAV do MSR [F269], fixo na escala: não há fonte de como ele
+      cresce. O nível c do motor tem duas variantes: A, pelo inerte do motor do MSR [F269]; B, pela divisão do inerte que a
+      verificação da P-110 escolheu. Que a lei do motor do catálogo valha para o MAV (frio, armazenagem longa) não tem fonte.
+      Proposta para a aprovação do Fabio; a P-019 e a P-111 não mudam.
+      Aprovada pelo Fabio em 2026-11-10 como NÃO VALIDADA: variante A nominal; B só como sensibilidade.
+      Nota (2026-11-12): com a errata da P-110, a divisão de base passou a ser a do [F269], e a variante B fica quase igual à
+      A (results/familia1/inerte_solido.md).
+    status: NÃO VALIDADA
+
+  - id: P-114
+    nome: vies_do_modelo_de_subida_do_solido
+    valor: {forma: "fator comum no Isp dos dois estágios", fator_isp_busca: [1.0, 1.2], passo_varredura: 0.005, passos_bissecao: 20}
+    unidade: —
+    uso: config/familia1.yaml (inerte_solido.vies), results/familia1/inerte_solido.md
+    justificativa: >
+      Com a variante A da P-113, o modelo de subida não leva o MAV do MSR à órbita publicada ([F34]). O que falta é medido
+      como um fator comum no Isp dos dois estágios (o Δv equivalente é a diferença de capacidade ideal) e tratado como
+      incerteza do modelo de subida do sólido (decisão do Fabio, 2026-11-10). Que o viés seja um fator de Isp, igual nos dois
+      estágios, e que valha em outras escalas e órbitas, não tem fonte. A faixa, o passo da varredura e o número de passos da
+      bisseção são escolhas numéricas.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA. A busca passou a ser a raiz da P-117 no fator (passo da varredura
+      para achar o intervalo, brentq na escala da P-117); os passos de bisseção não são mais usados. Incerteza numérica do
+      integrador (rtol × 0,5 e × 2), aceita como sensibilidade numérica: results/familia1/inerte_solido.md.
+    status: NÃO VALIDADA
+
+  - id: P-115
+    nome: gasto_de_energia_do_solido_com_margem
+    valor: {antecedencia_max_s: 300, guinada_partidas_rad: [0.2, 0.5, 0.8], guinada_limites_rad: [0.0, 1.4]}
+    unidade: s; rad
+    uso: config/familia1.yaml (inerte_solido.guinada), src/orbital/subida.py (voa_solido), results/familia1/inerte_solido.md
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA (antecedência e guinada com uma partida de 0,3 rad).
+      COM FONTE (método): (a1) a ignição antecipada do estágio 2 é o método do MSR para gastar a energia que sobra no sólido
+      ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy";
+      [F271] PDF p. 3: os motores são dimensionados com Δv a mais que o necessário). (a2) Pilotar fora do ótimo para gastar
+      o excesso tem o análogo do GEM ([F272] PDF p. 4); não há fonte de guinada alternada para o MAV.
+      SEM FONTE (escolha numérica e hipótese): o limite de 300 s para a antecedência (no lugar dos 60 s da P-110) só no caso
+      com margem; as partidas e os limites (0 a 1,4 rad) da guinada; a hipótese de que a mudança de plano se cancela entre
+      as metades da guinada (aproximada: as metades têm Δv diferentes porque a massa cai; o resto fora do plano não foi
+      estimado) e de que o controle de atitude do estágio 2 consegue a manobra.
+      REVISÃO PROPOSTA (2026-11-14, para a aprovação do Fabio; opção B aprovada): o ajuste com guinada é subdeterminado (4
+      parâmetros, θ0, c₁, antecedência e guinada, para 3 resíduos, semieixo e as duas componentes do vetor excentricidade):
+      as soluções exatas formam uma curva, e só "chega à circular" é bem definido. O ajuste parte de 9 pontos fixos (as 3
+      partidas da P-110 × guinada inicial de 0,2, 0,5 e 0,8 rad), só para garantir que ache uma solução que chega à
+      circular; o ângulo e o guiamento não são resultado. Valor antigo, como registro: guinada_partida_rad = 0,3.
+      Errata (2026-11-14): a revisão de 2026-11-13 dizia que a guinada era multimodal e que as partidas escolheriam o
+      melhor mínimo; não era multimodalidade, e sim a curva de soluções exatas. Critério para tornar a solução única,
+      registrado para quando a energia que sobra for decidida (não implementado): a menor guinada entre as que chegam à
+      circular, por otimização com restrição.
+    status: NÃO VALIDADA
+
   - id: P-116
     nome: diagnostico_do_ruido_da_subida
     valor: {integradores_solido: "atual, a, b, c e referência (config/familia1.yaml, ruido_subida)", integradores_hipergolico: "atual, a, b, c e referência", rugosidade: {passos: 21, delta_t_antes_s: 1.0e-4, delta_theta0_rad: 1.0e-7}, escalas_custo: [0.97, 0.98, 0.99, 1.0, 1.02, 1.03], fatores_tolerancia: [0.5, 2.0], perturbacao_relativa: 1.0e-13, perturbacao_escala: 4.0e-16, meia_largura_intervalo: 1.0e-6, altitudes_reprodutibilidade_km: [380]}
     unidade: SI; s; rad; —
     uso: config/familia1.yaml (ruido_subida), results/conferencia/ruido_subida.md
     justificativa: >
-      Integradores, passos e perturbações usados só no diagnóstico do piso de ruído da subida e no teste de reprodutibilidade
-      da escala mínima do sólido (decisão do Fabio, 2026-11-11). Escolhas numéricas, sem fonte; não mudam resultados.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA.
+      COM FONTE: nenhuma; é um diagnóstico numérico (decisão do Fabio, 2026-11-11) que não muda resultados.
+      SEM FONTE (escolha numérica): os integradores (rtol, atol, passos máximos) atual, a, b, c e de referência; os 21 passos
+      de 1e-4 s e 1e-7 rad da rugosidade; as escalas da tabela de custos; os fatores 0,5 e 2 nas tolerâncias; as
+      perturbações de 1e-13 na carga e de 4e-16 na escala; a meia largura de ±1e-6 do intervalo; a altitude de 380 km.
     status: NÃO VALIDADA
 
   - id: P-117
@@ -1275,14 +1343,14 @@ premissas:
     unidade: tol_ls e custo_circular adimensionais; xatol_c em 1/s; xtol_escala adimensional
     uso: tools/mav_familia1.py (escala_minima), src/orbital/subida.py (ajusta_solido, semieixo_circular_maximo), results/familia1/mavs.md
     justificativa: >
-      O motor sólido não desliga no alvo: queima até esgotar. A escala do sólido é a menor com que ele chega à circular-alvo;
-      o excesso acima dela é tratado à parte. O ajuste antigo media periapse e apoapse, que têm uma quina em e = 0, exatamente
-      no alvo circular; o custo parava entre 1e-9 e 4e-4 conforme a escala, e a escala escolhida mudava com a CPU (CI do PR
-      #60, run 42896102600). Uma primeira correção (resíduo suave com bisseção sobre o limiar de custo, commit 5729b00, não
-      publicado) ainda virava com uma perturbação de 4e-16, porque o custo abaixo da borda vai a zero de forma contínua. Com a
-      raiz de uma função suave e monótona (opção A, aprovada pelo Fabio em 2026-11-11), perturbações do tamanho do ruído de ponto
-      flutuante mudam a escala em ~1e-12; as variantes do integrador (rtol × 0,5 e × 2) mudam ~1e-6, fora da P-039, e uma
-      decisão discreta do integrador virada em outra CPU pode dar um salto da ordem da rugosidade (results/conferencia/ruido_subida.md). O pedido falava em "apoapse ótimo ≥ alvo": o apoapse sozinho não garante a
-      órbita (uma trajetória suborbital o alcança), e o critério usa a circular inteira. As tolerâncias numéricas são escolhas
-      sem fonte. Proposta para a aprovação do Fabio.
+      Aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA.
+      COM FONTE (motivo físico): o motor sólido não desliga no alvo e queima até esgotar; o MAV sólido do MSR era
+      dimensionado com energia a mais que a necessária para a órbita-alvo ([F271] PDF p. 3) e gastava o excesso na subida
+      ([F230] PDF p. 9). Por isso a escala do sólido é a menor com que ele chega à circular-alvo, e o excesso acima dela é
+      tratado à parte.
+      MÉTODO (decisão do Fabio, opção A, 2026-11-11): raiz em s de (maior semieixo de uma circular alcançável) − (raio-alvo),
+      por brentq. O ajuste antigo media periapse e apoapse, com uma quina em e = 0 no alvo circular, e a escala mudava com a
+      CPU (CI do PR #60, run 42896102600); o critério usa a circular inteira, porque o apoapse sozinho não garante a órbita.
+      SEM FONTE (escolha numérica): tol_ls = 1e-14, custo_circular = 1e-16, xatol_c = 1e-10 1/s e xtol_escala = 1e-14.
+      Reprodutibilidade e incerteza numérica: results/conferencia/ruido_subida.md.
     status: NÃO VALIDADA

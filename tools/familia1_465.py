@@ -29,6 +29,7 @@ sys.path.insert(0, str(RAIZ / "src"))
 sys.path.insert(0, str(RAIZ / "tools"))
 
 import cad_parametros as cp  # noqa: E402
+import comprimento_solido as cs  # noqa: E402
 import envelope_arranjo as ea  # noqa: E402
 import mav_familia1 as mf  # noqa: E402
 import rota_a_dimensiona as rad  # noqa: E402
@@ -198,8 +199,7 @@ def main():
                 assint = assintotica(mp_msr, f_tempo, isp_s, k)
                 for nome, esc in (("sem margem", b_), ("com a margem da P-014, não simulado", s2_)) if s2_ is not None else (("sem margem", b_),):
                     e_, i_ = mf.solido([esc * x for x in mp_msr], [esc * x for x in f_tempo], isp_s, k, carga)
-                    mp = sum(x.propelente_kg for x in e_)
-                    Ls = [lf + (v(msd["comprimento_m"]) - lf) * mp / sum(mp_msr) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
+                    Ls = [cs.comprimento([x.propelente_kg for x in e_], d_s)]   # P-108 revista
                     linha.setdefault("casos", []).append({"margem": nome, "escala": esc, "capacidade_m_s": mf.capacidade(e_, i_, carga), "glom_kg": e_[0].massa_inicial_kg,
                                                           "comprimento_m": [min(Ls), max(Ls)], "folga_465_com_deck_m": [(lim[d_s]["com_deck_m"] - max(Ls)) / 2, (lim[d_s]["com_deck_m"] - min(Ls)) / 2],
                                                           "folga_465_sem_deck_m": [(lim[d_s]["sem_deck_m"] - max(Ls)) / 2, (lim[d_s]["sem_deck_m"] - min(Ls)) / 2]})
@@ -211,8 +211,7 @@ def main():
                 assint_ = assintotica(mp_msr, f_tempo, isp_s, k)
                 s2_ = escala_para((1 + margem) * cap_b, melhor["escala"], mp_msr, f_tempo, isp_s, k, carga) or melhor["escala"]
                 e2, i2 = mf.solido([s2_ * x for x in mp_msr], [s2_ * x for x in f_tempo], isp_s, k, carga)
-                mp2 = sum(x.propelente_kg for x in e2)
-                L2 = [lf + (v(msd["comprimento_m"]) - lf) * mp2 / sum(mp_msr) for lf in msd["escala"]["comprimento_fixo_m"]["valor"]]
+                L2 = [cs.comprimento([x.propelente_kg for x in e2], d_s)]   # P-108 revista
                 ind = {"escala": s2_, "capacidade_m_s": mf.capacidade(e2, i2, carga), "glom_kg": e2[0].massa_inicial_kg, "comprimento_m": [min(L2), max(L2)],
                        "folga_465_sem_deck_m": [(lim[d_s]["sem_deck_m"] - max(L2)) / 2, (lim[d_s]["sem_deck_m"] - min(L2)) / 2],
                        "folga_465_com_deck_m": [(lim[d_s]["com_deck_m"] - max(L2)) / 2, (lim[d_s]["com_deck_m"] - min(L2)) / 2],
@@ -226,8 +225,17 @@ def main():
                   "encaixe": encaixe, "massa_entrada_min_srl_kg": m_srl, "limites_465": {str(d): x for d, x in lim.items()}, "limites_45": {str(d): x for d, x in lim45.items()}, "linhas": linhas,
                   "referencia_m2020_kg_m2": rb["referencia_m2020_kg_m2"], "alvo_folga_m": m.alvo, "capacidade_coifa_longa": a4["capacidade_coifa_longa"],
                   "penalidade_coifa_longa": a4.get("penalidade_coifa_longa_kg"), "sensibilidade_solido": sens, "politica_margem_msr": fc.get("politica_margem_msr", [])})
+    # só vai para o yaml (comparado pelo CI, P-039) o que tem resposta bem definida (Fabio, 2026-11-13): o melhor ponto da
+    # varredura de um caso que não fecha (ponto de compromisso do ajuste) e o indicativo derivado dele ficam só no .md
+    oy = copy.deepcopy(out)
+    fora = []
+    for x in oy["sensibilidade_solido"]:
+        if "melhor_da_varredura" in x:
+            x.pop("melhor_da_varredura")
+            fora.append("/sensibilidade_solido[]/melhor_da_varredura")
+    out["fora_do_yaml"] = oy["fora_do_yaml"] = sorted(set(fora))
     SAIDA.mkdir(parents=True, exist_ok=True)
-    (SAIDA / "aeroshell_465.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    (SAIDA / "aeroshell_465.yaml").write_text(yaml.safe_dump(oy, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
 
 
@@ -260,6 +268,8 @@ def faixa(par, f=sg):
 
 def escreve_md(o):
     al = o["alvo_folga_m"]
+    dg = ["# Diagnóstico da família 1 com o aeroshell de 4,65 m (gerado por tools/familia1_465.py)", "",
+          "**Fora da comparação do CI** (CLAUDE.md, regra 6): o melhor ponto da varredura dos casos que não fecham (ponto de compromisso do ajuste) e o indicativo derivado dele, arredondados. Os resultados estão em results/familia1/aeroshell_465.md.", ""]
     md = ["# Família 1 com o aeroshell de 4,65 m (gerado por tools/familia1_465.py)", "", "**NÃO VALIDADO.** Forma da cápsula: " + o["forma"].upper().replace("_", "-") + f" (Ø {br(o['diametro_m'], 2)} m); adaptador da P-097 ({br(o['altura_adaptador_m'], 3)} m e {br(o['massa_adaptador_kg'], 0)} kg).", "",
           "## (a) Encaixe no Vulcan com a coifa longa de 21,3 m", "", "Envelope de [F80] Fig. 4.3.1-2, PDF p. 45 (figura simplificada, leitura das cotas). Duas leituras entre as cotas, como na 7.2: contorno reto, e o Ø da segunda estação desde a interface.", "",
           "| Cápsula | Leitura | Folga radial nos vértices (m) | Folga na grade de 400 pontos (m) |", "| :- | :- | -: | -: |"]
@@ -304,21 +314,26 @@ def escreve_md(o):
         if not s["fecha"]:
             b = s["melhor_da_varredura"]
             ind = b["indicativo_com_margem"]
-            md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | não fecha na varredura | {br(s['capacidade_assintotica_m_s'], 0)} | melhor ponto (diagnóstico): resíduo {b['custo']:.1e} (tolerância {b['tolerancia']:.0e}), {br(b['periapse_km'], 0)} × {br(b['apoapse_km'], 0)} km, {br(b['capacidade_m_s'], 0)} m/s".replace(".", ",") + f" | {br(b['escala'], 2)} | {br(b['glom_kg'], 1)} | | | |")
-            if ind is None:
-                md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | | | indicativo com a margem da P-014: não existe (passa da capacidade assintótica) | | | | | |")
-                continue
-            md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | | | indicativo: o melhor ponto com a margem da P-014, não simulado | {br(ind['escala'], 2)} | {br(ind['glom_kg'], 1)} | {faixa(ind['comprimento_m'], lambda y: br(y, 2))} | {faixa(ind['folga_465_sem_deck_m'])} | {faixa(ind['folga_465_com_deck_m'])} |")
+            md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | não fecha na varredura | {br(s['capacidade_assintotica_m_s'], 0)} | melhor ponto e indicativo com margem: results/familia1/diagnostico_familia1_465.md | | | | | |")
+            dg += [f"## {s['inerte']}, {br(s['altitude_km'], 0)} km: não fecha na varredura", "",
+                   f"- Melhor ponto da varredura: escala {br(b['escala'], 2)}, GLOM {br(b['glom_kg'], 1)} kg, órbita {br(b['periapse_km'], 0)} × {br(b['apoapse_km'], 0)} km, resíduo {b['custo']:.0e} (tolerância {b['tolerancia']:.0e}), capacidade {br(b['capacidade_m_s'], 0)} m/s.".replace("e-", "e−"),
+                   ("- Indicativo com a margem da P-014: não existe (passa da capacidade assintótica)." if ind is None else
+                    f"- Indicativo com a margem da P-014, não simulado: escala {br(ind['escala'], 2)}, GLOM {br(ind['glom_kg'], 1)} kg, comprimento {faixa(ind['comprimento_m'], lambda y: br(y, 2))} m, folga a 4,65 m sem deck {faixa(ind['folga_465_sem_deck_m'])} m, com deck {faixa(ind['folga_465_com_deck_m'])} m."), ""]
             continue
         for c in s["casos"]:
             md.append(f"| {s['inerte']} | {br(s['altitude_km'], 0)} | {br(s['capacidade_minima_m_s'], 0)} | {br(s['capacidade_assintotica_m_s'], 0)} | {c['margem']} | {br(c['escala'], 2)} | {br(c['glom_kg'], 1)} | {faixa(c['comprimento_m'], lambda y: br(y, 2))} | {faixa(c['folga_465_sem_deck_m'])} | {faixa(c['folga_465_com_deck_m'])} |")
     md += ["", "A capacidade assintótica é a de um sólido de escala infinita com os mesmos k de inerte: se a capacidade com a margem passa dela, não há sólido que feche.", "",
            "\"Não fecha na varredura\" quer dizer: em nenhuma escala da varredura da P-110 o ajuste chega à circular (critério da P-117). O melhor ponto é diagnóstico, não resultado.",
            "", "**Nota (2026-11-12):** a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo) (P-117, PR #64); as versões anteriores desta página, com o ajuste antigo, davam a P-019 a 380 km como \"não fecha na varredura\", com o melhor ponto a menos de 1 km da órbita. Valem os números desta versão; os da linha do sólido nas seções (c) a (e) vêm de results/familia1/mavs.yaml, regenerado no PR #64.",
-           "", "O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; \"não existe\" quando esse alvo passa da capacidade assintótica."]
+           "", "O caso indicativo (no diagnóstico) é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; \"não existe\" quando esse alvo passa da capacidade assintótica."]
+    if o.get("fora_do_yaml"):
+        md += ["", "## Fora da comparação do CI (diagnóstico)", "",
+               "Por decisão do Fabio (2026-11-13), só vai para results/familia1/aeroshell_465.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. O melhor ponto da varredura dos casos que não fecham, e o indicativo com margem derivado dele, estão em results/familia1/diagnostico_familia1_465.md, fora da comparação. Saíram do yaml:", ""]
+        md += [f"- `{c}`" for c in o["fora_do_yaml"]]
     if o["politica_margem_msr"]:
         md += ["", "## Política de margem do MAV sólido do MSR, nas fontes", ""] + [f"- {x}" for x in o["politica_margem_msr"]]
     (SAIDA / "aeroshell_465.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    (SAIDA / "diagnostico_familia1_465.md").write_text("\n".join(dg) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

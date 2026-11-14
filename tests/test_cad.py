@@ -528,7 +528,8 @@ def test_pendencia_recompilar_onshape():
     assert "**Pendência (decisão do Fabio, 2026-11-06):**" in md and "bocais e do aeroshell" in md
     assert "Orbitador +6,8 g; Lander −0,015 kg; MAV −0,6 g" in md
     # resíduo da descida com 4 algarismos: o passo de impressão fica em 1 % do piso da P-039
-    el = (RAIZ / "results/etapa3.3/orbitador_eletrico.md").read_text(encoding="utf-8")
+    # desde 2026-11-14 a conferência da descida fica no arquivo de diagnóstico, fora da comparação do CI
+    el = (RAIZ / "results/etapa3.3/diagnostico_orbitador_eletrico.md").read_text(encoding="utf-8")
     assert "(-2.105e-09)" in el and "(-3.350e-09)" in el
 
 
@@ -734,8 +735,9 @@ def test_mav_solido():
     for x in r["casos"]:
         mp = sum(x["propelente_kg"])
         assert x["empuxos_n"][0] == pytest.approx(ref["empuxo_medio_n"][0] * x["propelente_kg"][0] / ref["propelente_kg"][0])
-        for c in x["comprimentos"]:
-            assert c["comprimento_m"] == pytest.approx(c["comprimento_fixo_m"] + (ref["comprimento_m"] - c["comprimento_fixo_m"]) * mp / sum(ref["propelente_kg"]))
+        cs_ = ler("results/familia1/comprimento_solido.yaml")
+        for c in x["comprimentos"]:   # P-108 revista: motores pelo ajuste do catálogo + resto fixo
+            assert mp > 0 and c["comprimento_m"] == pytest.approx(sum(cs_["a"] * p ** cs_["b"] * ref["diametro_m"] ** cs_["c"] for p in x["propelente_kg"]) + cs_["resto_m"])
             assert c["folga_sem_deck_m"] == pytest.approx((r["limites"]["sem_deck_m"] - c["comprimento_m"]) / 2)
 
 
@@ -779,14 +781,21 @@ def test_familia1_missao():
 
 
 def test_familia1_mavs():
-    """Família 1: o sólido do MSR fecha a órbita publicada na divisão de base; rotação efetiva ω cos i; folgas, capacidade
-    e aquecimento refeitos por fora da ferramenta."""
+    """Família 1: a divisão de base é a do [F269] (errata da P-110); o caso com margem chega à capacidade-alvo da P-014;
+    rotação efetiva ω cos i; folgas, capacidade e aquecimento refeitos por fora da ferramenta."""
     from orbital import subida as sb
     from orbital.config import v
     assert sb.omega_efetivo(1.0, 60.0) == pytest.approx(0.5)
     r = ler("results/familia1/mavs.yaml")
     b = r["verificacao"]["base"]
-    assert b["fecha"] and b["modelo"] == "tempo_publicado"
+    # errata da P-110 (2026-11-12): a base é a divisão do [F269], que não precisa chegar à órbita publicada (viés da P-114)
+    msr = ler("config/familia1.yaml")["inerte_solido"]["msr"]
+    f2 = (msr["inerte_motor_kg"]["valor"][1] + msr["inerte_nao_propulsivo_kg"]["valor"][1]) / (sum(msr["inerte_motor_kg"]["valor"]) + sum(msr["inerte_nao_propulsivo_kg"]["valor"]))
+    assert b["fracao_inerte_2"] == pytest.approx(f2) and b["modelo"] == "tempo_publicado"
+    margem = v(ler("config/dimensionamento.yaml")["margem_dv"])
+    for x in r["solido"]:
+        if x.get("fecha") and "com a margem" in x["rotulo"]:
+            assert x["capacidade_m_s"] == pytest.approx((1 + margem) * x["capacidade_minima_m_s"], rel=1e-9)
     # empuxo da base: propelente × Isp × g0 / tempo de queima publicado ([F34] PDF p. 4)
     assert b["empuxos_n"][0] == pytest.approx(216 * 293 * 9.80665 / 75.9) and b["empuxos_n"][1] == pytest.approx(54.4 * 282 * 9.80665 / 24.5)
     assert b["queimas_s"][0] == pytest.approx(75.9) and b["queimas_s"][1] == pytest.approx(24.5)
@@ -831,11 +840,8 @@ def test_familia1_aeroshell_465():
             for c in cm:
                 assert c["capacidade_m_s"] == pytest.approx((1 + margem) * s["capacidade_minima_m_s"], rel=1e-9)
         else:
-            ind = s["melhor_da_varredura"]["indicativo_com_margem"]
-            if ind is None:
-                assert (1 + margem) * s["melhor_da_varredura"]["capacidade_m_s"] >= s["capacidade_assintotica_m_s"]
-            else:
-                assert ind["capacidade_m_s"] == pytest.approx((1 + margem) * s["melhor_da_varredura"]["capacidade_m_s"], rel=1e-9)
+            # o melhor ponto da varredura de um caso que não fecha é diagnóstico, fora do yaml (Fabio, 2026-11-13)
+            assert "melhor_da_varredura" not in s and "/sensibilidade_solido[]/melhor_da_varredura" in r["fora_do_yaml"]
     for d, lim in (("0.57", mv["limites"]["solido"]), ("0.72", mv["limites"]["hipergolico"])):
         assert r["limites_45"][d]["sem_deck_m"] == pytest.approx(lim["sem_deck_m"]) and r["limites_45"][d]["com_deck_m"] == pytest.approx(lim["com_deck_m"])
     for x in r["linhas"]:
@@ -854,6 +860,61 @@ def test_familia1_aeroshell_465():
             for mm, ch in (("modelo", "lander_injetado_kg"), ("piso_srl", "lander_injetado_piso_srl_kg")):
                 assert mg[f"{mm}_coifa_longa"] == pytest.approx(mg[f"{mm}_coifa_padrao"] - pen / x[ch])
         assert x["lander_injetado_piso_srl_kg"] >= x["lander_injetado_kg"] - 1e-9
+
+
+def test_familia1_inerte_solido():
+    """Lei de inerte do sólido: o ajuste refeito por fora; a variante B reproduz os inertes da verificação na escala 1;
+    o caso com margem chega à capacidade-alvo; folgas pela regra de sempre."""
+    import numpy as np
+    from orbital.config import v
+    r = ler("results/familia1/inerte_solido.yaml")
+    cfg = ler("config/familia1.yaml")["inerte_solido"]
+    lb = v(ler("config/motores.yaml")["conversao"]["lb_para_kg"])
+    P = np.array([m["propelente_lbm"] for m in cfg["motores"]]) * lb
+    I = np.array([m["inerte_lbm"] for m in cfg["motores"]]) * lb
+    b, la = np.polyfit(np.log(P), np.log(I), 1)
+    assert r["ajuste"]["b"] == pytest.approx(b) and r["ajuste"]["a"] == pytest.approx(math.exp(la))
+    mv = ler("results/familia1/mavs.yaml")
+    a4 = ler("results/familia1/aeroshell_465.yaml")
+    lim = a4["limites_465"][str(mv["limites"]["solido"]["diametro_m"])]
+    margem = v(ler("config/dimensionamento.yaml")["margem_dv"])
+    for c in r["casos"]:
+        if c["lei"].startswith("B"):
+            assert c["verificacao"]["inertes_kg"] == pytest.approx(mv["verificacao"]["base"]["inertes_kg"])
+        if not c["fecha_na_varredura"]:
+            continue
+        assert c["sem_margem"]["voo"]["fecha"]
+        assert c["com_margem"]["capacidade_m_s"] == pytest.approx((1 + margem) * c["sem_margem"]["capacidade_m_s"], rel=1e-9)
+        for k in ("sem_margem", "com_margem"):
+            y = c[k]
+            assert y["inertes_kg"] == pytest.approx([n + ci * p ** c["b"] for n, ci, p in zip(c["N_kg"], c["c"], y["propelente_kg"])])
+            assert y["folga_465_com_deck_m"] == pytest.approx((lim["com_deck_m"] - y["comprimento_m"]) / 2)
+
+
+def test_familia1_inerte_comprimento_e_vies():
+    """Comprimento do motor refeito por fora (L = a P^b D^c); o resto fixo fecha os 2,7 m do MSR; o comprimento revisto de
+    cada caso; o viés é um fator de Isp > 1 com Δv positivo."""
+    import numpy as np
+    from orbital.config import v
+    r = ler("results/familia1/inerte_solido.yaml")
+    cfg = ler("config/familia1.yaml")["inerte_solido"]
+    lb = v(ler("config/motores.yaml")["conversao"]["lb_para_kg"])
+    P = np.array([m["propelente_lbm"] for m in cfg["motores"]]) * lb
+    D = np.array([m["diametro_pol"] for m in cfg["motores"]]) * 0.0254
+    L = np.array([m["comprimento_pol"] for m in cfg["motores"]]) * 0.0254
+    X = np.vstack([np.ones_like(P), np.log(P), np.log(D)]).T
+    co, *_ = np.linalg.lstsq(X, np.log(L), rcond=None)
+    cp = r["comprimento"]
+    assert cp["b"] == pytest.approx(co[1]) and cp["c"] == pytest.approx(co[2]) and cp["a"] == pytest.approx(math.exp(co[0]))
+    lm = lambda p: cp["a"] * p ** cp["b"] * cp["diametro_mav_m"] ** cp["c"]  # noqa: E731
+    assert cp["resto_m"] + sum(cp["motores_msr_m"]) == pytest.approx(cp["comprimento_msr_m"])
+    for c in r["casos"] + ([r["vies"]["corrigida"]] if r["vies"].get("corrigida") else []):
+        if c.get("fecha_na_varredura"):
+            for k in ("sem_margem", "com_margem"):
+                y = c[k]
+                assert y["comprimento_m"] == pytest.approx(lm(y["propelente_kg"][0]) + lm(y["propelente_kg"][1]) + cp["resto_m"])
+    if r["vies"].get("fator_isp"):
+        assert r["vies"]["fator_isp"] > 1 and r["vies"]["dv_vies_m_s"] > 0 and r["vies"]["voo"]["fecha"]
 
 def test_vetor_excentricidade_e_escala_minima():
     """Vetor excentricidade: zero na circular e |e| = (ra − rp)/(ra + rp) numa elipse; escala mínima (P-117): a raiz de um

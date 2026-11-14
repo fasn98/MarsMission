@@ -61,6 +61,17 @@ def dados():
     }
 
 
+def linha_inerte():
+    """Os números do resultado parcial, lidos de results/familia1/inerte_solido.yaml (variante nominal da P-113)."""
+    p = RAIZ / "results" / "familia1" / "inerte_solido.yaml"
+    if not p.exists():
+        return "Números: results/familia1/inerte_solido.md (ainda não gerado)."
+    o = ler("results/familia1/inerte_solido.yaml")
+    c = next(x for x in o["casos"] if x["lei"] == o["variante_nominal"])["com_margem"]
+    return (f"Números de results/familia1/inerte_solido.md (variante {o['variante_nominal'][0]} da P-113, com a margem da P-014, {br(o['altitude_km'], 0)} km): GLOM de {br(c['glom_kg'], 1)} kg, "
+            f"comprimento de {br(c['comprimento_m'], 2)} m, folga com deck de {sg(c['folga_465_com_deck_m'])} m no aeroshell de 4,65 m, contra o alvo de {sg(o['alvo_folga_m'], 2)} m.")
+
+
 def portao(d, cfg):
     a, b, s, ba = d["a_com_deck"], d["b"], d["solido"], d["base"]
     md = ["# Portão do MAV: conclusão de sistema (gerado por tools/opcoes_arquitetura.py)", "",
@@ -69,12 +80,16 @@ def portao(d, cfg):
           f"Conclusão parcial do portão da família 1 (decisão do Fabio, {cfg['conclusao_parcial_familia1']['data']}; a linha não foi decidida):", "",
           f"> {cfg['conclusao_parcial_familia1']['texto']}", "",
           "A família 1 com o aeroshell de 4,65 m está em results/familia1/aeroshell_465.md.", "",
+          f"Resultado parcial da família 1 com o aeroshell de 4,65 m (decisão do Fabio, {cfg['resultado_parcial_familia1_465']['data']}; **NÃO VALIDADO**):", "",
+          f"> {cfg['resultado_parcial_familia1_465']['texto']}", "",
+          linha_inerte(), "",
           f"Δv do MAV com margem, no vigente: {br(d['dv_km_s'], 3)} km/s (results/etapa2.5/arquitetura.yaml); órbita de encontro {br(d['orbita_km'][0], 0)} × {br(d['orbita_km'][1], 0)} km.", "",
           "| Rota | Resultado | Fonte |", "| :- | :- | :- |",
           f"| A com deck | Isp calculado de {br(a['isp_s'], 1)} s: folga com deck de {sg(min(a['folgas_m']))} a {sg(max(a['folgas_m']))} m nas quatro geometrias, contra o alvo de {sg(a['alvo_m'], 2)} m | results/etapa7.2/rota_a.md, seção 0 |",
           f"| A sem deck | " + ("não converge: com o empuxo/peso real, o Δv pedido passa do usado em toda a varredura (de " + sg(d['a_sem_deck']['pedido_menos_usado_m_s'][0], 0) + " a " + sg(d['a_sem_deck']['pedido_menos_usado_m_s'][1], 0) + " m/s), até o MAV não decolar" if not d["a_sem_deck"]["convergiu"] else "convergiu") + " | results/etapa7.2/subida_mav.md |",
           "| B (orbitador elétrico, encontro em órbita baixa) | MAV com folga sem deck de " + " e ".join(f"{sg(m['folga_sem_deck_m'])} m ({br(m['altitude_km'], 0)} km)" for m in b["mav"]) + f", abaixo do alvo, e com deck negativa; orbitador híbrido com margem no Falcon Heavy de {sg(100 * b['hibrido_margem'][0], 1)} a {sg(100 * b['hibrido_margem'][1], 1)} %; o só elétrico (calculado, não verificado) fecha massa ({sg(100 * b['eletrico_margem'][0], 1)} a {sg(100 * b['eletrico_margem'][1], 1)} %) e estada, mas fica pronto em {' e '.join(b['eletrico_pronto'])}, depois do último lançamento do MAV ({b['ultimo_lancamento_mav']}) | results/etapa7.2/rotas_mav.md; ADR 0013, adendo |",
           f"| Sólido | GLOM de {br(min(s['glom_kg']), 0)} a {br(max(s['glom_kg']), 0)} kg; melhor folga sem deck {sg(s['melhor_folga_sem_deck_m'])} m, no limite do Δv ideal | results/etapa7.2/mav_solido.md |",
+          "", "**Nota (2026-11-12):** a linha do sólido segue a P-108 revista (comprimento pelos motores do catálogo [F270] mais um resto fixo); a folga sem deck mudou com ela. Os valores anteriores estão na errata de results/etapa7.2/mav_solido.md.",
           "", "## Achado: GLOM da base com o empuxo/peso real (não aplicado)", "",
           f"Com a subida simulada no empuxo/peso real ({br(ba['empuxo_peso'], 2)}), a base com o 164:1 converge em GLOM de {br(ba['glom_kg'], 1)} kg, contra {br(ba['vigente_kg'], 1)} kg vigentes, com Δv de 100 × 100 km de {br(ba['dv_100_m_s'], 1)} m/s contra {br(ba['f37_m_s'], 1)} m/s de [F37] (results/etapa7.2/subida_mav.md). A folga sem deck da base segue negativa ({sg(ba['folga_sem_deck_m'])} m). **Decisão do Fabio: não substituir o vigente agora; decidir junto com a arquitetura.**",
           "", "As famílias de arquitetura para a próxima decisão estão em results/etapa7.2/opcoes_arquitetura.md."]

@@ -56,58 +56,58 @@ solido:
 custos_p111_380km:
 - escala: 0.97
   apses, atual:
-    custo: 3.845937769794134e-06
-    erro_orbita_m: 27.73423072592472
+    custo: 30.3099297243663
+    erro_orbita_m: 77858.756378928
     fecha: false
   suave, atual:
-    custo: 5.366512349999711e-20
-    erro_orbita_m: 3.276129530406181e-06
-    fecha: true
+    custo: 15.268604937733947
+    erro_orbita_m: 55260.48305567723
+    fecha: false
 - escala: 0.98
   apses, atual:
-    custo: 3.713383085822188e-09
-    erro_orbita_m: 0.8617868745603158
-    fecha: true
+    custo: 26.380812537662713
+    erro_orbita_m: 72637.1978226896
+    fecha: false
   suave, atual:
-    custo: 3.2519147884544837e-23
-    erro_orbita_m: 8.064632401361495e-08
-    fecha: true
+    custo: 13.283365106012958
+    erro_orbita_m: 51542.924065312705
+    fecha: false
 - escala: 0.99
   apses, atual:
-    custo: 8.89610637999915e-05
-    erro_orbita_m: 133.3874535329253
+    custo: 22.8182248125962
+    erro_orbita_m: 67554.7552916835
     fecha: false
   suave, atual:
-    custo: 2.684139574250323e-21
-    erro_orbita_m: 7.326854132914511e-07
-    fecha: true
+    custo: 11.483822606339094
+    erro_orbita_m: 47924.57116415147
+    fecha: false
 - escala: 1.0
   apses, atual:
-    custo: 1.2817734256390188e-08
-    erro_orbita_m: 1.60110800737428
-    fecha: true
+    custo: 19.59200972816267
+    erro_orbita_m: 62597.14007550611
+    fecha: false
   suave, atual:
-    custo: 1.6262260719714008e-21
-    erro_orbita_m: 5.703027392484453e-07
-    fecha: true
+    custo: 9.856224212442573
+    erro_orbita_m: 44398.703162237915
+    fecha: false
 - escala: 1.02
   apses, atual:
-    custo: 0.00039337499166297574
-    erro_orbita_m: 280.49063858281465
+    custo: 14.070486184125594
+    erro_orbita_m: 53048.065344790084
     fecha: false
   suave, atual:
-    custo: 2.687547554272598e-25
-    erro_orbita_m: 7.331504012510118e-09
-    fecha: true
+    custo: 7.07190217920637
+    erro_orbita_m: 37608.24957162024
+    fecha: false
 - escala: 1.03
   apses, atual:
-    custo: 6.323213639855526e-05
-    erro_orbita_m: 112.45633499145814
+    custo: 11.734260962267525
+    erro_orbita_m: 48444.32053867104
     fecha: false
   suave, atual:
-    custo: 4.337340078484292e-25
-    erro_orbita_m: 9.3137963027804e-09
-    fecha: true
+    custo: 5.895261705722149
+    erro_orbita_m: 34337.33159615682
+    fecha: false
 tol_custo_p110: 1.0e-06
 tol_hipergolico:
   altitude_m: 1.0
@@ -162,44 +162,45 @@ reprodutibilidade:
   variante: atual
   metodo: raiz de results/familia1/mavs.yaml
   fecha: true
-  escala: 0.9691792458185269
-  glom_kg: 382.3497549194032
-  deficit_m: 5.4016709327697754e-08
+  escala: 1.1513144254504548
+  glom_kg: 451.19685282027194
+  deficit_m: -1.2619420886039734e-07
 - altitude_km: 380
   variante: escala + 4,0e-16 no déficit
   metodo: raiz por brentq em torno da atual
   fecha: true
   deficit_intervalo_m:
-  - -0.40908016450703144
-  - 0.40907913306728005
-  escala: 0.9691792458175463
-  glom_kg: 382.34975491903253
-  deficit_m: 4.4284388422966003e-07
+  - -0.3505920423194766
+  - 0.35058822063729167
+  escala: 1.151314425450944
+  glom_kg: 451.19685282045685
+  deficit_m: -1.364387571811676e-07
 - altitude_km: 380
   variante: carga útil × (1 + 1,0e-13)
   metodo: raiz por brentq em torno da atual
   fecha: true
   deficit_intervalo_m:
-  - -0.4090811936184764
-  - 0.4090779069811106
-  escala: 0.9691792458195218
-  glom_kg: 382.3497549197809
-  deficit_m: 3.0314549803733826e-07
+  - -0.3505919431336224
+  - 0.35058744344860315
+  escala: 1.1513144254509962
+  glom_kg: 451.19685282047817
+  deficit_m: -3.739260137081146e-07
 - altitude_km: 380
   variante: rtol e atol × 0,5
   metodo: primeira ordem (déficit na raiz ÷ inclinação do intervalo)
   fecha: true
-  escala: 0.9691798569089062
-  glom_kg: 382.3499859115666
-  deficit_m: -0.256458587013185
+  escala: 1.151314451121655
+  glom_kg: 451.19686252398566
+  deficit_m: -0.007506894413381815
 - altitude_km: 380
   variante: rtol e atol × 2,0
   metodo: primeira ordem (déficit na raiz ÷ inclinação do intervalo)
   fecha: true
-  escala: 0.9691775167755029
-  glom_kg: 382.3491013411401
-  deficit_m: 0.7256339583545923
-inclinacao_deficit_m: 419673.7433930576
-escala_atual: 0.9691792458185269
+  escala: 1.1513141575379777
+  glom_kg: 451.1967515493556
+  deficit_m: 0.0783442398533225
+fracao_rugosidade: 0.4
+inclinacao_deficit_m: 292424.7527183683
+escala_atual: 1.1513144254504548
 perturbacao_escala: 4.0e-16
 perturbacao_relativa: 1.0e-13
