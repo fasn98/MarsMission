@@ -1300,7 +1300,7 @@ premissas:
 
   - id: P-115
     nome: gasto_de_energia_do_solido_com_margem
-    valor: {antecedencia_max_s: 300, guinada_partida_rad: 0.3, guinada_limites_rad: [0.0, 1.4]}
+    valor: {antecedencia_max_s: 300, guinada_partidas_rad: [0.2, 0.5, 0.8], guinada_limites_rad: [0.0, 1.4]}
     unidade: s; rad
     uso: config/familia1.yaml (inerte_solido.guinada), src/orbital/subida.py (voa_solido), results/familia1/inerte_solido.md
     justificativa: >
@@ -1313,6 +1313,10 @@ premissas:
       com margem; a partida (0,3 rad) e os limites (0 a 1,4 rad) da guinada; a hipótese de que a mudança de plano se cancela
       entre as metades da guinada (aproximada: as metades têm Δv diferentes porque a massa cai; o resto fora do plano não
       foi estimado) e de que o controle de atitude do estágio 2 consegue a manobra.
+      REVISÃO PROPOSTA (2026-11-13, para a aprovação do Fabio; a opção 3 foi aprovada): a guinada é multimodal (dois mínimos
+      observados, θ0 de 65,3° e 62,2°, conforme a CPU). Em vez de uma partida de 0,3 rad, o ajuste parte de 9 pontos fixos
+      (as 3 partidas da P-110 × guinada inicial de 0,2, 0,5 e 0,8 rad) e fica com o melhor mínimo. Valor antigo, como
+      registro: guinada_partida_rad = 0,3. Escolha numérica, sem fonte.
     status: NÃO VALIDADA
 
   - id: P-116

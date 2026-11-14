@@ -65,8 +65,12 @@ def main():
     area = v(sc["arrasto"]["cd_base"]) * math.pi * d_s ** 2 / 4
     pl_v = sb.Planeta(pl0.mu, pl0.raio, sb.omega_efetivo(pl0.omega, v(vf["inclinacao_graus"])))
     pl_e = sb.Planeta(pl0.mu, pl0.raio, sb.omega_efetivo(pl0.omega, v(scfg["sitio_e_encontro"]["inclinacao_encontro_graus"])))
-    est, ine = mf.solido(mp, f, isp, k, carga)
-    gu = base["guia"]
+    # rugosidade: num caso da varredura da verificação que chega exatamente à circular publicada (órbita quase circular, onde
+    # está a quina de periapse/apoapse), com os inertes e o guiamento dele; a base (divisão do [F269]) não chega à órbita
+    fecham = [x for x in mv["verificacao"]["casos"] if x["fecha"] and x["modelo"] == "tempo_publicado"]
+    caso_r = fecham[(len(fecham) - 1) // 2]
+    est, ine = mf.solido(mp, f, isp, [i / x for i, x in zip(caso_r["inertes_kg"], mp)], carga)
+    gu = caso_r["guia"]
     th0, c1, ta = math.radians(gu["theta0_graus"]), gu["c_1_s"], gu["t_antes_apoapse_s"]
     t_v = v(g["t_v_s"])
 
@@ -132,7 +136,7 @@ def main():
         sv = next(x for x in mv["solido"] if x.get("fecha") and x.get("simulado") and x["altitude_km"] == h)
         s0 = sv["escala"]
         meia = v(cfg["meia_largura_intervalo"]) * s0
-        repro.append({"altitude_km": h, "variante": "atual", "metodo": "raiz de results/familia1/mavs.yaml", "fecha": True, "escala": s0, "glom_kg": sv["glom_kg"], "deficit_m": sv["deficit_na_escala_m"]})
+        repro.append({"altitude_km": h, "variante": "atual", "metodo": "raiz de results/familia1/mavs.yaml", "fecha": True, "escala": s0, "glom_kg": sv["glom_kg"], "deficit_m": maquina()[1](s0)[0]})
 
         def raiz(nome, **kw):
             deficit = maquina(**kw)[1]
@@ -179,7 +183,7 @@ def main():
                     "erro_altitude_m": abs(o[0] - ref_h[0]), "erro_vr_m_s": abs(o[1] - ref_h[1]), "erro_dv_m_s": abs(o[2] - ref_h[2]),
                     "rugosidade_altitude_m": rh[0], "rugosidade_vr_m_s": rh[1], "rugosidade_dv_m_s": rh[2]})
     out = nativo({"gerado_por": "tools/ruido_subida.py", "status": "diagnóstico; não muda resultados", "solido": solido, "custos_p111_380km": custos,
-                  "tol_custo_p110": tol, "tol_hipergolico": {"altitude_m": num["tol_m"], "vr_m_s": num["tol_m_s"]}, "hipergolico": hip, "rugosidade": rg, "reprodutibilidade": repro,
+                  "tol_custo_p110": tol, "tol_hipergolico": {"altitude_m": num["tol_m"], "vr_m_s": num["tol_m_s"]}, "hipergolico": hip, "rugosidade": rg, "reprodutibilidade": repro, "fracao_rugosidade": caso_r["fracao_inerte_2"],
                   "inclinacao_deficit_m": inclinacao_md, "escala_atual": escala_md, "perturbacao_escala": ds, "perturbacao_relativa": pert})
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "ruido_subida.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
@@ -193,7 +197,7 @@ def e(x):
 def escreve_md(o):
     rg = o["rugosidade"]
     md = ["# Piso de ruído da subida (gerado por tools/ruido_subida.py)", "", "**Diagnóstico (P-116, NÃO VALIDADA); não muda nenhum resultado.** Os tempos de execução não ficam aqui (mudam de máquina para máquina); saem no log.", "",
-          "## Sólido (`voa_solido`), MAV do MSR na divisão de base, guiamento da verificação", "",
+          f"## Sólido (`voa_solido`), MAV do MSR com a divisão {br(o['fracao_rugosidade'], 2)} da varredura da verificação (chega à órbita publicada), guiamento dela", "",
           f"Rugosidade: desvio rms do ajuste quadrático da órbita final em {rg['passos']} passos de {e(rg['delta_t_antes_s'])} s na antecedência e de {e(rg['delta_theta0_rad'])} rad em θ0. "
           "\"Apses\": maior entre periapse e apoapse, que têm uma quina em e = 0 (a órbita da verificação é quase circular). \"Suave\": maior entre o semieixo e as componentes do vetor excentricidade vezes o raio-alvo.", "",
           "| Integrador | rtol | atol | Passo máx. queima / costa (s) | Erro contra a referência: periapse / apoapse / semieixo / excentricidade (m) | Rugosidade apses: antecedência / θ0 (m) | Rugosidade suave: antecedência / θ0 (m) |",

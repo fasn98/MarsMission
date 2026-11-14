@@ -95,6 +95,12 @@ A capacidade assintótica é a de um sólido de escala infinita com os mesmos k 
 
 O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; "não existe" quando esse alvo passa da capacidade assintótica.
 
+## Fora da comparação do CI (diagnóstico)
+
+Por decisão do Fabio (2026-11-13), só vai para results/familia1/aeroshell_465.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. O melhor ponto da varredura dos casos que não fecham, e o indicativo com margem derivado dele, aparecem na tabela (f) só como diagnóstico. Saíram do yaml:
+
+- `/sensibilidade_solido[]/melhor_da_varredura`
+
 ## Política de margem do MAV sólido do MSR, nas fontes
 
 - [F34] PDF p. 6: "A mass growth allowance of 19% and 17% was assigned to the first and second stage structures, respectively."

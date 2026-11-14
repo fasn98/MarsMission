@@ -109,13 +109,81 @@ P-108 revista, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA; o ajuste es
 ## Energia que sobra no sólido com margem (variante nominal)
 
 - **(a1) Ignição antecipada do estágio 2, o método do MSR** ([F230] PDF p. 9: "This second stage burn is performed slightly before predicted apoapsis, expending excess energy by lowering apoapsis while at the same time raising periapsis"; [F271] PDF p. 3: "The solid motors are sized so as to nominally impart more delta-v than required to meet the target orbit"), com a antecedência até o limite da P-115: não chega a 380 km (melhor órbita 421 × 632 km, antecedência ótima 16 s, longe do limite de 300 s: o limite não esteve ativo). Com o empuxo do estágio 2 na horizontal local, antecipar a ignição não tira energia; o excesso vem do estágio 1 (guiamento no limite c₁ = 0,050 1/s da P-110), e o semieixo fica acima do alvo. No MSR o excesso era menor e o estágio 2 tinha guiamento próprio; gastar um excesso deste tamanho exige apontar fora do ótimo, que é o (a2).
-- **(a2) Guinada alternada do estágio 2 (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4):** melhor órbita 380,00 × 380,00 km com guinada de 36,7° (resíduo 4,9e-18, tolerância 1e-06: dentro da tolerância da P-110). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada.
+- **A guinada é multimodal.** Com uma partida só (0,3 rad), o caso corrigido pelo viés caiu em dois mínimos diferentes conforme a CPU (θ0 de 65,3° e 62,2°; commit 70ccede (local) e run 43294739101 do CI (AMD EPYC 7763), caso vies/corrigida/com_margem/voo_com_guinada). Desde 2026-11-13 o ajuste parte de 9 pontos fixos (as 3 partidas da P-110 × guinada inicial de 0,2, 0,5, 0,8 rad, P-115 revista) e fica com o melhor mínimo; o guiamento e a órbita da guinada ficam fora do yaml (diagnóstico).
+- **(a2) Guinada alternada do estágio 2 (P-115, sem fonte para o MAV; o mais próximo é o GEM, pilotagem fora do ótimo, [F272] PDF p. 4):** melhor órbita 380,00 × 380,00 km com guinada de 38,0° (resíduo 5,9e-19, tolerância 1e-06: dentro da tolerância da P-110). Custo para a missão: nenhuma massa a mais (a margem já está no MAV); o que se perde é a energia da margem quando ela não é usada.
 - **(b) Aceitar a órbita do sólido (421 × 632 km) e levar o orbitador até ela** (orbitador só elétrico, XIPS-25 × 10, **calculado, não verificado**, e não usado como fato). Limite superior, na hipótese de o orbitador esperar na circular de 380 km, com a massa injetada (9 420 kg):
   - subir a circular de 380 km até o periapse: 18 m/s, 3,1 dias; essa parte se recupera na espiral de saída (Edelbaum coplanar: o Δv entre circulares soma), então não entra no custo;
   - subir o apoapse em arcos em torno do periapse (P-049): 46 m/s, 18,5 dias (fim em 426 × 632 km);
   - semieixo dessa órbita a 527 km de altitude sobre o raio equatorial (o referencial do [F273]), acima do limite de 500 km do MSR ([F273] PDF p. 1): no MSR, essa órbita estaria fora da faixa aceita;
   - custo: no máximo 46 m/s e 18,5 dias, sem a fase (RAAN e anomalia). Não foi calculado o ganho: na rota B o orbitador desce em espiral desde a captura, e uma órbita de encontro mais alta encurta a descida e a espiral de saída.
-- **Qual afeta menos a missão:** (a): não muda massa nem datas.
+- **Qual afeta menos a missão:** pelos números, (a2): chega à circular sem massa a mais nem atraso, enquanto a órbita de (b) fica fora da faixa do MSR e o custo de (b) é só um limite superior, com o orbitador não verificado. A guinada de (a2) não tem fonte para o MAV (P-115); a decisão sobre a energia que sobra continua com o Fabio.
+
+## Fora da comparação do CI (diagnóstico)
+
+Por decisão do Fabio (2026-11-13), só vai para results/familia1/inerte_solido.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. Os números marcados como diagnóstico nesta página (órbitas, resíduos, guiamentos, tempos de costa, o caso (b) do orbitador) são arredondados e vêm de ajustes que não fecham, de mínimos locais ou de grandezas nulas por construção. Saíram do yaml:
+
+- `/casos[]/com_margem/voo/apoapse_km`
+- `/casos[]/com_margem/voo/costa_s`
+- `/casos[]/com_margem/voo/custo`
+- `/casos[]/com_margem/voo/guiamento`
+- `/casos[]/com_margem/voo/periapse_km`
+- `/casos[]/com_margem/voo_antecipada/apoapse_km`
+- `/casos[]/com_margem/voo_antecipada/costa_s`
+- `/casos[]/com_margem/voo_antecipada/custo`
+- `/casos[]/com_margem/voo_antecipada/guiamento`
+- `/casos[]/com_margem/voo_antecipada/periapse_km`
+- `/casos[]/com_margem/voo_com_guinada/apoapse_km`
+- `/casos[]/com_margem/voo_com_guinada/costa_s`
+- `/casos[]/com_margem/voo_com_guinada/custo`
+- `/casos[]/com_margem/voo_com_guinada/guiamento`
+- `/casos[]/com_margem/voo_com_guinada/periapse_km`
+- `/casos[]/sem_margem/voo/apoapse_km`
+- `/casos[]/sem_margem/voo/costa_s`
+- `/casos[]/sem_margem/voo/custo`
+- `/casos[]/sem_margem/voo/deficit_m`
+- `/casos[]/sem_margem/voo/guiamento`
+- `/casos[]/sem_margem/voo/periapse_km`
+- `/casos[]/verificacao/apoapse_km`
+- `/casos[]/verificacao/costa_s`
+- `/casos[]/verificacao/custo`
+- `/casos[]/verificacao/guiamento`
+- `/casos[]/verificacao/periapse_km`
+- `/orbitador_b/apoapse_dias`
+- `/orbitador_b/apoapse_dv_m_s`
+- `/orbitador_b/apoapse_final_km`
+- `/orbitador_b/circular_dias`
+- `/orbitador_b/circular_dv_m_s`
+- `/orbitador_b/orbita_km`
+- `/orbitador_b/periapse_final_km`
+- `/orbitador_b/semieixo_alt_eq_km`
+- `/orbitador_b/subida_dias_familia1`
+- `/vies/corrigida/com_margem/voo/apoapse_km`
+- `/vies/corrigida/com_margem/voo/costa_s`
+- `/vies/corrigida/com_margem/voo/custo`
+- `/vies/corrigida/com_margem/voo/guiamento`
+- `/vies/corrigida/com_margem/voo/periapse_km`
+- `/vies/corrigida/com_margem/voo_antecipada/apoapse_km`
+- `/vies/corrigida/com_margem/voo_antecipada/costa_s`
+- `/vies/corrigida/com_margem/voo_antecipada/custo`
+- `/vies/corrigida/com_margem/voo_antecipada/guiamento`
+- `/vies/corrigida/com_margem/voo_antecipada/periapse_km`
+- `/vies/corrigida/com_margem/voo_com_guinada/apoapse_km`
+- `/vies/corrigida/com_margem/voo_com_guinada/costa_s`
+- `/vies/corrigida/com_margem/voo_com_guinada/custo`
+- `/vies/corrigida/com_margem/voo_com_guinada/guiamento`
+- `/vies/corrigida/com_margem/voo_com_guinada/periapse_km`
+- `/vies/corrigida/sem_margem/voo/apoapse_km`
+- `/vies/corrigida/sem_margem/voo/costa_s`
+- `/vies/corrigida/sem_margem/voo/custo`
+- `/vies/corrigida/sem_margem/voo/deficit_m`
+- `/vies/corrigida/sem_margem/voo/guiamento`
+- `/vies/corrigida/sem_margem/voo/periapse_km`
+- `/vies/voo/apoapse_km`
+- `/vies/voo/costa_s`
+- `/vies/voo/custo`
+- `/vies/voo/deficit_m`
+- `/vies/voo/guiamento`
+- `/vies/voo/periapse_km`
 
 ## Errata da P-110 (aplicada)
 

@@ -316,16 +316,7 @@ casos:
   - 0.8550201704375014
   b: 0.7008520255155859
   verificacao:
-    custo: 2.593300557630846
     fecha: false
-    periapse_km: 318.4346176956636
-    apoapse_km: 343.86253725180075
-    costa_s: 468.1824639140952
-    guiamento:
-      t_v_s: 5.0
-      theta0_graus: 46.574380856510196
-      c_1_s: 0.005994730041111886
-      t_antes_apoapse_s: 14.84578467347167
     inertes_kg:
     - 60.0
     - 48.07260068075654
@@ -349,17 +340,7 @@ casos:
     - 61.37079059554365
     - 48.49196130397441
     voo:
-      custo: null
       fecha: true
-      deficit_m: -6.100162863731384e-08
-      periapse_km: 379.999999999939
-      apoapse_km: 379.999999999939
-      costa_s: 517.459670318145
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 48.77800679469802
-        c_1_s: 0.00552150854359187
-        t_antes_apoapse_s: 14.948442700272457
     comprimento_m: 2.748898464827527
     folga_465_com_deck_m: 0.2692029414992798
     folga_465_sem_deck_m: 0.42311598497754055
@@ -375,39 +356,11 @@ casos:
     - 69.31918687911146
     - 50.923583194214814
     voo:
-      custo: 159.32323028880683
       fecha: false
-      periapse_km: 421.2588471691203
-      apoapse_km: 632.3143742973078
-      costa_s: 677.6360688193598
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 75.77329524887566
-        c_1_s: 0.04999999999986658
-        t_antes_apoapse_s: 15.562703132085607
     voo_antecipada:
-      custo: 159.32323028890292
       fecha: false
-      periapse_km: 421.2588530789418
-      apoapse_km: 632.3143731644857
-      costa_s: 677.6362218916753
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 75.77329523985443
-        c_1_s: 0.049999999999867595
-        t_antes_apoapse_s: 15.56254959048738
     voo_com_guinada:
-      custo: 4.852151082647356e-18
       fecha: true
-      periapse_km: 379.9999999998999
-      apoapse_km: 379.9999999998999
-      costa_s: 528.6210226245796
-      guiamento:
-        t_v_s: 5.0
-        theta0_graus: 62.37734121595888
-        c_1_s: 0.02476083394459568
-        t_antes_apoapse_s: 14.972463023776406
-        guinada_2_graus: 36.66070054230334
     comprimento_m: 3.035485686171221
     folga_465_com_deck_m: 0.12590933082743283
     folga_465_sem_deck_m: 0.27982237430569357
@@ -471,17 +424,7 @@ vies:
   fator_isp: 1.0082492547415123
   dv_vies_m_s: 32.82159985492672
   voo:
-    custo: null
     fecha: true
-    deficit_m: 4.838220775127411e-07
-    periapse_km: 350.0000000004838
-    apoapse_km: 350.0000000004838
-    costa_s: 494.590743903835
-    guiamento:
-      t_v_s: 5.0
-      theta0_graus: 47.65920424758024
-      c_1_s: 0.005791887206246605
-      t_antes_apoapse_s: 14.874526684824726
   corrigida:
     fecha_na_varredura: true
     busca_da_escala:
@@ -502,17 +445,7 @@ vies:
       - 60.740454212450125
       - 48.2991249514999
       voo:
-        custo: null
         fecha: true
-        deficit_m: -8.195638656616211e-07
-        periapse_km: 379.99999999918043
-        apoapse_km: 379.99999999918043
-        costa_s: 518.1047063411329
-        guiamento:
-          t_v_s: 5.0
-          theta0_graus: 48.726948959213594
-          c_1_s: 0.005609467202514566
-          t_antes_apoapse_s: 14.926451694038876
       comprimento_m: 2.7263930212112797
       folga_465_com_deck_m: 0.28045566330740357
       folga_465_sem_deck_m: 0.4343687067856643
@@ -528,39 +461,11 @@ vies:
       - 68.53033656404247
       - 50.682253292457105
       voo:
-        custo: 160.29103340460958
         fecha: false
-        periapse_km: 422.1962219119775
-        apoapse_km: 632.9320831115367
-        costa_s: 678.7606825943526
-        guiamento:
-          t_v_s: 5.0
-          theta0_graus: 75.72735997054065
-          c_1_s: 0.04999999999999972
-          t_antes_apoapse_s: 15.536475897946595
       voo_antecipada:
-        custo: 160.2910334036916
         fecha: false
-        periapse_km: 422.1962317993366
-        apoapse_km: 632.9320811804245
-        costa_s: 678.7608722073587
-        guiamento:
-          t_v_s: 5.0
-          theta0_graus: 75.72735995367583
-          c_1_s: 0.04999999999999971
-          t_antes_apoapse_s: 15.536285392202066
       voo_com_guinada:
-        custo: 6.151189415651205e-18
         fecha: true
-        periapse_km: 380.0000000000936
-        apoapse_km: 380.0000000000936
-        costa_s: 524.0108353059628
-        guiamento:
-          t_v_s: 5.0
-          theta0_graus: 65.29474823825021
-          c_1_s: 0.02975382976217778
-          t_antes_apoapse_s: 14.984976330184901
-          guinada_2_graus: 34.96401854494077
       comprimento_m: 3.0068213669841546
       folga_465_com_deck_m: 0.14024149042096612
       folga_465_sem_deck_m: 0.29415453389922686
@@ -570,17 +475,6 @@ orbitador_b:
   propulsor: XIPS-25
   n_ativos: 10
   massa_kg: 9419.636858254124
-  orbita_km:
-  - 421.2588471691203
-  - 632.3143742973078
-  circular_dv_m_s: 18.248660177091924
-  circular_dias: 3.0671534874956414
-  apoapse_dv_m_s: 45.751731357846
-  apoapse_dias: 18.542125148685187
-  apoapse_final_km: 632.314374297308
-  periapse_final_km: 425.88059069802694
-  subida_dias_familia1: 179.61642414994336
-  semieixo_alt_eq_km: 526.7766107332145
 variante_nominal: A (nível do motor pelo [F269])
 incerteza_integrador:
 - 2.2297297514177828e-08
@@ -609,3 +503,75 @@ variante_b_registro:
 fracao_2_p110_original: 0.4
 semieixo_max_alt_km: 500.0
 antecedencia_max_s: 300.0
+partidas_guinada_rad:
+- 0.2
+- 0.5
+- 0.8
+guinada_multimodal:
+  valor:
+  - 65.29474823825021
+  - 62.240660299798805
+  fonte: commit 70ccede (local) e run 43294739101 do CI (AMD EPYC 7763), caso vies/corrigida/com_margem/voo_com_guinada
+fora_do_yaml:
+- /casos[]/com_margem/voo/apoapse_km
+- /casos[]/com_margem/voo/costa_s
+- /casos[]/com_margem/voo/custo
+- /casos[]/com_margem/voo/guiamento
+- /casos[]/com_margem/voo/periapse_km
+- /casos[]/com_margem/voo_antecipada/apoapse_km
+- /casos[]/com_margem/voo_antecipada/costa_s
+- /casos[]/com_margem/voo_antecipada/custo
+- /casos[]/com_margem/voo_antecipada/guiamento
+- /casos[]/com_margem/voo_antecipada/periapse_km
+- /casos[]/com_margem/voo_com_guinada/apoapse_km
+- /casos[]/com_margem/voo_com_guinada/costa_s
+- /casos[]/com_margem/voo_com_guinada/custo
+- /casos[]/com_margem/voo_com_guinada/guiamento
+- /casos[]/com_margem/voo_com_guinada/periapse_km
+- /casos[]/sem_margem/voo/apoapse_km
+- /casos[]/sem_margem/voo/costa_s
+- /casos[]/sem_margem/voo/custo
+- /casos[]/sem_margem/voo/deficit_m
+- /casos[]/sem_margem/voo/guiamento
+- /casos[]/sem_margem/voo/periapse_km
+- /casos[]/verificacao/apoapse_km
+- /casos[]/verificacao/costa_s
+- /casos[]/verificacao/custo
+- /casos[]/verificacao/guiamento
+- /casos[]/verificacao/periapse_km
+- /orbitador_b/apoapse_dias
+- /orbitador_b/apoapse_dv_m_s
+- /orbitador_b/apoapse_final_km
+- /orbitador_b/circular_dias
+- /orbitador_b/circular_dv_m_s
+- /orbitador_b/orbita_km
+- /orbitador_b/periapse_final_km
+- /orbitador_b/semieixo_alt_eq_km
+- /orbitador_b/subida_dias_familia1
+- /vies/corrigida/com_margem/voo/apoapse_km
+- /vies/corrigida/com_margem/voo/costa_s
+- /vies/corrigida/com_margem/voo/custo
+- /vies/corrigida/com_margem/voo/guiamento
+- /vies/corrigida/com_margem/voo/periapse_km
+- /vies/corrigida/com_margem/voo_antecipada/apoapse_km
+- /vies/corrigida/com_margem/voo_antecipada/costa_s
+- /vies/corrigida/com_margem/voo_antecipada/custo
+- /vies/corrigida/com_margem/voo_antecipada/guiamento
+- /vies/corrigida/com_margem/voo_antecipada/periapse_km
+- /vies/corrigida/com_margem/voo_com_guinada/apoapse_km
+- /vies/corrigida/com_margem/voo_com_guinada/costa_s
+- /vies/corrigida/com_margem/voo_com_guinada/custo
+- /vies/corrigida/com_margem/voo_com_guinada/guiamento
+- /vies/corrigida/com_margem/voo_com_guinada/periapse_km
+- /vies/corrigida/sem_margem/voo/apoapse_km
+- /vies/corrigida/sem_margem/voo/costa_s
+- /vies/corrigida/sem_margem/voo/custo
+- /vies/corrigida/sem_margem/voo/deficit_m
+- /vies/corrigida/sem_margem/voo/guiamento
+- /vies/corrigida/sem_margem/voo/periapse_km
+- /vies/voo/apoapse_km
+- /vies/voo/costa_s
+- /vies/voo/custo
+- /vies/voo/deficit_m
+- /vies/voo/guiamento
+- /vies/voo/periapse_km

@@ -469,15 +469,6 @@ sensibilidade_solido:
   k:
   - 0.2767489711934157
   - 0.8790849673202616
-  melhor_da_varredura:
-    custo: 104.74768095944613
-    escala: 3.9999999999999942
-    periapse_km: 612.9237429368743
-    apoapse_km: 789.5675812887387
-    tolerancia: 1.0e-06
-    capacidade_m_s: 4379.564010552702
-    glom_kg: 1527.999999999998
-    indicativo_com_margem: null
   capacidade_assintotica_m_s: 4535.399257799143
 - inerte: P-019 (ε 0,286 nos dois estágios)
   altitude_km: 380.0
@@ -520,30 +511,6 @@ sensibilidade_solido:
   k:
   - 0.4005602240896358
   - 0.4005602240896358
-  melhor_da_varredura:
-    custo: 0.3781514764529834
-    escala: 2.5499999999999994
-    periapse_km: 801.7102695397288
-    apoapse_km: 814.0387005750583
-    tolerancia: 1.0e-06
-    capacidade_m_s: 5346.660023670295
-    glom_kg: 981.7142857142853
-    indicativo_com_margem:
-      escala: 206.4142909077607
-      capacidade_m_s: 5881.326026037327
-      glom_kg: 78187.4625510623
-      comprimento_m:
-      - 95.47423944540137
-      - 95.47423944540137
-      folga_465_sem_deck_m:
-      - -45.93955450530938
-      - -45.93955450530938
-      folga_465_com_deck_m:
-      - -46.09346754878764
-      - -46.09346754878764
-      folga_45_com_deck_m:
-      - -46.36511972270068
-      - -46.36511972270068
   capacidade_assintotica_m_s: 5889.114406611101
 politica_margem_msr:
 - '[F34] PDF p. 6: "A mass growth allowance of 19% and 17% was assigned to the first
@@ -560,3 +527,5 @@ politica_margem_msr:
 - '[F267] PDF p. 3 (Tab. 1, requisitos do estudo de conceito de 2018): "Performance
   Margin" — "Addtl. 5 kg payload"; "Other Margin Allocation" — "AIAA margins / 25%
   for unknowns"'
+fora_do_yaml:
+- /sensibilidade_solido[]/melhor_da_varredura

@@ -839,11 +839,8 @@ def test_familia1_aeroshell_465():
             for c in cm:
                 assert c["capacidade_m_s"] == pytest.approx((1 + margem) * s["capacidade_minima_m_s"], rel=1e-9)
         else:
-            ind = s["melhor_da_varredura"]["indicativo_com_margem"]
-            if ind is None:
-                assert (1 + margem) * s["melhor_da_varredura"]["capacidade_m_s"] >= s["capacidade_assintotica_m_s"]
-            else:
-                assert ind["capacidade_m_s"] == pytest.approx((1 + margem) * s["melhor_da_varredura"]["capacidade_m_s"], rel=1e-9)
+            # o melhor ponto da varredura de um caso que não fecha é diagnóstico, fora do yaml (Fabio, 2026-11-13)
+            assert "melhor_da_varredura" not in s and "/sensibilidade_solido[]/melhor_da_varredura" in r["fora_do_yaml"]
     for d, lim in (("0.57", mv["limites"]["solido"]), ("0.72", mv["limites"]["hipergolico"])):
         assert r["limites_45"][d]["sem_deck_m"] == pytest.approx(lim["sem_deck_m"]) and r["limites_45"][d]["com_deck_m"] == pytest.approx(lim["com_deck_m"])
     for x in r["linhas"]:

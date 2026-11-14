@@ -197,18 +197,9 @@ verificacao:
     - 8177.118118577073
     - 6140.483931428571
     fecha: false
-    orbita_km:
-    - 326.8302883917424
-    - 345.58004178284995
-    costa_s: 475.19608044668286
     queimas_s:
     - 75.90000000000002
     - 24.5
-    guia:
-      t_v_s: 5.0
-      theta0_graus: 46.903458779460045
-      c_1_s: 0.0059480504747541135
-      t_antes_apoapse_s: 14.858293319110757
 limites:
   solido:
     diametro_m: 0.57
@@ -225,12 +216,6 @@ solido:
   fecha: true
   simulado: true
   escala: 1.1513144254504548
-  costa_s: 517.2705394247291
-  guia:
-    t_v_s: 5.0
-    theta0_graus: 48.50667310805898
-    c_1_s: 0.005212215453763175
-    t_antes_apoapse_s: 14.953236249772806
   busca_da_escala:
     intervalo:
     - 1.1500000000000006
@@ -238,7 +223,6 @@ solido:
     deficit_m:
     - -401.2648135917261
     - 14219.972822326701
-  deficit_na_escala_m: -1.2619420886039734e-07
   capacidade_m_s: 4049.6772406937503
   capacidade_minima_m_s: 4049.6772406937503
   glom_kg: 451.19685282027194
@@ -558,3 +542,10 @@ errata_2:
     potencia_w: 37.1684164260977
     energia_kwh: 254.23196835450824
     rhus: 51
+fora_do_yaml:
+- /solido[]/costa_s
+- /solido[]/deficit_na_escala_m
+- /solido[]/guia
+- /verificacao/base/costa_s
+- /verificacao/base/guia
+- /verificacao/base/orbita_km

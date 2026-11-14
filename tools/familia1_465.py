@@ -225,8 +225,17 @@ def main():
                   "encaixe": encaixe, "massa_entrada_min_srl_kg": m_srl, "limites_465": {str(d): x for d, x in lim.items()}, "limites_45": {str(d): x for d, x in lim45.items()}, "linhas": linhas,
                   "referencia_m2020_kg_m2": rb["referencia_m2020_kg_m2"], "alvo_folga_m": m.alvo, "capacidade_coifa_longa": a4["capacidade_coifa_longa"],
                   "penalidade_coifa_longa": a4.get("penalidade_coifa_longa_kg"), "sensibilidade_solido": sens, "politica_margem_msr": fc.get("politica_margem_msr", [])})
+    # só vai para o yaml (comparado pelo CI, P-039) o que tem resposta bem definida (Fabio, 2026-11-13): o melhor ponto da
+    # varredura de um caso que não fecha (ponto de compromisso do ajuste) e o indicativo derivado dele ficam só no .md
+    oy = copy.deepcopy(out)
+    fora = []
+    for x in oy["sensibilidade_solido"]:
+        if "melhor_da_varredura" in x:
+            x.pop("melhor_da_varredura")
+            fora.append("/sensibilidade_solido[]/melhor_da_varredura")
+    out["fora_do_yaml"] = oy["fora_do_yaml"] = sorted(set(fora))
     SAIDA.mkdir(parents=True, exist_ok=True)
-    (SAIDA / "aeroshell_465.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    (SAIDA / "aeroshell_465.yaml").write_text(yaml.safe_dump(oy, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
 
 
@@ -315,6 +324,10 @@ def escreve_md(o):
            "\"Não fecha na varredura\" quer dizer: em nenhuma escala da varredura da P-110 o ajuste chega à circular (critério da P-117). O melhor ponto é diagnóstico, não resultado.",
            "", "**Nota (2026-11-12):** a escala mínima do sólido passou a ser a raiz de (maior semieixo de uma circular alcançável) − (raio-alvo) (P-117, PR #64); as versões anteriores desta página, com o ajuste antigo, davam a P-019 a 380 km como \"não fecha na varredura\", com o melhor ponto a menos de 1 km da órbita. Valem os números desta versão; os da linha do sólido nas seções (c) a (e) vêm de results/familia1/mavs.yaml, regenerado no PR #64.",
            "", "O caso indicativo é a escala cuja capacidade ideal chega ao melhor ponto vezes 1 + a margem da P-014; \"não existe\" quando esse alvo passa da capacidade assintótica."]
+    if o.get("fora_do_yaml"):
+        md += ["", "## Fora da comparação do CI (diagnóstico)", "",
+               "Por decisão do Fabio (2026-11-13), só vai para results/familia1/aeroshell_465.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. O melhor ponto da varredura dos casos que não fecham, e o indicativo com margem derivado dele, aparecem na tabela (f) só como diagnóstico. Saíram do yaml:", ""]
+        md += [f"- `{c}`" for c in o["fora_do_yaml"]]
     if o["politica_margem_msr"]:
         md += ["", "## Política de margem do MAV sólido do MSR, nas fontes", ""] + [f"- {x}" for x in o["politica_margem_msr"]]
     (SAIDA / "aeroshell_465.md").write_text("\n".join(md) + "\n", encoding="utf-8")

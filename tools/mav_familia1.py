@@ -269,7 +269,23 @@ def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     out["errata"] = fc.get("errata_mavs_2026_11_11")
     out["errata_2"] = fc.get("errata_mavs_2026_11_12")
-    (SAIDA / "mavs.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    # só vai para o yaml (comparado pelo CI, P-039) o que tem resposta bem definida (Fabio, 2026-11-13): o guiamento, a órbita
+    # e a costa da base que não chega à órbita publicada (ponto de compromisso) e, na raiz da P-117, o guiamento (argumento de
+    # um máximo raso), a costa e o déficit (nulo por construção) ficam só no .md, como diagnóstico
+    fora = []
+    oy = copy.deepcopy(out)
+    b_ = oy["verificacao"]["base"]
+    if b_ and not b_["fecha"]:
+        fora += [f"/verificacao/base/{k}" for k in ("orbita_km", "costa_s", "guia") if k in b_]
+        for k in ("orbita_km", "costa_s", "guia"):
+            b_.pop(k, None)
+    for x in oy["solido"]:
+        if x.get("simulado"):
+            fora += [f"/solido[]/{k}" for k in ("costa_s", "guia", "deficit_na_escala_m") if k in x]
+            for k in ("costa_s", "guia", "deficit_na_escala_m"):
+                x.pop(k, None)
+    out["fora_do_yaml"] = oy["fora_do_yaml"] = sorted(set(fora))
+    (SAIDA / "mavs.yaml").write_text(yaml.safe_dump(oy, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
 
 
@@ -282,7 +298,7 @@ def escreve_md(o):
     for x in vb["casos"]:
         md.append(f"| {x['modelo'].replace('_', ' ')} | {br(x['empuxos_n'][0], 0)} e {br(x['empuxos_n'][1], 0)} | {br(x['fracao_inerte_2'], 2)} | {br(x['inertes_kg'][0], 1)} e {br(x['inertes_kg'][1], 1)} | {'sim' if x['fecha'] else 'não'} | " + (f"{br(x['queimas_s'][0], 1)} e {br(x['queimas_s'][1], 1)} | {br(x['costa_s'], 0)} |" if x["fecha"] else "— | — |"))
     b = vb["base"]
-    md += ["", (f"**Base: tempo de queima publicado, fração {br(b['fracao_inerte_2'], 3)}, a do [F269]** (errata da P-110, 2026-11-12): " + ("chega à órbita publicada. " if b["fecha"] else f"**não chega à órbita publicada** ({br(b['orbita_km'][0], 0)} × {br(b['orbita_km'][1], 0)} km); a diferença é o viés da P-114. ") + f"Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de {br(b['costa_s'], 0)} s no melhor ajuste, contra {br(vb['costa_publicada_s'], 0)} s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial." if b else "**Nenhuma divisão do inerte leva à órbita publicada com o tempo de queima publicado: o modelo não reproduz o MSR.**"), "",
+    md += ["", (f"**Base: tempo de queima publicado, fração {br(b['fracao_inerte_2'], 3)}, a do [F269]** (errata da P-110, 2026-11-12): " + ("chega à órbita publicada. " if b["fecha"] else f"**não chega à órbita publicada** ({br(b['orbita_km'][0], 0)} × {br(b['orbita_km'][1], 0)} km, diagnóstico); a diferença é o viés da P-114. ") + f"Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de {br(b['costa_s'], 0)} s no melhor ajuste (diagnóstico), contra {br(vb['costa_publicada_s'], 0)} s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial." if b else "**Nenhuma divisão do inerte leva à órbita publicada com o tempo de queima publicado: o modelo não reproduz o MSR.**"), "",
            "## Comparação lado a lado", ""]
     hd = "| Grandeza | " + " | ".join(x["rotulo"] for x in o["solido"] + o["hipergolico"]) + " |"
     md += [hd, "| :- |" + " -: |" * (len(o["solido"]) + len(o["hipergolico"]))]
@@ -368,6 +384,10 @@ def escreve_md(o):
             for rot, a_, x_ in (("sem margem", er2["solido_380_sem_margem"], sm2), ("com a margem da P-014", er2["solido_380_com_margem"], cm2)):
                 md.append(linha_vigente(rot, a_, f"PR #64 ({er2['fonte']})"))
                 md.append(linha_vigente(rot, x_))
+    if o.get("fora_do_yaml"):
+        md += ["", "## Fora da comparação do CI (diagnóstico)", "",
+               "Por decisão do Fabio (2026-11-13), só vai para results/familia1/mavs.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. A órbita e a costa da base, que não chega à órbita publicada, e a costa e o guiamento na raiz da P-117 aparecem nesta página só arredondados, como diagnóstico. Saíram do yaml:", ""]
+        md += [f"- `{c}`" for c in o["fora_do_yaml"]]
     (SAIDA / "mavs.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 

@@ -23,7 +23,7 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 | empuxo publicado | 9 854 e 6 937 | 0,46 | 58,1 e 49,5 | não | — | — |
 | empuxo publicado | 9 854 e 6 937 | 0,50 | 53,8 e 53,8 | não | — | — |
 
-**Base: tempo de queima publicado, fração 0,444, a do [F269]** (errata da P-110, 2026-11-12): **não chega à órbita publicada** (327 × 346 km); a diferença é o viés da P-114. Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de 475 s no melhor ajuste, contra 446 s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial.
+**Base: tempo de queima publicado, fração 0,444, a do [F269]** (errata da P-110, 2026-11-12): **não chega à órbita publicada** (327 × 346 km, diagnóstico); a diferença é o viés da P-114. Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa de 475 s no melhor ajuste (diagnóstico), contra 446 s publicados ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial.
 
 ## Comparação lado a lado
 
@@ -92,3 +92,14 @@ Duas propostas aprovadas foram aplicadas: a P-108 revista (comprimento = motores
 | sem margem, vigente | 1,1513 | 451,2 | 4 050 | 5,62 | 2,87 | +0,156 | −0,064 | 4 534 | 285 | 18,7 | 128 | 26 |
 | com a margem da P-014, PR #64 (results/familia1/mavs.yaml no commit 9da6251, o merge do PR #64) | 3,2228 | 1 234,2 | 4 481 | 5,75 | 5,37 a 8,70 | −2,759 a −1,092 | −2,979 a −1,312 | 6 072 | 382 | 37,2 | 254 | 51 |
 | com a margem da P-014, vigente | 7,9043 | 3 003,8 | 4 455 | 5,79 | 8,61 | −2,715 | −2,935 | 9 549 | 600 | 67,6 | 462 | 92 |
+
+## Fora da comparação do CI (diagnóstico)
+
+Por decisão do Fabio (2026-11-13), só vai para results/familia1/mavs.yaml, comparado pelo CI (P-039), o que tem resposta bem definida. A órbita e a costa da base, que não chega à órbita publicada, e a costa e o guiamento na raiz da P-117 aparecem nesta página só arredondados, como diagnóstico. Saíram do yaml:
+
+- `/solido[]/costa_s`
+- `/solido[]/deficit_na_escala_m`
+- `/solido[]/guia`
+- `/verificacao/base/costa_s`
+- `/verificacao/base/guia`
+- `/verificacao/base/orbita_km`

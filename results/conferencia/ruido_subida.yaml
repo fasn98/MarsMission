@@ -6,53 +6,53 @@ solido:
   atol: 1.0e-06
   max_step_s: 1.0
   max_step_costa_s: 5.0
-  erro_periapse_m: 0.052257135044783354
-  erro_apoapse_m: 2.3270012200810015
-  erro_semieixo_m: 1.1896291775628924
-  erro_excentricidade_m: 1.1385277027820848
-  rugosidade_apses_t_antes_m: 1.0791734719088304e-07
-  rugosidade_apses_theta0_m: 0.3190765708812755
-  rugosidade_suave_t_antes_m: 1.6290223721132478e-09
-  rugosidade_suave_theta0_m: 0.17454616803504155
+  erro_periapse_m: 1.0343327783048153
+  erro_apoapse_m: 0.042009014170616865
+  erro_semieixo_m: 0.5381708960048854
+  erro_excentricidade_m: 0.4968871243691997
+  rugosidade_apses_t_antes_m: 0.20440043035588518
+  rugosidade_apses_theta0_m: 0.5431180464666941
+  rugosidade_suave_t_antes_m: 2.219318720593553e-09
+  rugosidade_suave_theta0_m: 0.12823500543078287
 - integrador: a
   rtol: 1.0e-10
   atol: 1.0e-07
   max_step_s: 0.5
   max_step_costa_s: 2.5
-  erro_periapse_m: 0.011209080927073956
-  erro_apoapse_m: 0.1069084070622921
-  erro_semieixo_m: 0.05905874399468303
-  erro_excentricidade_m: 0.04787590706473566
-  rugosidade_apses_t_antes_m: 9.299018910629918e-08
-  rugosidade_apses_theta0_m: 0.015198518986836674
-  rugosidade_suave_t_antes_m: 2.6145050304305602e-09
-  rugosidade_suave_theta0_m: 0.008314100930387027
+  erro_periapse_m: 0.12316859420388937
+  erro_apoapse_m: 0.009939605370163918
+  erro_semieixo_m: 0.06655409932136536
+  erro_excentricidade_m: 0.05457800839220983
+  rugosidade_apses_t_antes_m: 0.14136094789629236
+  rugosidade_apses_theta0_m: 0.5216984170921811
+  rugosidade_suave_t_antes_m: 3.726675937452908e-09
+  rugosidade_suave_theta0_m: 0.010452939315978623
 - integrador: b
   rtol: 1.0e-11
   atol: 1.0e-08
   max_step_s: 0.25
   max_step_costa_s: 1.0
-  erro_periapse_m: 3.601983189582825e-05
-  erro_apoapse_m: 0.0004163626581430435
-  erro_semieixo_m: 0.00019017141312360764
-  erro_excentricidade_m: 0.00022657064801023807
-  rugosidade_apses_t_antes_m: 1.2241226944824144e-07
-  rugosidade_apses_theta0_m: 0.009353889660772595
-  rugosidade_suave_t_antes_m: 4.30399448733825e-09
-  rugosidade_suave_theta0_m: 0.005116923234680646
+  erro_periapse_m: 0.0039151618257164955
+  erro_apoapse_m: 0.0007699127309024334
+  erro_semieixo_m: 0.002342537045478821
+  erro_excentricidade_m: 0.003282478229107433
+  rugosidade_apses_t_antes_m: 0.13352025037886206
+  rugosidade_apses_theta0_m: 0.5264294513730029
+  rugosidade_suave_t_antes_m: 3.8694076698218314e-09
+  rugosidade_suave_theta0_m: 0.0041437953790504954
 - integrador: c
   rtol: 1.0e-12
   atol: 1.0e-09
   max_step_s: 0.1
   max_step_costa_s: 0.5
-  erro_periapse_m: 6.534811109304428e-05
-  erro_apoapse_m: 0.0003786347806453705
-  erro_semieixo_m: 0.00022199144586920738
-  erro_excentricidade_m: 0.0001565271377330646
-  rugosidade_apses_t_antes_m: 1.0694285717979646e-07
-  rugosidade_apses_theta0_m: 0.0008271093817336782
-  rugosidade_suave_t_antes_m: 5.61282615194306e-09
-  rugosidade_suave_theta0_m: 0.0004525452439869114
+  erro_periapse_m: 1.458311453461647e-05
+  erro_apoapse_m: 1.458311453461647e-05
+  erro_semieixo_m: 1.458311453461647e-05
+  erro_excentricidade_m: 8.372697078984359e-06
+  rugosidade_apses_t_antes_m: 0.1334677962925675
+  rugosidade_apses_theta0_m: 0.5261823069170927
+  rugosidade_suave_t_antes_m: 5.522881595621877e-09
+  rugosidade_suave_theta0_m: 0.0004342352205093397
 custos_p111_380km:
 - escala: 0.97
   apses, atual:
@@ -199,6 +199,7 @@ reprodutibilidade:
   escala: 1.1513141575379777
   glom_kg: 451.1967515493556
   deficit_m: 0.0783442398533225
+fracao_rugosidade: 0.4
 inclinacao_deficit_m: 292424.7527183683
 escala_atual: 1.1513144254504548
 perturbacao_escala: 4.0e-16
