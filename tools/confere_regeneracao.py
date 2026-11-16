@@ -37,6 +37,8 @@ from __future__ import annotations
 
 import hashlib
 import importlib.metadata as md_
+import hashlib
+import json
 import platform
 import re
 import shutil
@@ -312,9 +314,29 @@ def _linha_dif(onde, a, b):
     return r
 
 
-def regenerar(d: Path):
-    """Roda todas as ferramentas em d, na ordem histórica. Devolve [(ferramenta, ok, motivo)]."""
+def partes():
+    """Partes da regeneração em paralelo (tools/regeneracao_partes.yaml), conferidas contra FASE_ATUAL: cada ferramenta de
+    FASE_ATUAL está em exatamente uma parte, e só a "base" roda as fases históricas."""
+    ps = yaml.safe_load((RAIZ / "tools" / "regeneracao_partes.yaml").read_text(encoding="utf-8"))["partes"]
+    nomes = [Path(c[0]).stem for c in FASE_ATUAL]
+    todas = [f for p in ps.values() for f in p["ferramentas"]]
+    if sorted(todas) != sorted(nomes) or len(set(todas)) != len(todas):
+        raise RuntimeError("tools/regeneracao_partes.yaml não cobre FASE_ATUAL exatamente uma vez")
+    if [n for n, p in ps.items() if p.get("fases_historicas")] != ["base"]:
+        raise RuntimeError("só a parte base roda as fases históricas")
+    for n, p in ps.items():
+        if any(x not in ps for x in p["depende_de"]):
+            raise RuntimeError(f"parte {n}: dependência desconhecida")
+    return ps
+
+
+def regenerar(d: Path, rastreio: Path | None = None, parte: dict | None = None):
+    """Roda as ferramentas em d, na ordem histórica (todas, ou só as da `parte`, para a regeneração em paralelo do CI).
+    Devolve [(ferramenta, ok, motivo)], com o tempo de cada uma. Com `rastreio`, cada ferramenta roda por
+    tools/rastreio_es.py e grava ali os arquivos de results/ que lê e escreve."""
+    import time
     log = []
+    n = [0]
 
     def rodar(cmd):
         if not (d / cmd[0]).exists():
@@ -323,11 +345,22 @@ def regenerar(d: Path):
         if cmd[0] == "tools/efeito_efemeride.py" and not (d / "data/kernels/de200.bsp").exists():
             log.append({"ferramenta": " ".join(cmd), "rodou": False, "motivo": "data/kernels/de200.bsp ausente"})
             return
-        r = subprocess.run([sys.executable, *cmd], cwd=d, capture_output=True, text=True)
+        pre = []
+        if rastreio is not None:
+            n[0] += 1
+            pre = [str(RAIZ / "tools" / "rastreio_es.py"), str(rastreio / f"{n[0]:03d}.json")]
+        t0 = time.perf_counter()
+        r = subprocess.run([sys.executable, *pre, *cmd], cwd=d, capture_output=True, text=True)
         if r.returncode:
             raise RuntimeError(f"{' '.join(cmd)} falhou:\n{r.stderr[-3000:]}")
-        log.append({"ferramenta": " ".join(cmd), "rodou": True})
+        log.append({"ferramenta": " ".join(cmd), "rodou": True, "segundos": round(time.perf_counter() - t0, 1)})
+        print(f"[regeneração] {' '.join(cmd)}: {log[-1]['segundos']} s", flush=True)
 
+    if parte is not None and not parte.get("fases_historicas"):
+        for c in FASE_ATUAL:
+            if Path(c[0]).stem in parte["ferramentas"]:
+                rodar(c)
+        return log
     antes = yaml.safe_load((d / "config/plataformas.yaml").read_text(encoding="utf-8"))["antes_etapa_2_3"]
     for c in FASE_1:
         rodar(c)
@@ -343,7 +376,37 @@ def regenerar(d: Path):
     subprocess.run(["git", "add", "-A"], cwd=d, check=True)
     subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "config atual"], cwd=d, check=True)
     for c in FASE_ATUAL:
-        rodar(c)
+        if parte is None or Path(c[0]).stem in parte["ferramentas"]:
+            rodar(c)
+    return log
+
+
+def _arvore(raiz: Path) -> dict:
+    return {str(x.relative_to(raiz)): hashlib.sha256(x.read_bytes()).hexdigest() for x in raiz.rglob("*") if x.is_file()}
+
+
+def juntar_entradas(destino: Path, entradas: list[Path]):
+    """Copia em destino (results/) os resultados das partes de que esta depende; o mesmo arquivo vindo de duas partes com
+    conteúdo diferente é erro (as partes em paralelo gravam arquivos disjuntos)."""
+    vistos = {}
+    for e in entradas:
+        for x in sorted(e.rglob("*")):
+            if not x.is_file() or "_log" in x.relative_to(e).parts:
+                continue
+            rel = x.relative_to(e)
+            h = hashlib.sha256(x.read_bytes()).hexdigest()
+            if str(rel) in vistos and vistos[str(rel)] != h:
+                raise RuntimeError(f"{rel} veio de duas partes com conteúdo diferente")
+            vistos[str(rel)] = h
+            (destino / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(x, destino / rel)
+
+
+def logs_das_entradas(entradas: list[Path]) -> list:
+    log = []
+    for e in entradas:
+        for j in sorted((e / "_log").glob("*.json")) if (e / "_log").exists() else []:
+            log += json.loads(j.read_text(encoding="utf-8"))
     return log
 
 
@@ -357,6 +420,12 @@ def main():
         atualizar = [a for a in sys.argv[sys.argv.index("--atualizar") + 1:] if not a.startswith("--")]
         if not atualizar or not all(a.startswith("results/") and ".." not in Path(a).parts for a in atualizar):
             sys.exit("--atualizar exige caminhos em results/")
+    nome_parte = sys.argv[sys.argv.index("--parte") + 1] if "--parte" in sys.argv else None
+    parte = partes()[nome_parte] if nome_parte else None
+    saida = Path(sys.argv[sys.argv.index("--saida") + 1]) if "--saida" in sys.argv else None
+    entradas = [Path(sys.argv[i + 1]) for i, a in enumerate(sys.argv) if a == "--entrada"]
+    if parte is not None and nome_parte != "comparacao" and saida is None:
+        sys.exit("--parte exige --saida (exceto a parte comparacao)")
     base = referencia if referencia else RAIZ / "results"
     amb = ambiente()   # antes da cópia: descreve a árvore regenerada
     with tempfile.TemporaryDirectory() as tmp:
@@ -368,7 +437,19 @@ def main():
         subprocess.run(["git", "init", "-q"], cwd=d, check=True)
         subprocess.run(["git", "add", "-A"], cwd=d, check=True)
         subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True)
-        log = regenerar(d)
+        juntar_entradas(d / "results", entradas)
+        antes_parte = _arvore(d / "results")
+        log = logs_das_entradas(entradas) + regenerar(d, parte=parte)
+        if parte is not None and nome_parte != "comparacao":
+            # parte intermediária: entrega só o que gravou (novo ou mudado) e o seu log; a comparação é na parte final
+            depois = _arvore(d / "results")
+            for rel, h in depois.items():
+                if antes_parte.get(rel) != h:
+                    (saida / rel).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(d / "results" / rel, saida / rel)
+            (saida / "_log").mkdir(parents=True, exist_ok=True)
+            (saida / "_log" / f"{nome_parte}.json").write_text(json.dumps([x for x in log if x not in logs_das_entradas(entradas)]), encoding="utf-8")
+            return
         # fora da comparação: results/conferencia/ e os arquivos de diagnóstico (diagnostico_*.md), que guardam saídas sem
         # resposta bem definida (ajustes que não fecham, soluções não únicas, grandezas nulas por construção; CLAUDE.md, regra 6)
         versionados = sorted(x for x in base.rglob("*") if x.is_file() and x.name != ".gitkeep"
@@ -382,6 +463,18 @@ def main():
                 item.update(avaliar(p, q, str(rel)))
                 item["identico"] = item["estado"] != "diferente"
             arquivos.append(item)
+        # sanidade dos diagnósticos (regra 6), sem comparar valores: cada diagnostico_*.md versionado foi regenerado, não está
+        # vazio e não tem número não finito (NaN ou inf)
+        diag_falhas = []
+        for p in sorted(x for x in base.rglob("diagnostico_*.md") if "conferencia" not in x.relative_to(base).parts):
+            rel = Path("results") / p.relative_to(base)
+            q = d / rel
+            if not q.exists():
+                diag_falhas.append(f"{rel}: não regenerado")
+            elif not q.read_text(encoding="utf-8").strip():
+                diag_falhas.append(f"{rel}: vazio")
+            elif re.search(r"(?i)(?<![a-z])(nan|[+-−]?inf(inity)?)(?![a-z])|∞", q.read_text(encoding="utf-8")):
+                diag_falhas.append(f"{rel}: número não finito")
         novos = sorted(str(x.relative_to(d)) for x in (d / "results").rglob("*")
                        if x.is_file() and not (base / x.relative_to(d / "results")).exists())
         for a in atualizar:
@@ -404,7 +497,7 @@ def main():
            "dentro_da_tolerancia": [a["arquivo"] for a in arquivos if a.get("estado") == "tolerancia"],
            "nao_regenerados": [a["arquivo"] for a in arquivos if not a["regenerado"]],
            "diferentes": [a["arquivo"] for a in arquivos if a["regenerado"] and not a["identico"]],
-           "gerados_sem_versao": novos, "atualizados": atualizar, "arquivos": arquivos}
+           "gerados_sem_versao": novos, "atualizados": atualizar, "diagnosticos_com_falha": diag_falhas, "arquivos": arquivos}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / f"regeneracao_{rotulo}.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     amb_md = ambiente_md(out["ambiente"])
@@ -419,6 +512,7 @@ def main():
           f"{_tolerancias()[1]:g}), a versionado e b regenerado (P-039); PNG com até {100 * _tolerancias()[2]:g} % de pixels diferentes (P-040); "
           f"arquivos de controle ({', '.join(sorted(CONTROLE))}) sem o hash do commit. Premissas NÃO VALIDADAS.", "",
           "Ferramentas não rodadas: " + (", ".join(f"{x['ferramenta']} ({x['motivo']})" for x in log if not x["rodou"]) or "nenhuma") + ".", "",
+          "Sanidade dos diagnósticos (existe, não vazio, sem NaN/inf; sem comparar valores): " + ("; ".join(out["diagnosticos_com_falha"]) or "ok") + ".", "",
           "## Arquivos diferentes (acima do limite)", ""]
 
     def tabela(vals):
@@ -458,7 +552,7 @@ def main():
         md.append("")
     (SAIDA / f"regeneracao_{rotulo}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
-    if ci and (out["diferentes"] or out["nao_regenerados"] or novos):
+    if ci and (out["diferentes"] or out["nao_regenerados"] or novos or diag_falhas):
         sys.exit(1)
 
 

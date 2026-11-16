@@ -205,7 +205,17 @@ def main():
     out = {"gerado_por": "tools/orbitador_eletrico.py", "quimico": quimico, "hibrido_c2": resultados, "hibrido_c1": c1, "eletrico": eletrico,
            "tempo_encontro_dias": t_enc / DIA, "janelas": {w["id"]: w["em_marte_dias"] for w in janelas}}
     SAIDA.mkdir(parents=True, exist_ok=True)
-    (SAIDA / "orbitador_eletrico.yaml").write_text(yaml.safe_dump(nativo(out), sort_keys=False, allow_unicode=True), encoding="utf-8")
+    # regra 6 (CLAUDE.md): a diferença relativa e a excentricidade final da conferência da descida são resíduos perto de zero
+    # (autoconsistência da fórmula quase circular com a integração, não comparação com caso publicado): ficam só no
+    # diagnóstico (results/etapa3.3/diagnostico_orbitador_eletrico.md); os Δv, os tempos e as voltas continuam aqui
+    oy = copy.deepcopy(nativo(out))
+    for r in oy["hibrido_c2"].values():
+        c = r.get("conferencia_descida")
+        if c:
+            c.pop("diferenca_relativa", None)
+            c.pop("excentricidade_final", None)
+    oy["fora_do_yaml"] = ["/hibrido_c2/*/conferencia_descida/diferenca_relativa", "/hibrido_c2/*/conferencia_descida/excentricidade_final"]
+    (SAIDA / "orbitador_eletrico.yaml").write_text(yaml.safe_dump(oy, sort_keys=False, allow_unicode=True), encoding="utf-8")
     escreve_md(out)
 
 

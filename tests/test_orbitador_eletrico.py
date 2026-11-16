@@ -79,6 +79,7 @@ def test_resultado_da_etapa_3_3():
     r = ler("results/etapa3.3/orbitador_eletrico.yaml")
     for nome, x in r["hibrido_c2"].items():
         if x["n_minimo"] is not None:
-            assert abs(x["conferencia_descida"]["diferenca_relativa"]) < TOL
+            c = x["conferencia_descida"]   # a diferença relativa é refeita dos dois Δv (ela mesma fica só no diagnóstico)
+            assert abs((c["dv_numerico_km_s"] - c["dv_quase_circular_km_s"]) / c["dv_quase_circular_km_s"]) < TOL
     q = r["quimico"]
     assert q["orbitador_injetado_kg"] == ler("results/etapa2.5/arquitetura.yaml")["orbitador"]["injetado_kg"]

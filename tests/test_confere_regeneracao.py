@@ -150,3 +150,28 @@ def test_linha_de_ambiente_do_markdown(cr):
                                    "(árvore de trabalho com alterações não commitadas)")
     amb.update(commit="a" * 40, alteracoes_nao_commitadas=False)
     assert cr.ambiente_md(amb).endswith(f"commit {'a' * 40}")
+
+
+def test_partes_da_regeneracao_paralela(cr):
+    """Issue #61: as partes cobrem FASE_ATUAL uma vez, e o workflow declara, para cada parte, as mesmas dependências de
+    tools/regeneracao_partes.yaml (needs e entradas)."""
+    import yaml
+    ps = cr.partes()
+    wf = yaml.safe_load((cr.RAIZ / ".github/workflows/regeneracao.yml").read_text(encoding="utf-8"))["jobs"]
+    por_parte = {j["with"]["parte"]: j for j in wf.values()}
+    assert set(por_parte) == set(ps)
+    for nome, p in ps.items():
+        j = por_parte[nome]
+        assert set(j.get("needs", [])) == set(p["depende_de"])
+        assert set(j["with"].get("entradas", "").split()) == set(p["depende_de"])
+
+
+def test_juntar_entradas_recusa_conflito(cr, tmp_path):
+    """Duas partes que entregam o mesmo arquivo com conteúdo diferente são erro."""
+    a, b, d = tmp_path / "a", tmp_path / "b", tmp_path / "d"
+    for x, t in ((a, "1"), (b, "2")):
+        (x / "etapa").mkdir(parents=True)
+        (x / "etapa" / "r.yaml").write_text(t)
+    d.mkdir()
+    with pytest.raises(RuntimeError):
+        cr.juntar_entradas(d, [a, b])

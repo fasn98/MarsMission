@@ -1,6 +1,9 @@
 name: Regeneração de results/
 
-# Regenera todo o results/ numa cópia, na ordem histórica (tools/confere_regeneracao.py), e compara com o versionado:
+# Regenera todo o results/ numa cópia, na ordem histórica (tools/confere_regeneracao.py), e compara com o versionado.
+# Desde a issue #61 (2026-11-14), em partes paralelas (tools/regeneracao_partes.yaml; mapa de dependências em
+# results/conferencia/mapa_regeneracao.md): cada parte roda num job, sobre os resultados das partes de que depende, e a
+# parte "comparacao" junta tudo e faz a comparação:
 # números (YAML, Markdown, NPZ) e PNG comparados com tolerância declarada; arquivos de controle sem o hash do commit.
 # "Idêntico" = dentro das tolerâncias P-039 (números) e P-040 (PNG), premissas NÃO VALIDADAS; o relatório lista as
 # diferenças abaixo do limite. Falha se algum arquivo passar do limite ou não for regenerado, ou se a regeneração gerar
@@ -19,6 +22,7 @@ on:
       - "environment.yml"
       - "pyproject.toml"
       - ".github/workflows/regeneracao.yml"
+      - ".github/workflows/regeneracao_parte.yml"
   pull_request:
     paths:
       - "src/**"
@@ -29,49 +33,35 @@ on:
       - "environment.yml"
       - "pyproject.toml"
       - ".github/workflows/regeneracao.yml"
+      - ".github/workflows/regeneracao_parte.yml"
 
 jobs:
+  # Comparação: tools/confere_regeneracao.py compara results/ com tolerância (P-039, P-040); results/conferencia/ e os
+  # arquivos results/**/diagnostico_*.md ficam fora da comparação, com só a checagem de sanidade (CLAUDE.md, regra 6).
+  base:
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: base}
+  subida_mav:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: subida_mav, entradas: "base"}
+  mav_familia1:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: mav_familia1, entradas: "base"}
+  ruido_subida:
+    needs: [base, mav_familia1]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: ruido_subida, entradas: "base mav_familia1"}
+  familia1_465:
+    needs: [base, mav_familia1]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: familia1_465, entradas: "base mav_familia1"}
+  inerte_solido:
+    needs: [base, mav_familia1, ruido_subida, familia1_465]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: inerte_solido, entradas: "base mav_familia1 ruido_subida familia1_465"}
   regeneracao:
-    runs-on: ubuntu-latest
-    timeout-minutes: 300   # Fabio, 2026-11-12. Limite por job em runner hospedado: "Each job in a workflow can run for up to 6 hours of execution time" (docs.github.com/en/actions/reference/limits, tabela "Existing system limits", lida em 2026-11-12)
-    # Comparação: tools/confere_regeneracao.py compara results/ com tolerância (P-039, P-040); results/conferencia/ e
-    # os arquivos results/**/diagnostico_*.md ficam fora da comparação (CLAUDE.md, regra 6).
-    defaults:
-      run:
-        shell: bash -el {0}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-version: latest
-          environment-file: environment.yml
-          activate-environment: marsmission
-          auto-activate-base: false
-
-      # Kernels do CI (de440s, naif0012) e os de verificação (de200, usado por tools/efeito_efemeride.py).
-      - name: Cache dos kernels SPICE
-        uses: actions/cache@v4
-        with:
-          path: data/kernels
-          key: spice-regeneracao-${{ hashFiles('config/kernels.yaml', 'config/kernels_verificacao.yaml') }}
-
-      - name: Baixar e conferir kernels (MD5)
-        run: |
-          python tools/fetch_kernels.py
-          python tools/fetch_kernels.py config/kernels_verificacao.yaml
-
-      - name: Regenerar results/ e comparar com o versionado
-        run: python tools/confere_regeneracao.py ci --ci
-
-      - name: Resumo no job (inclui as diferenças abaixo do limite)
-        if: always()
-        run: cat results/conferencia/regeneracao_ci.md >> "$GITHUB_STEP_SUMMARY" || true
-
-      - name: Relatório da regeneração
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: regeneracao
-          path: results/conferencia/regeneracao_ci.*
-          if-no-files-found: ignore
+    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido"}
