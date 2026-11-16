@@ -186,6 +186,8 @@ def test_partes_conferem_com_o_mapa(cr):
     mapa = yaml.safe_load((cr.RAIZ / "results/conferencia/mapa_regeneracao.yaml").read_text(encoding="utf-8"))["ferramentas"]
     parte_de = {f: n for n, p in ps.items() for f in p["ferramentas"]}
     stem = [Path(n["ferramenta"].split()[0]).stem for n in mapa]
+    # o mapa precisa ser da ordem atual da regeneração (senão uma ferramenta nova cairia na base sem conferência)
+    assert [n["ferramenta"] for n in mapa] == [" ".join(c) for c in cr.FASE_1 + cr.FASE_850 + cr.FASE_ATUAL]
     p_de = [parte_de.get(s, "base") for s in stem]   # fora de FASE_ATUAL: fases históricas, na base
     gravado_por = {}
     for i, n in enumerate(mapa):

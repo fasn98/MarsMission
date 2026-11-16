@@ -42,19 +42,20 @@ jobs:
           python tools/fetch_kernels.py
           python tools/fetch_kernels.py config/kernels_verificacao.yaml
 
+      # fora do checkout: dentro dele, entradas/ apareceria como não rastreado no ambiente() (alteracoes_nao_commitadas)
       - name: Baixar os resultados das partes de que depende
         if: inputs.entradas != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           for p in ${{ inputs.entradas }}; do
-            gh run download ${{ github.run_id }} -R ${{ github.repository }} -n "parte-$p" -D "entradas/$p"
+            gh run download ${{ github.run_id }} -R ${{ github.repository }} -n "parte-$p" -D "$RUNNER_TEMP/entradas/$p"
           done
 
       - name: Rodar a parte ${{ inputs.parte }}
         run: |
           args=""
-          for p in ${{ inputs.entradas }}; do args="$args --entrada entradas/$p"; done
+          for p in ${{ inputs.entradas }}; do args="$args --entrada $RUNNER_TEMP/entradas/$p"; done
           if [ "${{ inputs.parte }}" = "comparacao" ]; then
             python tools/confere_regeneracao.py ci --ci --parte comparacao $args
           else
