@@ -54,12 +54,12 @@ jobs:
 
       - name: Rodar a parte ${{ inputs.parte }}
         run: |
-          args=""
-          for p in ${{ inputs.entradas }}; do args="$args --entrada $RUNNER_TEMP/entradas/$p"; done
+          args=()
+          for p in ${{ inputs.entradas }}; do args+=(--entrada "$RUNNER_TEMP/entradas/$p"); done
           if [ "${{ inputs.parte }}" = "comparacao" ]; then
-            python tools/confere_regeneracao.py ci --ci --parte comparacao $args
+            python tools/confere_regeneracao.py ci --ci --parte comparacao "${args[@]}"
           else
-            python tools/confere_regeneracao.py ci --parte "${{ inputs.parte }}" --saida saida $args
+            python tools/confere_regeneracao.py ci --parte "${{ inputs.parte }}" --saida saida "${args[@]}"
           fi
 
       - name: Publicar o que a parte gravou

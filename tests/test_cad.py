@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from orbital.config import ler
+from orbital.config import ler, v
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "tools"))
@@ -527,10 +527,13 @@ def test_pendencia_recompilar_onshape():
     md = (RAIZ / "results/etapa7.2/conferencia_onshape.md").read_text(encoding="utf-8")
     assert "**Pendência (decisão do Fabio, 2026-11-06):**" in md and "bocais e do aeroshell" in md
     assert "Orbitador +6,8 g; Lander −0,015 kg; MAV −0,6 g" in md
-    # resíduo da descida com 4 algarismos: o passo de impressão fica em 1 % do piso da P-039
-    # desde 2026-11-14 a conferência da descida fica no arquivo de diagnóstico, fora da comparação do CI
+    # desde 2026-11-14 a conferência da descida fica no arquivo de diagnóstico, fora da comparação do CI; os dígitos do
+    # resíduo mudam com a CPU (regra 6), então confere-se o limite: o mesmo de tests/test_orbitador_eletrico.py, a
+    # tolerância da verificação da espiral de baixo empuxo (config/baixo_empuxo.yaml, P-046)
+    tol = v(ler("config/baixo_empuxo.yaml")["verificacao_schwenzfeger"]["tolerancia_relativa"])
     el = (RAIZ / "results/etapa3.3/diagnostico_orbitador_eletrico.md").read_text(encoding="utf-8")
-    assert "(-2.105e-09)" in el and "(-3.350e-09)" in el
+    res = [float(x) for x in re.findall(r"numérico [\d,]+ km/s \(([-+]?\d\.\d{3}e[-+]\d+)\)", el)]
+    assert len(res) == 2 and all(abs(x) < tol for x in res), res
 
 
 def test_rota_a_dimensiona():

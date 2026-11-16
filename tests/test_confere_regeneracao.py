@@ -158,8 +158,10 @@ def test_partes_da_regeneracao_paralela(cr):
     import yaml
     ps = cr.partes()
     wf = yaml.safe_load((cr.RAIZ / ".github/workflows/regeneracao.yml").read_text(encoding="utf-8"))["jobs"]
-    por_parte = {j["with"]["parte"]: j for j in wf.values()}
+    por_parte = {j["with"]["parte"]: j for j in wf.values() if "with" in j}
     assert set(por_parte) == set(ps)
+    # portão (verificação obrigatória da main): depende de todos os jobs de parte e roda sempre
+    assert set(wf["portao"]["needs"]) == set(wf) - {"portao"} and wf["portao"]["if"] == "always()"
     for nome, p in ps.items():
         j = por_parte[nome]
         assert set(j.get("needs", [])) == set(p["depende_de"])
