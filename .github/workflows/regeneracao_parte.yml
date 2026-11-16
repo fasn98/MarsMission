@@ -17,7 +17,7 @@ on:
 jobs:
   parte:
     runs-on: ubuntu-latest
-    timeout-minutes: 300   # limite por job em runner hospedado: 6 h (docs.github.com/en/actions/reference/limits)
+    timeout-minutes: 300   # Fabio, 2026-11-12. Limite por job em runner hospedado: "Each job in a workflow can run for up to 6 hours of execution time" (docs.github.com/en/actions/reference/limits, tabela "Existing system limits", lida em 2026-11-12)
     defaults:
       run:
         shell: bash -el {0}

@@ -35,6 +35,11 @@ on:
       - ".github/workflows/regeneracao.yml"
       - ".github/workflows/regeneracao_parte.yml"
 
+# actions: read para as partes baixarem os artefatos umas das outras (gh run download, em regeneracao_parte.yml).
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   # Comparação: tools/confere_regeneracao.py compara results/ com tolerância (P-039, P-040); results/conferencia/ e os
   # arquivos results/**/diagnostico_*.md ficam fora da comparação, com só a checagem de sanidade (CLAUDE.md, regra 6).

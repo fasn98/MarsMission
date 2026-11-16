@@ -37,7 +37,6 @@ from __future__ import annotations
 
 import hashlib
 import importlib.metadata as md_
-import hashlib
 import json
 import platform
 import re
@@ -83,6 +82,7 @@ NUM = re.compile(r"[−-]?\d{1,3}(?:[  ]\d{3})+(?:,\d+)?|[−-]?\d+(?:[.,]\d+)?(
 CONTROLE = {"results/etapa2.5/conferencia_2033.yaml", "results/etapa2.5/conferencia_2033.md"}
 HASH_YAML = re.compile(r"^commit: \S+$", flags=re.M)
 HASH_MD = re.compile(r"^Commit [0-9a-f]+;", flags=re.M)
+NAO_FINITO = re.compile(r"(?i)(?<![a-z0-9])(nan|[+\-−]?inf(inity)?)(?![a-z])|∞")  # sanidade dos diagnósticos (regra 6)
 
 
 def _sem_hash(p: Path) -> bytes:
@@ -402,12 +402,16 @@ def juntar_entradas(destino: Path, entradas: list[Path]):
             shutil.copyfile(x, destino / rel)
 
 
-def logs_das_entradas(entradas: list[Path]) -> list:
-    log = []
+def logs_das_entradas(entradas: list[Path]) -> tuple[list, dict]:
+    """Log das ferramentas e ambiente de cada parte de que esta depende ({parte: ambiente}): cada parte pode rodar numa
+    máquina diferente, e o relatório da comparação descreve todas."""
+    log, ambientes = [], {}
     for e in entradas:
         for j in sorted((e / "_log").glob("*.json")) if (e / "_log").exists() else []:
-            log += json.loads(j.read_text(encoding="utf-8"))
-    return log
+            x = json.loads(j.read_text(encoding="utf-8"))
+            log += x["log"]
+            ambientes[j.stem] = x["ambiente"]
+    return log, ambientes
 
 
 def main():
@@ -439,7 +443,9 @@ def main():
         subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True)
         juntar_entradas(d / "results", entradas)
         antes_parte = _arvore(d / "results")
-        log = logs_das_entradas(entradas) + regenerar(d, parte=parte)
+        log_parte = regenerar(d, parte=parte)
+        log_entradas, amb_partes = logs_das_entradas(entradas)
+        log = log_entradas + log_parte
         if parte is not None and nome_parte != "comparacao":
             # parte intermediária: entrega só o que gravou (novo ou mudado) e o seu log; a comparação é na parte final
             depois = _arvore(d / "results")
@@ -448,7 +454,7 @@ def main():
                     (saida / rel).parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(d / "results" / rel, saida / rel)
             (saida / "_log").mkdir(parents=True, exist_ok=True)
-            (saida / "_log" / f"{nome_parte}.json").write_text(json.dumps([x for x in log if x not in logs_das_entradas(entradas)]), encoding="utf-8")
+            (saida / "_log" / f"{nome_parte}.json").write_text(json.dumps({"ambiente": amb, "log": log_parte}), encoding="utf-8")
             return
         # fora da comparação: results/conferencia/ e os arquivos de diagnóstico (diagnostico_*.md), que guardam saídas sem
         # resposta bem definida (ajustes que não fecham, soluções não únicas, grandezas nulas por construção; CLAUDE.md, regra 6)
@@ -473,7 +479,7 @@ def main():
                 diag_falhas.append(f"{rel}: não regenerado")
             elif not q.read_text(encoding="utf-8").strip():
                 diag_falhas.append(f"{rel}: vazio")
-            elif re.search(r"(?i)(?<![a-z])(nan|[+-−]?inf(inity)?)(?![a-z])|∞", q.read_text(encoding="utf-8")):
+            elif NAO_FINITO.search(q.read_text(encoding="utf-8")):
                 diag_falhas.append(f"{rel}: número não finito")
         novos = sorted(str(x.relative_to(d)) for x in (d / "results").rglob("*")
                        if x.is_file() and not (base / x.relative_to(d / "results")).exists())
@@ -488,7 +494,7 @@ def main():
             shutil.copytree(d / "results", guardar)
     out = {"gerado_por": "tools/confere_regeneracao.py", "rotulo": rotulo,
            "comparado_com": "regeneração guardada em " + referencia.name if referencia else "results/ versionado",
-           "ambiente": amb,
+           "ambiente": amb, **({"ambientes_das_partes": amb_partes} if amb_partes else {}),
            "ferramentas": log, "versionados": len(arquivos),
            "regenerados": sum(a["regenerado"] for a in arquivos),
            "tolerancias": {"P-039": {"relativa": _tolerancias()[0], "piso_absoluto": _tolerancias()[1]},
@@ -503,6 +509,8 @@ def main():
     amb_md = ambiente_md(out["ambiente"])
     md = [f"# Regeneração de results/ — ambiente \"{rotulo}\" (gerado por tools/confere_regeneracao.py)", "",
           f"Ambiente: {amb_md}. Comparado com: {out['comparado_com']}.", "",
+          *([f"Regeneração em partes paralelas (issue #61); ambiente de cada parte, além da comparação acima: "
+             + "; ".join(f"{k}: {ambiente_md(v)}" for k, v in amb_partes.items()) + ".", ""] if amb_partes else []),
           f"**Versionados: {out['versionados']}; regenerados: {out['regenerados']}; idênticos: {out['identicos']}; "
           f"dentro da tolerância: {len(out['dentro_da_tolerancia'])}; diferentes: {len(out['diferentes'])}.**", "",
           f"Não regenerados: {', '.join(out['nao_regenerados']) or 'nenhum'}.", "",
