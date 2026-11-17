@@ -26,8 +26,10 @@ permissions:
   actions: read
 
 jobs:
-  # Detector: o PR (ou o push na main) mudou algo que afeta results/? Lista de caminhos em RELEVANTE (a mesma do antigo
-  # filtro; conferida em tests/test_confere_regeneracao.py). Sem ação de terceiros: git diff contra a base.
+  # Detector: o PR (ou o push na main) mudou algo que afeta results/? Caminhos em CAMINHOS (os do antigo filtro), como
+  # pathspec do git: casa o caminho real (sem as aspas do core.quotePath) e, com --no-renames, um arquivo movido conta pelo
+  # caminho antigo e pelo novo. Sem ação de terceiros. Na dúvida (sem base conferida), regenera. Conferido com repositórios
+  # de prova em tests/test_confere_regeneracao.py::test_detector_*.
   detecta:
     name: Regeneração (detecta mudança)
     runs-on: ubuntu-latest
@@ -40,32 +42,35 @@ jobs:
       - name: Arquivos mudados contra a base
         id: diff
         env:
-          RELEVANTE: '^(src/|tools/|config/|results/|tests/data/|environment\.yml$|pyproject\.toml$|\.github/workflows/regeneracao(_parte)?\.yml$)'
+          CAMINHOS: "src tools config results tests/data environment.yml pyproject.toml .github/workflows/regeneracao.yml .github/workflows/regeneracao_parte.yml"
           EVENTO: ${{ github.event_name }}
           ANTES: ${{ github.event.before }}
+          CABECA_PR: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
+          base=""
           if [ "$EVENTO" = "pull_request" ]; then
-            # o checkout do pull_request é o merge sintético: o primeiro pai é a base
-            base=$(git rev-parse HEAD^1)
-          elif [ -n "$ANTES" ] && [ "$ANTES" != "0000000000000000000000000000000000000000" ] && git cat-file -e "$ANTES^{commit}"; then
+            # o checkout do pull_request é o merge sintético: primeiro pai = base, segundo pai = head do PR (conferido)
+            if [ -n "$CABECA_PR" ] && [ "$(git rev-parse -q --verify 'HEAD^2' || true)" = "$CABECA_PR" ]; then
+              base=$(git rev-parse 'HEAD^1')
+            fi
+          elif [ -n "$ANTES" ] && [ "$ANTES" != "0000000000000000000000000000000000000000" ] && git cat-file -e "$ANTES^{commit}" 2>/dev/null; then
             base=$ANTES
-          else
-            base=""
           fi
           if [ -z "$base" ]; then
-            echo "Sem commit base para comparar ($EVENTO): regeneração completa por segurança." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "Sem commit base conferido ($EVENTO): regeneração completa por segurança." | tee -a "$GITHUB_STEP_SUMMARY"
             echo "relevante=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git diff --name-only "$base" HEAD > mudados.txt
-          grep -E "$RELEVANTE" mudados.txt > relevantes.txt || true
-          echo "Base $base; arquivos mudados: $(wc -l < mudados.txt); que afetam results/: $(wc -l < relevantes.txt)."
-          if [ -s relevantes.txt ]; then
-            { echo "Regeneração necessária: mudaram arquivos que afetam results/:"; sed 's/^/- /' relevantes.txt; } | tee -a "$GITHUB_STEP_SUMMARY"
+          read -ra caminhos <<< "$CAMINHOS"
+          git -c core.quotePath=false diff --no-renames --name-only "$base" HEAD > "$RUNNER_TEMP/mudados.txt"
+          git -c core.quotePath=false diff --no-renames --name-only "$base" HEAD -- "${caminhos[@]}" > "$RUNNER_TEMP/relevantes.txt"
+          echo "Base $base; arquivos mudados: $(wc -l < "$RUNNER_TEMP/mudados.txt"); que afetam results/: $(wc -l < "$RUNNER_TEMP/relevantes.txt")."
+          if [ -s "$RUNNER_TEMP/relevantes.txt" ]; then
+            { echo "Regeneração necessária: mudaram arquivos que afetam results/:"; sed 's/^/- /' "$RUNNER_TEMP/relevantes.txt"; } | tee -a "$GITHUB_STEP_SUMMARY"
             echo "relevante=true" >> "$GITHUB_OUTPUT"
           else
-            { echo "Regeneração dispensada: nenhum arquivo mudado afeta results/ (padrão: $RELEVANTE). Mudados:"; sed 's/^/- /' mudados.txt; } | tee -a "$GITHUB_STEP_SUMMARY"
+            { echo "Regeneração dispensada: nenhum arquivo mudado está em $CAMINHOS. Mudados:"; sed 's/^/- /' "$RUNNER_TEMP/mudados.txt"; } | tee -a "$GITHUB_STEP_SUMMARY"
             echo "relevante=false" >> "$GITHUB_OUTPUT"
           fi
 

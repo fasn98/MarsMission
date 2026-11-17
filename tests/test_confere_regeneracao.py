@@ -214,22 +214,141 @@ def test_logs_das_entradas_com_ambiente(cr, tmp_path):
     assert log == [{"ferramenta": "t", "rodou": True}] and amb == {"base": {"cpu": "x"}}
 
 
-def test_detector_de_mudanca_relevante(cr):
-    """Sem filtro de caminhos no gatilho (decisão do Fabio, 2026-11-17): o job "detecta" decide se a regeneração roda, e
-    só a base depende dele diretamente (as demais partes herdam o pulo). O padrão é o do antigo filtro."""
-    import re
+def _wf(cr):
     import yaml
-    d = yaml.safe_load((cr.RAIZ / ".github/workflows/regeneracao.yml").read_text(encoding="utf-8"))
-    gatilhos = d[True]   # "on" vira True no YAML 1.1
-    assert all("paths" not in (g or {}) and "paths-ignore" not in (g or {}) for g in gatilhos.values())
+    return yaml.safe_load((cr.RAIZ / ".github/workflows/regeneracao.yml").read_text(encoding="utf-8"))
+
+
+def test_detector_de_mudanca_relevante(cr):
+    """Sem filtro de caminhos no gatilho (decisão do Fabio, 2026-11-17): o job "detecta" decide se a regeneração roda; só a
+    base depende dele (as demais partes herdam o pulo), e o portão o lê. Os caminhos são os do antigo filtro."""
+    d = _wf(cr)
+    assert all("paths" not in (g or {}) and "paths-ignore" not in (g or {}) for g in d[True].values())   # "on" → True
     jobs = d["jobs"]
     assert jobs["base"]["needs"] == ["detecta"] and jobs["base"]["if"] == "needs.detecta.outputs.relevante == 'true'"
-    assert "detecta" in jobs["portao"]["needs"]
-    pad = re.compile(next(s for s in jobs["detecta"]["steps"] if s.get("id") == "diff")["env"]["RELEVANTE"])
-    for p in ("src/orbital/foguete.py", "tools/subida_mav.py", "config/premissas.yaml", "results/etapa3.3/orbitador_eletrico.yaml",
-              "tests/data/horizons/terra.txt", "environment.yml", "pyproject.toml", ".github/workflows/regeneracao.yml",
-              ".github/workflows/regeneracao_parte.yml"):
-        assert pad.search(p), p
-    for p in ("docs/painel.md", "README.md", "CLAUDE.md", "tests/test_cad.py", ".github/workflows/ci.yml",
-              "environment.yml.bak", "docs/tools/x.md", "pyproject.toml~"):
-        assert not pad.search(p), p
+    assert [n for n, j in jobs.items() if "detecta" in j.get("needs", [])] == ["base", "portao"]
+    passo = next(s for s in jobs["detecta"]["steps"] if s.get("id") == "diff")
+    assert passo["env"]["CAMINHOS"].split() == ["src", "tools", "config", "results", "tests/data", "environment.yml", "pyproject.toml",
+                                                ".github/workflows/regeneracao.yml", ".github/workflows/regeneracao_parte.yml"]
+
+
+def _sem_git(env: dict) -> dict:
+    """Ambiente sem GIT_* (no hook de pre-commit vêm GIT_DIR e GIT_INDEX_FILE, que apontariam o git dos repositórios de
+    prova para o repositório de verdade)."""
+    return {k: v for k, v in env.items() if not k.startswith("GIT_")}
+
+
+def _roda_detector(cr, repo, env):
+    """Roda o passo do detector (o script do workflow) num repositório de prova; devolve a saída "relevante"."""
+    import os
+    import subprocess
+    passo = next(s for s in _wf(cr)["jobs"]["detecta"]["steps"] if s.get("id") == "diff")
+    saida, resumo, tmp = repo.parent / "_saida", repo.parent / "_resumo", repo.parent / "_tmp"   # fora do repositório
+    tmp.mkdir(exist_ok=True)
+    saida.write_text("")
+    fixos = {k: v for k, v in passo["env"].items() if "${{" not in v}   # CAMINHOS; os de evento vêm de env
+    amb = {**_sem_git(dict(os.environ)), **fixos, **env, "GITHUB_OUTPUT": str(saida), "GITHUB_STEP_SUMMARY": str(resumo), "RUNNER_TEMP": str(tmp)}
+    subprocess.run(["bash", "-c", passo["run"]], cwd=repo, env=amb, check=True, capture_output=True)
+    linhas = [x for x in saida.read_text(encoding="utf-8").splitlines() if x.startswith("relevante=")]
+    assert len(linhas) == 1
+    return linhas[0].split("=", 1)[1]
+
+
+def _git(repo, *a):
+    import os
+    import subprocess
+    return subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", *a], cwd=repo, check=True,
+                          capture_output=True, text=True, env=_sem_git(dict(os.environ))).stdout.strip()
+
+
+@pytest.fixture
+def repo_prova(tmp_path):
+    """Repositório com a main (results/foo.md, docs/a.md) e uma função que cria um PR e o merge sintético do GitHub."""
+    r = tmp_path / "repo"
+    r.mkdir()
+    _git(r, "init", "-q", "-b", "main")
+    assert _git(r, "rev-parse", "--show-toplevel") == str(r.resolve())   # o git dos testes age só no repositório de prova
+    (r / "results").mkdir()
+    (r / "docs").mkdir()
+    (r / "results" / "foo.md").write_text("\n".join(map(str, range(50))))
+    (r / "docs" / "a.md").write_text("a")
+    _git(r, "add", "-A")
+    _git(r, "commit", "-qm", "base")
+
+    n = [0]
+
+    def pr(mudar):
+        """Cria um branch a partir da main com a mudança e deixa o HEAD no merge sintético (pais: main, head do PR)."""
+        n[0] += 1
+        _git(r, "checkout", "-q", "-b", f"pr{n[0]}", "main")
+        mudar(r)
+        _git(r, "add", "-A")
+        _git(r, "commit", "-qm", "pr")
+        cabeca = _git(r, "rev-parse", "HEAD")
+        _git(r, "checkout", "-q", "--detach", "main")
+        _git(r, "merge", "-q", "--no-ff", "-m", "merge sintético", f"pr{n[0]}")
+        return cabeca
+    return r, pr
+
+
+def test_detector_so_documentacao(cr, repo_prova):
+    r, pr = repo_prova
+    cabeca = pr(lambda r: (r / "docs" / "a.md").write_text("b"))
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": cabeca, "ANTES": ""}) == "false"
+
+
+def test_detector_ferramenta_renomeacao_e_acento(cr, repo_prova):
+    """Um arquivo de results/ movido para docs/ (o diff com renomeação só mostraria docs/) e um caminho com acento (que o
+    core.quotePath poria entre aspas) contam como relevantes."""
+    r, pr = repo_prova
+
+    def mover(r):
+        (r / "results" / "foo.md").rename(r / "docs" / "foo.md")
+    cabeca = pr(mover)
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": cabeca, "ANTES": ""}) == "true"
+
+    def acento(r):
+        (r / "config").mkdir()
+        (r / "config" / "órbita.yaml").write_text("x")
+    cabeca = pr(acento)
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": cabeca, "ANTES": ""}) == "true"
+
+
+def test_detector_falha_fechada(cr, repo_prova):
+    """Sem base conferida, regenera: head do PR que não é o segundo pai, push sem before, before inexistente."""
+    r, pr = repo_prova
+    pr(lambda r: (r / "docs" / "a.md").write_text("b"))
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": "0" * 40, "ANTES": ""}) == "true"
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": "", "ANTES": ""}) == "true"
+    assert _roda_detector(cr, r, {"EVENTO": "push", "CABECA_PR": "", "ANTES": "0" * 40}) == "true"
+    assert _roda_detector(cr, r, {"EVENTO": "push", "CABECA_PR": "", "ANTES": "1" * 40}) == "true"
+    # push com before conhecido e só documentação: dispensa
+    assert _roda_detector(cr, r, {"EVENTO": "push", "CABECA_PR": "", "ANTES": _git(r, "rev-parse", "HEAD^1")}) == "false"
+
+
+@pytest.mark.parametrize("detecta, relevante, resultados, passa", [
+    ("success", "false", {}, True),                                  # nada relevante: tudo pulado
+    ("success", "false", {"base": "success"}, False),                # nada relevante, mas uma parte rodou
+    ("success", "true", {}, True),                                   # regeneração completa com sucesso
+    ("success", "true", {"inerte_solido": "skipped"}, False),        # pulado com mudança relevante
+    ("success", "true", {"base": "failure"}, False),
+    ("success", "true", {"regeneracao": "cancelled"}, False),
+    ("failure", None, {}, False),                                    # detector falhou
+    ("cancelled", None, {}, False),
+    ("success", None, {}, False),                                    # saída do detector ausente
+])
+def test_portao(cr, tmp_path, detecta, relevante, resultados, passa):
+    """O script do portão: pulado só conta como sucesso quando o detector disse que nada relevante mudou."""
+    import json
+    import os
+    import shutil
+    import subprocess
+    if not shutil.which("jq"):
+        pytest.skip("jq ausente nesta máquina")
+    passo = next(s for s in _wf(cr)["jobs"]["portao"]["steps"] if "NEEDS" in s.get("env", {}))
+    padrao = "success" if relevante == "true" else "skipped"
+    needs = {"detecta": {"result": detecta, "outputs": {} if relevante is None else {"relevante": relevante}}}
+    needs |= {j: {"result": resultados.get(j, padrao), "outputs": {}} for j in _wf(cr)["jobs"]["portao"]["needs"] if j != "detecta"}
+    r = subprocess.run(["bash", "-c", passo["run"]], env={**os.environ, "NEEDS": json.dumps(needs),
+                       "GITHUB_STEP_SUMMARY": str(tmp_path / "resumo")}, capture_output=True, text=True)
+    assert (r.returncode == 0) == passa, r.stdout
