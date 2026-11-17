@@ -358,7 +358,7 @@ def regenerar(d: Path, rastreio: Path | None = None, parte: dict | None = None):
             n[0] += 1
             pre = [str(RAIZ / "tools" / "rastreio_es.py"), str(rastreio / f"{n[0]:03d}.json")]
         t0 = time.perf_counter()
-        r = subprocess.run([sys.executable, *pre, *cmd], cwd=d, capture_output=True, text=True)
+        r = subprocess.run([sys.executable, *pre, *cmd], cwd=d, capture_output=True, text=True, env=_env_git())   # o git das ferramentas (confere_2033) também
         if r.returncode:
             raise RuntimeError(f"{' '.join(cmd)} falhou:\n{r.stderr[-3000:]}")
         log.append({"ferramenta": " ".join(cmd), "rodou": True, "segundos": round(time.perf_counter() - t0, 1)})

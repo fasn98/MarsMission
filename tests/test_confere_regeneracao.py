@@ -129,7 +129,7 @@ def test_p039_relativo_piso_e_falha(cr, caso, a, b, passa):
     assert cr._dentro(a, b, rtol, atol) is passa
 
 
-def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr):
+def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr, repo_prova, monkeypatch):
     """O relatório lista todas as dependências do pyproject.toml (inclusive o pillow), o Python, a CPU, o sistema e o commit."""
     import tomllib
 
@@ -137,7 +137,10 @@ def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr):
     reqs = proj["dependencies"] + [r for extra in proj["optional-dependencies"].values() for r in extra]
     nomes = {r.split(";")[0].split("[")[0].split("=")[0].split(">")[0].split("<")[0].strip().lower() for r in reqs}
     assert set(cr.pacotes()) == nomes and {"pillow", "streamlit", "pandas", "pytest"} <= nomes
-    amb = cr.ambiente()   # o git de ambiente() é conferido em test_ambiente_ignora_git_do_hook, num repositório de prova
+    monkeypatch.setattr(cr, "RAIZ", repo_prova[0])   # o git de ambiente() roda no repositório de prova (regra 9)
+    monkeypatch.delenv("GITHUB_EVENT_PATH", raising=False)
+    amb = cr.ambiente()
+    assert amb["commit"] == _git(repo_prova[0], "rev-parse", "HEAD")
     assert list(amb)[0] == "python" and list(amb)[-1] == "alteracoes_nao_commitadas"
     assert {"cpu", "sistema", "commit"} <= set(amb) and amb["pillow"] and amb["cpu"] and amb["sistema"]
     if amb["commit"] is not None:   # com git disponível, o commit é o SHA do HEAD
@@ -369,6 +372,7 @@ def test_ambiente_ignora_git_do_hook(cr, repo_prova, monkeypatch, tmp_path):
     isca = tmp_path / "isca"
     isca.mkdir()
     _git(isca, "init", "-q")
+    assert _git(isca, "rev-parse", "--show-toplevel") == str(isca.resolve())
     _git(isca, "commit", "-q", "--allow-empty", "-m", "isca")
     antes = (_git(isca, "rev-parse", "HEAD"), sorted(p.name for p in (isca / ".git").iterdir()))
     monkeypatch.setattr(cr, "RAIZ", r)
