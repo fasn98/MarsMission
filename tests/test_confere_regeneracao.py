@@ -164,7 +164,7 @@ def test_partes_da_regeneracao_paralela(cr):
     assert set(wf["portao"]["needs"]) == set(wf) - {"portao"} and wf["portao"]["if"] == "always()"
     for nome, p in ps.items():
         j = por_parte[nome]
-        assert set(j.get("needs", [])) == set(p["depende_de"])
+        assert set(j.get("needs", [])) - {"detecta"} == set(p["depende_de"])   # detecta: test_detector_de_mudanca_relevante
         assert set(j["with"].get("entradas", "").split()) == set(p["depende_de"])
 
 
@@ -212,3 +212,24 @@ def test_logs_das_entradas_com_ambiente(cr, tmp_path):
     (tmp_path / "a" / "_log" / "base.json").write_text(json.dumps({"ambiente": {"cpu": "x"}, "log": [{"ferramenta": "t", "rodou": True}]}))
     log, amb = cr.logs_das_entradas([tmp_path / "a", tmp_path / "vazia"])
     assert log == [{"ferramenta": "t", "rodou": True}] and amb == {"base": {"cpu": "x"}}
+
+
+def test_detector_de_mudanca_relevante(cr):
+    """Sem filtro de caminhos no gatilho (decisão do Fabio, 2026-11-17): o job "detecta" decide se a regeneração roda, e
+    só a base depende dele diretamente (as demais partes herdam o pulo). O padrão é o do antigo filtro."""
+    import re
+    import yaml
+    d = yaml.safe_load((cr.RAIZ / ".github/workflows/regeneracao.yml").read_text(encoding="utf-8"))
+    gatilhos = d[True]   # "on" vira True no YAML 1.1
+    assert all("paths" not in (g or {}) and "paths-ignore" not in (g or {}) for g in gatilhos.values())
+    jobs = d["jobs"]
+    assert jobs["base"]["needs"] == ["detecta"] and jobs["base"]["if"] == "needs.detecta.outputs.relevante == 'true'"
+    assert "detecta" in jobs["portao"]["needs"]
+    pad = re.compile(next(s for s in jobs["detecta"]["steps"] if s.get("id") == "diff")["env"]["RELEVANTE"])
+    for p in ("src/orbital/foguete.py", "tools/subida_mav.py", "config/premissas.yaml", "results/etapa3.3/orbitador_eletrico.yaml",
+              "tests/data/horizons/terra.txt", "environment.yml", "pyproject.toml", ".github/workflows/regeneracao.yml",
+              ".github/workflows/regeneracao_parte.yml"):
+        assert pad.search(p), p
+    for p in ("docs/painel.md", "README.md", "CLAUDE.md", "tests/test_cad.py", ".github/workflows/ci.yml",
+              "environment.yml.bak", "docs/tools/x.md", "pyproject.toml~"):
+        assert not pad.search(p), p
