@@ -137,7 +137,7 @@ def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr):
     reqs = proj["dependencies"] + [r for extra in proj["optional-dependencies"].values() for r in extra]
     nomes = {r.split(";")[0].split("[")[0].split("=")[0].split(">")[0].split("<")[0].strip().lower() for r in reqs}
     assert set(cr.pacotes()) == nomes and {"pillow", "streamlit", "pandas", "pytest"} <= nomes
-    amb = cr.ambiente()
+    amb = cr.ambiente()   # o git de ambiente() é conferido em test_ambiente_ignora_git_do_hook, num repositório de prova
     assert list(amb)[0] == "python" and list(amb)[-1] == "alteracoes_nao_commitadas"
     assert {"cpu", "sistema", "commit"} <= set(amb) and amb["pillow"] and amb["cpu"] and amb["sistema"]
     if amb["commit"] is not None:   # com git disponível, o commit é o SHA do HEAD
@@ -358,3 +358,23 @@ def test_portao(cr, tmp_path, detecta, relevante, resultados, passa):
     r = subprocess.run(["bash", "-c", passo["run"]], env={**os.environ, "NEEDS": json.dumps(needs),
                        "GITHUB_STEP_SUMMARY": str(tmp_path / "resumo")}, capture_output=True, text=True)
     assert (r.returncode == 0) == passa, r.stdout
+
+
+def test_ambiente_ignora_git_do_hook(cr, repo_prova, monkeypatch, tmp_path):
+    """ambiente() descreve o repositório da ferramenta mesmo com GIT_DIR e GIT_INDEX_FILE de um hook no ambiente (regra 9):
+    roda num repositório de prova, com as variáveis apontando para uma isca, que não pode ser tocada."""
+    r, _ = repo_prova
+    isca = tmp_path / "isca"
+    isca.mkdir()
+    _git(isca, "init", "-q")
+    _git(isca, "commit", "-q", "--allow-empty", "-m", "isca")
+    antes = (_git(isca, "rev-parse", "HEAD"), sorted(p.name for p in (isca / ".git").iterdir()))
+    monkeypatch.setattr(cr, "RAIZ", r)
+    monkeypatch.delenv("GITHUB_EVENT_PATH", raising=False)
+    monkeypatch.setenv("GIT_DIR", str(isca / ".git"))
+    monkeypatch.setenv("GIT_INDEX_FILE", str(isca / ".git" / "index_do_hook"))
+    amb = cr.ambiente()
+    monkeypatch.delenv("GIT_DIR")
+    monkeypatch.delenv("GIT_INDEX_FILE")
+    assert amb["commit"] == _git(r, "rev-parse", "HEAD") and amb["alteracoes_nao_commitadas"] is False
+    assert (_git(isca, "rev-parse", "HEAD"), sorted(p.name for p in (isca / ".git").iterdir())) == antes
