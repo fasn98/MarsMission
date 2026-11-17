@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import numpy as np
@@ -128,7 +129,7 @@ def test_p039_relativo_piso_e_falha(cr, caso, a, b, passa):
     assert cr._dentro(a, b, rtol, atol) is passa
 
 
-def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr):
+def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr, repo_prova, monkeypatch):
     """O relatório lista todas as dependências do pyproject.toml (inclusive o pillow), o Python, a CPU, o sistema e o commit."""
     import tomllib
 
@@ -136,7 +137,10 @@ def test_ambiente_registra_pacotes_do_pyproject_cpu_sistema_e_commit(cr):
     reqs = proj["dependencies"] + [r for extra in proj["optional-dependencies"].values() for r in extra]
     nomes = {r.split(";")[0].split("[")[0].split("=")[0].split(">")[0].split("<")[0].strip().lower() for r in reqs}
     assert set(cr.pacotes()) == nomes and {"pillow", "streamlit", "pandas", "pytest"} <= nomes
+    monkeypatch.setattr(cr, "RAIZ", repo_prova[0])   # o git de ambiente() roda no repositório de prova (regra 9)
+    monkeypatch.delenv("GITHUB_EVENT_PATH", raising=False)
     amb = cr.ambiente()
+    assert amb["commit"] == _git(repo_prova[0], "rev-parse", "HEAD")
     assert list(amb)[0] == "python" and list(amb)[-1] == "alteracoes_nao_commitadas"
     assert {"cpu", "sistema", "commit"} <= set(amb) and amb["pillow"] and amb["cpu"] and amb["sistema"]
     if amb["commit"] is not None:   # com git disponível, o commit é o SHA do HEAD
@@ -164,7 +168,7 @@ def test_partes_da_regeneracao_paralela(cr):
     assert set(wf["portao"]["needs"]) == set(wf) - {"portao"} and wf["portao"]["if"] == "always()"
     for nome, p in ps.items():
         j = por_parte[nome]
-        assert set(j.get("needs", [])) == set(p["depende_de"])
+        assert set(j.get("needs", [])) - {"detecta"} == set(p["depende_de"])   # detecta: test_detector_de_mudanca_relevante
         assert set(j["with"].get("entradas", "").split()) == set(p["depende_de"])
 
 
@@ -212,3 +216,171 @@ def test_logs_das_entradas_com_ambiente(cr, tmp_path):
     (tmp_path / "a" / "_log" / "base.json").write_text(json.dumps({"ambiente": {"cpu": "x"}, "log": [{"ferramenta": "t", "rodou": True}]}))
     log, amb = cr.logs_das_entradas([tmp_path / "a", tmp_path / "vazia"])
     assert log == [{"ferramenta": "t", "rodou": True}] and amb == {"base": {"cpu": "x"}}
+
+
+def _wf(cr):
+    import yaml
+    return yaml.safe_load((cr.RAIZ / ".github/workflows/regeneracao.yml").read_text(encoding="utf-8"))
+
+
+def test_detector_de_mudanca_relevante(cr):
+    """Sem filtro de caminhos no gatilho (decisão do Fabio, 2026-11-17): o job "detecta" decide se a regeneração roda; só a
+    base depende dele (as demais partes herdam o pulo), e o portão o lê. Os caminhos são os do antigo filtro."""
+    d = _wf(cr)
+    assert all("paths" not in (g or {}) and "paths-ignore" not in (g or {}) for g in d[True].values())   # "on" → True
+    jobs = d["jobs"]
+    assert jobs["base"]["needs"] == ["detecta"] and jobs["base"]["if"] == "needs.detecta.outputs.relevante == 'true'"
+    assert [n for n, j in jobs.items() if "detecta" in j.get("needs", [])] == ["base", "portao"]
+    passo = next(s for s in jobs["detecta"]["steps"] if s.get("id") == "diff")
+    assert passo["env"]["CAMINHOS"].split() == ["src", "tools", "config", "results", "tests/data", "tests/test_ephemeris.py", "cad/featurescript", "environment.yml", "pyproject.toml",
+                                                ".github/workflows/regeneracao.yml", ".github/workflows/regeneracao_parte.yml"]
+    # quem lê o modelo de FeatureScript para gerar results/ (decisão do Fabio, 2026-11-17)
+    for f in ("tools/cad_parametros.py", "tools/encaixe_coifas.py"):
+        assert 'RAIZ / "cad" / "featurescript"' in (cr.RAIZ / f).read_text(encoding="utf-8"), f
+    # tools/baricentro_marte.py (FASE_1) importa de tests/test_ephemeris.py até a issue #69 (decisão do Fabio, 2026-11-17)
+    assert "from test_ephemeris import" in (cr.RAIZ / "tools/baricentro_marte.py").read_text(encoding="utf-8")
+
+
+def _sem_git(env: dict) -> dict:
+    """Ambiente sem GIT_* (no hook de pre-commit vêm GIT_DIR e GIT_INDEX_FILE, que apontariam o git dos repositórios de
+    prova para o repositório de verdade), e sem a configuração global e de sistema (hooks, gpgsign, templateDir)."""
+    return {**{k: v for k, v in env.items() if not k.startswith("GIT_")}, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1"}
+
+
+def _roda_detector(cr, repo, env):
+    """Roda o passo do detector (o script do workflow) num repositório de prova; devolve a saída "relevante"."""
+    import os
+    import subprocess
+    passo = next(s for s in _wf(cr)["jobs"]["detecta"]["steps"] if s.get("id") == "diff")
+    saida, resumo, tmp = repo.parent / "_saida", repo.parent / "_resumo", repo.parent / "_tmp"   # fora do repositório
+    tmp.mkdir(exist_ok=True)
+    saida.write_text("")
+    fixos = {k: v for k, v in passo["env"].items() if "${{" not in v}   # CAMINHOS; os de evento vêm de env
+    amb = {**_sem_git(dict(os.environ)), **fixos, **env, "GITHUB_OUTPUT": str(saida), "GITHUB_STEP_SUMMARY": str(resumo), "RUNNER_TEMP": str(tmp)}
+    subprocess.run(["bash", "-c", passo["run"]], cwd=repo, env=amb, check=True, capture_output=True)
+    linhas = [x for x in saida.read_text(encoding="utf-8").splitlines() if x.startswith("relevante=")]
+    assert len(linhas) == 1
+    return linhas[0].split("=", 1)[1]
+
+
+def _git(repo, *a):
+    import os
+    import subprocess
+    return subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", *a], cwd=repo, check=True,
+                          capture_output=True, text=True, env=_sem_git(dict(os.environ))).stdout.strip()
+
+
+@pytest.fixture
+def repo_prova(tmp_path):
+    """Repositório com a main (results/foo.md, docs/a.md) e uma função que cria um PR e o merge sintético do GitHub."""
+    r = tmp_path / "repo"
+    r.mkdir()
+    _git(r, "init", "-q", "-b", "main")
+    assert _git(r, "rev-parse", "--show-toplevel") == str(r.resolve())   # o git dos testes age só no repositório de prova
+    (r / "results").mkdir()
+    (r / "docs").mkdir()
+    (r / "results" / "foo.md").write_text("\n".join(map(str, range(50))))
+    (r / "docs" / "a.md").write_text("a")
+    _git(r, "add", "-A")
+    _git(r, "commit", "-qm", "base")
+
+    n = [0]
+
+    def pr(mudar):
+        """Cria um branch a partir da main com a mudança e deixa o HEAD no merge sintético (pais: main, head do PR)."""
+        n[0] += 1
+        _git(r, "checkout", "-q", "-b", f"pr{n[0]}", "main")
+        mudar(r)
+        _git(r, "add", "-A")
+        _git(r, "commit", "-qm", "pr")
+        cabeca = _git(r, "rev-parse", "HEAD")
+        _git(r, "checkout", "-q", "--detach", "main")
+        _git(r, "merge", "-q", "--no-ff", "-m", "merge sintético", f"pr{n[0]}")
+        return cabeca
+    return r, pr
+
+
+def test_detector_so_documentacao(cr, repo_prova):
+    r, pr = repo_prova
+    cabeca = pr(lambda r: (r / "docs" / "a.md").write_text("b"))
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": cabeca, "ANTES": ""}) == "false"
+
+
+def test_detector_ferramenta_renomeacao_e_acento(cr, repo_prova):
+    """Um arquivo de results/ movido para docs/ (o diff com renomeação só mostraria docs/) e um caminho com acento (que o
+    core.quotePath poria entre aspas) contam como relevantes."""
+    r, pr = repo_prova
+
+    def mover(r):
+        (r / "results" / "foo.md").rename(r / "docs" / "foo.md")
+    cabeca = pr(mover)
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": cabeca, "ANTES": ""}) == "true"
+
+    def acento(r):
+        (r / "config").mkdir()
+        (r / "config" / "órbita.yaml").write_text("x")
+    cabeca = pr(acento)
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": cabeca, "ANTES": ""}) == "true"
+
+
+def test_detector_falha_fechada(cr, repo_prova):
+    """Sem base conferida, regenera: head do PR que não é o segundo pai, push sem before, before inexistente."""
+    r, pr = repo_prova
+    pr(lambda r: (r / "docs" / "a.md").write_text("b"))
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": "0" * 40, "ANTES": ""}) == "true"
+    assert _roda_detector(cr, r, {"EVENTO": "pull_request", "CABECA_PR": "", "ANTES": ""}) == "true"
+    assert _roda_detector(cr, r, {"EVENTO": "push", "CABECA_PR": "", "ANTES": "0" * 40}) == "true"
+    assert _roda_detector(cr, r, {"EVENTO": "push", "CABECA_PR": "", "ANTES": "1" * 40}) == "true"
+    # push com before conhecido e só documentação: dispensa
+    assert _roda_detector(cr, r, {"EVENTO": "push", "CABECA_PR": "", "ANTES": _git(r, "rev-parse", "HEAD^1")}) == "false"
+
+
+@pytest.mark.parametrize("detecta, relevante, resultados, passa", [
+    ("success", "false", {}, True),                                  # nada relevante: tudo pulado
+    ("success", "false", {"base": "success"}, False),                # nada relevante, mas uma parte rodou
+    ("success", "true", {}, True),                                   # regeneração completa com sucesso
+    ("success", "true", {"inerte_solido": "skipped"}, False),        # pulado com mudança relevante
+    ("success", "true", {"base": "failure"}, False),
+    ("success", "true", {"regeneracao": "cancelled"}, False),
+    ("failure", None, {}, False),                                    # detector falhou
+    ("cancelled", None, {}, False),
+    ("success", None, {}, False),                                    # saída do detector ausente
+])
+def test_portao(cr, tmp_path, detecta, relevante, resultados, passa):
+    """O script do portão: pulado só conta como sucesso quando o detector disse que nada relevante mudou."""
+    import json
+    import os
+    import shutil
+    import subprocess
+    if not shutil.which("jq"):
+        if os.environ.get("CI"):
+            pytest.fail("jq ausente no CI: o portão ficaria sem teste")
+        pytest.skip("jq ausente nesta máquina")
+    passo = next(s for s in _wf(cr)["jobs"]["portao"]["steps"] if "NEEDS" in s.get("env", {}))
+    padrao = "success" if relevante == "true" else "skipped"
+    needs = {"detecta": {"result": detecta, "outputs": {} if relevante is None else {"relevante": relevante}}}
+    needs |= {j: {"result": resultados.get(j, padrao), "outputs": {}} for j in _wf(cr)["jobs"]["portao"]["needs"] if j != "detecta"}
+    r = subprocess.run(["bash", "-c", passo["run"]], env={**os.environ, "NEEDS": json.dumps(needs),
+                       "GITHUB_STEP_SUMMARY": str(tmp_path / "resumo")}, capture_output=True, text=True)
+    assert (r.returncode == 0) == passa, r.stdout
+
+
+def test_ambiente_ignora_git_do_hook(cr, repo_prova, monkeypatch, tmp_path):
+    """ambiente() descreve o repositório da ferramenta mesmo com GIT_DIR e GIT_INDEX_FILE de um hook no ambiente (regra 9):
+    roda num repositório de prova, com as variáveis apontando para uma isca, que não pode ser tocada."""
+    r, _ = repo_prova
+    isca = tmp_path / "isca"
+    isca.mkdir()
+    _git(isca, "init", "-q")
+    assert _git(isca, "rev-parse", "--show-toplevel") == str(isca.resolve())
+    _git(isca, "commit", "-q", "--allow-empty", "-m", "isca")
+    antes = (_git(isca, "rev-parse", "HEAD"), sorted(p.name for p in (isca / ".git").iterdir()))
+    monkeypatch.setattr(cr, "RAIZ", r)
+    monkeypatch.delenv("GITHUB_EVENT_PATH", raising=False)
+    monkeypatch.setenv("GIT_DIR", str(isca / ".git"))
+    monkeypatch.setenv("GIT_INDEX_FILE", str(isca / ".git" / "index_do_hook"))
+    amb = cr.ambiente()
+    monkeypatch.delenv("GIT_DIR")
+    monkeypatch.delenv("GIT_INDEX_FILE")
+    assert amb["commit"] == _git(r, "rev-parse", "HEAD") and amb["alteracoes_nao_commitadas"] is False
+    assert (_git(isca, "rev-parse", "HEAD"), sorted(p.name for p in (isca / ".git").iterdir())) == antes

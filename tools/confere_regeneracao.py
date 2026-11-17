@@ -38,6 +38,7 @@ from __future__ import annotations
 import hashlib
 import importlib.metadata as md_
 import json
+import os
 import platform
 import re
 import shutil
@@ -205,9 +206,16 @@ def pacotes() -> list[str]:
     return list(dict.fromkeys(nomes))
 
 
+def _env_git() -> dict:
+    """Ambiente dos comandos git desta ferramenta: sem GIT_* herdadas (um hook de pre-commit traz GIT_DIR e GIT_INDEX_FILE,
+    que apontariam o git para outro repositório ou índice; CLAUDE.md, regra 9) e sem as travas opcionais (o git status não
+    regrava o índice)."""
+    return {**{k: v for k, v in os.environ.items() if not k.startswith("GIT_")}, "GIT_OPTIONAL_LOCKS": "0"}
+
+
 def _git(*args):
     try:
-        r = subprocess.run(["git", *args], cwd=RAIZ, capture_output=True, text=True)
+        r = subprocess.run(["git", *args], cwd=RAIZ, capture_output=True, text=True, env=_env_git())
     except OSError:
         return None
     return r.stdout.strip() if r.returncode == 0 else None
@@ -350,7 +358,7 @@ def regenerar(d: Path, rastreio: Path | None = None, parte: dict | None = None):
             n[0] += 1
             pre = [str(RAIZ / "tools" / "rastreio_es.py"), str(rastreio / f"{n[0]:03d}.json")]
         t0 = time.perf_counter()
-        r = subprocess.run([sys.executable, *pre, *cmd], cwd=d, capture_output=True, text=True)
+        r = subprocess.run([sys.executable, *pre, *cmd], cwd=d, capture_output=True, text=True, env=_env_git())   # o git das ferramentas (confere_2033) também
         if r.returncode:
             raise RuntimeError(f"{' '.join(cmd)} falhou:\n{r.stderr[-3000:]}")
         log.append({"ferramenta": " ".join(cmd), "rodou": True, "segundos": round(time.perf_counter() - t0, 1)})
@@ -373,8 +381,8 @@ def regenerar(d: Path, rastreio: Path | None = None, parte: dict | None = None):
         rodar(c)
     for a, t in originais.items():
         (d / a).write_text(t, encoding="utf-8")
-    subprocess.run(["git", "add", "-A"], cwd=d, check=True)
-    subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "config atual"], cwd=d, check=True)
+    subprocess.run(["git", "add", "-A"], cwd=d, check=True, env=_env_git())
+    subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "config atual"], cwd=d, check=True, env=_env_git())
     for c in FASE_ATUAL:
         if parte is None or Path(c[0]).stem in parte["ferramentas"]:
             rodar(c)
@@ -438,9 +446,9 @@ def main():
         shutil.copytree(RAIZ / "data", d / "data")
         (d / "results").mkdir()
         # confere_2033 exporta o HEAD com git archive: a cópia vira um repositório com a árvore de trabalho atual
-        subprocess.run(["git", "init", "-q"], cwd=d, check=True)
-        subprocess.run(["git", "add", "-A"], cwd=d, check=True)
-        subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True)
+        subprocess.run(["git", "init", "-q"], cwd=d, check=True, env=_env_git())
+        subprocess.run(["git", "add", "-A"], cwd=d, check=True, env=_env_git())
+        subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True, env=_env_git())
         juntar_entradas(d / "results", entradas)
         antes_parte = _arvore(d / "results")
         log_parte = regenerar(d, parte=parte)

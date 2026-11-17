@@ -32,9 +32,9 @@ def main():
         shutil.copytree(RAIZ, d, ignore=cr._ignorar)
         shutil.copytree(RAIZ / "data", d / "data")
         (d / "results").mkdir()
-        subprocess.run(["git", "init", "-q"], cwd=d, check=True)
-        subprocess.run(["git", "add", "-A"], cwd=d, check=True)
-        subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True)
+        subprocess.run(["git", "init", "-q"], cwd=d, check=True, env=cr._env_git())
+        subprocess.run(["git", "add", "-A"], cwd=d, check=True, env=cr._env_git())
+        subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True, env=cr._env_git())
         rs = Path(tmp) / "rastreio"
         rs.mkdir()
         log = cr.regenerar(d, rastreio=rs)

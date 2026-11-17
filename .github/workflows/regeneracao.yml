@@ -8,32 +8,17 @@ name: Regeneração de results/
 # "Idêntico" = dentro das tolerâncias P-039 (números) e P-040 (PNG), premissas NÃO VALIDADAS; o relatório lista as
 # diferenças abaixo do limite. Falha se algum arquivo passar do limite ou não for regenerado, ou se a regeneração gerar
 # arquivo sem versão.
-# Pedido do Fabio (2026-10-27): rodar nos PRs que alteram src/, tools/ ou config/. Também roda quando muda o que
+# Pedido do Fabio (2026-10-27): regenerar nos PRs que alteram src/, tools/ ou config/, e também quando muda o que
 # alimenta ou é o próprio resultado: results/, tests/data/ (dados publicados usados nas verificações), dependências.
+# Desde 2026-11-17 (decisão do Fabio) sem filtro de caminhos no gatilho: com "paths", um workflow pulado deixa a
+# verificação obrigatória "Pending" e bloqueia o merge ("A workflow is skipped by path filtering, branch filtering, or a
+# commit message" → "Associated checks stay in a \"Pending\" state and block merging", docs.github.com/en/pull-requests/
+# collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/troubleshooting-required-status-checks,
+# lida em 2026-11-17). O job "detecta" decide pelo git diff se a regeneração roda; o portão sempre reporta.
 on:
   push:
     branches: [main]   # também depois do merge: dois PRs que passam separados podem divergir juntos
-    paths:
-      - "src/**"
-      - "tools/**"
-      - "config/**"
-      - "results/**"
-      - "tests/data/**"
-      - "environment.yml"
-      - "pyproject.toml"
-      - ".github/workflows/regeneracao.yml"
-      - ".github/workflows/regeneracao_parte.yml"
   pull_request:
-    paths:
-      - "src/**"
-      - "tools/**"
-      - "config/**"
-      - "results/**"
-      - "tests/data/**"
-      - "environment.yml"
-      - "pyproject.toml"
-      - ".github/workflows/regeneracao.yml"
-      - ".github/workflows/regeneracao_parte.yml"
 
 # actions: read para as partes baixarem os artefatos umas das outras (gh run download, em regeneracao_parte.yml).
 permissions:
@@ -41,9 +26,61 @@ permissions:
   actions: read
 
 jobs:
+  # Detector: o PR (ou o push na main) mudou algo que afeta results/? Caminhos em CAMINHOS (os do antigo filtro, mais
+  # cad/featurescript, que tools/cad_parametros.py e tools/encaixe_coifas.py leem, e tests/test_ephemeris.py, de onde
+  # tools/baricentro_marte.py importa ler_horizons até a issue #69; decisões do Fabio, 2026-11-17), como
+  # pathspec do git: casa o caminho real (sem as aspas do core.quotePath) e, com --no-renames, um arquivo movido conta pelo
+  # caminho antigo e pelo novo. Sem ação de terceiros. Na dúvida (sem base conferida), regenera. Conferido com repositórios
+  # de prova em tests/test_confere_regeneracao.py::test_detector_*.
+  detecta:
+    name: Regeneração (detecta mudança)
+    runs-on: ubuntu-latest
+    outputs:
+      relevante: ${{ steps.diff.outputs.relevante }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Arquivos mudados contra a base
+        id: diff
+        env:
+          CAMINHOS: "src tools config results tests/data tests/test_ephemeris.py cad/featurescript environment.yml pyproject.toml .github/workflows/regeneracao.yml .github/workflows/regeneracao_parte.yml"
+          EVENTO: ${{ github.event_name }}
+          ANTES: ${{ github.event.before }}
+          CABECA_PR: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          base=""
+          if [ "$EVENTO" = "pull_request" ]; then
+            # o checkout do pull_request é o merge sintético: primeiro pai = base, segundo pai = head do PR (conferido)
+            if [ -n "$CABECA_PR" ] && [ "$(git rev-parse -q --verify 'HEAD^2' || true)" = "$CABECA_PR" ]; then
+              base=$(git rev-parse 'HEAD^1')
+            fi
+          elif [ -n "$ANTES" ] && [ "$ANTES" != "0000000000000000000000000000000000000000" ] && git cat-file -e "$ANTES^{commit}" 2>/dev/null; then
+            base=$ANTES
+          fi
+          if [ -z "$base" ]; then
+            echo "Sem commit base conferido ($EVENTO): regeneração completa por segurança." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "relevante=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          read -ra caminhos <<< "$CAMINHOS"
+          git -c core.quotePath=false diff --no-renames --name-only "$base" HEAD > "$RUNNER_TEMP/mudados.txt"
+          git -c core.quotePath=false diff --no-renames --name-only "$base" HEAD -- "${caminhos[@]}" > "$RUNNER_TEMP/relevantes.txt"
+          echo "Base $base; arquivos mudados: $(wc -l < "$RUNNER_TEMP/mudados.txt"); que afetam results/: $(wc -l < "$RUNNER_TEMP/relevantes.txt")."
+          if [ -s "$RUNNER_TEMP/relevantes.txt" ]; then
+            { echo "Regeneração necessária: mudaram arquivos que afetam results/:"; sed 's/^/- /' "$RUNNER_TEMP/relevantes.txt"; } | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "relevante=true" >> "$GITHUB_OUTPUT"
+          else
+            { echo "Regeneração dispensada: nenhum arquivo mudado está em $CAMINHOS. Mudados:"; sed 's/^/- /' "$RUNNER_TEMP/mudados.txt"; } | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "relevante=false" >> "$GITHUB_OUTPUT"
+          fi
+
   # Comparação: tools/confere_regeneracao.py compara results/ com tolerância (P-039, P-040); results/conferencia/ e os
   # arquivos results/**/diagnostico_*.md ficam fora da comparação, com só a checagem de sanidade (CLAUDE.md, regra 6).
   base:
+    needs: [detecta]
+    if: needs.detecta.outputs.relevante == 'true'
     uses: ./.github/workflows/regeneracao_parte.yml
     with: {parte: base}
   subida_mav:
@@ -70,19 +107,40 @@ jobs:
     needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido]
     uses: ./.github/workflows/regeneracao_parte.yml
     with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido"}
-  # Portão (decisão do Fabio, 2026-11-16): a verificação obrigatória da main. Roda sempre e só passa se todas as partes e
-  # a comparação terminaram com sucesso; falha, cancelamento ou job pulado reprovam (um job pulado não pode contar como
-  # verde). O nome do job é o da verificação na proteção da main: não renomear sem mudar a proteção.
+  # Portão (decisões do Fabio, 2026-11-16 e 2026-11-17): a verificação obrigatória da main. Roda sempre. Se o detector
+  # disse que nada relevante mudou, passa com as partes e a comparação puladas (e só puladas). Em qualquer outro caso, só
+  # passa se o detector e todos os jobs terminaram com sucesso: falha, cancelamento ou job pulado reprovam. O nome do job
+  # é o da verificação na proteção da main: não renomear sem mudar a proteção.
   portao:
     name: Regeneração (portão)
-    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, regeneracao]
+    needs: [detecta, base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, regeneracao]
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Conferir o resultado de todas as partes
+      # jq explícito: o Ubuntu 24.04 o traz, mas ubuntu-latest migra para o 26.04 em novembro de 2026 (github.com/actions/
+      # runner-images, lido em 2026-11-17) e não conferimos o 26.04
+      - name: jq
+        run: command -v jq || (sudo apt-get update -q && sudo apt-get install -y -q jq); jq --version
+      - name: Conferir o detector e todas as partes
         env:
           NEEDS: ${{ toJSON(needs) }}
         run: |
+          set -euo pipefail
           echo "$NEEDS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
-          ruins=$(echo "$NEEDS" | jq -r '[to_entries[] | select(.value.result != "success") | .key] | join(" ")')
-          if [ -n "$ruins" ]; then echo "Partes sem sucesso: $ruins"; exit 1; fi
+          detecta=$(echo "$NEEDS" | jq -r '.detecta.result')
+          relevante=$(echo "$NEEDS" | jq -r '.detecta.outputs.relevante // ""')
+          if [ "$detecta" != "success" ]; then
+            echo "Reprovado: o detector terminou com '$detecta'." | tee -a "$GITHUB_STEP_SUMMARY"; exit 1
+          fi
+          if [ "$relevante" = "false" ]; then
+            outros=$(echo "$NEEDS" | jq -r '[to_entries[] | select(.key != "detecta" and .value.result != "skipped") | "\(.key)=\(.value.result)"] | join(" ")')
+            if [ -n "$outros" ]; then echo "Reprovado: sem mudança relevante, mas jobs não pulados: $outros" | tee -a "$GITHUB_STEP_SUMMARY"; exit 1; fi
+            echo "Aprovado sem regenerar: nenhum arquivo mudado afeta results/ (detector); partes e comparação puladas." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [ "$relevante" != "true" ]; then
+            echo "Reprovado: saída do detector inesperada ('$relevante')." | tee -a "$GITHUB_STEP_SUMMARY"; exit 1
+          fi
+          ruins=$(echo "$NEEDS" | jq -r '[to_entries[] | select(.value.result != "success") | "\(.key)=\(.value.result)"] | join(" ")')
+          if [ -n "$ruins" ]; then echo "Reprovado: jobs sem sucesso: $ruins" | tee -a "$GITHUB_STEP_SUMMARY"; exit 1; fi
+          echo "Aprovado: regeneração completa e comparação dentro das tolerâncias." | tee -a "$GITHUB_STEP_SUMMARY"

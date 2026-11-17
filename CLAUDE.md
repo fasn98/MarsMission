@@ -4,6 +4,8 @@ Estudo conceitual (Pré-Fase A) de uma missão robótica Terra–Marte–Terra. 
 Estas regras valem para qualquer agente ou pessoa que trabalhe neste repositório. Elas têm precedência sobre regras
 genéricas.
 
+**Plano vigente:** issue #68, "Plano até a publicação (aprovado pelo Fabio em 14/11/2026)".
+
 ## Ciência e dados
 1. **Só física e fontes verificáveis.** Toda constante tem fonte primária citada no código e em `docs/fontes.md`
    (`[Fnn]`), com a citação literal e a página quando houver. Fonte secundária ou de terceiros não basta.
@@ -61,6 +63,9 @@ genéricas.
    - Nunca usar `git commit --no-verify`. Se o hook falhar, corrigir a causa.
    - Também é proibido qualquer outro meio de desativar ou contornar hooks: apontar `core.hooksPath` para outro lugar (inclusive
      `git -c core.hooksPath=...`), variáveis como `HUSKY=0`, renomear ou apagar `.git/hooks` ou `.githooks`, ou similares.
+   - Testes que executam git devem limpar todas as variáveis `GIT_*` do ambiente e conferir que estão operando no
+     repositório de teste. Nunca rodar comandos git de teste com o ambiente herdado do hook (decisão do Fabio,
+     2026-11-17).
 10. **Revisão independente antes de todo push.**
     - Um revisor separado, somente leitura, que não escreveu o código.
     - Se houver achado bloqueante, corrigir e fazer **segunda revisão**, limitada às correções, antes do push.
