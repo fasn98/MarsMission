@@ -1,4 +1,4 @@
-"""Lista as premissas de config/premissas.yaml em results/fase1/premissas.md e, só as NÃO VALIDADAS, em
+"""(Prova do portão, PR #71: comentário só; não fazer merge.) Lista as premissas de config/premissas.yaml em results/fase1/premissas.md e, só as NÃO VALIDADAS, em
 results/fase2/, results/fase3/ e results/fase4/premissas_nao_validadas.md (sem edição à mão). As listas das Fases 3 e 4
 marcam as premissas criadas nelas: as premissas são numeradas em ordem de criação; a primeira da Fase 3 é a P-041
 (Etapa 3.1), a primeira da Fase 4 é a P-050 (Etapa 4.1) e a primeira da Fase 7 é a P-078 (Etapa 7.1). Cada lista de
