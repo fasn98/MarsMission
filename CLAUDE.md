@@ -4,6 +4,8 @@ Estudo conceitual (Pré-Fase A) de uma missão robótica Terra–Marte–Terra. 
 Estas regras valem para qualquer agente ou pessoa que trabalhe neste repositório. Elas têm precedência sobre regras
 genéricas.
 
+**Plano vigente:** issue #68, "Plano até a publicação (aprovado pelo Fabio em 14/11/2026)".
+
 ## Ciência e dados
 1. **Só física e fontes verificáveis.** Toda constante tem fonte primária citada no código e em `docs/fontes.md`
    (`[Fnn]`), com a citação literal e a página quando houver. Fonte secundária ou de terceiros não basta.
