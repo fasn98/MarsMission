@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import numpy as np
@@ -234,8 +235,8 @@ def test_detector_de_mudanca_relevante(cr):
 
 def _sem_git(env: dict) -> dict:
     """Ambiente sem GIT_* (no hook de pre-commit vêm GIT_DIR e GIT_INDEX_FILE, que apontariam o git dos repositórios de
-    prova para o repositório de verdade)."""
-    return {k: v for k, v in env.items() if not k.startswith("GIT_")}
+    prova para o repositório de verdade), e sem a configuração global e de sistema (hooks, gpgsign, templateDir)."""
+    return {**{k: v for k, v in env.items() if not k.startswith("GIT_")}, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1"}
 
 
 def _roda_detector(cr, repo, env):
@@ -344,6 +345,8 @@ def test_portao(cr, tmp_path, detecta, relevante, resultados, passa):
     import shutil
     import subprocess
     if not shutil.which("jq"):
+        if os.environ.get("CI"):
+            pytest.fail("jq ausente no CI: o portão ficaria sem teste")
         pytest.skip("jq ausente nesta máquina")
     passo = next(s for s in _wf(cr)["jobs"]["portao"]["steps"] if "NEEDS" in s.get("env", {}))
     padrao = "success" if relevante == "true" else "skipped"
