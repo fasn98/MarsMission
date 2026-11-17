@@ -150,3 +150,65 @@ def test_linha_de_ambiente_do_markdown(cr):
                                    "(árvore de trabalho com alterações não commitadas)")
     amb.update(commit="a" * 40, alteracoes_nao_commitadas=False)
     assert cr.ambiente_md(amb).endswith(f"commit {'a' * 40}")
+
+
+def test_partes_da_regeneracao_paralela(cr):
+    """Issue #61: as partes cobrem FASE_ATUAL uma vez, e o workflow declara, para cada parte, as mesmas dependências de
+    tools/regeneracao_partes.yaml (needs e entradas)."""
+    import yaml
+    ps = cr.partes()
+    wf = yaml.safe_load((cr.RAIZ / ".github/workflows/regeneracao.yml").read_text(encoding="utf-8"))["jobs"]
+    por_parte = {j["with"]["parte"]: j for j in wf.values() if "with" in j}
+    assert set(por_parte) == set(ps)
+    # portão (verificação obrigatória da main): depende de todos os jobs de parte e roda sempre
+    assert set(wf["portao"]["needs"]) == set(wf) - {"portao"} and wf["portao"]["if"] == "always()"
+    for nome, p in ps.items():
+        j = por_parte[nome]
+        assert set(j.get("needs", [])) == set(p["depende_de"])
+        assert set(j["with"].get("entradas", "").split()) == set(p["depende_de"])
+
+
+def test_juntar_entradas_recusa_conflito(cr, tmp_path):
+    """Duas partes que entregam o mesmo arquivo com conteúdo diferente são erro."""
+    a, b, d = tmp_path / "a", tmp_path / "b", tmp_path / "d"
+    for x, t in ((a, "1"), (b, "2")):
+        (x / "etapa").mkdir(parents=True)
+        (x / "etapa" / "r.yaml").write_text(t)
+    d.mkdir()
+    with pytest.raises(RuntimeError):
+        cr.juntar_entradas(d, [a, b])
+
+
+def test_partes_conferem_com_o_mapa(cr):
+    """Issue #61: pelo mapa de dependências (results/conferencia/mapa_regeneracao.yaml), toda ferramenta de que uma parte
+    depende está nela ou numa parte declarada em depende_de (cujos resultados ela baixa), e nenhum arquivo é gravado por
+    duas partes (o rastreio não registra a leitura de um arquivo que a própria ferramenta regrava)."""
+    import yaml
+    ps = cr.partes()
+    mapa = yaml.safe_load((cr.RAIZ / "results/conferencia/mapa_regeneracao.yaml").read_text(encoding="utf-8"))["ferramentas"]
+    parte_de = {f: n for n, p in ps.items() for f in p["ferramentas"]}
+    stem = [Path(n["ferramenta"].split()[0]).stem for n in mapa]
+    # o mapa precisa ser da ordem atual da regeneração (senão uma ferramenta nova cairia na base sem conferência)
+    assert [n["ferramenta"] for n in mapa] == [" ".join(c) for c in cr.FASE_1 + cr.FASE_850 + cr.FASE_ATUAL]
+    p_de = [parte_de.get(s, "base") for s in stem]   # fora de FASE_ATUAL: fases históricas, na base
+    gravado_por = {}
+    for i, n in enumerate(mapa):
+        for j in n["depende_de"]:
+            assert p_de[j] == p_de[i] or p_de[j] in ps[p_de[i]]["depende_de"], (stem[i], stem[j])
+        for f in n["gravados"]:
+            assert gravado_por.setdefault(f, p_de[i]) == p_de[i], f
+
+
+def test_diagnostico_nao_finito(cr):
+    for s in ("nan", "NaN", "-inf", "−inf", "+Inf", "infinity", "∞", "diferença: nan."):
+        assert cr.NAO_FINITO.search(s), s
+    for s in ("Ainf", "1inf", "informação", "nano", "finança", "1,5e-09"):
+        assert not cr.NAO_FINITO.search(s), s
+
+
+def test_logs_das_entradas_com_ambiente(cr, tmp_path):
+    import json
+    (tmp_path / "a" / "_log").mkdir(parents=True)
+    (tmp_path / "a" / "_log" / "base.json").write_text(json.dumps({"ambiente": {"cpu": "x"}, "log": [{"ferramenta": "t", "rodou": True}]}))
+    log, amb = cr.logs_das_entradas([tmp_path / "a", tmp_path / "vazia"])
+    assert log == [{"ferramenta": "t", "rodou": True}] and amb == {"base": {"cpu": "x"}}

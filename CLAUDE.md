@@ -41,6 +41,8 @@ genéricas.
      soluções não únicas, mínimos locais e grandezas nulas por construção vão para arquivos de diagnóstico próprios
      (`results/<etapa>/diagnostico_<ferramenta>.md`), fora da comparação; os arquivos comparados citam o diagnóstico, sem
      os números (decisões do Fabio, 2026-11-13 e 2026-11-14).
+   - Os diagnósticos têm só uma checagem de sanidade no CI, sem comparar valores: cada `diagnostico_*.md` versionado é
+     regenerado, não está vazio e não tem número não finito (NaN ou inf) (decisão do Fabio, 2026-11-14).
    - A verificação é bloqueante, e cada relatório lista as diferenças abaixo do limite, com o tamanho.
    - Quando uma mudança altera um resultado de etapa anterior, regenerar e registrar errata no mesmo PR.
 

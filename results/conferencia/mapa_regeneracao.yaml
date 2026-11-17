@@ -1,0 +1,869 @@
+gerado_por: tools/mapa_regeneracao.py
+data: '2026-11-14'
+maquina: x86_64
+total_sequencial_s: 9761.7
+caminho_critico_s: 6586.200000000001
+caminho_critico:
+- tools/missoes.py
+- tools/varredura_encontro.py
+- tools/mav_propulsao.py
+- tools/redimensiona.py
+- tools/plataformas.py
+- tools/queima_finita.py
+- tools/bocais_estagio1.py
+- tools/rotas_mav.py
+- tools/missao_familia1.py
+- tools/mav_familia1.py
+- tools/ruido_subida.py
+- tools/inerte_solido.py
+- tools/opcoes_arquitetura.py
+nao_rodadas: []
+ferramentas:
+- ordem: 0
+  ferramenta: tools/baricentro_marte.py
+  segundos: 1.7
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa1.1/baricentro_marte.yaml
+- ordem: 1
+  ferramenta: tools/porkchop.py terra_marte
+  segundos: 23.5
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa1.2/minimos_terra_marte.yaml
+  - results/etapa1.2/porkchop_terra_marte_2028.png
+  - results/etapa1.2/porkchop_terra_marte_2031.png
+  - results/etapa1.2/porkchop_terra_marte_2033.png
+  - results/etapa1.2/porkchop_terra_marte_2035.png
+- ordem: 2
+  ferramenta: tools/porkchop.py marte_terra
+  segundos: 43.3
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa1.2/minimos_marte_terra.yaml
+  - results/etapa1.2/porkchop_marte_terra_2030.png
+  - results/etapa1.2/porkchop_marte_terra_2032.png
+  - results/etapa1.2/porkchop_marte_terra_2035.png
+  - results/etapa1.2/porkchop_marte_terra_2037.png
+  - results/etapa1.2/porkchop_marte_terra_2039.png
+- ordem: 3
+  ferramenta: tools/verifica_burke2010.py
+  segundos: 24.6
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa1.2/verificacao_burke2010.md
+  - results/etapa1.2/verificacao_burke2010.yaml
+- ordem: 4
+  ferramenta: tools/verifica_jpl8243.py
+  segundos: 156.5
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa1.2/verificacao_jpl8243.md
+  - results/etapa1.2/verificacao_jpl8243.yaml
+- ordem: 5
+  ferramenta: tools/efeito_efemeride.py
+  segundos: 0.3
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa1.2/efeito_efemeride_de200.yaml
+- ordem: 6
+  ferramenta: tools/missoes.py
+  segundos: 114.3
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa1.3/missoes.md
+  - results/etapa1.3/missoes.yaml
+- ordem: 7
+  ferramenta: tools/compara_dra5.py
+  segundos: 0.3
+  depende_de:
+  - 6
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  gravados:
+  - results/etapa1.3/comparacao_dra5.md
+- ordem: 8
+  ferramenta: tools/grafico_missoes.py
+  segundos: 0.8
+  depende_de:
+  - 6
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  gravados:
+  - results/etapa1.3/dv_x_duracao.png
+- ordem: 9
+  ferramenta: tools/lista_premissas.py
+  segundos: 0.1
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/fase1/premissas.md
+  - results/fase2/premissas_nao_validadas.md
+  - results/fase3/premissas_nao_validadas.md
+  - results/fase4/premissas_nao_validadas.md
+- ordem: 10
+  ferramenta: tools/dimensionamento.py
+  segundos: 10.5
+  depende_de:
+  - 6
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  gravados:
+  - results/etapa1.4/dimensionamento.md
+  - results/etapa1.4/dimensionamento.yaml
+  - results/etapa1.4/orcamento_dv.md
+- ordem: 11
+  ferramenta: tools/compara_msr.py
+  segundos: 0.7
+  depende_de:
+  - 10
+  lidos:
+  - results/etapa1.4/dimensionamento.yaml
+  gravados:
+  - results/etapa1.4/comparacao_msr.md
+- ordem: 12
+  ferramenta: tools/superficie.py
+  segundos: 2.1
+  depende_de:
+  - 6
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  gravados:
+  - results/etapa2.1/arquiteturas.md
+  - results/etapa2.1/arquiteturas.yaml
+- ordem: 13
+  ferramenta: tools/varredura_encontro.py
+  segundos: 34.5
+  depende_de:
+  - 6
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  gravados:
+  - results/etapa2.1/varredura_encontro_rp250.md
+  - results/etapa2.1/varredura_encontro_rp250.png
+  - results/etapa2.1/varredura_encontro_rp250.yaml
+  - results/etapa2.1/varredura_encontro_rp300.md
+  - results/etapa2.1/varredura_encontro_rp300.png
+  - results/etapa2.1/varredura_encontro_rp300.yaml
+- ordem: 14
+  ferramenta: tools/isru.py
+  segundos: 0.4
+  depende_de:
+  - 6
+  - 13
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.1/varredura_encontro_rp300.yaml
+  gravados:
+  - results/etapa2.2/isru.md
+  - results/etapa2.2/isru.yaml
+- ordem: 15
+  ferramenta: tools/mav_propulsao.py
+  segundos: 16.8
+  depende_de:
+  - 6
+  - 13
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.1/varredura_encontro_rp300.yaml
+  gravados:
+  - results/etapa2.1/varredura_encontro_rp300_O4.md
+  - results/etapa2.1/varredura_encontro_rp300_O4.png
+  - results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  - results/etapa2.2/mav_propulsao.md
+  - results/etapa2.2/mav_propulsao.yaml
+- ordem: 16
+  ferramenta: tools/redimensiona.py
+  segundos: 1094.7
+  depende_de:
+  - 6
+  - 15
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  gravados:
+  - results/etapa2.3/plataformas.md
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.md
+  - results/etapa3.1/perdas_calculadas.yaml
+- ordem: 17
+  ferramenta: tools/plataformas.py
+  segundos: 247.1
+  depende_de:
+  - 6
+  - 15
+  - 16
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  gravados:
+  - results/etapa2.3/plataformas.md
+  - results/etapa2.3/plataformas.yaml
+- ordem: 18
+  ferramenta: tools/lancamento.py
+  segundos: 32.9
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  gravados:
+  - results/etapa2.4/lancamento.md
+  - results/etapa2.4/lancamento.yaml
+- ordem: 19
+  ferramenta: tools/coleta.py
+  segundos: 6.8
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  gravados:
+  - results/etapa2.5/coleta.md
+  - results/etapa2.5/coleta.yaml
+- ordem: 20
+  ferramenta: tools/arquitetura.py
+  segundos: 11.6
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  gravados:
+  - results/etapa2.5/arquitetura.md
+  - results/etapa2.5/arquitetura.yaml
+- ordem: 21
+  ferramenta: tools/confere_2033.py
+  segundos: 51.7
+  depende_de:
+  - 12
+  - 13
+  - 14
+  - 15
+  lidos:
+  - results
+  - results/etapa2.1/arquiteturas.md
+  - results/etapa2.1/arquiteturas.yaml
+  - results/etapa2.1/varredura_encontro_rp250.md
+  - results/etapa2.1/varredura_encontro_rp250.png
+  - results/etapa2.1/varredura_encontro_rp250.yaml
+  - results/etapa2.1/varredura_encontro_rp300.md
+  - results/etapa2.1/varredura_encontro_rp300.png
+  - results/etapa2.1/varredura_encontro_rp300.yaml
+  - results/etapa2.1/varredura_encontro_rp300_O4.md
+  - results/etapa2.1/varredura_encontro_rp300_O4.png
+  - results/etapa2.1/varredura_encontro_rp300_O4.yaml
+  - results/etapa2.2/isru.md
+  - results/etapa2.2/isru.yaml
+  - results/etapa2.2/mav_propulsao.md
+  - results/etapa2.2/mav_propulsao.yaml
+  gravados:
+  - results/etapa2.5/conferencia_2033.md
+  - results/etapa2.5/conferencia_2033.yaml
+- ordem: 22
+  ferramenta: tools/exporta_painel.py
+  segundos: 45.2
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/painel/porkchop_marte_terra_2030.npz
+  - results/painel/porkchop_marte_terra_2032.npz
+  - results/painel/porkchop_marte_terra_2035.npz
+  - results/painel/porkchop_marte_terra_2037.npz
+  - results/painel/porkchop_marte_terra_2039.npz
+  - results/painel/porkchop_terra_marte_2028.npz
+  - results/painel/porkchop_terra_marte_2031.npz
+  - results/painel/porkchop_terra_marte_2033.npz
+  - results/painel/porkchop_terra_marte_2035.npz
+  - results/painel/porkchops.yaml
+- ordem: 23
+  ferramenta: tools/queima_finita.py
+  segundos: 169.7
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  gravados:
+  - results/etapa3.1/queima_finita.md
+  - results/etapa3.1/queima_finita.yaml
+- ordem: 24
+  ferramenta: tools/baixo_empuxo.py
+  segundos: 34.8
+  depende_de:
+  - 17
+  lidos:
+  - results/etapa2.3/plataformas.yaml
+  gravados:
+  - results/etapa3.2/baixo_empuxo.md
+  - results/etapa3.2/baixo_empuxo.yaml
+- ordem: 25
+  ferramenta: tools/geometria_marte.py
+  segundos: 0.4
+  depende_de:
+  - 6
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  gravados:
+  - results/etapa3.3/geometria_planos.md
+  - results/etapa3.3/geometria_planos.yaml
+- ordem: 26
+  ferramenta: tools/orbitador_eletrico.py
+  segundos: 116.0
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  gravados:
+  - results/etapa3.3/diagnostico_orbitador_eletrico.md
+  - results/etapa3.3/orbitador_eletrico.md
+  - results/etapa3.3/orbitador_eletrico.yaml
+- ordem: 27
+  ferramenta: tools/energia.py
+  segundos: 55.4
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  gravados:
+  - results/etapa4.1/energia.md
+  - results/etapa4.1/energia.yaml
+- ordem: 28
+  ferramenta: tools/termico.py
+  segundos: 0.3
+  depende_de:
+  - 6
+  - 15
+  - 27
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa4.1/energia.yaml
+  gravados:
+  - results/etapa4.2/termico.md
+  - results/etapa4.2/termico.yaml
+- ordem: 29
+  ferramenta: tools/comunicacao.py
+  segundos: 8.4
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 27
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa4.1/energia.yaml
+  gravados:
+  - results/etapa4.3/comunicacao.md
+  - results/etapa4.3/comunicacao.yaml
+- ordem: 30
+  ferramenta: tools/operacao_superficie.py
+  segundos: 2.1
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 27
+  - 29
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa4.1/energia.yaml
+  - results/etapa4.3/comunicacao.yaml
+  gravados:
+  - results/etapa4.4/operacao_superficie.md
+  - results/etapa4.4/operacao_superficie.yaml
+- ordem: 31
+  ferramenta: tools/lista_massas_lander.py
+  segundos: 8.9
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 27
+  - 28
+  - 29
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa4.1/energia.yaml
+  - results/etapa4.2/termico.yaml
+  - results/etapa4.3/comunicacao.yaml
+  gravados:
+  - results/etapa4.5/lista_massas.md
+  - results/etapa4.5/lista_massas.yaml
+- ordem: 32
+  ferramenta: tools/fase4.py
+  segundos: 1.3
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa4.1/energia.yaml
+  - results/etapa4.2/termico.yaml
+  - results/etapa4.3/comunicacao.yaml
+  - results/etapa4.4/operacao_superficie.yaml
+  - results/etapa4.5/lista_massas.yaml
+  gravados:
+  - results/fase4/resumo.md
+  - results/fase4/resumo.yaml
+- ordem: 33
+  ferramenta: tools/envelope_arranjo.py
+  segundos: 3.0
+  depende_de:
+  - 20
+  - 27
+  lidos:
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa4.1/energia.yaml
+  gravados:
+  - results/etapa7.1/envelope.md
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.1/lander_na_coifa.png
+  - results/etapa7.1/lander_superficie.png
+  - results/etapa7.1/mav.png
+  - results/etapa7.1/orbitador_na_coifa.png
+- ordem: 34
+  ferramenta: tools/cad_parametros.py
+  segundos: 2.0
+  depende_de:
+  - 20
+  - 33
+  lidos:
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa7.1/envelope.yaml
+  gravados:
+  - results/etapa7.2/capsula_mav.png
+  - results/etapa7.2/conferencias.md
+  - results/etapa7.2/lander.fs
+  - results/etapa7.2/mav.fs
+  - results/etapa7.2/orbitador.fs
+  - results/etapa7.2/parametros.yaml
+- ordem: 35
+  ferramenta: tools/encaixe_coifas.py
+  segundos: 6.9
+  depende_de:
+  - 20
+  - 33
+  - 34
+  lidos:
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.2/parametros.yaml
+  gravados:
+  - results/etapa7.2b/envelope_falcon_heavy.fs
+  - results/etapa7.2b/envelope_vulcan.fs
+  - results/etapa7.2b/folgas.md
+  - results/etapa7.2b/folgas.yaml
+  - results/etapa7.2b/lander_4_5.fs
+  - results/etapa7.2b/lander_4_65.fs
+  - results/etapa7.2b/orbitador.fs
+  - results/etapa7.2b/roteiro_onshape.md
+- ordem: 36
+  ferramenta: tools/mav_arranjo.py
+  segundos: 0.8
+  depende_de:
+  - 20
+  lidos:
+  - results/etapa2.5/arquitetura.yaml
+  gravados:
+  - results/etapa7.2/mav_arranjo.md
+  - results/etapa7.2/mav_arranjo.yaml
+- ordem: 37
+  ferramenta: tools/conferencia_onshape.py
+  segundos: 1.1
+  depende_de:
+  - 34
+  lidos:
+  - results/etapa7.2/parametros.yaml
+  gravados:
+  - results/etapa7.2/conferencia_onshape.md
+  - results/etapa7.2/conferencia_onshape.yaml
+- ordem: 38
+  ferramenta: tools/cg_lateral.py
+  segundos: 1.3
+  depende_de:
+  - 34
+  lidos:
+  - results/etapa7.2/parametros.yaml
+  gravados:
+  - results/etapa7.2/cg_lateral.md
+  - results/etapa7.2/cg_lateral.yaml
+- ordem: 39
+  ferramenta: tools/portao_7_2.py
+  segundos: 1.2
+  depende_de:
+  - 20
+  - 33
+  - 34
+  - 36
+  lidos:
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/parametros.yaml
+  gravados:
+  - results/etapa7.2/portao_decisao.md
+  - results/etapa7.2/portao_decisao.yaml
+- ordem: 40
+  ferramenta: tools/bocais_estagio1.py
+  segundos: 0.9
+  depende_de:
+  - 20
+  - 23
+  - 36
+  - 39
+  lidos:
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/portao_decisao.yaml
+  gravados:
+  - results/etapa7.2/bocais_alternativas.md
+  - results/etapa7.2/bocais_alternativas.yaml
+- ordem: 41
+  ferramenta: tools/comprimento_mav.py
+  segundos: 57.3
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 23
+  - 36
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  gravados:
+  - results/etapa7.2/comprimento_mav.md
+  - results/etapa7.2/comprimento_mav.yaml
+- ordem: 42
+  ferramenta: tools/rotas_mav.py
+  segundos: 14.3
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 23
+  - 26
+  - 29
+  - 30
+  - 34
+  - 36
+  - 40
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa3.3/orbitador_eletrico.yaml
+  - results/etapa4.3/comunicacao.yaml
+  - results/etapa4.4/operacao_superficie.yaml
+  - results/etapa7.2/bocais_alternativas.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/parametros.yaml
+  gravados:
+  - results/etapa7.2/rotas_mav.md
+  - results/etapa7.2/rotas_mav.yaml
+- ordem: 43
+  ferramenta: tools/isp_44_bocal.py
+  segundos: 0.8
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/etapa7.2/isp_44.md
+  - results/etapa7.2/isp_44.yaml
+- ordem: 44
+  ferramenta: tools/rota_a_dimensiona.py
+  segundos: 136.7
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 23
+  - 33
+  - 34
+  - 36
+  - 42
+  - 43
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.2/isp_44.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/parametros.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  gravados:
+  - results/etapa7.2/rota_a.md
+  - results/etapa7.2/rota_a.yaml
+- ordem: 45
+  ferramenta: tools/subida_mav.py
+  segundos: 1301.5
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 33
+  - 34
+  - 36
+  - 43
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.2/isp_44.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/parametros.yaml
+  gravados:
+  - results/etapa7.2/subida_mav.md
+  - results/etapa7.2/subida_mav.yaml
+- ordem: 46
+  ferramenta: tools/comprimento_solido.py
+  segundos: 2.1
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/familia1/comprimento_solido.md
+  - results/familia1/comprimento_solido.yaml
+- ordem: 47
+  ferramenta: tools/mav_solido.py
+  segundos: 3.8
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 33
+  - 34
+  - 36
+  - 46
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/parametros.yaml
+  - results/familia1/comprimento_solido.yaml
+  gravados:
+  - results/etapa7.2/mav_solido.md
+  - results/etapa7.2/mav_solido.yaml
+- ordem: 48
+  ferramenta: tools/missao_familia1.py
+  segundos: 5.2
+  depende_de:
+  - 2
+  - 42
+  lidos:
+  - results/etapa1.2/minimos_marte_terra.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  gravados:
+  - results/familia1/missao.md
+  - results/familia1/missao.yaml
+- ordem: 49
+  ferramenta: tools/mav_familia1.py
+  segundos: 1387.3
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 33
+  - 34
+  - 36
+  - 46
+  - 48
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/parametros.yaml
+  - results/familia1/comprimento_solido.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/familia1/diagnostico_mav_familia1.md
+  - results/familia1/mavs.md
+  - results/familia1/mavs.yaml
+- ordem: 50
+  ferramenta: tools/ruido_subida.py
+  segundos: 1541.4
+  depende_de:
+  - 49
+  lidos:
+  - results/familia1/mavs.yaml
+  gravados:
+  - results/conferencia/ruido_subida.md
+  - results/conferencia/ruido_subida.yaml
+- ordem: 51
+  ferramenta: tools/familia1_465.py
+  segundos: 1016.4
+  depende_de:
+  - 6
+  - 15
+  - 16
+  - 17
+  - 20
+  - 33
+  - 34
+  - 36
+  - 42
+  - 46
+  - 49
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa2.2/mav_propulsao.yaml
+  - results/etapa2.3/plataformas.yaml
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa7.1/envelope.yaml
+  - results/etapa7.2/mav_arranjo.yaml
+  - results/etapa7.2/parametros.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/comprimento_solido.yaml
+  - results/familia1/mavs.yaml
+  gravados:
+  - results/familia1/aeroshell_465.md
+  - results/familia1/aeroshell_465.yaml
+  - results/familia1/diagnostico_familia1_465.md
+- ordem: 52
+  ferramenta: tools/inerte_solido.py
+  segundos: 1956.8
+  depende_de:
+  - 42
+  - 46
+  - 49
+  - 50
+  - 51
+  lidos:
+  - results/conferencia/ruido_subida.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/aeroshell_465.yaml
+  - results/familia1/comprimento_solido.yaml
+  - results/familia1/mavs.yaml
+  gravados:
+  - results/familia1/diagnostico_inerte_solido.md
+  - results/familia1/inerte_solido.md
+  - results/familia1/inerte_solido.yaml
+- ordem: 53
+  ferramenta: tools/opcoes_arquitetura.py
+  segundos: 3.2
+  depende_de:
+  - 20
+  - 35
+  - 40
+  - 42
+  - 44
+  - 45
+  - 47
+  - 52
+  lidos:
+  - results/etapa2.5/arquitetura.yaml
+  - results/etapa7.2/bocais_alternativas.yaml
+  - results/etapa7.2/mav_solido.yaml
+  - results/etapa7.2/rota_a.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/etapa7.2/subida_mav.yaml
+  - results/etapa7.2b/folgas.yaml
+  - results/familia1/inerte_solido.yaml
+  gravados:
+  - results/etapa7.2/opcoes_arquitetura.md
+  - results/etapa7.2/portao_mav.md

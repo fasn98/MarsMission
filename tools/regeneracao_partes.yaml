@@ -1,0 +1,31 @@
+# Partes da regeneração em paralelo no CI (issue #61). Cada parte roda, numa cópia, as suas ferramentas de FASE_ATUAL (na
+# ordem de tools/confere_regeneracao.py) sobre os resultados das partes de que depende; a parte "base" roda também a FASE_1 e
+# a FASE_850. As dependências vêm de results/conferencia/mapa_regeneracao.md (quem lê o resultado de quem).
+# A parte "comparacao" junta tudo e compara com o versionado (P-039, P-040) e confere a sanidade dos diagnósticos.
+partes:
+  base:
+    depende_de: []
+    fases_historicas: true
+    ferramentas: [redimensiona, plataformas, lancamento, coleta, arquitetura, confere_2033, exporta_painel, queima_finita,
+                  baixo_empuxo, geometria_marte, orbitador_eletrico, energia, termico, comunicacao, operacao_superficie,
+                  lista_massas_lander, fase4, envelope_arranjo, cad_parametros, encaixe_coifas, mav_arranjo,
+                  conferencia_onshape, cg_lateral, portao_7_2, bocais_estagio1, comprimento_mav, rotas_mav, isp_44_bocal,
+                  rota_a_dimensiona, comprimento_solido, mav_solido, missao_familia1]
+  subida_mav:
+    depende_de: [base]
+    ferramentas: [subida_mav]
+  mav_familia1:
+    depende_de: [base]
+    ferramentas: [mav_familia1]
+  ruido_subida:
+    depende_de: [base, mav_familia1]
+    ferramentas: [ruido_subida]
+  familia1_465:
+    depende_de: [base, mav_familia1]
+    ferramentas: [familia1_465]
+  inerte_solido:
+    depende_de: [base, mav_familia1, ruido_subida, familia1_465]
+    ferramentas: [inerte_solido]
+  comparacao:
+    depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido]
+    ferramentas: [opcoes_arquitetura]

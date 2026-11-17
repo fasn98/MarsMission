@@ -625,12 +625,10 @@ hibrido_c2:
     n_minimo: 1
     conferencia_descida:
       dv_quase_circular_km_s: 0.07735649907806641
-      dv_numerico_km_s: 0.07735649891526537
-      diferenca_relativa: -2.104555382946616e-09
+      dv_numerico_km_s: 0.07735649891497023
       tempo_empuxo_quase_circular_dias: 89.39905547387875
-      tempo_empuxo_numerico_dias: 89.39905528557547
+      tempo_empuxo_numerico_dias: 89.39905528607653
       voltas: 781.7
-      excentricidade_final: 0.0
   XIPS-25:
     por_n:
     - n_ativos: 1
@@ -1237,12 +1235,10 @@ hibrido_c2:
     n_minimo: 1
     conferencia_descida:
       dv_quase_circular_km_s: 0.1625409541444527
-      dv_numerico_km_s: 0.16254095359988616
-      diferenca_relativa: -3.350334281131369e-09
+      dv_numerico_km_s: 0.16254095360658777
       tempo_empuxo_quase_circular_dias: 116.79249056246368
-      tempo_empuxo_numerico_dias: 116.79249017200648
+      tempo_empuxo_numerico_dias: 116.79249017705861
       voltas: 1021.0
-      excentricidade_final: 0.0
 hibrido_c1:
   meio_arco_graus: 30.0
   encontro_alt_km: 300.0
@@ -1251,49 +1247,49 @@ hibrido_c1:
   casos:
   - propulsor: NSTAR
     n_ativos: 1
-    dv_km_s: 1.2053137785394419
-    tempo_empuxo_dias: 525.563460495822
-    tempo_total_dias: 11972.455549465072
+    dv_km_s: 1.2053137785402492
+    tempo_empuxo_dias: 525.5634604958028
+    tempo_total_dias: 11972.455549460248
     voltas: 46432
     rp_final_alt_km: 223.20000000000002
     ra_final_alt_km: 303.0
   - propulsor: NSTAR
     n_ativos: 4
-    dv_km_s: 1.2053139891731275
-    tempo_empuxo_dias: 131.3908876413002
-    tempo_total_dias: 2992.7088662428
+    dv_km_s: 1.2053139891728097
+    tempo_empuxo_dias: 131.39088764129184
+    tempo_total_dias: 2992.708866242603
     voltas: 11608
     rp_final_alt_km: 223.20000000000002
     ra_final_alt_km: 303.0
   - propulsor: NSTAR
     n_ativos: 12
-    dv_km_s: 1.2053156677666683
-    tempo_empuxo_dias: 43.79702236293138
-    tempo_total_dias: 997.2525964284447
+    dv_km_s: 1.2053156677665888
+    tempo_empuxo_dias: 43.79702236293019
+    tempo_total_dias: 997.2525964283967
     voltas: 3870
     rp_final_alt_km: 223.20000000000002
     ra_final_alt_km: 303.0
   - propulsor: XIPS-25
     n_ativos: 1
-    dv_km_s: 1.2053143418034842
-    tempo_empuxo_dias: 296.85648722218133
-    tempo_total_dias: 6755.98999338818
+    dv_km_s: 1.205314341804029
+    tempo_empuxo_dias: 296.8564872221665
+    tempo_total_dias: 6755.989993386648
     voltas: 26225
     rp_final_alt_km: 223.20000000000002
     ra_final_alt_km: 303.0
   - propulsor: XIPS-25
     n_ativos: 4
-    dv_km_s: 1.205314716098488
-    tempo_empuxo_dias: 74.21414445511809
-    tempo_total_dias: 1688.6408830578812
+    dv_km_s: 1.2053147160986748
+    tempo_empuxo_dias: 74.21414445512195
+    tempo_total_dias: 1688.6408830580735
     voltas: 6557
     rp_final_alt_km: 223.20000000000002
     ra_final_alt_km: 303.0
   - propulsor: XIPS-25
     n_ativos: 12
-    dv_km_s: 1.205316374115459
-    tempo_empuxo_dias: 24.738081595399034
-    tempo_total_dias: 562.5416215189291
+    dv_km_s: 1.2053163741152202
+    tempo_empuxo_dias: 24.7380815953979
+    tempo_total_dias: 562.5416215188352
     voltas: 2186
     rp_final_alt_km: 223.20000000000002
     ra_final_alt_km: 303.0
@@ -1339,3 +1335,6 @@ janelas:
   2031-conjuncao: 480.0
   2033-conjuncao: 550.0
   2035-conjuncao: 542.0
+fora_do_yaml:
+- /hibrido_c2/*/conferencia_descida/diferenca_relativa
+- /hibrido_c2/*/conferencia_descida/excentricidade_final

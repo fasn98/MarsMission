@@ -1,0 +1,84 @@
+name: Regeneração de results/ (uma parte)
+
+# Uma parte da regeneração em paralelo (issue #61; partes em tools/regeneracao_partes.yaml). Baixa só os artefatos das
+# partes de que depende, roda as suas ferramentas numa cópia e publica o que gravou. A parte "comparacao" junta tudo e
+# compara com o versionado (P-039, P-040), com a checagem de sanidade dos diagnósticos (CLAUDE.md, regra 6).
+on:
+  workflow_call:
+    inputs:
+      parte:
+        required: true
+        type: string
+      entradas:
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  parte:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300   # Fabio, 2026-11-12. Limite por job em runner hospedado: "Each job in a workflow can run for up to 6 hours of execution time" (docs.github.com/en/actions/reference/limits, tabela "Existing system limits", lida em 2026-11-12)
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          environment-file: environment.yml
+          activate-environment: marsmission
+          auto-activate-base: false
+
+      - name: Cache dos kernels SPICE
+        uses: actions/cache@v4
+        with:
+          path: data/kernels
+          key: spice-regeneracao-${{ hashFiles('config/kernels.yaml', 'config/kernels_verificacao.yaml') }}
+
+      - name: Baixar e conferir kernels (MD5)
+        run: |
+          python tools/fetch_kernels.py
+          python tools/fetch_kernels.py config/kernels_verificacao.yaml
+
+      # fora do checkout: dentro dele, entradas/ apareceria como não rastreado no ambiente() (alteracoes_nao_commitadas)
+      - name: Baixar os resultados das partes de que depende
+        if: inputs.entradas != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for p in ${{ inputs.entradas }}; do
+            gh run download ${{ github.run_id }} -R ${{ github.repository }} -n "parte-$p" -D "$RUNNER_TEMP/entradas/$p"
+          done
+
+      - name: Rodar a parte ${{ inputs.parte }}
+        run: |
+          args=()
+          for p in ${{ inputs.entradas }}; do args+=(--entrada "$RUNNER_TEMP/entradas/$p"); done
+          if [ "${{ inputs.parte }}" = "comparacao" ]; then
+            python tools/confere_regeneracao.py ci --ci --parte comparacao "${args[@]}"
+          else
+            python tools/confere_regeneracao.py ci --parte "${{ inputs.parte }}" --saida saida "${args[@]}"
+          fi
+
+      - name: Publicar o que a parte gravou
+        if: inputs.parte != 'comparacao'
+        uses: actions/upload-artifact@v4
+        with:
+          name: parte-${{ inputs.parte }}
+          path: saida/
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: Resumo no job (inclui as diferenças abaixo do limite)
+        if: always() && inputs.parte == 'comparacao'
+        run: cat results/conferencia/regeneracao_ci.md >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Relatório da regeneração
+        if: always() && inputs.parte == 'comparacao'
+        uses: actions/upload-artifact@v4
+        with:
+          name: regeneracao
+          path: results/conferencia/regeneracao_ci.*
+          if-no-files-found: ignore
