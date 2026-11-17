@@ -61,6 +61,9 @@ genéricas.
    - Nunca usar `git commit --no-verify`. Se o hook falhar, corrigir a causa.
    - Também é proibido qualquer outro meio de desativar ou contornar hooks: apontar `core.hooksPath` para outro lugar (inclusive
      `git -c core.hooksPath=...`), variáveis como `HUSKY=0`, renomear ou apagar `.git/hooks` ou `.githooks`, ou similares.
+   - Testes que executam git devem limpar todas as variáveis `GIT_*` do ambiente e conferir que estão operando no
+     repositório de teste. Nunca rodar comandos git de teste com o ambiente herdado do hook (o hook exporta `GIT_DIR` e
+     `GIT_INDEX_FILE`; decisão do Fabio, 2026-11-17, depois do incidente em que um teste escreveu no repositório real).
 10. **Revisão independente antes de todo push.**
     - Um revisor separado, somente leitura, que não escreveu o código.
     - Se houver achado bloqueante, corrigir e fazer **segunda revisão**, limitada às correções, antes do push.

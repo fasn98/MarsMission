@@ -26,7 +26,8 @@ permissions:
   actions: read
 
 jobs:
-  # Detector: o PR (ou o push na main) mudou algo que afeta results/? Caminhos em CAMINHOS (os do antigo filtro), como
+  # Detector: o PR (ou o push na main) mudou algo que afeta results/? Caminhos em CAMINHOS (os do antigo filtro, mais
+  # cad/featurescript, que tools/cad_parametros.py e tools/encaixe_coifas.py leem; decisão do Fabio, 2026-11-17), como
   # pathspec do git: casa o caminho real (sem as aspas do core.quotePath) e, com --no-renames, um arquivo movido conta pelo
   # caminho antigo e pelo novo. Sem ação de terceiros. Na dúvida (sem base conferida), regenera. Conferido com repositórios
   # de prova em tests/test_confere_regeneracao.py::test_detector_*.
@@ -42,7 +43,7 @@ jobs:
       - name: Arquivos mudados contra a base
         id: diff
         env:
-          CAMINHOS: "src tools config results tests/data environment.yml pyproject.toml .github/workflows/regeneracao.yml .github/workflows/regeneracao_parte.yml"
+          CAMINHOS: "src tools config results tests/data cad/featurescript environment.yml pyproject.toml .github/workflows/regeneracao.yml .github/workflows/regeneracao_parte.yml"
           EVENTO: ${{ github.event_name }}
           ANTES: ${{ github.event.before }}
           CABECA_PR: ${{ github.event.pull_request.head.sha }}
