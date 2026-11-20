@@ -44,7 +44,6 @@ import orbitador_eletrico as oe  # noqa: E402
 from orbital import dimensionamento as dm  # noqa: E402
 from orbital import ephemeris as eph  # noqa: E402
 from orbital import hibrido as hb  # noqa: E402
-from orbital import lambert  # noqa: E402
 from orbital import lancamento as lc  # noqa: E402
 from orbital import porkchop as pc  # noqa: E402
 from orbital import sims_flanagan as sf  # noqa: E402
@@ -81,9 +80,17 @@ def _data(et):
     return eph.data_tdb(et)
 
 
+def _ecl_para_eq():
+    """Rotação de ECLIPJ2000 (referencial dos estados, orbital.porkchop) para J2000 (equador da Terra); constante."""
+    import spiceypy as spice
+    eph.carregar_kernels()
+    return np.asarray(spice.pxform(pc.FRAME, "J2000", 0.0))
+
+
 def _declinacao(vinf):
+    """Declinação (graus) do vetor v∞ no equador da Terra (J2000), a partir do vetor em ECLIPJ2000."""
     n = float(np.linalg.norm(vinf))
-    return math.degrees(math.asin(vinf[2] / n)) if n > 0 else float("nan")
+    return math.degrees(math.asin(float((_ecl_para_eq() @ vinf)[2]) / n)) if n > 0 else float("nan")
 
 
 def _chute_u(estado, t0, tof, n, sentido, fracao=0.5):
@@ -94,23 +101,6 @@ def _chute_u(estado, t0, tof, n, sentido, fracao=0.5):
         _, vi = sf.kepler.propagar(GM_SOL, r, v_, (i + 0.5) * tof / n)
         u[i] = sentido * fracao * vi / np.linalg.norm(vi)
     return u
-
-
-def _datas_lambert(origem, destino, t_ini, t_fim, tof_min, tof_max, passo_t=5.0, passo_tof=10.0):
-    """Datas do chute a frio: (partida, duração) em s com a menor soma dos v∞ de Lambert (0 revolução, prograde) na faixa."""
-    melhor = None
-    for t in np.arange(t_ini, t_fim + 1.0, passo_t * DIA):
-        r1, v1 = origem(float(t))
-        for tof in np.arange(tof_min, tof_max + 1.0, passo_tof * DIA):
-            r2, v2 = destino(float(t + tof))
-            try:
-                sol = lambert.resolver(GM_SOL, r1, r2, float(tof))
-            except (RuntimeError, ValueError):
-                continue
-            custo = float(np.linalg.norm(sol.v1 - v1) + np.linalg.norm(sol.v2 - v2))
-            if melhor is None or custo < melhor[0]:
-                melhor = (custo, float(t), float(tof))
-    return melhor[1], melhor[2]
 
 
 def _partida_fria(perna, base, objetivo, oc, origem, sentido, duracoes, lim_et):
@@ -138,6 +128,12 @@ def _oc():
     return {k: v(o[k]) for k in ("n_segmentos", "ordem", "maxiter", "ftol", "residuo_max")}
 
 
+def _lc():
+    """Limites das massas, chutes a frio, limiar de arco e restrição de declinação do otimizador (P-118)."""
+    o = ler("config/orbitador_so_eletrico.yaml")["limites_e_chutes"]
+    return {k: (o[k]["valor"]) for k in o}
+
+
 def _resolve(perna, objetivo, chute, oc, ineq_extra=None, exigir=True, rodadas=4):
     """SLSQP com reinícios a partir do último ponto (até `rodadas`) enquanto ele para sem convergir. Convergiu quando a
     continuidade e |u| ≤ 1 ficam dentro do resíduo aceito (P-118) e o SLSQP declara sucesso ou o objetivo para de mudar
@@ -159,7 +155,8 @@ def _resolve(perna, objetivo, chute, oc, ineq_extra=None, exigir=True, rodadas=4
 
 
 def _resumo(s, motor, mu=GM_SOL):
-    """Grandezas de uma solução: Δv, arcos de empuxo e a conferência pela propagação contínua."""
+    """Grandezas de uma solução: Δv e arcos de empuxo (segmentos com |u| acima do limiar, P-118)."""
+    lc_ = _lc()
     u = s["u"]
     a = np.linalg.norm(u, axis=1)
     dt_ = s["tof"] / len(u)
@@ -167,7 +164,7 @@ def _resumo(s, motor, mu=GM_SOL):
     for ai in a:
         m2 = m - ai * motor.vazao_kg_s * dt_
         d = motor.c_km_s * math.log(m / m2)
-        if ai > 1e-3:
+        if ai > lc_["limiar_arco"]:
             dv_arco, em_arco = dv_arco + d, True
         elif em_arco:
             arcos.append(dv_arco)
@@ -176,7 +173,7 @@ def _resumo(s, motor, mu=GM_SOL):
     if em_arco:
         arcos.append(dv_arco)
     return {"dv_km_s": motor.c_km_s * math.log(s["m0"] / s["mf"]), "arcos_dv_km_s": arcos,
-            "fracao_tempo_com_empuxo": float(np.mean(a > 1e-3)), "aceleracao_inicial_m_s2": motor.empuxo_n / s["m0"]}
+            "fracao_tempo_com_empuxo": float(np.mean(a > lc_["limiar_arco"])), "aceleracao_inicial_m_s2": motor.empuxo_n / s["m0"]}
 
 
 def _confere_continuo(perna, s):
@@ -190,10 +187,10 @@ def _confere_continuo(perna, s):
 # ---------------------------------------------------------------- (b) caso publicado
 
 def _polo_marte(et):
-    """Eixo de rotação de Marte (IAU_MARS, pck00011) no J2000, na época."""
+    """Eixo de rotação de Marte (IAU_MARS, pck00011) no referencial dos estados (ECLIPJ2000), na época."""
     import spiceypy as spice
     eph.carregar_kernels()
-    return np.asarray(spice.pxform("IAU_MARS", "J2000", et))[:, 2]
+    return np.asarray(spice.pxform("IAU_MARS", pc.FRAME, et))[:, 2]
 
 
 def caso_publicado(arg):
@@ -201,6 +198,7 @@ def caso_publicado(arg):
     `declinacoes`, também as declinações publicadas (partida no equador da Terra J2000; chegada no equador de Marte), P-119."""
     nome, declinacoes = arg
     cfg = ler("config/orbitador_so_eletrico.yaml")["caso_publicado"]
+    lc_ = _lc()
     c = cfg["casos"][nome]
     oc = _oc()
     isp = v(cfg["isp_s"]) if nome == "esquerda" else v(cfg["isp_direita_s"])
@@ -213,22 +211,23 @@ def caso_publicado(arg):
     extra = None
     if declinacoes:
         d0 = math.radians(v(c["declinacao_partida_graus"]))
-        polo = _polo_marte(t1)
+        polo, rot = _polo_marte(t1), _ecl_para_eq()
         d1 = math.radians(v(c["declinacao_chegada_graus"])) if "declinacao_chegada_graus" in c else None
 
         def extra(t0_, tof, m0_, mf, a, b):
-            g = [a[2] / max(np.linalg.norm(a), 1e-9) - math.sin(d0)]
+            g = [float((rot @ a)[2]) / max(np.linalg.norm(a), 1e-9) - math.sin(d0)]
             if d1 is not None:
                 g.append(float(b @ polo) / max(np.linalg.norm(b), 1e-9) - math.sin(d1))
-            g = np.array(g) * 100.0
-            return np.r_[g + 1e-6, 1e-6 - g]   # igualdade como duas desigualdades com folga de 1e-8 no seno
-    chute = {"t0": t0, "tof": t1 - t0, "m0": m0, "mf": 0.85 * m0, "vinf0": vi0 * vT / np.linalg.norm(vT),
+            g = np.array(g) * lc_["escala_restricao_declinacao"]
+            fo = lc_["folga_restricao_declinacao"]
+            return np.r_[g + fo, fo - g]   # igualdade como duas desigualdades com folga (P-118)
+    chute = {"t0": t0, "tof": t1 - t0, "m0": m0, "mf": lc_["mf_chute_fracao"] * m0, "vinf0": vi0 * vT / np.linalg.norm(vT),
              "vinf1": np.zeros(3), "u": _chute_u(terra, t0, t1 - t0, n, +1)}
     linhas = []
     for empuxo in cfg["empuxos_n"]["valor"]:
         motor = sf.Motor(empuxo, isp)
         p = sf.Perna(GM_SOL, terra, marte, motor, n, (t0, t0), (t1 - t0, t1 - t0), (vi0, vi0), (vi1, vi1), (m0, m0),
-                     (0.2 * m0, m0))
+                     (lc_["mf_min_fracao"] * m0, m0))
         s = _resolve(p, lambda t0_, tof, m0_, mf, a, b: -mf / 1000.0, chute, oc, ineq_extra=extra, exigir=False)
         lin = {"empuxo_n": empuxo, "convergiu": s["convergiu"], "viavel": s["viavel"], "mensagem": s["mensagem"],
                "iteracoes": s["iteracoes"], "rodadas": s["rodadas"], "residuo_max": s["residuo_max"]}
@@ -347,16 +346,17 @@ def fecho(nome, n, h, e=None, chutes=None):
         k = chutes["empuxo_n"] / motor.empuxo_n
         if k <= 1.0 and chutes.get("isp_s") == motor.isp_s:
             ida0, volta0 = {**ida0, "u": ida0["u"] * k}, {**volta0, "u": volta0["u"] * k}
-    m_chegada = float(ida0["mf"]) if ida0 is not None else 6000.0   # com chute (n anterior da cadeia), a massa dele
-    inst = n + reservas
+    lc_ = _lc()
+    # massa na chegada: a do chute (n anterior da cadeia) ou a do chute a frio (P-118)
+    m_chegada = float(ida0["mf"]) if ida0 is not None else float(lc_["massa_chegada_chute_kg"])
     hist = []
     for it in range(int(v(ms["iteracoes_fecho"]))):
         # ---- ida: m0 livre, mf = massa na chegada; objetivo: maior margem no lançador
-        t_d_est = espiral(e["hill"], r_e, m_chegada)[0] * DIA / DIA
+        t_d_est = espiral(e["hill"], r_e, m_chegada)[0]
         lim_et = _et(lim_ultimo.isoformat()) - t_d_est
         pi = sf.Perna(GM_SOL, terra, marte, motor, nseg, (t0min, t0max),
                       (ms["ida_dias"]["valor"]["min"] * DIA, ms["ida_dias"]["valor"]["max"] * DIA),
-                      (0.0, math.sqrt(c3_max)), (0.0, v(ms["vinf_chegada_marte_km_s"])), (0.3 * m_chegada, 4.0 * m_chegada),
+                      (0.0, math.sqrt(c3_max)), (0.0, v(ms["vinf_chegada_marte_km_s"])), (lc_["m0_ida_fracao"][0] * m_chegada, lc_["m0_ida_fracao"][1] * m_chegada),
                       (m_chegada, m_chegada))
 
         def obj_ida(t0, tof, m0, mf, a, b):
@@ -366,7 +366,8 @@ def fecho(nome, n, h, e=None, chutes=None):
         if ida0 is None:
             t0 = min(max(_et(ms["partida_frio"]["valor"]), t0min), t0max)
             _, vT = terra(t0)
-            base = {"t0": t0, "m0": 1.6 * m_chegada, "mf": m_chegada, "vinf0": 3.0 * vT / np.linalg.norm(vT), "vinf1": np.zeros(3)}
+            base = {"t0": t0, "m0": lc_["m0_chute_fracao"] * m_chegada, "mf": m_chegada,
+                    "vinf0": lc_["vinf_partida_chute_km_s"] * vT / np.linalg.norm(vT), "vinf1": np.zeros(3)}
             ida0 = _partida_fria(pi, base, obj_ida, oc, terra, +1, ms["duracoes_frio_ida_dias"]["valor"], lim_et)
         si = _resolve(pi, obj_ida, {**ida0, "mf": m_chegada}, oc, ineq_extra=extra)
         ida0 = si
@@ -383,10 +384,12 @@ def fecho(nome, n, h, e=None, chutes=None):
         prox = next((cj for cj in conj if cj["inicio"] > lanc0), None)
         lanc_tarde = prox["inicio"] - dt.timedelta(days=folga) if prox else None
         # massas: ponto fixo com a razão da volta da iteração anterior
-        razao_volta = (volta0["m0"] / volta0["mf"]) ** f if volta0 else 1.25
+        razao_volta = (volta0["m0"] / volta0["mf"]) ** f if volta0 else lc_["razao_volta_chute"]
         pr = px = 0.0
-        for _ in range(200):
-            xe_inst = max(inst, math.ceil(px / vida) + reservas) if px > 0 else inst
+        tol_m = v(e["ecfg"]["varredura"]["convergencia_massas_kg"])   # P-049, como em tools/rotas_mav.py
+        for _ in range(int(lc_["max_iteracoes_massas"])):
+            # instalados: os ativos ou os que bastam para a vida (o que for maior), mais as reservas (P-121)
+            xe_inst = max(n, math.ceil(px / vida)) + reservas
             se = dataclasses.replace(se0, n_instalados=xe_inst)
             mf_ = carga + se.massa_seca_kg() + k_r * pr + se.inerte_por_kg_xenonio * px
             b_desv = mf_ * math.exp(f * orc["desvio_orbitador"] / c)
@@ -399,12 +402,14 @@ def fecho(nome, n, h, e=None, chutes=None):
             nr = (b_desv - mf_) + (b_enc - b_sub)
             nx = (b_volta - a_cap) + (b_sub - b_volta) + (b_desc - a_desc)   # a ida entra abaixo
             nx += b_desc * (razao_ida - 1)
-            if abs(nr - pr) < 1e-9 and abs(nx - px) < 1e-9:
+            if abs(nr - pr) < tol_m and abs(nx - px) < tol_m:
                 break
             pr, px = nr, nx
         else:
             raise RuntimeError("massas não convergiram")
         inst = xe_inst
+        if px / (inst - reservas) > vida * (1 + 1e-12):
+            raise RuntimeError("ponto fixo das massas terminou com xenônio por propulsor acima da vida")
         _, t_s_real, _, _ = hb.tempos_espiral(mu, R, r_e, e["hill"], b_sub, se0, fator_dv=f)
         t_s = t_s_real / duty
         partida_cedo = lanc0 + dt.timedelta(days=math.ceil(e["t_enc"] / DIA + t_s / DIA))
@@ -412,10 +417,10 @@ def fecho(nome, n, h, e=None, chutes=None):
         t2 = _et(partida_cedo.isoformat())
         pv = sf.Perna(GM_SOL, marte, terra, motor, nseg, (t2, t2 + v(ms["espera_retorno_dias"]) * DIA),
                       (ms["volta_dias"]["valor"]["min"] * DIA, ms["volta_dias"]["valor"]["max"] * DIA),
-                      (0.0, 0.0), (0.0, v(ms["vinf_chegada_terra_max_km_s"])), (b_volta, b_volta), (0.2 * b_volta, b_volta))
+                      (0.0, 0.0), (0.0, v(ms["vinf_chegada_terra_max_km_s"])), (b_volta, b_volta), (lc_["mf_min_fracao"] * b_volta, b_volta))
         obj_volta = lambda t0, tof, m0, mf, a, b: -mf / 1000.0  # noqa: E731
         if volta0 is None:
-            base = {"t0": t2, "m0": b_volta, "mf": 0.85 * b_volta, "vinf0": np.zeros(3), "vinf1": np.zeros(3)}
+            base = {"t0": t2, "m0": b_volta, "mf": lc_["mf_chute_fracao"] * b_volta, "vinf0": np.zeros(3), "vinf1": np.zeros(3)}
             volta0 = _partida_fria(pv, base, obj_volta, oc, marte, -1, ms["duracoes_frio_volta_dias"]["valor"], None)
         sv = _resolve(pv, obj_volta, {**volta0, "m0": b_volta, "t0": max(volta0["t0"], t2)}, oc)
         volta0 = sv
@@ -442,6 +447,8 @@ def fecho(nome, n, h, e=None, chutes=None):
             "subida_dias": t_s / DIA, "partida_marte_mais_cedo": partida_cedo.isoformat(), "partida_marte": partida_marte.isoformat(),
             "volta_dias": sv["tof"] / DIA, "chegada_terra": _data(sv["t0"] + sv["tof"]), "vinf_chegada_terra_km_s": float(np.linalg.norm(sv["vinf1"])),
             "dv_volta_km_s": cx * math.log(sv["m0"] / sv["mf"]),
+            "descida_cruza_conjuncao": any(pronto - dt.timedelta(days=math.ceil(t_d / DIA)) <= cj["fim"] and cj["inicio"] <= pronto for cj in conj),
+            "subida_cruza_conjuncao": any(lanc0 <= cj["fim"] and cj["inicio"] <= partida_marte for cj in conj),
             "fecha": bool(margem >= 0 and pronto <= lim_ultimo and px / (inst - reservas) <= vida),
             "historico": hist, "erro_continuo_ida_km_e_km_s": erro_ida, "erro_continuo_volta_km_e_km_s": erro_volta,
             "otimizador": {"ida": (si["mensagem"], si["iteracoes"], si["residuo_max"]), "volta": (sv["mensagem"], sv["iteracoes"], sv["residuo_max"])},
@@ -457,8 +464,8 @@ def _cadeia(arg):
         try:
             r = fecho(nome, n, h, chutes=chutes)
             chutes = sol[n] = r.pop("_chutes")
-        except NaoConverge as x:
-            r = {"propulsor": nome, "n_ativos": n, "altitude_km": h, "erro": str(x)}
+        except (NaoConverge, RuntimeError, ValueError) as x:
+            r = {"propulsor": nome, "n_ativos": n, "altitude_km": h, "erro": f"{type(x).__name__}: {x}"}
         out.append(r)
     for i, n in enumerate(ns):
         if "erro" not in out[i]:
@@ -472,8 +479,8 @@ def _cadeia(arg):
             sol[n] = r.pop("_chutes")
             r["nota"] = f"convergiu na segunda passada, a partir de n = {viz}"
             out[i] = r
-        except NaoConverge as x:
-            out[i]["erro"] += f"; segunda passada, a partir de n = {viz}: {x}"
+        except (NaoConverge, RuntimeError, ValueError) as x:
+            out[i]["erro"] += f"; segunda passada, a partir de n = {viz}: {type(x).__name__}: {x}"
     return out
 
 
@@ -497,7 +504,8 @@ def escreve(casos, fam):
           f"maior margem no {ms['lancador']} pela curva C3 × massa e pela declinação ([F79]). Restrição: o orbitador fica pronto "
           "no encontro até o último lançamento do MAV da família 1 (`results/familia1/missao.yaml`).",
           "- **Marte:** espirais de descida e de subida como na rota B (`orbital.hibrido`, verificadas na Etapa 3.2), com o motor "
-          "desligado no eclipse; MAV lançado pela regra da família 1 (conjunções, recuperação, folga de 60 d).",
+          "desligado no eclipse; MAV lançado pela regra da família 1 (conjunções, recuperação, "
+          f"folga de {ler('results/familia1/missao.yaml')['folga_conjuncao_dias']} d).",
           "- **Volta:** partida do raio de Hill com v∞ = 0 a partir da partida mais cedo; objetivo: a maior massa final.",
           "- **Fecho de massa:** o da rota B (`tools/rotas_mav.py`), com a razão de massas de cada trecho heliocêntrico "
           f"otimizado no lugar do Δv quase circular; a margem de Δv (P-014) multiplica o logaritmo da razão. "
@@ -525,7 +533,7 @@ def escreve(casos, fam):
          "Fora da comparação do CI (regra 6): soluções de otimização (mínimos locais). Calculado, NÃO validado.", "",
          "## (b) Caso publicado: Joffre 2018 [F121] com massa e empuxo de Yau 2021 [F22]", ""]
     for c in casos:
-        var = "com as declinações publicadas impostas" if c["declinacoes"] else "só com os módulos de v∞ publicados"
+        var = "com as declinações publicadas impostas" if c["declinacoes"] else "só com os módulos de v infinito publicados"
         eq = (f"empuxo em que o Δv calculado iguala o publicado: {br(c['empuxo_equivalente_n'], 3)} N "
               f"({_sci(c['aceleracao_equivalente_m_s2'])} m/s² com {br(c['massa_inicial_kg'])} kg), contra o máximo de "
               f"{br(c['empuxo_max_publicado_n'], 2)} N de [F22]") if c["empuxo_equivalente_n"] else \
@@ -543,19 +551,20 @@ def escreve(casos, fam):
                      f"{br(x['continuo_erro_km'])}; {_sci(x['continuo_erro_km_s'])} |")
         d.append("")
     d += ["## (a) e (c) Família 1", "",
-          "| Propulsor | Ativos | Encontro (km) | Instalados | Potência (kW) | Xe (kg) | Xe por propulsor (kg) | Vida (kg) | Propulsores + PPU (kg) | Orbitador (kg) | Margem no Falcon Heavy | C3 (km²/s²) | DLA (°) | Partida da Terra | Ida (d) | Chegada a Marte | Descida (d) | Pronto no encontro | Último lançamento do MAV | Lançamento do MAV | Subida (d) | Partida de Marte | Volta (d) | Chegada à Terra | Fecha? |",
-          "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | -: | :- | -: | :- | :- | :- | -: | :- | -: | :- | :- |"]
+          "| Propulsor | Ativos | Encontro (km) | Instalados | Potência (kW) | Xe (kg) | Xe por propulsor (kg) | Vida (kg) | Propulsores + PPU (kg) | Orbitador (kg) | Margem no Falcon Heavy | C3 (km²/s²) | DLA (°) | Partida da Terra | Ida (d) | Chegada a Marte | Descida (d) | Pronto no encontro | Último lançamento do MAV | Lançamento do MAV | Subida (d) | Partida de Marte | Volta (d) | Chegada à Terra | Descida cruza conjunção | Encontro e subida cruzam conjunção | Fecha? |",
+          "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | -: | :- | -: | :- | :- | :- | -: | :- | -: | :- | :- | :- | :- |"]
     for r in fam:
         if "erro" in r:
-            d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | " + " | ".join(["—"] * 21) + f" | **{r['erro']}** |")
+            d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | " + " | ".join(["—"] * 23) + f" | **{r['erro']}** |")
             continue
         d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {r['n_instalados']} | {br(r['potencia_kw'], 1)} | {br(r['xenonio_kg'])} | "
                  f"{br(r['xenonio_por_propulsor_kg'])} | {br(r['vida_kg'])} | {br(r['massa_propulsores_e_ppu_kg'])} | {br(r['orbitador_kg'])} | "
                  f"{br(r['margem_falcon_heavy'] * 100, 1)} % | {br(r['c3_km2_s2'], 2)} | {br(r['dla_graus'], 1)} | {r['partida_terra']} | {br(r['ida_dias'])} | "
                  f"{r['chegada_marte']} | {br(r['descida_dias'])} | {r['pronto_no_encontro']} | {r['ultimo_lancamento_mav']} | {r['lancamento_mav']} | "
-                 f"{br(r['subida_dias'])} | {r['partida_marte']} | {br(r['volta_dias'])} | {r['chegada_terra']} | {'**sim**' if r['fecha'] else 'não'} |")
+                 f"{br(r['subida_dias'])} | {r['partida_marte']} | {br(r['volta_dias'])} | {r['chegada_terra']} | {'sim' if r['descida_cruza_conjuncao'] else 'não'} | "
+                 f"{'sim' if r['subida_cruza_conjuncao'] else 'não'} | {'**sim**' if r['fecha'] else 'não'} |")
     d += ["", "### Convergência", "",
-          "| Propulsor | Ativos | Encontro (km) | Δv ida (km/s) | Δv volta (km/s) | v∞ na Terra (km/s) | Mudança do orbitador na última iteração do fecho | Erro contínuo da ida (km; km/s) | Erro contínuo da volta (km; km/s) | Otimizador (ida; volta) | Nota |",
+          "| Propulsor | Ativos | Encontro (km) | Δv ida (km/s) | Δv volta (km/s) | v infinito na Terra (km/s) | Mudança do orbitador na última iteração do fecho | Erro contínuo da ida (km; km/s) | Erro contínuo da volta (km; km/s) | Otimizador (ida; volta) | Nota |",
           "| :- | -: | -: | -: | -: | -: | -: | :- | :- | :- | :- |"]
     for r in fam:
         if "erro" in r:

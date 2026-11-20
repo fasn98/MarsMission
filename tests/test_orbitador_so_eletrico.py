@@ -55,3 +55,25 @@ def test_config_fora_do_catalogo():
     for nome in ("XIPS-25", "NEXT-C"):
         assert v(cfg["propulsores"][nome]["vida_kg"]) > 0 and "fonte" in cfg["propulsores"][nome]["vida_kg"]
     assert "[F278]" in cfg["propulsores"]["NEXT-C"]["voo"]
+
+
+def test_declinacao_no_equador_da_terra():
+    """Os estados vêm em ECLIPJ2000 (orbital.porkchop); a declinação é no equador J2000: o polo da eclíptica fica a
+    90° − obliquidade de declinação, e um vetor no equinócio (eixo x, comum aos dois) tem declinação zero."""
+    obl = math.degrees(math.acos(float(ose._ecl_para_eq()[2, 2])))
+    assert 23.0 < obl < 24.0
+    assert ose._declinacao(np.array([0.0, 0.0, 2.0])) == pytest.approx(90.0 - obl, abs=1e-9)
+    assert ose._declinacao(np.array([3.0, 0.0, 0.0])) == pytest.approx(0.0, abs=1e-9)
+
+
+def test_textos_do_diagnostico_passam_na_checagem_de_sanidade():
+    """O CI reprova diagnóstico com número não finito (NAO_FINITO casa também o caractere ∞): os nomes dos casos e os
+    cabeçalhos escritos no diagnóstico não podem usá-lo."""
+    import confere_regeneracao as cr
+    cfg = ler("config/orbitador_so_eletrico.yaml")
+    for c in cfg["caso_publicado"]["casos"].values():
+        assert not cr.NAO_FINITO.search(c["nome"]), c["nome"]
+    fonte = (RAIZ / "tools" / "orbitador_so_eletrico.py").read_text(encoding="utf-8")
+    trecho = fonte[fonte.index("def escreve("):]
+    trecho = trecho[trecho.index("\n    d = ["):]
+    assert "∞" not in trecho

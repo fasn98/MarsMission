@@ -13,6 +13,20 @@ otimizador:
   # solução não converge e a ferramenta para (decisão do Fabio: parar se o otimizador não convergir).
   residuo_max: {valor: 1.0e-8, premissa: P-118}
 
+limites_e_chutes:
+  # Limites das massas, chutes a frio e detalhes numéricos do otimizador (tools/orbitador_so_eletrico.py). P-118.
+  m0_ida_fracao: {valor: [0.3, 4.0], premissa: P-118}          # m0 da ida entre estes múltiplos da massa na chegada
+  mf_min_fracao: {valor: 0.2, premissa: P-118}                 # massa final mínima, fração da inicial (volta e caso publicado)
+  mf_chute_fracao: {valor: 0.85, premissa: P-118}              # massa final do chute a frio, fração da inicial
+  m0_chute_fracao: {valor: 1.6, premissa: P-118}               # m0 do chute a frio da ida, múltiplo da massa na chegada
+  massa_chegada_chute_kg: {valor: 6000.0, premissa: P-118}     # massa na chegada do chute a frio do fecho
+  vinf_partida_chute_km_s: {valor: 3.0, premissa: P-118}       # v∞ de partida do chute a frio, na direção da Terra
+  razao_volta_chute: {valor: 1.25, premissa: P-118}            # razão de massas da volta antes da primeira volta otimizada
+  max_iteracoes_massas: {valor: 200, premissa: P-118}          # ponto fixo das massas (tolerância: P-049, config/eletrica.yaml)
+  limiar_arco: {valor: 1.0e-3, premissa: P-118}                # |u| acima disto conta como empuxo (Δv dos arcos)
+  escala_restricao_declinacao: {valor: 100.0, premissa: P-118} # escala da restrição de declinação do caso publicado
+  folga_restricao_declinacao: {valor: 1.0e-6, premissa: P-118} # folga (no seno escalado) da igualdade como duas desigualdades
+
 caso_publicado:
   # Joffre et al. 2018 [F121], Fig. 4 (rótulos na p. 5; texto na p. 4): dois exemplos de ida com propulsão elétrica do
   # estudo do ERO. Massa e empuxo não estão na fonte: vêm de Yau 2021 [F22], outra versão do projeto (decisão do Fabio,
@@ -20,13 +34,15 @@ caso_publicado:
   isp_s: {valor: 3900, fonte: "[F121] p. 4: \"the high Isp (3900 s on this example)\" (exemplo da esquerda)"}
   isp_direita_s: {valor: 3900, premissa: P-119}   # a fonte não dá o Isp do exemplo da direita; usa-se o da esquerda
   massa_inicial_kg: {valor: 6500, fonte: "[F22] slide 7: \"Approx 6.5 Tonnes (wet mass)\""}
-  empuxo_max_publicado_n: {valor: 0.75, fonte: "[F22] slide 8: \"Thrust Range = 0.13 – 0.75 N\""}
+  # Lido como empuxo total dos 3 propulsores ativos ([F22] slide 8, "3 x active + 1 spare"), coerente com 3 × 250 mN de
+  # [F29] slide 6 ("4 x 250 mN"); a leitura é deste estudo (P-119).
+  empuxo_max_publicado_n: {valor: 0.75, fonte: "[F22] slide 8: \"Thrust Range = 0.13 – 0.75 N\"", premissa: P-119}
   # Empuxos da varredura (N), com a massa acima: do máximo de [F22] para cima, para achar o empuxo em que o Δv calculado
   # iguala o publicado. P-119.
   empuxos_n: {valor: [1.5, 1.25, 1.2, 1.15, 1.1, 1.05, 1.0, 0.75], premissa: P-119}
   casos:
     esquerda:
-      nome: "Fig. 4, esquerda: empuxo constante, chegada com v∞ (captura química)"
+      nome: "Fig. 4, esquerda: empuxo constante, chegada com v infinito (captura química)"
       partida: {valor: "2026-10-02", fonte: "[F121] p. 5, Fig. 4: \"Earth escape - 02 OCT 2026\""}
       chegada: {valor: "2027-10-14", fonte: "[F121] p. 5, Fig. 4: \"Mars arrival - 14 OCT 2027\""}
       vinf_partida_km_s: {valor: 2.23, fonte: "[F121] p. 5, Fig. 4: \"V∞ = 2.23 km/s\""}
@@ -35,7 +51,7 @@ caso_publicado:
       declinacao_chegada_graus: {valor: -11.9, fonte: "[F121] p. 5, Fig. 4: \"δ = -11.9 deg\""}
       dv_publicado_km_s: {valor: 2.59, fonte: "[F121] p. 5, Fig. 4: \"∆V = 2.59 km/s\"; p. 4: \"a significant SEP Delta-V (2.59 km/s)\""}
     direita:
-      nome: "Fig. 4, direita: chegada com v∞ = 0, arco de voo livre entre dois arcos de empuxo"
+      nome: "Fig. 4, direita: chegada com v infinito = 0, arco de voo livre entre dois arcos de empuxo"
       partida: {valor: "2026-06-16", fonte: "[F121] p. 5, Fig. 4: \"Earth escape - 16 JUN 2026\""}
       chegada: {valor: "2027-10-08", fonte: "[F121] p. 5, Fig. 4: \"Mars arrival - 08 OCT 2027\""}
       vinf_partida_km_s: {valor: 2.08, fonte: "[F121] p. 5, Fig. 4: \"V∞ = 2.08 km/s\""}

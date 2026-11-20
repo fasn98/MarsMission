@@ -1357,7 +1357,7 @@ premissas:
 
   - id: P-118
     nome: transcricao_e_otimizador_do_baixo_empuxo_heliocentrico
-    valor: {n_segmentos: 30, ordem: 4, maxiter: 800, ftol: 1.0e-10, residuo_max: 1.0e-8}
+    valor: {n_segmentos: 30, ordem: 4, maxiter: 800, ftol: 1.0e-10, residuo_max: 1.0e-8, limites_e_chutes: "config/orbitador_so_eletrico.yaml"}
     unidade: segmentos; adimensional (resíduo em UA, √(μ☉/1 UA) e t)
     uso: config/orbitador_so_eletrico.yaml (orbital.sims_flanagan, tools/orbitador_so_eletrico.py)
     justificativa: >
@@ -1369,7 +1369,11 @@ premissas:
       Também sem fonte: (i) até 4 reinícios do SLSQP a partir do último ponto, e aceitar como convergido um ponto viável
       cujo objetivo muda menos que ftol × 10³ entre dois reinícios; (ii) no objetivo da ida, a curva C3 × massa do lançador
       ([F79]) interpolada por PCHIP (monótona, nos mesmos pontos), porque o SLSQP não converge nas quinas da interpolação
-      linear; a margem reportada usa a interpolação linear de orbital.lancamento.
+      linear; a margem reportada usa a interpolação linear de orbital.lancamento; (iii) os limites e chutes de
+      config/orbitador_so_eletrico.yaml (limites_e_chutes): faixas das massas (m0 da ida entre 0,3 e 4 vezes a massa na
+      chegada; massa final ≥ 0,2 da inicial), chutes a frio (6000 kg, 1,6, 3 km/s, 0,85, razão da volta 1,25), até 200
+      passos do ponto fixo das massas, limiar de 1e-3 em |u| para contar um arco de empuxo, e escala 100 e folga 1e-6 da
+      restrição de declinação do caso publicado.
     status: NÃO VALIDADA
 
   - id: P-119
@@ -1385,7 +1389,8 @@ premissas:
       SEM FONTE: o Isp do exemplo da direita (o da esquerda); os empuxos da varredura acima de 0,75 N, usados para achar
       o empuxo em que o Δv calculado iguala o publicado; e os referenciais das declinações publicadas (δ de partida no
       equador da Terra, J2000; δ de chegada no equador de Marte, IAU_MARS do pck00011 na data de chegada), na variante com
-      as declinações impostas.
+      as declinações impostas; e a leitura de "Thrust Range = 0.13 – 0.75 N" ([F22] slide 8) como empuxo total dos 3
+      propulsores ativos, coerente com "4 x 250 mN" de [F29] slide 6.
     status: NÃO VALIDADA
 
   - id: P-120

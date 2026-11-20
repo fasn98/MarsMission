@@ -1,4 +1,4 @@
-# Orbitador só elétrico da família 1: verificação (gerado por tools/orbitador_so_eletrico.py)
+# Orbitador só elétrico da família 1: trajetória de baixo empuxo e fecho de massa (gerado por tools/orbitador_so_eletrico.py)
 
 Etapa 2 do plano (issue #68). Plano aprovado pelo Fabio em 2026-11-20. **Calculado, NÃO validado.**
 
@@ -27,8 +27,8 @@ Joffre et al. 2018 [F121], Fig. 4, p. 5: dois exemplos de ida do ERO. Massa inic
 
 | Exemplo | Partida | Chegada | v∞ de partida (km/s) | v∞ de chegada (km/s) | Δv publicado (km/s) |
 | :- | :- | :- | -: | -: | -: |
-| Fig. 4, esquerda: empuxo constante, chegada com v∞ (captura química) | 2026-10-02 | 2027-10-14 | 2,23 | 1,47 | 2,59 |
-| Fig. 4, direita: chegada com v∞ = 0, arco de voo livre entre dois arcos de empuxo | 2026-06-16 | 2027-10-08 | 2,08 | 0,00 | 5,94 |
+| Fig. 4, esquerda: empuxo constante, chegada com v infinito (captura química) | 2026-10-02 | 2027-10-14 | 2,23 | 1,47 | 2,59 |
+| Fig. 4, direita: chegada com v infinito = 0, arco de voo livre entre dois arcos de empuxo | 2026-06-16 | 2027-10-08 | 2,08 | 0,00 | 5,94 |
 
 Configurações da família 1 avaliadas: XIPS-25: 6, 7, 8, 9, 10, 11, 12 ativos; NEXT-C: 3, 4, 5, 6, 7 ativos; encontro a 380 e 814 km.
 
