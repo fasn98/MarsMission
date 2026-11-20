@@ -1354,3 +1354,75 @@ premissas:
       SEM FONTE (escolha numérica): tol_ls = 1e-14, custo_circular = 1e-16, xatol_c = 1e-10 1/s e xtol_escala = 1e-14.
       Reprodutibilidade e incerteza numérica: results/conferencia/ruido_subida.md.
     status: NÃO VALIDADA
+
+  - id: P-118
+    nome: transcricao_e_otimizador_do_baixo_empuxo_heliocentrico
+    valor: {n_segmentos: 30, ordem: 4, maxiter: 800, ftol: 1.0e-10, residuo_max: 1.0e-8}
+    unidade: segmentos; adimensional (resíduo em UA, √(μ☉/1 UA) e t)
+    uso: config/orbitador_so_eletrico.yaml (orbital.sims_flanagan, tools/orbitador_so_eletrico.py)
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-20 como NÃO VALIDADA (plano da Etapa 2, item 2 das premissas novas).
+      SEM FONTE (escolha numérica): número de segmentos da transcrição de Sims–Flanagan, ordem da composição (4, Yoshida),
+      limite de iterações e tolerância do SLSQP, e o resíduo de continuidade acima do qual a solução é tratada como não
+      convergida (a ferramenta para). Com ordem 4 e 30 segmentos, o erro da transcrição contra a propagação contínua fica
+      registrado no diagnóstico de cada solução (results/familia1/diagnostico_orbitador_so_eletrico.md).
+      Também sem fonte: (i) até 4 reinícios do SLSQP a partir do último ponto, e aceitar como convergido um ponto viável
+      cujo objetivo muda menos que ftol × 10³ entre dois reinícios; (ii) no objetivo da ida, a curva C3 × massa do lançador
+      ([F79]) interpolada por PCHIP (monótona, nos mesmos pontos), porque o SLSQP não converge nas quinas da interpolação
+      linear; a margem reportada usa a interpolação linear de orbital.lancamento.
+    status: NÃO VALIDADA
+
+  - id: P-119
+    nome: caso_publicado_do_baixo_empuxo
+    valor: {isp_direita_s: 3900, empuxos_n: [1.5, 1.25, 1.2, 1.15, 1.1, 1.05, 1.0, 0.75]}
+    unidade: s; N
+    uso: config/orbitador_so_eletrico.yaml (caso_publicado), tools/orbitador_so_eletrico.py
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-20 como NÃO VALIDADA (comparação com Joffre 2018, com a ressalva de que a massa e o
+      empuxo vêm de Yau 2021, outra versão do projeto).
+      COM FONTE: a massa inicial de 6,5 t e o empuxo máximo de 0,75 N ([F22] slides 7–8); o Isp de 3900 s do exemplo da
+      esquerda ([F121] p. 4).
+      SEM FONTE: o Isp do exemplo da direita (o da esquerda); os empuxos da varredura acima de 0,75 N, usados para achar
+      o empuxo em que o Δv calculado iguala o publicado; e os referenciais das declinações publicadas (δ de partida no
+      equador da Terra, J2000; δ de chegada no equador de Marte, IAU_MARS do pck00011 na data de chegada), na variante com
+      as declinações impostas.
+    status: NÃO VALIDADA
+
+  - id: P-120
+    nome: ciclo_de_trabalho_do_orbitador_eletrico
+    valor: 0.95
+    unidade: adimensional (fração do tempo com empuxo nos trechos com empuxo)
+    uso: config/orbitador_so_eletrico.yaml (operacao), tools/orbitador_so_eletrico.py
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-20 como NÃO VALIDADA (item 1 das premissas novas).
+      COM FONTE: o Dawn projetou a trajetória interplanetária com ciclo de trabalho de 95 % ([F279] p. 611).
+      SEM FONTE: a aplicação desse valor a este orbitador, como redução do empuxo médio no trecho heliocêntrico e como
+      aumento do tempo das espirais. A margem de empuxo perdido do Dawn (≥ 28 d, [F279] p. 611) não está somada aqui.
+    status: NÃO VALIDADA
+
+  - id: P-121
+    nome: rodizio_e_vida_dos_propulsores
+    valor: {ppu_por_propulsor: true, reservas_sem_xenonio: true, vida_xips25_kg: 158, vida_next_kg: 918}
+    unidade: kg de xenônio por propulsor
+    uso: config/orbitador_so_eletrico.yaml (propulsores, operacao), tools/orbitador_so_eletrico.py
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-20 como NÃO VALIDADA (item 4 das premissas novas e decisão 3 do portão).
+      COM FONTE: 158 kg no teste de vida do XIPS-25 ([F274] p. 4; [F275] p. 1 dá "about 170 kg" para o mesmo teste);
+      918 kg no teste de longa duração do NEXT ([F277] p. 2); 700 kg na análise do NEXT-C ([F276] p. 7).
+      SEM FONTE: (i) a vida de um teste com perfil de GEO (XIPS-25) vale para espaço profundo; (ii) a vida do NEXT (propulsor
+      de engenharia) vale para o NEXT-C de voo; (iii) rodízio: propulsores instalados além dos ativos, cada um com a sua PPU,
+      até o xenônio por propulsor ficar abaixo da vida; as reservas de P-047 não processam xenônio.
+    status: NÃO VALIDADA
+
+  - id: P-122
+    nome: faixas_da_missao_do_orbitador_so_eletrico
+    valor: {partida_terra: ["2028-09-01", "2029-01-31"], ida_dias: [200, 1100], vinf_chegada_marte_km_s: 0.0, espera_retorno_dias: 400, volta_dias: [150, 900], vinf_chegada_terra_max_km_s: 5.0, n_ativos: {XIPS-25: [6, 12], NEXT-C: [3, 7]}, iteracoes_fecho: 4, partida_frio: "2028-11-24", duracoes_frio_ida_dias: [600, 700, 800, 500, 900, 1000], duracoes_frio_volta_dias: [400, 500, 600, 300, 700, 800]}
+    unidade: data; dias; km/s; propulsores
+    uso: config/orbitador_so_eletrico.yaml (missao), tools/orbitador_so_eletrico.py
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-20 como NÃO VALIDADA (faixas de busca da Etapa 2).
+      SEM FONTE: faixa da data de partida (em torno da partida de referência de 2028-11-24), duração da ida e da volta,
+      chegada a Marte com v∞ = 0 (a espiral de descida começa no raio de Hill, como na rota B), espera máxima para partir de
+      Marte, v∞ máximo na chegada à Terra (sem limite publicado de entrada da cápsula), números de propulsores varridos,
+      número de iterações do fecho de massa, e a partida a frio do otimizador (data e durações tentadas em ordem).
+    status: NÃO VALIDADA

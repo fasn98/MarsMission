@@ -233,8 +233,9 @@ class _Avaliador:
         return ((res[1:] - res[0]) / h[:, None]).T
 
 
-def otimizar(p: Perna, objetivo, chute, maxiter=500, ftol=1e-10):
-    """Minimiza `objetivo(t0, tof, m0, mf, vinf0, vinf1)` sujeito à continuidade da perna, |u_i| ≤ 1 e aos limites.
+def otimizar(p: Perna, objetivo, chute, maxiter=500, ftol=1e-10, ineq_extra=None):
+    """Minimiza `objetivo(t0, tof, m0, mf, vinf0, vinf1)` sujeito à continuidade da perna, |u_i| ≤ 1, aos limites e,
+    se dada, a `ineq_extra(t0, tof, m0, mf, vinf0, vinf1) ≥ 0` (vetor).
 
     `chute`: dicionário com t0, tof (s), m0, mf (kg), vinf0, vinf1 (vetores) e u (N × 3). Devolve um dicionário com a
     solução, o resíduo de continuidade e o estado do otimizador."""
@@ -258,6 +259,9 @@ def otimizar(p: Perna, objetivo, chute, maxiter=500, ftol=1e-10):
         a0, a1 = float(vi0 @ vi0), float(vi1 @ vi1)
         g.append([p.vinf_partida[1] ** 2 - a0, a0 - p.vinf_partida[0] ** 2, p.vinf_chegada[1] ** 2 - a1,
                   a1 - p.vinf_chegada[0] ** 2])
+        if ineq_extra is not None:
+            t0, tof, m0, mf, _, _, _ = av.desfaz(z)
+            g.append(np.atleast_1d(ineq_extra(t0, tof, m0, mf, vi0, vi1)))
         return np.concatenate(g)
 
     sol = minimize(f, z0, method="SLSQP", bounds=lim,
@@ -280,3 +284,62 @@ def dv_total(u, tof, m0, motor):
         dv += motor.c_km_s * math.log(m / m2)
         m = m2
     return dv
+
+
+def viabilizar(p: Perna, chute, max_nfev=300):
+    """Ponto viável com as datas do chute fixas: mínimos quadrados (scipy least_squares, método trf) no resíduo de
+    continuidade, com o empuxo em coordenadas esféricas (fração em [0, 1], dois ângulos livres) e os v∞ em módulo (nos
+    limites da perna) e direção; a massa livre (m0 ou mf, a que tiver limites diferentes) fica nos seus limites.
+    Devolve o chute atualizado e o maior resíduo; serve de partida para `otimizar`, que precisa de um ponto viável."""
+    from scipy.optimize import least_squares
+    av = _Avaliador(p)
+    n = p.n_segmentos
+    t0, tof = chute["t0"], chute["tof"]
+    m0_livre = p.m0[0] < p.m0[1]
+
+    def esf(x):
+        x = np.asarray(x, float)
+        a = float(np.linalg.norm(x))
+        if a == 0:
+            return 0.0, 0.0, 0.0
+        return a, math.atan2(x[1], x[0]), math.asin(max(-1.0, min(1.0, x[2] / a)))
+
+    def cart(a, th, fi):
+        return a * np.array([math.cos(fi) * math.cos(th), math.cos(fi) * math.sin(th), math.sin(fi)])
+
+    u = np.asarray(chute["u"], float)
+    q0, lo, hi = [], [], []
+    m_ini = chute["m0"] if m0_livre else chute["mf"]
+    mlim = p.m0 if m0_livre else p.mf
+    q0.append(min(max(m_ini, mlim[0]), mlim[1]) / p.escala_m); lo.append(mlim[0] / p.escala_m); hi.append(mlim[1] / p.escala_m)
+    for vi, lim in ((chute["vinf0"], p.vinf_partida), (chute["vinf1"], p.vinf_chegada)):
+        a, th, fi = esf(vi)
+        q0 += [min(max(a, lim[0]), lim[1]), th, fi]
+        lo += [lim[0], -np.inf, -np.inf]
+        hi += [lim[1] + (1e-12 if lim[1] == lim[0] else 0.0), np.inf, np.inf]
+    for ui in u:
+        a, th, fi = esf(ui)
+        q0 += [min(a, 1.0), th, fi]
+        lo += [0.0, -np.inf, -np.inf]
+        hi += [1.0, np.inf, np.inf]
+    q0 = np.clip(np.array(q0), np.array(lo), np.array(hi))
+
+    def z_de(q):
+        m = q[0] * p.escala_m
+        m0, mf = (m, chute["mf"]) if m0_livre else (chute["m0"], m)
+        vi0 = cart(*q[1:4])
+        vi1 = cart(*q[4:7])
+        uu = np.array([cart(*q[7 + 3 * i:10 + 3 * i]) for i in range(n)])
+        return np.r_[t0 / _DIA, tof / _DIA, m0 / p.escala_m, mf / p.escala_m, vi0, vi1, uu.ravel()]
+
+    def jac(q):
+        h = 1.4901161193847656e-08 * np.maximum(1.0, np.abs(q))
+        qs = [q] + [q + np.eye(len(q))[k] * h[k] for k in range(len(q))]
+        res = av.lote(np.vstack([z_de(x) for x in qs]))
+        return ((res[1:] - res[0]) / h[:, None]).T
+
+    sol = least_squares(lambda q: av.lote(z_de(q)[None, :])[0], q0, jac=jac, bounds=(lo, hi), method="trf",
+                        max_nfev=max_nfev, xtol=1e-15, ftol=1e-15, gtol=1e-15)
+    z = z_de(sol.x)
+    t0_, tof_, m0, mf, vi0, vi1, uu = av.desfaz(z)
+    return {**chute, "m0": m0, "mf": mf, "vinf0": vi0, "vinf1": vi1, "u": uu}, float(np.max(np.abs(sol.fun)))
