@@ -26,6 +26,44 @@ partes:
   inerte_solido:
     depende_de: [base, mav_familia1, ruido_subida, familia1_465]
     ferramentas: [inerte_solido]
+  # Etapa 2 (issue #68): orbitador só elétrico em matriz (blocos de config/orbitador_so_eletrico.yaml); leem a base, a
+  # junção lê todos.
+  se_caso_publicado:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --caso-publicado"]
+  se_xips_25_380_12_7:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 380 12-7"]
+  se_xips_25_380_6_1:
+    depende_de: [base, se_xips_25_380_12_7]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 380 6-1"]
+  se_xips_25_87_kg_380_12_7:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 (87 kg) 380 12-7"]
+  se_xips_25_87_kg_380_6_1:
+    depende_de: [base, se_xips_25_87_kg_380_12_7]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 (87 kg) 380 6-1"]
+  se_next_c_380_7_1:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --bloco NEXT-C 380 7-1"]
+  se_xips_25_814_12_7:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 814 12-7"]
+  se_xips_25_814_6_1:
+    depende_de: [base, se_xips_25_814_12_7]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 814 6-1"]
+  se_xips_25_87_kg_814_12_7:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 (87 kg) 814 12-7"]
+  se_xips_25_87_kg_814_6_1:
+    depende_de: [base, se_xips_25_87_kg_814_12_7]
+    ferramentas: ["orbitador_so_eletrico --bloco XIPS-25 (87 kg) 814 6-1"]
+  se_next_c_814_7_1:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --bloco NEXT-C 814 7-1"]
+  se_junta:
+    depende_de: [base, mav_familia1, se_caso_publicado, se_xips_25_380_12_7, se_xips_25_380_6_1, se_xips_25_87_kg_380_12_7, se_xips_25_87_kg_380_6_1, se_next_c_380_7_1, se_xips_25_814_12_7, se_xips_25_814_6_1, se_xips_25_87_kg_814_12_7, se_xips_25_87_kg_814_6_1, se_next_c_814_7_1]
+    ferramentas: ["orbitador_so_eletrico --junta"]
   comparacao:
-    depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido]
+    depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_junta]
     ferramentas: [opcoes_arquitetura]

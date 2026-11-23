@@ -1357,7 +1357,7 @@ premissas:
 
   - id: P-118
     nome: transcricao_e_otimizador_do_baixo_empuxo_heliocentrico
-    valor: {n_segmentos: 30, ordem: 4, maxiter: 800, ftol: 1.0e-10, residuo_max: 1.0e-8, limites_e_chutes: "config/orbitador_so_eletrico.yaml"}
+    valor: {n_segmentos: 30, ordem: 4, maxiter: 2400, ftol: 1.0e-10, residuo_max: 1.0e-8, limites_e_chutes: "config/orbitador_so_eletrico.yaml"}
     unidade: segmentos; adimensional (resíduo em UA, √(μ☉/1 UA) e t)
     uso: config/orbitador_so_eletrico.yaml (orbital.sims_flanagan, tools/orbitador_so_eletrico.py)
     justificativa: >
@@ -1373,7 +1373,20 @@ premissas:
       config/orbitador_so_eletrico.yaml (limites_e_chutes): faixas das massas (m0 da ida entre 0,3 e 4 vezes a massa na
       chegada; massa final ≥ 0,2 da inicial), chutes a frio (6000 kg, 1,6, 3 km/s, 0,85, razão da volta 1,25), até 200
       passos do ponto fixo das massas, limiar de 1e-3 em |u| para contar um arco de empuxo, e escala 100 e folga 1e-6 da
-      restrição de declinação do caso publicado.
+      restrição de declinação do caso publicado; (iv) a formulação do limite de DLA no objetivo da ida (decisão do Fabio,
+      2026-11-20: testar as duas e ficar com a mais robusta): "suave" (o multiplicador da P-036 por PCHIP só no objetivo,
+      com derivada zero em 28,5°) ou "restricao" (DLA ≤ 28,5° explícita); a margem reportada usa sempre a P-036 inalterada.
+      Escolhida em 2026-11-21: "restricao". Numa comparação local exploratória (mesmas configurações, fora de results/)
+      ela convergiu em mais configurações que a "suave" e põe o DLA exatamente no limite publicado, enquanto a "suave" o
+      deixa um pouco acima (onde a P-036 já reduz a capacidade); a "suave" fica como registro, selecionável no config.
+      maxiter: 800 até 2026-11-21; 2400 aprovado pelo Fabio em 2026-11-22, condicionado às sondas. Sondas locais
+      exploratórias (fora de results/; notebook Acer Nitro ANV15-52, 2026-11-21/22), as mesmas cadeias com 800 e 2400:
+      dos 6 casos parados no limite de iterações a 800, 4 convergem a 2400; nas 17 configurações comparadas, 10 convergem
+      a 2400 contra 7 a 800, com 26 % mais tempo no total. A cadeia muda de caminho com o limite: numa delas (XIPS-25 de
+      87 kg a 380 km) 3 configurações que convergiam a 800 deixam de convergir a 2400.
+      Classificação de quem não converge (decisão do Fabio, 2026-11-22): pelo menor resíduo de continuidade alcançado nas
+      tentativas; acima de residuo_max, "nenhuma solução viável encontrada" (sem afirmar inviabilidade); abaixo, "sem
+      convergência do otimizador".
     status: NÃO VALIDADA
 
   - id: P-119
@@ -1407,7 +1420,7 @@ premissas:
 
   - id: P-121
     nome: rodizio_e_vida_dos_propulsores
-    valor: {ppu_por_propulsor: true, reservas_sem_xenonio: true, vida_xips25_kg: 158, vida_next_kg: 918}
+    valor: {ppu_por_propulsor: true, reservas_sem_xenonio: true, vida_xips25_kg: 158, vida_xips25_plena_potencia_kg: 87, vida_next_kg: 918}
     unidade: kg de xenônio por propulsor
     uso: config/orbitador_so_eletrico.yaml (propulsores, operacao), tools/orbitador_so_eletrico.py
     justificativa: >
@@ -1417,11 +1430,14 @@ premissas:
       SEM FONTE: (i) a vida de um teste com perfil de GEO (XIPS-25) vale para espaço profundo; (ii) a vida do NEXT (propulsor
       de engenharia) vale para o NEXT-C de voo; (iii) rodízio: propulsores instalados além dos ativos, cada um com a sua PPU,
       até o xenônio por propulsor ficar abaixo da vida; as reservas de P-047 não processam xenônio.
+      XIPS-25 a ~4,5 kW (decisão do Fabio, 2026-11-20: carregar as duas vidas até o portão): o teste de vida processou 114
+      dos 158 kg a 2 kW ([F274] p. 4, Tab. 3); a plena potência, o modelo de [F275] p. 10 dá 134 kg no limite e 87 kg com a
+      margem de 50 %. Base de 158 kg (aplicada a 4,5 kW sem fonte) e variante de 87 kg (avaliação por modelo, não teste).
     status: NÃO VALIDADA
 
   - id: P-122
     nome: faixas_da_missao_do_orbitador_so_eletrico
-    valor: {partida_terra: ["2028-09-01", "2029-01-31"], ida_dias: [200, 1100], vinf_chegada_marte_km_s: 0.0, espera_retorno_dias: 400, volta_dias: [150, 900], vinf_chegada_terra_max_km_s: 5.0, n_ativos: {XIPS-25: [6, 12], NEXT-C: [3, 7]}, iteracoes_fecho: 4, partida_frio: "2028-11-24", duracoes_frio_ida_dias: [600, 700, 800, 500, 900, 1000], duracoes_frio_volta_dias: [400, 500, 600, 300, 700, 800]}
+    valor: {partida_terra: ["2028-09-01", "2029-01-31"], ida_dias: [200, 1100], vinf_chegada_marte_km_s: 0.0, espera_retorno_dias: 400, volta_dias: [150, 900], vinf_chegada_terra_max_km_s: 5.0, n_ativos: {XIPS-25: [1, 12], "XIPS-25 (87 kg)": [1, 12], NEXT-C: [1, 7]}, iteracoes_fecho: 4, partida_frio: "2028-11-24", duracoes_frio_ida_dias: [600, 700, 800, 500, 900, 1000], duracoes_frio_volta_dias: [400, 500, 600, 300, 700, 800]}
     unidade: data; dias; km/s; propulsores
     uso: config/orbitador_so_eletrico.yaml (missao), tools/orbitador_so_eletrico.py
     justificativa: >
@@ -1430,4 +1446,40 @@ premissas:
       chegada a Marte com v∞ = 0 (a espiral de descida começa no raio de Hill, como na rota B), espera máxima para partir de
       Marte, v∞ máximo na chegada à Terra (sem limite publicado de entrada da cápsula), números de propulsores varridos,
       número de iterações do fecho de massa, e a partida a frio do otimizador (data e durações tentadas em ordem).
+      Cadeias (decisão do Fabio, 2026-11-22): uma cadeia de n decrescente por propulsor e órbita, em ordem fixa, com
+      partida a quente da solução convergida mais recente; dividida em blocos encadeados quando não cabe num job do CI
+      (bloco_cadeia: 6 valores de n para as duas variantes do XIPS-25, cadeia inteira de 7 para o NEXT-C; pelas sondas,
+      cerca de 20 a 30 min por configuração neste notebook, o que dá mais de 270 min para 12 valores de n). O bloco
+      seguinte continua das soluções gravadas pelo anterior; a segunda passada usa os vizinhos convergidos deste bloco e
+      dos anteriores.
     status: NÃO VALIDADA
+
+  - id: P-123
+    nome: bandas_das_conclusoes_do_orbitador_so_eletrico
+    valor: {margem_minima: 0.0, banda_margem: 0.05, banda_prazo_dias: 30}
+    unidade: fração da massa injetada; dias
+    uso: config/orbitador_so_eletrico.yaml (conclusoes), results/familia1/orbitador_so_eletrico.md
+    justificativa: >
+      Decisão do Fabio em 2026-11-20 (regra 6): as conclusões vão para o arquivo comparado pelo CI, com limites que não
+      virem entre CPUs; valores escolhidos aqui, NÃO VALIDADA.
+      SEM FONTE: três estados ("sim", "não", "indeterminado"). Margem no Falcon Heavy: "sim" só com margem ≥ 0 + 5 pontos e
+      "não" só abaixo de −5 pontos; prazo: "sim" com o orbitador pronto 30 d ou mais antes do último lançamento do MAV,
+      "não" com 30 d ou mais depois. Justificativa das bandas: a banda tem de ser muito maior que a diferença entre mínimos
+      locais da mesma configuração (medida no diagnóstico ao comparar as formulações e as partidas a frio e a quente) e
+      menor que as diferenças entre configurações vizinhas.
+    status: NÃO VALIDADA
+
+  - id: P-124
+    nome: estacao_das_tempestades_globais_de_poeira
+    valor: {ls_graus: [180, 340]}
+    unidade: graus de longitude solar Ls
+    uso: config/orbitador_so_eletrico.yaml (estocagem_mav), results/familia1/diagnostico_orbitador_so_eletrico.md
+    justificativa: >
+      Pedido do Fabio em 2026-11-20 (item 6 do portão). NÃO VALIDADA.
+      COM FONTE: a estação de tempestades do periélio vai de Ls 200° a 340° ([F281] p. 1), e as tempestades globais do
+      catálogo começaram entre Ls 185° e 310° ([F282] p. 8, Tab. 1, preprint).
+      SEM FONTE: a janela de 180° a 340° (o início arredondado para baixo, abaixo do mais cedo do catálogo), e contar uma
+      "temporada" sempre que a estada do lander toca essa janela; a ocorrência de uma tempestade global numa temporada não
+      é prevista (cerca de 40 a 50 % das tempestades do periélio observadas foram globais, [F281] p. 15).
+    status: NÃO VALIDADA
+

@@ -62,12 +62,28 @@ FASE_1 = [["tools/baricentro_marte.py"], ["tools/porkchop.py", "terra_marte"], [
           ["tools/missoes.py"], ["tools/compara_dra5.py"], ["tools/grafico_missoes.py"], ["tools/lista_premissas.py"]]
 FASE_850 = [["tools/dimensionamento.py"], ["tools/compara_msr.py"], ["tools/superficie.py"],
             ["tools/varredura_encontro.py"], ["tools/isru.py"], ["tools/mav_propulsao.py"]]
+# Etapa 2 (issue #68): o orbitador só elétrico roda em matriz no CI: o caso publicado, um comando por bloco das cadeias de
+# n (propulsor × órbita; os blocos de uma cadeia em sequência) e a junção; a lista de blocos é a de
+# config/orbitador_so_eletrico.yaml (conferida em tests/).
+import orbitador_so_eletrico as _ose  # noqa: E402
+
+ORBITADOR_SO_ELETRICO = ([["tools/orbitador_so_eletrico.py", "--caso-publicado"]]
+                         + [["tools/orbitador_so_eletrico.py", "--bloco", nome, str(int(h)), _ose._rotulo_bloco(ns)]
+                            for nome, h, ns, _ in _ose.blocos()]
+                         + [["tools/orbitador_so_eletrico.py", "--junta"]])
+
+
+def chave(cmd):
+    """Nome de um comando da regeneração em tools/regeneracao_partes.yaml: o nome da ferramenta e os argumentos."""
+    return " ".join([Path(cmd[0]).stem, *cmd[1:]])
+
+
 FASE_ATUAL = [["tools/redimensiona.py"], ["tools/plataformas.py"], ["tools/lancamento.py"], ["tools/coleta.py"], ["tools/arquitetura.py"],
               ["tools/confere_2033.py"], ["tools/exporta_painel.py"], ["tools/queima_finita.py"], ["tools/baixo_empuxo.py"],
               ["tools/geometria_marte.py"], ["tools/orbitador_eletrico.py"], ["tools/energia.py"], ["tools/termico.py"], ["tools/comunicacao.py"], ["tools/operacao_superficie.py"], ["tools/lista_massas_lander.py"],
               ["tools/fase4.py"], ["tools/envelope_arranjo.py"],
               ["tools/cad_parametros.py"], ["tools/encaixe_coifas.py"], ["tools/mav_arranjo.py"],
-              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/isp_44_bocal.py"], ["tools/rota_a_dimensiona.py"], ["tools/subida_mav.py"], ["tools/comprimento_solido.py"], ["tools/mav_solido.py"], ["tools/missao_familia1.py"], ["tools/mav_familia1.py"], ["tools/ruido_subida.py"], ["tools/familia1_465.py"], ["tools/inerte_solido.py"], ["tools/opcoes_arquitetura.py"]]
+              ["tools/conferencia_onshape.py"], ["tools/cg_lateral.py"], ["tools/portao_7_2.py"], ["tools/bocais_estagio1.py"], ["tools/comprimento_mav.py"], ["tools/rotas_mav.py"], ["tools/isp_44_bocal.py"], ["tools/rota_a_dimensiona.py"], ["tools/subida_mav.py"], ["tools/comprimento_solido.py"], ["tools/mav_solido.py"], ["tools/missao_familia1.py"], ["tools/mav_familia1.py"], ["tools/ruido_subida.py"], ["tools/familia1_465.py"], ["tools/inerte_solido.py"]] + ORBITADOR_SO_ELETRICO + [["tools/opcoes_arquitetura.py"]]
 _SO_NA_RAIZ = {".git", "data", "results", "hanatrial", ".venv", ".pythonlibs", ".cache", ".claude"}
 
 
@@ -326,7 +342,7 @@ def partes():
     """Partes da regeneração em paralelo (tools/regeneracao_partes.yaml), conferidas contra FASE_ATUAL: cada ferramenta de
     FASE_ATUAL está em exatamente uma parte, e só a "base" roda as fases históricas."""
     ps = yaml.safe_load((RAIZ / "tools" / "regeneracao_partes.yaml").read_text(encoding="utf-8"))["partes"]
-    nomes = [Path(c[0]).stem for c in FASE_ATUAL]
+    nomes = [chave(c) for c in FASE_ATUAL]
     todas = [f for p in ps.values() for f in p["ferramentas"]]
     if sorted(todas) != sorted(nomes) or len(set(todas)) != len(todas):
         raise RuntimeError("tools/regeneracao_partes.yaml não cobre FASE_ATUAL exatamente uma vez")
@@ -366,7 +382,7 @@ def regenerar(d: Path, rastreio: Path | None = None, parte: dict | None = None):
 
     if parte is not None and not parte.get("fases_historicas"):
         for c in FASE_ATUAL:
-            if Path(c[0]).stem in parte["ferramentas"]:
+            if chave(c) in parte["ferramentas"]:
                 rodar(c)
         return log
     antes = yaml.safe_load((d / "config/plataformas.yaml").read_text(encoding="utf-8"))["antes_etapa_2_3"]
@@ -384,7 +400,7 @@ def regenerar(d: Path, rastreio: Path | None = None, parte: dict | None = None):
     subprocess.run(["git", "add", "-A"], cwd=d, check=True, env=_env_git())
     subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "config atual"], cwd=d, check=True, env=_env_git())
     for c in FASE_ATUAL:
-        if parte is None or Path(c[0]).stem in parte["ferramentas"]:
+        if parte is None or chave(c) in parte["ferramentas"]:
             rodar(c)
     return log
 

@@ -103,17 +103,66 @@ jobs:
     needs: [base, mav_familia1, ruido_subida, familia1_465]
     uses: ./.github/workflows/regeneracao_parte.yml
     with: {parte: inerte_solido, entradas: "base mav_familia1 ruido_subida familia1_465"}
-  regeneracao:
-    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido]
+  # Etapa 2 (issue #68): orbitador só elétrico em matriz (tools/regeneracao_partes.yaml).
+  se_caso_publicado:
+    needs: [base]
     uses: ./.github/workflows/regeneracao_parte.yml
-    with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido"}
+    with: {parte: se_caso_publicado, entradas: "base"}
+  se_xips_25_380_12_7:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_380_12_7, entradas: "base"}
+  se_xips_25_380_6_1:
+    needs: [base, se_xips_25_380_12_7]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_380_6_1, entradas: "base se_xips_25_380_12_7"}
+  se_xips_25_87_kg_380_12_7:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_87_kg_380_12_7, entradas: "base"}
+  se_xips_25_87_kg_380_6_1:
+    needs: [base, se_xips_25_87_kg_380_12_7]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_87_kg_380_6_1, entradas: "base se_xips_25_87_kg_380_12_7"}
+  se_next_c_380_7_1:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_next_c_380_7_1, entradas: "base"}
+  se_xips_25_814_12_7:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_814_12_7, entradas: "base"}
+  se_xips_25_814_6_1:
+    needs: [base, se_xips_25_814_12_7]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_814_6_1, entradas: "base se_xips_25_814_12_7"}
+  se_xips_25_87_kg_814_12_7:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_87_kg_814_12_7, entradas: "base"}
+  se_xips_25_87_kg_814_6_1:
+    needs: [base, se_xips_25_87_kg_814_12_7]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_xips_25_87_kg_814_6_1, entradas: "base se_xips_25_87_kg_814_12_7"}
+  se_next_c_814_7_1:
+    needs: [base]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_next_c_814_7_1, entradas: "base"}
+  se_junta:
+    needs: [base, mav_familia1, se_caso_publicado, se_xips_25_380_12_7, se_xips_25_380_6_1, se_xips_25_87_kg_380_12_7, se_xips_25_87_kg_380_6_1, se_next_c_380_7_1, se_xips_25_814_12_7, se_xips_25_814_6_1, se_xips_25_87_kg_814_12_7, se_xips_25_87_kg_814_6_1, se_next_c_814_7_1]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_junta, entradas: "base mav_familia1 se_caso_publicado se_xips_25_380_12_7 se_xips_25_380_6_1 se_xips_25_87_kg_380_12_7 se_xips_25_87_kg_380_6_1 se_next_c_380_7_1 se_xips_25_814_12_7 se_xips_25_814_6_1 se_xips_25_87_kg_814_12_7 se_xips_25_87_kg_814_6_1 se_next_c_814_7_1"}
+  regeneracao:
+    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_junta]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido se_junta"}
   # Portão (decisões do Fabio, 2026-11-16 e 2026-11-17): a verificação obrigatória da main. Roda sempre. Se o detector
   # disse que nada relevante mudou, passa com as partes e a comparação puladas (e só puladas). Em qualquer outro caso, só
   # passa se o detector e todos os jobs terminaram com sucesso: falha, cancelamento ou job pulado reprovam. O nome do job
   # é o da verificação na proteção da main: não renomear sem mudar a proteção.
   portao:
     name: Regeneração (portão)
-    needs: [detecta, base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, regeneracao]
+    needs: [detecta, base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_caso_publicado, se_xips_25_380_12_7, se_xips_25_380_6_1, se_xips_25_87_kg_380_12_7, se_xips_25_87_kg_380_6_1, se_next_c_380_7_1, se_xips_25_814_12_7, se_xips_25_814_6_1, se_xips_25_87_kg_814_12_7, se_xips_25_87_kg_814_6_1, se_next_c_814_7_1, se_junta, regeneracao]
     if: always()
     runs-on: ubuntu-latest
     steps:

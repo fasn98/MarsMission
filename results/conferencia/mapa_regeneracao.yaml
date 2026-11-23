@@ -1,8 +1,8 @@
 gerado_por: tools/mapa_regeneracao.py
-data: '2026-11-14'
+data: '2026-11-23'
 maquina: x86_64
-total_sequencial_s: 9761.7
-caminho_critico_s: 6586.200000000001
+total_sequencial_s: 65372.600000000006
+caminho_critico_s: 21206.3
 caminho_critico:
 - tools/missoes.py
 - tools/varredura_encontro.py
@@ -13,22 +13,21 @@ caminho_critico:
 - tools/bocais_estagio1.py
 - tools/rotas_mav.py
 - tools/missao_familia1.py
-- tools/mav_familia1.py
-- tools/ruido_subida.py
-- tools/inerte_solido.py
-- tools/opcoes_arquitetura.py
+- tools/orbitador_so_eletrico.py --bloco XIPS-25 (87 kg) 380 12-7
+- tools/orbitador_so_eletrico.py --bloco XIPS-25 (87 kg) 380 6-1
+- tools/orbitador_so_eletrico.py --junta
 nao_rodadas: []
 ferramentas:
 - ordem: 0
   ferramenta: tools/baricentro_marte.py
-  segundos: 1.7
+  segundos: 0.2
   depende_de: []
   lidos: []
   gravados:
   - results/etapa1.1/baricentro_marte.yaml
 - ordem: 1
   ferramenta: tools/porkchop.py terra_marte
-  segundos: 23.5
+  segundos: 17.7
   depende_de: []
   lidos: []
   gravados:
@@ -39,7 +38,7 @@ ferramentas:
   - results/etapa1.2/porkchop_terra_marte_2035.png
 - ordem: 2
   ferramenta: tools/porkchop.py marte_terra
-  segundos: 43.3
+  segundos: 40.3
   depende_de: []
   lidos: []
   gravados:
@@ -51,7 +50,7 @@ ferramentas:
   - results/etapa1.2/porkchop_marte_terra_2039.png
 - ordem: 3
   ferramenta: tools/verifica_burke2010.py
-  segundos: 24.6
+  segundos: 22.9
   depende_de: []
   lidos: []
   gravados:
@@ -59,7 +58,7 @@ ferramentas:
   - results/etapa1.2/verificacao_burke2010.yaml
 - ordem: 4
   ferramenta: tools/verifica_jpl8243.py
-  segundos: 156.5
+  segundos: 145.5
   depende_de: []
   lidos: []
   gravados:
@@ -67,14 +66,14 @@ ferramentas:
   - results/etapa1.2/verificacao_jpl8243.yaml
 - ordem: 5
   ferramenta: tools/efeito_efemeride.py
-  segundos: 0.3
+  segundos: 0.2
   depende_de: []
   lidos: []
   gravados:
   - results/etapa1.2/efeito_efemeride_de200.yaml
 - ordem: 6
   ferramenta: tools/missoes.py
-  segundos: 114.3
+  segundos: 105.3
   depende_de: []
   lidos: []
   gravados:
@@ -82,7 +81,7 @@ ferramentas:
   - results/etapa1.3/missoes.yaml
 - ordem: 7
   ferramenta: tools/compara_dra5.py
-  segundos: 0.3
+  segundos: 0.2
   depende_de:
   - 6
   lidos:
@@ -91,7 +90,7 @@ ferramentas:
   - results/etapa1.3/comparacao_dra5.md
 - ordem: 8
   ferramenta: tools/grafico_missoes.py
-  segundos: 0.8
+  segundos: 0.7
   depende_de:
   - 6
   lidos:
@@ -110,7 +109,7 @@ ferramentas:
   - results/fase4/premissas_nao_validadas.md
 - ordem: 10
   ferramenta: tools/dimensionamento.py
-  segundos: 10.5
+  segundos: 9.4
   depende_de:
   - 6
   lidos:
@@ -121,7 +120,7 @@ ferramentas:
   - results/etapa1.4/orcamento_dv.md
 - ordem: 11
   ferramenta: tools/compara_msr.py
-  segundos: 0.7
+  segundos: 0.1
   depende_de:
   - 10
   lidos:
@@ -130,7 +129,7 @@ ferramentas:
   - results/etapa1.4/comparacao_msr.md
 - ordem: 12
   ferramenta: tools/superficie.py
-  segundos: 2.1
+  segundos: 1.0
   depende_de:
   - 6
   lidos:
@@ -140,7 +139,7 @@ ferramentas:
   - results/etapa2.1/arquiteturas.yaml
 - ordem: 13
   ferramenta: tools/varredura_encontro.py
-  segundos: 34.5
+  segundos: 32.2
   depende_de:
   - 6
   lidos:
@@ -154,7 +153,7 @@ ferramentas:
   - results/etapa2.1/varredura_encontro_rp300.yaml
 - ordem: 14
   ferramenta: tools/isru.py
-  segundos: 0.4
+  segundos: 0.3
   depende_de:
   - 6
   - 13
@@ -166,7 +165,7 @@ ferramentas:
   - results/etapa2.2/isru.yaml
 - ordem: 15
   ferramenta: tools/mav_propulsao.py
-  segundos: 16.8
+  segundos: 16.7
   depende_de:
   - 6
   - 13
@@ -181,7 +180,7 @@ ferramentas:
   - results/etapa2.2/mav_propulsao.yaml
 - ordem: 16
   ferramenta: tools/redimensiona.py
-  segundos: 1094.7
+  segundos: 1168.7
   depende_de:
   - 6
   - 15
@@ -196,7 +195,7 @@ ferramentas:
   - results/etapa3.1/perdas_calculadas.yaml
 - ordem: 17
   ferramenta: tools/plataformas.py
-  segundos: 247.1
+  segundos: 252.2
   depende_de:
   - 6
   - 15
@@ -211,7 +210,7 @@ ferramentas:
   - results/etapa2.3/plataformas.yaml
 - ordem: 18
   ferramenta: tools/lancamento.py
-  segundos: 32.9
+  segundos: 30.7
   depende_de:
   - 6
   - 15
@@ -227,7 +226,7 @@ ferramentas:
   - results/etapa2.4/lancamento.yaml
 - ordem: 19
   ferramenta: tools/coleta.py
-  segundos: 6.8
+  segundos: 5.1
   depende_de:
   - 6
   - 15
@@ -243,7 +242,7 @@ ferramentas:
   - results/etapa2.5/coleta.yaml
 - ordem: 20
   ferramenta: tools/arquitetura.py
-  segundos: 11.6
+  segundos: 11.4
   depende_de:
   - 6
   - 15
@@ -259,7 +258,7 @@ ferramentas:
   - results/etapa2.5/arquitetura.yaml
 - ordem: 21
   ferramenta: tools/confere_2033.py
-  segundos: 51.7
+  segundos: 52.4
   depende_de:
   - 12
   - 13
@@ -287,7 +286,7 @@ ferramentas:
   - results/etapa2.5/conferencia_2033.yaml
 - ordem: 22
   ferramenta: tools/exporta_painel.py
-  segundos: 45.2
+  segundos: 42.5
   depende_de: []
   lidos: []
   gravados:
@@ -303,7 +302,7 @@ ferramentas:
   - results/painel/porkchops.yaml
 - ordem: 23
   ferramenta: tools/queima_finita.py
-  segundos: 169.7
+  segundos: 176.5
   depende_de:
   - 6
   - 15
@@ -319,7 +318,7 @@ ferramentas:
   - results/etapa3.1/queima_finita.yaml
 - ordem: 24
   ferramenta: tools/baixo_empuxo.py
-  segundos: 34.8
+  segundos: 34.0
   depende_de:
   - 17
   lidos:
@@ -329,7 +328,7 @@ ferramentas:
   - results/etapa3.2/baixo_empuxo.yaml
 - ordem: 25
   ferramenta: tools/geometria_marte.py
-  segundos: 0.4
+  segundos: 0.3
   depende_de:
   - 6
   lidos:
@@ -339,7 +338,7 @@ ferramentas:
   - results/etapa3.3/geometria_planos.yaml
 - ordem: 26
   ferramenta: tools/orbitador_eletrico.py
-  segundos: 116.0
+  segundos: 120.8
   depende_de:
   - 6
   - 15
@@ -358,7 +357,7 @@ ferramentas:
   - results/etapa3.3/orbitador_eletrico.yaml
 - ordem: 27
   ferramenta: tools/energia.py
-  segundos: 55.4
+  segundos: 54.9
   depende_de:
   - 6
   - 15
@@ -374,7 +373,7 @@ ferramentas:
   - results/etapa4.1/energia.yaml
 - ordem: 28
   ferramenta: tools/termico.py
-  segundos: 0.3
+  segundos: 0.2
   depende_de:
   - 6
   - 15
@@ -388,7 +387,7 @@ ferramentas:
   - results/etapa4.2/termico.yaml
 - ordem: 29
   ferramenta: tools/comunicacao.py
-  segundos: 8.4
+  segundos: 8.1
   depende_de:
   - 6
   - 15
@@ -406,7 +405,7 @@ ferramentas:
   - results/etapa4.3/comunicacao.yaml
 - ordem: 30
   ferramenta: tools/operacao_superficie.py
-  segundos: 2.1
+  segundos: 1.8
   depende_de:
   - 6
   - 15
@@ -426,7 +425,7 @@ ferramentas:
   - results/etapa4.4/operacao_superficie.yaml
 - ordem: 31
   ferramenta: tools/lista_massas_lander.py
-  segundos: 8.9
+  segundos: 8.4
   depende_de:
   - 6
   - 15
@@ -450,7 +449,7 @@ ferramentas:
   - results/etapa4.5/lista_massas.yaml
 - ordem: 32
   ferramenta: tools/fase4.py
-  segundos: 1.3
+  segundos: 1.1
   depende_de:
   - 6
   - 15
@@ -478,7 +477,7 @@ ferramentas:
   - results/fase4/resumo.yaml
 - ordem: 33
   ferramenta: tools/envelope_arranjo.py
-  segundos: 3.0
+  segundos: 0.9
   depende_de:
   - 20
   - 27
@@ -494,7 +493,7 @@ ferramentas:
   - results/etapa7.1/orbitador_na_coifa.png
 - ordem: 34
   ferramenta: tools/cad_parametros.py
-  segundos: 2.0
+  segundos: 1.0
   depende_de:
   - 20
   - 33
@@ -510,7 +509,7 @@ ferramentas:
   - results/etapa7.2/parametros.yaml
 - ordem: 35
   ferramenta: tools/encaixe_coifas.py
-  segundos: 6.9
+  segundos: 6.4
   depende_de:
   - 20
   - 33
@@ -530,7 +529,7 @@ ferramentas:
   - results/etapa7.2b/roteiro_onshape.md
 - ordem: 36
   ferramenta: tools/mav_arranjo.py
-  segundos: 0.8
+  segundos: 0.6
   depende_de:
   - 20
   lidos:
@@ -540,7 +539,7 @@ ferramentas:
   - results/etapa7.2/mav_arranjo.yaml
 - ordem: 37
   ferramenta: tools/conferencia_onshape.py
-  segundos: 1.1
+  segundos: 0.8
   depende_de:
   - 34
   lidos:
@@ -550,7 +549,7 @@ ferramentas:
   - results/etapa7.2/conferencia_onshape.yaml
 - ordem: 38
   ferramenta: tools/cg_lateral.py
-  segundos: 1.3
+  segundos: 0.8
   depende_de:
   - 34
   lidos:
@@ -560,7 +559,7 @@ ferramentas:
   - results/etapa7.2/cg_lateral.yaml
 - ordem: 39
   ferramenta: tools/portao_7_2.py
-  segundos: 1.2
+  segundos: 0.9
   depende_de:
   - 20
   - 33
@@ -576,7 +575,7 @@ ferramentas:
   - results/etapa7.2/portao_decisao.yaml
 - ordem: 40
   ferramenta: tools/bocais_estagio1.py
-  segundos: 0.9
+  segundos: 0.7
   depende_de:
   - 20
   - 23
@@ -592,7 +591,7 @@ ferramentas:
   - results/etapa7.2/bocais_alternativas.yaml
 - ordem: 41
   ferramenta: tools/comprimento_mav.py
-  segundos: 57.3
+  segundos: 57.7
   depende_de:
   - 6
   - 15
@@ -614,7 +613,7 @@ ferramentas:
   - results/etapa7.2/comprimento_mav.yaml
 - ordem: 42
   ferramenta: tools/rotas_mav.py
-  segundos: 14.3
+  segundos: 13.6
   depende_de:
   - 6
   - 15
@@ -646,7 +645,7 @@ ferramentas:
   - results/etapa7.2/rotas_mav.yaml
 - ordem: 43
   ferramenta: tools/isp_44_bocal.py
-  segundos: 0.8
+  segundos: 0.6
   depende_de: []
   lidos: []
   gravados:
@@ -654,7 +653,7 @@ ferramentas:
   - results/etapa7.2/isp_44.yaml
 - ordem: 44
   ferramenta: tools/rota_a_dimensiona.py
-  segundos: 136.7
+  segundos: 142.8
   depende_de:
   - 6
   - 15
@@ -684,7 +683,7 @@ ferramentas:
   - results/etapa7.2/rota_a.yaml
 - ordem: 45
   ferramenta: tools/subida_mav.py
-  segundos: 1301.5
+  segundos: 1547.3
   depende_de:
   - 6
   - 15
@@ -710,7 +709,7 @@ ferramentas:
   - results/etapa7.2/subida_mav.yaml
 - ordem: 46
   ferramenta: tools/comprimento_solido.py
-  segundos: 2.1
+  segundos: 0.4
   depende_de: []
   lidos: []
   gravados:
@@ -718,7 +717,7 @@ ferramentas:
   - results/familia1/comprimento_solido.yaml
 - ordem: 47
   ferramenta: tools/mav_solido.py
-  segundos: 3.8
+  segundos: 1.6
   depende_de:
   - 6
   - 15
@@ -744,7 +743,7 @@ ferramentas:
   - results/etapa7.2/mav_solido.yaml
 - ordem: 48
   ferramenta: tools/missao_familia1.py
-  segundos: 5.2
+  segundos: 5.5
   depende_de:
   - 2
   - 42
@@ -756,7 +755,7 @@ ferramentas:
   - results/familia1/missao.yaml
 - ordem: 49
   ferramenta: tools/mav_familia1.py
-  segundos: 1387.3
+  segundos: 1644.7
   depende_de:
   - 6
   - 15
@@ -785,7 +784,7 @@ ferramentas:
   - results/familia1/mavs.yaml
 - ordem: 50
   ferramenta: tools/ruido_subida.py
-  segundos: 1541.4
+  segundos: 1327.2
   depende_de:
   - 49
   lidos:
@@ -795,7 +794,7 @@ ferramentas:
   - results/conferencia/ruido_subida.yaml
 - ordem: 51
   ferramenta: tools/familia1_465.py
-  segundos: 1016.4
+  segundos: 1022.9
   depende_de:
   - 6
   - 15
@@ -826,7 +825,7 @@ ferramentas:
   - results/familia1/diagnostico_familia1_465.md
 - ordem: 52
   ferramenta: tools/inerte_solido.py
-  segundos: 1956.8
+  segundos: 2047.3
   depende_de:
   - 42
   - 46
@@ -844,8 +843,229 @@ ferramentas:
   - results/familia1/inerte_solido.md
   - results/familia1/inerte_solido.yaml
 - ordem: 53
+  ferramenta: tools/orbitador_so_eletrico.py --caso-publicado
+  segundos: 1121.4
+  depende_de: []
+  lidos: []
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/caso_publicado.yaml
+- ordem: 54
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 380 12-7
+  segundos: 4068.5
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_380_12-7.yaml
+- ordem: 55
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 380 6-1
+  segundos: 5667.7
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  - 54
+  lidos:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_380_12-7.yaml
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_380_6-1.yaml
+- ordem: 56
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 (87 kg) 380 12-7
+  segundos: 12087.1
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_380_12-7.yaml
+- ordem: 57
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 (87 kg) 380 6-1
+  segundos: 7322.8
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  - 56
+  lidos:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_380_12-7.yaml
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_380_6-1.yaml
+- ordem: 58
+  ferramenta: tools/orbitador_so_eletrico.py --bloco NEXT-C 380 7-1
+  segundos: 4363.4
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_next_c_380_7-1.yaml
+- ordem: 59
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 814 12-7
+  segundos: 4516.4
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_814_12-7.yaml
+- ordem: 60
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 814 6-1
+  segundos: 2655.6
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  - 59
+  lidos:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_814_12-7.yaml
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_814_6-1.yaml
+- ordem: 61
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 (87 kg) 814 12-7
+  segundos: 3068.2
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_814_12-7.yaml
+- ordem: 62
+  ferramenta: tools/orbitador_so_eletrico.py --bloco XIPS-25 (87 kg) 814 6-1
+  segundos: 3580.1
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  - 61
+  lidos:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_814_12-7.yaml
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_814_6-1.yaml
+- ordem: 63
+  ferramenta: tools/orbitador_so_eletrico.py --bloco NEXT-C 814 7-1
+  segundos: 6710.4
+  depende_de:
+  - 6
+  - 16
+  - 23
+  - 42
+  - 48
+  lidos:
+  - results/etapa1.3/missoes.yaml
+  - results/etapa3.1/perdas_calculadas.yaml
+  - results/etapa3.1/queima_finita.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/conferencia/orbitador_so_eletrico/bloco_next_c_814_7-1.yaml
+- ordem: 64
+  ferramenta: tools/orbitador_so_eletrico.py --junta
+  segundos: 25.0
+  depende_de:
+  - 42
+  - 48
+  - 49
+  - 53
+  - 54
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  - 63
+  lidos:
+  - results/conferencia/orbitador_so_eletrico/bloco_next_c_380_7-1.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_next_c_814_7-1.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_380_12-7.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_380_6-1.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_814_12-7.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25_814_6-1.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_380_12-7.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_380_6-1.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_814_12-7.yaml
+  - results/conferencia/orbitador_so_eletrico/bloco_xips_25__87_kg_814_6-1.yaml
+  - results/conferencia/orbitador_so_eletrico/caso_publicado.yaml
+  - results/etapa7.2/rotas_mav.yaml
+  - results/familia1/mavs.yaml
+  - results/familia1/missao.yaml
+  gravados:
+  - results/familia1/diagnostico_orbitador_so_eletrico.md
+  - results/familia1/orbitador_so_eletrico.md
+- ordem: 65
   ferramenta: tools/opcoes_arquitetura.py
-  segundos: 3.2
+  segundos: 0.4
   depende_de:
   - 20
   - 35

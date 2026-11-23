@@ -1,0 +1,500 @@
+gerado_por: tools/orbitador_so_eletrico.py --caso-publicado
+casos:
+- caso: esquerda
+  declinacoes: false
+  nome: 'Fig. 4, esquerda: empuxo constante, chegada com v infinito (captura química)'
+  massa_inicial_kg: 6500.0
+  isp_s: 3900.0
+  dv_publicado_km_s: 2.59
+  linhas:
+  - empuxo_n: 1.5
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 1321
+    rodadas: 1
+    residuo_max: 2.8930116968695075e-11
+    dv_km_s: 1.9860152526474144
+    arcos_dv_km_s: [1.10305924979602, 0.5413544329276853, 0.3414103685730434]
+    fracao_tempo_com_empuxo: 0.3333333333333333
+    aceleracao_inicial_m_s2: 0.00023076923076923076
+    declinacao_partida_graus: 34.213655138083276
+    mf_kg: 6171.085108581786
+    declinacao_chegada_marte_graus: -13.823813017228613
+    continuo_erro_km: 34.37632645004392
+    continuo_erro_km_s: 4.343937788777479e-06
+  - empuxo_n: 1.25
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 749
+    rodadas: 1
+    residuo_max: 8.705683285370468e-12
+    dv_km_s: 1.9866280913364256
+    arcos_dv_km_s: [1.1206872834983381, 0.5045342612866323, 0.3612930638733485]
+    fracao_tempo_com_empuxo: 0.43333333333333335
+    aceleracao_inicial_m_s2: 0.0001923076923076923
+    declinacao_partida_graus: 34.274596578906
+    mf_kg: 6170.986226193156
+    declinacao_chegada_marte_graus: -13.73702745738758
+    continuo_erro_km: 31.31607368534694
+    continuo_erro_km_s: 3.627646258864416e-06
+  - empuxo_n: 1.2
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 733
+    rodadas: 1
+    residuo_max: 6.716618372593075e-12
+    dv_km_s: 1.9868515198027712
+    arcos_dv_km_s: [1.128990492198655, 0.49587695967796913, 0.361971592941887]
+    fracao_tempo_com_empuxo: 0.43333333333333335
+    aceleracao_inicial_m_s2: 0.0001846153846153846
+    declinacao_partida_graus: 34.295184391655766
+    mf_kg: 6170.950176088458
+    declinacao_chegada_marte_graus: -13.720708620285999
+    continuo_erro_km: 30.728929778704547
+    continuo_erro_km_s: 3.3921733826290724e-06
+  - empuxo_n: 1.15
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 844
+    rodadas: 1
+    residuo_max: 2.647539076860994e-11
+    dv_km_s: 1.987076763423607
+    arcos_dv_km_s: [1.1338229647422755, 0.4867931929370667, 0.366416475277261]
+    fracao_tempo_com_empuxo: 0.43333333333333335
+    aceleracao_inicial_m_s2: 0.0001769230769230769
+    declinacao_partida_graus: 34.29663391892193
+    mf_kg: 6170.913833322392
+    declinacao_chegada_marte_graus: -13.693846680590415
+    continuo_erro_km: 30.474402155286068
+    continuo_erro_km_s: 3.2276048991146594e-06
+  - empuxo_n: 1.1
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 865
+    rodadas: 1
+    residuo_max: 1.0668372851796449e-12
+    dv_km_s: 1.9873002931870063
+    arcos_dv_km_s: [1.1414185686341907, 0.47905816702677745, 0.3667496332958527]
+    fracao_tempo_com_empuxo: 0.4
+    aceleracao_inicial_m_s2: 0.00016923076923076926
+    declinacao_partida_graus: 34.31036353163516
+    mf_kg: 6170.877767296599
+    declinacao_chegada_marte_graus: -13.680842188716595
+    continuo_erro_km: 30.41503575406121
+    continuo_erro_km_s: 3.119949771333426e-06
+  - empuxo_n: 1.05
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 826
+    rodadas: 1
+    residuo_max: 1.2854798114858568e-11
+    dv_km_s: 1.9875259242521617
+    arcos_dv_km_s: [1.1466144085838803, 0.47316880782011655, 0.36772171828377964]
+    fracao_tempo_com_empuxo: 0.4
+    aceleracao_inicial_m_s2: 0.00016153846153846155
+    declinacao_partida_graus: 34.305722656572684
+    mf_kg: 6170.841362444252
+    declinacao_chegada_marte_graus: -13.663681014098097
+    continuo_erro_km: 30.4056102282269
+    continuo_erro_km_s: 3.0632160981361465e-06
+  - empuxo_n: 1.0
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 828
+    rodadas: 1
+    residuo_max: 9.008545021060854e-11
+    dv_km_s: 1.9878079755273206
+    arcos_dv_km_s: [1.1438111183815358, 0.4784264108377805, 0.36541142636799195]
+    fracao_tempo_com_empuxo: 0.5
+    aceleracao_inicial_m_s2: 0.00015384615384615385
+    declinacao_partida_graus: 34.20401482278679
+    mf_kg: 6170.795854673104
+    declinacao_chegada_marte_graus: -13.669804160793905
+    continuo_erro_km: 30.379435588271036
+    continuo_erro_km_s: 3.054027944117672e-06
+  - empuxo_n: 0.75
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 982
+    rodadas: 1
+    residuo_max: 5.274341674521565e-11
+    dv_km_s: 1.9904353865107498
+    arcos_dv_km_s: [1.2239740671934864, 0.30164908569843596, 0.4645984759858055]
+    fracao_tempo_com_empuxo: 0.6
+    aceleracao_inicial_m_s2: 0.00011538461538461538
+    declinacao_partida_graus: 34.21831945360746
+    mf_kg: 6170.37194923291
+    declinacao_chegada_marte_graus: -13.364513108167131
+    continuo_erro_km: 29.2831172815178
+    continuo_erro_km_s: 2.672216493701236e-06
+  empuxo_equivalente_n: null
+  aceleracao_equivalente_m_s2: null
+  empuxo_max_publicado_n: 0.75
+- caso: esquerda
+  declinacoes: true
+  nome: 'Fig. 4, esquerda: empuxo constante, chegada com v infinito (captura química)'
+  massa_inicial_kg: 6500.0
+  isp_s: 3900.0
+  dv_publicado_km_s: 2.59
+  linhas:
+  - empuxo_n: 1.5
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 1110
+    rodadas: 1
+    residuo_max: 3.112836566288024e-11
+    dv_km_s: 2.376145752617276
+    arcos_dv_km_s: [0.7865972280069321, 1.404389038136804, 0.1851441359373902]
+    fracao_tempo_com_empuxo: 0.4
+    aceleracao_inicial_m_s2: 0.00023076923076923076
+    declinacao_partida_graus: 4.97000057511989
+    mf_kg: 6108.45646381096
+    declinacao_chegada_marte_graus: -11.900000585541557
+    continuo_erro_km: 201.88945821326024
+    continuo_erro_km_s: 2.0693958878254708e-05
+  - empuxo_n: 1.25
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 718
+    rodadas: 1
+    residuo_max: 7.033031579339876e-11
+    dv_km_s: 2.37920099184622
+    arcos_dv_km_s: [0.7869666230383916, 1.4160265680421469, 0.17620555712319436]
+    fracao_tempo_com_empuxo: 0.4
+    aceleracao_inicial_m_s2: 0.0001923076923076923
+    declinacao_partida_graus: 4.970000575120039
+    mf_kg: 6107.968515211801
+    declinacao_chegada_marte_graus: -11.900000585541589
+    continuo_erro_km: 199.840715223487
+    continuo_erro_km_s: 2.0333268366287258e-05
+  - empuxo_n: 1.2
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 532
+    rodadas: 1
+    residuo_max: 1.5145815268624573e-11
+    dv_km_s: 2.379940958816607
+    arcos_dv_km_s: [0.7864055444384545, 1.4148400964855448, 0.17869445359602704]
+    fracao_tempo_com_empuxo: 0.43333333333333335
+    aceleracao_inicial_m_s2: 0.0001846153846153846
+    declinacao_partida_graus: 4.970000575119249
+    mf_kg: 6107.850341836381
+    declinacao_chegada_marte_graus: -11.900000585541688
+    continuo_erro_km: 197.6555252028438
+    continuo_erro_km_s: 2.0107086005300737e-05
+  - empuxo_n: 1.15
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 530
+    rodadas: 1
+    residuo_max: 1.3313620012438305e-12
+    dv_km_s: 2.3808512208574157
+    arcos_dv_km_s: [0.7850421261313656, 1.4123409605725168, 0.1834665991135466]
+    fracao_tempo_com_empuxo: 0.4666666666666667
+    aceleracao_inicial_m_s2: 0.0001769230769230769
+    declinacao_partida_graus: 4.970000575120011
+    mf_kg: 6107.704975324722
+    declinacao_chegada_marte_graus: -11.900000585539983
+    continuo_erro_km: 194.591691148073
+    continuo_erro_km_s: 1.980068388562971e-05
+  - empuxo_n: 1.1
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 517
+    rodadas: 1
+    residuo_max: 1.3081262295600026e-11
+    dv_km_s: 2.3820391918525186
+    arcos_dv_km_s: [0.7873244939236627, 1.4230924893285184, 0.17162137460090718]
+    fracao_tempo_com_empuxo: 0.5
+    aceleracao_inicial_m_s2: 0.00016923076923076926
+    declinacao_partida_graus: 4.970000575120005
+    mf_kg: 6107.5152646098095
+    declinacao_chegada_marte_graus: -11.900000585541344
+    continuo_erro_km: 187.93859941093257
+    continuo_erro_km_s: 1.917223867825045e-05
+  - empuxo_n: 1.05
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 451
+    rodadas: 1
+    residuo_max: 9.542873158352449e-11
+    dv_km_s: 2.3834394937252656
+    arcos_dv_km_s: [0.7853766699280518, 1.4295284829025658, 0.16852983785286602]
+    fracao_tempo_com_empuxo: 0.5
+    aceleracao_inicial_m_s2: 0.00016153846153846155
+    declinacao_partida_graus: 4.970000575120129
+    mf_kg: 6107.291653695329
+    declinacao_chegada_marte_graus: -11.900000585541676
+    continuo_erro_km: 179.32878735155595
+    continuo_erro_km_s: 1.83873299172567e-05
+  - empuxo_n: 1.0
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 563
+    rodadas: 1
+    residuo_max: 8.089955372270196e-12
+    dv_km_s: 2.3850064325695763
+    arcos_dv_km_s: [0.7835409359062666, 1.4360186687669325, 0.16544067200061738]
+    fracao_tempo_com_empuxo: 0.5
+    aceleracao_inicial_m_s2: 0.00015384615384615385
+    declinacao_partida_graus: 4.970000575120136
+    mf_kg: 6107.041442620829
+    declinacao_chegada_marte_graus: -11.900000585541683
+    continuo_erro_km: 171.7729797454289
+    continuo_erro_km_s: 1.770817066987239e-05
+  - empuxo_n: 0.75
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 592
+    rodadas: 1
+    residuo_max: 1.219086698256433e-11
+    dv_km_s: 2.398069557200557
+    arcos_dv_km_s: [0.7757864938275435, 1.4891279407711948, 0.13315465217482966]
+    fracao_tempo_com_empuxo: 0.6666666666666666
+    aceleracao_inicial_m_s2: 0.00011538461538461538
+    declinacao_partida_graus: 4.970000575120127
+    mf_kg: 6104.955902788093
+    declinacao_chegada_marte_graus: -11.900000585541582
+    continuo_erro_km: 159.53626305088136
+    continuo_erro_km_s: 1.6375409471276186e-05
+  empuxo_equivalente_n: null
+  aceleracao_equivalente_m_s2: null
+  empuxo_max_publicado_n: 0.75
+- caso: direita
+  declinacoes: false
+  nome: 'Fig. 4, direita: chegada com v infinito = 0, arco de voo livre entre dois
+    arcos de empuxo'
+  massa_inicial_kg: 6500.0
+  isp_s: 3900.0
+  dv_publicado_km_s: 5.94
+  linhas:
+  - empuxo_n: 1.5
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 309
+    rodadas: 1
+    residuo_max: 7.226753950817511e-11
+    dv_km_s: 5.384122828217629
+    arcos_dv_km_s: [2.876133015081235, 2.5079894790479678]
+    fracao_tempo_com_empuxo: 0.6
+    aceleracao_inicial_m_s2: 0.00023076923076923076
+    declinacao_partida_graus: 14.707847647587434
+    mf_kg: 5646.44325664946
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 1238.0614903236287
+    continuo_erro_km_s: 0.00012409574316646729
+  - empuxo_n: 1.25
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 223
+    rodadas: 1
+    residuo_max: 3.817513061221689e-11
+    dv_km_s: 5.7297789585789065
+    arcos_dv_km_s: [3.0690604322933943, 2.660718418080807]
+    fracao_tempo_com_empuxo: 0.7333333333333333
+    aceleracao_inicial_m_s2: 0.0001923076923076923
+    declinacao_partida_graus: 13.499277802904277
+    mf_kg: 5595.6421806718645
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 1109.8943289986678
+    continuo_erro_km_s: 0.00011042673528344409
+  - empuxo_n: 1.2
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 313
+    rodadas: 1
+    residuo_max: 1.0326402843929826e-11
+    dv_km_s: 5.860182819174692
+    arcos_dv_km_s: [3.1800577432166346, 2.68012499397758]
+    fracao_tempo_com_empuxo: 0.7666666666666667
+    aceleracao_inicial_m_s2: 0.0001846153846153846
+    declinacao_partida_graus: 13.152550777991019
+    mf_kg: 5576.59569195802
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 955.3930202638145
+    continuo_erro_km_s: 9.541728208505682e-05
+  - empuxo_n: 1.15
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 189
+    rodadas: 1
+    residuo_max: 4.3552972783800215e-11
+    dv_km_s: 6.02877846842476
+    arcos_dv_km_s: [3.2833323820554683, 2.745446024300795]
+    fracao_tempo_com_empuxo: 0.8
+    aceleracao_inicial_m_s2: 0.0001769230769230769
+    declinacao_partida_graus: 13.355401425241354
+    mf_kg: 5552.067057956583
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 857.0789292102139
+    continuo_erro_km_s: 8.643651572032103e-05
+  - empuxo_n: 1.1
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 153
+    rodadas: 1
+    residuo_max: 3.5747689253184944e-11
+    dv_km_s: 6.249730325454466
+    arcos_dv_km_s: [3.4662347792322836, 2.7834954959809948]
+    fracao_tempo_com_empuxo: 0.8666666666666667
+    aceleracao_inicial_m_s2: 0.00016923076923076926
+    declinacao_partida_graus: 13.503156559061729
+    mf_kg: 5520.084500280968
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 668.7130998162253
+    continuo_erro_km_s: 6.892713267525374e-05
+  - empuxo_n: 1.05
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 94
+    rodadas: 1
+    residuo_max: 1.0414623830001802e-11
+    dv_km_s: 6.598912907697257
+    arcos_dv_km_s: [3.623473606723459, 2.9754392800172655]
+    fracao_tempo_com_empuxo: 0.9333333333333333
+    aceleracao_inicial_m_s2: 0.00016153846153846155
+    declinacao_partida_graus: 13.820097279370577
+    mf_kg: 5469.915899849847
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 571.0111035155558
+    continuo_erro_km_s: 5.97559173957913e-05
+  - {empuxo_n: 1.0, convergiu: false, viavel: false, mensagem: Positive directional
+      derivative for linesearch, iteracoes: 759, rodadas: 4, residuo_max: 0.014696280506369477}
+  - {empuxo_n: 0.75, convergiu: false, viavel: false, mensagem: Positive directional
+      derivative for linesearch, iteracoes: 795, rodadas: 4, residuo_max: 0.12496965544795421}
+  empuxo_equivalente_n: 1.176328813590284
+  aceleracao_equivalente_m_s2: 0.00018097366362927446
+  empuxo_max_publicado_n: 0.75
+- caso: direita
+  declinacoes: true
+  nome: 'Fig. 4, direita: chegada com v infinito = 0, arco de voo livre entre dois
+    arcos de empuxo'
+  massa_inicial_kg: 6500.0
+  isp_s: 3900.0
+  dv_publicado_km_s: 5.94
+  linhas:
+  - empuxo_n: 1.5
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 371
+    rodadas: 2
+    residuo_max: 9.479663276579231e-12
+    dv_km_s: 5.463095459669365
+    arcos_dv_km_s: [2.9608361478124503, 2.5022590268553104]
+    fracao_tempo_com_empuxo: 0.6
+    aceleracao_inicial_m_s2: 0.00023076923076923076
+    declinacao_partida_graus: -0.0599994270418927
+    mf_kg: 5634.796151596834
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 1259.0690331008882
+    continuo_erro_km_s: 0.00012573737058538915
+  - empuxo_n: 1.25
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 367
+    rodadas: 1
+    residuo_max: 2.831984602380544e-11
+    dv_km_s: 5.8115168713171395
+    arcos_dv_km_s: [3.1586092725798562, 2.652907504992732]
+    fracao_tempo_com_empuxo: 0.7333333333333333
+    aceleracao_inicial_m_s2: 0.0001923076923076923
+    declinacao_partida_graus: -0.05999942704189372
+    mf_kg: 5583.696134224705
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 1086.253959051571
+    continuo_erro_km_s: 0.00010820651390381958
+  - empuxo_n: 1.2
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 228
+    rodadas: 1
+    residuo_max: 1.8014361558016388e-11
+    dv_km_s: 5.940251065064151
+    arcos_dv_km_s: [3.249677912038484, 2.6905730404481605]
+    fracao_tempo_com_empuxo: 0.7666666666666667
+    aceleracao_inicial_m_s2: 0.0001846153846153846
+    declinacao_partida_graus: -0.05999942704189039
+    mf_kg: 5564.933245312162
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 934.9715296156344
+    continuo_erro_km_s: 9.345980817668153e-05
+  - empuxo_n: 1.15
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 251
+    rodadas: 1
+    residuo_max: 2.2646418074145915e-12
+    dv_km_s: 6.117614764851723
+    arcos_dv_km_s: [3.3811297759698378, 2.736484914868091]
+    fracao_tempo_com_empuxo: 0.8
+    aceleracao_inicial_m_s2: 0.0001769230769230769
+    declinacao_partida_graus: -0.05999942704188828
+    mf_kg: 5539.185879986357
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 781.4737553999636
+    continuo_erro_km_s: 7.90998978169083e-05
+  - empuxo_n: 1.1
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 207
+    rodadas: 1
+    residuo_max: 3.4270669857505707e-11
+    dv_km_s: 6.346306769140507
+    arcos_dv_km_s: [3.5754350829437924, 2.7708716287147377]
+    fracao_tempo_com_empuxo: 0.8666666666666667
+    aceleracao_inicial_m_s2: 0.00016923076923076926
+    declinacao_partida_graus: -0.059999427041887744
+    mf_kg: 5506.163083364426
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 627.8414094826044
+    continuo_erro_km_s: 6.49975059730562e-05
+  - empuxo_n: 1.05
+    convergiu: true
+    viavel: true
+    mensagem: Optimization terminated successfully
+    iteracoes: 200
+    rodadas: 1
+    residuo_max: 5.386027623899281e-12
+    dv_km_s: 6.772180682438123
+    arcos_dv_km_s: [3.730682538475894, 3.041498125366855]
+    fracao_tempo_com_empuxo: 0.9333333333333333
+    aceleracao_inicial_m_s2: 0.00016153846153846155
+    declinacao_partida_graus: -0.05999942704189045
+    mf_kg: 5445.1912709985645
+    declinacao_chegada_marte_graus: null
+    continuo_erro_km: 548.6369613744326
+    continuo_erro_km_s: 5.7777801967951045e-05
+  - {empuxo_n: 1.0, convergiu: false, viavel: false, mensagem: Positive directional
+      derivative for linesearch, iteracoes: 642, rodadas: 4, residuo_max: 0.027354038282112015}
+  - {empuxo_n: 0.75, convergiu: false, viavel: false, mensagem: Positive directional
+      derivative for linesearch, iteracoes: 804, rodadas: 4, residuo_max: 0.1606962553175781}
+  empuxo_equivalente_n: 1.2000975129671625
+  aceleracao_equivalente_m_s2: 0.0001846303866103327
+  empuxo_max_publicado_n: 0.75

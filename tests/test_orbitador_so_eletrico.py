@@ -9,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+import yaml
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "tools"))
@@ -22,16 +23,94 @@ from orbital.constantes import GM_SOL, UA_KM  # noqa: E402
 DIA = 86400.0
 
 
-def test_capacidade_suave_coincide_com_a_oficial_nos_pontos_publicados():
-    """A curva suave (PCHIP) do objetivo passa pelos mesmos pontos do ELVPerf [F79] que a interpolação linear oficial."""
+def test_capacidade_do_objetivo_coincide_com_a_oficial_nos_pontos_publicados():
+    """A curva do objetivo (PCHIP em C3) passa pelos mesmos pontos do ELVPerf [F79] que a interpolação linear oficial, nas
+    duas formulações do limite de DLA, com DLA zero (sem multiplicador)."""
+    import copy
     e = ose._entradas()
-    cap, cap_suave, c3_max = ose._capacidade(e)
-    lan = e["lcfg"]["lancadores"][e["se"]["missao"]["lancador"]]
-    assert c3_max == max(lan["c3"]["pontos"])
-    for c3 in lan["c3"]["pontos"]:
-        vinf = np.array([math.sqrt(c3), 0.0, 0.0])   # declinação zero: sem multiplicador de DLA
-        assert cap_suave(vinf) == pytest.approx(cap(vinf), rel=1e-12)
-        assert cap(vinf) == pytest.approx(lc.interpolar(c3, lan["c3"]["pontos"], lan["c3"]["massa_kg"]) - lc.adaptador_p097()[0])
+    for formulacao in ("suave", "restricao"):
+        e2 = {**e, "se": copy.deepcopy(e["se"])}
+        e2["se"]["otimizador"]["formulacao_dla"]["valor"] = formulacao
+        cap, cap_obj, lim_dla, c3_max = ose._capacidade(e2)
+        lan = e["lcfg"]["lancadores"][e["se"]["missao"]["lancador"]]
+        assert c3_max == max(lan["c3"]["pontos"]) and lim_dla == 28.5
+        for c3 in lan["c3"]["pontos"]:
+            vinf = np.array([math.sqrt(c3), 0.0, 0.0])   # no equinócio: declinação zero
+            assert cap_obj(vinf) == pytest.approx(cap(vinf), rel=1e-12)
+            assert cap(vinf) == pytest.approx(lc.interpolar(c3, lan["c3"]["pontos"], lan["c3"]["massa_kg"]) - lc.adaptador_p097()[0])
+
+
+def test_multiplicador_suave_de_dla_sem_quina_em_28_5():
+    """Formulação "suave": o multiplicador do objetivo vale 1 até 28,5°, tem derivada zero ali (sem a quina da P-036) e
+    passa pelos pontos da P-036."""
+    import copy
+    e = {**ose._entradas()}
+    e["se"] = copy.deepcopy(e["se"])
+    e["se"]["otimizador"]["formulacao_dla"]["valor"] = "suave"
+    cap, cap_obj, lim, _ = ose._capacidade(e)
+    rot = ose._ecl_para_eq()
+
+    def vinf_com_dla(graus, c3=4.0):
+        d = np.array([math.cos(math.radians(graus)), 0.0, math.sin(math.radians(graus))])   # no equador J2000
+        return math.sqrt(c3) * (rot.T @ d)
+    base = cap_obj(vinf_com_dla(0.0))
+    k = [(cap_obj(vinf_com_dla(lim + x)) + lc.adaptador_p097()[0]) / (base + lc.adaptador_p097()[0]) for x in (-1e-3, 0.0, 1e-3)]
+    assert k[0] == pytest.approx(1.0, abs=1e-12) and k[1] == pytest.approx(1.0, abs=1e-12)
+    assert abs(k[2] - 1.0) < 1e-6   # derivada nula: variação de segunda ordem
+    ad = lc.adaptador_p097()[0]
+    for g in e["lcfg"]["dla"]["multiplicador_nordeste"]["dla_graus"]:
+        oficial = cap(vinf_com_dla(g))
+        if oficial > 0:   # acima da inclinação máxima a oficial dá zero (exige dogleg) e o objetivo não é usado ali
+            assert (cap_obj(vinf_com_dla(g)) + ad) / (base + ad) == pytest.approx((oficial + ad) / (cap(vinf_com_dla(0.0)) + ad), rel=1e-9)
+
+
+def test_matriz_da_regeneracao_cobre_as_cadeias_do_config():
+    """Uma cadeia de n decrescente por propulsor e órbita (decisão do Fabio, 2026-11-22), em blocos encadeados: cada n do
+    config aparece uma vez, os blocos de uma cadeia vêm em sequência e cada parte do CI depende dos blocos anteriores."""
+    import confere_regeneracao as cr
+    cfg = ler("config/orbitador_so_eletrico.yaml")["missao"]
+    bl = ose.blocos()
+    for h in cfg["altitudes_km"]["valor"]:
+        for nome, ns in cfg["n_ativos"]["valor"].items():
+            cad = [b for b in bl if b[0] == nome and b[1] == float(h)]
+            assert [n for b in cad for n in b[2]] == sorted(ns, reverse=True)
+            assert all(b[3] == [x[2] for x in cad[:i]] for i, b in enumerate(cad))
+    cmds = [c for c in cr.ORBITADOR_SO_ELETRICO if "--bloco" in c]
+    assert [(c[2], float(c[3]), c[4]) for c in cmds] == [(b[0], b[1], ose._rotulo_bloco(b[2])) for b in bl]
+    assert cr.ORBITADOR_SO_ELETRICO[0][1] == "--caso-publicado" and cr.ORBITADOR_SO_ELETRICO[-1][1] == "--junta"
+    ps = yaml.safe_load((RAIZ / "tools" / "regeneracao_partes.yaml").read_text(encoding="utf-8"))["partes"]
+    parte = {p["ferramentas"][0]: k for k, p in ps.items() if len(p["ferramentas"]) == 1}
+    for b in bl:
+        k = parte[cr.chave(["tools/orbitador_so_eletrico.py", "--bloco", b[0], str(int(b[1])), ose._rotulo_bloco(b[2])])]
+        ant = {parte[cr.chave(["tools/orbitador_so_eletrico.py", "--bloco", b[0], str(int(b[1])), ose._rotulo_bloco(a)])] for a in b[3]}
+        assert ant <= set(ps[k]["depende_de"])
+
+
+def test_semente_da_cadeia_volta_igual_pelo_yaml():
+    """Um bloco continua do anterior pela semente gravada em YAML: a volta é exata (os floats saem com repr)."""
+    rng = np.random.default_rng(7)
+    perna = lambda: {"t0": float(rng.normal()) * 1e8, "tof": float(rng.uniform(1e7, 9e7)), "m0": float(rng.uniform(5e3, 1e4)),
+                     "mf": float(rng.uniform(1e3, 5e3)), "vinf0": rng.normal(size=3), "vinf1": rng.normal(size=3),
+                     "u": rng.uniform(-1, 1, size=(30, 3)), "mensagem": "ignorada"}
+    ch = {"ida": perna(), "volta": perna(), "empuxo_n": 1.234567890123, "isp_s": 2500.0}
+    volta = ose._de_semente(yaml.safe_load(yaml.safe_dump(ose._semente(ch))))
+    for k in ("ida", "volta"):
+        for c in ose.SEMENTE:
+            assert np.array_equal(np.asarray(volta[k][c]), np.asarray(ch[k][c]))
+    assert volta["empuxo_n"] == ch["empuxo_n"]
+
+
+def test_conclusoes_de_quem_nao_converge_e_do_propulsor():
+    cfg = ler("config/orbitador_so_eletrico.yaml")
+    falha = {"falha": "x", "situacao": "nenhuma solução viável encontrada"}
+    assert ose._conclusoes(falha, cfg) == ["não (nenhuma solução viável encontrada)", "—", "—", "—"]
+    ok = {"margem_falcon_heavy": 0.5, "ultimo_lancamento_mav": "2032-04-26", "pronto_no_encontro": "2031-01-01", "dentro_da_vida": True}
+    ruim = {**ok, "margem_falcon_heavy": -0.5}
+    borda = {**ok, "margem_falcon_heavy": 0.01}
+    assert ose._fecha_propulsor([{**ok, "n_ativos": 3}, {**falha, "n_ativos": 1}], cfg) == ["sim", "3"]
+    assert ose._fecha_propulsor([{**ruim, "n_ativos": 3}, {**falha, "n_ativos": 1}], cfg) == ["não demonstrado", "—"]
+    assert ose._fecha_propulsor([{**ruim, "n_ativos": 3}], cfg) == ["não", "—"]
+    assert ose._fecha_propulsor([{**borda, "n_ativos": 3}, {**falha, "n_ativos": 1}], cfg) == ["indeterminado", "—"]
 
 
 def test_viabilizar_acha_ponto_continuo():

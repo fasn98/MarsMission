@@ -7,11 +7,16 @@ otimizador:
   # Transcrição e otimizador (orbital.sims_flanagan): escolhas numéricas, sem fonte. P-118.
   n_segmentos: {valor: 30, premissa: P-118}
   ordem: {valor: 4, premissa: P-118}
-  maxiter: {valor: 800, premissa: P-118}
+  # 800 até 2026-11-21; 2400 aprovado pelo Fabio em 2026-11-22 depois das sondas (P-118).
+  maxiter: {valor: 2400, premissa: P-118}
   ftol: {valor: 1.0e-10, premissa: P-118}
   # Resíduo de continuidade aceito (posição em UA, velocidade em unidades de √(μ☉/1 UA), massa em t): acima dele, a
   # solução não converge e a ferramenta para (decisão do Fabio: parar se o otimizador não convergir).
   residuo_max: {valor: 1.0e-8, premissa: P-118}
+  # Formulação do limite de DLA do lançador no objetivo da ida (decisão do Fabio, 2026-11-20: testar as duas e ficar com a
+  # mais robusta): "suave" (multiplicador da P-036 por PCHIP no objetivo) ou "restricao" (DLA ≤ 28,5° explícita). P-118.
+  # Escolhida "restricao" em 2026-11-21 (mais robusta; P-118); a "suave" fica como registro.
+  formulacao_dla: {valor: restricao, premissa: P-118}
 
 limites_e_chutes:
   # Limites das massas, chutes a frio e detalhes numéricos do otimizador (tools/orbitador_so_eletrico.py). P-118.
@@ -66,6 +71,14 @@ propulsores:
     vida_kg:
       valor: 158
       fonte: "[F274] p. 4, Tab. 3: \"Xe throughput (kG) 4 40 114 158\" (teste de vida de 16 250 h, perfil de GEO); [F275] p. 1 dá \"about 170 kg\" para o mesmo teste"
+  XIPS-25 (87 kg):
+    # Variante de vida do XIPS-25 do catálogo (mesmo desempenho e massas): a vida avaliada a plena potência. O teste de
+    # vida [F274] processou 114 dos 158 kg a 2 kW; a 4,3 kW, o modelo de [F275] dá o limite em 134 kg e, com a margem
+    # padrão de 50 %, 87 kg. Carregada ao lado da base de 158 kg (P-121) até a decisão do Fabio.
+    base: XIPS-25
+    vida_kg:
+      valor: 87
+      fonte: "[F275] p. 10: \"the thruster should be rated at full power for about 87 kg\" (modelo CEX-2D a 4,3 kW: \"operate for 7270 hours and process 134 kg of xenon\", com 50 % de margem)"
   NEXT-C:
     # Fora do catálogo: avaliação em paralelo (decisão do Fabio, 2026-11-20). Ponto de potência máxima de [F276].
     voo: "[F278] p. 2: \"On December 18, 2021, the NEXT-C system underwent its first activation in flight\" (DART; cerca de 2 h de operação)"
@@ -101,7 +114,12 @@ missao:
   # v∞ de partida até o maior C3 da curva publicada do Falcon Heavy (config/lancadores.yaml, [F79]: 20 km²/s²).
   lancador: "Falcon Heavy (descartável)"
   # Número de propulsores ativos varridos, por propulsor. P-122.
-  n_ativos: {valor: {XIPS-25: [6, 7, 8, 9, 10, 11, 12], NEXT-C: [3, 4, 5, 6, 7]}, premissa: P-122}
+  # Estendidos para baixo (decisão do Fabio, 2026-11-20): o menor n da faixa anterior já fechava.
+  n_ativos: {valor: {XIPS-25: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "XIPS-25 (87 kg)": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], NEXT-C: [1, 2, 3, 4, 5, 6, 7]}, premissa: P-122}
+  # Uma cadeia de n decrescente por propulsor e órbita, em ordem fixa (decisão do Fabio, 2026-11-22). Uma cadeia longa
+  # demais para um job do CI é dividida em blocos encadeados: cada bloco continua da solução gravada pelo anterior (mesmo
+  # resultado da cadeia inteira). Tamanho do bloco por propulsor (valores de n por job). P-122.
+  bloco_cadeia: {valor: {XIPS-25: 6, "XIPS-25 (87 kg)": 6, NEXT-C: 7}, premissa: P-122}
   altitudes_km: {valor: [380, 814], fonte: "results/familia1/missao.yaml (as duas órbitas de encontro da família 1)"}
   iteracoes_fecho: {valor: 4, premissa: P-122}
   # Partida a frio do otimizador (sf.viabilizar e depois SLSQP com as datas fixas): data de partida da ida e durações
@@ -109,3 +127,20 @@ missao:
   partida_frio: {valor: "2028-11-24", premissa: P-122}
   duracoes_frio_ida_dias: {valor: [600, 700, 800, 500, 900, 1000], premissa: P-122}
   duracoes_frio_volta_dias: {valor: [400, 500, 600, 300, 700, 800], premissa: P-122}
+
+conclusoes:
+  # Conclusões gravadas no arquivo comparado pelo CI (decisão do Fabio, 2026-11-20): três estados, "sim", "não" ou
+  # "indeterminado" (dentro da banda), para que o ruído entre CPUs nos mínimos locais não vire a conclusão. P-123.
+  margem_minima: {valor: 0.0, premissa: P-123}          # o critério de fecho (margem no Falcon Heavy ≥ 0)
+  banda_margem: {valor: 0.05, premissa: P-123}          # ± 5 pontos percentuais
+  banda_prazo_dias: {valor: 30, premissa: P-123}        # ± 30 dias em torno do último lançamento do MAV
+
+estocagem_mav:
+  # Estação das tempestades globais de poeira, em Ls (graus). P-124.
+  estacao_tempestades_ls: {valor: [180, 340], premissa: P-124}
+  fontes:
+    - "[F281] p. 1: \"perihelion dust storm season (10-20 K for LS =200°-340°)\""
+    - "[F282] p. 8, Tab. 1: inícios das tempestades globais entre Ls 185,0 (MY 25) e 310,0 (MY −16)"
+    - "[F263] PDF p. 1: \"The results showed <0.1% mass loss in all samples, a sign of vacuum compatibility\" (só a fase de vácuo)"
+    - "[F35] PDF p. 1: \"After residing on the surface for another year, the MAV will carry a payload of samples into orbit\""
+    - "[F283] PDF p. 6: \"a couple of the motors will also undergo a simulated aging period to test any effects of long term storage\""
