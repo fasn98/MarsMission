@@ -1451,7 +1451,9 @@ premissas:
       (bloco_cadeia: 6 valores de n para as duas variantes do XIPS-25, cadeia inteira de 7 para o NEXT-C; pelas sondas,
       cerca de 20 a 30 min por configuração neste notebook, o que dá mais de 270 min para 12 valores de n). O bloco
       seguinte continua das soluções gravadas pelo anterior; a segunda passada usa os vizinhos convergidos deste bloco e
-      dos anteriores.
+      dos anteriores. Por isso o tamanho do bloco faz parte do caminho da cadeia: o resultado pode diferir do de uma cadeia
+      contínua (os n dos blocos seguintes não entram na segunda passada); vale o resultado dos blocos, o mesmo no local e no
+      CI (revisão de 2026-11-23).
     status: NÃO VALIDADA
 
   - id: P-123

@@ -65,7 +65,13 @@ FASE_850 = [["tools/dimensionamento.py"], ["tools/compara_msr.py"], ["tools/supe
 # Etapa 2 (issue #68): o orbitador só elétrico roda em matriz no CI: o caso publicado, um comando por bloco das cadeias de
 # n (propulsor × órbita; os blocos de uma cadeia em sequência) e a junção; a lista de blocos é a de
 # config/orbitador_so_eletrico.yaml (conferida em tests/).
+_amb = dict(os.environ)
 import orbitador_so_eletrico as _ose  # noqa: E402
+
+# o import fixa uma thread de BLAS no os.environ (para os processos da própria ferramenta); as outras ferramentas da
+# regeneração herdam o os.environ (_env_git) e não devem receber isso
+os.environ.clear()
+os.environ.update(_amb)
 
 ORBITADOR_SO_ELETRICO = ([["tools/orbitador_so_eletrico.py", "--caso-publicado"]]
                          + [["tools/orbitador_so_eletrico.py", "--bloco", nome, str(int(h)), _ose._rotulo_bloco(ns)]

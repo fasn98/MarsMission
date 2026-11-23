@@ -7,7 +7,7 @@ Etapa 2 do plano (issue #68). Plano aprovado pelo Fabio em 2026-11-20. **Calcula
 ## Método
 
 - **(a) Trechos heliocêntricos:** transcrição de Sims–Flanagan de ordem 4 (`orbital.sims_flanagan`) com as efemérides DE440s, 30 segmentos por trecho, otimizada com SLSQP (P-118). Conferências em `tests/test_sims_flanagan.py`: empuxo zero contra Kepler e Lambert, aceleração tangencial constante contra [F113] p. 31.
-- **Ida:** partida da Terra com o v∞ do lançador (variável), chegada ao raio de Hill de Marte com v∞ = 0; objetivo: a maior margem no Falcon Heavy (descartável) pela curva C3 × massa e pela declinação ([F79]). Restrição: o orbitador fica pronto no encontro até o último lançamento do MAV da família 1 (`results/familia1/missao.yaml`).
+- **Ida:** partida da Terra com o v∞ do lançador (variável), chegada ao raio de Hill de Marte com v∞ = 0; objetivo: a maior margem no Falcon Heavy (descartável) pela curva C3 × massa e pela declinação ([F79]). Restrições: DLA ≤ 28,5° (formulação "restricao", P-118) e o orbitador pronto no encontro até o último lançamento do MAV da família 1 (`results/familia1/missao.yaml`); se a tentativa com o prazo falha, tenta-se sem ele, e o prazo entra só na conclusão.
 - **Marte:** espirais de descida e de subida como na rota B (`orbital.hibrido`, verificadas na Etapa 3.2), com o motor desligado no eclipse; MAV lançado pela regra da família 1 (conjunções, recuperação, folga de 60 d).
 - **Volta:** partida do raio de Hill com v∞ = 0 a partir da partida mais cedo; objetivo: a maior massa final.
 - **Fecho de massa:** o da rota B (`tools/rotas_mav.py`), com a razão de massas de cada trecho heliocêntrico otimizado no lugar do Δv quase circular; a margem de Δv (P-014) multiplica o logaritmo da razão. 4 iterações entre a ida e o fecho (P-122).
@@ -27,11 +27,11 @@ Etapa 2 do plano (issue #68). Plano aprovado pelo Fabio em 2026-11-20. **Calcula
 
 ## Conclusões
 
-Três estados (P-123): "sim" e "não" só fora da banda; dentro dela, "indeterminado". Os números estão no diagnóstico. Xe por propulsor ≤ vida: por construção do rodízio (P-121), quando converge. Uma configuração que não converge é classificada pelo menor resíduo de continuidade alcançado (P-118): acima do aceito, "nenhuma solução viável encontrada" (o que não demonstra inviabilidade); abaixo, "sem convergência do otimizador".
+Três estados (P-123): "sim" e "não" só fora da banda; dentro dela, "indeterminado". Os números estão no diagnóstico. Xe por propulsor ≤ vida: por construção do rodízio (P-121), quando converge. Uma configuração que não converge é classificada pelo menor resíduo de continuidade alcançado (P-118): acima do aceito, "nenhuma solução viável encontrada" (o que não demonstra inviabilidade); abaixo, "sem convergência do otimizador"; sem resíduo (fecho de massa, vida ou erro), "falha fora do otimizador".
 
 ### Conclusão principal: o orbitador só elétrico fecha a 380 km?
 
-Na família 1, o MAV sólido só fecha com encontro a 380 km (decisão do Fabio, 2026-11-22). Fecha, para um propulsor, se alguma configuração dá "sim" nas quatro colunas; "não demonstrado" quando nenhuma configuração convergida fecha e alguma não convergiu.
+Na família 1, o MAV sólido só fecha com encontro a 380 km (decisão do Fabio, 2026-11-22). Fecha, para um propulsor: "sim" se alguma configuração dá "sim" nas quatro colunas; senão, "indeterminado" se alguma convergida tem "indeterminado" e nenhum "não"; "não" se todas convergiram e nenhuma fecha; "não demonstrado" nos outros casos (alguma não convergiu).
 
 | Propulsor | Fecha? | Ativos que fecham |
 | :- | :- | :- |

@@ -15,7 +15,8 @@ As saídas das otimizações são mínimos locais (CLAUDE.md, regra 6): os núme
 results/familia1/diagnostico_orbitador_so_eletrico.md, fora da comparação do CI; results/familia1/orbitador_so_eletrico.md
 traz o método e as entradas e cita o diagnóstico.
 
-Uso: python tools/orbitador_so_eletrico.py [--so-caso-publicado]
+Uso: python tools/orbitador_so_eletrico.py [--caso-publicado | --bloco PROPULSOR ALTITUDE N_MAX-N_MIN | --junta]
+(sem argumentos: as cadeias em paralelo e o caso publicado, depois --junta)
 """
 
 from __future__ import annotations
@@ -573,8 +574,12 @@ def _cadeia(nome, h, ns, anteriores=None):
             out[i] = r
     for r in out:
         if "falha" in r:
-            viavel = r["residuo_minimo"] is not None and r["residuo_minimo"] <= oc["residuo_max"]
-            r["situacao"] = "sem convergência do otimizador" if viavel else "nenhuma solução viável encontrada"
+            if r["residuo_minimo"] is None:   # falha fora do otimizador (fecho de massa, vida, erro): sem resíduo
+                r["situacao"] = "falha fora do otimizador"
+            elif r["residuo_minimo"] <= oc["residuo_max"]:
+                r["situacao"] = "sem convergência do otimizador"
+            else:
+                r["situacao"] = "nenhuma solução viável encontrada"
     return sorted(out, key=lambda r: r["n_ativos"]), proprias
 
 
@@ -621,8 +626,11 @@ def escreve(casos, fam):
           f"DE440s, {int(oc['n_segmentos'])} segmentos por trecho, otimizada com SLSQP (P-118). Conferências em "
           "`tests/test_sims_flanagan.py`: empuxo zero contra Kepler e Lambert, aceleração tangencial constante contra [F113] p. 31.",
           "- **Ida:** partida da Terra com o v∞ do lançador (variável), chegada ao raio de Hill de Marte com v∞ = 0; objetivo: a "
-          f"maior margem no {ms['lancador']} pela curva C3 × massa e pela declinação ([F79]). Restrição: o orbitador fica pronto "
-          "no encontro até o último lançamento do MAV da família 1 (`results/familia1/missao.yaml`).",
+          f"maior margem no {ms['lancador']} pela curva C3 × massa e pela declinação ([F79]). Restrições: DLA ≤ "
+          f"{br(v(ler('config/lancadores.yaml')['dla']['faixa_sem_penalidade_graus']), 1)}° (formulação \""
+          f"{ler('config/orbitador_so_eletrico.yaml')['otimizador']['formulacao_dla']['valor']}\", P-118) e o orbitador pronto no encontro até o último lançamento "
+          "do MAV da família 1 (`results/familia1/missao.yaml`); se a tentativa com o prazo falha, tenta-se sem ele, e o "
+          "prazo entra só na conclusão.",
           "- **Marte:** espirais de descida e de subida como na rota B (`orbital.hibrido`, verificadas na Etapa 3.2), com o motor "
           "desligado no eclipse; MAV lançado pela regra da família 1 (conjunções, recuperação, "
           f"folga de {ler('results/familia1/missao.yaml')['folga_conjuncao_dias']} d).",
@@ -651,12 +659,14 @@ def escreve(casos, fam):
           "Três estados (P-123): \"sim\" e \"não\" só fora da banda; dentro dela, \"indeterminado\". Os números estão no "
           "diagnóstico. Xe por propulsor ≤ vida: por construção do rodízio (P-121), quando converge. Uma configuração que não "
           "converge é classificada pelo menor resíduo de continuidade alcançado (P-118): acima do aceito, \"nenhuma solução "
-          "viável encontrada\" (o que não demonstra inviabilidade); abaixo, \"sem convergência do otimizador\".", ""]
+          "viável encontrada\" (o que não demonstra inviabilidade); abaixo, \"sem convergência do otimizador\"; sem resíduo (fecho de massa, vida ou erro), \"falha fora do "
+          "otimizador\".", ""]
     principal = float(min(ms["altitudes_km"]["valor"]))
     md += [f"### Conclusão principal: o orbitador só elétrico fecha a {br(principal)} km?", "",
            f"Na família 1, o MAV sólido só fecha com encontro a {br(principal)} km (decisão do Fabio, 2026-11-22). Fecha, para "
-           "um propulsor, se alguma configuração dá \"sim\" nas quatro colunas; \"não demonstrado\" quando nenhuma "
-           "configuração convergida fecha e alguma não convergiu.", "",
+           "um propulsor: \"sim\" se alguma configuração dá \"sim\" nas quatro colunas; senão, \"indeterminado\" se alguma "
+           "convergida tem \"indeterminado\" e nenhum \"não\"; \"não\" se todas convergiram e nenhuma fecha; \"não "
+           "demonstrado\" nos outros casos (alguma não convergiu).", "",
            "| Propulsor | Fecha? | Ativos que fecham |", "| :- | :- | :- |"]
     for nome in ms["n_ativos"]["valor"]:
         md.append(f"| {nome} | " + " | ".join(_fecha_propulsor([r for r in fam if r["propulsor"] == nome and r["altitude_km"] == principal], cfg)) + " |")
