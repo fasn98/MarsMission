@@ -3,6 +3,7 @@ inteira (a otimização completa roda na regeneração, parte orbitador_so_eletr
 
 from __future__ import annotations
 
+import copy
 import math
 import sys
 from pathlib import Path
@@ -182,3 +183,101 @@ def test_textos_do_diagnostico_passam_na_checagem_de_sanidade():
     trecho = fonte[fonte.index("def escreve("):]
     trecho = trecho[trecho.index("\n    d = ["):]
     assert "∞" not in trecho
+
+
+def _solucao_que_fecha():
+    d = yaml.safe_load(ose._arquivo_solucoes("NEXT-C", 380).read_text(encoding="utf-8"))
+    return next(tn["solucao"] for c in d["configuracoes"] if c["n_ativos"] == 4 for tn in c["tentativas"] if "solucao" in tn)
+
+
+@pytest.mark.parametrize("ruim", [math.nan, math.inf])
+@pytest.mark.parametrize("perna,campo", [(k, c) for k in ("ida", "volta") for c in ose.SEMENTE])
+def test_verificacao_recusa_nao_finito_na_solucao_gravada(perna, campo, ruim):
+    """NaN ou inf em qualquer grandeza da solução gravada: "não verificada", com o nome da grandeza (decisão do Fabio,
+    2026-11-25: nenhuma conferência aprova por comparação com NaN)."""
+    sm = copy.deepcopy(_solucao_que_fecha())
+    if isinstance(sm[perna][campo], list):
+        x = np.asarray(sm[perna][campo], dtype=float)
+        x.flat[1] = ruim
+        sm[perna][campo] = x.tolist()
+    else:
+        sm[perna][campo] = ruim
+    r = ose._verifica_uma("NEXT-C", 4, 380.0, sm)
+    assert "erro" in r and f"{perna}.{campo}" in r["erro"]
+
+
+def _verifica_com(monkeypatch, alvo, nome, troca):
+    """A solução que fecha, verificada com `alvo.nome` trocado por `troca(original)`."""
+    monkeypatch.setattr(alvo, nome, troca(getattr(alvo, nome)))
+    return ose._verifica_uma("NEXT-C", 4, 380.0, _solucao_que_fecha())
+
+
+def _nao_verificada(r):
+    return "erro" in r or (not r["verificacao"]["verificada"] and r["verificacao"]["nao_finitos"])
+
+
+def test_verificacao_sem_troca_aceita():
+    r = ose._verifica_uma("NEXT-C", 4, 380.0, _solucao_que_fecha())
+    assert r["verificacao"]["verificada"] and r["verificacao"]["nao_finitos"] == []
+
+
+@pytest.mark.parametrize("ruim", [math.nan, math.inf])
+@pytest.mark.parametrize("chave", ["residuo_max", "violacao_u", "t0", "tof", "m0", "mf", "vinf_e_u"])
+def test_verificacao_recusa_nao_finito_no_residuo_e_nos_limites(monkeypatch, chave, ruim):
+    """NaN ou inf no resíduo, na violação das desigualdades (|u|, v∞ na Terra, DLA) ou na de um limite (datas, durações,
+    massas, v∞): "não verificada", mesmo quando o max() do Python descartaria o NaN."""
+    def troca(orig):
+        def avaliar(*a, **k):
+            r = orig(*a, **k)
+            if chave in r["violacao_limites"]:
+                r["violacao_limites"] = {**r["violacao_limites"], chave: ruim}
+            else:
+                r[chave] = ruim
+            return r
+        return avaliar
+    assert _nao_verificada(_verifica_com(monkeypatch, sf, "avaliar", troca))
+
+
+@pytest.mark.parametrize("ruim", [math.nan, math.inf])
+@pytest.mark.parametrize("grandeza", ["margem", "dla", "espiral", "vida", "encontro"])
+def test_verificacao_recusa_nao_finito_nas_grandezas_derivadas(monkeypatch, grandeza, ruim):
+    """NaN ou inf na margem (capacidade do lançador), na DLA, nas espirais (massas, Xe e datas de Marte), na vida ou no
+    tempo de encontro: "não verificada" (explicitamente ou por erro), nunca aprovada."""
+    if grandeza == "margem":
+        def troca(orig):
+            def capacidade(e):
+                cap, *resto = orig(e)
+                return (lambda vinf: ruim, *resto)
+            return capacidade
+        r = _verifica_com(monkeypatch, ose, "_capacidade", troca)
+    elif grandeza == "dla":
+        r = _verifica_com(monkeypatch, ose, "_declinacao", lambda orig: (lambda vinf: ruim))
+    elif grandeza == "espiral":
+        def troca(orig):
+            def tempos(*a, **k):
+                t = list(orig(*a, **k))
+                t[1] = ruim
+                return tuple(t)
+            return tempos
+        r = _verifica_com(monkeypatch, ose.hb, "tempos_espiral", troca)
+    else:
+        def troca(orig):
+            def entradas():
+                e = orig()
+                if grandeza == "vida":
+                    e = copy.deepcopy(e)
+                    for p in e["se"]["propulsores"].values():
+                        p["vida_kg"]["valor"] = ruim
+                else:
+                    e = {**e, "t_enc": ruim}
+                return e
+            return entradas
+        r = _verifica_com(monkeypatch, ose, "_entradas", troca)
+    assert _nao_verificada(r)
+
+
+def test_conclusao_recusa_margem_nao_finita():
+    cfg = ler("config/orbitador_so_eletrico.yaml")
+    r = {"margem_falcon_heavy": math.nan, "ultimo_lancamento_mav": "2032-04-26", "pronto_no_encontro": "2031-01-01", "dentro_da_vida": True}
+    with pytest.raises(ValueError):
+        ose._conclusoes(r, cfg)

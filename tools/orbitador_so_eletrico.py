@@ -190,6 +190,12 @@ def _resumo(s, motor, mu=GM_SOL):
             "fracao_tempo_com_empuxo": float(np.mean(a > lc_["limiar_arco"])), "aceleracao_inicial_m_s2": motor.empuxo_n / s["m0"]}
 
 
+def _nao_finitos(valores):
+    """Nomes das grandezas com algum valor NaN ou inf. Nenhuma conferência pode aprovar por comparação com NaN (em Python,
+    NaN <= limite e NaN > limite dão os dois False): a verificação recusa explicitamente (decisão do Fabio, 2026-11-25)."""
+    return sorted(k for k, x in valores.items() if not all(math.isfinite(y) for y in np.ravel(np.asarray(x, dtype=float))))
+
+
 def _avaliada(perna, s, ineq_extra=None):
     """Uma solução gravada, sem otimizar, com o resultado de sf.avaliar (no lugar do que _resolve devolve)."""
     a = sf.avaliar(perna, s, ineq_extra)
@@ -399,6 +405,9 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True, verificar=False):
     if verificar:
         if chutes is None or chutes["empuxo_n"] != motor.empuxo_n or chutes["isp_s"] != motor.isp_s:
             raise ValueError("solução gravada com outro empuxo ou Isp que o do config")
+        nf = _nao_finitos({f"{k}.{c}": chutes[k][c] for k in ("ida", "volta") for c in SEMENTE})
+        if nf:
+            raise ValueError(f"solução gravada com valor não finito: {', '.join(nf)}")
         com_prazo = False   # o prazo entra só na conclusão
     # massa na chegada: a do chute (n anterior da cadeia) ou a do chute a frio (P-118)
     m_chegada = float(ida0["mf"]) if ida0 is not None else float(lc_["massa_chegada_chute_kg"])
@@ -504,7 +513,19 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True, verificar=False):
         pior = max(si["residuo_max"], sv["residuo_max"], si["violacao_u"], sv["violacao_u"], *lim_i.values(), *lim_v.values())
         tol_f = v(ler("config/orbitador_so_eletrico.yaml")["verificacao"]["descasamento_fecho_relativo_max"])
         desc = max(abs(b_volta - sv["m0"]) / sv["m0"], abs(b_desc - si["mf"]) / si["mf"])
-        ver = {"verificada": bool(pior <= oc["residuo_max"] and desc <= tol_f), "pior": pior, "descasamento_relativo": desc,
+        # tudo o que as conferências e as conclusões usam tem de ser finito (as datas saem dos tempos e das durações)
+        nf = _nao_finitos({**{f"{k}.{c}": x[c] for k, x in (("ida", si), ("volta", sv)) for c in SEMENTE},
+                           **{f"{k}.residuo": x["residuo_max"] for k, x in (("ida", si), ("volta", sv))},
+                           **{f"{k}.violacao_u": x["violacao_u"] for k, x in (("ida", si), ("volta", sv))},
+                           **{f"{k}.limite_{c}": y for k, x in (("ida", si), ("volta", sv)) for c, y in x["violacao_limites"].items()},
+                           "residuo_aceito": oc["residuo_max"], "descasamento_max": tol_f, "descasamento": desc,
+                           "margem_falcon_heavy": margem, "c3": float(si["vinf0"] @ si["vinf0"]), "dla": _declinacao(si["vinf0"]),
+                           "vinf_chegada_terra": float(np.linalg.norm(sv["vinf1"])), "orbitador_kg": m0_lanc,
+                           "massa_chegada_marte_kg": b_desc, "massa_volta_kg": b_volta, "xenonio_kg": px,
+                           "xenonio_por_propulsor_kg": px / (inst - reservas), "vida_kg": vida,
+                           "descida_s": t_d, "subida_s": t_s, "encontro_s": e["t_enc"]})
+        ok = not nf and pior <= oc["residuo_max"] and desc <= tol_f
+        ver = {"verificada": bool(ok), "nao_finitos": nf, "pior": pior, "descasamento_relativo": desc,
                "residuo_ida": si["residuo_max"], "residuo_volta": sv["residuo_max"],
                "violacao_ida": si["violacao_u"], "violacao_volta": sv["violacao_u"],
                "limites_ida": lim_i, "limites_volta": lim_v,
@@ -623,6 +644,8 @@ def _conclusoes(r, cfg):
         return [f"não ({r['situacao']})", "—", "—", "—"]
     c = cfg["conclusoes"]
     m, lim, bm = r["margem_falcon_heavy"], v(c["margem_minima"]), v(c["banda_margem"])
+    if not all(math.isfinite(x) for x in (m, lim, bm)):
+        raise ValueError(f"margem ou banda não finita: {m}, {lim}, {bm}")
     margem = "sim" if m >= lim + bm else "não" if m < lim - bm else "indeterminado"
     folga = (D(r["ultimo_lancamento_mav"]) - D(r["pronto_no_encontro"])).days
     bp = v(c["banda_prazo_dias"])
@@ -806,7 +829,7 @@ def escreve(casos, fam):
                 continue
             vv = x["verificacao"]
             d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {x['origem']} | "
-                     f"{'verificada' if vv['verificada'] else 'não verificada'} | {_sci(vv['pior'])} | {_sci(vv['residuo_ida'])}; {_sci(vv['residuo_volta'])} | "
+                     f"{'verificada' if vv['verificada'] else 'não verificada'}{' (não finito: ' + ', '.join(vv['nao_finitos']) + ')' if vv['nao_finitos'] else ''} | {_sci(vv['pior'])} | {_sci(vv['residuo_ida'])}; {_sci(vv['residuo_volta'])} | "
                      f"{br(vv['descasamento_m0_volta_kg'], 3)} | {br(vv['descasamento_chegada_marte_kg'], 3)} | {_sci(vv['descasamento_relativo'])} | {br(x['margem_falcon_heavy'] * 100, 2)} % | "
                      f"{x['pronto_no_encontro']} | {'**sim**' if esc == (x['origem'], x['margem_falcon_heavy']) else '—'} |")
     d += estocagem_mav(fam)
@@ -984,6 +1007,17 @@ def _nota_fecho(r, cfg):
     return 2 if c == ["sim"] * 4 else 1 if "não" not in c else 0
 
 
+def _verifica_uma(nome, n, h, solucao):
+    """Uma solução gravada verificada (fecho com verificar=True), ou {"erro": ...} se a verificação falha antes do fim
+    (valor não finito, massas que não convergem, xenônio acima da vida, conta impossível)."""
+    try:
+        r = fecho(nome, n, h, chutes=_de_semente(solucao), verificar=True)
+    except (RuntimeError, ValueError, ArithmeticError) as x:
+        return {"erro": f"{type(x).__name__}: {x}"}
+    r.pop("_chutes")
+    return r
+
+
 def verifica():
     """Verifica as soluções gravadas, sem reotimizar (decisão do Fabio, 2026-11-24): por configuração, cada solução é
     propagada (fecho com verificar=True) e fica a melhor das verificadas (_nota_fecho, depois a maior margem), com a
@@ -1005,13 +1039,7 @@ def verifica():
                     if "solucao" not in tn:
                         sem.append({"origem": rot, "situacao": tn["situacao"], "residuo_minimo": tn["residuo_minimo"]})
                         continue
-                    try:
-                        r = fecho(nome, n, float(h), chutes=_de_semente(tn["solucao"]), verificar=True)
-                    except (RuntimeError, ValueError) as x:
-                        cands.append({"origem": rot, "erro": f"{type(x).__name__}: {x}"})
-                        continue
-                    r.pop("_chutes")
-                    cands.append({**r, "origem": rot})
+                    cands.append({**_verifica_uma(nome, n, float(h), tn["solucao"]), "origem": rot})
                 ok = [r for r in cands if "erro" not in r and r["verificacao"]["verificada"]]
                 base = {"candidatas": cands, "sem_solucao": sem}
                 if ok:
