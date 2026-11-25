@@ -866,7 +866,9 @@ def estocagem_mav(fam):
     return out
 
 
-PARCIAIS = RAIZ / "results" / "conferencia" / "orbitador_so_eletrico"   # blocos da otimização local e caso publicado, fora da comparação
+# Caso publicado e blocos da otimização local, fora da comparação. Os blocos não são versionados desde 2026-11-25: as
+# soluções ficam em data/orbitador_so_eletrico/ (--salva-solucoes).
+PARCIAIS = RAIZ / "results" / "conferencia" / "orbitador_so_eletrico"
 VARIANTES = [("esquerda", False), ("esquerda", True), ("direita", False), ("direita", True)]
 
 

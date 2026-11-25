@@ -81,32 +81,6 @@ def test_regeneracao_verifica_sem_reotimizar():
             assert all(c["tentativas"] for c in d["configuracoes"])
 
 
-def test_solucoes_gravadas_sao_as_dos_blocos():
-    """Antes de apagar os blocos versionados (decisão do Fabio, 2026-11-24): as tentativas do notebook em
-    data/orbitador_so_eletrico/ reproduzem exatamente os blocos, configuração por configuração (a solução com as mesmas
-    variáveis de decisão, bit a bit, ou a mesma falha), e não há tentativa do notebook sem bloco."""
-    blocos = sorted((RAIZ / "results/conferencia/orbitador_so_eletrico").glob("bloco_*.yaml"))
-    assert len(blocos) == len(ose.blocos())
-    esperado = {}
-    for arq in blocos:
-        b = yaml.safe_load(arq.read_text(encoding="utf-8"))
-        for c in b["configuracoes"]:
-            k = (c["propulsor"], float(c["altitude_km"]), int(c["n_ativos"]))
-            esperado[k] = ({"falha": c["falha"], "situacao": c["situacao"], "residuo_minimo": c["residuo_minimo"]} if "falha" in c
-                           else {"solucao": b["sementes"][c["n_ativos"]]})
-    achado = {}
-    ms = ler("config/orbitador_so_eletrico.yaml")["missao"]
-    for h in ms["altitudes_km"]["valor"]:
-        for nome in ms["n_ativos"]["valor"]:
-            for c in yaml.safe_load(ose._arquivo_solucoes(nome, h).read_text(encoding="utf-8"))["configuracoes"]:
-                for tn in c["tentativas"]:
-                    if tn["origem"]["rotulo"] == "notebook":
-                        k = (nome, float(h), int(c["n_ativos"]))
-                        assert k not in achado
-                        achado[k] = {x: tn[x] for x in ("solucao", "falha", "situacao", "residuo_minimo") if x in tn}
-    assert achado == esperado
-
-
 def test_avaliar_reproduz_o_otimizador():
     """sf.avaliar devolve, para a solução do otimizador, o mesmo resíduo e a mesma violação que o otimizar."""
     r0, v0 = np.array([UA_KM, 0.0, 0.0]), np.array([0.0, math.sqrt(GM_SOL / UA_KM), 0.0])
