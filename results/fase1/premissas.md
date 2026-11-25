@@ -126,5 +126,6 @@
 | P-122 | faixas_da_missao_do_orbitador_so_eletrico | partida_terra: ['2028-09-01', '2029-01-31']; ida_dias: [200, 1100]; vinf_chegada_marte_km_s: 0.0; espera_retorno_dias: 400; volta_dias: [150, 900]; vinf_chegada_terra_max_km_s: 5.0; n_ativos: {'XIPS-25': [1, 12], 'XIPS-25 (87 kg)': [1, 12], 'NEXT-C': [1, 7]}; iteracoes_fecho: 4; partida_frio: 2028-11-24; duracoes_frio_ida_dias: [600, 700, 800, 500, 900, 1000]; duracoes_frio_volta_dias: [400, 500, 600, 300, 700, 800] | data; dias; km/s; propulsores | NÃO VALIDADA | config/orbitador_so_eletrico.yaml (missao), tools/orbitador_so_eletrico.py |
 | P-123 | bandas_das_conclusoes_do_orbitador_so_eletrico | margem_minima: 0.0; banda_margem: 0.05; banda_prazo_dias: 30 | fração da massa injetada; dias | NÃO VALIDADA | config/orbitador_so_eletrico.yaml (conclusoes), results/familia1/orbitador_so_eletrico.md |
 | P-124 | estacao_das_tempestades_globais_de_poeira | ls_graus: [180, 340] | graus de longitude solar Ls | NÃO VALIDADA | config/orbitador_so_eletrico.yaml (estocagem_mav), results/familia1/diagnostico_orbitador_so_eletrico.md |
+| P-125 | descasamento_do_fecho_de_massa_na_verificacao | 0.001 | adimensional (diferença relativa de massa) | NÃO VALIDADA | config/orbitador_so_eletrico.yaml (verificacao), tools/orbitador_so_eletrico.py (--verifica) |
 
-Total: 124 premissas, 124 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
+Total: 125 premissas, 125 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.

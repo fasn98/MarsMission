@@ -1387,6 +1387,10 @@ premissas:
       Classificação de quem não converge (decisão do Fabio, 2026-11-22): pelo menor resíduo de continuidade alcançado nas
       tentativas; acima de residuo_max, "nenhuma solução viável encontrada" (sem afirmar inviabilidade); abaixo, "sem
       convergência do otimizador".
+      Verificação (decisão do Fabio, 2026-11-24: verificar, não reotimizar): o CI propaga as soluções gravadas e as aceita
+      com o mesmo residuo_max, aplicado como no otimizador ao resíduo de continuidade e à violação das desigualdades
+      (|u| ≤ 1, v∞, DLA), e também à violação dos limites das datas e durações. O CI do PR #74 (2026-11-23) mostrou que a
+      otimização muda entre CPUs (notebook Intel e runners AMD EPYC com as mesmas versões de Python, numpy e scipy).
     status: NÃO VALIDADA
 
   - id: P-119
@@ -1451,7 +1455,8 @@ premissas:
       (bloco_cadeia: 6 valores de n para as duas variantes do XIPS-25, cadeia inteira de 7 para o NEXT-C; pelas sondas,
       cerca de 20 a 30 min por configuração neste notebook, o que dá mais de 270 min para 12 valores de n). O bloco
       seguinte continua das soluções gravadas pelo anterior; a segunda passada usa os vizinhos convergidos deste bloco e
-      dos anteriores. Por isso o tamanho do bloco faz parte do caminho da cadeia: o resultado pode diferir do de uma cadeia
+      dos anteriores. Desde 2026-11-24 (decisão do Fabio) as cadeias rodam fora do CI obrigatório; as soluções vão para
+      data/orbitador_so_eletrico/, com a origem (notebook ou CI), e o CI só as verifica. Por isso o tamanho do bloco faz parte do caminho da cadeia: o resultado pode diferir do de uma cadeia
       contínua (os n dos blocos seguintes não entram na segunda passada); vale o resultado dos blocos, o mesmo no local e no
       CI (revisão de 2026-11-23).
     status: NÃO VALIDADA
@@ -1469,6 +1474,9 @@ premissas:
       "não" com 30 d ou mais depois. Justificativa das bandas: a banda tem de ser muito maior que a diferença entre mínimos
       locais da mesma configuração (medida no diagnóstico ao comparar as formulações e as partidas a frio e a quente) e
       menor que as diferenças entre configurações vizinhas.
+      Desde 2026-11-24 (decisão do Fabio): a conclusão comparada é de existência de trajetória verificada que fecha ("sim",
+      "indeterminado", "não demonstrado"), e a margem aparece como limite inferior em pontos percentuais inteiros
+      arredondados para baixo (a melhor solução verificada; o otimizador é local).
     status: NÃO VALIDADA
 
   - id: P-124
@@ -1483,5 +1491,23 @@ premissas:
       SEM FONTE: a janela de 180° a 340° (o início arredondado para baixo, abaixo do mais cedo do catálogo), e contar uma
       "temporada" sempre que a estada do lander toca essa janela; a ocorrência de uma tempestade global numa temporada não
       é prevista (cerca de 40 a 50 % das tempestades do periélio observadas foram globais, [F281] p. 15).
+    status: NÃO VALIDADA
+
+  - id: P-125
+    nome: descasamento_do_fecho_de_massa_na_verificacao
+    valor: 1.0e-3
+    unidade: adimensional (diferença relativa de massa)
+    uso: config/orbitador_so_eletrico.yaml (verificacao), tools/orbitador_so_eletrico.py (--verifica)
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-24 como NÃO VALIDADA, com o "verificar, não reotimizar". É um critério de
+      consistência da solução (a trajetória gravada e o fecho de massa precisam descrever a mesma nave), não um ajuste de
+      resultado: nenhuma massa ou margem é corrigida por ele; a solução que não passa fica como não verificada.
+      SEM FONTE: a solução gravada só é verificada se a massa que o fecho de massa pede, com as razões de massas das
+      trajetórias gravadas, difere no máximo 0,1 % da gravada no trecho (m0 da volta e massa na chegada a Marte). A
+      otimização faz 4 iterações entre a ida e o fecho (P-122) e nem sempre fecha; com o descasamento, a margem no Falcon
+      Heavy muda da ordem da diferença relativa, e 0,1 % fica 50 vezes abaixo da banda de 5 pontos da P-123. A
+      continuidade com as massas do fecho não é exigida: com empuxo fixo, um descasamento de 1e-5 kg já leva o resíduo
+      acima do aceito da P-118. Por isso a margem no arquivo comparado ("pelo menos", P-123) é limite inferior quanto ao
+      otimizador local, a menos de cerca de (1 + margem) × este valor quanto ao descasamento.
     status: NÃO VALIDADA
 

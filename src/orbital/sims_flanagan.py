@@ -233,26 +233,22 @@ class _Avaliador:
         return ((res[1:] - res[0]) / h[:, None]).T
 
 
-def otimizar(p: Perna, objetivo, chute, maxiter=500, ftol=1e-10, ineq_extra=None):
-    """Minimiza `objetivo(t0, tof, m0, mf, vinf0, vinf1)` sujeito à continuidade da perna, |u_i| ≤ 1, aos limites e,
-    se dada, a `ineq_extra(t0, tof, m0, mf, vinf0, vinf1) ≥ 0` (vetor).
+def _z(p: Perna, s):
+    """Vetor de variáveis (escalado) de uma solução ou chute com t0, tof, m0, mf, vinf0, vinf1 e u."""
+    return np.r_[s["t0"] / _DIA, s["tof"] / _DIA, s["m0"] / p.escala_m, s["mf"] / p.escala_m,
+                 np.asarray(s["vinf0"], float), np.asarray(s["vinf1"], float), np.asarray(s["u"], float).ravel()]
 
-    `chute`: dicionário com t0, tof (s), m0, mf (kg), vinf0, vinf1 (vetores) e u (N × 3). Devolve um dicionário com a
-    solução, o resíduo de continuidade e o estado do otimizador."""
-    av = _Avaliador(p)
+
+def _limites(p: Perna):
     n = p.n_segmentos
-    z0 = np.r_[chute["t0"] / _DIA, chute["tof"] / _DIA, chute["m0"] / p.escala_m, chute["mf"] / p.escala_m,
-               np.asarray(chute["vinf0"], float), np.asarray(chute["vinf1"], float), np.asarray(chute["u"], float).ravel()]
-    lim = ([(p.t0[0] / _DIA, p.t0[1] / _DIA), (p.tof[0] / _DIA, p.tof[1] / _DIA),
-            (p.m0[0] / p.escala_m, p.m0[1] / p.escala_m), (p.mf[0] / p.escala_m, p.mf[1] / p.escala_m)]
-           + [(-p.vinf_partida[1], p.vinf_partida[1])] * 3 + [(-p.vinf_chegada[1], p.vinf_chegada[1])] * 3
-           + [(-1.0, 1.0)] * (3 * n))
-    z0 = np.clip(z0, [a for a, _ in lim], [b for _, b in lim])
+    return ([(p.t0[0] / _DIA, p.t0[1] / _DIA), (p.tof[0] / _DIA, p.tof[1] / _DIA),
+             (p.m0[0] / p.escala_m, p.m0[1] / p.escala_m), (p.mf[0] / p.escala_m, p.mf[1] / p.escala_m)]
+            + [(-p.vinf_partida[1], p.vinf_partida[1])] * 3 + [(-p.vinf_chegada[1], p.vinf_chegada[1])] * 3
+            + [(-1.0, 1.0)] * (3 * n))
 
-    def f(z):
-        t0, tof, m0, mf, vi0, vi1, _ = av.desfaz(z)
-        return objetivo(t0, tof, m0, mf, vi0, vi1)
 
+def _desigualdades(p: Perna, av, ineq_extra=None):
+    """Restrições de desigualdade (≥ 0): |u_i| ≤ 1, os limites dos módulos de v∞ e as extras."""
     def ineq(z):
         _, _, _, _, vi0, vi1, u = av.desfaz(z)
         g = [1.0 - np.sum(u * u, axis=1)]
@@ -263,6 +259,38 @@ def otimizar(p: Perna, objetivo, chute, maxiter=500, ftol=1e-10, ineq_extra=None
             t0, tof, m0, mf, _, _, _ = av.desfaz(z)
             g.append(np.atleast_1d(ineq_extra(t0, tof, m0, mf, vi0, vi1)))
         return np.concatenate(g)
+    return ineq
+
+
+def avaliar(p: Perna, s, ineq_extra=None):
+    """Confere uma solução sem otimizar: propaga os comandos gravados com a mesma transcrição e devolve o resíduo de
+    continuidade (o máximo, nas mesmas unidades do `otimizar`), a maior violação das desigualdades (as mesmas do
+    `otimizar`, com as extras) e a maior violação de cada limite das variáveis (t0, tof, m0, mf, na escala do vetor)."""
+    av = _Avaliador(p)
+    z = _z(p, s)
+    res = av.avalia_um(z)
+    lim = _limites(p)
+    viol = [max(0.0, a - x, x - b) for (a, b), x in zip(lim, z)]
+    return {"residuo": res, "residuo_max": float(np.max(np.abs(res))),
+            "violacao_u": float(max(0.0, -np.min(_desigualdades(p, av, ineq_extra)(z)))),
+            "violacao_limites": {"t0": viol[0], "tof": viol[1], "m0": viol[2], "mf": viol[3], "vinf_e_u": max(viol[4:])}}
+
+
+def otimizar(p: Perna, objetivo, chute, maxiter=500, ftol=1e-10, ineq_extra=None):
+    """Minimiza `objetivo(t0, tof, m0, mf, vinf0, vinf1)` sujeito à continuidade da perna, |u_i| ≤ 1, aos limites e,
+    se dada, a `ineq_extra(t0, tof, m0, mf, vinf0, vinf1) ≥ 0` (vetor).
+
+    `chute`: dicionário com t0, tof (s), m0, mf (kg), vinf0, vinf1 (vetores) e u (N × 3). Devolve um dicionário com a
+    solução, o resíduo de continuidade e o estado do otimizador."""
+    av = _Avaliador(p)
+    lim = _limites(p)
+    z0 = np.clip(_z(p, chute), [a for a, _ in lim], [b for _, b in lim])
+
+    def f(z):
+        t0, tof, m0, mf, vi0, vi1, _ = av.desfaz(z)
+        return objetivo(t0, tof, m0, mf, vi0, vi1)
+
+    ineq = _desigualdades(p, av, ineq_extra)
 
     sol = minimize(f, z0, method="SLSQP", bounds=lim,
                    constraints=[{"type": "eq", "fun": av.avalia, "jac": av.jacobiano}, {"type": "ineq", "fun": ineq}],

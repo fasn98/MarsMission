@@ -64,26 +64,73 @@ def test_multiplicador_suave_de_dla_sem_quina_em_28_5():
             assert (cap_obj(vinf_com_dla(g)) + ad) / (base + ad) == pytest.approx((oficial + ad) / (cap(vinf_com_dla(0.0)) + ad), rel=1e-9)
 
 
-def test_matriz_da_regeneracao_cobre_as_cadeias_do_config():
-    """Uma cadeia de n decrescente por propulsor e órbita (decisão do Fabio, 2026-11-22), em blocos encadeados: cada n do
-    config aparece uma vez, os blocos de uma cadeia vêm em sequência e cada parte do CI depende dos blocos anteriores."""
+def test_regeneracao_verifica_sem_reotimizar():
+    """Verificar, não reotimizar (decisão do Fabio, 2026-11-24): o CI roda o caso publicado e a verificação; as soluções
+    gravadas cobrem todas as configurações do config, e a parte da verificação baixa o que ela lê."""
     import confere_regeneracao as cr
-    cfg = ler("config/orbitador_so_eletrico.yaml")["missao"]
-    bl = ose.blocos()
-    for h in cfg["altitudes_km"]["valor"]:
-        for nome, ns in cfg["n_ativos"]["valor"].items():
-            cad = [b for b in bl if b[0] == nome and b[1] == float(h)]
-            assert [n for b in cad for n in b[2]] == sorted(ns, reverse=True)
-            assert all(b[3] == [x[2] for x in cad[:i]] for i, b in enumerate(cad))
-    cmds = [c for c in cr.ORBITADOR_SO_ELETRICO if "--bloco" in c]
-    assert [(c[2], float(c[3]), c[4]) for c in cmds] == [(b[0], b[1], ose._rotulo_bloco(b[2])) for b in bl]
-    assert cr.ORBITADOR_SO_ELETRICO[0][1] == "--caso-publicado" and cr.ORBITADOR_SO_ELETRICO[-1][1] == "--junta"
+    assert cr.ORBITADOR_SO_ELETRICO == [["tools/orbitador_so_eletrico.py", "--caso-publicado"], ["tools/orbitador_so_eletrico.py", "--verifica"]]
     ps = yaml.safe_load((RAIZ / "tools" / "regeneracao_partes.yaml").read_text(encoding="utf-8"))["partes"]
-    parte = {p["ferramentas"][0]: k for k, p in ps.items() if len(p["ferramentas"]) == 1}
-    for b in bl:
-        k = parte[cr.chave(["tools/orbitador_so_eletrico.py", "--bloco", b[0], str(int(b[1])), ose._rotulo_bloco(b[2])])]
-        ant = {parte[cr.chave(["tools/orbitador_so_eletrico.py", "--bloco", b[0], str(int(b[1])), ose._rotulo_bloco(a)])] for a in b[3]}
-        assert ant <= set(ps[k]["depende_de"])
+    assert ps["se_verifica"] == {"depende_de": ["base", "mav_familia1", "se_caso_publicado"], "ferramentas": ["orbitador_so_eletrico --verifica"]}
+    assert not any("--bloco" in f for p in ps.values() for f in p["ferramentas"])
+    ms = ler("config/orbitador_so_eletrico.yaml")["missao"]
+    for h in ms["altitudes_km"]["valor"]:
+        for nome, ns in ms["n_ativos"]["valor"].items():
+            d = yaml.safe_load(ose._arquivo_solucoes(nome, h).read_text(encoding="utf-8"))
+            assert (d["formato"], d["propulsor"], d["altitude_km"]) == (1, nome, float(h))
+            assert [c["n_ativos"] for c in d["configuracoes"]] == sorted(ns)
+            assert all(c["tentativas"] for c in d["configuracoes"])
+
+
+def test_solucoes_gravadas_sao_as_dos_blocos():
+    """Antes de apagar os blocos versionados (decisão do Fabio, 2026-11-24): as tentativas do notebook em
+    data/orbitador_so_eletrico/ reproduzem exatamente os blocos, configuração por configuração (a solução com as mesmas
+    variáveis de decisão, bit a bit, ou a mesma falha), e não há tentativa do notebook sem bloco."""
+    blocos = sorted((RAIZ / "results/conferencia/orbitador_so_eletrico").glob("bloco_*.yaml"))
+    assert len(blocos) == len(ose.blocos())
+    esperado = {}
+    for arq in blocos:
+        b = yaml.safe_load(arq.read_text(encoding="utf-8"))
+        for c in b["configuracoes"]:
+            k = (c["propulsor"], float(c["altitude_km"]), int(c["n_ativos"]))
+            esperado[k] = ({"falha": c["falha"], "situacao": c["situacao"], "residuo_minimo": c["residuo_minimo"]} if "falha" in c
+                           else {"solucao": b["sementes"][c["n_ativos"]]})
+    achado = {}
+    ms = ler("config/orbitador_so_eletrico.yaml")["missao"]
+    for h in ms["altitudes_km"]["valor"]:
+        for nome in ms["n_ativos"]["valor"]:
+            for c in yaml.safe_load(ose._arquivo_solucoes(nome, h).read_text(encoding="utf-8"))["configuracoes"]:
+                for tn in c["tentativas"]:
+                    if tn["origem"]["rotulo"] == "notebook":
+                        k = (nome, float(h), int(c["n_ativos"]))
+                        assert k not in achado
+                        achado[k] = {x: tn[x] for x in ("solucao", "falha", "situacao", "residuo_minimo") if x in tn}
+    assert achado == esperado
+
+
+def test_avaliar_reproduz_o_otimizador():
+    """sf.avaliar devolve, para a solução do otimizador, o mesmo resíduo e a mesma violação que o otimizar."""
+    r0, v0 = np.array([UA_KM, 0.0, 0.0]), np.array([0.0, math.sqrt(GM_SOL / UA_KM), 0.0])
+    tof = 250.0 * DIA
+    alvo_r, alvo_v = sf.kepler.propagar(GM_SOL, r0, v0 * 1.03, tof)
+    p = sf.Perna(GM_SOL, lambda t: (r0, v0), lambda t: (alvo_r, alvo_v), sf.Motor(0.5, 3000.0), 8, (0.0, 0.0), (tof, tof),
+                 (0.0, 0.0), (0.0, 0.0), (1000.0, 1000.0), (200.0, 1000.0))
+    chute = {"t0": 0.0, "tof": tof, "m0": 1000.0, "mf": 900.0, "vinf0": np.zeros(3), "vinf1": np.zeros(3),
+             "u": np.tile([0.0, 0.3, 0.0], (8, 1))}
+    s = sf.otimizar(p, lambda t0, tof, m0, mf, a, b: -mf, sf.viabilizar(p, chute)[0], maxiter=200)
+    a = sf.avaliar(p, s)
+    assert a["residuo_max"] == s["residuo_max"] and a["violacao_u"] == s["violacao_u"]
+
+
+def test_verificacao_aceita_a_gravada_e_recusa_a_perturbada():
+    """A verificação aceita uma solução gravada que fecha (NEXT-C, 4 ativos, 380 km) e recusa a mesma com a partida um dia
+    depois (os comandos deixam de ligar os planetas)."""
+    d = yaml.safe_load(ose._arquivo_solucoes("NEXT-C", 380).read_text(encoding="utf-8"))
+    sm = next(tn["solucao"] for c in d["configuracoes"] if c["n_ativos"] == 4 for tn in c["tentativas"] if "solucao" in tn)
+    r = ose.fecho("NEXT-C", 4, 380.0, chutes=ose._de_semente(sm), verificar=True)
+    assert r["verificacao"]["verificada"] and r["fecha"]
+    ruim = ose._de_semente(sm)
+    ruim["ida"]["t0"] += DIA
+    assert not ose.fecho("NEXT-C", 4, 380.0, chutes=ruim, verificar=True)["verificacao"]["verificada"]
 
 
 def test_semente_da_cadeia_volta_igual_pelo_yaml():
@@ -100,17 +147,22 @@ def test_semente_da_cadeia_volta_igual_pelo_yaml():
     assert volta["empuxo_n"] == ch["empuxo_n"]
 
 
-def test_conclusoes_de_quem_nao_converge_e_do_propulsor():
+def test_conclusoes_de_quem_nao_tem_solucao_e_do_propulsor():
     cfg = ler("config/orbitador_so_eletrico.yaml")
-    falha = {"falha": "x", "situacao": "nenhuma solução viável encontrada"}
-    assert ose._conclusoes(falha, cfg) == ["não (nenhuma solução viável encontrada)", "—", "—", "—"]
+    falha = {"falha": "x", "situacao": "nenhuma solução verificada"}
+    assert ose._conclusoes(falha, cfg) == ["não (nenhuma solução verificada)", "—", "—", "—"]
     ok = {"margem_falcon_heavy": 0.5, "ultimo_lancamento_mav": "2032-04-26", "pronto_no_encontro": "2031-01-01", "dentro_da_vida": True}
     ruim = {**ok, "margem_falcon_heavy": -0.5}
     borda = {**ok, "margem_falcon_heavy": 0.01}
+    # existência (decisão do Fabio, 2026-11-24): quem não tem solução verificada não conta contra
     assert ose._fecha_propulsor([{**ok, "n_ativos": 3}, {**falha, "n_ativos": 1}], cfg) == ["sim", "3"]
     assert ose._fecha_propulsor([{**ruim, "n_ativos": 3}, {**falha, "n_ativos": 1}], cfg) == ["não demonstrado", "—"]
-    assert ose._fecha_propulsor([{**ruim, "n_ativos": 3}], cfg) == ["não", "—"]
-    assert ose._fecha_propulsor([{**borda, "n_ativos": 3}, {**falha, "n_ativos": 1}], cfg) == ["indeterminado", "—"]
+    assert ose._fecha_propulsor([{**ruim, "n_ativos": 3}], cfg) == ["não demonstrado", "—"]
+    assert ose._fecha_propulsor([{**borda, "n_ativos": 3}, {**ruim, "n_ativos": 2}], cfg) == ["indeterminado", "3"]
+
+
+def test_margem_como_limite_inferior():
+    assert ose._pelo_menos(0.4593) == "45 %" and ose._pelo_menos(1.0) == "100 %" and ose._pelo_menos(-0.111) == "−12 %"
 
 
 def test_viabilizar_acha_ponto_continuo():

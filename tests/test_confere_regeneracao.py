@@ -232,8 +232,10 @@ def test_detector_de_mudanca_relevante(cr):
     assert jobs["base"]["needs"] == ["detecta"] and jobs["base"]["if"] == "needs.detecta.outputs.relevante == 'true'"
     assert [n for n, j in jobs.items() if "detecta" in j.get("needs", [])] == ["base", "portao"]
     passo = next(s for s in jobs["detecta"]["steps"] if s.get("id") == "diff")
-    assert passo["env"]["CAMINHOS"].split() == ["src", "tools", "config", "results", "tests/data", "tests/test_ephemeris.py", "cad/featurescript", "environment.yml", "pyproject.toml",
+    assert passo["env"]["CAMINHOS"].split() == ["src", "tools", "config", "results", "data/orbitador_so_eletrico", "tests/data", "tests/test_ephemeris.py", "cad/featurescript", "environment.yml", "pyproject.toml",
                                                 ".github/workflows/regeneracao.yml", ".github/workflows/regeneracao_parte.yml"]
+    # as soluções gravadas do orbitador só elétrico, que a verificação lê (decisão do Fabio, 2026-11-24)
+    assert 'RAIZ / "data" / "orbitador_so_eletrico"' in (cr.RAIZ / "tools/orbitador_so_eletrico.py").read_text(encoding="utf-8")
     # quem lê o modelo de FeatureScript para gerar results/ (decisão do Fabio, 2026-11-17)
     for f in ("tools/cad_parametros.py", "tools/encaixe_coifas.py"):
         assert 'RAIZ / "cad" / "featurescript"' in (cr.RAIZ / f).read_text(encoding="utf-8"), f

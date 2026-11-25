@@ -11,12 +11,16 @@
 Fecho de massa como o da rota B (tools/rotas_mav.py, "só elétrico"), com os trechos heliocêntricos otimizados no lugar
 do Δv quase circular: a margem de Δv (P-014) multiplica o logaritmo da razão de massas de cada trecho.
 
-As saídas das otimizações são mínimos locais (CLAUDE.md, regra 6): os números ficam em
-results/familia1/diagnostico_orbitador_so_eletrico.md, fora da comparação do CI; results/familia1/orbitador_so_eletrico.md
-traz o método e as entradas e cita o diagnóstico.
+Verificar, não reotimizar (decisão do Fabio, 2026-11-24): as otimizações (mínimos locais, que mudam entre CPUs) rodam
+fora do CI e as soluções vão para data/orbitador_so_eletrico/ (--salva-solucoes); a regeneração só as verifica
+(--verifica: propaga os comandos gravados e confere continuidade, restrições e conclusões). O arquivo comparado traz a
+existência de trajetória verificada que fecha e as margens como limites inferiores; os números ficam em
+results/familia1/diagnostico_orbitador_so_eletrico.md, fora da comparação (CLAUDE.md, regra 6).
 
-Uso: python tools/orbitador_so_eletrico.py [--caso-publicado | --bloco PROPULSOR ALTITUDE N_MAX-N_MIN | --junta]
-(sem argumentos: as cadeias em paralelo e o caso publicado, depois --junta)
+Uso: python tools/orbitador_so_eletrico.py [--caso-publicado | --verifica | --bloco PROPULSOR ALTITUDE N_MAX-N_MIN |
+     --salva-solucoes ROTULO PASTA DESCRICAO [--salva-solucoes ...]]
+(sem argumentos: a otimização local, as cadeias em paralelo e o caso publicado; depois, --salva-solucoes com as pastas
+dos blocos e --verifica atualizam data/ e results/)
 """
 
 from __future__ import annotations
@@ -186,6 +190,12 @@ def _resumo(s, motor, mu=GM_SOL):
             "fracao_tempo_com_empuxo": float(np.mean(a > lc_["limiar_arco"])), "aceleracao_inicial_m_s2": motor.empuxo_n / s["m0"]}
 
 
+def _avaliada(perna, s, ineq_extra=None):
+    """Uma solução gravada, sem otimizar, com o resultado de sf.avaliar (no lugar do que _resolve devolve)."""
+    a = sf.avaliar(perna, s, ineq_extra)
+    return {**{k: s[k] for k in SEMENTE}, **a, "mensagem": "verificada sem otimizar", "iteracoes": 0}
+
+
 def _confere_continuo(perna, s):
     """Diferença entre o estado final da propagação contínua do mesmo perfil e o alvo (km, km/s)."""
     rp, vp = perna.estado_partida(s["t0"])
@@ -332,10 +342,15 @@ def _capacidade(e):
     return cap, cap_objetivo, lim_dla, max(lan["c3"]["pontos"])
 
 
-def fecho(nome, n, h, e=None, chutes=None, com_prazo=True):
+def fecho(nome, n, h, e=None, chutes=None, com_prazo=True, verificar=False):
     """Fecho de massa e linha do tempo do orbitador só elétrico com n propulsores ativos e encontro a h km. Com
     `com_prazo`, a ida tem a restrição de ficar pronta no encontro até o último lançamento do MAV; sem ela, a data sai
-    livre e o "pronto antes" é conferido depois."""
+    livre e o "pronto antes" é conferido depois.
+
+    Com `verificar` (decisão do Fabio, 2026-11-24: verificar, não reotimizar), `chutes` é uma solução gravada e nada é
+    otimizado: os dois trechos são propagados como gravados (sf.avaliar) e o fecho de massa é feito uma vez, com as razões
+    de massas deles; a verificação (resíduo, desigualdades e limites dentro do resíduo aceito da P-118; descasamento do
+    fecho de massa dentro da P-125) vai em "verificacao"."""
     e = e or _entradas()
     oc = _oc()
     ms = e["se"]["missao"]
@@ -371,7 +386,7 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True):
     # chutes iniciais
     ida0 = (chutes or {}).get("ida")
     volta0 = (chutes or {}).get("volta")
-    if chutes and chutes.get("empuxo_n"):
+    if chutes and chutes.get("empuxo_n") and not verificar:
         # mesma trajetória com outro empuxo máximo: u escala pela razão dos empuxos (a vazão escala junto, Isp igual)
         k = chutes["empuxo_n"] / motor.empuxo_n
         if chutes.get("isp_s") == motor.isp_s:
@@ -381,10 +396,14 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True):
                 return u / np.maximum(1.0, a)[:, None]   # com empuxo menor, |u| acima de 1 fica em 1
             ida0, volta0 = {**ida0, "u": esc(ida0["u"])}, {**volta0, "u": esc(volta0["u"])}
     lc_ = _lc()
+    if verificar:
+        if chutes is None or chutes["empuxo_n"] != motor.empuxo_n or chutes["isp_s"] != motor.isp_s:
+            raise ValueError("solução gravada com outro empuxo ou Isp que o do config")
+        com_prazo = False   # o prazo entra só na conclusão
     # massa na chegada: a do chute (n anterior da cadeia) ou a do chute a frio (P-118)
     m_chegada = float(ida0["mf"]) if ida0 is not None else float(lc_["massa_chegada_chute_kg"])
     hist = []
-    for it in range(int(v(ms["iteracoes_fecho"]))):
+    for it in range(1 if verificar else int(v(ms["iteracoes_fecho"]))):
         # ---- ida: m0 livre, mf = massa na chegada; objetivo: maior margem no lançador
         t_d_est = espiral(e["hill"], r_e, m_chegada)[0]
         lim_et = _et(lim_ultimo.isoformat()) - t_d_est
@@ -404,14 +423,14 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True):
                 sd = float((rot @ a)[2]) / max(float(np.linalg.norm(a)), 1e-9)   # seno da DLA
                 g += [math.sin(math.radians(lim_dla)) - sd, sd + math.sin(math.radians(lim_dla))]
             return np.array(g if g else [1.0])
-        if ida0 is None:
+        if ida0 is None and not verificar:
             t0 = min(max(_et(ms["partida_frio"]["valor"]), t0min), t0max)
             _, vT = terra(t0)
             base = {"t0": t0, "m0": lc_["m0_chute_fracao"] * m_chegada, "mf": m_chegada,
                     "vinf0": lc_["vinf_partida_chute_km_s"] * vT / np.linalg.norm(vT), "vinf1": np.zeros(3)}
             ida0 = _partida_fria(pi, base, obj_ida, oc, terra, +1, ms["duracoes_frio_ida_dias"]["valor"],
                                  lim_et if com_prazo else None, extra)
-        si = _resolve(pi, obj_ida, {**ida0, "mf": m_chegada}, oc, ineq_extra=extra)
+        si = _avaliada(pi, ida0, extra) if verificar else _resolve(pi, obj_ida, {**ida0, "mf": m_chegada}, oc, ineq_extra=extra)
         ida0 = si
         # margem de Δv (P-014) no logaritmo da razão de massas
         razao_ida = (si["m0"] / si["mf"]) ** f
@@ -464,7 +483,7 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True):
         if volta0 is None:
             base = {"t0": t2, "m0": b_volta, "mf": lc_["mf_chute_fracao"] * b_volta, "vinf0": np.zeros(3), "vinf1": np.zeros(3)}
             volta0 = _partida_fria(pv, base, obj_volta, oc, marte, -1, ms["duracoes_frio_volta_dias"]["valor"], None)
-        sv = _resolve(pv, obj_volta, {**volta0, "m0": b_volta, "t0": max(volta0["t0"], t2)}, oc)
+        sv = _avaliada(pv, volta0) if verificar else _resolve(pv, obj_volta, {**volta0, "m0": b_volta, "t0": max(volta0["t0"], t2)}, oc)
         volta0 = sv
         hist.append({"iteracao": it, "massa_chegada_kg": m_chegada, "orbitador_kg": razao_ida * b_desc, "xenonio_kg": px})
         m_chegada = b_desc
@@ -476,6 +495,20 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True):
     margem = cap(si["vinf0"]) / m0_lanc - 1
     se_f = dataclasses.replace(se0, n_instalados=inst)
     partida_marte = D(_data(sv["t0"]))
+    ver = None
+    if verificar:
+        # as massas fixas dos trechos (mf da ida e m0 da volta) vêm do fecho, que usa as razões de massas (método da Etapa 2):
+        # a diferença para as massas gravadas é o descasamento do fecho, conferido em termos relativos (P-125)
+        lim_i = {k: x for k, x in si["violacao_limites"].items() if k != "mf"}
+        lim_v = {k: x for k, x in sv["violacao_limites"].items() if k != "m0"}
+        pior = max(si["residuo_max"], sv["residuo_max"], si["violacao_u"], sv["violacao_u"], *lim_i.values(), *lim_v.values())
+        tol_f = v(ler("config/orbitador_so_eletrico.yaml")["verificacao"]["descasamento_fecho_relativo_max"])
+        desc = max(abs(b_volta - sv["m0"]) / sv["m0"], abs(b_desc - si["mf"]) / si["mf"])
+        ver = {"verificada": bool(pior <= oc["residuo_max"] and desc <= tol_f), "pior": pior, "descasamento_relativo": desc,
+               "residuo_ida": si["residuo_max"], "residuo_volta": sv["residuo_max"],
+               "violacao_ida": si["violacao_u"], "violacao_volta": sv["violacao_u"],
+               "limites_ida": lim_i, "limites_volta": lim_v,
+               "descasamento_m0_volta_kg": b_volta - sv["m0"], "descasamento_chegada_marte_kg": b_desc - si["mf"]}
     return {"propulsor": nome, "n_ativos": n, "altitude_km": h, "n_instalados": inst, "reservas": reservas,
             "potencia_kw": se0.potencia_total_w / 1e3, "vida_kg": vida, "xenonio_kg": px,
             "xenonio_por_propulsor_kg": px / (inst - reservas), "dentro_da_vida": px / (inst - reservas) <= vida,
@@ -495,7 +528,8 @@ def fecho(nome, n, h, e=None, chutes=None, com_prazo=True):
             "fecha": bool(margem >= 0 and pronto <= lim_ultimo and px / (inst - reservas) <= vida),
             "historico": hist, "erro_continuo_ida_km_e_km_s": erro_ida, "erro_continuo_volta_km_e_km_s": erro_volta,
             "otimizador": {"ida": (si["mensagem"], si["iteracoes"], si["residuo_max"]), "volta": (sv["mensagem"], sv["iteracoes"], sv["residuo_max"])},
-            "_chutes": {"ida": si, "volta": sv, "empuxo_n": motor.empuxo_n, "isp_s": motor.isp_s}}
+            "_chutes": {"ida": si, "volta": sv, "empuxo_n": motor.empuxo_n, "isp_s": motor.isp_s},
+            **({"verificacao": ver} if verificar else {})}
 
 
 SEMENTE = ("t0", "tof", "m0", "mf", "vinf0", "vinf1", "u")   # o que a partida a quente usa de uma solução
@@ -597,16 +631,23 @@ def _conclusoes(r, cfg):
 
 
 def _fecha_propulsor(rs, cfg):
-    """(fecha?, ativos que fecham) de um propulsor numa órbita, a partir das conclusões por configuração."""
-    cs = [(r["n_ativos"], _conclusoes(r, cfg)) for r in rs]
-    sim = [n for n, c in cs if c == ["sim"] * 4]
+    """Existência (decisão do Fabio, 2026-11-24): (existe trajetória verificada que fecha?, ativos) de um propulsor numa
+    órbita. "sim" se alguma solução verificada dá "sim" nas quatro conclusões; senão "indeterminado" se alguma verificada
+    fica sem "não" (na banda); senão "não demonstrado" (o otimizador é local: não prova inexistência)."""
+    cs = [(r["n_ativos"], _conclusoes(r, cfg)) for r in rs if "falha" not in r]
+    sim = sorted(n for n, c in cs if c == ["sim"] * 4)
     if sim:
-        return ["sim", ", ".join(str(n) for n in sorted(sim))]
-    if any(c[0] == "sim" and "não" not in c and "indeterminado" in c for _, c in cs):
-        return ["indeterminado", "—"]
-    if all(c[0] == "sim" for _, c in cs):
-        return ["não", "—"]
+        return ["sim", ", ".join(str(n) for n in sim)]
+    ind = sorted(n for n, c in cs if "não" not in c)
+    if ind:
+        return ["indeterminado", ", ".join(str(n) for n in ind)]
     return ["não demonstrado", "—"]
+
+
+def _pelo_menos(m):
+    """Margem como limite inferior (o otimizador é local), em pontos percentuais inteiros arredondados para baixo: a
+    verificação reproduz a margem a ~1e-12 entre CPUs, e só um valor a essa distância de um inteiro mudaria (P-123)."""
+    return f"{math.floor(m * 100):d}".replace("-", "−") + " %"
 
 
 def _sci(x):
@@ -619,8 +660,11 @@ def escreve(casos, fam):
     oc = _oc()
     md = ["# Orbitador só elétrico da família 1: trajetória de baixo empuxo e fecho de massa (gerado por tools/orbitador_so_eletrico.py)", "",
           "Etapa 2 do plano (issue #68). Plano aprovado pelo Fabio em 2026-11-20. **Calculado, NÃO validado.**", "",
-          "**Os números estão em `results/familia1/diagnostico_orbitador_so_eletrico.md`**, fora da comparação do CI: as "
-          "trajetórias otimizadas são mínimos locais (CLAUDE.md, regra 6). Este arquivo traz o método e as entradas.", "",
+          "**Verificar, não reotimizar** (decisão do Fabio, 2026-11-24): as trajetórias são otimizadas fora do CI (mínimos "
+          "locais, que mudam entre CPUs) e gravadas em `data/orbitador_so_eletrico/`; a regeneração só as verifica. Este "
+          "arquivo traz o método, as entradas, a existência de trajetória verificada que fecha e as margens como limites "
+          "inferiores; os demais números estão em `results/familia1/diagnostico_orbitador_so_eletrico.md`, fora da "
+          "comparação do CI (CLAUDE.md, regra 6).", "",
           "## Método", "",
           "- **(a) Trechos heliocêntricos:** transcrição de Sims–Flanagan de ordem 4 (`orbital.sims_flanagan`) com as efemérides "
           f"DE440s, {int(oc['n_segmentos'])} segmentos por trecho, otimizada com SLSQP (P-118). Conferências em "
@@ -638,6 +682,17 @@ def escreve(casos, fam):
           "- **Fecho de massa:** o da rota B (`tools/rotas_mav.py`), com a razão de massas de cada trecho heliocêntrico "
           f"otimizado no lugar do Δv quase circular; a margem de Δv (P-014) multiplica o logaritmo da razão. "
           f"{int(v(ms['iteracoes_fecho']))} iterações entre a ida e o fecho (P-122).",
+          "- **Otimização (fora do CI):** uma cadeia de n decrescente por propulsor e órbita, em blocos (P-122), no notebook e "
+          "no CI do PR #74 (as partes que terminaram); as soluções e as falhas de cada origem estão em "
+          "`data/orbitador_so_eletrico/`.",
+          "- **Verificação (no CI):** cada solução gravada é propagada com a mesma transcrição (`sf.avaliar`), sem otimizar: "
+          "resíduo de continuidade, |u| ≤ 1, v∞ dentro dos limites (na chegada à Terra, ≤ "
+          f"{br(v(ms['vinf_chegada_terra_max_km_s']))} km/s), DLA ≤ "
+          f"{br(v(ler('config/lancadores.yaml')['dla']['faixa_sem_penalidade_graus']), 1)}° e os limites das datas e das "
+          f"durações, tudo dentro do resíduo aceito ({_sci(v(cfg['otimizador']['residuo_max']))}, P-118); depois, o fecho "
+          "de massa e a linha do tempo com as razões de massas das trajetórias gravadas, com a massa que o fecho pede a até "
+          f"{br(v(cfg['verificacao']['descasamento_fecho_relativo_max']) * 100, 1)} % da gravada nos trechos (P-125). Por "
+          "configuração fica a melhor solução verificada (a que fecha; depois, a de maior margem), com a origem.",
           f"- **Ciclo de trabalho:** {br(v(cfg['operacao']['ciclo_trabalho']) * 100)} % (P-120, valor do Dawn [F279] p. 611).",
           "- **(c) Vida e rodízio:** propulsores além dos ativos até o xenônio por propulsor ficar abaixo da vida demonstrada, "
           "cada um com a sua PPU (P-121).", "",
@@ -656,30 +711,32 @@ def escreve(casos, fam):
           "teste elétrico insuficiente entre propulsor e nave antes do lançamento e levou à suspensão das operações do NEXT-C "
           "([F278] p. 2). A vida usada é a do NEXT de engenharia em solo ([F277] p. 2).", "",
           "## Conclusões", "",
-          "Três estados (P-123): \"sim\" e \"não\" só fora da banda; dentro dela, \"indeterminado\". Os números estão no "
-          "diagnóstico. Xe por propulsor ≤ vida: por construção do rodízio (P-121), quando converge. Uma configuração que não "
-          "converge é classificada pelo menor resíduo de continuidade alcançado (P-118): acima do aceito, \"nenhuma solução "
-          "viável encontrada\" (o que não demonstra inviabilidade); abaixo, \"sem convergência do otimizador\"; sem resíduo (fecho de massa, vida ou erro), \"falha fora do "
-          "otimizador\".", ""]
+          "Três estados (P-123): \"sim\" e \"não\" só fora da banda; dentro dela, \"indeterminado\". Xe por propulsor ≤ "
+          "vida: por construção do rodízio (P-121). **O otimizador é local:** as margens são limites inferiores (a melhor "
+          "solução verificada achada), e uma configuração sem solução verificada (\"nenhuma solução verificada\") não "
+          "demonstra inviabilidade; as situações do otimizador em cada origem (\"nenhuma solução viável encontrada\", "
+          "\"sem convergência do otimizador\", P-118) estão no diagnóstico.", ""]
     principal = float(min(ms["altitudes_km"]["valor"]))
     md += [f"### Conclusão principal: o orbitador só elétrico fecha a {br(principal)} km?", "",
-           f"Na família 1, o MAV sólido só fecha com encontro a {br(principal)} km (decisão do Fabio, 2026-11-22). Fecha, para "
-           "um propulsor: \"sim\" se alguma configuração dá \"sim\" nas quatro colunas; senão, \"indeterminado\" se alguma "
-           "convergida tem \"indeterminado\" e nenhum \"não\"; \"não\" se todas convergiram e nenhuma fecha; \"não "
-           "demonstrado\" nos outros casos (alguma não convergiu).", "",
-           "| Propulsor | Fecha? | Ativos que fecham |", "| :- | :- | :- |"]
+           f"Na família 1, o MAV sólido só fecha com encontro a {br(principal)} km (decisão do Fabio, 2026-11-22). Existe "
+           "trajetória verificada que fecha: \"sim\" se alguma solução verificada dá \"sim\" nas quatro conclusões; senão, "
+           "\"indeterminado\" se alguma fica na banda sem nenhum \"não\"; senão, \"não demonstrado\". Ativos: os das "
+           "soluções nesse estado.", "",
+           "| Propulsor | Existe trajetória verificada que fecha? | Ativos |", "| :- | :- | :- |"]
     for nome in ms["n_ativos"]["valor"]:
         md.append(f"| {nome} | " + " | ".join(_fecha_propulsor([r for r in fam if r["propulsor"] == nome and r["altitude_km"] == principal], cfg)) + " |")
-    cab = [f"| Propulsor | Ativos | Encontro (km) | Converge | Margem no Falcon Heavy ≥ {br(v(cfg['conclusoes']['margem_minima']) * 100)} % "
-           f"(banda ± {br(v(cfg['conclusoes']['banda_margem']) * 100)} pontos) | Pronto até o último lançamento do MAV "
-           f"(banda ± {int(v(cfg['conclusoes']['banda_prazo_dias']))} d) | Xe por propulsor ≤ vida |",
-           "| :- | -: | -: | :- | :- | :- | :- |"]
+    cab = [f"| Propulsor | Ativos | Encontro (km) | Trajetória verificada | Origem | Margem no Falcon Heavy, pelo menos | "
+           f"Margem ≥ {br(v(cfg['conclusoes']['margem_minima']) * 100)} % (banda ± {br(v(cfg['conclusoes']['banda_margem']) * 100)} pontos) | "
+           f"Pronto até o último lançamento do MAV (banda ± {int(v(cfg['conclusoes']['banda_prazo_dias']))} d) | Xe por propulsor ≤ vida |",
+           "| :- | -: | -: | :- | :- | -: | :- | :- | :- |"]
     for titulo, sel in ((f"### Por configuração, encontro a {br(principal)} km", lambda r: r["altitude_km"] == principal),
                         ("### Sensibilidade: as outras órbitas de encontro", lambda r: r["altitude_km"] != principal)):
         md += ["", titulo, ""] + cab
         for r in fam:
             if sel(r):
-                md.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | " + " | ".join(_conclusoes(r, cfg)) + " |")
+                c = _conclusoes(r, cfg)
+                ori, mar = ("—", "—") if "falha" in r else (r["origem"], _pelo_menos(r["margem_falcon_heavy"]))
+                md.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {c[0]} | {ori} | {mar} | " + " | ".join(c[1:]) + " |")
     md += ["", "## (b) Caso publicado", "",
           "Joffre et al. 2018 [F121], Fig. 4, p. 5: dois exemplos de ida do ERO. Massa inicial e empuxo de Yau 2021 [F22] "
           "(outra versão do projeto). O ERO não é comparável na captura: ela é química ([F280] p. 6).", "",
@@ -693,7 +750,8 @@ def escreve(casos, fam):
     (SAIDA / "orbitador_so_eletrico.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
     d = ["# Diagnóstico do orbitador só elétrico da família 1 (gerado por tools/orbitador_so_eletrico.py)", "",
-         "Fora da comparação do CI (regra 6): soluções de otimização (mínimos locais). Calculado, NÃO validado.", "",
+         "Fora da comparação do CI (regra 6): soluções de otimização (mínimos locais), verificadas sem reotimizar. Calculado, "
+         "NÃO validado.", "",
          "## (b) Caso publicado: Joffre 2018 [F121] com massa e empuxo de Yau 2021 [F22]", ""]
     for c in casos:
         var = "com as declinações publicadas impostas" if c["declinacoes"] else "só com os módulos de v infinito publicados"
@@ -713,14 +771,13 @@ def escreve(casos, fam):
                      f"{', '.join(br(a, 3) for a in x['arcos_dv_km_s'])} | {br(x['declinacao_partida_graus'], 2)} | {dch} | "
                      f"{br(x['continuo_erro_km'])}; {_sci(x['continuo_erro_km_s'])} |")
         d.append("")
-    d += ["## (a) e (c) Família 1", "",
+    d += ["## (a) e (c) Família 1: a melhor solução verificada de cada configuração", "",
           "| Propulsor | Ativos | Encontro (km) | Instalados | Potência (kW) | Xe (kg) | Xe por propulsor (kg) | Vida (kg) | Propulsores + PPU (kg) | Orbitador (kg) | Margem no Falcon Heavy | C3 (km²/s²) | DLA (°) | Partida da Terra | Ida (d) | Chegada a Marte | Descida (d) | Pronto no encontro | Último lançamento do MAV | Lançamento do MAV | Subida (d) | Partida de Marte | Volta (d) | Chegada à Terra | Descida cruza conjunção | Encontro e subida cruzam conjunção | Fecha? |",
           "| :- | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | -: | :- | -: | :- | -: | :- | :- | :- | -: | :- | -: | :- | :- | :- | :- |"]
     for r in fam:
         if "falha" in r:
-            res = "—" if r["residuo_minimo"] is None else _sci(r["residuo_minimo"])
             d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | " + " | ".join(["—"] * 23)
-                     + f" | **{r['situacao']}** (menor resíduo {res}; {r['falha']}) |")
+                     + f" | **{r['situacao']}** |")
             continue
         d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {r['n_instalados']} | {br(r['potencia_kw'], 1)} | {br(r['xenonio_kg'])} | "
                  f"{br(r['xenonio_por_propulsor_kg'])} | {br(r['vida_kg'])} | {br(r['massa_propulsores_e_ppu_kg'])} | {br(r['orbitador_kg'])} | "
@@ -728,18 +785,30 @@ def escreve(casos, fam):
                  f"{r['chegada_marte']} | {br(r['descida_dias'])} | {r['pronto_no_encontro']} | {r['ultimo_lancamento_mav']} | {r['lancamento_mav']} | "
                  f"{br(r['subida_dias'])} | {r['partida_marte']} | {br(r['volta_dias'])} | {r['chegada_terra']} | {'sim' if r['descida_cruza_conjuncao'] else 'não'} | "
                  f"{'sim' if r['subida_cruza_conjuncao'] else 'não'} | {'**sim**' if r['fecha'] else 'não'} |")
-    d += ["", "### Convergência", "",
-          "| Propulsor | Ativos | Encontro (km) | Δv ida (km/s) | Δv volta (km/s) | v infinito na Terra (km/s) | Mudança do orbitador na última iteração do fecho | Erro contínuo da ida (km; km/s) | Erro contínuo da volta (km; km/s) | Otimizador (ida; volta) | Nota |",
-          "| :- | -: | -: | -: | -: | -: | -: | :- | :- | :- | :- |"]
+    d += ["", "### Verificação das soluções gravadas", "",
+          "Todas as tentativas de cada configuração, por origem. Pior: o maior entre os resíduos de continuidade, as violações "
+          f"das desigualdades e as dos limites, contra o aceito ({_sci(_oc()['residuo_max'])}, P-118). Descasamento: massa do "
+          "fecho menos a massa gravada no trecho (m0 da volta; chegada a Marte), de o fecho por razões de massas (método da "
+          "Etapa 2) não ter fechado por completo nas iterações da otimização; o relativo (o maior dos dois) contra a P-125 ("
+          f"{_sci(v(cfg['verificacao']['descasamento_fecho_relativo_max']))}).", "",
+          "| Propulsor | Ativos | Encontro (km) | Origem | Situação | Pior | Resíduo ida; volta | Descasamento m0 da volta (kg) | Descasamento chegada a Marte (kg) | Descasamento relativo | Margem no Falcon Heavy | Pronto no encontro | Escolhida |",
+          "| :- | -: | -: | :- | :- | -: | :- | -: | -: | -: | -: | :- | :- |"]
     for r in fam:
-        if "falha" in r:
-            continue
-        h = r["historico"]
-        mud = abs(h[-1]["orbitador_kg"] - h[-2]["orbitador_kg"]) / h[-1]["orbitador_kg"] if len(h) > 1 else float("nan")
-        oi, ov = r["otimizador"]["ida"], r["otimizador"]["volta"]
-        d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {br(r['dv_ida_km_s'], 3)} | {br(r['dv_volta_km_s'], 3)} | "
-                 f"{br(r['vinf_chegada_terra_km_s'], 2)} | {_sci(mud)} | {br(r['erro_continuo_ida_km_e_km_s'][0])}; {_sci(r['erro_continuo_ida_km_e_km_s'][1])} | "
-                 f"{br(r['erro_continuo_volta_km_e_km_s'][0])}; {_sci(r['erro_continuo_volta_km_e_km_s'][1])} | {oi[0]}, {oi[1]} it.; {ov[0]}, {ov[1]} it. | {r.get('nota', '—')} |")
+        esc = None if "falha" in r else (r["origem"], r["margem_falcon_heavy"])
+        for x in r["sem_solucao"]:
+            res = "—" if x["residuo_minimo"] is None else _sci(x["residuo_minimo"])
+            d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {x['origem']} | otimizador: {x['situacao']} "
+                     f"(menor resíduo {res}) | — | — | — | — | — | — | — | — |")
+        for x in r["candidatas"]:
+            if "erro" in x:
+                d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {x['origem']} | não verificada: {x['erro']} "
+                         "| — | — | — | — | — | — | — | — |")
+                continue
+            vv = x["verificacao"]
+            d.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(r['altitude_km'])} | {x['origem']} | "
+                     f"{'verificada' if vv['verificada'] else 'não verificada'} | {_sci(vv['pior'])} | {_sci(vv['residuo_ida'])}; {_sci(vv['residuo_volta'])} | "
+                     f"{br(vv['descasamento_m0_volta_kg'], 3)} | {br(vv['descasamento_chegada_marte_kg'], 3)} | {_sci(vv['descasamento_relativo'])} | {br(x['margem_falcon_heavy'] * 100, 2)} % | "
+                     f"{x['pronto_no_encontro']} | {'**sim**' if esc == (x['origem'], x['margem_falcon_heavy']) else '—'} |")
     d += estocagem_mav(fam)
     (SAIDA / "diagnostico_orbitador_so_eletrico.md").write_text("\n".join(d) + "\n", encoding="utf-8")
 
@@ -797,12 +866,12 @@ def estocagem_mav(fam):
     return out
 
 
-PARCIAIS = RAIZ / "results" / "conferencia" / "orbitador_so_eletrico"   # resultados por bloco (matriz do CI), fora da comparação
+PARCIAIS = RAIZ / "results" / "conferencia" / "orbitador_so_eletrico"   # blocos da otimização local e caso publicado, fora da comparação
 VARIANTES = [("esquerda", False), ("esquerda", True), ("direita", False), ("direita", True)]
 
 
 def blocos():
-    """Blocos da regeneração (matriz do CI), em ordem fixa: por órbita e propulsor (ou variante de vida), uma cadeia de n
+    """Blocos da otimização local (fora do CI desde 2026-11-24), em ordem fixa: por órbita e propulsor (ou variante de vida), uma cadeia de n
     decrescente (decisão do Fabio, 2026-11-22), dividida em blocos de até `bloco_cadeia` valores (P-122) quando não cabe
     num job; cada bloco continua do anterior da mesma cadeia. Devolve (propulsor, altitude, n do bloco, blocos anteriores)."""
     ms = ler("config/orbitador_so_eletrico.yaml")["missao"]
@@ -853,10 +922,103 @@ def roda_cadeia(nome, h):
             roda_bloco(nome, h, _rotulo_bloco(ns))
 
 
-def junta():
+SOLUCOES = RAIZ / "data" / "orbitador_so_eletrico"   # soluções gravadas (versionadas): o CI só as verifica
+
+
+def _slug(nome):
+    return "".join(ch if ch.isalnum() else "_" for ch in nome.lower()).strip("_")
+
+
+def _arquivo_solucoes(nome, h):
+    return SOLUCOES / f"solucoes_{_slug(nome)}_{int(h)}.yaml"
+
+
+def _ambiente_da_parte(bloco):
+    """Ambiente gravado pela regeneração do CI ao lado do bloco (artefato: <parte>/_log/<parte>.json), se houver."""
+    import json
+    for pasta in list(bloco.parents)[:4]:
+        for j in sorted((pasta / "_log").glob("*.json")) if (pasta / "_log").is_dir() else []:
+            a = json.loads(j.read_text(encoding="utf-8")).get("ambiente", {})
+            return {k: a[k] for k in ("cpu", "commit", "commit_head_do_pr", "python", "numpy", "scipy") if k in a}
+    return None
+
+
+def salva_solucoes(fontes):
+    """Junta as soluções das rodadas de otimização (blocos das cadeias, de uma ou mais máquinas) em
+    data/orbitador_so_eletrico/solucoes_<propulsor>_<altitude>.yaml, um arquivo por propulsor e órbita (decisão do
+    Fabio, 2026-11-24). `fontes`: [(rótulo, pasta, descrição)], na ordem em que as tentativas são gravadas.
+
+    Formato (versão 1): por configuração (n_ativos), a lista de tentativas, cada uma com a origem (rótulo, descrição,
+    arquivo do bloco, comando e, quando gravado pela regeneração, o ambiente) e ou a solução (empuxo_n, isp_s e, para a
+    ida e a volta, t0 e tof em s ET, m0 e mf em kg, vinf0 e vinf1 em km/s no ECLIPJ2000 e u, os comandos por segmento,
+    N × 3, fração do empuxo máximo), ou a falha do otimizador (com a situação e o menor resíduo). Os floats saem com repr:
+    a volta pelo YAML é exata."""
+    ms = ler("config/orbitador_so_eletrico.yaml")["missao"]
+    for h in ms["altitudes_km"]["valor"]:
+        for nome, ns in ms["n_ativos"]["valor"].items():
+            tent = {int(n): [] for n in sorted(ns)}
+            for rot, pasta, desc in fontes:
+                for arq in sorted(Path(pasta).rglob(f"bloco_{_slug(nome)}_{int(h)}_*.yaml")):
+                    d = yaml.safe_load(arq.read_text(encoding="utf-8"))
+                    amb = _ambiente_da_parte(arq)
+                    origem = {"rotulo": rot, "descricao": desc, "arquivo": arq.name, "gerado_por": d["gerado_por"],
+                              **({"ambiente": amb} if amb else {})}
+                    for c in d["configuracoes"]:
+                        n = int(c["n_ativos"])
+                        if "falha" in c:
+                            tent[n].append({"origem": origem, "falha": c["falha"], "situacao": c["situacao"],
+                                            "residuo_minimo": c["residuo_minimo"]})
+                        else:
+                            tent[n].append({"origem": origem, "solucao": d["sementes"][n]})
+            _grava(_arquivo_solucoes(nome, h), {
+                "gerado_por": "tools/orbitador_so_eletrico.py --salva-solucoes", "formato": 1, "propulsor": nome,
+                "altitude_km": float(h), "formulacao_dla": ler("config/orbitador_so_eletrico.yaml")["otimizador"]["formulacao_dla"]["valor"],
+                "configuracoes": [{"n_ativos": n, "tentativas": x} for n, x in tent.items()]})
+
+
+def _nota_fecho(r, cfg):
+    """Ordem das soluções verificadas de uma configuração: fecha (as quatro conclusões "sim") > na banda (sem "não") > não."""
+    c = _conclusoes(r, cfg)
+    return 2 if c == ["sim"] * 4 else 1 if "não" not in c else 0
+
+
+def verifica():
+    """Verifica as soluções gravadas, sem reotimizar (decisão do Fabio, 2026-11-24): por configuração, cada solução é
+    propagada (fecho com verificar=True) e fica a melhor das verificadas (_nota_fecho, depois a maior margem), com a
+    origem. Sem solução verificada: "nenhuma solução verificada" (o que não demonstra inviabilidade)."""
+    cfg = ler("config/orbitador_so_eletrico.yaml")
+    ms = cfg["missao"]
+    t_ini = time.perf_counter()
+    fam = []
+    for h in ms["altitudes_km"]["valor"]:
+        for nome in ms["n_ativos"]["valor"]:
+            arq = ler(str(_arquivo_solucoes(nome, h).relative_to(RAIZ)))
+            if arq["formulacao_dla"] != cfg["otimizador"]["formulacao_dla"]["valor"]:
+                raise ValueError(f"{_arquivo_solucoes(nome, h).name}: soluções da formulação {arq['formulacao_dla']!r}, "
+                                 f"config com {cfg['otimizador']['formulacao_dla']['valor']!r}")
+            for c in arq["configuracoes"]:
+                n, cands, sem = int(c["n_ativos"]), [], []
+                for tn in c["tentativas"]:
+                    rot = tn["origem"]["rotulo"]
+                    if "solucao" not in tn:
+                        sem.append({"origem": rot, "situacao": tn["situacao"], "residuo_minimo": tn["residuo_minimo"]})
+                        continue
+                    try:
+                        r = fecho(nome, n, float(h), chutes=_de_semente(tn["solucao"]), verificar=True)
+                    except (RuntimeError, ValueError) as x:
+                        cands.append({"origem": rot, "erro": f"{type(x).__name__}: {x}"})
+                        continue
+                    r.pop("_chutes")
+                    cands.append({**r, "origem": rot})
+                ok = [r for r in cands if "erro" not in r and r["verificacao"]["verificada"]]
+                base = {"candidatas": cands, "sem_solucao": sem}
+                if ok:
+                    fam.append({**max(ok, key=lambda r: (_nota_fecho(r, cfg), r["margem_falcon_heavy"])), **base})
+                else:
+                    fam.append({"propulsor": nome, "n_ativos": n, "altitude_km": float(h), "falha": "nenhuma solução verificada",
+                                "situacao": "nenhuma solução verificada", **base})
+    print(f"verificação: {sum(len(r['candidatas']) for r in fam)} soluções em {time.perf_counter() - t_ini:.1f} s", flush=True)
     casos = ler("results/conferencia/orbitador_so_eletrico/caso_publicado.yaml")["casos"]
-    fam = [r for b in blocos() for r in ler(str(_arquivo_bloco(*b[:3]).relative_to(RAIZ)))["configuracoes"]]
-    fam.sort(key=lambda r: (r["altitude_km"], list(ler("config/orbitador_so_eletrico.yaml")["missao"]["n_ativos"]["valor"]).index(r["propulsor"]), r["n_ativos"]))
     SAIDA.mkdir(parents=True, exist_ok=True)
     escreve(casos, fam)
 
@@ -865,21 +1027,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--caso-publicado", action="store_true")
     ap.add_argument("--bloco", nargs=3, metavar=("PROPULSOR", "ALTITUDE_KM", "N_MAX-N_MIN"))
-    ap.add_argument("--junta", action="store_true")
+    ap.add_argument("--verifica", action="store_true")
+    ap.add_argument("--salva-solucoes", nargs=3, action="append", metavar=("ROTULO", "PASTA", "DESCRICAO"))
     a = ap.parse_args()
     if a.caso_publicado:
         roda_caso_publicado()
     elif a.bloco:
         roda_bloco(a.bloco[0], float(a.bloco[1]), a.bloco[2])
-    elif a.junta:
-        junta()
-    else:   # tudo numa máquina: as cadeias (cada uma com os seus blocos em sequência) e o caso publicado em paralelo
+    elif a.verifica:
+        verifica()
+    elif a.salva_solucoes:
+        salva_solucoes(a.salva_solucoes)
+    else:   # otimização local (fora do CI): as cadeias (cada uma com os seus blocos em sequência) e o caso publicado em paralelo
         cads = list(dict.fromkeys((b[0], b[1]) for b in blocos()))
         with ProcessPoolExecutor(max_workers=max(1, min(os.cpu_count() or 1, len(cads) + 1))) as ex:
             fs = [ex.submit(roda_cadeia, nome, h) for nome, h in cads] + [ex.submit(roda_caso_publicado)]
             for f in fs:
                 f.result()
-        junta()
 
 
 if __name__ == "__main__":

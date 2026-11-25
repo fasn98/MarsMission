@@ -62,21 +62,9 @@ FASE_1 = [["tools/baricentro_marte.py"], ["tools/porkchop.py", "terra_marte"], [
           ["tools/missoes.py"], ["tools/compara_dra5.py"], ["tools/grafico_missoes.py"], ["tools/lista_premissas.py"]]
 FASE_850 = [["tools/dimensionamento.py"], ["tools/compara_msr.py"], ["tools/superficie.py"],
             ["tools/varredura_encontro.py"], ["tools/isru.py"], ["tools/mav_propulsao.py"]]
-# Etapa 2 (issue #68): o orbitador só elétrico roda em matriz no CI: o caso publicado, um comando por bloco das cadeias de
-# n (propulsor × órbita; os blocos de uma cadeia em sequência) e a junção; a lista de blocos é a de
-# config/orbitador_so_eletrico.yaml (conferida em tests/).
-_amb = dict(os.environ)
-import orbitador_so_eletrico as _ose  # noqa: E402
-
-# o import fixa uma thread de BLAS no os.environ (para os processos da própria ferramenta); as outras ferramentas da
-# regeneração herdam o os.environ (_env_git) e não devem receber isso
-os.environ.clear()
-os.environ.update(_amb)
-
-ORBITADOR_SO_ELETRICO = ([["tools/orbitador_so_eletrico.py", "--caso-publicado"]]
-                         + [["tools/orbitador_so_eletrico.py", "--bloco", nome, str(int(h)), _ose._rotulo_bloco(ns)]
-                            for nome, h, ns, _ in _ose.blocos()]
-                         + [["tools/orbitador_so_eletrico.py", "--junta"]])
+# Etapa 2 (issue #68): orbitador só elétrico. Verificar, não reotimizar (decisão do Fabio, 2026-11-24): o CI roda o caso
+# publicado e a verificação das soluções gravadas em data/orbitador_so_eletrico/; as cadeias de otimização rodam fora do CI.
+ORBITADOR_SO_ELETRICO = [["tools/orbitador_so_eletrico.py", "--caso-publicado"], ["tools/orbitador_so_eletrico.py", "--verifica"]]
 
 
 def chave(cmd):

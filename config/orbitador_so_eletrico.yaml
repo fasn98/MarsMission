@@ -18,6 +18,13 @@ otimizador:
   # Escolhida "restricao" em 2026-11-21 (mais robusta; P-118); a "suave" fica como registro.
   formulacao_dla: {valor: restricao, premissa: P-118}
 
+verificacao:
+  # Verificar, não reotimizar (decisão do Fabio, 2026-11-24): o CI propaga as soluções gravadas em data/orbitador_so_eletrico/
+  # e confere continuidade, desigualdades e limites com o residuo_max (P-118). O fecho de massa das soluções vem das
+  # iterações da otimização (P-122) e pode não ter fechado: a massa que o fecho pede (m0 da volta, chegada a Marte) difere da
+  # gravada no trecho. Diferença relativa máxima aceita. P-125.
+  descasamento_fecho_relativo_max: {valor: 1.0e-3, premissa: P-125}
+
 limites_e_chutes:
   # Limites das massas, chutes a frio e detalhes numéricos do otimizador (tools/orbitador_so_eletrico.py). P-118.
   m0_ida_fracao: {valor: [0.3, 4.0], premissa: P-118}          # m0 da ida entre estes múltiplos da massa na chegada
@@ -120,6 +127,7 @@ missao:
   # demais para um job do CI é dividida em blocos encadeados: cada bloco continua das soluções gravadas pelos anteriores.
   # O tamanho do bloco faz parte do caminho da cadeia: a segunda passada de um bloco não vê os n dos blocos seguintes, e o
   # resultado pode diferir do de uma cadeia contínua (vale o dos blocos, o mesmo no local e no CI). Tamanho do bloco por propulsor (valores de n por job). P-122.
+  # Fora do CI desde 2026-11-24 (decisão do Fabio: verificar, não reotimizar): os blocos rodam só na otimização local.
   bloco_cadeia: {valor: {XIPS-25: 6, "XIPS-25 (87 kg)": 6, NEXT-C: 7}, premissa: P-122}
   altitudes_km: {valor: [380, 814], fonte: "results/familia1/missao.yaml (as duas órbitas de encontro da família 1)"}
   iteracoes_fecho: {valor: 4, premissa: P-122}
