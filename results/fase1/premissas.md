@@ -127,6 +127,6 @@
 | P-123 | bandas_das_conclusoes_do_orbitador_so_eletrico | margem_minima: 0.0; banda_margem: 0.05; banda_prazo_dias: 30 | fração da massa injetada; dias | NÃO VALIDADA | config/orbitador_so_eletrico.yaml (conclusoes), results/familia1/orbitador_so_eletrico.md |
 | P-124 | estacao_das_tempestades_globais_de_poeira | ls_graus: [180, 340] | graus de longitude solar Ls | NÃO VALIDADA | config/orbitador_so_eletrico.yaml (estocagem_mav), results/familia1/diagnostico_orbitador_so_eletrico.md |
 | P-125 | descasamento_do_fecho_de_massa_na_verificacao | 0.001 | adimensional (diferença relativa de massa) | NÃO VALIDADA | config/orbitador_so_eletrico.yaml (verificacao), tools/orbitador_so_eletrico.py (--verifica) |
-| P-127 | parada_do_newton_de_kepler | tol: 1e-13; piso: 1e-12; residuo_relativo_no_piso: 1e-12 | adimensional (passo relativo a max(1, |χ|); resíduo relativo à soma dos módulos dos termos) | NÃO VALIDADA | src/orbital/kepler.py (propagar e propagar_lote; por eles, orbital.sims_flanagan e quem propaga por Kepler) |
+| P-127 | parada_do_newton_de_kepler | tol: 1e-13; piso: 1e-12; residuo_relativo_no_piso: 1e-12 | adimensional (passo relativo a max(1, abs(χ)); resíduo relativo à soma dos módulos dos termos) | NÃO VALIDADA | src/orbital/kepler.py (propagar e propagar_lote; por eles, orbital.sims_flanagan e quem propaga por Kepler) |
 
 Total: 126 premissas, 126 com status NÃO VALIDADA. Justificativas em config/premissas.yaml.
