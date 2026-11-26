@@ -45,6 +45,21 @@ def test_kepler_em_lote_igual_ao_escalar(dt):
         assert np.linalg.norm(vl[i] - ve) <= 1e-12 * np.linalg.norm(ve)
 
 
+def test_newton_para_no_piso_de_ruido():
+    """Órbita 20 do lote acima (dt = −230 d): o Newton leva 25 iterações e o último passo fica perto do tol de 1e-13; numa
+    CPU do CI ele ficou acima para sempre (main em 86b39e9). Com tol = 0, o critério |passo| ≤ tol·max(1, |χ|) não é atingido
+    em nenhuma CPU (antes da correção, os dois propagadores falhavam aqui), e o Newton tem de parar no piso de ruído
+    (kepler.PISO) com o mesmo estado do tol de 1e-13."""
+    r, v_ = _orbitas(40, 1)
+    dt = -230.0 * DIA
+    ref = [kepler.propagar(GM_SOL, r[i], v_[i], dt) for i in (19, 20, 21)]
+    rl, vl = kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], dt, tol=0.0)
+    re, ve = kepler.propagar(GM_SOL, r[20], v_[20], dt, tol=0.0)
+    for (rp, vp), (rr, vr) in zip([*zip(rl, vl), (re, ve)], [*ref, ref[1]]):
+        assert np.linalg.norm(rp - rr) <= 1e-12 * np.linalg.norm(rr)
+        assert np.linalg.norm(vp - vr) <= 1e-12 * np.linalg.norm(vr)
+
+
 def test_propagacao_continua_sem_empuxo_igual_a_kepler():
     r, v_ = _orbitas(5, 2)
     for i in range(len(r)):

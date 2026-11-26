@@ -12,6 +12,10 @@ jobs:
       run:
         shell: bash -el {0}   # login shell: ativa o ambiente conda em cada passo
     steps:
+      # Modelo da CPU no log (decisão do Fabio, 2026-11-26): resultados numéricos já mudaram entre CPUs (23/11 e 26/11)
+      - name: CPU do runner
+        shell: bash
+        run: LC_ALL=C lscpu | grep -E '^(Architecture|Vendor ID|Model name|CPU\(s\)):' || grep -m1 'model name' /proc/cpuinfo
       - uses: actions/checkout@v4
 
       # Ambiente criado a partir do mesmo environment.yml usado localmente (Python do conda; dependências do

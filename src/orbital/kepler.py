@@ -42,6 +42,18 @@ def _cs(z: float) -> tuple[float, float]:
     return stumpff_c(z), stumpff_s(z)
 
 
+# Parada do Newton no piso de ruído (decisão do Fabio, 2026-11-26): além de |passo| ≤ tol·max(1, |χ|), o Newton para quando
+# o passo relativo já passou por PISO e deixou de diminuir, porque daí em diante ele é arredondamento e o tol pode nunca ser
+# atingido, conforme a CPU (CI da main em 86b39e9). Nessa parada, o resíduo de f é conferido contra PISO vezes a soma dos
+# módulos dos termos da equação; acima disso, o Newton falha.
+PISO = 1e-12
+
+
+def _termos(r0n, vr0, smu, alpha, chi, c, s, dt):
+    """Os quatro termos da equação universal de Kepler, cuja soma é f."""
+    return (r0n * vr0 / smu * chi**2 * c, (1.0 - alpha * r0n) * chi**3 * s, r0n * chi, -smu * dt)
+
+
 def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-13):
     """Estado (r, v) após `dt` a partir de (r0, v0) no problema de dois corpos."""
     r0 = np.asarray(r0, dtype=float)
@@ -58,16 +70,24 @@ def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-
         sinal = np.sign(dt)
         arg = (-2.0 * mu * alpha * dt) / (r0 @ v0 + sinal * np.sqrt(-mu * a) * (1.0 - r0n * alpha))
         chi = sinal * np.sqrt(-a) * np.log(arg) if arg > 0 else chi
+    passou, anterior = False, np.inf
     for _ in range(max_iter):
         z = alpha * chi**2
         c, s = _cs(z)
-        f = (r0n * vr0 / smu * chi**2 * c + (1.0 - alpha * r0n) * chi**3 * s
-             + r0n * chi - smu * dt)
+        f = sum(_termos(r0n, vr0, smu, alpha, chi, c, s, dt))
         df = (r0n * vr0 / smu * chi * (1.0 - z * s) + (1.0 - alpha * r0n) * chi**2 * c + r0n)
         passo = f / df
         chi -= passo
         if abs(passo) <= tol * max(1.0, abs(chi)):
             break
+        if passou and abs(passo) >= anterior:   # piso de ruído
+            c, s = _cs(alpha * chi**2)
+            t = _termos(r0n, vr0, smu, alpha, chi, c, s, dt)
+            if abs(sum(t)) > PISO * sum(abs(x) for x in t):
+                raise RuntimeError("Newton da equação universal de Kepler parou no piso de ruído com resíduo acima do limite")
+            break
+        passou = passou or abs(passo) <= PISO * max(1.0, abs(chi))
+        anterior = abs(passo)
     else:
         raise RuntimeError("Newton da equação universal de Kepler não convergiu")
 
@@ -123,18 +143,31 @@ def propagar_lote(mu: float, r0, v0, dt, max_iter: int = 200, tol: float = 1e-13
             chute = sinal * np.sqrt(-a) * np.log(np.where(arg > 0, arg, 1.0))
         chi[hip] = np.where(arg > 0, chute, chi[hip])
     ativo = np.ones(len(r0), dtype=bool)
+    passou = np.zeros(len(r0), dtype=bool)
+    no_piso = np.zeros(len(r0), dtype=bool)
+    anterior = np.full(len(r0), np.inf)
     for _ in range(max_iter):
         z = alpha * chi**2
         c, s = _cs_lote(z)
-        f = (r0n * vr0 / smu * chi**2 * c + (1.0 - alpha * r0n) * chi**3 * s + r0n * chi - smu * dt)
+        f = sum(_termos(r0n, vr0, smu, alpha, chi, c, s, dt))
         df = (r0n * vr0 / smu * chi * (1.0 - z * s) + (1.0 - alpha * r0n) * chi**2 * c + r0n)
         passo = np.where(ativo, f / df, 0.0)
         chi = chi - passo
-        ativo = ativo & ~(np.abs(passo) <= tol * np.maximum(1.0, np.abs(chi)))
+        ap, escala = np.abs(passo), np.maximum(1.0, np.abs(chi))
+        piso = ativo & passou & (ap >= anterior) & ~(ap <= tol * escala)
+        no_piso |= piso
+        ativo = ativo & ~(ap <= tol * escala) & ~piso
+        passou |= ap <= PISO * escala
+        anterior = np.where(ativo, ap, anterior)
         if not np.any(ativo):
             break
     else:
         raise RuntimeError("Newton da equação universal de Kepler não convergiu")
+    if np.any(no_piso):
+        c, s = _cs_lote(alpha[no_piso] * chi[no_piso] ** 2)
+        t = _termos(r0n[no_piso], vr0[no_piso], smu, alpha[no_piso], chi[no_piso], c, s, dt[no_piso])
+        if np.any(np.abs(sum(t)) > PISO * sum(np.abs(x) for x in t)):
+            raise RuntimeError("Newton da equação universal de Kepler parou no piso de ruído com resíduo acima do limite")
     z = alpha * chi**2
     c, s = _cs_lote(z)
     f = 1.0 - chi**2 / r0n * c
