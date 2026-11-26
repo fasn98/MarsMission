@@ -68,14 +68,18 @@ def test_residuo_no_piso():
     assert not kepler._residuo_ok((np.array([1.0, 1.0]), np.array([-1.0, -1.0 + 1e-9]), np.zeros(2), np.zeros(2)))
 
 
-def test_newton_falha_se_o_residuo_no_piso_reprova(monkeypatch):
-    """Os dois propagadores chamam a conferência do resíduo quando param pelo piso (órbita 20, tol = 0) e falham se ela
-    reprova, em vez de devolver o estado."""
+def test_newton_falha_se_para_no_piso_com_residuo_grande(monkeypatch):
+    """Caso construído (numa órbita real o passo só para de diminuir quando o resíduo já é arredondamento): a derivada do
+    Newton é multiplicada por 1e20 e tol = 0 (com tol = 1e-13, um passo de ~1e-20 pararia pelo tol, que não confere o
+    resíduo, como antes da correção). O primeiro passo fica ~1e-20 relativo, abaixo do PISO e do arredondamento de χ,
+    então χ não muda, o passo seguinte é igual (deixou de diminuir) e o Newton para pelo piso com f ainda do tamanho do
+    chute inicial. Os dois propagadores têm de levantar o RuntimeError em vez de devolver esse χ."""
     r, v_ = _orbitas(40, 1)
-    monkeypatch.setattr(kepler, "_residuo_ok", lambda t: False)
-    with pytest.raises(RuntimeError, match="piso de ruído"):
+    derivada = kepler._derivada
+    monkeypatch.setattr(kepler, "_derivada", lambda *a: 1e20 * derivada(*a))
+    with pytest.raises(RuntimeError, match="piso de ruído com resíduo acima do limite"):
         kepler.propagar(GM_SOL, r[20], v_[20], -230.0 * DIA, tol=0.0)
-    with pytest.raises(RuntimeError, match="piso de ruído"):
+    with pytest.raises(RuntimeError, match="piso de ruído com resíduo acima do limite"):
         kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], -230.0 * DIA, tol=0.0)
 
 

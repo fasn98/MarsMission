@@ -54,6 +54,11 @@ def _termos(r0n, vr0, smu, alpha, chi, c, s, dt):
     return (r0n * vr0 / smu * chi**2 * c, (1.0 - alpha * r0n) * chi**3 * s, r0n * chi, -smu * dt)
 
 
+def _derivada(r0n, vr0, smu, alpha, chi, z, c, s):
+    """df/dχ da equação universal de Kepler."""
+    return r0n * vr0 / smu * chi * (1.0 - z * s) + (1.0 - alpha * r0n) * chi**2 * c + r0n
+
+
 def _residuo_ok(t) -> bool:
     """Resíduo de f na parada pelo piso: |Σ termos| ≤ PISO · Σ |termos| em todas as faixas (NaN reprova)."""
     return bool(np.all(np.abs(sum(t)) <= PISO * sum(np.abs(x) for x in t)))
@@ -80,7 +85,7 @@ def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-
         z = alpha * chi**2
         c, s = _cs(z)
         f = sum(_termos(r0n, vr0, smu, alpha, chi, c, s, dt))
-        df = (r0n * vr0 / smu * chi * (1.0 - z * s) + (1.0 - alpha * r0n) * chi**2 * c + r0n)
+        df = _derivada(r0n, vr0, smu, alpha, chi, z, c, s)
         passo = f / df
         chi -= passo
         if abs(passo) <= tol * max(1.0, abs(chi)):
@@ -155,7 +160,7 @@ def propagar_lote(mu: float, r0, v0, dt, max_iter: int = 200, tol: float = 1e-13
         z = alpha * chi**2
         c, s = _cs_lote(z)
         f = sum(_termos(r0n, vr0, smu, alpha, chi, c, s, dt))
-        df = (r0n * vr0 / smu * chi * (1.0 - z * s) + (1.0 - alpha * r0n) * chi**2 * c + r0n)
+        df = _derivada(r0n, vr0, smu, alpha, chi, z, c, s)
         passo = np.where(ativo, f / df, 0.0)
         chi = chi - passo
         ap, escala = np.abs(passo), np.maximum(1.0, np.abs(chi))
