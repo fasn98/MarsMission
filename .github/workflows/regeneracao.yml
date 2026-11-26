@@ -42,7 +42,7 @@ jobs:
       # Modelo da CPU no log (decisão do Fabio, 2026-11-26): resultados numéricos já mudaram entre CPUs (23/11 e 26/11)
       - name: CPU do runner
         shell: bash
-        run: LC_ALL=C lscpu | grep -E '^(Architecture|Vendor ID|Model name|CPU\(s\)):' || grep -m1 'model name' /proc/cpuinfo
+        run: LC_ALL=C lscpu | grep -E '^(Architecture|Vendor ID|Model name|CPU\(s\)):' || grep -m1 'model name' /proc/cpuinfo || true   # só informativo: não reprova o job
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -135,7 +135,7 @@ jobs:
       # Modelo da CPU no log (decisão do Fabio, 2026-11-26): resultados numéricos já mudaram entre CPUs (23/11 e 26/11)
       - name: CPU do runner
         shell: bash
-        run: LC_ALL=C lscpu | grep -E '^(Architecture|Vendor ID|Model name|CPU\(s\)):' || grep -m1 'model name' /proc/cpuinfo
+        run: LC_ALL=C lscpu | grep -E '^(Architecture|Vendor ID|Model name|CPU\(s\)):' || grep -m1 'model name' /proc/cpuinfo || true   # só informativo: não reprova o job
       # jq explícito: o Ubuntu 24.04 o traz, mas ubuntu-latest migra para o 26.04 em novembro de 2026 (github.com/actions/
       # runner-images, lido em 2026-11-17) e não conferimos o 26.04
       - name: jq

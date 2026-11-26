@@ -45,13 +45,18 @@ def _cs(z: float) -> tuple[float, float]:
 # Parada do Newton no piso de ruído (decisão do Fabio, 2026-11-26): além de |passo| ≤ tol·max(1, |χ|), o Newton para quando
 # o passo relativo já passou por PISO e deixou de diminuir, porque daí em diante ele é arredondamento e o tol pode nunca ser
 # atingido, conforme a CPU (CI da main em 86b39e9). Nessa parada, o resíduo de f é conferido contra PISO vezes a soma dos
-# módulos dos termos da equação; acima disso, o Newton falha.
+# módulos dos termos da equação; acima disso (ou NaN), o Newton falha. Valores: P-127 (NÃO VALIDADA).
 PISO = 1e-12
 
 
 def _termos(r0n, vr0, smu, alpha, chi, c, s, dt):
     """Os quatro termos da equação universal de Kepler, cuja soma é f."""
     return (r0n * vr0 / smu * chi**2 * c, (1.0 - alpha * r0n) * chi**3 * s, r0n * chi, -smu * dt)
+
+
+def _residuo_ok(t) -> bool:
+    """Resíduo de f na parada pelo piso: |Σ termos| ≤ PISO · Σ |termos| em todas as faixas (NaN reprova)."""
+    return bool(np.all(np.abs(sum(t)) <= PISO * sum(np.abs(x) for x in t)))
 
 
 def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-13):
@@ -83,7 +88,7 @@ def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-
         if passou and abs(passo) >= anterior:   # piso de ruído
             c, s = _cs(alpha * chi**2)
             t = _termos(r0n, vr0, smu, alpha, chi, c, s, dt)
-            if abs(sum(t)) > PISO * sum(abs(x) for x in t):
+            if not _residuo_ok(t):
                 raise RuntimeError("Newton da equação universal de Kepler parou no piso de ruído com resíduo acima do limite")
             break
         passou = passou or abs(passo) <= PISO * max(1.0, abs(chi))
@@ -166,7 +171,7 @@ def propagar_lote(mu: float, r0, v0, dt, max_iter: int = 200, tol: float = 1e-13
     if np.any(no_piso):
         c, s = _cs_lote(alpha[no_piso] * chi[no_piso] ** 2)
         t = _termos(r0n[no_piso], vr0[no_piso], smu, alpha[no_piso], chi[no_piso], c, s, dt[no_piso])
-        if np.any(np.abs(sum(t)) > PISO * sum(np.abs(x) for x in t)):
+        if not _residuo_ok(t):
             raise RuntimeError("Newton da equação universal de Kepler parou no piso de ruído com resíduo acima do limite")
     z = alpha * chi**2
     c, s = _cs_lote(z)

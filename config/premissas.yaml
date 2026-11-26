@@ -1510,4 +1510,16 @@ premissas:
       acima do aceito da P-118. Por isso a margem no arquivo comparado ("pelo menos", P-123) é limite inferior quanto ao
       otimizador local, a menos de cerca de (1 + margem) × este valor quanto ao descasamento.
     status: NÃO VALIDADA
+  - id: P-127
+    nome: parada_do_newton_de_kepler
+    valor: {tol: 1.0e-13, piso: 1.0e-12, residuo_relativo_no_piso: 1.0e-12}
+    unidade: adimensional (passo relativo a max(1, |χ|); resíduo relativo à soma dos módulos dos termos)
+    uso: src/orbital/kepler.py (propagar, propagar_lote; usados por orbital.sims_flanagan e pela Etapa 1)
+    justificativa: >
+      SEM FONTE. O Newton da equação universal de Kepler [F11] para quando |passo| ≤ tol · max(1, |χ|) (tol de 1e-13, o
+      valor que o código já usava, registrado aqui só agora) ou quando o passo relativo já passou pelo piso e deixou de
+      diminuir: daí em diante ele é arredondamento, e o tol pode nunca ser atingido conforme a CPU (pytest da main em
+      86b39e9, 2026-11-26). Na parada pelo piso, o resíduo de f tem de ficar ≤ piso · Σ|termos|, senão o Newton falha.
+      Piso e critério do resíduo: decisão do Fabio em 2026-11-26 (correção pela opção A), registrados como NÃO VALIDADA.
+    status: NÃO VALIDADA
 

@@ -60,6 +60,25 @@ def test_newton_para_no_piso_de_ruido():
         assert np.linalg.norm(vp - vr) <= 1e-12 * np.linalg.norm(vr)
 
 
+def test_residuo_no_piso():
+    """Conferência do resíduo na parada pelo piso: aceita resíduo de arredondamento, reprova resíduo grande e NaN."""
+    assert kepler._residuo_ok((1.0, 2.0, -3.0 + 1e-15, 0.0))
+    assert not kepler._residuo_ok((1.0, 2.0, -3.0 + 1e-9, 0.0))
+    assert not kepler._residuo_ok((1.0, float("nan"), -3.0, 0.0))
+    assert not kepler._residuo_ok((np.array([1.0, 1.0]), np.array([-1.0, -1.0 + 1e-9]), np.zeros(2), np.zeros(2)))
+
+
+def test_newton_falha_se_o_residuo_no_piso_reprova(monkeypatch):
+    """Os dois propagadores chamam a conferência do resíduo quando param pelo piso (órbita 20, tol = 0) e falham se ela
+    reprova, em vez de devolver o estado."""
+    r, v_ = _orbitas(40, 1)
+    monkeypatch.setattr(kepler, "_residuo_ok", lambda t: False)
+    with pytest.raises(RuntimeError, match="piso de ruído"):
+        kepler.propagar(GM_SOL, r[20], v_[20], -230.0 * DIA, tol=0.0)
+    with pytest.raises(RuntimeError, match="piso de ruído"):
+        kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], -230.0 * DIA, tol=0.0)
+
+
 def test_propagacao_continua_sem_empuxo_igual_a_kepler():
     r, v_ = _orbitas(5, 2)
     for i in range(len(r)):
