@@ -81,3 +81,67 @@ def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-
     gdot = 1.0 - chi**2 / rn * c
     v = fdot * r0 + gdot * v0
     return r, v
+
+
+def _cs_lote(z):
+    """C(z) e S(z) vetorizados, com a série de Taylor para |z| < 1e-3 (como `_cs`)."""
+    z = np.asarray(z, dtype=float)
+    c = np.empty_like(z)
+    s = np.empty_like(z)
+    pe = np.abs(z) < 1e-3
+    zp = z[pe]
+    c[pe] = 0.5 - zp / 24.0 + zp**2 / 720.0 - zp**3 / 40320.0 + zp**4 / 3628800.0
+    s[pe] = 1.0 / 6.0 - zp / 120.0 + zp**2 / 5040.0 - zp**3 / 362880.0 + zp**4 / 39916800.0
+    el = (~pe) & (z > 0)
+    sz = np.sqrt(z[el])
+    c[el] = (1.0 - np.cos(sz)) / z[el]
+    s[el] = (sz - np.sin(sz)) / sz**3
+    hi = (~pe) & (z < 0)
+    sz = np.sqrt(-z[hi])
+    c[hi] = (np.cosh(sz) - 1.0) / (-z[hi])
+    s[hi] = (np.sinh(sz) - sz) / sz**3
+    return c, s
+
+
+def propagar_lote(mu: float, r0, v0, dt, max_iter: int = 200, tol: float = 1e-13):
+    """`propagar` vetorizado: r0 e v0 com forma (k, 3), dt escalar ou (k,). Mesmas equações, Newton em paralelo."""
+    r0 = np.atleast_2d(np.asarray(r0, dtype=float))
+    v0 = np.atleast_2d(np.asarray(v0, dtype=float))
+    dt = np.broadcast_to(np.asarray(dt, dtype=float), (len(r0),)).copy()
+    r0n = np.linalg.norm(r0, axis=1)
+    rv = np.einsum("ij,ij->i", r0, v0)
+    vr0 = rv / r0n
+    alpha = 2.0 / r0n - np.einsum("ij,ij->i", v0, v0) / mu
+    smu = np.sqrt(mu)
+    chi = np.where(alpha != 0, smu * np.abs(alpha) * dt, smu * dt / r0n)
+    hip = alpha < 0
+    if np.any(hip):
+        a = 1.0 / alpha[hip]
+        sinal = np.sign(dt[hip])
+        arg = (-2.0 * mu * alpha[hip] * dt[hip]) / (rv[hip] + sinal * np.sqrt(-mu * a) * (1.0 - r0n[hip] * alpha[hip]))
+        with np.errstate(invalid="ignore"):
+            chute = sinal * np.sqrt(-a) * np.log(np.where(arg > 0, arg, 1.0))
+        chi[hip] = np.where(arg > 0, chute, chi[hip])
+    ativo = np.ones(len(r0), dtype=bool)
+    for _ in range(max_iter):
+        z = alpha * chi**2
+        c, s = _cs_lote(z)
+        f = (r0n * vr0 / smu * chi**2 * c + (1.0 - alpha * r0n) * chi**3 * s + r0n * chi - smu * dt)
+        df = (r0n * vr0 / smu * chi * (1.0 - z * s) + (1.0 - alpha * r0n) * chi**2 * c + r0n)
+        passo = np.where(ativo, f / df, 0.0)
+        chi = chi - passo
+        ativo = ativo & ~(np.abs(passo) <= tol * np.maximum(1.0, np.abs(chi)))
+        if not np.any(ativo):
+            break
+    else:
+        raise RuntimeError("Newton da equação universal de Kepler não convergiu")
+    z = alpha * chi**2
+    c, s = _cs_lote(z)
+    f = 1.0 - chi**2 / r0n * c
+    g = dt - chi**3 / smu * s
+    r = f[:, None] * r0 + g[:, None] * v0
+    rn = np.linalg.norm(r, axis=1)
+    fdot = smu / (rn * r0n) * (z * s - 1.0) * chi
+    gdot = 1.0 - chi**2 / rn * c
+    v = fdot[:, None] * r0 + gdot[:, None] * v0
+    return r, v

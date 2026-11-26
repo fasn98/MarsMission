@@ -26,6 +26,14 @@ partes:
   inerte_solido:
     depende_de: [base, mav_familia1, ruido_subida, familia1_465]
     ferramentas: [inerte_solido]
+  # Etapa 2 (issue #68): orbitador só elétrico em matriz (blocos de config/orbitador_so_eletrico.yaml); leem a base, a
+  # junção lê todos.
+  se_caso_publicado:
+    depende_de: [base]
+    ferramentas: ["orbitador_so_eletrico --caso-publicado"]
+  se_verifica:
+    depende_de: [base, mav_familia1, se_caso_publicado]
+    ferramentas: ["orbitador_so_eletrico --verifica"]
   comparacao:
-    depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido]
+    depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_verifica]
     ferramentas: [opcoes_arquitetura]

@@ -28,7 +28,8 @@ permissions:
 jobs:
   # Detector: o PR (ou o push na main) mudou algo que afeta results/? Caminhos em CAMINHOS (os do antigo filtro, mais
   # cad/featurescript, que tools/cad_parametros.py e tools/encaixe_coifas.py leem, e tests/test_ephemeris.py, de onde
-  # tools/baricentro_marte.py importa ler_horizons até a issue #69; decisões do Fabio, 2026-11-17), como
+  # tools/baricentro_marte.py importa ler_horizons até a issue #69; decisões do Fabio, 2026-11-17, e
+  # data/orbitador_so_eletrico, as soluções gravadas que tools/orbitador_so_eletrico.py --verifica lê; 2026-11-24), como
   # pathspec do git: casa o caminho real (sem as aspas do core.quotePath) e, com --no-renames, um arquivo movido conta pelo
   # caminho antigo e pelo novo. Sem ação de terceiros. Na dúvida (sem base conferida), regenera. Conferido com repositórios
   # de prova em tests/test_confere_regeneracao.py::test_detector_*.
@@ -44,7 +45,7 @@ jobs:
       - name: Arquivos mudados contra a base
         id: diff
         env:
-          CAMINHOS: "src tools config results tests/data tests/test_ephemeris.py cad/featurescript environment.yml pyproject.toml .github/workflows/regeneracao.yml .github/workflows/regeneracao_parte.yml"
+          CAMINHOS: "src tools config results data/orbitador_so_eletrico tests/data tests/test_ephemeris.py cad/featurescript environment.yml pyproject.toml .github/workflows/regeneracao.yml .github/workflows/regeneracao_parte.yml"
           EVENTO: ${{ github.event_name }}
           ANTES: ${{ github.event.before }}
           CABECA_PR: ${{ github.event.pull_request.head.sha }}
@@ -103,17 +104,27 @@ jobs:
     needs: [base, mav_familia1, ruido_subida, familia1_465]
     uses: ./.github/workflows/regeneracao_parte.yml
     with: {parte: inerte_solido, entradas: "base mav_familia1 ruido_subida familia1_465"}
-  regeneracao:
-    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido]
+  # Etapa 2 (issue #68): orbitador só elétrico, caso publicado e verificação das soluções gravadas (sem reotimizar;
+  # decisão do Fabio, 2026-11-24). As cadeias de otimização rodam fora do CI.
+  se_caso_publicado:
+    needs: [base]
     uses: ./.github/workflows/regeneracao_parte.yml
-    with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido"}
+    with: {parte: se_caso_publicado, entradas: "base"}
+  se_verifica:
+    needs: [base, mav_familia1, se_caso_publicado]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: se_verifica, entradas: "base mav_familia1 se_caso_publicado"}
+  regeneracao:
+    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_verifica]
+    uses: ./.github/workflows/regeneracao_parte.yml
+    with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido se_verifica"}
   # Portão (decisões do Fabio, 2026-11-16 e 2026-11-17): a verificação obrigatória da main. Roda sempre. Se o detector
   # disse que nada relevante mudou, passa com as partes e a comparação puladas (e só puladas). Em qualquer outro caso, só
   # passa se o detector e todos os jobs terminaram com sucesso: falha, cancelamento ou job pulado reprovam. O nome do job
   # é o da verificação na proteção da main: não renomear sem mudar a proteção.
   portao:
     name: Regeneração (portão)
-    needs: [detecta, base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, regeneracao]
+    needs: [detecta, base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_caso_publicado, se_verifica, regeneracao]
     if: always()
     runs-on: ubuntu-latest
     steps:

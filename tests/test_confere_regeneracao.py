@@ -191,7 +191,7 @@ def test_partes_conferem_com_o_mapa(cr):
     ps = cr.partes()
     mapa = yaml.safe_load((cr.RAIZ / "results/conferencia/mapa_regeneracao.yaml").read_text(encoding="utf-8"))["ferramentas"]
     parte_de = {f: n for n, p in ps.items() for f in p["ferramentas"]}
-    stem = [Path(n["ferramenta"].split()[0]).stem for n in mapa]
+    stem = [cr.chave(n["ferramenta"].split()) for n in mapa]   # ferramenta e argumentos (a matriz da Etapa 2)
     # o mapa precisa ser da ordem atual da regeneração (senão uma ferramenta nova cairia na base sem conferência)
     assert [n["ferramenta"] for n in mapa] == [" ".join(c) for c in cr.FASE_1 + cr.FASE_850 + cr.FASE_ATUAL]
     p_de = [parte_de.get(s, "base") for s in stem]   # fora de FASE_ATUAL: fases históricas, na base
@@ -232,8 +232,10 @@ def test_detector_de_mudanca_relevante(cr):
     assert jobs["base"]["needs"] == ["detecta"] and jobs["base"]["if"] == "needs.detecta.outputs.relevante == 'true'"
     assert [n for n, j in jobs.items() if "detecta" in j.get("needs", [])] == ["base", "portao"]
     passo = next(s for s in jobs["detecta"]["steps"] if s.get("id") == "diff")
-    assert passo["env"]["CAMINHOS"].split() == ["src", "tools", "config", "results", "tests/data", "tests/test_ephemeris.py", "cad/featurescript", "environment.yml", "pyproject.toml",
+    assert passo["env"]["CAMINHOS"].split() == ["src", "tools", "config", "results", "data/orbitador_so_eletrico", "tests/data", "tests/test_ephemeris.py", "cad/featurescript", "environment.yml", "pyproject.toml",
                                                 ".github/workflows/regeneracao.yml", ".github/workflows/regeneracao_parte.yml"]
+    # as soluções gravadas do orbitador só elétrico, que a verificação lê (decisão do Fabio, 2026-11-24)
+    assert 'RAIZ / "data" / "orbitador_so_eletrico"' in (cr.RAIZ / "tools/orbitador_so_eletrico.py").read_text(encoding="utf-8")
     # quem lê o modelo de FeatureScript para gerar results/ (decisão do Fabio, 2026-11-17)
     for f in ("tools/cad_parametros.py", "tools/encaixe_coifas.py"):
         assert 'RAIZ / "cad" / "featurescript"' in (cr.RAIZ / f).read_text(encoding="utf-8"), f

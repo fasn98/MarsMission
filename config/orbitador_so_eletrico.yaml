@@ -1,0 +1,155 @@
+# Etapa 2 do plano (issue #68): verificação do orbitador só elétrico da família 1 (tools/orbitador_so_eletrico.py,
+# orbital.sims_flanagan). Plano aprovado pelo Fabio em 2026-11-20 (método próprio com scipy, estilo Sims–Flanagan).
+# O NEXT-C é avaliado EM PARALELO ao XIPS-25 (decisão do Fabio, 2026-11-20) e fica fora do catálogo de config/eletrica.yaml
+# (ADR 0013, item 4) até a decisão dele no ponto de parada.
+
+otimizador:
+  # Transcrição e otimizador (orbital.sims_flanagan): escolhas numéricas, sem fonte. P-118.
+  n_segmentos: {valor: 30, premissa: P-118}
+  ordem: {valor: 4, premissa: P-118}
+  # 800 até 2026-11-21; 2400 aprovado pelo Fabio em 2026-11-22 depois das sondas (P-118).
+  maxiter: {valor: 2400, premissa: P-118}
+  ftol: {valor: 1.0e-10, premissa: P-118}
+  # Resíduo de continuidade aceito (posição em UA, velocidade em unidades de √(μ☉/1 UA), massa em t): acima dele, a
+  # solução não converge e a ferramenta para (decisão do Fabio: parar se o otimizador não convergir).
+  residuo_max: {valor: 1.0e-8, premissa: P-118}
+  # Formulação do limite de DLA do lançador no objetivo da ida (decisão do Fabio, 2026-11-20: testar as duas e ficar com a
+  # mais robusta): "suave" (multiplicador da P-036 por PCHIP no objetivo) ou "restricao" (DLA ≤ 28,5° explícita). P-118.
+  # Escolhida "restricao" em 2026-11-21 (mais robusta; P-118); a "suave" fica como registro.
+  formulacao_dla: {valor: restricao, premissa: P-118}
+
+verificacao:
+  # Verificar, não reotimizar (decisão do Fabio, 2026-11-24): o CI propaga as soluções gravadas em data/orbitador_so_eletrico/
+  # e confere continuidade, desigualdades e limites com o residuo_max (P-118). O fecho de massa das soluções vem das
+  # iterações da otimização (P-122) e pode não ter fechado: a massa que o fecho pede (m0 da volta, chegada a Marte) difere da
+  # gravada no trecho. Diferença relativa máxima aceita. P-125.
+  descasamento_fecho_relativo_max: {valor: 1.0e-3, premissa: P-125}
+
+limites_e_chutes:
+  # Limites das massas, chutes a frio e detalhes numéricos do otimizador (tools/orbitador_so_eletrico.py). P-118.
+  m0_ida_fracao: {valor: [0.3, 4.0], premissa: P-118}          # m0 da ida entre estes múltiplos da massa na chegada
+  mf_min_fracao: {valor: 0.2, premissa: P-118}                 # massa final mínima, fração da inicial (volta e caso publicado)
+  mf_chute_fracao: {valor: 0.85, premissa: P-118}              # massa final do chute a frio, fração da inicial
+  m0_chute_fracao: {valor: 1.6, premissa: P-118}               # m0 do chute a frio da ida, múltiplo da massa na chegada
+  massa_chegada_chute_kg: {valor: 6000.0, premissa: P-118}     # massa na chegada do chute a frio do fecho
+  vinf_partida_chute_km_s: {valor: 3.0, premissa: P-118}       # v∞ de partida do chute a frio, na direção da Terra
+  razao_volta_chute: {valor: 1.25, premissa: P-118}            # razão de massas da volta antes da primeira volta otimizada
+  max_iteracoes_massas: {valor: 200, premissa: P-118}          # ponto fixo das massas (tolerância: P-049, config/eletrica.yaml)
+  limiar_arco: {valor: 1.0e-3, premissa: P-118}                # |u| acima disto conta como empuxo (Δv dos arcos)
+  escala_restricao_declinacao: {valor: 100.0, premissa: P-118} # escala da restrição de declinação do caso publicado
+  folga_restricao_declinacao: {valor: 1.0e-6, premissa: P-118} # folga (no seno escalado) da igualdade como duas desigualdades
+
+caso_publicado:
+  # Joffre et al. 2018 [F121], Fig. 4 (rótulos na p. 5; texto na p. 4): dois exemplos de ida com propulsão elétrica do
+  # estudo do ERO. Massa e empuxo não estão na fonte: vêm de Yau 2021 [F22], outra versão do projeto (decisão do Fabio,
+  # 2026-11-20). O ERO não é comparável na captura, que é química ([F280] p. 6, "890 m/s out of the OIM").
+  isp_s: {valor: 3900, fonte: "[F121] p. 4: \"the high Isp (3900 s on this example)\" (exemplo da esquerda)"}
+  isp_direita_s: {valor: 3900, premissa: P-119}   # a fonte não dá o Isp do exemplo da direita; usa-se o da esquerda
+  massa_inicial_kg: {valor: 6500, fonte: "[F22] slide 7: \"Approx 6.5 Tonnes (wet mass)\""}
+  # Lido como empuxo total dos 3 propulsores ativos ([F22] slide 8, "3 x active + 1 spare"), coerente com 3 × 250 mN de
+  # [F29] slide 6 ("4 x 250 mN"); a leitura é deste estudo (P-119).
+  empuxo_max_publicado_n: {valor: 0.75, fonte: "[F22] slide 8: \"Thrust Range = 0.13 – 0.75 N\"", premissa: P-119}
+  # Empuxos da varredura (N), com a massa acima: do máximo de [F22] para cima, para achar o empuxo em que o Δv calculado
+  # iguala o publicado. P-119.
+  empuxos_n: {valor: [1.5, 1.25, 1.2, 1.15, 1.1, 1.05, 1.0, 0.75], premissa: P-119}
+  casos:
+    esquerda:
+      nome: "Fig. 4, esquerda: empuxo constante, chegada com v infinito (captura química)"
+      partida: {valor: "2026-10-02", fonte: "[F121] p. 5, Fig. 4: \"Earth escape - 02 OCT 2026\""}
+      chegada: {valor: "2027-10-14", fonte: "[F121] p. 5, Fig. 4: \"Mars arrival - 14 OCT 2027\""}
+      vinf_partida_km_s: {valor: 2.23, fonte: "[F121] p. 5, Fig. 4: \"V∞ = 2.23 km/s\""}
+      vinf_chegada_km_s: {valor: 1.47, fonte: "[F121] p. 5, Fig. 4: \"V∞ = 1.47 km/s\""}
+      declinacao_partida_graus: {valor: 4.97, fonte: "[F121] p. 5, Fig. 4: \"δ = 4.97 deg\""}
+      declinacao_chegada_graus: {valor: -11.9, fonte: "[F121] p. 5, Fig. 4: \"δ = -11.9 deg\""}
+      dv_publicado_km_s: {valor: 2.59, fonte: "[F121] p. 5, Fig. 4: \"∆V = 2.59 km/s\"; p. 4: \"a significant SEP Delta-V (2.59 km/s)\""}
+    direita:
+      nome: "Fig. 4, direita: chegada com v infinito = 0, arco de voo livre entre dois arcos de empuxo"
+      partida: {valor: "2026-06-16", fonte: "[F121] p. 5, Fig. 4: \"Earth escape - 16 JUN 2026\""}
+      chegada: {valor: "2027-10-08", fonte: "[F121] p. 5, Fig. 4: \"Mars arrival - 08 OCT 2027\""}
+      vinf_partida_km_s: {valor: 2.08, fonte: "[F121] p. 5, Fig. 4: \"V∞ = 2.08 km/s\""}
+      vinf_chegada_km_s: {valor: 0.0, fonte: "[F121] p. 5, Fig. 4: \"V∞ = 0 km/s\""}
+      declinacao_partida_graus: {valor: -0.06, fonte: "[F121] p. 5, Fig. 4: \"δ = -0.06 deg\""}
+      dv_publicado_km_s: {valor: 5.94, fonte: "[F121] p. 4: \"arcs whose total Delta-V amounts to 5.94 km/s\"; p. 5, Fig. 4: \"SEP thrust arc 1 ∆V = 3.11 km/s\", \"∆V = 2.83 km/s\""}
+      dv_arcos_publicados_km_s: {valor: [3.11, 2.83], fonte: "[F121] p. 5, Fig. 4"}
+
+propulsores:
+  # Vida demonstrada por propulsor (kg de xenônio processado). O catálogo (config/eletrica.yaml) não muda aqui.
+  XIPS-25:
+    vida_kg:
+      valor: 158
+      fonte: "[F274] p. 4, Tab. 3: \"Xe throughput (kG) 4 40 114 158\" (teste de vida de 16 250 h, perfil de GEO); [F275] p. 1 dá \"about 170 kg\" para o mesmo teste"
+  XIPS-25 (87 kg):
+    # Variante de vida do XIPS-25 do catálogo (mesmo desempenho e massas): a vida avaliada a plena potência. O teste de
+    # vida [F274] processou 114 dos 158 kg a 2 kW; a 4,3 kW, o modelo de [F275] dá o limite em 134 kg e, com a margem
+    # padrão de 50 %, 87 kg. Carregada ao lado da base de 158 kg (P-121) até a decisão do Fabio.
+    base: XIPS-25
+    vida_kg:
+      valor: 87
+      fonte: "[F275] p. 10: \"the thruster should be rated at full power for about 87 kg\" (modelo CEX-2D a 4,3 kW: \"operate for 7270 hours and process 134 kg of xenon\", com 50 % de margem)"
+  NEXT-C:
+    # Fora do catálogo: avaliação em paralelo (decisão do Fabio, 2026-11-20). Ponto de potência máxima de [F276].
+    voo: "[F278] p. 2: \"On December 18, 2021, the NEXT-C system underwent its first activation in flight\" (DART; cerca de 2 h de operação)"
+    empuxo_n: {valor: 0.235, fonte: "[F276] p. 4, Tab. 1: \"1800 3.52 7.33 0.70 235 4155\" (V, A, kW de entrada da PPU, eficiência, mN, s)"}
+    isp_s: {valor: 4155, fonte: "[F276] p. 4, Tab. 1 (mesma linha)"}
+    potencia_w: {valor: 7330, fonte: "[F276] p. 4, Tab. 1: \"PPU Input Power ... 7.33\" kW"}
+    massa_propulsor_kg: {valor: 14.0, fonte: "[F276] p. 6: \"weighs approximately 14kg\""}
+    massa_ppu_kg: {valor: 35.0, fonte: "[F276] p. 8: \"The PPU weighs less than 35kg\" (o limite)"}
+    massa_alimentacao_kg: {valor: 11.4, premissa: P-047}   # sem número publicado; análogo do NSTAR [F118], como no XIPS-25
+    vida_kg:
+      valor: 918
+      fonte: "[F277] p. 2: \"processed 918 kg of xenon propellant\" (NEXT, teste de longa duração, propulsor de engenharia; a análise do NEXT-C em [F276] p. 7 dá \"a conservative minimum\" de 700 kg)"
+
+operacao:
+  # Fração do tempo com empuxo nos trechos com empuxo, aplicada como redução do empuxo médio (heliocêntrico) e aumento
+  # do tempo (espirais). Valor do Dawn, aplicado a este orbitador: P-120.
+  ciclo_trabalho: {valor: 0.95, fonte: "[F279] p. 611: \"Dawn's interplanetary trajectory is designed with a duty cycle of 95%\"", premissa: P-120}
+  # Rodízio: propulsores além dos ativos, para que o xenônio por propulsor fique abaixo da vida demonstrada; cada um com a
+  # sua PPU; as reservas (config/eletrica.yaml, P-047) não processam xenônio. P-121.
+  rodizio_ppu_por_propulsor: {valor: true, premissa: P-121}
+
+missao:
+  # Faixas da otimização da família 1. P-122.
+  partida_terra: {valor: {min: "2028-09-01", max: "2029-01-31"}, premissa: P-122}
+  ida_dias: {valor: {min: 200, max: 1100}, premissa: P-122}
+  # A espiral de descida começa na esfera de influência, com v∞ = 0 (a mesma hipótese da rota B: espiral desde o raio de Hill).
+  vinf_chegada_marte_km_s: {valor: 0.0, premissa: P-122}
+  # Retorno: partida de Marte com v∞ = 0, no máximo `espera_retorno_dias` depois da partida mais cedo; chegada à Terra
+  # com v∞ livre até o máximo (a cápsula entra direto; sem fonte para o limite).
+  espera_retorno_dias: {valor: 400, premissa: P-122}
+  volta_dias: {valor: {min: 150, max: 900}, premissa: P-122}
+  vinf_chegada_terra_max_km_s: {valor: 5.0, premissa: P-122}
+  # v∞ de partida até o maior C3 da curva publicada do Falcon Heavy (config/lancadores.yaml, [F79]: 20 km²/s²).
+  lancador: "Falcon Heavy (descartável)"
+  # Número de propulsores ativos varridos, por propulsor. P-122.
+  # Estendidos para baixo (decisão do Fabio, 2026-11-20): o menor n da faixa anterior já fechava.
+  n_ativos: {valor: {XIPS-25: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "XIPS-25 (87 kg)": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], NEXT-C: [1, 2, 3, 4, 5, 6, 7]}, premissa: P-122}
+  # Uma cadeia de n decrescente por propulsor e órbita, em ordem fixa (decisão do Fabio, 2026-11-22). Uma cadeia longa
+  # demais para um job do CI é dividida em blocos encadeados: cada bloco continua das soluções gravadas pelos anteriores.
+  # O tamanho do bloco faz parte do caminho da cadeia: a segunda passada de um bloco não vê os n dos blocos seguintes, e o
+  # resultado pode diferir do de uma cadeia contínua (vale o dos blocos, o mesmo no local e no CI). Tamanho do bloco por propulsor (valores de n por job). P-122.
+  # Fora do CI desde 2026-11-24 (decisão do Fabio: verificar, não reotimizar): os blocos rodam só na otimização local.
+  bloco_cadeia: {valor: {XIPS-25: 6, "XIPS-25 (87 kg)": 6, NEXT-C: 7}, premissa: P-122}
+  altitudes_km: {valor: [380, 814], fonte: "results/familia1/missao.yaml (as duas órbitas de encontro da família 1)"}
+  iteracoes_fecho: {valor: 4, premissa: P-122}
+  # Partida a frio do otimizador (sf.viabilizar e depois SLSQP com as datas fixas): data de partida da ida e durações
+  # tentadas, em ordem; a volta parte na partida mais cedo de Marte. P-122.
+  partida_frio: {valor: "2028-11-24", premissa: P-122}
+  duracoes_frio_ida_dias: {valor: [600, 700, 800, 500, 900, 1000], premissa: P-122}
+  duracoes_frio_volta_dias: {valor: [400, 500, 600, 300, 700, 800], premissa: P-122}
+
+conclusoes:
+  # Conclusões gravadas no arquivo comparado pelo CI (decisão do Fabio, 2026-11-20): três estados, "sim", "não" ou
+  # "indeterminado" (dentro da banda), para que o ruído entre CPUs nos mínimos locais não vire a conclusão. P-123.
+  margem_minima: {valor: 0.0, premissa: P-123}          # o critério de fecho (margem no Falcon Heavy ≥ 0)
+  banda_margem: {valor: 0.05, premissa: P-123}          # ± 5 pontos percentuais
+  banda_prazo_dias: {valor: 30, premissa: P-123}        # ± 30 dias em torno do último lançamento do MAV
+
+estocagem_mav:
+  # Estação das tempestades globais de poeira, em Ls (graus). P-124.
+  estacao_tempestades_ls: {valor: [180, 340], premissa: P-124}
+  fontes:
+    - "[F281] p. 1: \"perihelion dust storm season (10-20 K for LS =200°-340°)\""
+    - "[F282] p. 8, Tab. 1: inícios das tempestades globais entre Ls 185,0 (MY 25) e 310,0 (MY −16)"
+    - "[F263] PDF p. 1: \"The results showed <0.1% mass loss in all samples, a sign of vacuum compatibility\" (só a fase de vácuo)"
+    - "[F35] PDF p. 1: \"After residing on the surface for another year, the MAV will carry a payload of samples into orbit\""
+    - "[F283] PDF p. 6: \"a couple of the motors will also undergo a simulated aging period to test any effects of long term storage\""
