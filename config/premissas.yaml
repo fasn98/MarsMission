@@ -1510,4 +1510,40 @@ premissas:
       acima do aceito da P-118. Por isso a margem no arquivo comparado ("pelo menos", P-123) é limite inferior quanto ao
       otimizador local, a menos de cerca de (1 + margem) × este valor quanto ao descasamento.
     status: NÃO VALIDADA
+  - id: P-127
+    nome: parada_do_newton_de_kepler
+    valor: {tol: 1.0e-13, piso: 1.0e-12, residuo_relativo_no_piso: 1.0e-12}
+    unidade: adimensional (passo relativo a max(1, abs(χ)); resíduo relativo à soma dos módulos dos termos)
+    uso: nenhum desde 2026-11-26 (revertida pelo Fabio; ver a errata na justificativa, em config/premissas.yaml, e a P-128)
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-26 como NÃO VALIDADA. SEM FONTE: piso e resíduo são escolha, não fonte. O Newton
+      da equação universal de Kepler [F11] para quando abs(passo) ≤ tol · max(1, abs(χ)) (tol de 1e-13, o valor que o código
+      já usava, registrado aqui só agora) ou quando o passo relativo já passou pelo piso e deixou de diminuir: daí em
+      diante ele é arredondamento, e o tol pode nunca ser atingido conforme a CPU (pytest da main em 86b39e9). O piso
+      fica acima do ruído observado no caso que falhou: último passo relativo de 3,4e-14 na órbita 20 de
+      tests/test_sims_flanagan.py (notebook, i5-13420H, 2026-11-26), cerca de 30 vezes abaixo do piso. Na parada pelo
+      piso, o resíduo de f tem de ficar ≤ piso · Σ abs(termos) (NaN reprova); senão o Newton falha.
+      Errata (2026-11-26, revertida pelo Fabio): a causa que justificava o piso estava errada. Dizia-se que o último passo
+      do Newton na órbita 20 ficava no arredondamento, perto do tol, e que o tol podia nunca ser atingido conforme a CPU.
+      A medição que derrubou isso: o ruído de f nessa órbita é de cerca de 5e-16 relativo (notebook, i5-13420H,
+      2026-11-26), longe do tol e do piso; e o CI do PR #76 (AMD EPYC 9V74) falhou com o piso. A causa real: na órbita 20
+      (elíptica, dt = −230 d, cerca de 1,5 volta), o chute inicial cai longe da raiz e o Newton sem proteção salta de forma
+      caótica; com o chute perturbado em ~1e-15, ele levou de 16 a 522 iterações (mediana 45), às vezes mais que as 200 do
+      max_iter. O piso e esta premissa saíram do código; a parada vigente é a do Newton protegido por bisseção (P-128).
+    status: NÃO VALIDADA
+  - id: P-128
+    nome: newton_de_kepler_com_intervalo
+    valor: {tol: 1.0e-13, residuo_relativo_no_intervalo_esgotado: 1.0e-12}
+    unidade: adimensional (passo relativo a max(1, abs(χ)); resíduo relativo à soma dos módulos dos termos)
+    uso: src/orbital/kepler.py (propagar e propagar_lote; por eles, orbital.sims_flanagan e quem propaga por Kepler)
+    justificativa: >
+      Aprovada pelo Fabio em 2026-11-27 como NÃO VALIDADA. SEM FONTE: tol e resíduo são escolha, não fonte. O Newton da equação
+      universal de Kepler [F11] é protegido por bisseção num intervalo que contém a raiz (f(0) = −√μ·dt e df/dχ = r > 0,
+      então a raiz é única). Ele para quando abs(passo) ≤ tol · max(1, abs(χ)) (tol de 1e-13, o valor que o código já
+      usava antes da P-127) ou quando o intervalo não encolhe mais (extremos vizinhos em ponto flutuante); nessa segunda
+      parada, o resíduo de f tem de ficar ≤ resíduo · Σ abs(termos) (NaN reprova), senão o Newton falha. O resíduo é o
+      mesmo valor da conferência da P-127 aprovada em 2026-11-26. Observado com tol = 0 (notebook, i5-13420H, 2026-11-26):
+      maior resíduo relativo de 1,2e-14 em 1 304 paradas pelo intervalo esgotado, margem de cerca de 80 vezes até o
+      limite.
+    status: NÃO VALIDADA
 
