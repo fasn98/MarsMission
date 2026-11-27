@@ -1537,12 +1537,13 @@ premissas:
     unidade: adimensional (passo relativo a max(1, abs(χ)); resíduo relativo à soma dos módulos dos termos)
     uso: src/orbital/kepler.py (propagar e propagar_lote; por eles, orbital.sims_flanagan e quem propaga por Kepler)
     justificativa: >
-      PROPOSTA, aguardando a aprovação do Fabio. SEM FONTE: tol e resíduo são escolha, não fonte. O Newton da equação
+      Aprovada pelo Fabio em 2026-11-27 como NÃO VALIDADA. SEM FONTE: tol e resíduo são escolha, não fonte. O Newton da equação
       universal de Kepler [F11] é protegido por bisseção num intervalo que contém a raiz (f(0) = −√μ·dt e df/dχ = r > 0,
       então a raiz é única). Ele para quando abs(passo) ≤ tol · max(1, abs(χ)) (tol de 1e-13, o valor que o código já
       usava antes da P-127) ou quando o intervalo não encolhe mais (extremos vizinhos em ponto flutuante); nessa segunda
       parada, o resíduo de f tem de ficar ≤ resíduo · Σ abs(termos) (NaN reprova), senão o Newton falha. O resíduo é o
       mesmo valor da conferência da P-127 aprovada em 2026-11-26. Observado com tol = 0 (notebook, i5-13420H, 2026-11-26):
-      resíduo relativo de até 1,2e-14 em 1 304 paradas pelo intervalo esgotado, cerca de 80 vezes abaixo do limite.
+      maior resíduo relativo de 1,2e-14 em 1 304 paradas pelo intervalo esgotado, margem de cerca de 80 vezes até o
+      limite.
     status: NÃO VALIDADA
 
