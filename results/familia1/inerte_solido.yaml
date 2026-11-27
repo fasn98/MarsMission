@@ -7,7 +7,7 @@ motores:
   propelente_kg: 12.301425888
   inerte_kg: 5.130130044
   pagina_pdf: 78
-  residuo_fator: 1.4957055401252406
+  residuo_fator: 1.495705540125239
   inerte_sobre_propelente: 0.4170353982300885
   comprimento_m: 0.687578
   diametro_m: 0.20472400000000002
@@ -17,7 +17,7 @@ motores:
   propelente_kg: 14.42423832
   inerte_kg: 4.173050079999999
   pagina_pdf: 79
-  residuo_fator: 1.0882187724983214
+  residuo_fator: 1.0882187724983203
   inerte_sobre_propelente: 0.28930817610062887
   comprimento_m: 0.506984
   diametro_m: 0.2286
@@ -27,7 +27,7 @@ motores:
   propelente_kg: 32.93080824
   inerte_kg: 8.98112952
   pagina_pdf: 80
-  residuo_fator: 1.313201791935667
+  residuo_fator: 1.3132017919356658
   inerte_sobre_propelente: 0.27272727272727276
   comprimento_m: 0.5715
   diametro_m: 0.310896
@@ -37,7 +37,7 @@ motores:
   propelente_kg: 41.23154916
   inerte_kg: 5.80598272
   pagina_pdf: 81
-  residuo_fator: 0.7251936312034902
+  residuo_fator: 0.7251936312034896
   inerte_sobre_propelente: 0.1408140814081408
   comprimento_m: 0.637794
   diametro_m: 0.344678
@@ -47,7 +47,7 @@ motores:
   propelente_kg: 79.6054662
   inerte_kg: 14.016005159999999
   pagina_pdf: 82
-  residuo_fator: 1.10397640106378
+  residuo_fator: 1.1039764010637796
   inerte_sobre_propelente: 0.17606837606837605
   comprimento_m: 0.801878
   diametro_m: 0.38201599999999997
@@ -57,7 +57,7 @@ motores:
   propelente_kg: 69.6264334
   inerte_kg: 9.434721920000001
   pagina_pdf: 83
-  residuo_fator: 0.8162671619080997
+  residuo_fator: 0.8162671619080989
   inerte_sobre_propelente: 0.13550488599348537
   comprimento_m: 0.6873239999999999
   diametro_m: 0.44195999999999996
@@ -67,7 +67,7 @@ motores:
   propelente_kg: 112.26411900000001
   inerte_kg: 13.3809758
   pagina_pdf: 84
-  residuo_fator: 0.8282996215527813
+  residuo_fator: 0.8282996215527805
   inerte_sobre_propelente: 0.11919191919191918
   comprimento_m: 0.981456
   diametro_m: 0.44195999999999996
@@ -87,7 +87,7 @@ motores:
   propelente_kg: 199.85281144
   inerte_kg: 18.32513296
   pagina_pdf: 86
-  residuo_fator: 0.757190058293209
+  residuo_fator: 0.7571900582932086
   inerte_sobre_propelente: 0.09169314571039491
   comprimento_m: 1.0287
   diametro_m: 0.6223
@@ -107,7 +107,7 @@ motores:
   propelente_kg: 230.6517354
   inerte_kg: 38.782150200000004
   pagina_pdf: 88
-  residuo_fator: 1.4493193551249635
+  residuo_fator: 1.4493193551249628
   inerte_sobre_propelente: 0.168141592920354
   comprimento_m: 0.8382
   diametro_m: 0.6604
@@ -127,7 +127,7 @@ motores:
   propelente_kg: 231.96715336
   inerte_kg: 30.662846239999997
   pagina_pdf: 90
-  residuo_fator: 1.141336568977035
+  residuo_fator: 1.1413365689770345
   inerte_sobre_propelente: 0.1321861556511537
   comprimento_m: 0.84074
   diametro_m: 0.66294
@@ -137,7 +137,7 @@ motores:
   propelente_kg: 333.66256944
   inerte_kg: 27.48769944
   pagina_pdf: 91
-  residuo_fator: 0.7930278589187506
+  residuo_fator: 0.793027858918751
   inerte_sobre_propelente: 0.08238172920065252
   comprimento_m: 1.23698
   diametro_m: 0.69342
@@ -147,7 +147,7 @@ motores:
   propelente_kg: 337.83561951999997
   inerte_kg: 29.982457639999996
   pagina_pdf: 92
-  residuo_fator: 0.8574999772920198
+  residuo_fator: 0.8574999772920194
   inerte_sobre_propelente: 0.08874865735767991
   comprimento_m: 1.2191999999999998
   diametro_m: 0.69342
@@ -157,7 +157,7 @@ motores:
   propelente_kg: 505.12049663999994
   inerte_kg: 37.69352844
   pagina_pdf: 94
-  residuo_fator: 0.8132089571288942
+  residuo_fator: 0.8132089571288945
   inerte_sobre_propelente: 0.07462284482758622
   comprimento_m: 1.50622
   diametro_m: 0.762
@@ -167,7 +167,7 @@ motores:
   propelente_kg: 590.8041010000001
   inerte_kg: 38.46463552
   pagina_pdf: 95
-  residuo_fator: 0.7435412139653349
+  residuo_fator: 0.7435412139653352
   inerte_sobre_propelente: 0.06510556621880997
   comprimento_m: 1.49352
   diametro_m: 0.762
@@ -177,7 +177,7 @@ motores:
   propelente_kg: 590.8041010000001
   inerte_kg: 41.09547144
   pagina_pdf: 96
-  residuo_fator: 0.794396627184662
+  residuo_fator: 0.7943966271846623
   inerte_sobre_propelente: 0.06955854126679462
   comprimento_m: 1.63322
   diametro_m: 0.762
@@ -187,7 +187,7 @@ motores:
   propelente_kg: 631.4006208
   inerte_kg: 42.50160788
   pagina_pdf: 97
-  residuo_fator: 0.784189714475195
+  residuo_fator: 0.7841897144751947
   inerte_sobre_propelente: 0.0673132183908046
   comprimento_m: 1.6840199999999999
   diametro_m: 0.762
@@ -253,14 +253,14 @@ motores:
   diametro_m: 0.9652
   residuo_comprimento_fator: 1.0101349257355714
 ajuste:
-  a: 0.5907242287047155
-  b: 0.7008520255155859
-  erro_padrao_b: 0.04087513767970303
+  a: 0.5907242287047165
+  b: 0.7008520255155857
+  erro_padrao_b: 0.040875137679703015
   n: 25
   faixa_propelente_kg:
   - 12.301425888
   - 1285.934454
-  rms_ln: 0.26736192413043125
+  rms_ln: 0.26736192413043114
   fator_rms: 1.3065132194323368
   fator_max: 1.6455365991253839
   proporcional:
@@ -270,17 +270,17 @@ ajuste:
 comparacao_msr:
 - estagio: estágio 1
   propelente_kg: 216
-  catalogo_motor_kg: 25.555914347228295
+  catalogo_motor_kg: 25.55591434722831
   msr_motor_kg: 46
   msr_nao_propulsivo_kg: 14
   msr_estagio_kg: 60
   p019_estagio_kg: 86.52100840336134
   p111_estagio_kg: 59.777777777777786
   lei_A_estagio_kg: 60.0
-  lei_B_estagio_kg: 59.77777777777778
+  lei_B_estagio_kg: 59.777777777777786
 - estagio: estágio 2
   propelente_kg: 54.4
-  catalogo_motor_kg: 9.722608273388104
+  catalogo_motor_kg: 9.722608273388111
   msr_motor_kg: 14
   msr_nao_propulsivo_kg: 34
   msr_estagio_kg: 48
@@ -312,9 +312,9 @@ casos:
   - 14.0
   - 34.0
   c:
-  - 1.0632886834418442
-  - 0.8550201704375014
-  b: 0.7008520255155859
+  - 1.0632886834418456
+  - 0.8550201704375022
+  b: 0.7008520255155857
   verificacao:
     fecha: false
     inertes_kg:
@@ -327,41 +327,59 @@ casos:
     - 1.0000000000000004
     - 1.0500000000000005
   sem_margem:
-    escala: 1.0427882754873512
-    capacidade_m_s: 4054.246420685744
-    glom_kg: 407.8327015912978
+    escala: 1.0427882754877658
+    capacidade_m_s: 4054.246420686461
+    glom_kg: 407.83270159142717
     propelente_kg:
-    - 225.24226750526785
-    - 56.727682186511906
+    - 225.2422675053574
+    - 56.72768218653446
     inertes_kg:
-    - 61.37079059554365
-    - 48.49196130397441
+    - 61.37079059555686
+    - 48.49196130397845
     voo:
       fecha: true
-    comprimento_m: 2.748898464827527
-    folga_465_com_deck_m: 0.2692029414992798
-    folga_465_sem_deck_m: 0.42311598497754055
-    folga_45_com_deck_m: -0.0024492324137637134
+    comprimento_m: 2.748898464827999
+    folga_465_com_deck_m: 0.269202941499044
+    folga_465_sem_deck_m: 0.42311598497730474
+    folga_45_com_deck_m: -0.0024492324139995247
+    termico:
+      temperatura_c: -40.0
+      potencia_w: 17.517124753193666
+      dias: 285
+      energia_kwh: 119.81713331184466
+      rhu_w: 0.74
+      ano: 2030
+      rhus: 24
+      rhu_teto_new_frontiers: 43.0
   com_margem:
-    escala: 1.3011131950878383
-    capacidade_m_s: 4459.6710627555085
-    glom_kg: 488.06377802507774
+    escala: 1.3011131950883557
+    capacidade_m_s: 4459.671062756245
+    glom_kg: 488.06377802523775
     propelente_kg:
-    - 281.0404501389731
-    - 70.7805578127784
+    - 281.04045013908484
+    - 70.78055781280655
     inertes_kg:
-    - 69.31918687911146
-    - 50.923583194214814
+    - 69.31918687912687
+    - 50.92358319421953
     voo:
       fecha: false
     voo_antecipada:
       fecha: false
     voo_com_guinada:
       fecha: true
-    comprimento_m: 3.035485686171221
-    folga_465_com_deck_m: 0.12590933082743283
-    folga_465_sem_deck_m: 0.27982237430569357
-    folga_45_com_deck_m: -0.1457428430856107
+    comprimento_m: 3.035485686171782
+    folga_465_com_deck_m: 0.1259093308271524
+    folga_465_sem_deck_m: 0.2798223743054131
+    folga_45_com_deck_m: -0.14574284308589114
+    termico:
+      temperatura_c: -40.0
+      potencia_w: 20.302303760470796
+      dias: 285
+      energia_kwh: 138.86775772162025
+      rhu_w: 0.74
+      ano: 2030
+      rhus: 28
+      rhu_teto_new_frontiers: 43.0
 comprimento:
   gerado_por: tools/comprimento_solido.py
   status: NÃO VALIDADO
@@ -418,8 +436,8 @@ comprimento:
 vies:
   variante: A (nível do motor pelo [F269])
   fecha_na_busca: true
-  fator_isp: 1.0082492547415123
-  dv_vies_m_s: 32.82159985492672
+  fator_isp: 1.0082492547414639
+  dv_vies_m_s: 32.82159985473436
   voo:
     fecha: true
   corrigida:
@@ -429,41 +447,41 @@ vies:
       - 1.0000000000000004
       - 1.0500000000000005
     sem_margem:
-      escala: 1.0230461770219337
-      capacidade_m_s: 4052.9046410665287
-      glom_kg: 401.6712654306809
+      escala: 1.0230461770206003
+      capacidade_m_s: 4052.904641063965
+      glom_kg: 401.6712654302646
       propelente_kg:
-      - 220.97797423673768
-      - 55.65371202999319
+      - 220.97797423644965
+      - 55.653712029920655
       inertes_kg:
-      - 60.740454212450125
-      - 48.2991249514999
+      - 60.74045421240743
+      - 48.29912495148684
       voo:
         fecha: true
-      comprimento_m: 2.7263930212112797
-      folga_465_com_deck_m: 0.28045566330740357
-      folga_465_sem_deck_m: 0.4343687067856643
-      folga_45_com_deck_m: 0.008803489394360042
+      comprimento_m: 2.7263930212097565
+      folga_465_com_deck_m: 0.2804556633081652
+      folga_465_sem_deck_m: 0.4343687067864259
+      folga_45_com_deck_m: 0.008803489395121655
     com_margem:
-      escala: 1.2747207141639336
-      capacidade_m_s: 4458.195105174489
-      glom_kg: 479.89707096642724
+      escala: 1.2747207141613415
+      capacidade_m_s: 4458.195105170483
+      glom_kg: 479.89707096562483
       propelente_kg:
-      - 275.33967425940966
-      - 69.34480685051798
+      - 275.33967425884975
+      - 69.34480685037697
       inertes_kg:
-      - 68.53033656404247
-      - 50.682253292457105
+      - 68.53033656396477
+      - 50.68225329243333
       voo:
         fecha: false
       voo_antecipada:
         fecha: false
       voo_com_guinada:
         fecha: true
-      comprimento_m: 3.0068213669841546
-      folga_465_com_deck_m: 0.14024149042096612
-      folga_465_sem_deck_m: 0.29415453389922686
-      folga_45_com_deck_m: -0.1314106834920774
+      comprimento_m: 3.006821366981333
+      folga_465_com_deck_m: 0.140241490422377
+      folga_465_sem_deck_m: 0.2941545339006377
+      folga_45_com_deck_m: -0.13141068349066654
     lei: A (nível do motor pelo [F269]), corrigida pelo viés
 orbitador_b:
   propulsor: XIPS-25

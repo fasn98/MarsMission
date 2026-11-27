@@ -115,9 +115,9 @@ jobs:
     uses: ./.github/workflows/regeneracao_parte.yml
     with: {parte: se_caso_publicado, entradas: "base"}
   se_verifica:
-    needs: [base, mav_familia1, se_caso_publicado]
+    needs: [base, mav_familia1, se_caso_publicado, inerte_solido]
     uses: ./.github/workflows/regeneracao_parte.yml
-    with: {parte: se_verifica, entradas: "base mav_familia1 se_caso_publicado"}
+    with: {parte: se_verifica, entradas: "base mav_familia1 se_caso_publicado inerte_solido"}
   regeneracao:
     needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_verifica]
     uses: ./.github/workflows/regeneracao_parte.yml

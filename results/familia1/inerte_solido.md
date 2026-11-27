@@ -96,6 +96,17 @@ Fator comum no Isp dos dois estágios que leva o MAV do MSR na variante A à ór
 | sem margem (o menor que chega) | 1,023 | 4 053 | 401,7 | 221,0 + 55,7 | 60,7 + 48,3 | sim | 2,73 | +0,280 | +0,434 | +0,009 |
 | com a margem da P-014 na capacidade | 1,275 | 4 458 | 479,9 | 275,3 + 69,3 | 68,5 + 50,7 | não | 3,01 | +0,140 | +0,294 | −0,131 |
 
+## Aquecimento na superfície (P-027), variante nominal
+
+A massa do sólido tem uma só fonte, esta lei (errata da issue #77, 2026-11-27): a estocagem do MAV em results/familia1/diagnostico_orbitador_so_eletrico.md lê daqui o aquecimento do sólido. Modelo da P-027 ([F57]), o mesmo de results/familia1/mavs.md (orbital.mav.aquecimento): a potência escala com a diferença de temperatura até o ambiente do igloo e com a massa de propelente elevada a 2/3, no mínimo fora de operação de [F57]; RHUs de [F155] no ano do lançamento do MAV.
+
+| Caso, 380 km | Propelente (kg) | Temperatura mantida (°C) | Aquecimento (W) | Dias na superfície | Energia (kWh) | RHUs equivalentes |
+| :- | -: | -: | -: | -: | -: | -: |
+| Lei A, sem margem (o menor que chega) | 282,0 | −40 | 17,5 | 285 | 120 | 24 de 0,74 W em 2030 |
+| Lei A, com a margem da P-014 na capacidade | 351,8 | −40 | 20,3 | 285 | 139 | 28 de 0,74 W em 2030 |
+
+Para comparar: [F155] p. 2 registra um teto de 43 RHUs oferecido a um edital do New Frontiers, não o tamanho do inventário.
+
 ## Comprimento (P-108 revista, aplicada)
 
 P-108 revista, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA; o ajuste está em results/familia1/comprimento_solido.md.

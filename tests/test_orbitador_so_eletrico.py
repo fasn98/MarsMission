@@ -71,7 +71,8 @@ def test_regeneracao_verifica_sem_reotimizar():
     import confere_regeneracao as cr
     assert cr.ORBITADOR_SO_ELETRICO == [["tools/orbitador_so_eletrico.py", "--caso-publicado"], ["tools/orbitador_so_eletrico.py", "--verifica"]]
     ps = yaml.safe_load((RAIZ / "tools" / "regeneracao_partes.yaml").read_text(encoding="utf-8"))["partes"]
-    assert ps["se_verifica"] == {"depende_de": ["base", "mav_familia1", "se_caso_publicado"], "ferramentas": ["orbitador_so_eletrico --verifica"]}
+    # inerte_solido: a estocagem lê dali o aquecimento do sólido (errata da issue #77, 2026-11-27)
+    assert ps["se_verifica"] == {"depende_de": ["base", "mav_familia1", "se_caso_publicado", "inerte_solido"], "ferramentas": ["orbitador_so_eletrico --verifica"]}
     assert not any("--bloco" in f for p in ps.values() for f in p["ferramentas"])
     ms = ler("config/orbitador_so_eletrico.yaml")["missao"]
     for h in ms["altitudes_km"]["valor"]:

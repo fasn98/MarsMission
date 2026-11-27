@@ -27,7 +27,7 @@ Propelente, Isp, tempos de queima e empuxos médios publicados ([F34] PDF p. 4; 
 
 ## Comparação lado a lado
 
-| Grandeza | Sólido, 380 km, sem margem (o menor que chega) | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | Sólido, 814 km | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | Hipergólico 4 × 164:1, 380 km, sem margem | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | Hipergólico 4 × 164:1, 814 km, sem margem |
+| Grandeza | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituída pela P-113; errata da issue #77) | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituída pela P-113; errata da issue #77) | Sólido, 814 km | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | Hipergólico 4 × 164:1, 380 km, sem margem | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | Hipergólico 4 × 164:1, 814 km, sem margem |
 | :- | -: | -: | -: | -: | -: | -: | -: |
 | Fecha | sim | não simulado | não | sim | sim | sim | sim |
 | Δv (m/s) | 4 050 (capacidade ideal) | 4 455 (capacidade ideal) | — | 4 553 (de projeto) | 4 139 (de projeto) | 4 715 (de projeto) | 4 287 (de projeto) |
@@ -52,6 +52,8 @@ Alvo de folga: +0,05 m. Limites deitado: sólido em Ø 0,57 m, 3,184 m sem deck 
 **Hipergólico:** Ø 0,72 m é o menor da grade de diâmetros que contém as quatro saídas com parede (results/etapa7.2/bocais_alternativas.md); o mínimo contínuo é menor. A versão sem margem tira a margem só do MAV: o Δv de 100 × 100 km é o do veículo com margem (empuxo/peso menor, conservador), e a massa de entrada desconta só a diferença do GLOM, sem a da energia de aquecimento. Os números diferem dos da rota B (results/etapa7.2/rotas_mav.md) porque aqui entra a perda gravitacional do PR #55, e porque a rota B usou 2 × 164:1 em Ø 0,60 m.
 
 **Como cada Δv foi obtido:** o sólido é dimensionado pela simulação da subida (queima até esgotar, costa e 2º estágio) até a circular de encontro, e a margem da P-014 entra sobre a capacidade ideal; o hipergólico usa o Δv de 100 × 100 km da simulação do PR #55 com o empuxo/peso dele, mais a transferência e o déficit de rotação, com a margem da P-014. A massa por área do sólido troca no lander o GLOM do hipergólico pelo do sólido, dividido pela razão pousada/entrada (P-018); a energia do aquecimento e o seu hardware não entram nessa troca.
+
+**Errata (2026-11-27, issue #77): as colunas do sólido a 380 km estão substituídas pela P-113.** A conclusão vigente da família 1 (results/etapa7.2/portao_mav.md, portão de 2026-11-12) dimensiona o sólido pela lei A da P-113 (results/familia1/inerte_solido.md), não pelo inerte proporcional da P-111 destas colunas; a massa do sólido tem agora uma só fonte, aquela lei, e a estocagem do MAV (results/familia1/diagnostico_orbitador_so_eletrico.md) lê de lá o aquecimento do sólido. Estas colunas ficam como estavam, para comparação e para as ferramentas que estudam a própria P-111 (tools/ruido_subida.py, tools/familia1_465.py); o hipergólico não muda.
 
 ## Térmico e estocagem
 

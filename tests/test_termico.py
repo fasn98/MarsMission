@@ -38,3 +38,21 @@ def test_cruzeiro_e_amostras():
     assert cz["fracao_do_srl_passivo"] == pytest.approx(cz["rhu_w"] / v(C["cruzeiro"]["srl_perda_passiva_max_w"]), rel=1e-12)
     am = r["amostras"]
     assert am["excesso_k"] == pytest.approx(am["mav_c"] - am["aft_c"])
+
+
+def test_aquecimento_do_solido_tem_uma_so_fonte():
+    """Errata da issue #77: o aquecimento do MAV sólido vem da lei nominal da P-113 (results/familia1/inerte_solido.yaml), com
+    a mesma conta (orbital.mav.aquecimento) do hipergólico e das colunas da P-111 em results/familia1/mavs.yaml."""
+    from orbital.mav import aquecimento
+    aq, tf = ler("config/mav_propulsao.yaml")["aquecimento"], ler("config/familia1.yaml")["termico"]
+    mv, ins = ler("results/familia1/mavs.yaml"), ler("results/familia1/inerte_solido.yaml")
+    nom = next(c for c in ins["casos"] if c["lei"] == ins["variante_nominal"])
+    sol = [(nom[k]["termico"], sum(nom[k]["propelente_kg"])) for k in ("sem_margem", "com_margem")]
+    p111 = [(x["termico"], sum(x["propelente_kg"]) if isinstance(x["propelente_kg"], list) else x["propelente_kg"])
+            for t in ("solido", "hipergolico") for x in mv[t] if "termico" in x]
+    assert len(sol) == 2 and len(p111) >= 3
+    for t, m in sol + p111:
+        assert aquecimento(aq, tf, t["temperatura_c"], m, t["ano"], t["dias"]) == pytest.approx(t, rel=1e-12)
+    # o sólido da P-113 tem menos propelente que o da P-111 com margem, logo menos aquecimento
+    com_p111 = next(x for x in mv["solido"] if "termico" in x and "com a margem" in x["rotulo"])
+    assert nom["com_margem"]["termico"]["potencia_w"] < com_p111["termico"]["potencia_w"]

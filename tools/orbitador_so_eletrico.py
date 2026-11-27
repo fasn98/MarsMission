@@ -838,15 +838,22 @@ def escreve(casos, fam):
 
 def estocagem_mav(fam):
     """Estocagem do MAV na superfície (decisão do Fabio, 2026-11-20, item 6): do pouso do lander ao lançamento do MAV, com
-    o aquecimento de results/familia1/mavs.yaml (o mesmo modelo da P-027, independente do tempo), a energia, os RHUs no ano
-    do lançamento ([F155]) e a longitude solar Ls nas duas pontas (orbital.energia.geometria_marte)."""
+    o aquecimento (o mesmo modelo da P-027, independente do tempo), a energia, os RHUs no ano do lançamento ([F155]) e a
+    longitude solar Ls nas duas pontas (orbital.energia.geometria_marte). O sólido vem da sua fonte única, a lei nominal da
+    P-113 (results/familia1/inerte_solido.yaml); o hipergólico, de results/familia1/mavs.yaml. As linhas do sólido da P-111
+    (mavs.yaml) ficam na tabela, marcadas como substituídas, para comparação (errata da issue #77, 2026-11-27)."""
     from orbital import energia as en
     mv = ler("results/familia1/mavs.yaml")
+    ins = ler("results/familia1/inerte_solido.yaml")
     tf = ler("config/familia1.yaml")["termico"]
     ref = ler("results/etapa7.2/rotas_mav.yaml")["missao"]
     pouso = D(ref["chegada"])
-    mavs = [(x["rotulo"], x["altitude_km"], x["termico"]["temperatura_c"], x["termico"]["potencia_w"])
-            for t in ("solido", "hipergolico") for x in mv[t] if "termico" in x]
+    nom = next(c for c in ins["casos"] if c["lei"] == ins["variante_nominal"])
+    SUBST = " (P-111, substituído pela P-113; errata da issue #77)"
+    mavs = ([(f"Sólido, lei {nom['lei'][0]} da P-113, {ins['altitude_km']:.0f} km, {rot}", ins["altitude_km"], nom[k]["termico"]["temperatura_c"],
+              nom[k]["termico"]["potencia_w"]) for rot, k in (("sem margem", "sem_margem"), ("com a margem da P-014", "com_margem"))]
+            + [(x["rotulo"], x["altitude_km"], x["termico"]["temperatura_c"], x["termico"]["potencia_w"]) for x in mv["hipergolico"] if "termico" in x]
+            + [(x["rotulo"] + SUBST, x["altitude_km"], x["termico"]["temperatura_c"], x["termico"]["potencia_w"]) for x in mv["solido"] if "termico" in x])
     ls_pouso = en.geometria_marte(pouso.isoformat() + "T00:00:00")[0]
     ls_a, ls_b = ler("config/orbitador_so_eletrico.yaml")["estocagem_mav"]["estacao_tempestades_ls"]["valor"]
 
@@ -861,8 +868,8 @@ def estocagem_mav(fam):
         return n
     lanc_ref = D(ref["lancamento_mav_mais_cedo"])
     out = ["", "## Estocagem do MAV na superfície", "",
-           f"Pouso do lander em {pouso.isoformat()} (Ls {br(ls_pouso, 1)}°). Aquecimento de results/familia1/mavs.yaml "
-           "(modelo da P-027); RHU com a potência do ano do lançamento do MAV ([F155] p. 1: 0,90 W em 2014, menos 0,01 W por "
+           f"Pouso do lander em {pouso.isoformat()} (Ls {br(ls_pouso, 1)}°). Aquecimento (modelo da P-027) do sólido de "
+           "results/familia1/inerte_solido.yaml (lei nominal da P-113) e do hipergólico de results/familia1/mavs.yaml; RHU com a potência do ano do lançamento do MAV ([F155] p. 1: 0,90 W em 2014, menos 0,01 W por "
            "ano). Teto oferecido ao New Frontiers: " + br(v(tf["rhu_teto_new_frontiers"])) + " RHUs ([F155] p. 2).",
            f"Temporadas de tempestade global (Ls {ls_a}° a {ls_b}°, P-124) tocadas entre o pouso e o lançamento do MAV; na "
            f"missão de referência (MAV no lançamento mais cedo, {lanc_ref.isoformat()}): {temporadas(pouso, lanc_ref)}.",
@@ -886,6 +893,21 @@ def estocagem_mav(fam):
                 continue
             out.append(f"| {r['propulsor']} | {r['n_ativos']} | {br(h)} | {lanc.isoformat()} | {dias} | {br(ls, 1)} | {cache_temp[lanc]} | {rot} | "
                        f"{br(tc)} | {br(p, 1)} | {br(p * 24 * dias / 1000)} | {math.ceil(p / rhu_w)} |")
+    teto = br(v(tf["rhu_teto_new_frontiers"]))
+    out += ["", "### Errata (2026-11-27, issue #77): o sólido passou da P-111 para a P-113", "",
+            "- **O que estava escrito:** até o PR #74, esta seção lia o aquecimento dos dois sólidos de results/familia1/mavs.yaml, "
+            "com o inerte proporcional ao propelente da P-111 (as linhas marcadas \"substituído pela P-113\" na tabela acima). O "
+            f"relatório do ponto de parada de 2026-11-26 e o PR #74 concluíram daí que, com o teto de {teto} RHUs, nenhum dos dois "
+            "MAVs, com a margem da P-014, se mantinha aquecido só com RHUs na espera.",
+            "- **O erro:** a conclusão vigente da família 1 (results/etapa7.2/portao_mav.md, portão de 2026-11-12) usa para o sólido "
+            "a lei A da P-113 (results/familia1/inerte_solido.md), com outra massa de propelente; esta seção herdou de mavs.yaml o "
+            "modelo que não é o da conclusão.",
+            "- **O que muda:** o sólido vem agora da sua fonte única, a lei nominal da P-113 (results/familia1/inerte_solido.yaml), com "
+            "o mesmo modelo de aquecimento (orbital.mav.aquecimento); os RHUs vigentes do sólido são os das linhas \"lei A da "
+            "P-113\". As linhas da P-111 ficam só para comparação.",
+            "- **O que não muda:** o fecho a 380 km por propulsor (não lê os MAVs; usa results/familia1/missao.yaml e "
+            "results/etapa7.2/rotas_mav.yaml) e o hipergólico; a geometria do sólido com margem segue com as pendências do "
+            "próprio resultado (results/familia1/inerte_solido.md: \"Chega?\" e a energia que sobra na subida)."]
     return out
 
 

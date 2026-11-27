@@ -7,9 +7,21 @@ tools/confere_regeneracao.py).
 
 from __future__ import annotations
 
+import math
+
 from orbital import foguete as fg
 from orbital import isru
 from orbital.config import v
+
+
+def aquecimento(aq, tf, t_min, m_prop, ano, dias):
+    """Aquecimento do MAV na superfície (P-027, [F57]) e RHUs equivalentes no ano do lançamento ([F155]): a potência escala
+    com a diferença de temperatura até o ambiente do igloo e com a massa de propelente elevada a 2/3; o RHU tem a potência
+    de 2014 menos a queda anual. Uma só conta para os dois MAVs da família 1 (tools/mav_familia1.py e, para o sólido da
+    P-113, tools/inerte_solido.py; errata da issue #77)."""
+    rhu_w = v(tf["rhu_w_2014"]) - v(tf["rhu_queda_w_ano"]) * (ano - v(tf["rhu_ano_referencia"]))
+    p = v(aq["referencia_w"]) * (t_min - v(aq["t_ambiente_c"])) / (v(aq["t_referencia_c"]) - v(aq["t_ambiente_c"])) * (m_prop / v(aq["m_prop_referencia_kg"])) ** v(aq["expoente_area"])
+    return {"temperatura_c": t_min, "potencia_w": p, "dias": dias, "energia_kwh": p * 24 * dias / 1000, "rhu_w": rhu_w, "ano": ano, "rhus": math.ceil(p / rhu_w), "rhu_teto_new_frontiers": v(tf["rhu_teto_new_frontiers"])}
 
 
 def zbo(icfg, m_ch4, m_lox):
