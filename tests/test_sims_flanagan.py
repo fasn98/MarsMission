@@ -49,7 +49,7 @@ def test_newton_converge_com_o_chute_perturbado():
     """Órbita 20 do lote acima (elíptica, dt = −230 d, cerca de 1,5 volta): o chute inicial cai longe da raiz e o Newton sem
     proteção salta de forma caótica, com o número de iterações conforme o arredondamento; numa CPU do CI ele passou de 200
     iterações (main em 86b39e9). Aqui o dt é perturbado em ~1e-15 relativo, o que basta para mudar o caminho do Newton (com
-    o kepler.py da main em 86b39e9, cerca de 4 % dos casos escalares e o lote falham). Todos têm de convergir, e o estado
+    o kepler.py da main em 86b39e9, o lote e parte dos casos escalares falham). Todos têm de convergir, e o estado
     tem de ficar igual ao do dt sem perturbação dentro de 1e-12 (o efeito da perturbação no estado é ~1e-15)."""
     r, v_ = _orbitas(40, 1)
     dt = -230.0 * DIA * (1.0 + 1e-15 * np.random.default_rng(0).normal(size=5000))
@@ -127,6 +127,17 @@ def test_newton_falha_se_esgota_o_intervalo_com_residuo_grande(monkeypatch):
         kepler.propagar(GM_SOL, r[20], v_[20], -230.0 * DIA, tol=0.0)
     with pytest.raises(RuntimeError, match="esgotou o intervalo com resíduo acima do limite"):
         kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], -230.0 * DIA, tol=0.0)
+
+
+def test_newton_falha_se_f_nao_e_numero_na_busca_do_intervalo(monkeypatch):
+    """Caso construído: f NaN em todo χ. A busca do intervalo que contém a raiz tem de levantar o RuntimeError nos dois
+    propagadores, em vez de seguir com um intervalo não conferido."""
+    r, v_ = _orbitas(40, 1)
+    monkeypatch.setattr(kepler, "_termos", lambda *a: (float("nan"),) * 4)
+    with pytest.raises(RuntimeError, match="não achou o intervalo que contém a raiz"):
+        kepler.propagar(GM_SOL, r[20], v_[20], -230.0 * DIA)
+    with pytest.raises(RuntimeError, match="não achou o intervalo que contém a raiz"):
+        kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], -230.0 * DIA)
 
 
 def test_propagacao_continua_sem_empuxo_igual_a_kepler():

@@ -1514,7 +1514,7 @@ premissas:
     nome: parada_do_newton_de_kepler
     valor: {tol: 1.0e-13, piso: 1.0e-12, residuo_relativo_no_piso: 1.0e-12}
     unidade: adimensional (passo relativo a max(1, abs(χ)); resíduo relativo à soma dos módulos dos termos)
-    uso: nenhum desde 2026-11-26 (revertida pelo Fabio; ver a errata abaixo e a P-128)
+    uso: nenhum desde 2026-11-26 (revertida pelo Fabio; ver a errata na justificativa, em config/premissas.yaml, e a P-128)
     justificativa: >
       Aprovada pelo Fabio em 2026-11-26 como NÃO VALIDADA. SEM FONTE: piso e resíduo são escolha, não fonte. O Newton
       da equação universal de Kepler [F11] para quando abs(passo) ≤ tol · max(1, abs(χ)) (tol de 1e-13, o valor que o código

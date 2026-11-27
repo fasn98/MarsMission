@@ -71,7 +71,8 @@ ERRO_INTERVALO = "Newton da equação universal de Kepler não achou o intervalo
 
 
 def _intervalo(f, chi, dt, reserva, max_iter):
-    """[lo, hi] com f(lo) < 0 ≤ f(hi) (ou lo = hi = 0 com dt = 0): um extremo é 0 (f(0) = −√μ·dt) e o outro sai do chute,
+    """[lo, hi] que contém a raiz: f(lo) < 0 ≤ f(hi) com dt > 0, f(lo) ≤ 0 < f(hi) com dt < 0, lo = hi = 0 com dt = 0. Um
+    extremo é 0 (f(0) = −√μ·dt) e o outro sai do chute,
     dobrado até f mudar de sinal. Chute com o sinal errado ou nulo (o log do chute hiperbólico pode dar isso) é trocado
     pela `reserva` √μ·dt/r0, que tem o sinal de dt."""
     sinal = np.sign(dt)
@@ -173,12 +174,12 @@ def _intervalo_lote(f, chi, dt, reserva, max_iter):
     perto = np.zeros_like(b)
     busca = sinal != 0
     for _ in range(max_iter):
-        if not np.any(busca):
-            return np.where(sinal > 0, perto, b), np.where(sinal > 0, b, perto)
         fb = f(b)
         if np.any(busca & np.isnan(fb)):
             raise RuntimeError(ERRO_INTERVALO)
         busca = busca & (sinal * fb < 0)
+        if not np.any(busca):
+            return np.where(sinal > 0, perto, b), np.where(sinal > 0, b, perto)
         perto = np.where(busca, b, perto)
         b = np.where(busca, 2.0 * b, b)
     raise RuntimeError(ERRO_INTERVALO)
