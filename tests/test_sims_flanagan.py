@@ -45,41 +45,87 @@ def test_kepler_em_lote_igual_ao_escalar(dt):
         assert np.linalg.norm(vl[i] - ve) <= 1e-12 * np.linalg.norm(ve)
 
 
-def test_newton_para_no_piso_de_ruido():
-    """Órbita 20 do lote acima (dt = −230 d): o Newton leva 25 iterações e o último passo fica perto do tol de 1e-13; numa
-    CPU do CI ele ficou acima para sempre (main em 86b39e9). Com tol = 0, o critério |passo| ≤ tol·max(1, |χ|) não é atingido
-    em nenhuma CPU (antes da correção, os dois propagadores falhavam aqui), e o Newton tem de parar no piso de ruído
-    (kepler.PISO) com o mesmo estado do tol de 1e-13."""
+def test_newton_converge_com_o_chute_perturbado():
+    """Órbita 20 do lote acima (elíptica, dt = −230 d, cerca de 1,5 volta): o chute inicial cai longe da raiz e o Newton sem
+    proteção salta de forma caótica, com o número de iterações conforme o arredondamento; numa CPU do CI ele passou de 200
+    iterações (main em 86b39e9). Aqui o dt é perturbado em ~1e-15 relativo, o que basta para mudar o caminho do Newton (com
+    o kepler.py da main em 86b39e9, cerca de 4 % dos casos escalares e o lote falham). Todos têm de convergir, e o estado
+    tem de ficar igual ao do dt sem perturbação dentro de 1e-12 (o efeito da perturbação no estado é ~1e-15)."""
     r, v_ = _orbitas(40, 1)
-    dt = -230.0 * DIA
-    ref = [kepler.propagar(GM_SOL, r[i], v_[i], dt) for i in (19, 20, 21)]
-    rl, vl = kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], dt, tol=0.0)
-    re, ve = kepler.propagar(GM_SOL, r[20], v_[20], dt, tol=0.0)
-    for (rp, vp), (rr, vr) in zip([*zip(rl, vl), (re, ve)], [*ref, ref[1]]):
-        assert np.linalg.norm(rp - rr) <= 1e-12 * np.linalg.norm(rr)
-        assert np.linalg.norm(vp - vr) <= 1e-12 * np.linalg.norm(vr)
+    dt = -230.0 * DIA * (1.0 + 1e-15 * np.random.default_rng(0).normal(size=5000))
+    re, ve = kepler.propagar(GM_SOL, r[20], v_[20], -230.0 * DIA)
+    rl, vl = kepler.propagar_lote(GM_SOL, np.repeat(r[20:21], len(dt), 0), np.repeat(v_[20:21], len(dt), 0), dt)
+    for i, d in enumerate(dt):
+        for rp, vp in (kepler.propagar(GM_SOL, r[20], v_[20], d), (rl[i], vl[i])):
+            assert np.linalg.norm(rp - re) <= 1e-12 * np.linalg.norm(re)
+            assert np.linalg.norm(vp - ve) <= 1e-12 * np.linalg.norm(ve)
 
 
-def test_residuo_no_piso():
-    """Conferência do resíduo na parada pelo piso: aceita resíduo de arredondamento, reprova resíduo grande e NaN."""
+def test_newton_com_tol_zero_para_no_intervalo_esgotado():
+    """Com tol = 0, o critério |passo| ≤ tol·max(1, |χ|) só é atingido com passo nulo; o Newton tem de parar quando o
+    intervalo que contém a raiz não encolhe mais (extremos vizinhos em ponto flutuante), com o mesmo estado do tol de
+    1e-13. Órbitas 19 a 21 do lote acima, com dt positivo e negativo."""
+    r, v_ = _orbitas(40, 1)
+    for dt in (17.0 * DIA, -230.0 * DIA):
+        ref = [kepler.propagar(GM_SOL, r[i], v_[i], dt) for i in (19, 20, 21)]
+        rl, vl = kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], dt, tol=0.0)
+        esc = [kepler.propagar(GM_SOL, r[i], v_[i], dt, tol=0.0) for i in (19, 20, 21)]
+        for (rp, vp), (rr, vr) in zip([*zip(rl, vl), *esc], [*ref, *ref]):
+            assert np.linalg.norm(rp - rr) <= 1e-12 * np.linalg.norm(rr)
+            assert np.linalg.norm(vp - vr) <= 1e-12 * np.linalg.norm(vr)
+
+
+def test_derivada_e_o_raio():
+    """df/dχ = r > 0 é o que garante a raiz única e o intervalo: na raiz, a derivada do código é o raio do estado propagado."""
+    r, v_ = _orbitas(40, 1)
+    for i in (3, 20, 33):
+        dt = -230.0 * DIA
+        rp, _ = kepler.propagar(GM_SOL, r[i], v_[i], dt)
+        r0n = np.linalg.norm(r[i])
+        vr0 = r[i] @ v_[i] / r0n
+        alpha = 2.0 / r0n - v_[i] @ v_[i] / GM_SOL
+        smu = math.sqrt(GM_SOL)
+        lo, hi = kepler._intervalo(lambda x: sum(kepler._termos(r0n, vr0, smu, alpha, x, *kepler._cs(alpha * x**2), dt)),
+                                   -smu * abs(alpha) * 230.0 * DIA, dt, smu * dt / r0n, 200)
+        assert lo < hi <= 0.0
+        chi = 0.5 * (lo + hi)
+        for _ in range(200):   # bisseção simples dentro do intervalo, independente do Newton do código
+            m = 0.5 * (lo + hi)
+            if not lo < m < hi:
+                break
+            fm = sum(kepler._termos(r0n, vr0, smu, alpha, m, *kepler._cs(alpha * m**2), dt))
+            lo, hi = (m, hi) if fm < 0 else (lo, m)
+            chi = m
+        z = alpha * chi**2
+        df = kepler._derivada(r0n, vr0, smu, alpha, chi, z, *kepler._cs(z))
+        assert df == pytest.approx(np.linalg.norm(rp), rel=1e-9)
+
+
+def test_residuo_no_intervalo_esgotado():
+    """Conferência do resíduo com o intervalo esgotado: aceita resíduo de arredondamento, reprova resíduo grande e NaN."""
     assert kepler._residuo_ok((1.0, 2.0, -3.0 + 1e-15, 0.0))
     assert not kepler._residuo_ok((1.0, 2.0, -3.0 + 1e-9, 0.0))
     assert not kepler._residuo_ok((1.0, float("nan"), -3.0, 0.0))
     assert not kepler._residuo_ok((np.array([1.0, 1.0]), np.array([-1.0, -1.0 + 1e-9]), np.zeros(2), np.zeros(2)))
 
 
-def test_newton_falha_se_para_no_piso_com_residuo_grande(monkeypatch):
-    """Caso construído (numa órbita real o passo só para de diminuir quando o resíduo já é arredondamento): a derivada do
-    Newton é multiplicada por 1e20 e tol = 0 (com tol = 1e-13, um passo de ~1e-20 pararia pelo tol, que não confere o
-    resíduo, como antes da correção). O primeiro passo fica ~1e-20 relativo, abaixo do PISO e do arredondamento de χ,
-    então χ não muda, o passo seguinte é igual (deixou de diminuir) e o Newton para pelo piso com f ainda do tamanho do
-    chute inicial. Os dois propagadores têm de levantar o RuntimeError em vez de devolver esse χ."""
+def test_newton_falha_se_esgota_o_intervalo_com_residuo_grande(monkeypatch):
+    """Caso construído (numa órbita real, com o intervalo esgotado, o resíduo é arredondamento): f ganha um degrau de
+    1e3·√μ·|dt| com o sinal de f, o que mantém f crescente e com a mesma mudança de sinal, mas sem zero. O intervalo
+    encolhe até os extremos vizinhos em volta do degrau e o resíduo fica do tamanho do degrau; os dois propagadores têm de
+    levantar o RuntimeError em vez de devolver esse χ. Com tol = 0, porque com o tol de 1e-13 a bisseção pararia pelo tol,
+    que não confere o resíduo (como antes da correção)."""
     r, v_ = _orbitas(40, 1)
-    derivada = kepler._derivada
-    monkeypatch.setattr(kepler, "_derivada", lambda *a: 1e20 * derivada(*a))
-    with pytest.raises(RuntimeError, match="piso de ruído com resíduo acima do limite"):
+    termos = kepler._termos
+
+    def com_degrau(r0n, vr0, smu, alpha, chi, c, s, dt):
+        t = termos(r0n, vr0, smu, alpha, chi, c, s, dt)
+        return (*t[:3], t[3] + 1e3 * smu * np.abs(dt) * np.sign(sum(t)))
+
+    monkeypatch.setattr(kepler, "_termos", com_degrau)
+    with pytest.raises(RuntimeError, match="esgotou o intervalo com resíduo acima do limite"):
         kepler.propagar(GM_SOL, r[20], v_[20], -230.0 * DIA, tol=0.0)
-    with pytest.raises(RuntimeError, match="piso de ruído com resíduo acima do limite"):
+    with pytest.raises(RuntimeError, match="esgotou o intervalo com resíduo acima do limite"):
         kepler.propagar_lote(GM_SOL, r[19:22], v_[19:22], -230.0 * DIA, tol=0.0)
 
 

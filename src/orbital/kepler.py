@@ -42,11 +42,13 @@ def _cs(z: float) -> tuple[float, float]:
     return stumpff_c(z), stumpff_s(z)
 
 
-# Parada do Newton no piso de ruído (decisão do Fabio, 2026-11-26): além de |passo| ≤ tol·max(1, |χ|), o Newton para quando
-# o passo relativo já passou por PISO e deixou de diminuir, porque daí em diante ele é arredondamento e o tol pode nunca ser
-# atingido, conforme a CPU (CI da main em 86b39e9). Nessa parada, o resíduo de f é conferido contra PISO vezes a soma dos
-# módulos dos termos da equação; acima disso (ou NaN), o Newton falha. Valores: P-127 (NÃO VALIDADA).
-PISO = 1e-12
+# Newton protegido por bisseção (decisão do Fabio, 2026-11-26, 21h). Em f(χ) = Σ termos, f(0) = −√μ·dt e df/dχ = r > 0:
+# f é estritamente crescente, a raiz é única e tem o sinal de dt. O intervalo [lo, hi] que contém a raiz começa em 0 e no
+# chute, e o lado aberto é dobrado até f mudar de sinal. A cada iteração, o χ avaliado vira extremo do intervalo; quando o
+# passo de Newton sai do intervalo, o passo é a bisseção. Parada: o tol de sempre; se o intervalo não encolhe mais
+# (extremos vizinhos em ponto flutuante), o resíduo de f é conferido e, acima do limite (ou NaN), o Newton falha.
+# Valores do tol e do resíduo: P-128 (NÃO VALIDADA). Substitui o piso de ruído da P-127, revertido (ver a errata dela).
+RESIDUO = 1e-12
 
 
 def _termos(r0n, vr0, smu, alpha, chi, c, s, dt):
@@ -55,13 +57,35 @@ def _termos(r0n, vr0, smu, alpha, chi, c, s, dt):
 
 
 def _derivada(r0n, vr0, smu, alpha, chi, z, c, s):
-    """df/dχ da equação universal de Kepler."""
+    """df/dχ da equação universal de Kepler (igual a r, o raio no instante de χ)."""
     return r0n * vr0 / smu * chi * (1.0 - z * s) + (1.0 - alpha * r0n) * chi**2 * c + r0n
 
 
 def _residuo_ok(t) -> bool:
-    """Resíduo de f na parada pelo piso: |Σ termos| ≤ PISO · Σ |termos| em todas as faixas (NaN reprova)."""
-    return bool(np.all(np.abs(sum(t)) <= PISO * sum(np.abs(x) for x in t)))
+    """Resíduo de f com o intervalo esgotado: |Σ termos| ≤ RESIDUO · Σ |termos| em todas as faixas (NaN reprova)."""
+    return bool(np.all(np.abs(sum(t)) <= RESIDUO * sum(np.abs(x) for x in t)))
+
+
+ERRO_RESIDUO = "Newton da equação universal de Kepler esgotou o intervalo com resíduo acima do limite"
+ERRO_INTERVALO = "Newton da equação universal de Kepler não achou o intervalo que contém a raiz"
+
+
+def _intervalo(f, chi, dt, reserva, max_iter):
+    """[lo, hi] com f(lo) < 0 ≤ f(hi) (ou lo = hi = 0 com dt = 0): um extremo é 0 (f(0) = −√μ·dt) e o outro sai do chute,
+    dobrado até f mudar de sinal. Chute com o sinal errado ou nulo (o log do chute hiperbólico pode dar isso) é trocado
+    pela `reserva` √μ·dt/r0, que tem o sinal de dt."""
+    sinal = np.sign(dt)
+    if sinal == 0:
+        return 0.0, 0.0
+    b, perto = (chi if sinal * chi > 0 else reserva), 0.0
+    for _ in range(max_iter):
+        fb = f(b)
+        if np.isnan(fb):
+            raise RuntimeError(ERRO_INTERVALO)
+        if sinal * fb >= 0:
+            return (perto, b) if sinal > 0 else (b, perto)
+        perto, b = b, 2.0 * b
+    raise RuntimeError(ERRO_INTERVALO)
 
 
 def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-13):
@@ -80,24 +104,33 @@ def propagar(mu: float, r0, v0, dt: float, max_iter: int = 200, tol: float = 1e-
         sinal = np.sign(dt)
         arg = (-2.0 * mu * alpha * dt) / (r0 @ v0 + sinal * np.sqrt(-mu * a) * (1.0 - r0n * alpha))
         chi = sinal * np.sqrt(-a) * np.log(arg) if arg > 0 else chi
-    passou, anterior = False, np.inf
+    lo, hi = _intervalo(lambda x: sum(_termos(r0n, vr0, smu, alpha, x, *_cs(alpha * x**2), dt)), chi, dt, smu * dt / r0n,
+                        max_iter)
     for _ in range(max_iter):
         z = alpha * chi**2
         c, s = _cs(z)
-        f = sum(_termos(r0n, vr0, smu, alpha, chi, c, s, dt))
+        t = _termos(r0n, vr0, smu, alpha, chi, c, s, dt)
+        f = sum(t)
         df = _derivada(r0n, vr0, smu, alpha, chi, z, c, s)
+        if f < 0:
+            lo = max(lo, chi)
+        elif f > 0:
+            hi = min(hi, chi)
         passo = f / df
-        chi -= passo
-        if abs(passo) <= tol * max(1.0, abs(chi)):
+        novo = chi - passo
+        if abs(passo) <= tol * max(1.0, abs(novo)):
+            chi = novo
             break
-        if passou and abs(passo) >= anterior:   # piso de ruído
-            c, s = _cs(alpha * chi**2)
-            t = _termos(r0n, vr0, smu, alpha, chi, c, s, dt)
-            if not _residuo_ok(t):
-                raise RuntimeError("Newton da equação universal de Kepler parou no piso de ruído com resíduo acima do limite")
-            break
-        passou = passou or abs(passo) <= PISO * max(1.0, abs(chi))
-        anterior = abs(passo)
+        if not lo < novo < hi:   # Newton saiu do intervalo (ou não é número): bisseção
+            novo = 0.5 * (lo + hi)
+            if not lo < novo < hi:   # extremos vizinhos: o intervalo não encolhe mais
+                if not _residuo_ok(t):
+                    raise RuntimeError(ERRO_RESIDUO)
+                break
+            if abs(novo - chi) <= tol * max(1.0, abs(novo)):
+                chi = novo
+                break
+        chi = novo
     else:
         raise RuntimeError("Newton da equação universal de Kepler não convergiu")
 
@@ -133,6 +166,24 @@ def _cs_lote(z):
     return c, s
 
 
+def _intervalo_lote(f, chi, dt, reserva, max_iter):
+    """`_intervalo` vetorizado."""
+    sinal = np.sign(dt)
+    b = np.where(sinal * chi > 0, chi, reserva)
+    perto = np.zeros_like(b)
+    busca = sinal != 0
+    for _ in range(max_iter):
+        if not np.any(busca):
+            return np.where(sinal > 0, perto, b), np.where(sinal > 0, b, perto)
+        fb = f(b)
+        if np.any(busca & np.isnan(fb)):
+            raise RuntimeError(ERRO_INTERVALO)
+        busca = busca & (sinal * fb < 0)
+        perto = np.where(busca, b, perto)
+        b = np.where(busca, 2.0 * b, b)
+    raise RuntimeError(ERRO_INTERVALO)
+
+
 def propagar_lote(mu: float, r0, v0, dt, max_iter: int = 200, tol: float = 1e-13):
     """`propagar` vetorizado: r0 e v0 com forma (k, 3), dt escalar ou (k,). Mesmas equações, Newton em paralelo."""
     r0 = np.atleast_2d(np.asarray(r0, dtype=float))
@@ -152,32 +203,33 @@ def propagar_lote(mu: float, r0, v0, dt, max_iter: int = 200, tol: float = 1e-13
         with np.errstate(invalid="ignore"):
             chute = sinal * np.sqrt(-a) * np.log(np.where(arg > 0, arg, 1.0))
         chi[hip] = np.where(arg > 0, chute, chi[hip])
+    lo, hi = _intervalo_lote(lambda x: sum(_termos(r0n, vr0, smu, alpha, x, *_cs_lote(alpha * x**2), dt)), chi, dt,
+                             smu * dt / r0n, max_iter)
     ativo = np.ones(len(r0), dtype=bool)
-    passou = np.zeros(len(r0), dtype=bool)
-    no_piso = np.zeros(len(r0), dtype=bool)
-    anterior = np.full(len(r0), np.inf)
     for _ in range(max_iter):
         z = alpha * chi**2
         c, s = _cs_lote(z)
-        f = sum(_termos(r0n, vr0, smu, alpha, chi, c, s, dt))
+        t = _termos(r0n, vr0, smu, alpha, chi, c, s, dt)
+        f = sum(t)
         df = _derivada(r0n, vr0, smu, alpha, chi, z, c, s)
-        passo = np.where(ativo, f / df, 0.0)
-        chi = chi - passo
-        ap, escala = np.abs(passo), np.maximum(1.0, np.abs(chi))
-        piso = ativo & passou & (ap >= anterior) & ~(ap <= tol * escala)
-        no_piso |= piso
-        ativo = ativo & ~(ap <= tol * escala) & ~piso
-        passou |= ap <= PISO * escala
-        anterior = np.where(ativo, ap, anterior)
+        lo = np.where(ativo & (f < 0), np.maximum(lo, chi), lo)
+        hi = np.where(ativo & (f > 0), np.minimum(hi, chi), hi)
+        passo = f / df
+        novo = chi - passo
+        para = ativo & (np.abs(passo) <= tol * np.maximum(1.0, np.abs(novo)))
+        fora = ativo & ~para & ~((lo < novo) & (novo < hi))   # Newton saiu do intervalo (ou não é número): bisseção
+        meio = 0.5 * (lo + hi)
+        vizinhos = fora & ~((lo < meio) & (meio < hi))       # extremos vizinhos: o intervalo não encolhe mais
+        if np.any(vizinhos) and not _residuo_ok(tuple(x[vizinhos] for x in t)):
+            raise RuntimeError(ERRO_RESIDUO)
+        novo = np.where(fora, meio, novo)
+        para |= fora & ~vizinhos & (np.abs(novo - chi) <= tol * np.maximum(1.0, np.abs(novo)))
+        chi = np.where(ativo & ~vizinhos, novo, chi)
+        ativo = ativo & ~para & ~vizinhos
         if not np.any(ativo):
             break
     else:
         raise RuntimeError("Newton da equação universal de Kepler não convergiu")
-    if np.any(no_piso):
-        c, s = _cs_lote(alpha[no_piso] * chi[no_piso] ** 2)
-        t = _termos(r0n[no_piso], vr0[no_piso], smu, alpha[no_piso], chi[no_piso], c, s, dt[no_piso])
-        if not _residuo_ok(t):
-            raise RuntimeError("Newton da equação universal de Kepler parou no piso de ruído com resíduo acima do limite")
     z = alpha * chi**2
     c, s = _cs_lote(z)
     f = 1.0 - chi**2 / r0n * c
