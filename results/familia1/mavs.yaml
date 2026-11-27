@@ -33,15 +33,15 @@ verificacao:
     - 8177.118118577073
     - 6140.483931428571
     fecha: true
-    costa_s: 474.82475320114287
+    costa_s: 474.82475320113707
     queimas_s:
     - 75.90000000000002
     - 24.5
     guia:
       t_v_s: 5.0
-      theta0_graus: 69.08737576136835
-      c_1_s: 0.03565042533612315
-      t_antes_apoapse_s: 15.142601288963245
+      theta0_graus: 69.08737576136899
+      c_1_s: 0.03565042533612501
+      t_antes_apoapse_s: 15.142601288963263
   - modelo: tempo_publicado
     fracao_inerte_2: 0.4
     inertes_kg:
@@ -51,15 +51,15 @@ verificacao:
     - 8177.118118577073
     - 6140.483931428571
     fecha: true
-    costa_s: 480.6725641106579
+    costa_s: 480.67256411065847
     queimas_s:
     - 75.90000000000002
     - 24.5
     guia:
       t_v_s: 5.0
-      theta0_graus: 65.02132321208379
-      c_1_s: 0.027062190842710034
-      t_antes_apoapse_s: 15.051235302176517
+      theta0_graus: 65.02132321208353
+      c_1_s: 0.0270621908427095
+      t_antes_apoapse_s: 15.051235302176583
   - modelo: tempo_publicado
     fracao_inerte_2: 0.42
     inertes_kg:
@@ -69,15 +69,15 @@ verificacao:
     - 8177.118118577073
     - 6140.483931428571
     fecha: true
-    costa_s: 487.14426192593265
+    costa_s: 487.1442619259307
     queimas_s:
     - 75.90000000000002
     - 24.5
     guia:
       t_v_s: 5.0
-      theta0_graus: 58.67600890740876
-      c_1_s: 0.017295253301334586
-      t_antes_apoapse_s: 14.965730338426848
+      theta0_graus: 58.67600890741012
+      c_1_s: 0.017295253301336504
+      t_antes_apoapse_s: 14.965730338426752
   - modelo: tempo_publicado
     fracao_inerte_2: 0.46
     inertes_kg:
@@ -123,15 +123,15 @@ verificacao:
     - 9854
     - 6937
     fecha: true
-    costa_s: 482.50688086396366
+    costa_s: 482.50688086413726
     queimas_s:
     - 62.98389133346864
     - 21.686875640766903
     guia:
       t_v_s: 5.0
-      theta0_graus: 68.6470392164626
-      c_1_s: 0.04306039089313635
-      t_antes_apoapse_s: 13.403933217404093
+      theta0_graus: 68.64703921643755
+      c_1_s: 0.0430603908930572
+      t_antes_apoapse_s: 13.403933217404045
   - modelo: empuxo_publicado
     fracao_inerte_2: 0.4
     inertes_kg:
@@ -141,15 +141,15 @@ verificacao:
     - 9854
     - 6937
     fecha: true
-    costa_s: 488.13655229847114
+    costa_s: 488.1365522988065
     queimas_s:
     - 62.98389133346864
     - 21.686875640766903
     guia:
       t_v_s: 5.0
-      theta0_graus: 64.5202380442863
-      c_1_s: 0.03277025137404066
-      t_antes_apoapse_s: 13.32305737529057
+      theta0_graus: 64.5202380442713
+      c_1_s: 0.03277025137400539
+      t_antes_apoapse_s: 13.323057375290661
   - modelo: empuxo_publicado
     fracao_inerte_2: 0.42
     inertes_kg:
@@ -159,15 +159,15 @@ verificacao:
     - 9854
     - 6937
     fecha: true
-    costa_s: 494.26295551154186
+    costa_s: 494.2629555114733
     queimas_s:
     - 62.98389133346864
     - 21.686875640766903
     guia:
       t_v_s: 5.0
-      theta0_graus: 58.16457603673337
-      c_1_s: 0.021179637653241067
-      t_antes_apoapse_s: 13.24736961104996
+      theta0_graus: 58.164576036823966
+      c_1_s: 0.021179637653390027
+      t_antes_apoapse_s: 13.247369611049935
   - modelo: empuxo_publicado
     fracao_inerte_2: 0.46
     inertes_kg:
@@ -215,36 +215,36 @@ solido:
   rotulo: Sólido, 380 km, sem margem (o menor que chega)
   fecha: true
   simulado: true
-  escala: 1.1513144254504548
+  escala: 1.1513144254512542
   busca_da_escala:
     intervalo:
     - 1.1500000000000006
     - 1.2000000000000006
-  capacidade_m_s: 4049.6772406937503
-  capacidade_minima_m_s: 4049.6772406937503
-  glom_kg: 451.19685282027194
+  capacidade_m_s: 4049.677240694039
+  capacidade_minima_m_s: 4049.677240694039
+  glom_kg: 451.1968528205741
   propelente_kg:
-  - 248.68391589729825
-  - 62.63150474450474
+  - 248.6839158974709
+  - 62.631504744548224
   inertes_kg:
-  - 68.8230178769272
-  - 55.05841430154176
+  - 68.82301787697499
+  - 55.05841430157999
   empuxos_n:
-  - 9414.434048530067
-  - 7069.627729500435
-  empuxo_peso: 5.619278161754315
+  - 9414.434048536603
+  - 7069.627729505343
+  empuxo_peso: 5.619278161754454
   comprimentos:
   - lei: P-108 revista
-    comprimento_m: 2.8710030205617003
-    folga_sem_deck_m: 0.1564984897191497
-    folga_com_deck_m: -0.06350151028085027
-  massa_entrada_kg: 4533.893220612088
-  massa_por_area_kg_m2: 285.07319210320867
+    comprimento_m: 2.8710030205625903
+    folga_sem_deck_m: 0.15649848971870473
+    folga_com_deck_m: -0.06350151028129525
+  massa_entrada_kg: 4533.893220612677
+  massa_por_area_kg_m2: 285.07319210324573
   termico:
     temperatura_c: -40.0
-    potencia_w: 18.71239862800483
+    potencia_w: 18.712398628013496
     dias: 285
-    energia_kwh: 127.99280661555304
+    energia_kwh: 127.99280661561231
     rhu_w: 0.74
     ano: 2030
     rhus: 26
@@ -254,32 +254,32 @@ solido:
   rotulo: Sólido, 380 km, com a margem da P-014 na capacidade, não simulado
   fecha: true
   simulado: false
-  escala: 7.904335932486969
-  capacidade_m_s: 4454.644964763125
-  capacidade_minima_m_s: 4049.6772406937503
-  glom_kg: 3003.8389824800743
+  escala: 7.904335932518997
+  capacidade_m_s: 4454.644964763444
+  capacidade_minima_m_s: 4049.677240694039
+  glom_kg: 3003.838982492181
   propelente_kg:
-  - 1707.3365614171853
-  - 429.9958747272911
+  - 1707.3365614241034
+  - 429.9958747290334
   inertes_kg:
-  - 472.50363685311
-  - 378.002909482488
+  - 472.5036368550246
+  - 378.00290948401965
   empuxos_n:
-  - 64634.688568859
-  - 48536.447782049705
-  empuxo_peso: 5.794839163810691
+  - 64634.688569120895
+  - 48536.44778224637
+  empuxo_peso: 5.794839163810816
   comprimentos:
   - lei: P-108 revista
-    comprimento_m: 8.614697793738225
-    folga_sem_deck_m: -2.715348896869113
-    folga_com_deck_m: -2.9353488968691126
-  massa_entrada_kg: 9548.907227802269
-  massa_por_area_kg_m2: 600.3973477256922
+    comprimento_m: 8.614697793761582
+    folga_sem_deck_m: -2.7153488968807915
+    folga_com_deck_m: -2.9353488968807913
+  massa_entrada_kg: 9548.90722782605
+  massa_por_area_kg_m2: 600.3973477271875
   termico:
     temperatura_c: -40.0
-    potencia_w: 67.59869497965879
+    potencia_w: 67.5986949798414
     dias: 285
-    energia_kwh: 462.3750736608661
+    energia_kwh: 462.37507366211514
     rhu_w: 0.74
     ano: 2030
     rhus: 92
@@ -297,40 +297,40 @@ hipergolico:
   historico:
   - glom_kg: 166.55478053684573
     dv_100x100_usado_m_s: 4027.9
-    dv_simulado_m_s: 4036.1107885804995
-  - glom_kg: 159.78625923174582
-    dv_100x100_usado_m_s: 3969.3203661086945
-    dv_simulado_m_s: 4048.7108820619505
-  - glom_kg: 161.21276751694035
-    dv_100x100_usado_m_s: 3981.9204595901456
-    dv_simulado_m_s: 4045.935902551353
-  - glom_kg: 160.89724358104758
-    dv_100x100_usado_m_s: 3979.145480079548
-    dv_simulado_m_s: 4046.545385668229
-  - glom_kg: 160.96647779175805
-    dv_100x100_usado_m_s: 3979.754963196424
-    dv_simulado_m_s: 4046.408305459524
-  - glom_kg: 160.95090293798054
-    dv_100x100_usado_m_s: 3979.61788298772
-    dv_simulado_m_s: 4046.4413354152366
-  - glom_kg: 160.95465558186459
-    dv_100x100_usado_m_s: 3979.6509129434316
-    dv_simulado_m_s: 4046.4339633879445
-  glom_kg: 160.95465558186459
-  dv_subida_com_margem_km_s: 4.552541843015411
-  dv_100x100_m_s: 3979.6509129434316
-  empuxo_peso: 3.2748239824637317
-  comprimento_m: 3.058633909724249
-  folga_sem_deck_m: -0.04731695486212484
-  folga_com_deck_m: -0.2673169548621248
-  massa_entrada_kg: 3963.672793817574
-  propelente_kg: 111.61508479803574
-  massa_por_area_kg_m2: 249.21999720886117
+    dv_simulado_m_s: 4036.1107885804904
+  - glom_kg: 159.78625923174542
+    dv_100x100_usado_m_s: 3969.32036610869
+    dv_simulado_m_s: 4048.7108820623994
+  - glom_kg: 161.21276751699202
+    dv_100x100_usado_m_s: 3981.9204595905994
+    dv_simulado_m_s: 4045.935902551252
+  - glom_kg: 160.89724358103678
+    dv_100x100_usado_m_s: 3979.1454800794527
+    dv_simulado_m_s: 4046.5453856682757
+  - glom_kg: 160.9664777917638
+    dv_100x100_usado_m_s: 3979.7549631964757
+    dv_simulado_m_s: 4046.4083054611333
+  - glom_kg: 160.95090293816372
+    dv_100x100_usado_m_s: 3979.6178829893333
+    dv_simulado_m_s: 4046.4413354149137
+  - glom_kg: 160.95465558182883
+    dv_100x100_usado_m_s: 3979.6509129431142
+    dv_simulado_m_s: 4046.4339633879845
+  glom_kg: 160.95465558182883
+  dv_subida_com_margem_km_s: 4.552541843015063
+  dv_100x100_m_s: 3979.6509129431142
+  empuxo_peso: 3.2748239824644587
+  comprimento_m: 3.0586339097241395
+  folga_sem_deck_m: -0.04731695486206999
+  folga_com_deck_m: -0.26731695486206997
+  massa_entrada_kg: 3963.6727938175
+  propelente_kg: 111.6150847980082
+  massa_por_area_kg_m2: 249.2199972088565
   termico:
     temperatura_c: 15.0
-    potencia_w: 32.527346480432875
+    potencia_w: 32.52734648042752
     dias: 285
-    energia_kwh: 222.4870499261609
+    energia_kwh: 222.4870499261242
     rhu_w: 0.74
     ano: 2030
     rhus: 44
@@ -340,22 +340,22 @@ hipergolico:
   rotulo: Hipergólico 4 × 164:1, 380 km, sem margem
   fecha: true
   convergiu: true
-  glom_kg: 124.41824050113075
-  dv_subida_km_s: 4.138674402741282
-  dv_100x100_m_s: 3979.6509129434316
-  empuxo_peso: 4.236502333304493
-  comprimento_m: 2.9353618431137574
-  folga_sem_deck_m: 0.01431907844312108
-  folga_com_deck_m: -0.2056809215568789
-  massa_entrada_kg: 3891.8920176275274
-  propelente_kg: 83.48204518587067
+  glom_kg: 124.41824050110695
+  dv_subida_km_s: 4.138674402740966
+  dv_100x100_m_s: 3979.6509129431142
+  empuxo_peso: 4.236502333305303
+  comprimento_m: 2.9353618431136677
+  folga_sem_deck_m: 0.014319078443165933
+  folga_com_deck_m: -0.20568092155683404
+  massa_entrada_kg: 3891.8920176274764
+  propelente_kg: 83.48204518585236
   nota: 'massa por área: o lander com margem menos a diferença do MAV'
-  massa_por_area_kg_m2: 244.7067071941969
+  massa_por_area_kg_m2: 244.70670719419368
   termico:
     temperatura_c: 15.0
-    potencia_w: 26.80142522274488
+    potencia_w: 26.801425222740964
     dias: 285
-    energia_kwh: 183.32174852357497
+    energia_kwh: 183.3217485235482
     rhu_w: 0.74
     ano: 2030
     rhus: 37
@@ -368,40 +368,40 @@ hipergolico:
   historico:
   - glom_kg: 189.39784695131655
     dv_100x100_usado_m_s: 4027.9
-    dv_simulado_m_s: 4003.3750850754323
-  - glom_kg: 177.19975892907678
-    dv_100x100_usado_m_s: 3936.584662603628
-    dv_simulado_m_s: 4019.079495405971
-  - glom_kg: 179.22593211623249
-    dv_100x100_usado_m_s: 3952.289072934166
-    dv_simulado_m_s: 4016.1973193161975
-  - glom_kg: 178.8519111085051
-    dv_100x100_usado_m_s: 3949.4068968443926
+    dv_simulado_m_s: 4003.375085075423
+  - glom_kg: 177.19975892907604
+    dv_100x100_usado_m_s: 3936.5846626036237
+    dv_simulado_m_s: 4019.079495405984
+  - glom_kg: 179.22593211623473
+    dv_100x100_usado_m_s: 3952.2890729341834
+    dv_simulado_m_s: 4016.197319316205
+  - glom_kg: 178.8519111085065
+    dv_100x100_usado_m_s: 3949.4068968444044
     dv_simulado_m_s: 4016.720980092904
-  - glom_kg: 178.91979405360792
-    dv_100x100_usado_m_s: 3949.9305576211
-    dv_simulado_m_s: 4016.6260894909283
-  - glom_kg: 178.90749084747972
-    dv_100x100_usado_m_s: 3949.8356670191233
-    dv_simulado_m_s: 4016.646369903964
-  - glom_kg: 178.91012025072504
-    dv_100x100_usado_m_s: 3949.85594743216
-    dv_simulado_m_s: 4016.6389781422695
-  glom_kg: 178.91012025072504
-  dv_subida_com_margem_km_s: 4.715214842862989
-  dv_100x100_m_s: 3949.85594743216
-  empuxo_peso: 2.946161823881195
-  comprimento_m: 3.111143913585038
-  folga_sem_deck_m: -0.07357195679251927
-  folga_com_deck_m: -0.29357195679251924
-  massa_entrada_kg: 4000.9977093734246
-  propelente_kg: 125.44079259305829
-  massa_por_area_kg_m2: 251.5668396034098
+  - glom_kg: 178.91979405360843
+    dv_100x100_usado_m_s: 3949.9305576211045
+    dv_simulado_m_s: 4016.626089490929
+  - glom_kg: 178.9074908474803
+    dv_100x100_usado_m_s: 3949.8356670191297
+    dv_simulado_m_s: 4016.6463699039687
+  - glom_kg: 178.91012025072615
+    dv_100x100_usado_m_s: 3949.8559474321683
+    dv_simulado_m_s: 4016.638978344699
+  glom_kg: 178.91012025072615
+  dv_subida_com_margem_km_s: 4.7152148428629985
+  dv_100x100_m_s: 3949.8559474321683
+  empuxo_peso: 2.946161823881177
+  comprimento_m: 3.1111439135850407
+  folga_sem_deck_m: -0.0735719567925206
+  folga_com_deck_m: -0.29357195679252057
+  massa_entrada_kg: 4000.997709373427
+  propelente_kg: 125.44079259305913
+  massa_por_area_kg_m2: 251.56683960340993
   termico:
     temperatura_c: 15.0
-    potencia_w: 35.160976149795275
+    potencia_w: 35.16097614979543
     dias: 301
-    energia_kwh: 254.00289170612106
+    energia_kwh: 254.0028917061222
     rhu_w: 0.74
     ano: 2030
     rhus: 48
@@ -411,22 +411,22 @@ hipergolico:
   rotulo: Hipergólico 4 × 164:1, 814 km, sem margem
   fecha: true
   convergiu: true
-  glom_kg: 136.1645089556652
-  dv_subida_km_s: 4.286558948057262
-  dv_100x100_m_s: 3949.85594743216
-  empuxo_peso: 3.8710393055528276
-  comprimento_m: 2.9778631662692963
-  folga_sem_deck_m: -0.006931583134648367
-  folga_com_deck_m: -0.22693158313464834
-  massa_entrada_kg: 3917.018119402777
-  propelente_kg: 92.5266718958622
+  glom_kg: 136.16450895566598
+  dv_subida_km_s: 4.286558948057271
+  dv_100x100_m_s: 3949.8559474321683
+  empuxo_peso: 3.871039305552806
+  comprimento_m: 2.977863166269299
+  folga_sem_deck_m: -0.006931583134649699
+  folga_com_deck_m: -0.22693158313464967
+  massa_entrada_kg: 3917.018119402778
+  propelente_kg: 92.5266718958628
   nota: 'massa por área: o lander com margem menos a diferença do MAV'
-  massa_por_area_kg_m2: 246.28653664532223
+  massa_por_area_kg_m2: 246.28653664532231
   termico:
     temperatura_c: 15.0
-    potencia_w: 28.703969005283334
+    potencia_w: 28.703969005283458
     dias: 301
-    energia_kwh: 207.35747209416678
+    energia_kwh: 207.35747209416772
     rhu_w: 0.74
     ano: 2030
     rhus: 39

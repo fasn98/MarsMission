@@ -33,7 +33,7 @@ import comprimento_solido as cs  # noqa: E402
 import rota_a_dimensiona as rad  # noqa: E402
 import subida_mav as sm  # noqa: E402
 from orbital import motores as om  # noqa: E402
-from orbital.mav import mav_estagios  # noqa: E402
+from orbital.mav import aquecimento, mav_estagios  # noqa: E402
 from orbital import subida as sb  # noqa: E402
 from orbital import veiculos as ve  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
@@ -253,9 +253,7 @@ def main():
     lanc = {c["altitude_km"]: int(str(c["lancamento_mav"])[:4]) for c in ler("results/familia1/missao.yaml")["casos"]}
 
     def termico(t_min, m_prop, h):
-        rhu_w = v(tf["rhu_w_2014"]) - v(tf["rhu_queda_w_ano"]) * (lanc[h] - v(tf["rhu_ano_referencia"]))
-        p = v(aq["referencia_w"]) * (t_min - v(aq["t_ambiente_c"])) / (v(aq["t_referencia_c"]) - v(aq["t_ambiente_c"])) * (m_prop / v(aq["m_prop_referencia_kg"])) ** v(aq["expoente_area"])
-        return {"temperatura_c": t_min, "potencia_w": p, "dias": dias[h], "energia_kwh": p * 24 * dias[h] / 1000, "rhu_w": rhu_w, "ano": lanc[h], "rhus": math.ceil(p / rhu_w), "rhu_teto_new_frontiers": v(tf["rhu_teto_new_frontiers"])}
+        return aquecimento(aq, tf, t_min, m_prop, lanc[h], dias[h])
     for s_ in sol_casos:
         if s_["fecha"]:
             s_["termico"] = termico(v(aq["t_minima_c"]["O1"]), sum(s_["propelente_kg"]), s_["altitude_km"])
@@ -304,7 +302,9 @@ def escreve_md(o):
     b = vb["base"]
     md += ["", (f"**Base: tempo de queima publicado, fração {br(b['fracao_inerte_2'], 3)}, a do [F269]** (errata da P-110, 2026-11-12): " + ("chega à órbita publicada. " if b["fecha"] else "**não chega à órbita publicada** (órbita e costa do melhor ajuste em results/familia1/diagnostico_mav_familia1.md); a diferença é o viés da P-114. ") + f"Até 2026-11-11, a base era a divisão escolhida no meio das que chegam (P-110 original; ver a errata no fim). Costa publicada: {br(vb['costa_publicada_s'], 0)} s ([F34] PDF p. 7). Três parâmetros de guiamento para três resíduos (semieixo e vetor excentricidade; até 2026-11-11, dois: periapse e apoapse): **o modelo não fica verificado**; é uma conferência parcial." if b else "**Nenhuma divisão do inerte leva à órbita publicada com o tempo de queima publicado: o modelo não reproduz o MSR.**"), "",
            "## Comparação lado a lado", ""]
-    hd = "| Grandeza | " + " | ".join(x["rotulo"] for x in o["solido"] + o["hipergolico"]) + " |"
+    # errata da issue #77 (2026-11-27): as colunas do sólido a 380 km (P-111) ficam, marcadas como substituídas pela P-113
+    subst = " (P-111, substituída pela P-113; errata da issue #77)"
+    hd = "| Grandeza | " + " | ".join(x["rotulo"] + (subst if "termico" in x and x["tipo"] == "solido" else "") for x in o["solido"] + o["hipergolico"]) + " |"
     md += [hd, "| :- |" + " -: |" * (len(o["solido"]) + len(o["hipergolico"]))]
 
     def cel(x, f):
@@ -335,6 +335,7 @@ def escreve_md(o):
            "**Sólido a 814 km:** nenhuma escala da varredura (P-110) leva à circular, com a proporção de propelente entre estágios do MSR e o 2º estágio na horizontal. Causa provável, não demonstrada: a limitação do método. Não é uma conclusão sobre o sólido.", "",
            "**Hipergólico:** Ø 0,72 m é o menor da grade de diâmetros que contém as quatro saídas com parede (results/etapa7.2/bocais_alternativas.md); o mínimo contínuo é menor. A versão sem margem tira a margem só do MAV: o Δv de 100 × 100 km é o do veículo com margem (empuxo/peso menor, conservador), e a massa de entrada desconta só a diferença do GLOM, sem a da energia de aquecimento. Os números diferem dos da rota B (results/etapa7.2/rotas_mav.md) porque aqui entra a perda gravitacional do PR #55, e porque a rota B usou 2 × 164:1 em Ø 0,60 m.", "",
            "**Como cada Δv foi obtido:** o sólido é dimensionado pela simulação da subida (queima até esgotar, costa e 2º estágio) até a circular de encontro, e a margem da P-014 entra sobre a capacidade ideal; o hipergólico usa o Δv de 100 × 100 km da simulação do PR #55 com o empuxo/peso dele, mais a transferência e o déficit de rotação, com a margem da P-014. A massa por área do sólido troca no lander o GLOM do hipergólico pelo do sólido, dividido pela razão pousada/entrada (P-018); a energia do aquecimento e o seu hardware não entram nessa troca.", "",
+           "**Errata (2026-11-27, issue #77): as colunas do sólido a 380 km estão substituídas pela P-113.** A conclusão vigente da família 1 (results/etapa7.2/portao_mav.md, portão de 2026-11-12) dimensiona o sólido pela lei A da P-113 (results/familia1/inerte_solido.md), não pelo inerte proporcional da P-111 destas colunas; a massa do sólido tem agora uma só fonte, aquela lei, e a estocagem do MAV (results/familia1/diagnostico_orbitador_so_eletrico.md) lê de lá o aquecimento do sólido. Estas colunas ficam como estavam, para comparação e para as ferramentas que estudam a própria P-111 (tools/ruido_subida.py, tools/familia1_465.py); o hipergólico não muda. Nas tabelas das erratas de 2026-11-11 e 2026-11-12, mais abaixo, \"vigente\" quer dizer o vigente da P-111 naquela data; o sólido vigente da família 1 é o da P-113.", "",
            "## Térmico e estocagem", "", "O aquecimento segue o modelo da Etapa 4.2 (P-027, [F57]): a potência escala com a diferença de temperatura até o ambiente do igloo e com a massa de propelente elevada a 2/3. O sólido fica no mínimo fora de operação de [F57]; o hipergólico, a 15 °C (P-027). Os RHUs são o número de unidades de [F155] que dariam a mesma potência no ano do lançamento do MAV, com a potência de 2014 caindo 0,01 W por ano. Para comparar: [F155] p. 2 registra um teto de 43 RHUs oferecido a um edital do New Frontiers, não o tamanho do inventário.", "",
            "**Envelhecimento do propelente sólido, nas fontes:**"]
     md += [f"- {x}" for x in o["envelhecimento_solido"]]

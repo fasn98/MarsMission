@@ -29,6 +29,7 @@ import comprimento_solido as cs  # noqa: E402
 import mav_familia1 as mf  # noqa: E402
 import subida_mav as sm  # noqa: E402
 from orbital import subida as sb  # noqa: E402
+from orbital.mav import aquecimento  # noqa: E402
 from orbital.config import ler, nativo, v  # noqa: E402
 
 SAIDA = RAIZ / "results" / "familia1"
@@ -188,6 +189,16 @@ def main():
         x = {"lei": nome, "N_kg": lei[0], "c": lei[1], "b": lei[2], "verificacao": {**voo(pl_v, e1, i1, 1000 * v(vf["orbita_km"])), "inertes_kg": i1, "glom_kg": e1[0].massa_inicial_kg}}
         x.update(dimensiona(lei, isp))
         casos.append(x)
+    # ---------------- aquecimento na superfície do sólido da P-113 (errata da issue #77): a massa do sólido tem uma só fonte,
+    # esta lei; o modelo é o da P-027, a mesma conta de tools/mav_familia1.py (orbital.mav.aquecimento), no mínimo fora de
+    # operação de [F57] (O1)
+    aq, tf = ler("config/mav_propulsao.yaml")["aquecimento"], fc["termico"]
+    cm = next(c for c in ler("results/familia1/missao.yaml")["casos"] if abs(c["altitude_km"] - h) < 1e-6)
+    for x in casos:
+        for k in ("sem_margem", "com_margem"):
+            if k in x:
+                x[k]["termico"] = aquecimento(aq, tf, v(aq["t_minima_c"]["O1"]), sum(x[k]["propelente_kg"]),
+                                              int(str(cm["lancamento_mav"])[:4]), cm["mav_na_superficie_dias"])
     # ---------------- viés do modelo na variante nominal (P-114) e a variante corrigida
     nom = next(k for k in leis if k.startswith(cfg["variante_nominal"]))
     lei_n = leis[nom]
@@ -385,6 +396,22 @@ def escreve_md(o):
     else:
         md += ["Nenhum fator de Isp na busca da P-114 leva o MAV do MSR à órbita publicada: viés não medido.", ""]
     cp = o["comprimento"]
+    md += ["## Aquecimento na superfície (P-027), variante nominal", "",
+           "A massa do sólido tem uma só fonte, esta lei (errata da issue #77, 2026-11-27): a estocagem do MAV em "
+           "results/familia1/diagnostico_orbitador_so_eletrico.md lê daqui o aquecimento do sólido. Modelo da P-027 ([F57]), o "
+           "mesmo de results/familia1/mavs.md (orbital.mav.aquecimento): a potência escala com a diferença de temperatura até o "
+           "ambiente do igloo e com a massa de propelente elevada a 2/3, no mínimo fora de operação de [F57]; RHUs de [F155] no "
+           "ano do lançamento do MAV.", "",
+           f"| Caso, {br(o['altitude_km'], 0)} km | Propelente (kg) | Temperatura mantida (°C) | Aquecimento (W) | Dias na superfície | Energia (kWh) | RHUs equivalentes |",
+           "| :- | -: | -: | -: | -: | -: | -: |"]
+    for c in o["casos"]:
+        for rot, k in (("sem margem (o menor que chega)", "sem_margem"), ("com a margem da P-014 na capacidade", "com_margem")):
+            if k in c and "termico" in c[k]:
+                t_ = c[k]["termico"]
+                md.append(f"| Lei {c['lei'][0]}, {rot} | {br(sum(c[k]['propelente_kg']), 1)} | {br(t_['temperatura_c'], 0)} | {br(t_['potencia_w'], 1)} | "
+                          f"{t_['dias']} | {br(t_['energia_kwh'], 0)} | {t_['rhus']} de {br(t_['rhu_w'], 2)} W em {t_['ano']} |")
+    md += ["", "Para comparar: [F155] p. 2 registra um teto de " + br(o["casos"][0]["com_margem"]["termico"]["rhu_teto_new_frontiers"], 0)
+           + " RHUs oferecido a um edital do New Frontiers, não o tamanho do inventário.", ""]
     md += ["## Comprimento (P-108 revista, aplicada)", "", "P-108 revista, aprovada pelo Fabio em 2026-11-12 como NÃO VALIDADA; o ajuste está em results/familia1/comprimento_solido.md.", "",
            f"- Os {cp['n']} motores do catálogo publicam diâmetro e comprimento (\"Motor length\"; no Orion 38, \"Overall motor length (including nozzle)\"); nenhum tem bocal extensível.",
            f"- Forma: L = a · P^b · D^c, mínimos quadrados em ln: a = {br(cp['a'], 4)}, b = {br(cp['b'], 3)} (erro-padrão {br(cp['erro_padrao_b'], 3)}), c = {br(cp['c'], 3)} (erro-padrão {br(cp['erro_padrao_c'], 3)}); erro: fator rms {br(cp['fator_rms'], 2)}, maior desvio fator {br(cp['fator_max'], 2)}.",

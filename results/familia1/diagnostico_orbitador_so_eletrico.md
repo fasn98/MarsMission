@@ -252,76 +252,108 @@ Todas as tentativas de cada configuração, por origem. Pior: o maior entre os r
 
 ## Estocagem do MAV na superfície
 
-Pouso do lander em 2029-09-20 (Ls 189,5°). Aquecimento de results/familia1/mavs.yaml (modelo da P-027); RHU com a potência do ano do lançamento do MAV ([F155] p. 1: 0,90 W em 2014, menos 0,01 W por ano). Teto oferecido ao New Frontiers: 43 RHUs ([F155] p. 2).
+Pouso do lander em 2029-09-20 (Ls 189,5°). Aquecimento (modelo da P-027) do sólido de results/familia1/inerte_solido.yaml (lei nominal da P-113) e do hipergólico de results/familia1/mavs.yaml; RHU com a potência do ano do lançamento do MAV ([F155] p. 1: 0,90 W em 2014, menos 0,01 W por ano). Teto oferecido ao New Frontiers: 43 RHUs ([F155] p. 2).
 Temporadas de tempestade global (Ls 180° a 340°, P-124) tocadas entre o pouso e o lançamento do MAV; na missão de referência (MAV no lançamento mais cedo, 2029-11-03): 1.
 Envelhecimento do propelente sólido: só há resultado publicado da fase de vácuo ([F263] PDF p. 1, perda de massa abaixo de 0,1 %); a fase de um ano em condições de superfície de Marte estava planejada ([F263] PDF p. 1) e não há resultado publicado achado; o projeto do MSR previa cerca de um ano na superfície ([F35] PDF p. 1).
 
 | Propulsor | Ativos | Encontro (km) | Lançamento do MAV | Dias na superfície | Ls no lançamento (°) | Temporadas de tempestade | MAV | Temperatura mantida (°C) | Aquecimento (W) | Energia (kWh) | RHUs |
 | :- | -: | -: | :- | -: | -: | -: | :- | -: | -: | -: | -: |
-| XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 232 | 26 |
-| XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 837 | 93 |
+| XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 217 | 24 |
+| XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 251 | 28 |
 | XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 403 | 45 |
 | XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 332 | 37 |
-| XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 186 | 26 |
-| XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 673 | 92 |
+| XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 232 | 26 |
+| XIPS-25 | 4 | 380 | 2031-02-18 | 516 | 103,0 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 837 | 93 |
+| XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 174 | 24 |
+| XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 202 | 28 |
 | XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 324 | 44 |
 | XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 267 | 37 |
-| XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 193 | 26 |
-| XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 698 | 92 |
+| XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 186 | 26 |
+| XIPS-25 | 5 | 380 | 2030-11-09 | 415 | 58,6 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 673 | 92 |
+| XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 181 | 24 |
+| XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 210 | 28 |
 | XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 336 | 44 |
 | XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 277 | 37 |
-| XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 192 | 26 |
-| XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 693 | 92 |
+| XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 193 | 26 |
+| XIPS-25 | 6 | 380 | 2030-11-24 | 430 | 65,1 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 698 | 92 |
+| XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 180 | 24 |
+| XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 208 | 28 |
 | XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 333 | 44 |
 | XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 275 | 37 |
-| XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 189 | 26 |
-| XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 681 | 92 |
+| XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 192 | 26 |
+| XIPS-25 | 7 | 380 | 2030-11-21 | 427 | 63,8 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 693 | 92 |
+| XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 177 | 24 |
+| XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 205 | 28 |
 | XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 328 | 44 |
 | XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 270 | 37 |
-| XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 210 | 26 |
-| XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 758 | 92 |
+| XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 189 | 26 |
+| XIPS-25 | 8 | 380 | 2030-11-14 | 420 | 60,8 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 681 | 92 |
+| XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 196 | 24 |
+| XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 228 | 28 |
 | XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 365 | 44 |
 | XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 300 | 37 |
-| XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 182 | 26 |
-| XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 657 | 92 |
+| XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 210 | 26 |
+| XIPS-25 | 9 | 380 | 2030-12-31 | 467 | 81,3 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 758 | 92 |
+| XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 170 | 24 |
+| XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 197 | 28 |
 | XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 316 | 44 |
 | XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 261 | 37 |
-| XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 187 | 26 |
-| XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 675 | 92 |
+| XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 182 | 26 |
+| XIPS-25 | 10 | 380 | 2030-10-30 | 405 | 54,2 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 657 | 92 |
+| XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 175 | 24 |
+| XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 203 | 28 |
 | XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 325 | 44 |
 | XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 268 | 37 |
-| XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 190 | 26 |
-| XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 685 | 92 |
+| XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 187 | 26 |
+| XIPS-25 | 11 | 380 | 2030-11-10 | 416 | 59,0 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 675 | 92 |
+| XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 177 | 24 |
+| XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 206 | 28 |
 | XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 329 | 44 |
 | XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 271 | 37 |
-| XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 471 | 26 |
-| XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 1 700 | 94 |
+| XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 190 | 26 |
+| XIPS-25 | 12 | 380 | 2030-11-16 | 422 | 61,6 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 685 | 92 |
+| XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 441 | 25 |
+| XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 511 | 29 |
 | XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 818 | 46 |
 | XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 674 | 38 |
-| NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 507 | 26 |
-| NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 1 833 | 94 |
+| XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 471 | 26 |
+| XIPS-25 (87 kg) | 3 | 380 | 2032-08-03 | 1048 | 34,5 | 2 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 1 700 | 94 |
+| NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 475 | 25 |
+| NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 551 | 29 |
 | NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 882 | 46 |
 | NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 727 | 38 |
-| NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 211 | 26 |
-| NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 761 | 93 |
+| NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 507 | 26 |
+| NEXT-C | 1 | 380 | 2032-10-24 | 1130 | 70,8 | 2 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 1 833 | 94 |
+| NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 197 | 24 |
+| NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 229 | 28 |
 | NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 366 | 45 |
 | NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 302 | 37 |
-| NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 199 | 26 |
-| NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 719 | 92 |
+| NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 211 | 26 |
+| NEXT-C | 3 | 380 | 2031-01-02 | 469 | 82,2 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 761 | 93 |
+| NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 186 | 24 |
+| NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 216 | 28 |
 | NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 346 | 44 |
 | NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 285 | 37 |
-| NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 185 | 26 |
-| NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 668 | 92 |
+| NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 199 | 26 |
+| NEXT-C | 4 | 380 | 2030-12-07 | 443 | 70,8 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 719 | 92 |
+| NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 173 | 24 |
+| NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 201 | 28 |
 | NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 322 | 44 |
 | NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 265 | 37 |
-| NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 198 | 26 |
-| NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 715 | 92 |
+| NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 185 | 26 |
+| NEXT-C | 5 | 380 | 2030-11-06 | 412 | 57,2 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 668 | 92 |
+| NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 185 | 24 |
+| NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 215 | 28 |
 | NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 344 | 44 |
 | NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 284 | 37 |
-| NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Sólido, 380 km, sem margem (o menor que chega) | −40 | 18,7 | 201 | 26 |
-| NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado | −40 | 67,6 | 725 | 92 |
+| NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 198 | 26 |
+| NEXT-C | 6 | 380 | 2030-12-05 | 441 | 69,9 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 715 | 92 |
+| NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Sólido, lei A da P-113, 380 km, sem margem | −40 | 17,5 | 188 | 24 |
+| NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Sólido, lei A da P-113, 380 km, com a margem da P-014 | −40 | 20,3 | 218 | 28 |
 | NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Hipergólico 4 × 164:1, 380 km, com a margem da P-014 | 15 | 32,5 | 349 | 44 |
 | NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Hipergólico 4 × 164:1, 380 km, sem margem | 15 | 26,8 | 288 | 37 |
+| NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Sólido, 380 km, sem margem (o menor que chega) (P-111, substituído pela P-113; errata da issue #77) | −40 | 18,7 | 201 | 26 |
+| NEXT-C | 7 | 380 | 2030-12-11 | 447 | 72,6 | 1 | Sólido, 380 km, com a margem da P-014 na capacidade, não simulado (P-111, substituído pela P-113; errata da issue #77) | −40 | 67,6 | 725 | 92 |
 | XIPS-25 | 1 | 814 | 2033-08-12 | 1422 | 218,3 | 3 | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | 15 | 35,2 | 1 200 | 50 |
 | XIPS-25 | 1 | 814 | 2033-08-12 | 1422 | 218,3 | 3 | Hipergólico 4 × 164:1, 814 km, sem margem | 15 | 28,7 | 980 | 41 |
 | XIPS-25 | 2 | 814 | 2032-08-03 | 1048 | 34,5 | 2 | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | 15 | 35,2 | 884 | 49 |
@@ -366,3 +398,10 @@ Envelhecimento do propelente sólido: só há resultado publicado da fase de vá
 | NEXT-C | 3 | 814 | 2030-12-11 | 447 | 72,6 | 1 | Hipergólico 4 × 164:1, 814 km, sem margem | 15 | 28,7 | 308 | 39 |
 | NEXT-C | 5 | 814 | 2030-12-02 | 438 | 68,6 | 1 | Hipergólico 4 × 164:1, 814 km, com a margem da P-014 | 15 | 35,2 | 370 | 48 |
 | NEXT-C | 5 | 814 | 2030-12-02 | 438 | 68,6 | 1 | Hipergólico 4 × 164:1, 814 km, sem margem | 15 | 28,7 | 302 | 39 |
+
+### Errata (2026-11-27, issue #77): o sólido passou da P-111 para a P-113
+
+- **O que estava escrito:** até o PR #74, esta seção lia o aquecimento dos dois sólidos de results/familia1/mavs.yaml, com o inerte proporcional ao propelente da P-111 (as linhas marcadas "substituído pela P-113" na tabela acima). O relatório do ponto de parada de 2026-11-26 e o PR #74 concluíram daí que, com o teto de 43 RHUs, nenhum dos dois MAVs, com a margem da P-014, se mantinha aquecido só com RHUs na espera.
+- **O erro:** a conclusão vigente da família 1 (results/etapa7.2/portao_mav.md, portão de 2026-11-12) usa para o sólido a lei A da P-113 (results/familia1/inerte_solido.md), com outra massa de propelente; esta seção herdou de mavs.yaml o modelo que não é o da conclusão.
+- **O que muda:** o sólido vem agora da sua fonte única, a lei nominal da P-113 (results/familia1/inerte_solido.yaml), com o mesmo modelo de aquecimento (orbital.mav.aquecimento); os RHUs vigentes do sólido são os das linhas "lei A da P-113". As linhas da P-111 ficam só para comparação.
+- **O que não muda:** o fecho a 380 km por propulsor (não lê os MAVs; usa results/familia1/missao.yaml e results/etapa7.2/rotas_mav.yaml) e o hipergólico; a geometria do sólido com margem segue com as pendências do próprio resultado (results/familia1/inerte_solido.md: "Chega?" e a energia que sobra na subida).

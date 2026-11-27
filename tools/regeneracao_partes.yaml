@@ -32,7 +32,7 @@ partes:
     depende_de: [base]
     ferramentas: ["orbitador_so_eletrico --caso-publicado"]
   se_verifica:
-    depende_de: [base, mav_familia1, se_caso_publicado]
+    depende_de: [base, mav_familia1, se_caso_publicado, inerte_solido]   # inerte_solido: aquecimento do sólido (issue #77)
     ferramentas: ["orbitador_so_eletrico --verifica"]
   comparacao:
     depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_verifica]
