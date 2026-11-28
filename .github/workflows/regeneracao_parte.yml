@@ -2,7 +2,8 @@ name: Regeneração de results/ (uma parte)
 
 # Uma parte da regeneração em paralelo (issue #61; partes em tools/regeneracao_partes.yaml). Baixa só os artefatos das
 # partes de que depende, roda as suas ferramentas numa cópia e publica o que gravou. A parte "comparacao" junta tudo e
-# compara com o versionado (P-039, P-040), com a checagem de sanidade dos diagnósticos (CLAUDE.md, regra 6).
+# compara com o versionado (P-039, P-040), com a checagem de sanidade dos diagnósticos (CLAUDE.md, regra 6) e a conferência
+# das dependências declaradas com os arquivos que cada ferramenta leu e gravou (issue #79).
 on:
   workflow_call:
     inputs:

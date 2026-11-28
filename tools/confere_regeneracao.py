@@ -420,16 +420,48 @@ def juntar_entradas(destino: Path, entradas: list[Path]):
             shutil.copyfile(x, destino / rel)
 
 
-def logs_das_entradas(entradas: list[Path]) -> tuple[list, dict]:
+def logs_das_entradas(entradas: list[Path]) -> tuple[list, dict, dict]:
     """Log das ferramentas e ambiente de cada parte de que esta depende ({parte: ambiente}): cada parte pode rodar numa
-    máquina diferente, e o relatório da comparação descreve todas."""
-    log, ambientes = [], {}
+    máquina diferente, e o relatório da comparação descreve todas. Também os arquivos de results/ lidos e gravados por
+    ferramenta, rastreados em cada parte ({parte: [...]}, issue #79)."""
+    log, ambientes, es = [], {}, {}
     for e in entradas:
         for j in sorted((e / "_log").glob("*.json")) if (e / "_log").exists() else []:
             x = json.loads(j.read_text(encoding="utf-8"))
             log += x["log"]
             ambientes[j.stem] = x["ambiente"]
-    return log, ambientes
+            if "es" in x:
+                es[j.stem] = x["es"]
+    return log, ambientes, es
+
+
+def conferir_dependencias(es: dict, ps: dict) -> list[str]:
+    """Issue #79: confere as dependências declaradas em tools/regeneracao_partes.yaml com os arquivos de results/ que as
+    ferramentas leram e gravaram no CI (tools/rastreio_es.py). Cada arquivo lido foi gravado antes na mesma parte, ou por uma
+    parte declarada em depende_de, e nenhum arquivo é gravado por duas partes. `es` é {parte: [{ferramenta, lidos,
+    gravados}], na ordem em que as ferramentas rodaram}; toda parte precisa estar nele. Devolve as falhas."""
+    falhas = [f"{p}: sem o rastreio das leituras" for p in ps if p not in es]
+    quem = {}
+    for p, rs in es.items():
+        for r in rs:
+            for f in r["gravados"]:
+                if quem.setdefault(f, p) != p:
+                    falhas.append(f"{f}: gravado pelas partes {quem[f]} e {p}")
+    for p, rs in es.items():
+        antes = set()
+        for r in rs:
+            for f in r["lidos"]:
+                if f in antes or quem.get(f) in ps[p]["depende_de"]:
+                    continue
+                if f not in quem:
+                    motivo = "que nenhuma parte grava"
+                elif quem[f] == p:
+                    motivo = "gravado depois, na mesma parte"
+                else:
+                    motivo = f"gravado pela parte {quem[f]}, que não está em depende_de"
+                falhas.append(f"{p}: {r['ferramenta']} lê {f}, {motivo}")
+            antes |= set(r["gravados"])
+    return falhas
 
 
 def main():
@@ -461,8 +493,12 @@ def main():
         subprocess.run(["git", "-c", "user.name=x", "-c", "user.email=x@x", "commit", "-qm", "copia"], cwd=d, check=True, env=_env_git())
         juntar_entradas(d / "results", entradas)
         antes_parte = _arvore(d / "results")
-        log_parte = regenerar(d, parte=parte)
-        log_entradas, amb_partes = logs_das_entradas(entradas)
+        # nas partes, cada ferramenta roda pelo rastreio dos arquivos de results/ que lê e grava (issue #79)
+        rs = Path(tmp) / "rastreio"
+        rs.mkdir()
+        log_parte = regenerar(d, rastreio=rs if parte is not None else None, parte=parte)
+        es_parte = [json.loads(x.read_text(encoding="utf-8")) for x in sorted(rs.glob("*.json"))]
+        log_entradas, amb_partes, es = logs_das_entradas(entradas)
         log = log_entradas + log_parte
         if parte is not None and nome_parte != "comparacao":
             # parte intermediária: entrega só o que gravou (novo ou mudado) e o seu log; a comparação é na parte final
@@ -472,8 +508,12 @@ def main():
                     (saida / rel).parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(d / "results" / rel, saida / rel)
             (saida / "_log").mkdir(parents=True, exist_ok=True)
-            (saida / "_log" / f"{nome_parte}.json").write_text(json.dumps({"ambiente": amb, "log": log_parte}), encoding="utf-8")
+            (saida / "_log" / f"{nome_parte}.json").write_text(json.dumps({"ambiente": amb, "log": log_parte, "es": es_parte}), encoding="utf-8")
             return
+        dep_falhas = None   # só a comparação das partes tem o rastreio de todas
+        if parte is not None:
+            es[nome_parte] = es_parte
+            dep_falhas = conferir_dependencias(es, partes())
         # fora da comparação: results/conferencia/ e os arquivos de diagnóstico (diagnostico_*.md), que guardam saídas sem
         # resposta bem definida (ajustes que não fecham, soluções não únicas, grandezas nulas por construção; CLAUDE.md, regra 6)
         versionados = sorted(x for x in base.rglob("*") if x.is_file() and x.name != ".gitkeep"
@@ -521,7 +561,8 @@ def main():
            "dentro_da_tolerancia": [a["arquivo"] for a in arquivos if a.get("estado") == "tolerancia"],
            "nao_regenerados": [a["arquivo"] for a in arquivos if not a["regenerado"]],
            "diferentes": [a["arquivo"] for a in arquivos if a["regenerado"] and not a["identico"]],
-           "gerados_sem_versao": novos, "atualizados": atualizar, "diagnosticos_com_falha": diag_falhas, "arquivos": arquivos}
+           "gerados_sem_versao": novos, "atualizados": atualizar, "diagnosticos_com_falha": diag_falhas,
+           **({"dependencias_com_falha": dep_falhas, "leituras_rastreadas": es} if dep_falhas is not None else {}), "arquivos": arquivos}
     SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / f"regeneracao_{rotulo}.yaml").write_text(yaml.safe_dump(out, sort_keys=False, allow_unicode=True), encoding="utf-8")
     amb_md = ambiente_md(out["ambiente"])
@@ -539,6 +580,8 @@ def main():
           f"arquivos de controle ({', '.join(sorted(CONTROLE))}) sem o hash do commit. Premissas NÃO VALIDADAS.", "",
           "Ferramentas não rodadas: " + (", ".join(f"{x['ferramenta']} ({x['motivo']})" for x in log if not x["rodou"]) or "nenhuma") + ".", "",
           "Sanidade dos diagnósticos (existe, não vazio, sem NaN/inf; sem comparar valores): " + ("; ".join(out["diagnosticos_com_falha"]) or "ok") + ".", "",
+          "Dependências das partes conferidas com os arquivos lidos e gravados (issue #79; leituras no .yaml): "
+          + ("não conferidas (regeneração sem partes)" if dep_falhas is None else "; ".join(dep_falhas) or "ok") + ".", "",
           "## Arquivos diferentes (acima do limite)", ""]
 
     def tabela(vals):
@@ -578,7 +621,7 @@ def main():
         md.append("")
     (SAIDA / f"regeneracao_{rotulo}.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
-    if ci and (out["diferentes"] or out["nao_regenerados"] or novos or diag_falhas):
+    if ci and (out["diferentes"] or out["nao_regenerados"] or novos or diag_falhas or dep_falhas):
         sys.exit(1)
 
 

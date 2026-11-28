@@ -213,9 +213,57 @@ def test_diagnostico_nao_finito(cr):
 def test_logs_das_entradas_com_ambiente(cr, tmp_path):
     import json
     (tmp_path / "a" / "_log").mkdir(parents=True)
-    (tmp_path / "a" / "_log" / "base.json").write_text(json.dumps({"ambiente": {"cpu": "x"}, "log": [{"ferramenta": "t", "rodou": True}]}))
-    log, amb = cr.logs_das_entradas([tmp_path / "a", tmp_path / "vazia"])
-    assert log == [{"ferramenta": "t", "rodou": True}] and amb == {"base": {"cpu": "x"}}
+    es = [{"ferramenta": "t", "lidos": [], "gravados": ["results/r.yaml"]}]
+    (tmp_path / "a" / "_log" / "base.json").write_text(json.dumps({"ambiente": {"cpu": "x"}, "log": [{"ferramenta": "t", "rodou": True}], "es": es}))
+    log, amb, lidos = cr.logs_das_entradas([tmp_path / "a", tmp_path / "vazia"])
+    assert log == [{"ferramenta": "t", "rodou": True}] and amb == {"base": {"cpu": "x"}} and lidos == {"base": es}
+
+
+def _es(*rs):
+    return [{"ferramenta": f, "lidos": lidos, "gravados": gravados} for f, lidos, gravados in rs]
+
+
+def test_conferir_dependencias_casos_montados(cr):
+    """Issue #79: um arquivo lido precisa ter sido gravado antes na mesma parte ou por uma parte em depende_de."""
+    ps = {"a": {"depende_de": []}, "b": {"depende_de": ["a"]}, "c": {"depende_de": ["a"]}}
+    es = {"a": _es(("t1", [], ["x"]), ("t2", ["x"], ["y"])), "b": _es(("t3", ["y"], ["z"])), "c": _es(("t4", ["x"], ["w"]))}
+    assert cr.conferir_dependencias(es, ps) == []
+    # leitura de uma parte fora de depende_de (o caso da issue #77, se a dependência não tivesse sido declarada)
+    falhas = cr.conferir_dependencias({**es, "c": _es(("t4", ["z"], ["w"]))}, ps)
+    assert falhas == ["c: t4 lê z, gravado pela parte b, que não está em depende_de"]
+    # leitura antes da gravação, na mesma parte
+    assert cr.conferir_dependencias({**es, "a": _es(("t2", ["x"], ["y"]), ("t1", [], ["x"]))}, ps) == [
+        "a: t2 lê x, gravado depois, na mesma parte"]
+    # leitura que nenhuma parte grava, arquivo gravado por duas partes e parte sem rastreio
+    assert cr.conferir_dependencias({**es, "b": _es(("t3", ["y", "q"], ["z", "w"]))}, ps) == [
+        "w: gravado pelas partes b e c", "b: t3 lê q, que nenhuma parte grava"]
+    assert cr.conferir_dependencias({k: v for k, v in es.items() if k != "c"}, ps) == ["c: sem o rastreio das leituras"]
+
+
+def test_conferir_dependencias_pega_a_leitura_da_issue_77(cr):
+    """Com as leituras e gravações do mapa (results/conferencia/mapa_regeneracao.yaml) agrupadas pelas partes, as partes
+    declaradas passam; com a leitura de inerte_solido.yaml pelo --verifica (issue #77) e sem a dependência declarada, o
+    CI reprova e diz qual leitura falta (a omissão que test_partes_conferem_com_o_mapa não pegava)."""
+    import copy
+
+    import yaml
+    ps = cr.partes()
+    mapa = yaml.safe_load((cr.RAIZ / "results/conferencia/mapa_regeneracao.yaml").read_text(encoding="utf-8"))["ferramentas"]
+    parte_de = {f: n for n, p in ps.items() for f in p["ferramentas"]}
+    es = {n: [] for n in ps}
+    for n in mapa:
+        es[parte_de.get(cr.chave(n["ferramenta"].split()), "base")].append(
+            {"ferramenta": n["ferramenta"], "lidos": [f for f in n["lidos"] if not (cr.RAIZ / f).is_dir()], "gravados": n["gravados"]})
+    # sem diretórios, como o rastreio desde a issue #79 (o mapa de 2026-11-25 tem o "results" aberto pelo confere_2033)
+    assert cr.conferir_dependencias(es, ps) == []
+    verifica = next(r for r in es["se_verifica"] if r["ferramenta"] == "tools/orbitador_so_eletrico.py --verifica")
+    verifica["lidos"] = sorted({*verifica["lidos"], "results/familia1/inerte_solido.yaml"})
+    assert cr.conferir_dependencias(es, ps) == []
+    sem = copy.deepcopy(ps)
+    sem["se_verifica"]["depende_de"].remove("inerte_solido")
+    assert cr.conferir_dependencias(es, sem) == [
+        "se_verifica: tools/orbitador_so_eletrico.py --verifica lê results/familia1/inerte_solido.yaml, gravado pela parte "
+        "inerte_solido, que não está em depende_de"]
 
 
 def _wf(cr):
@@ -386,3 +434,17 @@ def test_ambiente_ignora_git_do_hook(cr, repo_prova, monkeypatch, tmp_path):
     monkeypatch.delenv("GIT_INDEX_FILE")
     assert amb["commit"] == _git(r, "rev-parse", "HEAD") and amb["alteracoes_nao_commitadas"] is False
     assert (_git(isca, "rev-parse", "HEAD"), sorted(p.name for p in (isca / ".git").iterdir())) == antes
+
+
+def test_rastreio_registra_arquivos_lidos_e_gravados_sem_diretorios(tmp_path):
+    """tools/rastreio_es.py (issue #79): registra os arquivos de results/ lidos e gravados, e não o diretório aberto."""
+    import json
+    import subprocess
+    import sys
+    (tmp_path / "results").mkdir()
+    (tmp_path / "results" / "a.yaml").write_text("1")
+    (tmp_path / "f.py").write_text('import os\nopen("results/a.yaml").read()\nos.close(os.open("results", os.O_RDONLY))\n'
+                                   'open("results/b.yaml", "w").write("2")\nopen("config.yaml", "w").write("3")\n')
+    subprocess.run([sys.executable, str(RAIZ / "tools" / "rastreio_es.py"), str(tmp_path / "es.json"), "f.py"], cwd=tmp_path, check=True)
+    es = json.loads((tmp_path / "es.json").read_text())
+    assert es["lidos"] == ["results/a.yaml"] and es["gravados"] == ["results/b.yaml"]
