@@ -7,7 +7,8 @@ name: Regeneração de results/
 # números (YAML, Markdown, NPZ) e PNG comparados com tolerância declarada; arquivos de controle sem o hash do commit.
 # "Idêntico" = dentro das tolerâncias P-039 (números) e P-040 (PNG), premissas NÃO VALIDADAS; o relatório lista as
 # diferenças abaixo do limite. Falha se algum arquivo passar do limite ou não for regenerado, ou se a regeneração gerar
-# arquivo sem versão.
+# arquivo sem versão. Desde a issue #79, falha também se uma ferramenta ler um arquivo de results/ gravado por uma parte que
+# não está em depende_de (rastreio dos arquivos lidos e gravados em cada parte); por isso a comparação depende de todas.
 # Pedido do Fabio (2026-10-27): regenerar nos PRs que alteram src/, tools/ ou config/, e também quando muda o que
 # alimenta ou é o próprio resultado: results/, tests/data/ (dados publicados usados nas verificações), dependências.
 # Desde 2026-11-17 (decisão do Fabio) sem filtro de caminhos no gatilho: com "paths", um workflow pulado deixa a
@@ -119,9 +120,9 @@ jobs:
     uses: ./.github/workflows/regeneracao_parte.yml
     with: {parte: se_verifica, entradas: "base mav_familia1 se_caso_publicado inerte_solido"}
   regeneracao:
-    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_verifica]
+    needs: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_caso_publicado, se_verifica]
     uses: ./.github/workflows/regeneracao_parte.yml
-    with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido se_verifica"}
+    with: {parte: comparacao, entradas: "base subida_mav mav_familia1 ruido_subida familia1_465 inerte_solido se_caso_publicado se_verifica"}
   # Portão (decisões do Fabio, 2026-11-16 e 2026-11-17): a verificação obrigatória da main. Roda sempre. Se o detector
   # disse que nada relevante mudou, passa com as partes e a comparação puladas (e só puladas). Em qualquer outro caso, só
   # passa se o detector e todos os jobs terminaram com sucesso: falha, cancelamento ou job pulado reprovam. O nome do job

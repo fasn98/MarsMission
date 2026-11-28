@@ -26,7 +26,7 @@ def main():
             rel = p.relative_to(raiz)
         except (ValueError, OSError):
             return
-        if not rel.parts or rel.parts[0] != "results":
+        if not rel.parts or rel.parts[0] != "results" or p.is_dir():   # diretório aberto (confere_2033) não é leitura de resultado
             return
         modo = a[1] if len(a) > 1 and isinstance(a[1], str) else "r"
         flags = a[2] if len(a) > 2 and isinstance(a[2], int) else 0

@@ -1,7 +1,9 @@
 # Partes da regeneração em paralelo no CI (issue #61). Cada parte roda, numa cópia, as suas ferramentas de FASE_ATUAL (na
 # ordem de tools/confere_regeneracao.py) sobre os resultados das partes de que depende; a parte "base" roda também a FASE_1 e
-# a FASE_850. As dependências vêm de results/conferencia/mapa_regeneracao.md (quem lê o resultado de quem).
-# A parte "comparacao" junta tudo e compara com o versionado (P-039, P-040) e confere a sanidade dos diagnósticos.
+# a FASE_850. As dependências vêm de results/conferencia/mapa_regeneracao.md (quem lê o resultado de quem) e são conferidas,
+# em todo CI que regenera, com os arquivos de results/ que cada ferramenta leu e gravou (issue #79).
+# A parte "comparacao" junta tudo, compara com o versionado (P-039, P-040), confere a sanidade dos diagnósticos e confere as
+# dependências; por isso depende de todas as outras partes.
 partes:
   base:
     depende_de: []
@@ -35,5 +37,5 @@ partes:
     depende_de: [base, mav_familia1, se_caso_publicado, inerte_solido]   # inerte_solido: aquecimento do sólido (issue #77)
     ferramentas: ["orbitador_so_eletrico --verifica"]
   comparacao:
-    depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_verifica]
+    depende_de: [base, subida_mav, mav_familia1, ruido_subida, familia1_465, inerte_solido, se_caso_publicado, se_verifica]
     ferramentas: [opcoes_arquitetura]
